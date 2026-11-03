@@ -26,8 +26,7 @@ Funciona no navegador, no computador ou no celular, em **português, espanhol e 
 
 ## Como abrir o app
 
-**Online:** se o GitHub Pages estiver ativado neste repositório, o app fica em
-`https://luccamello7.github.io/doly-bandoneon/`. Por esse link dá para **instalar no celular** (botão *Instalar app* em Ajustes) e usar **sem internet**.
+**Online:** o app fica em **[bandoly.app](https://bandoly.app)**. Por esse link dá para **instalar no celular** (botão *Instalar app* em Ajustes) e usar **sem internet**.
 
 **No seu computador:** baixe o repositório (botão verde *Code → Download ZIP*), descompacte e abra o arquivo `index.html` no Chrome, Edge ou Firefox.
 
