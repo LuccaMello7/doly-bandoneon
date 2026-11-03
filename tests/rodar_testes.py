@@ -1,4 +1,4 @@
-"""Roda os testes automáticos da Escola de Bandoneon num navegador invisível.
+"""Roda os testes automáticos do BanDoly num navegador invisível.
 
 Uso:  python tests/rodar_testes.py
 

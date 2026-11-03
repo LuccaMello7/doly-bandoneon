@@ -1,4 +1,4 @@
-"""Converte um SoundFont (.sf2) em sons/bandoneon.js para a Escola de Bandoneon.
+"""Converte um SoundFont (.sf2) em sons/bandoneon.js para o BanDoly.
 
 Uso:  python ferramentas/sf2_para_js.py caminho/para/arquivo.sf2 [sons/bandoneon.js]
 

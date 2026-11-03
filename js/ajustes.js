@@ -19,14 +19,15 @@ const firstGesture=()=>{
 };
 document.addEventListener('pointerdown',firstGesture,true); document.addEventListener('keydown',firstGesture,true);
 
-// Backup de tudo o que o app guarda no navegador (chaves "bandoneon.*")
+// Backup de tudo o que o app guarda no navegador (chaves "bandoneon.*").
+// O identificador 'escola-de-bandoneon' vem do nome antigo do app e foi mantido para aceitar backups antigos.
 const PREFIX='bandoneon.';
 const appKeys=()=>Object.keys(localStorage).filter(k=>k.startsWith(PREFIX));
 $('#backupExport').onclick=()=>{
   const data={}; appKeys().forEach(k=>data[k.slice(PREFIX.length)]=localStorage.getItem(k));
   const blob=new Blob([JSON.stringify({app:'escola-de-bandoneon', versao:1, criado:new Date().toISOString(), dados:data},null,1)],{type:'application/json'});
   const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
-  a.download=`backup-bandoneon-${new Date().toISOString().slice(0,10)}.json`; a.click();
+  a.download=`backup-bandoly-${new Date().toISOString().slice(0,10)}.json`; a.click();
 };
 $('#backupImport').onclick=()=>{
   const i=document.createElement('input'); i.type='file'; i.accept='.json,application/json';

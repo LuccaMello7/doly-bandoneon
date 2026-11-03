@@ -1,34 +1,44 @@
 /* Cores do tema: fundo escuro, vermelho e dourado do tango; azul = abrindo, laranja = fechando */
 :root{
-  --bg:#141010; --panel:#1f1817; --panel2:#2a201e; --line:#3a2c29;
-  --text:#f3e9e1; --muted:#b3a39a; --red:#b3262d; --red2:#e0464d;
-  --gold:#d9a441; --green:#4caf7a; --open:#4a90d9; --close:#d9774a;
+  /* azul-marinho, dourado e creme do logo BanDoly */
+  --bg:#0b1728; --panel:#12263e; --panel2:#1a3352; --line:#2a4568;
+  --text:#f4eee4; --muted:#a9b6c8; --navy:#12263e;
+  --gold:#c9a364; --gold2:#dbbb7f; --cream:#eedecf;
+  /* vermelho só para erros; azul = abrindo, laranja = fechando */
+  --red:#d0524c; --red2:#e8726c; --green:#4fb37f; --open:#4a90d9; --close:#e0884f;
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font-family:"Segoe UI",system-ui,sans-serif;line-height:1.5}
-header{background:linear-gradient(90deg,#2a0d0f,#1a1212);border-bottom:2px solid var(--red);padding:12px 20px;display:flex;flex-wrap:wrap;align-items:center;gap:16px;position:sticky;top:0;z-index:10}
-header h1{margin:0;font-size:1.3rem;color:var(--gold);letter-spacing:.5px}
+header{background:linear-gradient(90deg,#0d1d34,var(--navy));border-bottom:2px solid var(--gold);padding:12px 20px;display:flex;flex-wrap:wrap;align-items:center;gap:16px;position:sticky;top:0;z-index:10}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand img{border-radius:10px;display:block}
+.brand-text{display:flex;flex-direction:column;line-height:1.1}
+.brand-name{font-size:1.45rem;font-weight:800;color:#fff;letter-spacing:.3px}
+.brand-name b{color:var(--gold)}
+.brand-sub{font-size:.78rem;color:var(--cream);opacity:.85}
+.hero-logo{float:right;border-radius:18px;margin:0 0 10px 16px;box-shadow:0 4px 18px #0006}
 nav{display:flex;gap:6px;flex-wrap:wrap}
 nav button{background:transparent;border:1px solid var(--line);color:var(--text);padding:6px 14px;border-radius:20px;cursor:pointer;font-size:.95rem}
-nav button.active{background:var(--red);border-color:var(--red)}
+nav button.active{background:var(--gold);border-color:var(--gold);color:var(--navy);font-weight:600}
 main{max-width:1150px;margin:0 auto;padding:20px}
 section{display:none} section.active{display:block}
 h2{color:var(--gold);margin-top:0}
 h3{margin-bottom:6px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:16px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
-.btn{background:var(--red);color:#fff;border:none;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:.95rem}
-.btn:hover{background:var(--red2)}
-.btn.sec{background:var(--panel2);border:1px solid var(--line)}
-.btn.sec.on{background:var(--gold);color:#111;border-color:var(--gold)}
+.btn{background:var(--gold);color:var(--navy);font-weight:600;border:none;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:.95rem}
+.btn:hover{background:var(--gold2)}
+.btn.sec{background:var(--panel2);border:1px solid var(--line);color:var(--text);font-weight:400}
+.btn.sec:hover{background:#22406a}
+.btn.sec.on{background:var(--cream);color:var(--navy);border-color:var(--cream)}
 .btn:disabled{opacity:.4;cursor:default}
 .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .muted{color:var(--muted)}
 .stat{font-size:2rem;font-weight:700;color:var(--gold)}
 .bar{height:10px;background:var(--panel2);border-radius:6px;overflow:hidden}
-.bar>div{height:100%;background:linear-gradient(90deg,var(--red),var(--gold));transition:width .3s}
-.notice{border-left:4px solid var(--gold);background:#2a2216;padding:10px 14px;border-radius:6px;font-size:.92rem}
-select,input[type=range]{accent-color:var(--red)}
+.bar>div{height:100%;background:linear-gradient(90deg,var(--gold),var(--cream));transition:width .3s}
+.notice{border-left:4px solid var(--gold);background:#1d3150;padding:10px 14px;border-radius:6px;font-size:.92rem}
+select,input[type=range],input[type=checkbox]{accent-color:var(--gold)}
 select{background:var(--panel2);color:var(--text);border:1px solid var(--line);padding:6px;border-radius:6px}
 
 /* Teclado */
@@ -36,9 +46,9 @@ select{background:var(--panel2);color:var(--text);border:1px solid var(--line);p
 .side{display:flex;flex-direction:column;align-items:center;gap:6px}
 .side .label{font-size:.85rem;color:var(--muted)}
 /* Teclado do bandoneon: os botões são posicionados em absoluto pelo JavaScript */
-.kbd{position:relative;background:radial-gradient(circle at 30% 20%,#3a2a22,#1c1412);border:3px solid #4a3528;border-radius:18px;padding:8px;box-shadow:inset 0 0 20px #000}
+.kbd{position:relative;background:radial-gradient(circle at 30% 20%,#1f3b5e,#0d1d34);border:3px solid #7d6640;border-radius:18px;padding:8px;box-shadow:inset 0 0 20px #000}
 .key{position:absolute;border-radius:50%;border:2px solid #8b7a66;background:radial-gradient(circle at 35% 30%,#fffaf0,#d8cdb8);color:#2a1a10;font-size:inherit;font-weight:700;cursor:pointer;padding:0;user-select:none;touch-action:none;transition:transform .05s}
-.key.down{transform:scale(.9);background:radial-gradient(circle at 35% 30%,#ffe9a8,#d9a441)}
+.key.down{transform:scale(.9);background:radial-gradient(circle at 35% 30%,#f7e6c2,var(--gold))}
 .key.ok{background:var(--green)!important;color:#fff}
 .key.bad{background:var(--red)!important;color:#fff}
 .key.hint{box-shadow:0 0 0 4px var(--gold)}
@@ -46,7 +56,7 @@ select{background:var(--panel2);color:var(--text);border:1px solid var(--line);p
 .key.edit{border-style:dashed;border-color:var(--gold)}
 .key.sharp{background:radial-gradient(circle at 35% 30%,#e9e2d4,#b9ad98)}
 .bellows-wrap{display:flex;flex-direction:column;align-items:center;gap:6px;min-width:220px}
-.bellows{height:150px;transition:width .08s linear;background:repeating-linear-gradient(90deg,#3b0d10 0 8px,#8a1c22 8px 10px,#3b0d10 10px 18px);border-top:4px solid #111;border-bottom:4px solid #111;border-radius:4px;width:120px}
+.bellows{height:150px;transition:width .08s linear;background:repeating-linear-gradient(90deg,var(--navy) 0 8px,var(--gold) 8px 10px,var(--navy) 10px 18px);border-top:4px solid #0b1728;border-bottom:4px solid #0b1728;border-radius:4px;width:120px}
 .dirpill{font-weight:700;padding:6px 14px;border-radius:20px}
 .dirpill.open{background:var(--open)} .dirpill.close{background:var(--close)}
 .warn{color:var(--red2);font-weight:700;min-height:1.5em;text-align:center}
@@ -85,7 +95,9 @@ button,select,a,input{touch-action:manipulation}
 /* Celular */
 @media (max-width:700px){
   header{padding:8px 10px;gap:6px}
-  header h1{font-size:1.05rem}
+  .brand img{width:36px;height:36px}
+  .brand-name{font-size:1.2rem}
+  .hero-logo{width:84px;height:84px}
   nav{flex-wrap:nowrap;overflow-x:auto;width:100%;scrollbar-width:none;padding-bottom:2px}
   nav::-webkit-scrollbar{display:none}
   nav button{flex:0 0 auto;padding:6px 12px}
@@ -107,7 +119,7 @@ button,select,a,input{touch-action:manipulation}
 #micStatus .ok{color:var(--green)} #micStatus .bad{color:var(--close)}
 .micbar{display:inline-block;width:80px;height:8px;background:var(--panel2);border-radius:4px;vertical-align:middle;overflow:hidden}
 .micbar span{display:block;height:100%;background:var(--green)}
-.key.chord{background:radial-gradient(circle at 35% 30%,#ffe9a8,#d9a441)!important;box-shadow:0 0 0 3px var(--gold)}
+.key.chord{background:radial-gradient(circle at 35% 30%,#f7e6c2,var(--gold))!important;box-shadow:0 0 0 3px var(--gold)}
 #chVoicings small{opacity:.75}
 .staffwrap{overflow-x:auto;background:#f6efe2;border-radius:10px;margin-top:12px}
 .staffwrap svg{display:block}
@@ -115,16 +127,16 @@ button,select,a,input{touch-action:manipulation}
 .staffwrap .clef,.staffwrap .acc{fill:#222;font-family:"Segoe UI Symbol","Noto Music",serif}
 .staffwrap .nh{fill:#111} .staffwrap .nh.hollow{fill:#f6efe2;stroke:#111;stroke-width:1.6}
 .staffwrap .stem{stroke:#111;stroke-width:1.4} .staffwrap .nerr{fill:#bbb;stroke:#bbb}
-.staffwrap g.cur .nh{fill:var(--red)} .staffwrap g.cur .nh.hollow{fill:#f6efe2;stroke:var(--red)}
-.staffwrap g.cur .stem{stroke:var(--red)}
+.staffwrap g.cur .nh{fill:#a8792a} .staffwrap g.cur .nh.hollow{fill:#f6efe2;stroke:#a8792a}
+.staffwrap g.cur .stem{stroke:#a8792a}
 .staffwrap .scur{stroke:var(--gold);stroke-width:3;opacity:.6}
 .mcard small{opacity:.7;font-size:.7em}
 .mcard .errn{text-decoration:line-through;opacity:.6}
 .streak{font-size:1.1rem}
 .week{display:flex;align-items:center;gap:6px;margin:10px 0}
 .week .day{width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.75rem;background:var(--panel2);color:var(--muted);border:1px solid var(--line)}
-.week .day.on{background:var(--gold);color:#111;border-color:var(--gold)}
-.week .day.today{outline:2px solid var(--red)}
+.week .day.on{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+.week .day.today{outline:2px solid var(--cream)}
 .routine{display:flex;flex-direction:column;gap:8px}
 .ritem{display:flex;align-items:center;gap:12px;background:var(--panel2);border-radius:10px;padding:10px 12px}
 .ritem .rcheck{font-size:1.3rem;width:30px;text-align:center}
@@ -152,7 +164,7 @@ kbd{background:var(--panel2);border:1px solid var(--line);border-radius:4px;padd
 /* Ritmo */
 .steps{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;margin:14px 0}
 .step{height:60px;border-radius:8px;background:var(--panel2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--muted)}
-.step.hit1{background:#5a2a20;color:#fff} .step.hit2{background:var(--red);color:#fff}
+.step.hit1{background:#35577f;color:#fff} .step.hit2{background:var(--gold);color:var(--navy)}
 .step.now{outline:3px solid var(--gold);transform:scale(1.05)}
-.pad{width:100%;height:90px;font-size:1.3rem;border-radius:12px;border:2px dashed var(--gold);background:#2a2216;color:var(--gold);cursor:pointer}
-.pad:active{background:var(--gold);color:#111}
+.pad{width:100%;height:90px;font-size:1.3rem;border-radius:12px;border:2px dashed var(--gold);background:#1d3150;color:var(--gold);cursor:pointer}
+.pad:active{background:var(--gold);color:var(--navy)}

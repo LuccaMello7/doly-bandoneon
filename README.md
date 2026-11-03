@@ -1,6 +1,8 @@
-# 🪗 Escola de Bandoneon
+<p align="center"><img src="icones/icone-512.png" alt="Logo do BanDoly" width="180"></p>
 
-Um app gratuito e interativo para aprender **bandoneon**, o instrumento do tango. Você toca num teclado virtual com o som de um bandoneon de verdade, segue escalas e melodias guiadas, treina acordes e ritmos e, se tiver o instrumento, pode tocar nele enquanto o app escuta pelo microfone.
+# BanDoly - Aprenda Bandoneon
+
+O **BanDoly** é um app gratuito e interativo para aprender **bandoneon**, o instrumento do tango. Você toca num teclado virtual com o som de um bandoneon de verdade, segue escalas e melodias guiadas, treina acordes e ritmos e, se tiver o instrumento, pode tocar nele enquanto o app escuta pelo microfone.
 
 Funciona no navegador, no computador ou no celular. Não precisa instalar nada nem criar conta.
 

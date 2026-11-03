@@ -1,13 +1,13 @@
 // Service worker: guarda o app no aparelho para funcionar offline.
 // Estratégia "rede primeiro": online sempre pega a versão mais nova; offline usa o cache.
 // Ao adicionar um arquivo novo ao index.html, inclua-o em ARQUIVOS (os testes conferem).
-const CACHE = 'escola-bandoneon-v1';
+const CACHE = 'bandoly-v1'; // mudar o nome apaga o cache antigo na ativação
 const ARQUIVOS = [
   "./",
   "css/app.css",
   "icones/icone-192.png",
   "icones/icone-512.png",
-  "icones/icone.svg",
+  "icones/logo-cabecalho.png",
   "index.html",
   "js/ajustes.js",
   "js/atalhos.js",

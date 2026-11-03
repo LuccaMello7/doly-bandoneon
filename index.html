@@ -3,18 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Escola de Bandoneon</title>
-<meta name="theme-color" content="#2a0d0f">
+<title>BanDoly - Aprenda Bandoneon</title>
+<meta name="theme-color" content="#12263e">
 <meta name="description" content="App interativo para aprender bandoneon: teclado bisonoro, escalas guiadas, melodias e ritmos de tango.">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" href="icones/icone.svg" type="image/svg+xml">
+<link rel="icon" href="icones/icone-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icones/icone-192.png">
 <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
 <header>
-  <h1>🪗 Escola de Bandoneon</h1>
+  <a class="brand" href="#" data-go="inicio" aria-label="BanDoly - Aprenda Bandoneon (início)">
+    <img src="icones/logo-cabecalho.png" alt="" width="44" height="44">
+    <span class="brand-text"><span class="brand-name">Ban<b>Doly</b></span><span class="brand-sub">Aprenda Bandoneon</span></span>
+  </a>
   <nav id="nav" aria-label="Seções do app">
     <button data-v="inicio" class="active">Início</button>
     <button data-v="licoes">Lições</button>
@@ -31,7 +34,8 @@
 <!-- INÍCIO -->
 <section id="v-inicio" class="active">
   <div class="card">
-    <h2>Bem-vindo!</h2>
+    <img class="hero-logo" src="icones/icone-512.png" alt="Logo do BanDoly: um bandoneonista desenhado em dourado sobre azul-marinho" width="132" height="132">
+    <h2>Bem-vindo ao BanDoly!</h2>
     <p>Aqui você aprende os fundamentos do bandoneon: como o instrumento funciona, o sistema <b>bisonoro</b> (cada botão dá uma nota abrindo e outra fechando), leitura nas duas claves e os ritmos essenciais do tango.</p>
     <p class="muted">Dica: use fones de ouvido. O app funciona offline e o seu progresso fica salvo neste navegador. Em <a href="#" data-go="ajustes">Ajustes</a> você escolhe o som, a afinação e faz backup.</p>
   </div>

@@ -1,14 +1,14 @@
 {
-  "name": "Escola de Bandoneon",
-  "short_name": "Bandoneon",
+  "name": "BanDoly - Aprenda Bandoneon",
+  "short_name": "BanDoly",
   "description": "App interativo para aprender bandoneon: teclado bisonoro, escalas guiadas, melodias e ritmos de tango.",
   "lang": "pt-BR",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "any",
-  "background_color": "#141010",
-  "theme_color": "#2a0d0f",
+  "background_color": "#0b1728",
+  "theme_color": "#12263e",
   "icons": [
     {
       "src": "icones/icone-192.png",
@@ -19,11 +19,6 @@
       "src": "icones/icone-512.png",
       "sizes": "512x512",
       "type": "image/png"
-    },
-    {
-      "src": "icones/icone.svg",
-      "sizes": "any",
-      "type": "image/svg+xml"
     }
   ]
 }
