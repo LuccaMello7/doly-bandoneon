@@ -67,6 +67,14 @@
   .mcard.err{outline:2px dashed var(--red2)}
   textarea{background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:10px;font-family:Consolas,monospace;font-size:.9rem;width:100%}
   .lesson-list .best{float:right;color:var(--gold);font-size:.85em}
+  .sgrid{border-collapse:collapse;font-size:.8rem;margin-top:10px;width:100%}
+  .sgrid th,.sgrid td{border:1px solid var(--line);padding:3px;text-align:center}
+  .sgrid td{cursor:pointer;background:var(--panel2);min-width:34px}
+  .sgrid td:hover{outline:2px solid var(--gold)}
+  .sgrid td.g1{background:#5a3a1a} .sgrid td.g2{background:#6b5a1a} .sgrid td.g3{background:#1f5a3a;color:#fff}
+  .guide{background:var(--panel2);border-radius:10px;padding:12px 14px;margin-top:12px;border-left:4px solid var(--gold)}
+  .guide .gstep{font-size:1.1rem;margin-top:6px}
+  .guide .chg{color:var(--close);font-weight:700}
   kbd{background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:.85em}
 
   /* Lições */
@@ -133,6 +141,7 @@
       <li>Faça as <a href="#" data-go="licoes">Lições</a> em ordem.</li>
       <li>Explore o <a href="#" data-go="teclado">Teclado</a>: toque, troque a direção do fole com <kbd>Espaço</kbd> e veja as notas mudarem.</li>
       <li>Treine nos <a href="#" data-go="desafios">Desafios</a> até memorizar os botões.</li>
+      <li>Pratique as <b>Escalas guiadas</b> (na aba <a href="#" data-go="melodias">Melodias</a>): o app explica cada passo, cada troca de fole e onde está o próximo botão.</li>
       <li>Toque <a href="#" data-go="melodias">Melodias</a>: primeiro ouça, depois toque no modo Espera e por fim No tempo.</li>
       <li>Pratique o <a href="#" data-go="ritmo">Ritmo</a>: marcato, síncopa e 3-3-2.</li>
     </ol>
@@ -226,11 +235,27 @@
   <div class="lesson-layout">
     <div class="card lesson-list">
       <h3 style="margin-top:0">Melodias</h3>
+      <button class="btn" id="scaleOpen" style="width:100%;margin-bottom:10px">🎼 Escalas guiadas</button>
       <div id="melList"></div>
       <button class="btn sec" id="melNew" style="width:100%;margin-top:8px">+ Nova melodia</button>
       <button class="btn sec" id="melImportBtn" style="width:100%;margin-top:6px">⇪ Importar MusicXML</button>
     </div>
     <div>
+      <div class="card" id="scaleCard" style="display:none">
+        <h2 style="margin-top:0">Escalas guiadas</h2>
+        <div class="row">
+          <label>Tipo: <select id="scType"></select></label>
+          <label>Tônica: <select id="scTonic"></select></label>
+          <label>Mão: <select id="scHand"><option value="right">Direita</option><option value="left">Esquerda</option></select></label>
+          <label>Oitavas: <select id="scOct"><option value="1">1</option><option value="2">2</option></select></label>
+          <label>Começar em: <select id="scStart"></select></label>
+          <label>Sentido: <select id="scDir"><option value="updown">Sobe e desce</option><option value="up">Só sobe</option></select></label>
+          <button class="btn" id="scGo">Gerar escala</button>
+          <button class="btn sec" id="scClose">Fechar</button>
+        </div>
+        <div class="feedback bad" id="scErr"></div>
+        <details><summary class="muted">Seu progresso nas escalas (clique numa célula para abrir)</summary><div id="scGrid"></div></details>
+      </div>
       <div class="card" id="melPlayer">
         <h2 id="melTitle" style="margin-bottom:4px"></h2>
         <p class="muted" id="melDesc" style="margin-top:0"></p>
@@ -242,6 +267,7 @@
           <button class="btn sec" id="melEdit">Editar</button>
         </div>
         <div class="notice" id="melWarn" style="display:none;margin-top:10px"></div>
+        <div class="guide" id="melGuide" style="display:none"><div id="guideIntro"></div><div class="gstep" id="guideStep"></div></div>
         <div class="mstrip" id="melStrip"></div>
         <div style="text-align:center">
           <div id="melDirPill" class="dirpill open" style="display:inline-block">⟵ ABRINDO ⟶</div>
@@ -477,7 +503,7 @@ function go(v){
 $('#nav').addEventListener('click',e=>{ if(e.target.dataset.v) go(e.target.dataset.v); });
 document.addEventListener('click',e=>{ const g=e.target.closest('[data-go]'); if(g){ e.preventDefault(); go(g.dataset.go); } });
 $('#namesSel').value=state.names;
-$('#namesSel').onchange=e=>{ state.names=e.target.value; store.set('names',state.names); refreshAll(); renderLesson(); renderStaffAnswers(); if(fq.target!=null) showFindTarget(); if(mel.cur && !mel.running) renderMelPlayer(); };
+$('#namesSel').onchange=e=>{ state.names=e.target.value; store.set('names',state.names); refreshAll(); renderLesson(); renderStaffAnswers(); if(fq.target!=null) showFindTarget(); if(mel.cur && !mel.running) renderMelPlayer(); if($('#scaleCard').style.display!=='none') fillScaleTonics(); };
 
 /* ================== Progresso ================== */
 function renderProgress(){
@@ -914,7 +940,7 @@ function renderMelPlayer(){
   $('#mkRightWrap').style.display = m.hand==='right'?'flex':'none';
   $('#melStrip').innerHTML = m.notes.map((n,i)=> n.rest
     ? `<div class="mcard rest" data-i="${i}" style="width:${34+n.beats*18}px">𝄽<span class="d">&nbsp;</span></div>`
-    : `<div class="mcard ${n.dir||''} ${n.error?'err':''}" data-i="${i}" style="width:${34+n.beats*18}px" title="${n.error?'Nota inexistente nesta mão':''}">${noteName(n.midi)}<span class="d">${n.error?'?':n.dir==='open'?'abre':'fecha'}</span></div>`
+    : `<div class="mcard ${n.dir||''} ${n.error?'err':''}" data-i="${i}" style="width:${34+n.beats*18}px" title="${n.error?'Nota inexistente nesta mão':''}">${n.spell?spellName(n,true):noteName(n.midi)}<span class="d">${n.error?'?':n.dir==='open'?'abre':'fecha'}</span></div>`
   ).join('');
   const missing = m.notes.filter(n=>n.error).map(n=>noteName(n.midi));
   const warn = [];
@@ -924,13 +950,14 @@ function renderMelPlayer(){
   const first = playableNotes()[0];
   setMelDir(first ? first.dir : 'open'); hintBtn(first); markCur(-1);
   melFeed(''); $('#melStat').textContent = `${playableNotes().length} notas · ${countChanges()} troca(s) de fole sugerida(s)`;
+  renderGuide();
 }
 function countChanges(){ const p=playableNotes(); return p.filter((n,i)=>i && n.dir!==p[i-1].dir).length; }
 
 $('#melStrip').addEventListener('click', e=>{
   const c=e.target.closest('.mcard'); if(!c || mel.running) return;
   const n=mel.cur.notes[+c.dataset.i]; if(n.rest||n.error) return;
-  playNote(n.midi, 0.6, mel.cur.hand); hintBtn(n); markCur(+c.dataset.i);
+  playNote(n.midi, 0.6, mel.cur.hand); hintBtn(n); markCur(+c.dataset.i); guideStep(+c.dataset.i);
 });
 
 function stopMelody(){
@@ -943,7 +970,7 @@ function finishMel(msg, score){
   stopMelody(); melFeed(msg, score==null?'':score>=80?'ok':'bad'); markCur(-1);
   if(score!=null){
     const id=mel.cur.id, prev=state.progress.melodies[id];
-    if(prev==null || score>prev){ state.progress.melodies[id]=score; saveProgress(); renderMelList(); }
+    if(prev==null || score>prev){ state.progress.melodies[id]=score; saveProgress(); renderMelList(); if(mel.cur.guide) renderScaleGrid(); }
   }
 }
 $('#melStart').onclick = ()=>{
@@ -964,10 +991,11 @@ function startListen(){
     mel.timers.push(setTimeout(()=>{
       markCur(i);
       if(n.rest || n.error) return;
+      guideStep(i);
       if(n.dir!==mel.dir) setMelDir(n.dir);
       const k=melKb(); k.clearMarks(); k.mark(n.btn.id,'down',dur*0.9);
       playNote(n.midi, n.beats*spb*0.9, mel.cur.hand);
-      $('#melStat').textContent = `${noteName(n.midi)} · ${dirLabel(n.dir).toLowerCase()}`;
+      $('#melStat').textContent = `${lbl(n)} · ${dirLabel(n.dir).toLowerCase()}`;
     }, t));
     t += dur;
   });
@@ -983,10 +1011,10 @@ function advanceWait(){
     const total=playableNotes().length, acc=Math.round(100*total/(total+mel.errors));
     finishMel(`Concluído! ${mel.errors} erro(s) · precisão ${acc}%`, acc); hintBtn(null); return;
   }
-  const n=notes[mel.idx]; markCur(mel.idx); hintBtn(n);
+  const n=notes[mel.idx]; markCur(mel.idx); hintBtn(n); guideStep(mel.idx);
   if($('#melAuto').checked && n.dir!==mel.dir) setMelDir(n.dir);
   const pos=playableNotes().indexOf(n)+1;
-  $('#melStat').textContent = `Nota ${pos}/${playableNotes().length}: ${noteName(n.midi)} · ${dirLabel(n.dir).toLowerCase()}`;
+  $('#melStat').textContent = `Nota ${pos}/${playableNotes().length}: ${lbl(n)} · ${dirLabel(n.dir).toLowerCase()}`;
 }
 function melPress(b, m, dir){
   if(!mel.running) return;
@@ -1020,7 +1048,7 @@ function startTimed(){
     if(up && up!==mel.upcoming){
       mel.upcoming=up; markCur(up.i); hintBtn(up.n);
       if($('#melAuto').checked && up.n.dir!==mel.dir) setMelDir(up.n.dir);
-      if(now>=t0+4*spb) $('#melStat').textContent = `${noteName(up.n.midi)} · ${dirLabel(up.n.dir).toLowerCase()}`;
+      if(now>=t0+4*spb) $('#melStat').textContent = `${lbl(up.n)} · ${dirLabel(up.n.dir).toLowerCase()}`;
     }
     if(now>mel.tEnd+0.4){
       const score=Math.round(100*mel.hits/mel.events.length);
@@ -1238,6 +1266,150 @@ $('#impGo').onclick=()=>{
   }catch(e){ $('#impErr').textContent=e.message; }
 };
 
+// ---------- Escalas guiadas ----------
+const SCALE_TYPES = {
+  maior:{name:'Maior', steps:[2,2,1,2,2,2,1], spell:'maj',
+    info:'Fórmula: T T S T T T S. Os semitons ficam entre o 3º e o 4º graus e entre o 7º e o 8º.'},
+  menor:{name:'Menor natural', steps:[2,1,2,2,1,2,2], spell:'min',
+    info:'Fórmula: T S T T S T T. Mesmas notas da escala maior que começa uma terça menor acima (Lá menor e Dó maior, por exemplo).'},
+  harmonica:{name:'Menor harmônica', steps:[2,1,2,2,1,3,1], spell:'min',
+    info:'É a menor natural com o 7º grau elevado (a sensível). Entre o 6º e o 7º graus fica um intervalo de tom e meio, um som muito presente no tango.'},
+  melodica:{name:'Menor melódica', steps:[2,1,2,2,2,2,1], down:[2,1,2,2,1,2,2], spell:'min',
+    info:'Subindo, o 6º e o 7º graus são elevados. Descendo, ela volta a ser igual à menor natural (forma tradicional).'},
+  cromatica:{name:'Cromática', steps:Array(12).fill(1), spell:null,
+    info:'Todos os 12 semitons. É a melhor forma de passear pelo mapa inteiro de botões.'},
+};
+const TONIC_SPELL = {maj:['C','Db','D','Eb','E','F','F#','G','Ab','A','Bb','B'], min:['C','C#','D','Eb','E','F','F#','G','G#','A','Bb','B']};
+const ACC_SYM = {'-2':'𝄫','-1':'♭','0':'','1':'♯','2':'𝄪'};
+const STEP_NAME = {1:'semitom', 2:'tom', 3:'tom e meio'};
+function spellName(n, withOct){
+  const nm = letterNames()[n.spell.letter] + ACC_SYM[n.spell.acc];
+  return withOct ? nm + (Math.floor((n.midi - n.spell.acc)/12) - 1) : nm;
+}
+function tonicLabel(type, pc){
+  const sp = SCALE_TYPES[type].spell;
+  if(!sp) return (state.names==='pt'?PT:EN)[pc];
+  const t = TONIC_SPELL[sp][pc], letter='CDEFGAB'.indexOf(t[0]), acc = t[1]==='#'?1:t[1]==='b'?-1:0;
+  return letterNames()[letter] + ACC_SYM[acc];
+}
+function scaleNotes(type, pc, start, octs, dirMode){
+  const T = SCALE_TYPES[type], up = [], deg = T.steps.length;
+  let m = start;
+  for(let i=0; i<=deg*octs; i++){ up.push({midi:m, degree:i%deg+1}); m += T.steps[i%deg]; }
+  let all = up;
+  if(dirMode==='updown'){
+    const dsteps = T.down || T.steps, down = [];
+    m = up[up.length-1].midi;
+    for(let i=deg*octs-1; i>=0; i--){ m -= dsteps[i%deg]; down.push({midi:m, degree:i%deg+1}); }
+    all = up.concat(down);
+  }
+  if(T.spell){
+    const t = TONIC_SPELL[T.spell][pc], L0 = 'CDEFGAB'.indexOf(t[0]);
+    for(const n of all){
+      const letter = (L0 + n.degree - 1) % 7;
+      let acc = ((n.midi - DIA_SEMI[letter]) % 12 + 12) % 12; if(acc>6) acc -= 12;
+      n.spell = {letter, acc};
+    }
+  }
+  return all;
+}
+function validStarts(type, pc, hand, octs){
+  const L = state.layout[hand], has = m => L.some(b=>b.open===m || b.close===m), out = [];
+  for(let m=pc+12; m<=108; m+=12) if(scaleNotes(type, pc, m, octs, 'updown').every(n=>has(n.midi))) out.push(m);
+  const center = hand==='left' ? 48 : 62;
+  return out.sort((a,b)=>Math.abs(a-center)-Math.abs(b-center));
+}
+function fillScaleTonics(){
+  const type=$('#scType').value, cur=$('#scTonic').value||'0';
+  $('#scTonic').innerHTML = Array.from({length:12},(_,pc)=>`<option value="${pc}">${tonicLabel(type,pc)}</option>`).join('');
+  $('#scTonic').value = cur; fillScaleStarts(); renderScaleGrid();
+}
+function fillScaleStarts(){
+  const type=$('#scType').value, pc=+$('#scTonic').value, hand=$('#scHand').value, octs=+$('#scOct').value;
+  const st = validStarts(type, pc, hand, octs);
+  const name = n => tonicLabel(type, pc) + (Math.floor(n/12)-1);
+  $('#scStart').innerHTML = st.map(m=>`<option value="${m}">${name(m)}</option>`).join('');
+  $('#scErr').textContent = st.length ? '' : `Essa escala não cabe em ${octs} oitava(s) na mão ${hand==='left'?'esquerda':'direita'}. Tente 1 oitava ou a outra mão.`;
+  $('#scGo').disabled = !st.length;
+}
+$('#scType').innerHTML = Object.entries(SCALE_TYPES).map(([k,t])=>`<option value="${k}">${t.name}</option>`).join('');
+$('#scType').onchange = fillScaleTonics;
+['#scTonic','#scHand','#scOct'].forEach(id=>$(id).onchange=()=>{ fillScaleStarts(); renderScaleGrid(); });
+$('#scaleOpen').onclick = ()=>{ $('#scaleCard').style.display='block'; fillScaleTonics(); };
+$('#scClose').onclick = ()=>{ $('#scaleCard').style.display='none'; };
+$('#scGo').onclick = ()=>loadScale($('#scType').value, +$('#scTonic').value, $('#scHand').value, +$('#scOct').value, +$('#scStart').value, $('#scDir').value);
+
+const scaleId = (type, pc, hand, octs) => `esc:${type}:${pc}:${hand}:${octs}`;
+function loadScale(type, pc, hand, octs, start, dirMode){
+  stopMelody();
+  const T = SCALE_TYPES[type], notes = scaleNotes(type, pc, start, octs, dirMode);
+  notes.forEach((n,i)=>{ n.beats = i===notes.length-1 ? 2 : 1; });
+  const title = `${tonicLabel(type,pc)} ${T.name.toLowerCase()}${type==='cromatica'?' (a partir de '+tonicLabel(type,pc)+')':''}`;
+  const tok = n => noteToken(n.midi)+':'+(n.beats===2?'2':'4');
+  const m = {title:`Escala: ${title}`, desc:`${octs} oitava(s)`, hand, bpm:72, notes, bad:[],
+    id:scaleId(type,pc,hand,octs), builtin:true, guide:{type, pc},
+    text:`título: Escala: ${title}\nmão: ${hand==='left'?'esquerda':'direita'}\nbpm: 72\n${notes.map(tok).join(' ')}`};
+  fingerMelody(m); mel.cur = m;
+  $('#melEditor').style.display='none'; $('#melImport').style.display='none'; $('#melPlayer').style.display='block';
+  if($('#melMode').value==='listen') $('#melMode').value='wait';
+  renderMelList(); renderMelPlayer();
+}
+
+function renderGuide(){
+  const g = mel.cur && mel.cur.guide, box = $('#melGuide');
+  box.style.display = g ? 'block' : 'none';
+  if(!g) return;
+  const T = SCALE_TYPES[g.type], ns = mel.cur.notes;
+  const top = ns.reduce((a,b)=>b.midi>a.midi?b:a), upTo = ns.indexOf(top);
+  const names = ns.slice(0, upTo+1).map(n=>n.spell?spellName(n):noteName(n.midi).replace(/-?\d+$/,''));
+  const changes = [];
+  ns.forEach((n,i)=>{ if(i && n.dir!==ns[i-1].dir) changes.push(`${lbl(ns[i-1])} → ${lbl(n)} (${dirLabel(n.dir).toLowerCase()})`); });
+  $('#guideIntro').innerHTML = `<b>${T.info}</b><br>Notas: ${names.join(' · ')}<br>`+
+    `Fole: começa <b>${dirLabel(ns[0].dir).toLowerCase()}</b>` + (changes.length ? ` e troca ${changes.length}×: ${changes.join('; ')}.` : ', sem trocas.')+
+    `<br><span class="muted">No modo Espera, siga o contorno dourado. Aqui embaixo aparece a explicação de cada passo.</span>`;
+  $('#guideStep').innerHTML = '';
+}
+const lbl = n => n.spell ? spellName(n,true) : noteName(n.midi);
+function relPos(a, b){
+  if(a.id===b.id) return '<b>mesmo botão</b>, só muda o fole';
+  const dx=b.x-a.x, dy=b.y-a.y, d=Math.hypot(dx,dy);
+  const v = dy<-0.25?'acima':dy>0.25?'abaixo':'', h = dx>0.25?'à direita':dx<-0.25?'à esquerda':'';
+  return (d<1.3?'botão vizinho':'botão mais distante') + (v||h ? ', '+[v,h].filter(Boolean).join(' e ') : '');
+}
+function guideStep(i){
+  const g = mel.cur && mel.cur.guide; if(!g) return;
+  const ns = mel.cur.notes, n = ns[i], prev = ns[i-1];
+  let html = `Passo ${i+1}/${ns.length}: <b>${lbl(n)}</b>`;
+  if(SCALE_TYPES[g.type].spell) html += ` · ${n.degree}º grau`;
+  html += ` · <b>${dirLabel(n.dir).toLowerCase()}</b>`;
+  if(prev){
+    const diff = Math.abs(n.midi-prev.midi);
+    html += `<br>${n.midi>prev.midi?'Sobe':'Desce'} ${STEP_NAME[diff]||diff+' semitons'} a partir de ${lbl(prev)} · ${relPos(prev.btn, n.btn)}`;
+    if(prev.dir!==n.dir) html += ` · <span class="chg">troque o fole para ${dirLabel(n.dir).toLowerCase()}!</span>`;
+  } else html += '<br>Nota inicial (tônica). Prepare o fole e comece.';
+  $('#guideStep').innerHTML = html;
+}
+
+function renderScaleGrid(){
+  const hand=$('#scHand').value, octs=+$('#scOct').value, P=state.progress.melodies;
+  let h = `<table class="sgrid"><tr><th>${hand==='left'?'Esq.':'Dir.'} · ${octs} oit.</th>`+
+    Array.from({length:12},(_,pc)=>`<th>${(state.names==='pt'?PT:EN)[pc]}</th>`).join('')+'</tr>';
+  for(const [k,T] of Object.entries(SCALE_TYPES)){
+    h += `<tr><th style="text-align:left">${T.name}</th>`;
+    for(let pc=0; pc<12; pc++){
+      const v = P[scaleId(k,pc,hand,octs)];
+      h += `<td data-t="${k}" data-pc="${pc}" class="${v==null?'':v>=90?'g3':v>=70?'g2':'g1'}" title="${tonicLabel(k,pc)} ${T.name.toLowerCase()}">${v==null?'':v+'%'}</td>`;
+    }
+    h += '</tr>';
+  }
+  $('#scGrid').innerHTML = h + '</table>';
+}
+$('#scGrid').addEventListener('click', e=>{
+  const td = e.target.closest('td'); if(!td) return;
+  $('#scType').value = td.dataset.t; fillScaleTonics(); $('#scTonic').value = td.dataset.pc; fillScaleStarts();
+  if(!$('#scGo').disabled) $('#scGo').click();
+});
+
 loadMelody(BUILTIN_MELODIES[0].id);
 
 /* ================== Lições ================== */
@@ -1298,7 +1470,7 @@ const LESSONS = [
   <p>Uma rotina curta e diária rende mais que horas uma vez por semana. Sugestão de 20–30 minutos:</p>
   <ol>
     <li><b>5 min</b>: fole. Notas longas abrindo e fechando, com volume estável.</li>
-    <li><b>10 min</b>: mapa de botões. Escalas lentas de Dó e Sol maior, uma mão por vez, nas duas direções. Use o desafio <i>Encontre a nota</i>.</li>
+    <li><b>10 min</b>: mapa de botões. Escalas lentas de Dó e Sol maior, uma mão por vez. Use as <a href="#" data-go="melodias">Escalas guiadas</a> no modo Espera e o desafio <i>Encontre a nota</i>.</li>
     <li><b>5 min</b>: ritmo. Marcato e síncopa com metrônomo.</li>
     <li><b>5–10 min</b>: repertório. Um trecho de tango simples, como "La Cumparsita" ou "El Choclo", bem devagar.</li>
   </ol>
