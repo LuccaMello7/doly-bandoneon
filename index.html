@@ -166,7 +166,8 @@
     <div class="row" style="justify-content:space-between">
       <div class="row">
         <button class="btn" id="dirBtn">Trocar direção (Espaço)</button>
-        <button class="btn sec" id="valveBtn" title="Segure para mover o fole sem som">Válvula de ar (segure A)</button>
+        <button class="btn sec" id="valveOpenBtn" title="Segure para abrir o fole sem som">Válvula: abrir (segure A)</button>
+        <button class="btn sec" id="valveCloseBtn" title="Segure para fechar o fole sem som">Válvula: fechar (segure F)</button>
         <button class="btn sec on" id="labelsBtn">Mostrar nomes</button>
       </div>
       <div class="row">
@@ -554,7 +555,7 @@ function renderProgress(){
 }
 
 /* ================== Teclado livre + fole ================== */
-const bel = { level:0.15, valve:false, blocked:false, last:performance.now() };
+const bel = { level:0.15, valve:null, blocked:false, last:performance.now() };
 const canSound=()=>!bel.blocked;
 const tkOpts={ editable:true, canSound, onPress:(b,m,dir)=>{
   const other = dir==='open'?'close':'open';
@@ -568,25 +569,30 @@ function setDir(d){
 }
 $('#dirBtn').onclick=()=>setDir(state.dir==='open'?'close':'open');
 $('#labelsBtn').onclick=e=>{ state.showLabels=!state.showLabels; e.target.classList.toggle('on',state.showLabels); tkL.refresh(); tkR.refresh(); };
-const valve=v=>{ bel.valve=v; $('#valveBtn').classList.toggle('on',v); };
-$('#valveBtn').addEventListener('pointerdown',()=>valve(true));
-['pointerup','pointerleave'].forEach(t=>$('#valveBtn').addEventListener(t,()=>valve(false)));
+// Válvula de ar: move o fole sem som. d = 'open' (abrir), 'close' (fechar) ou null (solta)
+const valve=d=>{ bel.valve=d; $('#valveOpenBtn').classList.toggle('on',d==='open'); $('#valveCloseBtn').classList.toggle('on',d==='close'); };
+[['#valveOpenBtn','open'],['#valveCloseBtn','close']].forEach(([id,d])=>{
+  $(id).addEventListener('pointerdown',()=>valve(d));
+  ['pointerup','pointerleave'].forEach(t=>$(id).addEventListener(t,()=>{ if(bel.valve===d) valve(null); }));
+});
 function bellowsLoop(now){
   const dt=Math.min(0.1,(now-bel.last)/1000); bel.last=now;
   const notes=tkL.held.size+tkR.held.size;
-  let rate=0;
-  if(bel.valve) rate=0.45;
+  let rate=0, dir=state.dir;
+  if(bel.valve){ rate=0.45; dir=bel.valve; }
   else if(notes && !bel.blocked) rate=0.07*Math.sqrt(notes);
   if(rate){
-    bel.level += (state.dir==='open'?1:-1)*rate*dt;
+    bel.level += (dir==='open'?1:-1)*rate*dt;
     if(bel.level>=1 || bel.level<=0){
       bel.level=Math.max(0,Math.min(1,bel.level));
       if(!bel.valve && notes && !bel.blocked){
         bel.blocked=true; tkL.silence(); tkR.silence();
-        $('#bellowsWarn').textContent = state.dir==='open' ? 'Fole todo aberto! Troque para fechar (Espaço).' : 'Fole todo fechado! Troque para abrir (Espaço).';
+        $('#bellowsWarn').textContent = state.dir==='open' ? 'Fole todo aberto! Troque para fechar (Espaço) ou feche pela válvula (F).' : 'Fole todo fechado! Troque para abrir (Espaço) ou abra pela válvula (A).';
       }
     }
   }
+  // com a válvula o fole sai do limite e o som volta
+  if(bel.blocked && (state.dir==='open' ? bel.level<0.97 : bel.level>0.03)){ bel.blocked=false; $('#bellowsWarn').textContent=''; }
   $('#bellows').style.width=(30+bel.level*220)+'px';
   requestAnimationFrame(bellowsLoop);
 }
@@ -791,9 +797,9 @@ document.addEventListener('keydown',e=>{
     else if(currentView==='ritmo'){ e.preventDefault(); if(!e.repeat) tap(); }
     else if(currentView==='melodias'){ e.preventDefault(); if(!e.repeat && !$('#melAuto').checked) setMelDir(mel.dir==='open'?'close':'open'); }
   }
-  if(e.code==='KeyA' && currentView==='teclado') valve(true);
+  if(currentView==='teclado' && (e.code==='KeyA'||e.code==='KeyF')){ e.preventDefault(); valve(e.code==='KeyA'?'open':'close'); }
 });
-document.addEventListener('keyup',e=>{ if(e.code==='KeyA') valve(false); });
+document.addEventListener('keyup',e=>{ if((e.code==='KeyA' && bel.valve==='open') || (e.code==='KeyF' && bel.valve==='close')) valve(null); });
 
 /* ================== Melodias ================== */
 const BUILTIN_MELODIES = [
@@ -1482,7 +1488,7 @@ const LESSONS = [
     <li>Se o fole chegar ao fim, use a <b>válvula de ar</b> para reposicioná-lo em silêncio.</li>
     <li>Nunca force o fole sem apertar botões nem a válvula, porque isso danifica o instrumento.</li>
   </ul>
-  <p>Na aba <a href="#" data-go="teclado">Teclado</a> o fole é simulado: se você tocar muito tempo na mesma direção, ele chega ao fim. Use <kbd>Espaço</kbd> para trocar e segure <kbd>A</kbd> para a válvula.</p>`,
+  <p>Na aba <a href="#" data-go="teclado">Teclado</a> o fole é simulado: se você tocar muito tempo na mesma direção, ele chega ao fim. Use <kbd>Espaço</kbd> para trocar a direção. Para reposicionar o fole em silêncio, segure <kbd>A</kbd> (válvula abrindo) ou <kbd>F</kbd> (válvula fechando).</p>`,
   quiz:[{q:'O que controla principalmente o volume e a expressão no bandoneon?',o:['A força dos dedos nos botões','O fole','A válvula de ar','As correias'],a:1},
         {q:'O fole está quase todo aberto e a frase ainda não acabou. O melhor seria…',o:['Forçar mais','Ter planejado a troca antes, ou usar a válvula numa pausa','Soltar as correias','Tocar mais rápido'],a:1}]},
 { title:'5. Leitura: duas claves', html:`

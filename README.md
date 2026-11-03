@@ -5,7 +5,7 @@ App web interativo para aprender bandoneon (sistema Rheinische 142 vozes). É um
 ## O que tem
 
 - **Lições** sobre o instrumento, o sistema bisonoro, o fole, a leitura nas duas claves e os ritmos de tango, com mini-quizzes.
-- **Teclado virtual** com os 71 botões nas posições reais, som sintetizado, troca de direção do fole (Espaço), fole simulado e válvula de ar (A).
+- **Teclado virtual** com os 71 botões nas posições reais, som de bandoneon real, troca de direção do fole (Espaço), fole simulado e válvula de ar para abrir (A) ou fechar (F) o fole sem som.
 - **Desafios**: "Encontre a nota" e leitura na pauta.
 - **Melodias** com os modos Ouvir, Espera e No tempo, sugestão automática da direção do fole, editor em texto e importação de MusicXML (`.mxl` / `.musicxml`, por exemplo exportado do MuseScore).
 - **Ritmo**: marcato, síncopa, 3-3-2 e arrastre, com o modo "toque junto".
