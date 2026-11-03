@@ -125,6 +125,20 @@ teste('tamanho dos botões se adapta à largura da tela', () => {
   if(W>=1000) igual(s, 48, 'na tela larga deve usar o tamanho máximo');
 });
 
+
+/* ---------- Melodias: interface ---------- */
+teste('seletor de melodias lista as prontas e abre a escolhida', () => {
+  go('melodias'); stopMelody();
+  igual($$('#melSelect optgroup[label="Prontas"] option').length, BUILTIN_MELODIES.length);
+  $('#melSelect').value='estrelinha'; $('#melSelect').dispatchEvent(new Event('change'));
+  igual(mel.cur.id, 'estrelinha');
+});
+teste('escala guiada aparece no seletor e o gerador fecha', () => {
+  $('#scaleOpen').click(); igual($('#scaleCard').style.display, 'block');
+  $('#scGo').click(); igual($('#scaleCard').style.display, 'none');
+  ok($('#melSelect').value.startsWith('esc:'), $('#melSelect').value);
+});
+
 /* ---------- Execução ---------- */
 (async () => {
   const linhas = [];

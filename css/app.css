@@ -50,7 +50,8 @@ select{background:var(--panel2);color:var(--text);border:1px solid var(--line);p
 .warn{color:var(--red2);font-weight:700;min-height:1.5em;text-align:center}
 .info{font-size:1.05rem;min-height:1.6em}
 a{color:var(--gold)}
-.mstrip{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0}
+.mstrip{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:6px;margin:14px 0;padding:8px 4px;scroll-margin-top:90px}
+.mcard{flex:0 0 auto}
 .mcard{border-radius:8px;padding:5px 4px;text-align:center;background:var(--panel2);border:2px solid transparent;font-size:.85rem;cursor:pointer;transition:transform .1s}
 .mcard .d{display:block;font-size:.68rem;font-weight:700;border-radius:4px;margin-top:2px;color:#fff}
 .mcard.open .d{background:var(--open)} .mcard.close .d{background:var(--close)}
@@ -94,6 +95,10 @@ button,select,a,input{touch-action:manipulation}
   .instrument{gap:6px}
   .btn{padding:7px 12px;font-size:.9rem}
 }
+.melbar .row{gap:10px}
+.melbar label.grow{flex:1 1 260px;min-width:0;display:flex;align-items:center;gap:8px;color:var(--muted)}
+.melbar select{flex:1;min-width:0;width:100%;font-size:1rem}
+.guide summary{cursor:pointer;color:var(--gold);font-weight:700}
 kbd{background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:.85em}
 
 /* Lições */

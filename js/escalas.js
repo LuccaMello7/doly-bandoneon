@@ -67,7 +67,7 @@ function fillScaleStarts(){
 $('#scType').innerHTML = Object.entries(SCALE_TYPES).map(([k,t])=>`<option value="${k}">${t.name}</option>`).join('');
 $('#scType').onchange = fillScaleTonics;
 ['#scTonic','#scHand','#scOct'].forEach(id=>$(id).onchange=()=>{ fillScaleStarts(); renderScaleGrid(); });
-$('#scaleOpen').onclick = ()=>{ $('#scaleCard').style.display='block'; fillScaleTonics(); };
+$('#scaleOpen').onclick = ()=>{ const c=$('#scaleCard'); const show=c.style.display==='none'; c.style.display=show?'block':'none'; if(show){ fillScaleTonics(); c.scrollIntoView({block:'start', behavior:'smooth'}); } };
 $('#scClose').onclick = ()=>{ $('#scaleCard').style.display='none'; };
 $('#scGo').onclick = ()=>loadScale($('#scType').value, +$('#scTonic').value, $('#scHand').value, +$('#scOct').value, +$('#scStart').value, $('#scDir').value);
 
@@ -82,7 +82,7 @@ function loadScale(type, pc, hand, octs, start, dirMode){
     id:scaleId(type,pc,hand,octs), builtin:true, guide:{type, pc},
     text:`título: Escala: ${title}\nmão: ${hand==='left'?'esquerda':'direita'}\nbpm: 72\n${notes.map(tok).join(' ')}`};
   fingerMelody(m); mel.cur = m;
-  $('#melEditor').style.display='none'; $('#melImport').style.display='none'; $('#melPlayer').style.display='block';
+  $('#melEditor').style.display='none'; $('#melImport').style.display='none'; $('#scaleCard').style.display='none'; $('#melPlayer').style.display='block';
   if($('#melMode').value==='listen') $('#melMode').value='wait';
   renderMelList(); renderMelPlayer();
 }

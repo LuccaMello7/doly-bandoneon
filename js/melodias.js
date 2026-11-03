@@ -149,18 +149,27 @@ function setMelDir(d){
 }
 function melFeed(msg, cls=''){ const f=$('#melFeed'); f.className='feedback '+cls; f.textContent=msg; }
 function cardEl(i){ return $(`#melStrip .mcard[data-i="${i}"]`); }
-function markCur(i){ $$('#melStrip .mcard').forEach(c=>c.classList.toggle('cur', +c.dataset.i===i)); }
+function markCur(i){
+  $$('#melStrip .mcard').forEach(c=>c.classList.toggle('cur', +c.dataset.i===i));
+  // mantém a nota atual visível na faixa (rolagem só horizontal)
+  const c=cardEl(i), strip=$('#melStrip');
+  if(c){ const r=c.getBoundingClientRect(), s=strip.getBoundingClientRect(); strip.scrollLeft += (r.left+r.width/2) - (s.left+s.width/2); }
+}
 function cardCls(i, cls){ const c=cardEl(i); if(!c) return; c.classList.remove('ok','bad'); c.classList.add(cls); }
 function hintBtn(n){ const k=melKb(); k.clearMarks(); if(n && n.btn) k.mark(n.btn.id,'hint',0); }
 
 function renderMelList(){
-  const cur = mel.cur && mel.cur.id;
-  $('#melList').innerHTML = allMelodies().map(x=>{
-    const t = parseMelody(x.text), best = state.progress.melodies[x.id];
-    return `<button data-id="${x.id}" class="${x.id===cur?'active':''}">${t.title}${best!=null?`<span class="best">${best}%</span>`:''}${x.builtin?'':' <span class="muted">(sua)</span>'}</button>`;
-  }).join('');
+  const cur = mel.cur && mel.cur.id, esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+  const opt = x => { const t=parseMelody(x.text), best=state.progress.melodies[x.id];
+    return `<option value="${x.id}" ${x.id===cur?'selected':''}>${esc(t.title)}${best!=null?` — ${best}%`:''}</option>`; };
+  const prontas = BUILTIN_MELODIES, suas = customMelodies();
+  let h = `<optgroup label="Prontas">${prontas.map(opt).join('')}</optgroup>`;
+  if(suas.length) h += `<optgroup label="Suas melodias">${suas.map(opt).join('')}</optgroup>`;
+  if(mel.cur && mel.cur.guide){ const best=state.progress.melodies[mel.cur.id];
+    h = `<optgroup label="Escala guiada"><option value="${mel.cur.id}" selected>${esc(mel.cur.title)}${best!=null?` — ${best}%`:''}</option></optgroup>` + h; }
+  $('#melSelect').innerHTML = h;
 }
-$('#melList').addEventListener('click', e=>{ const b=e.target.closest('button'); if(b) loadMelody(b.dataset.id); });
+$('#melSelect').onchange = e=>{ if(!e.target.value.startsWith('esc:')) loadMelody(e.target.value); };
 
 function loadMelody(id){
   stopMelody();
@@ -220,6 +229,8 @@ $('#melStart').onclick = ()=>{
   ac(); $$('#melStrip .mcard').forEach(c=>c.classList.remove('ok','bad'));
   mel.running=true; mel.errors=0; mel.hits=0; $('#melStart').textContent='■ Parar'; melFeed('');
   ({listen:startListen, wait:startWait, timed:startTimed})[$('#melMode').value]();
+  if(window.innerWidth<700) $('#guideIntroBox').open=false; // no celular, mais espaço para praticar
+  $('#melStrip').scrollIntoView({block:'start', behavior:'smooth'});
 };
 $('#melMode').onchange = ()=>{ stopMelody(); renderMelPlayer(); };
 $('#melSpeed').oninput = e=>{ $('#melSpeedVal').textContent=e.target.value+'%'; };

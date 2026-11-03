@@ -143,14 +143,15 @@
 
 <!-- MELODIAS -->
 <section id="v-melodias">
-  <div class="lesson-layout">
-    <div class="card lesson-list">
-      <h3 style="margin-top:0">Melodias</h3>
-      <button class="btn" id="scaleOpen" style="width:100%;margin-bottom:10px">🎼 Escalas guiadas</button>
-      <div id="melList"></div>
-      <button class="btn sec" id="melNew" style="width:100%;margin-top:8px">+ Nova melodia</button>
-      <button class="btn sec" id="melImportBtn" style="width:100%;margin-top:6px">⇪ Importar MusicXML</button>
+  <div class="card melbar">
+    <div class="row">
+      <label class="grow">Melodia <select id="melSelect" aria-label="Escolher melodia"></select></label>
+      <button class="btn" id="scaleOpen">🎼 Escalas guiadas</button>
+      <button class="btn sec" id="melNew">+ Nova</button>
+      <button class="btn sec" id="melImportBtn">⇪ Importar MusicXML</button>
     </div>
+  </div>
+  <div>
     <div>
       <div class="card" id="scaleCard" style="display:none">
         <h2 style="margin-top:0">Escalas guiadas</h2>
@@ -178,7 +179,7 @@
           <button class="btn sec" id="melEdit">Editar</button>
         </div>
         <div class="notice" id="melWarn" style="display:none;margin-top:10px"></div>
-        <div class="guide" id="melGuide" style="display:none"><div id="guideIntro"></div><div class="gstep" id="guideStep"></div></div>
+        <div class="guide" id="melGuide" style="display:none"><details id="guideIntroBox" open><summary>Sobre esta escala</summary><div id="guideIntro"></div></details><div class="gstep" id="guideStep"></div></div>
         <div class="mstrip" id="melStrip"></div>
         <div style="text-align:center">
           <div id="melDirPill" class="dirpill open" style="display:inline-block">⟵ ABRINDO ⟶</div>
