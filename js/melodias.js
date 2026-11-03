@@ -310,13 +310,13 @@ function startTimed(){
   };
   mel.raf=requestAnimationFrame(tick);
 }
-function timedPress(m){
-  const now=ac().currentTime - (AC.outputLatency||0);
+function timedPress(m, when, fromMic){
+  const now = when ?? (ac().currentTime - (AC.outputLatency||0));
   const cands=mel.events.filter(e=>!e.judged && Math.abs(e.t-now)<0.25);
   if(!cands.length){ melFeed('Fora do tempo','bad'); return; }
   const e=cands.reduce((a,b)=>Math.abs(b.t-now)<Math.abs(a.t-now)?b:a); e.judged=true;
   const ms=Math.round((now-e.t)*1000);
-  if(e.n.midi===m){
+  if(fromMic ? micMatches(m, e.n.midi) : e.n.midi===m){
     mel.hits++; cardCls(e.i,'ok');
     melFeed(Math.abs(ms)<=60?'No tempo!':ms<0?`Certo, adiantado ${-ms} ms`:`Certo, atrasado ${ms} ms`, 'ok');
   } else { mel.errors++; cardCls(e.i,'bad'); melFeed(`Nota errada (${noteName(m)})`,'bad'); }

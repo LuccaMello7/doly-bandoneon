@@ -99,6 +99,10 @@ button,select,a,input{touch-action:manipulation}
 .melbar label.grow{flex:1 1 260px;min-width:0;display:flex;align-items:center;gap:8px;color:var(--muted)}
 .melbar select{flex:1;min-width:0;width:100%;font-size:1rem}
 .guide summary{cursor:pointer;color:var(--gold);font-weight:700}
+#micStatus{min-height:1.4em;margin-top:6px}
+#micStatus .ok{color:var(--green)} #micStatus .bad{color:var(--close)}
+.micbar{display:inline-block;width:80px;height:8px;background:var(--panel2);border-radius:4px;vertical-align:middle;overflow:hidden}
+.micbar span{display:block;height:100%;background:var(--green)}
 kbd{background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:.85em}
 
 /* Lições */

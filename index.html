@@ -175,6 +175,7 @@
           <label>Modo: <select id="melMode"><option value="listen">Ouvir</option><option value="wait">Espera</option><option value="timed">No tempo</option></select></label>
           <label>Velocidade: <input type="range" id="melSpeed" min="40" max="120" step="10" value="70"> <span id="melSpeedVal">70%</span></label>
           <label title="O app troca a direção do fole sozinho. Bom para começar."><input type="checkbox" id="melAuto"> Fole automático</label>
+          <label title="Toque no seu bandoneon: o app escuta pelo microfone e confere as notas (modos Espera e No tempo)"><input type="checkbox" id="micToggle"> 🎤 Usar microfone</label>
           <button class="btn" id="melStart">▶ Começar</button>
           <button class="btn sec" id="melEdit">Editar</button>
         </div>
@@ -183,6 +184,7 @@
         <div class="mstrip" id="melStrip"></div>
         <div style="text-align:center">
           <div id="melDirPill" class="dirpill open" style="display:inline-block">⟵ ABRINDO ⟶</div>
+          <div id="micStatus" aria-live="polite"></div>
           <div class="feedback" id="melFeed"></div>
           <div class="muted" id="melStat"></div>
         </div>
@@ -297,6 +299,7 @@
 <script src="js/melodias.js"></script>
 <script src="js/musicxml.js"></script>
 <script src="js/escalas.js"></script>
+<script src="js/microfone.js"></script>
 <script src="js/licoes.js"></script>
 <script src="js/ajustes.js"></script>
 <script src="js/init.js"></script>

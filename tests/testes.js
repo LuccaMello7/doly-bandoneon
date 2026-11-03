@@ -139,6 +139,34 @@ teste('escala guiada aparece no seletor e o gerador fecha', () => {
   ok($('#melSelect').value.startsWith('esc:'), $('#melSelect').value);
 });
 
+
+/* ---------- Microfone ---------- */
+const senoide = (f, sr, n, harm=[1]) => { const b=new Float32Array(n);
+  for(let i=0;i<n;i++) b[i]=harm.reduce((s,a,k)=>s+a*Math.sin(2*Math.PI*f*(k+1)*i/sr),0)*0.3; return b; };
+teste('detecção de altura: senoides e timbres com harmônicos', () => {
+  const sr=48000, a=state.tuning; state.tuning=440;
+  for(const [f,m] of [[440,69],[65.41,36],[987.77,83],[130.81,48]]){
+    const r=detectPitch(senoide(f,sr,2048,[1,0.6,0.4,0.3,0.2]),sr); ok(r, 'sem detecção em '+f);
+    igual(Math.round(freqToMidi(r.freq)), m, f+' Hz');
+  }
+  igual(detectPitch(new Float32Array(2048),sr), null, 'silêncio');
+  state.tuning=a;
+});
+teste('detecção de altura no som gravado do bandoneon (todas as amostras)', () => {
+  if(!SF) return; const a=state.tuning; state.tuning=443;
+  SF.samples.forEach((s,i)=>{
+    const ch=sfBuffer(i).getChannelData(0), z=SF.zones.find(z=>z.s===i);
+    const r=detectPitch(ch.slice(s.loopStart, s.loopStart+2048), s.rate); ok(r, s.name+' sem detecção');
+    const m=Math.round(freqToMidi(r.freq)); ok(micMatches(m, z.root), `${s.name}: ouvi ${m}, raiz ${z.root}`);
+  });
+  state.tuning=a;
+});
+teste('microfone no modo Espera completa a melodia', () => {
+  go('melodias'); loadMelody('esc-do'); $('#melMode').value='wait'; $('#melStart').click();
+  let n=0; while(mel.running && n++<100) onMicNote(mel.cur.notes[mel.idx].midi + (n%2?12:0));
+  ok(/100%/.test($('#melFeed').textContent), $('#melFeed').textContent);
+});
+
 /* ---------- Execução ---------- */
 (async () => {
   const linhas = [];
