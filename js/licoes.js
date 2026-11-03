@@ -1,4 +1,6 @@
 /* ================== Lições ================== */
+// Cada lição é {title, html, quiz:[{q, o (opções), a (índice da certa)}]}.
+// O progresso é salvo pelo ÍNDICE da lição: lições novas devem entrar no FIM da lista.
 const LESSONS = [
 { title:'1. O que é o bandoneon', html:`
   <p>O bandoneon é um instrumento de palheta livre e fole, da família da concertina. Foi desenvolvido na Alemanha por volta de 1840 e leva o nome de <b>Heinrich Band</b>, comerciante de instrumentos de Krefeld que ajudou a difundi-lo.</p>
@@ -127,12 +129,14 @@ function renderLesson(){
   if(host){
     lessonCount={open:0,close:0}; lessonDir='open';
     host.innerHTML=`<div class="row" style="margin:8px 0"><button class="btn" id="lDir">Direção: Abrindo (trocar)</button><span id="lCount" class="muted"></span></div><div id="lKb"></div>`;
+    // recria o teclado do exercício e tira o antigo da lista global
     const idx=allKeyboards.indexOf(lessonKb); if(idx>=0) allKeyboards.splice(idx,1);
     lessonKb=kb($('#lKb'),'right',{perRow:1, getDir:()=>lessonDir, onPress:(b,m,dir)=>{ lessonCount[dir]++; updLessonCount(noteName(m)); tryCompleteLesson(); }});
     $('#lDir').onclick=()=>{ lessonDir=lessonDir==='open'?'close':'open'; $('#lDir').textContent=`Direção: ${dirLabel(lessonDir)} (trocar)`; lessonKb.refresh(); };
     updLessonCount();
   }
 }
+// A lição é concluída quando todas as perguntas foram acertadas (e, na lição 3, o exercício feito)
 function tryCompleteLesson(){
   const L=LESSONS[curLesson];
   if(L.quiz.every((_,i)=>lessonAnswered[i]) && !state.progress.lessons[curLesson] && (!lessonNeedsExercise() || lessonExerciseDone())){

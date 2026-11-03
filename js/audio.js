@@ -1,5 +1,9 @@
 /* ================== Áudio ================== */
+// Motor de som (Web Audio). Cada nota é uma "voz" {oscs, out}: as fontes de som e um ganho de
+// saída onde aplicamos ataque e soltura. Há dois timbres: amostras reais (padrão) e sintetizado.
 let AC=null, master=null;
+// O navegador só libera o áudio depois de um gesto do usuário, por isso o contexto é criado na
+// primeira nota. O compressor evita distorção quando várias notas soam juntas (acordes).
 function ac(){
   if(!AC){
     AC = new (window.AudioContext||window.webkitAudioContext)();
@@ -10,13 +14,15 @@ function ac(){
   if(AC.state==='suspended') AC.resume();
   return AC;
 }
-const freq = m => state.tuning*Math.pow(2,(m-69)/12);
-const voices = {};
+const freq = m => state.tuning*Math.pow(2,(m-69)/12); // Hz na afinação escolhida (69 = Lá4)
+const voices = {}; // vozes soando com o botão apertado (chave = teclado + botão)
 
 // Amostras reais: sons/bandoneon.js (gerado do SoundFont por ferramentas/sf2_para_js.py)
 const SF = window.BANDONEON_SF || null, sfBuffers = [];
 const SF_REF_A = 443; // afinação medida das amostras (Lá ≈ 443 Hz)
 const useSamples = () => SF && state.sound!=='synth';
+// Decodifica a amostra i (PCM 16 bits em base64) para um AudioBuffer, já com o ganho de
+// normalização calculado pelo conversor. É feito sob demanda e guardado.
 function sfBuffer(i){
   if(!sfBuffers[i]){
     const s=SF.samples[i], bin=atob(s.data), u8=new Uint8Array(bin.length);
@@ -36,10 +42,13 @@ function preloadSamples(onProgress){
     sfBuffer(i++); onProgress&&onProgress(i,SF.samples.length); setTimeout(next,0); };
   next();
 }
+// Zona do SoundFont que cobre a nota (se nenhuma cobrir, a de nota raiz mais próxima)
 function sfZone(midi){
   return SF.zones.find(z=>midi>=z.lo && midi<=z.hi)
       || SF.zones.reduce((a,b)=>Math.abs(midi-b.root)<Math.abs(midi-a.root)?b:a);
 }
+// Toca a amostra transposta: velocidade = 2^(semitons/12), corrigida pela afinação escolhida
+// (as gravações estão em Lá ≈ 443 Hz). O loop sustenta o som enquanto o botão estiver apertado.
 function makeSampleVoice(midi, peak, t0){
   const c=ac(), z=sfZone(midi), s=SF.samples[z.s], src=c.createBufferSource();
   src.buffer=sfBuffer(z.s);
@@ -67,6 +76,7 @@ function makeReed(midi, hand, peak, t0){
   out.gain.setTargetAtTime(peak, t0, 0.025);
   return {oscs,out};
 }
+// Liga e desliga a voz de um botão. A soltura é exponencial (setTargetAtTime) para não estalar.
 function startVoice(key, midi, hand){
   stopVoice(key,true);
   voices[key] = makeReed(midi, hand, 0.16, ac().currentTime);
@@ -77,6 +87,7 @@ function stopVoice(key, fast){
   v.out.gain.cancelScheduledValues(t); v.out.gain.setTargetAtTime(0,t,fast?0.005:0.045);
   v.oscs.forEach(o=>o.stop(t+0.4));
 }
+// Toca uma nota com duração definida, agora ou no instante t0 do relógio de áudio
 function playNote(midi, dur=0.7, hand, t0, peak=0.16){
   const c=ac(); t0=t0??c.currentTime; hand = hand || (midi<57?'left':'right');
   const v=makeReed(midi, hand, peak, t0);

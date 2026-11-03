@@ -1,4 +1,6 @@
 /* ================== Desafio: Encontre a nota ================== */
+// O app sorteia um botão e uma direção, mostra a nota e o aluno procura o botão.
+// fq = estado da rodada (hand/dir sorteados, answer = botão certo, target = nota MIDI).
 const fq={round:0,score:0,target:null,dir:'open',hand:'right',errors:0,active:false,answer:null,heat:false};
 const fOpts=hand=>({ getDir:()=>fq.dir, showLabels:()=>fq.heat, sound:true, onPress:(b,m,dir,k)=>findPress(b,m,k) });
 // Estatística por botão e direção: {ok, err}
@@ -44,6 +46,7 @@ function showFindTarget(){
   p.textContent=`${dirLabel(fq.dir)} · mão ${fq.hand==='left'?'esquerda':'direita'}`;
   $('#fScore').textContent=`Rodada ${fq.round+1}/10 · Acertos: ${fq.score}`;
 }
+// Só pontua o acerto na primeira tentativa; depois de 2 erros mostra o botão certo
 function findPress(b,m,k){
   if(!fq.active) return;
   if(k.hand!==fq.hand){ $('#fFeed').className='feedback bad'; $('#fFeed').textContent='Essa nota está na outra mão.'; return; }
@@ -80,6 +83,8 @@ $('#fDir').addEventListener('change', ()=>{ if(fq.heat) paintHeat(); });
 $('#fListen').onclick=()=>{ if(fq.target!=null) playNote(fq.target,0.8,fq.hand); };
 
 /* ================== Desafio: Pauta ================== */
+// Posição na pauta = índice diatônico d (oitava*7 + letra, Dó=0 … Si=6). A linha de baixo é
+// Mi4 (d=30) na clave de sol e Sol2 (d=18) na clave de fá; cada passo de d sobe meia linha.
 const sq={round:0,score:0,d:null,clef:'treble',active:false,locked:false};
 const RANGES={treble:[27,41], bass:[15,29]}; // índices diatônicos (oitava*7+letra)
 const dToMidi=d=>(Math.floor(d/7)+1)*12+DIA_SEMI[d%7];
@@ -92,6 +97,7 @@ function drawStaff(clef,d){
     : `<text x="16" y="90" font-size="50" font-family="Segoe UI Symbol,Noto Music,serif" fill="#222">𝄢</text>`;
   if(d!=null){
     const x=180, y=Y(d);
+    // linhas suplementares abaixo e acima da pauta
     for(let k=bottom-2;k>=d;k-=2) s+=`<line x1="${x-14}" x2="${x+14}" y1="${Y(k)}" y2="${Y(k)}" stroke="#222" stroke-width="1.3"/>`;
     for(let k=bottom+10;k<=d;k+=2) s+=`<line x1="${x-14}" x2="${x+14}" y1="${Y(k)}" y2="${Y(k)}" stroke="#222" stroke-width="1.3"/>`;
     const up = d < bottom+4;

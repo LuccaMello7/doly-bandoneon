@@ -1,4 +1,7 @@
 /* ================== Teclado livre + fole ================== */
+// Aba Teclado com simulação do fole. bel.level vai de 0 (fechado) a 1 (todo aberto). Tocar move o
+// fole na direção atual (mais rápido com mais notas). No limite, o som para até inverter a direção
+// ou reposicionar o fole pela válvula de ar.
 const bel = { level:0.15, valve:null, blocked:false, last:performance.now() };
 const canSound=()=>!bel.blocked;
 const tkOpts={ editable:true, canSound, onPress:(b,m,dir)=>{
@@ -19,7 +22,8 @@ const valve=d=>{ bel.valve=d; $('#valveOpenBtn').classList.toggle('on',d==='open
   $(id).addEventListener('pointerdown',()=>valve(d));
   ['pointerup','pointerleave'].forEach(t=>$(id).addEventListener(t,()=>{ if(bel.valve===d) valve(null); }));
 });
-let foleSec=0;
+let foleSec=0; // segundos tocando: 1 minuto marca o "aquecimento de fole" da rotina
+// Laço de animação (~60 vezes por segundo): atualiza a posição do fole e o desenho
 function bellowsLoop(now){
   const dt=Math.min(0.1,(now-bel.last)/1000); bel.last=now;
   const notes=tkL.held.size+tkR.held.size;
@@ -44,7 +48,8 @@ function bellowsLoop(now){
 }
 requestAnimationFrame(bellowsLoop);
 
-// Edição de layout
+// Edição do mapa: no modo edição, clicar num botão pede as notas abrindo e fechando.
+// Exportar/Importar salvam o mapa em JSON.
 $('#editBtn').onclick=e=>{ state.editing=!state.editing; e.target.classList.toggle('on',state.editing); $('#editHelp').style.display=state.editing?'block':'none'; refreshAll(); };
 function editButton(b){
   const o=parseNote(prompt(`Nota ABRINDO para este botão (atual: ${noteName(b.open)})`, noteName(b.open).replace('♯','#')));

@@ -1,4 +1,6 @@
 /* ================== Ritmo ================== */
+// Cada padrão é um compasso 4/4 dividido em 8 colcheias.
+// hits = {colcheia: intensidade} (1 = fraco, 2 = forte).
 const PATTERNS = {
   marcato4:{name:'Marcato em 4', hits:{0:2,2:1,4:2,6:1},
     desc:'A base do tango: acordes curtos e firmes nos 4 tempos, com o 1 e o 3 mais fortes. No bandoneon, a mão esquerda costuma marcar com acordes graves e o fole dá o "peso".'},
@@ -21,6 +23,7 @@ function renderSteps(){
 $('#rPattern').onchange=()=>{ renderSteps(); rh.errors=[]; };
 $('#rBpm').oninput=e=>$('#rBpmVal').textContent=e.target.value;
 renderSteps();
+// Batida = acorde grave curto de Lá menor no timbre escolhido
 function hitSound(t,lvl,arr){
   const peak=lvl===2?0.22:0.12, dur=0.11;
   if(arr){ // arrastre: crescendo antes do tempo
@@ -36,6 +39,8 @@ function clickSound(t,strong,dest){
   o.frequency.value=strong?1500:1000; g.gain.setValueAtTime(strong?0.25:0.12,t); g.gain.exponentialRampToValueAtTime(0.0001,t+0.05);
   o.connect(g).connect(dest||master); o.start(t); o.stop(t+0.06);
 }
+// Agendador com antecedência: a cada 25 ms agenda no relógio de áudio as batidas dos próximos
+// 120 ms. Assim o tempo fica preciso mesmo que o JavaScript atrase um pouco.
 function scheduler(){
   const c=ac(), stepDur=60/(+$('#rBpm').value)/2, p=PATTERNS[$('#rPattern').value];
   while(rh.next < c.currentTime+0.12){
@@ -53,6 +58,7 @@ function toggleRhythm(){
   rh.timer=setInterval(scheduler,25); $('#rPlay').textContent='■ Parar'; $('#rFeed').textContent=''; $('#rStats').textContent='';
 }
 $('#rPlay').onclick=toggleRhythm;
+// Compara o toque com a batida mais próxima, descontando a latência de saída do áudio
 function tap(){
   if(!rh.playing){ $('#rFeed').className='feedback'; $('#rFeed').textContent='Aperte ▶ Tocar primeiro.'; return; }
   const now=ac().currentTime - (AC.outputLatency||0);

@@ -1,4 +1,9 @@
 /* ================== Melodias ================== */
+// Player com os modos Ouvir, Espera e No tempo, para uma ou duas mãos.
+// Modelo de uma melodia carregada (mel.cur):
+//   notes  = notas {midi, beats, hand, t (início em tempos), dir, btn, error}, em ordem de tempo
+//   groups = "momentos": notas que começam juntas {t, dur, idxs (índices em notes), dir, rest}
+// parseMelody lê o formato de texto; buildTimeline agrupa; fingerMelody escolhe fole e botões.
 const BUILTIN_MELODIES = [
 {id:'esc-do', text:`título: Escala de Dó maior
 mão: direita

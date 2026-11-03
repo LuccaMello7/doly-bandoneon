@@ -1,4 +1,7 @@
 // ---------- Importação MusicXML ----------
+// .mxl é um ZIP. Lemos o "diretório central" (no fim do arquivo) para achar cada arquivo e
+// descompactamos com DecompressionStream (deflate). O arquivo principal é indicado em
+// META-INF/container.xml.
 async function unzipMxl(buf){
   const u8=new Uint8Array(buf), dv=new DataView(buf), td=new TextDecoder();
   let eocd=-1;
@@ -27,6 +30,9 @@ async function unzipMxl(buf){
   return read(root);
 }
 
+// Lê a partitura (formato "partwise") e devolve, por parte, as notas com início e duração em
+// tempos (semínimas). O cursor de tempo dentro do compasso anda com cada nota; <backup> e
+// <forward> voltam ou avançam (várias vozes e pautas); <chord/> usa o mesmo início da nota anterior.
 function parseMusicXML(text){
   const doc=new DOMParser().parseFromString(text,'application/xml');
   if(doc.querySelector('parsererror')) throw new Error('O arquivo não é um XML válido.');
@@ -87,6 +93,7 @@ function extractLine(part, staff, pick){
   for(let i=0;i<ev.length-1;i++) ev[i].dur=Math.min(ev[i].dur, ev[i+1].start-ev[i].start);
   return ev;
 }
+// Transposição em oitavas que deixa mais notas dentro da extensão da mão
 function bestOctaveShift(ev, hand){
   const L=state.layout[hand], has=m=>L.some(b=>b.open===m||b.close===m);
   let best=0, bestCount=-1;
@@ -94,6 +101,7 @@ function bestOctaveShift(ev, hand){
   return best;
 }
 const DUR_TOKENS=[[4,'1'],[3,'2.'],[2,'2'],[1.5,'4.'],[4/3,'2t'],[1,'4'],[0.75,'8.'],[2/3,'4t'],[0.5,'8'],[0.375,'16.'],[1/3,'8t'],[0.25,'16'],[1/6,'16t'],[0.125,'32']];
+// Quebra uma duração em figuras do formato de texto (inclui tercinas), da maior para a menor
 function splitBeats(b){ const out=[]; let r=b; for(const [v,t] of DUR_TOKENS) while(r>=v-1e-3){ out.push(t); r-=v; } return out; }
 const noteToken = m => PT[((m%12)+12)%12].replace('♯','#') + (Math.floor(m/12)-1);
 

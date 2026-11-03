@@ -1,4 +1,5 @@
 /* ================== Teclado do computador ================== */
+// Espaço: troca o fole (Teclado e Melodias) ou marca o tempo (Ritmo). A/F: seguram a válvula de ar.
 document.addEventListener('keydown',e=>{
   if(['INPUT','SELECT','TEXTAREA'].includes(e.target.tagName)) return;
   if(e.code==='Space'){

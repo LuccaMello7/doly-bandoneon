@@ -1,4 +1,6 @@
 // ---------- Escalas guiadas ----------
+// Gera escalas (notas, graus e grafia correta) e as abre no player de Melodias, acrescentando
+// a explicação passo a passo (grau, intervalo, troca de fole e posição do próximo botão).
 const SCALE_TYPES = {
   maior:{name:'Maior', steps:[2,2,1,2,2,2,1], spell:'maj',
     info:'Fórmula: T T S T T T S. Os semitons ficam entre o 3º e o 4º graus e entre o 7º e o 8º.'},
@@ -11,6 +13,7 @@ const SCALE_TYPES = {
   cromatica:{name:'Cromática', steps:Array(12).fill(1), spell:null,
     info:'Todos os 12 semitons. É a melhor forma de passear pelo mapa inteiro de botões.'},
 };
+// Grafia da tônica: tons maiores usam os bemóis habituais (Mi♭, Si♭); menores, os sustenidos (Dó♯m, Sol♯m)
 const TONIC_SPELL = {maj:['C','Db','D','Eb','E','F','F#','G','Ab','A','Bb','B'], min:['C','C#','D','Eb','E','F','F#','G','G#','A','Bb','B']};
 const ACC_SYM = {'-2':'𝄫','-1':'♭','0':'','1':'♯','2':'𝄪'};
 const STEP_NAME = {1:'semitom', 2:'tom', 3:'tom e meio'};
@@ -24,6 +27,8 @@ function tonicLabel(type, pc){
   const t = TONIC_SPELL[sp][pc], letter='CDEFGAB'.indexOf(t[0]), acc = t[1]==='#'?1:t[1]==='b'?-1:0;
   return letterNames()[letter] + ACC_SYM[acc];
 }
+// Gera as notas (MIDI + grau). A grafia vem do grau: cada grau usa a letra seguinte e o acidente
+// é o que falta para chegar à altura. Por isso Fá maior tem Si♭, e não Lá♯.
 function scaleNotes(type, pc, start, octs, dirMode){
   const T = SCALE_TYPES[type], up = [], deg = T.steps.length;
   let m = start;
@@ -45,6 +50,7 @@ function scaleNotes(type, pc, start, octs, dirMode){
   }
   return all;
 }
+// Oitavas em que a escala inteira existe na mão (em alguma direção), da mais confortável à menos
 function validStarts(type, pc, hand, octs){
   const L = state.layout[hand], has = m => L.some(b=>b.open===m || b.close===m), out = [];
   for(let m=pc+12; m<=108; m+=12) if(scaleNotes(type, pc, m, octs, 'updown').every(n=>has(n.midi))) out.push(m);
@@ -72,6 +78,7 @@ $('#scClose').onclick = ()=>{ $('#scaleCard').style.display='none'; };
 $('#scGo').onclick = ()=>loadScale($('#scType').value, +$('#scTonic').value, $('#scHand').value, +$('#scOct').value, +$('#scStart').value, $('#scDir').value);
 
 const scaleId = (type, pc, hand, octs) => `esc:${type}:${pc}:${hand}:${octs}`;
+// Monta uma "melodia" com a escala e abre no player (o id próprio guarda o recorde de cada escala)
 function loadScale(type, pc, hand, octs, start, dirMode){
   stopMelody();
   const T = SCALE_TYPES[type], notes = scaleNotes(type, pc, start, octs, dirMode);

@@ -31,6 +31,8 @@ function chordVoicings(hand, dir, pc, type){
         if(span > 24) return;
         const key = acc.map(b=>b.id).sort().join();
         if(seen.has(key)) return; seen.add(key);
+        // pontuação (menor = melhor): distância entre botões + extensão em oitavas
+        // + penalidade se o baixo não for a tônica ou se faltar a 5ª
         const rootBass = ((low%12)+12)%12===pc, omit5 = req.length<pcs.length;
         out.push({btns:[...acc], degrees:req.map(r=>T.deg[r]), rootBass, omit5,
                   score: spread + span/12*0.8 + (rootBass?0:1.5) + (omit5?1:0)});
@@ -115,6 +117,8 @@ $('#chCheck').onclick=()=>{
   const {pc,type,vs}=ch.target, L=state.layout[ch.hand], T=CHORD_TYPES[type];
   const picked=[...ch.picked].map(id=>L.find(b=>b.id===id));
   const pcs=new Set(picked.map(b=>((b[ch.dir]%12)+12)%12));
+  // Certo = tem fundamental, 3ª e última nota do acorde (a 5ª é opcional nas tétrades) e nenhuma
+  // nota estranha. Dobrar notas vale.
   const need=new Set(T.iv.map(i=>(pc+i)%12)), core=new Set([0,1,T.iv.length-1].map(k=>(pc+T.iv[k])%12));
   const extra=[...pcs].filter(p=>!need.has(p)), missing=[...core].filter(p=>!pcs.has(p));
   const k=chKb();

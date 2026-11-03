@@ -1,4 +1,12 @@
 /* ================== Componente teclado ================== */
+// Desenha o teclado de uma mão a partir de state.layout e trata os toques. Cada aba cria os seus
+// com kb(elemento, 'left'|'right', opções):
+//   getDir()      direção do fole deste teclado (padrão: state.dir)
+//   showLabels()  mostra ou esconde os nomes das notas
+//   onPress(b, midi, dir, api)  chamado ao apertar um botão
+//   perRow        1 se o teclado fica sozinho na linha (afeta o tamanho automático)
+//   editable, canSound, sound   edição do mapa e controle do som
+// Devolve uma api para marcar botões (dica, acerto, erro, acorde, cor do mapa de erros).
 let kbSeq=0;
 // Tamanho do botão conforme a largura da tela. perRow = quantos teclados lado a lado (1 ou 2)
 function autoKeySize(maxX, perRow){
@@ -29,6 +37,7 @@ function createKeyboard(el, hand, opts={}){
         opts.onPress && opts.onPress(b, midi, dir, api);
       };
       const release=()=>{ if(!held.has(b.id)) return; held.delete(b.id); d.classList.remove('down'); stopVoice(uid+b.id); opts.onRelease&&opts.onRelease(b); };
+      // Eventos de ponteiro servem para mouse e toque (vários dedos = acorde). Sair do botão solta a nota.
       d.addEventListener('pointerdown',press);
       ['pointerup','pointerleave','pointercancel'].forEach(t=>d.addEventListener(t,release));
       el.appendChild(d); nodes[b.id]={d,b};
@@ -46,6 +55,7 @@ function createKeyboard(el, hand, opts={}){
   }
   const api={
     hand, build, refresh, held, size, perRow:opts.perRow,
+    // ao inverter o fole as notas seguradas mudam de altura, como no instrumento
     retune(){ const dir=opts.getDir?opts.getDir():state.dir;
       for(const id of held){ const b=nodes[id].b; if(voices[uid+id]) startVoice(uid+id,b[dir],hand); } },
     silence(){ for(const id of held) stopVoice(uid+id,true); },

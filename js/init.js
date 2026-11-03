@@ -1,4 +1,5 @@
 /* ================== Inicialização ================== */
+// Carregado por último: aqui todas as funções dos outros arquivos já existem.
 loadMelody(BUILTIN_MELODIES[0].id);
 renderLesson();
 renderProgress();
