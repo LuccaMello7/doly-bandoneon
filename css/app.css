@@ -103,6 +103,8 @@ button,select,a,input{touch-action:manipulation}
 #micStatus .ok{color:var(--green)} #micStatus .bad{color:var(--close)}
 .micbar{display:inline-block;width:80px;height:8px;background:var(--panel2);border-radius:4px;vertical-align:middle;overflow:hidden}
 .micbar span{display:block;height:100%;background:var(--green)}
+.key.chord{background:radial-gradient(circle at 35% 30%,#ffe9a8,#d9a441)!important;box-shadow:0 0 0 3px var(--gold)}
+#chVoicings small{opacity:.75}
 kbd{background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:.85em}
 
 /* Lições */

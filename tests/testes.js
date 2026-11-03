@@ -167,6 +167,32 @@ teste('microfone no modo Espera completa a melodia', () => {
   ok(/100%/.test($('#melFeed').textContent), $('#melFeed').textContent);
 });
 
+
+/* ---------- Acordes ---------- */
+teste('todo acorde (12 tônicas × 6 tipos) tem posição na mão esquerda em pelo menos uma direção', () => {
+  const faltam=[];
+  for(const t in CHORD_TYPES) for(let pc=0;pc<12;pc++)
+    if(!chordVoicings('left','open',pc,t).length && !chordVoicings('left','close',pc,t).length) faltam.push(chordName(pc,t));
+  igual(faltam, []);
+});
+teste('posições de acorde só usam notas do acorde e cabem na mão', () => {
+  for(const t in CHORD_TYPES) for(let pc=0;pc<12;pc++) for(const d of ['open','close']) for(const v of chordVoicings('left',d,pc,t)){
+    const need=CHORD_TYPES[t].iv.map(i=>(pc+i)%12);
+    v.btns.forEach(b=>ok(need.includes(b[d]%12), chordName(pc,t)));
+  }
+});
+teste('treino de acordes: acerto com a posição sugerida e erro com nota sobrando', () => {
+  go('acordes'); $('#chHand').value='left'; $('#chTrain').click();
+  const {vs}=ch.target; vs[0].btns.forEach(b=>chordPress(b));
+  $('#chCheck').click(); igual($('#chFeed').textContent, 'Certo!');
+  ch.round=0; nextChordRound();
+  const {pc,type}=ch.target, L=state.layout.left;
+  ch.target.vs[0].btns.forEach(b=>chordPress(b));
+  const intruso=L.find(b=>!CHORD_TYPES[type].iv.map(i=>(pc+i)%12).includes(b[ch.dir]%12)); chordPress(intruso);
+  $('#chCheck').click(); ok(/Sobrou/.test($('#chFeed').textContent), $('#chFeed').textContent);
+  $('#chStop').click();
+});
+
 /* ---------- Execução ---------- */
 (async () => {
   const linhas = [];

@@ -50,7 +50,8 @@ function createKeyboard(el, hand, opts={}){
       for(const id of held){ const b=nodes[id].b; if(voices[uid+id]) startVoice(uid+id,b[dir],hand); } },
     silence(){ for(const id of held) stopVoice(uid+id,true); },
     mark(id,cls,ms=600){ const n=nodes[id]; if(!n) return; n.d.classList.add(cls); if(ms) setTimeout(()=>n.d.classList.remove(cls),ms); },
-    clearMarks(){ Object.values(nodes).forEach(({d})=>d.classList.remove('ok','bad','hint')); },
+    unmark(id,cls){ const n=nodes[id]; if(n) n.d.classList.remove(cls); },
+    clearMarks(){ Object.values(nodes).forEach(({d})=>d.classList.remove('ok','bad','hint','chord')); },
     setDim(v){ Object.values(nodes).forEach(({d})=>d.classList.toggle('dim',v)); },
   };
   build();

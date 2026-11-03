@@ -1,0 +1,140 @@
+/* ================== Acordes ================== */
+const CHORD_TYPES = {
+  maior:{name:'Maior',              suf:'',     iv:[0,4,7],    deg:['1','3','5']},
+  menor:{name:'Menor',              suf:'m',    iv:[0,3,7],    deg:['1','♭3','5']},
+  dom7: {name:'Sétima (dominante)', suf:'7',    iv:[0,4,7,10], deg:['1','3','5','♭7']},
+  m7:   {name:'Menor com sétima',   suf:'m7',   iv:[0,3,7,10], deg:['1','♭3','5','♭7']},
+  m6:   {name:'Menor com sexta',    suf:'m6',   iv:[0,3,7,9],  deg:['1','♭3','5','6']},
+  dim7: {name:'Diminuto',           suf:'°7',   iv:[0,3,6,9],  deg:['1','♭3','♭5','𝄫7']},
+};
+const ROOT_PT = ['Dó','Dó♯','Ré','Mi♭','Mi','Fá','Fá♯','Sol','Lá♭','Lá','Si♭','Si'];
+const ROOT_EN = ['C','C♯','D','E♭','E','F','F♯','G','A♭','A','B♭','B'];
+const rootName = pc => (state.names==='pt'?ROOT_PT:ROOT_EN)[pc];
+const chordName = (pc, type) => rootName(pc) + CHORD_TYPES[type].suf;
+const MAX_SPREAD = 3.3; // distância máxima entre botões (em "botões") para caber na mão
+
+// Procura combinações de botões (uma por nota do acorde) na direção pedida
+function chordVoicings(hand, dir, pc, type){
+  const T = CHORD_TYPES[type], pcs = T.iv.map(i=>(pc+i)%12), L = state.layout[hand];
+  const byPc = pcs.map(p=>L.filter(b=>((b[dir]%12)+12)%12===p));
+  const sets = pcs.length===4 ? [[0,1,2,3],[0,1,3]] : [[0,1,2]]; // 7ª sem a 5ª também vale
+  const out = [], seen = new Set();
+  for(const req of sets){
+    const lists = req.map(k=>byPc[k]);
+    if(lists.some(l=>!l.length)) continue;
+    const walk = (k, acc)=>{
+      if(k===lists.length){
+        let spread = 0;
+        for(let i=0;i<acc.length;i++) for(let j=i+1;j<acc.length;j++) spread = Math.max(spread, Math.hypot(acc[i].x-acc[j].x, acc[i].y-acc[j].y));
+        if(spread > MAX_SPREAD) return;
+        const ms = acc.map(b=>b[dir]), low = Math.min(...ms), span = Math.max(...ms)-low;
+        if(span > 24) return;
+        const key = acc.map(b=>b.id).sort().join();
+        if(seen.has(key)) return; seen.add(key);
+        const rootBass = ((low%12)+12)%12===pc, omit5 = req.length<pcs.length;
+        out.push({btns:[...acc], degrees:req.map(r=>T.deg[r]), rootBass, omit5,
+                  score: spread + span/12*0.8 + (rootBass?0:1.5) + (omit5?1:0)});
+        return;
+      }
+      for(const b of lists[k]) if(!acc.includes(b)) walk(k+1, [...acc, b]);
+    };
+    walk(0, []);
+  }
+  return out.sort((a,b)=>a.score-b.score).slice(0,4);
+}
+
+const ch = {dir:'open', hand:'left', voicings:[], sel:0, training:false, round:0, score:0, target:null, picked:new Set()};
+const chOpts = hand => ({perRow:1, getDir:()=>ch.dir, onPress:(b,m)=>chordPress(b,m)});
+const ckL = kb($('#ckLeft'),'left',chOpts('left')), ckR = kb($('#ckRight'),'right',chOpts('right'));
+const chKb = () => ch.hand==='left' ? ckL : ckR;
+
+function fillChordSelects(){
+  const r=$('#chRoot').value||'9', t=$('#chType').value||'menor';
+  $('#chRoot').innerHTML = Array.from({length:12},(_,pc)=>`<option value="${pc}">${rootName(pc)}</option>`).join('');
+  $('#chType').innerHTML = Object.entries(CHORD_TYPES).map(([k,T])=>`<option value="${k}">${T.name}${T.suf?` (${T.suf})`:''}</option>`).join('');
+  $('#chRoot').value=r; $('#chType').value=t;
+}
+function showChord(){
+  if(ch.training) return;
+  const pc=+$('#chRoot').value, type=$('#chType').value;
+  ch.hand=$('#chHand').value; ch.dir=$('#chDir').value;
+  $('#ckLeftWrap').style.display = ch.hand==='left'?'flex':'none';
+  $('#ckRightWrap').style.display = ch.hand==='right'?'flex':'none';
+  ckL.refresh(); ckR.refresh();
+  const T=CHORD_TYPES[type];
+  $('#chTitle').textContent = `${chordName(pc,type)} · ${dirLabel(ch.dir).toLowerCase()}`;
+  $('#chNotes').textContent = 'Notas: ' + T.iv.map((iv,i)=>`${rootName((pc+iv)%12)} (${T.deg[i]})`).join(' · ');
+  ch.voicings = chordVoicings(ch.hand, ch.dir, pc, type); ch.sel = 0;
+  $('#chVoicings').innerHTML = ch.voicings.length
+    ? ch.voicings.map((v,i)=>`<button class="btn sec voicing ${i===0?'on':''}" data-i="${i}">Opção ${i+1}: ${v.btns.map(b=>noteName(b[ch.dir])).join(' · ')}${v.rootBass?'':' <small>(inversão)</small>'}${v.omit5?' <small>(sem a 5ª)</small>':''}</button>`).join('')
+    : `<p class="muted">Não encontrei uma forma confortável deste acorde ${dirLabel(ch.dir).toLowerCase()} na mão ${ch.hand==='left'?'esquerda':'direita'}. Tente a outra direção do fole.</p>`;
+  markVoicing();
+}
+function markVoicing(){
+  const k=chKb(); ckL.clearMarks(); ckR.clearMarks();
+  const v=ch.voicings[ch.sel]; if(!v) return;
+  v.btns.forEach(b=>k.mark(b.id,'chord',0));
+}
+function playChord(arp){
+  const v=ch.voicings[ch.sel]; if(!v) return; ac();
+  const ms=v.btns.map(b=>b[ch.dir]).sort((a,b)=>a-b);
+  ms.forEach((m,i)=>playNote(m, arp?0.5:1.4, ch.hand, AC.currentTime+(arp?i*0.22:0), 0.12));
+}
+$('#chVoicings').addEventListener('click', e=>{ const b=e.target.closest('.voicing'); if(!b) return;
+  ch.sel=+b.dataset.i; $$('#chVoicings .voicing').forEach(x=>x.classList.toggle('on',x===b)); markVoicing(); playChord(false); });
+['#chRoot','#chType','#chHand','#chDir'].forEach(id=>$(id).onchange=showChord);
+$('#chPlay').onclick=()=>playChord(false);
+$('#chArp').onclick=()=>playChord(true);
+
+// ---------- Treino ----------
+function chordPress(b){
+  if(!ch.training) return;
+  const k=chKb();
+  if(ch.picked.has(b.id)){ ch.picked.delete(b.id); k.unmark(b.id,'chord'); }
+  else { ch.picked.add(b.id); k.mark(b.id,'chord',0); }
+}
+function nextChordRound(){
+  ckL.clearMarks(); ckR.clearMarks(); ch.picked.clear();
+  if(ch.round>=10){
+    ch.training=false; $('#chTrainBox').style.display='none'; $('#chExplore').style.display='block';
+    $('#chFeed').className='feedback'; $('#chFeed').textContent=`Fim do treino: ${ch.score}/10`;
+    if(state.progress.chords==null || ch.score>state.progress.chords){ state.progress.chords=ch.score; saveProgress(); }
+    showChord(); return;
+  }
+  const types=$$('#chTrainTypes input:checked').map(i=>i.value); if(!types.length) types.push('maior','menor');
+  let pc, type, dir, vs;
+  do{ pc=rand(12); type=pick(types); dir=pick(['open','close']); vs=chordVoicings(ch.hand,dir,pc,type); }while(!vs.length);
+  Object.assign(ch, {target:{pc,type,vs}, dir}); ckL.refresh(); ckR.refresh();
+  $('#chTarget').textContent = chordName(pc,type);
+  const p=$('#chTrainDir'); p.className='dirpill '+dir; p.textContent=`${dirLabel(dir)} · mão ${ch.hand==='left'?'esquerda':'direita'}`;
+  $('#chScore').textContent=`Rodada ${ch.round+1}/10 · Acertos: ${ch.score}`;
+}
+$('#chCheck').onclick=()=>{
+  if(!ch.training) return;
+  const {pc,type,vs}=ch.target, L=state.layout[ch.hand], T=CHORD_TYPES[type];
+  const picked=[...ch.picked].map(id=>L.find(b=>b.id===id));
+  const pcs=new Set(picked.map(b=>((b[ch.dir]%12)+12)%12));
+  const need=new Set(T.iv.map(i=>(pc+i)%12)), core=new Set([0,1,T.iv.length-1].map(k=>(pc+T.iv[k])%12));
+  const extra=[...pcs].filter(p=>!need.has(p)), missing=[...core].filter(p=>!pcs.has(p));
+  const k=chKb();
+  if(picked.length && !extra.length && !missing.length){
+    ch.score++; $('#chFeed').className='feedback ok'; $('#chFeed').textContent='Certo!';
+    picked.forEach(b=>k.mark(b.id,'ok',800));
+  } else {
+    $('#chFeed').className='feedback bad';
+    $('#chFeed').textContent = extra.length ? `Sobrou: ${extra.map(rootName).join(', ')}. Veja uma forma correta.` : `Faltou: ${missing.map(rootName).join(', ')}. Veja uma forma correta.`;
+    vs[0].btns.forEach(b=>k.mark(b.id,'hint',1400));
+  }
+  ac(); picked.forEach((b,i)=>playNote(b[ch.dir],1,ch.hand,AC.currentTime,0.1));
+  ch.round++; setTimeout(nextChordRound, 1500);
+};
+$('#chTrain').onclick=()=>{
+  ac(); ch.hand=$('#chHand').value;
+  Object.assign(ch,{training:true, round:0, score:0});
+  $('#chExplore').style.display='none'; $('#chTrainBox').style.display='block'; $('#chFeed').textContent='';
+  $('#ckLeftWrap').style.display = ch.hand==='left'?'flex':'none';
+  $('#ckRightWrap').style.display = ch.hand==='right'?'flex':'none';
+  nextChordRound();
+};
+$('#chStop').onclick=()=>{ ch.training=false; $('#chTrainBox').style.display='none'; $('#chExplore').style.display='block'; $('#chFeed').textContent=''; showChord(); };
+fillChordSelects(); showChord();

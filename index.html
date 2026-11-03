@@ -21,6 +21,7 @@
     <button data-v="teclado">Teclado</button>
     <button data-v="desafios">Desafios</button>
     <button data-v="melodias">Melodias</button>
+    <button data-v="acordes">Acordes</button>
     <button data-v="ritmo">Ritmo</button>
     <button data-v="ajustes" aria-label="Ajustes">⚙ Ajustes</button>
   </nav>
@@ -40,6 +41,7 @@
     <div class="card"><div class="muted">Recorde: Leitura na pauta</div><div class="stat" id="pStaff">–</div></div>
     <div class="card"><div class="muted">Melhor precisão rítmica</div><div class="stat" id="pRhythm">–</div></div>
     <div class="card"><div class="muted">Melodias concluídas</div><div class="stat" id="pMel">–</div></div>
+    <div class="card"><div class="muted">Recorde: Acordes</div><div class="stat" id="pChords">–</div></div>
   </div>
   <div class="card">
     <h3>Por onde começar</h3>
@@ -232,6 +234,51 @@
   </div>
 </section>
 
+<!-- ACORDES -->
+<section id="v-acordes">
+  <div class="card">
+    <h2>Acordes</h2>
+    <div id="chExplore">
+      <div class="row">
+        <label>Tônica: <select id="chRoot"></select></label>
+        <label>Tipo: <select id="chType"></select></label>
+        <label>Mão: <select id="chHand"><option value="left">Esquerda (acompanhamento)</option><option value="right">Direita</option></select></label>
+        <label>Fole: <select id="chDir"><option value="open">Abrindo</option><option value="close">Fechando</option></select></label>
+      </div>
+      <h3 id="chTitle" style="color:var(--gold);font-size:1.4rem;margin:14px 0 2px"></h3>
+      <p class="muted" id="chNotes" style="margin-top:0"></p>
+      <div class="row" id="chVoicings"></div>
+      <div class="row" style="margin-top:10px">
+        <button class="btn" id="chPlay">▶ Ouvir acorde</button>
+        <button class="btn sec" id="chArp">Arpejo</button>
+      </div>
+      <p class="muted">No bandoneon cada acorde precisa ser aprendido duas vezes, abrindo e fechando, com botões diferentes. As opções são as posições mais compactas do mapa, com o baixo na tônica primeiro. "Inversão" quer dizer outra nota do acorde no baixo.</p>
+      <div class="row" id="chTrainTypes">
+        <span class="muted">Treinar:</span>
+        <label><input type="checkbox" value="maior" checked> Maior</label>
+        <label><input type="checkbox" value="menor" checked> Menor</label>
+        <label><input type="checkbox" value="dom7" checked> 7</label>
+        <label><input type="checkbox" value="m7"> m7</label>
+        <label><input type="checkbox" value="m6"> m6</label>
+        <label><input type="checkbox" value="dim7"> °7</label>
+        <button class="btn" id="chTrain">🎯 Treinar acordes</button>
+      </div>
+    </div>
+    <div id="chTrainBox" style="display:none;text-align:center">
+      <div class="target" id="chTarget"></div>
+      <div id="chTrainDir" class="dirpill open" style="display:inline-block"></div>
+      <p class="muted">Toque nos botões do acorde (toque de novo para desmarcar) e clique em Conferir. Pode dobrar notas; a 5ª é opcional nos acordes com sétima.</p>
+      <div class="row" style="justify-content:center"><button class="btn" id="chCheck">Conferir</button><button class="btn sec" id="chStop">Parar treino</button></div>
+      <div class="muted" id="chScore"></div>
+    </div>
+    <div class="feedback" id="chFeed" style="text-align:center" aria-live="polite"></div>
+    <div class="instrument">
+      <div class="side" id="ckLeftWrap"><div class="label">Mão esquerda</div><div id="ckLeft"></div></div>
+      <div class="side" id="ckRightWrap" style="display:none"><div class="label">Mão direita</div><div id="ckRight"></div></div>
+    </div>
+  </div>
+</section>
+
 <!-- RITMO -->
 <section id="v-ritmo">
   <div class="card">
@@ -300,6 +347,7 @@
 <script src="js/musicxml.js"></script>
 <script src="js/escalas.js"></script>
 <script src="js/microfone.js"></script>
+<script src="js/acordes.js"></script>
 <script src="js/licoes.js"></script>
 <script src="js/ajustes.js"></script>
 <script src="js/init.js"></script>
