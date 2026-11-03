@@ -53,11 +53,8 @@ function showMic(m, cents, rms){
 function onMicNote(m){
   if(!mel.running || !mel.cur) return;
   const mode = $('#melMode').value;
-  if(mode==='wait'){
-    const n = mel.cur.notes[mel.idx]; if(!n) return;
-    if(micMatches(m, n.midi)){ cardCls(mel.idx,'ok'); melFeed('Certo!','ok'); advanceWait(); }
-    else { mel.errors++; cardCls(mel.idx,'bad'); melFeed(`Ouvi ${noteName(m)}; a nota é ${lbl(n)}.`,'bad'); }
-  } else if(mode==='timed') timedPress(m, AC.currentTime - MIC_LATENCY, true);
+  if(mode==='wait') melHear(m);
+  else if(mode==='timed') timedPress(m, AC.currentTime - MIC_LATENCY, true);
 }
 
 async function micStart(){

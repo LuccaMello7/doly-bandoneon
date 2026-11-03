@@ -178,11 +178,13 @@
           <label>Velocidade: <input type="range" id="melSpeed" min="40" max="120" step="10" value="70"> <span id="melSpeedVal">70%</span></label>
           <label title="O app troca a direção do fole sozinho. Bom para começar."><input type="checkbox" id="melAuto"> Fole automático</label>
           <label title="Toque no seu bandoneon: o app escuta pelo microfone e confere as notas (modos Espera e No tempo)"><input type="checkbox" id="micToggle"> 🎤 Usar microfone</label>
+          <label><input type="checkbox" id="melStaffOn"> 𝄞 Partitura</label>
           <button class="btn" id="melStart">▶ Começar</button>
           <button class="btn sec" id="melEdit">Editar</button>
         </div>
         <div class="notice" id="melWarn" style="display:none;margin-top:10px"></div>
         <div class="guide" id="melGuide" style="display:none"><details id="guideIntroBox" open><summary>Sobre esta escala</summary><div id="guideIntro"></div></details><div class="gstep" id="guideStep"></div></div>
+        <div class="staffwrap" id="melStaff" aria-hidden="true"></div>
         <div class="mstrip" id="melStrip"></div>
         <div style="text-align:center">
           <div id="melDirPill" class="dirpill open" style="display:inline-block">⟵ ABRINDO ⟶</div>
@@ -225,6 +227,7 @@
             <li>Cada nota é <code>nome+oitava:duração</code>. Exemplos: <code>Dó4:4</code>, <code>Fá#4:8</code>, <code>Sib3:2</code>, <code>G4:4</code>.</li>
             <li>Durações: <code>1</code> semibreve, <code>2</code> mínima, <code>4</code> semínima, <code>8</code> colcheia, <code>16</code> semicolcheia. Ponto de aumento: <code>Mi4:4.</code>. Sem duração, vale semínima.</li>
             <li>Tercinas: acrescente <code>t</code>, por exemplo <code>Mi4:8t</code> (colcheia de tercina). Ligadura: termine a nota com <code>~</code> para somá-la à próxima de mesma altura (<code>Sol4:2~ | Sol4:4</code>).</li>
+            <li>Duas mãos: comece uma linha com <code>direita:</code> ou <code>esquerda:</code>. Cada mão tem seu próprio tempo, e as linhas seguintes continuam na mesma mão. O app combina as duas com um fole só.</li>
             <li>Pausa: <code>p:4</code>. Barras de compasso <code>|</code> são opcionais e só servem para organizar.</li>
             <li>Para forçar a direção do fole, acrescente <code>/a</code> (abrindo) ou <code>/f</code> (fechando): <code>Sol4:4/f</code>.</li>
           </ul>

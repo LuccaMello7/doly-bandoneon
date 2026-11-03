@@ -8,7 +8,7 @@ const igual = (a, b, msg) => {
 // avança a simulação do fole sem depender de requestAnimationFrame (headless)
 const passarTempoFole = ms => { for(let t=0; t<ms; t+=50) bellowsLoop(bel.last + 50); };
 const tecla = (tipo, code) => document.dispatchEvent(new KeyboardEvent(tipo, {code, bubbles:true}));
-const tocarEspera = () => { let n=0; while(mel.running && n++<5000){ const c=mel.cur.notes[mel.idx]; melPress(c.btn, c.midi, c.dir); } };
+const tocarEspera = () => { let n=0; while(mel.running && n++<5000){ const c=pendingNotes()[0]; melPress(c.btn, c.midi, c.dir); } };
 
 /* ---------- Base ---------- */
 teste('página carrega sem erros de JavaScript', () => igual(window.__erros, []));
@@ -163,7 +163,7 @@ teste('detecção de altura no som gravado do bandoneon (todas as amostras)', ()
 });
 teste('microfone no modo Espera completa a melodia', () => {
   go('melodias'); loadMelody('esc-do'); $('#melMode').value='wait'; $('#melStart').click();
-  let n=0; while(mel.running && n++<100) onMicNote(mel.cur.notes[mel.idx].midi + (n%2?12:0));
+  let n=0; while(mel.running && n++<100) onMicNote(pendingNotes()[0].midi + (n%2?12:0));
   ok(/100%/.test($('#melFeed').textContent), $('#melFeed').textContent);
 });
 
@@ -191,6 +191,38 @@ teste('treino de acordes: acerto com a posição sugerida e erro com nota sobran
   const intruso=L.find(b=>!CHORD_TYPES[type].iv.map(i=>(pc+i)%12).includes(b[ch.dir]%12)); chordPress(intruso);
   $('#chCheck').click(); ok(/Sobrou/.test($('#chFeed').textContent), $('#chFeed').textContent);
   $('#chStop').click();
+});
+
+/* ---------- Duas mãos e partitura ---------- */
+teste('duas mãos: notas simultâneas agrupadas e mesma direção de fole', () => {
+  const m = parseMelody(BUILTIN_MELODIES.find(x=>x.id==='ode-duas').text); fingerMelody(m);
+  igual(m.hand, 'both'); igual(m.notes.filter(n=>n.error).length, 0, 'notas com erro');
+  const g0 = m.groups[0]; igual(g0.idxs.map(i=>m.notes[i].hand), ['right','left']);
+  for(const g of m.groups) if(!g.rest){ const ds=new Set(g.idxs.map(i=>m.notes[i].dir)); igual(ds.size, 1, 'grupo com duas direções'); }
+});
+teste('duas mãos: fole não inverte com nota segurada', () => {
+  const m = parseMelody(BUILTIN_MELODIES.find(x=>x.id==='ode-duas').text); fingerMelody(m);
+  const ns = m.notes.filter(n=>!n.rest && !n.error);
+  for(const g of m.groups){ if(g.rest||!g.dir) continue;
+    const segurada = ns.find(n=>n.t < g.t-1e-6 && n.t+n.beats > g.t+1e-6);
+    if(segurada) igual(g.dir, segurada.dir, 'inverteu com nota soando em '+g.t); }
+});
+teste('duas mãos: modo Espera exige as duas notas de cada momento', () => {
+  go('melodias'); loadMelody('ode-duas'); $('#melMode').value='wait'; $('#melAuto').checked=true; $('#melStart').click();
+  igual(pendingNotes().length, 2);
+  const [a] = pendingNotes(); melPress(a.btn, a.midi, a.dir); igual(pendingNotes().length, 1, 'deve faltar uma');
+  tocarEspera(); ok(/100%/.test($('#melFeed').textContent), $('#melFeed').textContent);
+});
+teste('partitura desenha uma cabeça de nota por nota tocável', () => {
+  $('#melStaffOn').checked=true; loadMelody('ode-duas');
+  igual($$('#melStaff .nh').length, mel.cur.notes.filter(n=>!n.rest).length);
+});
+teste('MusicXML: importação a duas mãos mantém a sincronia', () => {
+  const sc = parseMusicXML(XML_TESTE);
+  const r = melodyFromScore(sc, {part:0, staff:'hands', fitOctave:false});
+  const m = parseMelody(r.text); igual(m.hand, 'both');
+  const fim = h => Math.max(...m.notes.filter(n=>n.hand===h).map(n=>n.t+n.beats));
+  igual(fim('right'), fim('left'));
 });
 
 /* ---------- Execução ---------- */

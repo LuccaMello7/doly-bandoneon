@@ -97,10 +97,8 @@ const DUR_TOKENS=[[4,'1'],[3,'2.'],[2,'2'],[1.5,'4.'],[4/3,'2t'],[1,'4'],[0.75,'
 function splitBeats(b){ const out=[]; let r=b; for(const [v,t] of DUR_TOKENS) while(r>=v-1e-3){ out.push(t); r-=v; } return out; }
 const noteToken = m => PT[((m%12)+12)%12].replace('♯','#') + (Math.floor(m/12)-1);
 
-function melodyFromScore(score, o){
-  const part=score.parts[o.part], ev=extractLine(part, o.staff, o.pick);
-  if(!ev.length) throw new Error('Essa pauta não tem notas.');
-  const shift = o.fitOctave ? bestOctaveShift(ev, o.hand) : 0;
+// Um texto por compasso (pausas preenchem os buracos; ligaduras atravessam a barra)
+function barsFor(part, ev, shift){
   const ms=part.measures, bars=[];
   for(let i=0;i<ms.length-1;i++){
     const a=ms[i], b=ms[i+1], toks=[]; let t=a;
@@ -113,16 +111,34 @@ function melodyFromScore(score, o){
       t=s1;
     }
     if(b>t+1e-3) splitBeats(b-t).forEach(d=>toks.push('p:'+d));
-    if(toks.length) bars.push(toks.join(' '));
+    bars.push(toks.join(' '));
   }
-  // remove compassos só de pausa no início e no fim
-  const isRest=x=>x.split(' ').every(k=>k.startsWith('p:'));
-  while(bars.length && isRest(bars[0])) bars.shift();
-  while(bars.length && isRest(bars[bars.length-1])) bars.pop();
-  const lines=[]; for(let i=0;i<bars.length;i+=4) lines.push(bars.slice(i,i+4).join(' | ')+' |');
-  const staffTxt = o.staff==='all' ? 'todas as pautas' : 'pauta '+o.staff;
-  const desc = `Importado de MusicXML (${part.name}, ${staffTxt})${shift?`, transposto ${shift>0?'+':''}${shift/12} oitava(s)`:''}.`;
-  return {text:`título: ${score.title}\nmão: ${o.hand==='left'?'esquerda':'direita'}\nbpm: ${score.tempo||80}\ndescrição: ${desc}\n${lines.join('\n')}`, count:ev.length, shift};
+  return bars;
+}
+// o.staff: número da pauta, 'all' (todas) ou 'hands' (pauta de cima → direita, de baixo → esquerda)
+function melodyFromScore(score, o){
+  const part=score.parts[o.part];
+  const voices = o.staff==='hands'
+    ? [{hand:'right', ev:extractLine(part,'1','high')}, {hand:'left', ev:extractLine(part,String(part.staves),'low')}]
+    : [{hand:o.hand, ev:extractLine(part,o.staff,o.pick)}];
+  if(voices.some(v=>!v.ev.length)) throw new Error('Essa pauta não tem notas.');
+  voices.forEach(v=>{ v.shift = o.fitOctave ? bestOctaveShift(v.ev, v.hand) : 0; v.bars = barsFor(part, v.ev, v.shift); });
+  // remove compassos só de pausa no início e no fim (em todas as mãos ao mesmo tempo, para não perder a sincronia)
+  const isRest=x=>!x || x.split(' ').every(k=>k.startsWith('p:'));
+  let a=0, b=voices[0].bars.length;
+  while(a<b && voices.every(v=>isRest(v.bars[a]))) a++;
+  while(b>a && voices.every(v=>isRest(v.bars[b-1]))) b--;
+  const two = voices.length>1, body=[];
+  for(const v of voices){
+    const bars=v.bars.slice(a,b);
+    for(let i=0;i<bars.length;i+=4) body.push((two && i===0 ? (v.hand==='right'?'direita: ':'esquerda: ') : '') + bars.slice(i,i+4).join(' | ')+' |');
+  }
+  const staffTxt = o.staff==='all' ? 'todas as pautas' : o.staff==='hands' ? 'duas mãos' : 'pauta '+o.staff;
+  const shifts = voices.filter(v=>v.shift).map(v=>`${v.hand==='left'?'esquerda':'direita'} ${v.shift>0?'+':''}${v.shift/12} oitava(s)`);
+  const desc = `Importado de MusicXML (${part.name}, ${staffTxt})${shifts.length?`, transposto: ${shifts.join(', ')}`:''}.`;
+  const head = two ? '' : `mão: ${o.hand==='left'?'esquerda':'direita'}\n`;
+  return {text:`título: ${score.title}\n${head}bpm: ${score.tempo||80}\ndescrição: ${desc}\n${body.join('\n')}`,
+          count:voices.reduce((s,v)=>s+v.ev.length,0), shift:voices[0].shift};
 }
 
 let importedScore=null;
@@ -147,13 +163,14 @@ $('#melImportBtn').onclick=()=>{
 function fillStaves(){
   const p=importedScore.parts[+$('#impPart').value], opts=[];
   for(let k=1;k<=p.staves;k++) opts.push(`<option value="${k}">${k}${p.staves>1?(k===1?' (superior)':k===p.staves?' (inferior)':''):''}</option>`);
-  if(p.staves>1) opts.push('<option value="all">Todas</option>');
+  if(p.staves>1){ opts.push('<option value="hands">Duas mãos (de cima → direita, de baixo → esquerda)</option>'); opts.push('<option value="all">Todas numa mão só</option>'); }
   $('#impStaff').innerHTML=opts.join(''); staffDefaults();
 }
 function staffDefaults(){
   const st=$('#impStaff').value, p=importedScore.parts[+$('#impPart').value];
   const low = p.staves>1 && st===String(p.staves);
   $('#impHand').value = low?'left':'right'; $('#impPick').value = low?'low':'high';
+  $('#impHand').disabled = $('#impPick').disabled = st==='hands';
 }
 $('#impPart').onchange=fillStaves;
 $('#impStaff').onchange=staffDefaults;

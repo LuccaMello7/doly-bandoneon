@@ -105,6 +105,17 @@ button,select,a,input{touch-action:manipulation}
 .micbar span{display:block;height:100%;background:var(--green)}
 .key.chord{background:radial-gradient(circle at 35% 30%,#ffe9a8,#d9a441)!important;box-shadow:0 0 0 3px var(--gold)}
 #chVoicings small{opacity:.75}
+.staffwrap{overflow-x:auto;background:#f6efe2;border-radius:10px;margin-top:12px}
+.staffwrap svg{display:block}
+.staffwrap .sl{stroke:#333;stroke-width:1}
+.staffwrap .clef,.staffwrap .acc{fill:#222;font-family:"Segoe UI Symbol","Noto Music",serif}
+.staffwrap .nh{fill:#111} .staffwrap .nh.hollow{fill:#f6efe2;stroke:#111;stroke-width:1.6}
+.staffwrap .stem{stroke:#111;stroke-width:1.4} .staffwrap .nerr{fill:#bbb;stroke:#bbb}
+.staffwrap g.cur .nh{fill:var(--red)} .staffwrap g.cur .nh.hollow{fill:#f6efe2;stroke:var(--red)}
+.staffwrap g.cur .stem{stroke:var(--red)}
+.staffwrap .scur{stroke:var(--gold);stroke-width:3;opacity:.6}
+.mcard small{opacity:.7;font-size:.7em}
+.mcard .errn{text-decoration:line-through;opacity:.6}
 kbd{background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:.85em}
 
 /* Lições */
