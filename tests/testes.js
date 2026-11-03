@@ -270,6 +270,49 @@ teste('links internos das lições apontam para abas existentes', () => {
   LESSONS.forEach(l=>[...l.html.matchAll(/data-go="([^"]+)"/g)].forEach(m=>ok(abas.includes(m[1]), l.title+' → '+m[1])));
 });
 
+
+/* ---------- Idiomas ---------- */
+const esperar = () => new Promise(r=>setTimeout(r,0)); // o tradutor roda logo depois de cada mudança
+const PARECE_PT = /[ãõçêâôÃÕÇÊÂÔ]|\b(você|fole|Toque|Ouvir|Certo|Rodada|Acertos|Sobe|Desce|direita|esquerda|botão|botões|mão|mãos|Começar|Lições|Escolher|Parar|Abrindo|Fechando|abrindo|fechando)\b/;
+function textosEmPortugues(){
+  const achados = new Set(), w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  for(let n=w.nextNode(); n; n=w.nextNode()){
+    const p = n.parentNode;
+    if(['SCRIPT','STYLE','TEXTAREA','CODE'].includes(p.nodeName) || p.closest('[translate="no"],#resultado-testes')) continue;
+    const s = n.nodeValue.replace(/\s+/g,' ').trim();
+    if(s && PARECE_PT.test(s)) achados.add(s);
+  }
+  return [...achados];
+}
+async function percorrerApp(){
+  for(const v of ['inicio','teclado','desafios','melodias','acordes','ritmo','ajustes']){ go(v); await esperar(); }
+  for(let i=0;i<LESSONS.length;i++){ curLesson=i; renderLesson(); await esperar(); }
+  go('desafios'); $('#fStart').click(); await esperar(); $('#sStart').click(); await esperar();
+  go('melodias'); $('#scaleOpen').click(); $('#scGo').click(); $('#melMode').value='wait'; $('#melStart').click(); await esperar();
+  { const c=pendingNotes()[0]; melPress(c.btn,c.midi,c.dir); } await esperar(); stopMelody();
+  loadMelody('ode-duas'); $('#melStart').click(); await esperar(); stopMelody();
+  go('acordes'); showChord(); $('#chTrain').click(); await esperar(); $('#chStop').click(); await esperar();
+  go('ritmo'); renderSteps(); go('inicio'); await esperar();
+}
+for(const lang of ['es','en']) teste(`tradução completa (${lang}): nenhum texto em português na tela`, async () => {
+  setLang(lang); await esperar(); await percorrerApp();
+  const pt = textosEmPortugues(); setLang('pt'); await esperar();
+  igual(pt.slice(0,40), []);
+});
+teste('voltar ao português restaura os textos originais', async () => {
+  setLang('es'); await esperar(); setLang('pt'); await esperar();
+  igual($('#nav [data-v="licoes"]').textContent, 'Lições'); igual(document.documentElement.lang, 'pt-BR');
+});
+teste('formato de texto aceita palavras-chave em espanhol e inglês', () => {
+  const m = parseMelody('title: X\nhand: left\nbpm: 90\nderecha: Do4 Re4\nizquierda: Do3:2');
+  igual(m.title, 'X'); igual(m.bpm, 90); igual(m.hand, 'both');
+  igual(m.notes.filter(n=>n.hand==='left').length, 1);
+});
+teste('t() traduz modelos com valores', () => {
+  const l = state.lang; state.lang='es'; igual(t('Rodada {}/10 · Acertos: {}', 3, 2), 'Ronda 3/10 · Aciertos: 2');
+  state.lang='en'; igual(t('Esse é {}.', 'E4'), 'That is E4.'); state.lang=l;
+});
+
 /* ---------- Execução ---------- */
 (async () => {
   const linhas = [];

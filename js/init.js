@@ -4,6 +4,10 @@ loadMelody(BUILTIN_MELODIES[0].id);
 renderLesson();
 renderProgress();
 
+// Idioma: traduz a página e passa a traduzir tudo o que o código escrever depois
+aplicarIdioma();
+observador.observe(document.body, {subtree:true, childList:true, characterData:true, attributes:true, attributeFilter:ATTRS});
+
 // PWA: funciona offline e pode ser instalado (só quando servido por http/https, ex.: GitHub Pages)
 if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('sw.js');
 let installPrompt=null;

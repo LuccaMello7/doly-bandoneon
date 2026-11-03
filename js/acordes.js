@@ -9,7 +9,8 @@ const CHORD_TYPES = {
 };
 const ROOT_PT = ['Dó','Dó♯','Ré','Mi♭','Mi','Fá','Fá♯','Sol','Lá♭','Lá','Si♭','Si'];
 const ROOT_EN = ['C','C♯','D','E♭','E','F','F♯','G','A♭','A','B♭','B'];
-const rootName = pc => (state.names==='pt'?ROOT_PT:ROOT_EN)[pc];
+const ROOT_ES = ['Do','Do♯','Re','Mi♭','Mi','Fa','Fa♯','Sol','La♭','La','Si♭','Si'];
+const rootName = pc => (state.names==='en' ? ROOT_EN : state.lang==='es' ? ROOT_ES : ROOT_PT)[pc];
 const chordName = (pc, type) => rootName(pc) + CHORD_TYPES[type].suf;
 const MAX_SPREAD = 3.3; // distância máxima entre botões (em "botões") para caber na mão
 

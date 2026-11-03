@@ -105,16 +105,17 @@ const LESSONS = [
         {q:'Numa parte de orquestra típica, o bandoneon muitas vezes…',o:['Tem uma pauta só, em clave de sol','Não tem partitura','Lê só cifras','Usa clave de dó'],a:0}]},
 ];
 let curLesson=0, lessonAnswered={}, lessonKb=null, lessonCount={open:0,close:0}, lessonDir='open';
+const lessonTr = i => (LICOES_TRAD[state.lang] && LICOES_TRAD[state.lang][i]) || LESSONS[i];
 function renderLessonList(){
   $('#lessonList').innerHTML='<h3 style="margin-top:0">Lições</h3>'+LESSONS.map((l,i)=>
-    `<button data-i="${i}" class="${i===curLesson?'active':''}">${l.title}${state.progress.lessons[i]?'<span class="done">✓</span>':''}</button>`).join('');
+    `<button data-i="${i}" class="${i===curLesson?'active':''}">${lessonTr(i).title}${state.progress.lessons[i]?'<span class="done">✓</span>':''}</button>`).join('');
 }
 $('#lessonList').addEventListener('click',e=>{ const b=e.target.closest('button'); if(b){ curLesson=+b.dataset.i; renderLesson(); } });
 function renderLesson(){
   renderLessonList();
-  const L=LESSONS[curLesson]; lessonAnswered={}; const answered=lessonAnswered;
-  $('#lessonBody').innerHTML=`<h2>${L.title}</h2>${L.html}<h3>Verifique o que aprendeu</h3>`+
-    L.quiz.map((q,qi)=>`<div class="q" data-q="${qi}"><div>${q.q}</div><div class="opts">${q.o.map((o,oi)=>`<button class="btn sec" data-o="${oi}">${o}</button>`).join('')}</div><div class="fb muted"></div></div>`).join('')+
+  const L=LESSONS[curLesson], T=lessonTr(curLesson); lessonAnswered={}; const answered=lessonAnswered;
+  $('#lessonBody').innerHTML=`<h2>${T.title}</h2>${T.html}<h3>Verifique o que aprendeu</h3>`+
+    T.quiz.map((q,qi)=>`<div class="q" data-q="${qi}"><div>${q.q}</div><div class="opts">${q.o.map((o,oi)=>`<button class="btn sec" data-o="${oi}">${o}</button>`).join('')}</div><div class="fb muted"></div></div>`).join('')+
     `<div class="row" style="margin-top:12px"><button class="btn sec" id="prevL" ${curLesson===0?'disabled':''}>← Anterior</button><button class="btn" id="nextL" ${curLesson===LESSONS.length-1?'disabled':''}>Próxima →</button></div>`;
   $$('#lessonBody .q').forEach(qe=>qe.addEventListener('click',e=>{
     const o=e.target.dataset.o; if(o==null) return;

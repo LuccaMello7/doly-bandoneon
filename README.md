@@ -4,7 +4,7 @@
 
 O **BanDoly** é um app gratuito e interativo para aprender **bandoneon**, o instrumento do tango. Você toca num teclado virtual com o som de um bandoneon de verdade, segue escalas e melodias guiadas, treina acordes e ritmos e, se tiver o instrumento, pode tocar nele enquanto o app escuta pelo microfone.
 
-Funciona no navegador, no computador ou no celular. Não precisa instalar nada nem criar conta.
+Funciona no navegador, no computador ou no celular, em **português, espanhol e inglês** (escolha pelas bandeiras no topo). Não precisa instalar nada nem criar conta.
 
 ---
 
@@ -78,6 +78,7 @@ Se é a sua primeira vez, siga esta ordem:
 | **Acordes** | Mostra onde ficam os botões de 72 acordes (maior, m, 7, m7, m6 e °7 em todas as tônicas), abrindo e fechando, nas duas mãos. Tem treino com conferência. |
 | **Ritmo** | Os acompanhamentos do tango (marcato, síncopa, 3-3-2 e arrastre) e o modo **toque junto**, que mede se você está adiantado ou atrasado. |
 | **⚙ Ajustes** | Som (gravação real ou sintetizado), afinação (440, 442 ou 443 Hz), volume, nomes das notas (Dó Ré Mi ou C D E) e backup. |
+| 🇧🇷 / Uruguai-Argentina / 🇬🇧 | Idioma do app: português, espanhol ou inglês. Na primeira visita vale o idioma do navegador. |
 
 **Cores que aparecem no app:** 🔵 azul = *abrindo* · 🟠 laranja = *fechando* · 🟡 contorno dourado = *o próximo botão a tocar*.
 
@@ -190,9 +191,12 @@ js/                   um arquivo por parte do app, carregados em ordem pelo inde
   rotina.js           rotina diária e sequência de dias
   licoes.js           conteúdo das lições
   ajustes.js          aba Ajustes e backup
+  i18n.js             tradução da interface (português → espanhol / inglês)
+  i18n-textos.js      dicionário de traduções
+  licoes-traducao.js  lições em espanhol e inglês
   init.js             inicialização (carregado por último)
 sons/bandoneon.js     amostras de som (geradas a partir do SoundFont)
-ferramentas/          sf2_para_js.py: converte um SoundFont (.sf2) no arquivo de sons
+ferramentas/          sf2_para_js.py (SoundFont → sons) e extrair_textos.py (confere traduções)
 icones/, manifest.webmanifest, sw.js    app instalável e funcionamento offline
 tests/                testes automáticos
 ```
@@ -204,13 +208,32 @@ tests/                testes automáticos
 - **Melodias** passam por três funções: `parseMelody` (lê o texto) → `buildTimeline` (agrupa as notas que começam juntas) → `fingerMelody` (escolhe a direção do fole e os botões). A direção do fole é escolhida por programação dinâmica: o menor número de trocas que respeita o tamanho do fole.
 - Os arquivos JS **compartilham o escopo global** e são carregados em ordem. Código que roda no carregamento só pode usar o que já foi definido nos arquivos anteriores.
 
+### Traduções
+
+O código e o `index.html` são escritos **em português**. O `js/i18n.js` traduz na tela tudo o que aparece, inclusive o que o código gera, usando o dicionário `js/i18n-textos.js`:
+
+```js
+'Rodada {}/10 · Acertos: {}': ['Ronda {}/10 · Aciertos: {}', 'Round {}/10 · Correct: {}'],
+//  português (chave)           espanhol                       inglês
+```
+
+- `{}` marca um valor que muda (número, nota…), na mesma ordem.
+- Mensagens em `alert`, `confirm` e `prompt` não passam pela página: no código, use `t('texto', valores…)`.
+- As lições têm tradução inteira em `js/licoes-traducao.js`.
+
+Depois de criar ou mudar um texto, rode o script abaixo. Ele lista o que ainda não tem tradução:
+
+```
+python ferramentas/extrair_textos.py
+```
+
 ### Testes
 
 ```
 python tests/rodar_testes.py
 ```
 
-O script abre o app no Edge ou Chrome em modo invisível e roda `tests/testes.js`: mapa, som, fole, melodias, duas mãos, MusicXML, escalas, acordes, microfone, rotina e lições. Ele também confere se o `sw.js` guarda todos os arquivos usados pelo `index.html`.
+O script abre o app no Edge ou Chrome em modo invisível e roda `tests/testes.js`: mapa, som, fole, melodias, duas mãos, MusicXML, escalas, acordes, microfone, rotina e lições. Ele também percorre o app em espanhol e em inglês procurando textos que ficaram em português. Ele também confere se o `sw.js` guarda todos os arquivos usados pelo `index.html`.
 
 ### Cuidados ao mudar
 

@@ -62,11 +62,12 @@ Mi4 Mi4 Fá4 Sol4 | Sol4 Fá4 Mi4 Ré4 | Dó4 Dó4 Ré4 Mi4 | Ré4:4. Dó4:8 Dó
 esquerda: Dó3:2 Dó3:2 | Sol2:2 Sol2:2 | Dó3:2 Dó3:2 | Sol2:2 Sol2:2 |
 Dó3:2 Dó3:2 | Sol2:2 Sol2:2 | Dó3:2 Dó3:2 | Sol2:2 Dó3:2`},
 ];
-const MEL_TEMPLATE = `título: Minha melodia
-mão: direita
-bpm: 80
-descrição:
-Dó4:4 Ré4:4 Mi4:4 p:4 | Mi4:4 Ré4:4 Dó4:2`;
+// Modelo de "Nova melodia" no idioma atual (o leitor aceita as palavras-chave nos três idiomas)
+const melTemplate = () => ({
+  pt:'título: Minha melodia\nmão: direita\nbpm: 80\ndescrição:\nDó4:4 Ré4:4 Mi4:4 p:4 | Mi4:4 Ré4:4 Dó4:2',
+  es:'título: Mi melodía\nmano: derecha\nbpm: 80\ndescripción:\nDo4:4 Re4:4 Mi4:4 p:4 | Mi4:4 Re4:4 Do4:2',
+  en:'title: My melody\nhand: right\nbpm: 80\ndescription:\nC4:4 D4:4 E4:4 p:4 | E4:4 D4:4 C4:2',
+})[state.lang];
 
 state.progress.melodies = state.progress.melodies || {};
 const mel = {cur:null, idx:-1, g:-1, pending:new Set(), dir:'open', running:false, timers:[], raf:null, bus:null,
@@ -84,13 +85,16 @@ function parseMelody(text){
   for(const raw of text.split('\n')){
     let line = raw;
     const h = line.match(/^\s*([^:\s]+)\s*:\s*(.*)$/);
-    const key = h && h[1].toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+    let key = h && h[1].toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+    const ALIAS = {title:'titulo', mano:'mao', hand:'mao', descripcion:'descricao', description:'descricao',
+                   derecha:'direita', right:'direita', izquierda:'esquerda', left:'esquerda'};
+    if(h && ALIAS[key]) key = ALIAS[key];
     if(h && ['titulo','mao','bpm','descricao'].includes(key)){
       const v=h[2].trim();
       if(key==='titulo') m.title=v||m.title;
       else if(key==='descricao') m.desc=v;
       else if(key==='bpm') m.bpm=Math.max(20,Math.min(240,parseInt(v)||80));
-      else m.hand = /esq|left/i.test(v)?'left':'right';
+      else m.hand = /esq|izq|left/i.test(v)?'left':'right';
       continue;
     }
     if(h && (key==='direita' || key==='esquerda')){ hand = key==='direita'?'right':'left'; line = h[2]; }
@@ -228,7 +232,7 @@ function hintGroup(g){
   if(g>=0) groupNotes(g).forEach(n=>{ if(mel.pending.size===0 || mel.pending.has(mel.cur.notes.indexOf(n))) kbOf(n.hand).mark(n.btn.id,'hint',0); });
 }
 function hintBtn(n){ mkL.clearMarks(); mkR.clearMarks(); if(n && n.btn) kbOf(n.hand).mark(n.btn.id,'hint',0); }
-const handLabel = h => h==='left'?'Mão esquerda':h==='right'?'Mão direita':'Duas mãos';
+const handLabel = h => t(h==='left'?'Mão esquerda':h==='right'?'Mão direita':'Duas mãos');
 
 function renderMelList(){
   const cur = mel.cur && mel.cur.id, esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
@@ -265,7 +269,7 @@ function renderMelPlayer(){
     const w = 34 + Math.min(g.dur,4)*18;
     if(g.rest) return `<div class="mcard rest" data-g="${k}" style="width:${w}px">𝄽<span class="d">&nbsp;</span></div>`;
     const ns = g.idxs.map(i=>m.notes[i]), err = ns.some(n=>n.error);
-    const names = ns.map(n=>`<span class="${n.error?'errn':''}" title="${n.error?(n.conflict?'Conflito de fole com a outra mão':'Nota inexistente nesta mão'):''}">${noteLabel(n)}${m.hand==='both'?`<small>${n.hand==='left'?' E':' D'}</small>`:''}</span>`).join('<br>');
+    const names = ns.map(n=>`<span class="${n.error?'errn':''}" title="${n.error?(n.conflict?'Conflito de fole com a outra mão':'Nota inexistente nesta mão'):''}">${noteLabel(n)}${m.hand==='both'?`<small> ${maoLetra(n.hand)}</small>`:''}</span>`).join('<br>');
     return `<div class="mcard ${g.dir||''} ${err?'err':''}" data-g="${k}" style="width:${w}px">${names}<span class="d">${!g.dir?'?':g.dir==='open'?'abre':'fecha'}</span></div>`;
   }).join('');
   const missing = m.notes.filter(n=>n.error && !n.conflict).map(n=>noteName(n.midi)), conflicts = m.notes.filter(n=>n.conflict).length;
@@ -479,7 +483,7 @@ function openEditor(text, id){
   $('#melDelete').style.display = id?'inline-block':'none';
   $('#melEditor').style.display='block'; $('#melText').focus();
 }
-$('#melNew').onclick=()=>openEditor(MEL_TEMPLATE, null);
+$('#melNew').onclick=()=>openEditor(melTemplate(), null);
 $('#melEdit').onclick=()=>openEditor(mel.cur.text, mel.cur.builtin?null:mel.cur.id);
 $('#melCancel').onclick=()=>{ $('#melEditor').style.display='none'; };
 $('#melSave').onclick=()=>{
@@ -492,7 +496,7 @@ $('#melSave').onclick=()=>{
   store.set('melodies', list); loadMelody(id);
 };
 $('#melDelete').onclick=()=>{
-  if(!mel.editingId || !confirm('Excluir esta melodia?')) return;
+  if(!mel.editingId || !confirm(t('Excluir esta melodia?'))) return;
   store.set('melodies', customMelodies().filter(x=>x.id!==mel.editingId));
   delete state.progress.melodies[mel.editingId]; saveProgress();
   loadMelody(BUILTIN_MELODIES[0].id);

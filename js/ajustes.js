@@ -35,16 +35,16 @@ $('#backupImport').onclick=()=>{
     try{
       const b=JSON.parse(await i.files[0].text());
       if(b.app!=='escola-de-bandoneon' || typeof b.dados!=='object') throw 0;
-      if(!confirm('Importar este backup? Os dados atuais deste navegador serão substituídos.')) return;
+      if(!confirm(t('Importar este backup? Os dados atuais deste navegador serão substituídos.'))) return;
       appKeys().forEach(k=>localStorage.removeItem(k));
       Object.entries(b.dados).forEach(([k,v])=>localStorage.setItem(PREFIX+k,v));
       location.reload();
-    }catch(e){ alert('Arquivo de backup inválido.'); }
+    }catch(e){ alert(t('Arquivo de backup inválido.')); }
   };
   i.click();
 };
 $('#backupReset').onclick=()=>{
-  if(!confirm('Apagar todo o progresso, as melodias criadas e as alterações no mapa? Isso não pode ser desfeito (a menos que você tenha um backup).')) return;
+  if(!confirm(t('Apagar todo o progresso, as melodias criadas e as alterações no mapa? Isso não pode ser desfeito (a menos que você tenha um backup).'))) return;
   appKeys().forEach(k=>localStorage.removeItem(k)); location.reload();
 };
 

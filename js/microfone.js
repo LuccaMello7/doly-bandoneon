@@ -59,11 +59,11 @@ function onMicNote(m){
 
 async function micStart(){
   if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
-    alert('Este navegador não permite usar o microfone aqui. Use o app pelo link https (GitHub Pages) ou num navegador atualizado.'); return false;
+    alert(t('Este navegador não permite usar o microfone aqui. Use o app pelo link https (GitHub Pages) ou num navegador atualizado.')); return false;
   }
   try{
     mic.stream = await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false, noiseSuppression:false, autoGainControl:false}});
-  }catch(e){ alert('Não foi possível usar o microfone (permissão negada ou nenhum microfone encontrado).'); return false; }
+  }catch(e){ alert(t('Não foi possível usar o microfone (permissão negada ou nenhum microfone encontrado).')); return false; }
   const c = ac();
   mic.src = c.createMediaStreamSource(mic.stream);
   mic.analyser = c.createAnalyser(); mic.analyser.fftSize = 2048;

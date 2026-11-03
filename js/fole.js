@@ -52,9 +52,9 @@ requestAnimationFrame(bellowsLoop);
 // Exportar/Importar salvam o mapa em JSON.
 $('#editBtn').onclick=e=>{ state.editing=!state.editing; e.target.classList.toggle('on',state.editing); $('#editHelp').style.display=state.editing?'block':'none'; refreshAll(); };
 function editButton(b){
-  const o=parseNote(prompt(`Nota ABRINDO para este botão (atual: ${noteName(b.open)})`, noteName(b.open).replace('♯','#')));
+  const o=parseNote(prompt(t('Nota ABRINDO para este botão (atual: {})', noteName(b.open)), noteName(b.open).replace('♯','#')));
   if(o==null) return;
-  const c=parseNote(prompt(`Nota FECHANDO para este botão (atual: ${noteName(b.close)})`, noteName(b.close).replace('♯','#')));
+  const c=parseNote(prompt(t('Nota FECHANDO para este botão (atual: {})', noteName(b.close)), noteName(b.close).replace('♯','#')));
   if(c==null) return;
   b.open=o; b.close=c; state.layout.name='Personalizado'; store.set('layout',state.layout); refreshAll(); onLayoutChange();
   playNote(o,0.35); playNote(c,0.35,undefined,ac().currentTime+0.4);
@@ -66,8 +66,8 @@ $('#exportBtn').onclick=()=>{
 $('#importBtn').onclick=()=>{
   const i=document.createElement('input'); i.type='file'; i.accept='.json,application/json';
   i.onchange=async()=>{ try{ const L=JSON.parse(await i.files[0].text());
-      if(!L.left||!L.right) throw 0; state.layout=L; store.set('layout',L); rebuildAll(); alert('Layout importado!'); }
-    catch(e){ alert('Arquivo inválido.'); } };
+      if(!L.left||!L.right) throw 0; state.layout=L; store.set('layout',L); rebuildAll(); alert(t('Layout importado!')); }
+    catch(e){ alert(t('Arquivo inválido.')); } };
   i.click();
 };
-$('#resetBtn').onclick=()=>{ if(confirm('Voltar ao mapa padrão Rheinische 142? Suas edições serão perdidas.')){ state.layout=makeDefaultLayout(); store.set('layout',state.layout); rebuildAll(); } };
+$('#resetBtn').onclick=()=>{ if(confirm(t('Voltar ao mapa padrão Rheinische 142? Suas edições serão perdidas.'))){ state.layout=makeDefaultLayout(); store.set('layout',state.layout); rebuildAll(); } };

@@ -23,7 +23,7 @@ function spellName(n, withOct){
 }
 function tonicLabel(type, pc){
   const sp = SCALE_TYPES[type].spell;
-  if(!sp) return (state.names==='pt'?PT:EN)[pc];
+  if(!sp) return noteNames()[pc];
   const t = TONIC_SPELL[sp][pc], letter='CDEFGAB'.indexOf(t[0]), acc = t[1]==='#'?1:t[1]==='b'?-1:0;
   return letterNames()[letter] + ACC_SYM[acc];
 }
@@ -83,10 +83,10 @@ function loadScale(type, pc, hand, octs, start, dirMode){
   stopMelody();
   const T = SCALE_TYPES[type], notes = scaleNotes(type, pc, start, octs, dirMode);
   notes.forEach((n,i)=>{ n.beats = i===notes.length-1 ? 2 : 1; });
-  const title = `${tonicLabel(type,pc)} ${T.name.toLowerCase()}${type==='cromatica'?' (a partir de '+tonicLabel(type,pc)+')':''}`;
+  const title = `${tonicLabel(type,pc)} ${t(T.name).toLowerCase()}${type==='cromatica'?' '+t('(a partir de {})', tonicLabel(type,pc)):''}`;
   const tok = n => noteToken(n.midi)+':'+(n.beats===2?'2':'4');
   const m = {title:`Escala: ${title}`, desc:`${octs} oitava(s)`, hand, bpm:72, notes, bad:[],
-    id:scaleId(type,pc,hand,octs), builtin:true, guide:{type, pc},
+    id:scaleId(type,pc,hand,octs), builtin:true, guide:{type, pc, hand, octs, start, dirMode}, // parâmetros guardados para refazer ao trocar o idioma
     text:`título: Escala: ${title}\nmão: ${hand==='left'?'esquerda':'direita'}\nbpm: 72\n${notes.map(tok).join(' ')}`};
   fingerMelody(m); mel.cur = m;
   $('#melEditor').style.display='none'; $('#melImport').style.display='none'; $('#scaleCard').style.display='none'; $('#melPlayer').style.display='block';
@@ -113,7 +113,8 @@ function relPos(a, b){
   if(a.id===b.id) return '<b>mesmo botão</b>, só muda o fole';
   const dx=b.x-a.x, dy=b.y-a.y, d=Math.hypot(dx,dy);
   const v = dy<-0.25?'acima':dy>0.25?'abaixo':'', h = dx>0.25?'à direita':dx<-0.25?'à esquerda':'';
-  return (d<1.3?'botão vizinho':'botão mais distante') + (v||h ? ', '+[v,h].filter(Boolean).join(' e ') : '');
+  // frases inteiras ("acima e à direita") para a tradução não depender da ordem das palavras
+  return t(d<1.3?'botão vizinho':'botão mais distante') + (v||h ? ', '+t([v,h].filter(Boolean).join(' e ')) : '');
 }
 function guideStep(i){
   const g = mel.cur && mel.cur.guide; if(!g) return;
@@ -132,7 +133,7 @@ function guideStep(i){
 function renderScaleGrid(){
   const hand=$('#scHand').value, octs=+$('#scOct').value, P=state.progress.melodies;
   let h = `<table class="sgrid"><tr><th>${hand==='left'?'Esq.':'Dir.'} · ${octs} oit.</th>`+
-    Array.from({length:12},(_,pc)=>`<th>${(state.names==='pt'?PT:EN)[pc]}</th>`).join('')+'</tr>';
+    Array.from({length:12},(_,pc)=>`<th>${noteNames()[pc]}</th>`).join('')+'</tr>';
   for(const [k,T] of Object.entries(SCALE_TYPES)){
     h += `<tr><th style="text-align:left">${T.name}</th>`;
     for(let pc=0; pc<12; pc++){

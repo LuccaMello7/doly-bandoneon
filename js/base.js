@@ -7,8 +7,10 @@
 // Nomes das 12 notas (índice = classe de altura, 0 = Dó)
 const PT = ["Dó","Dó♯","Ré","Ré♯","Mi","Fá","Fá♯","Sol","Sol♯","Lá","Lá♯","Si"];
 const EN = ["C","C♯","D","D♯","E","F","F♯","G","G♯","A","A♯","B"];
+const ES = ["Do","Do♯","Re","Re♯","Mi","Fa","Fa♯","Sol","Sol♯","La","La♯","Si"]; // solfejo em espanhol (sem acento)
 const LETTERS_PT = ["Dó","Ré","Mi","Fá","Sol","Lá","Si"];
 const LETTERS_EN = ["C","D","E","F","G","A","B"];
+const LETTERS_ES = ["Do","Re","Mi","Fa","Sol","La","Si"];
 const DIA_SEMI = [0,2,4,5,7,9,11]; // semitons das notas naturais a partir de Dó
 
 // Tudo fica no localStorage com o prefixo "bandoneon." (o backup em Ajustes exporta essas chaves)
@@ -27,8 +29,11 @@ function loadLayout(){
 }
 // Estado global compartilhado pelas abas. progress guarda lições concluídas, recordes,
 // estatísticas por botão (btnStats), melodias (melodies) e dias de prática (days).
+// Idioma inicial: o escolhido antes ou o do navegador (espanhol, português; o resto vê inglês)
+function detectLang(){ const n=(navigator.language||'pt').toLowerCase(); return n.startsWith('es')?'es':n.startsWith('pt')?'pt':'en'; }
 const state = {
-  names: store.get('names','pt'),
+  lang: store.get('lang', null) || detectLang(),
+  names: store.get('names', null) || 'pt', // 'pt' = solfejo, 'en' = letras (C D E)
   sound: store.get('sound','samples'),
   tuning: store.get('tuning',443),
   volume: store.get('volume',80),
@@ -43,9 +48,11 @@ const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 const rand = n => Math.floor(Math.random()*n);
 const pick = a => a[rand(a.length)];
-function noteName(m){ return (state.names==='pt'?PT:EN)[((m%12)+12)%12] + (Math.floor(m/12)-1); }
-function letterNames(){ return state.names==='pt'?LETTERS_PT:LETTERS_EN; }
-const dirLabel = d => d==='open' ? 'Abrindo' : 'Fechando';
+// Nomes das notas na escolha e no idioma atuais: letras (C D E) ou solfejo (Dó Ré Mi; em espanhol Do Re Mi)
+function noteNames(){ return state.names==='en' ? EN : state.lang==='es' ? ES : PT; }
+function noteName(m){ return noteNames()[((m%12)+12)%12] + (Math.floor(m/12)-1); }
+function letterNames(){ return state.names==='en' ? LETTERS_EN : state.lang==='es' ? LETTERS_ES : LETTERS_PT; }
+const dirLabel = d => t(d==='open' ? 'Abrindo' : 'Fechando');
 
 // Lê uma nota digitada ("Sol4", "Fá#3", "Sib4", "G4" ou o número MIDI). Devolve o MIDI ou null.
 function parseNote(s){

@@ -142,6 +142,11 @@ button,select,a,input{touch-action:manipulation}
 .ritem .rcheck{font-size:1.3rem;width:30px;text-align:center}
 .ritem .rtext{flex:1;min-width:0}
 .ritem.done{opacity:.7} .ritem.done .rcheck{color:var(--green);font-weight:700}
+.langs{display:flex;gap:6px;margin-left:auto}
+.langs button{background:none;border:2px solid transparent;border-radius:6px;padding:2px;cursor:pointer;opacity:.6}
+.langs button.on{border-color:var(--gold);opacity:1}
+.langs button:hover{opacity:1}
+.langs img{display:block;width:30px;height:20px;object-fit:cover;border-radius:2px}
 kbd{background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:.85em}
 
 /* Lições */

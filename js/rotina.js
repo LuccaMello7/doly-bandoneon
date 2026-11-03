@@ -40,11 +40,10 @@ function renderRoutine(){
   ROUTINE[1].d = `Hoje: ${tonicLabel(type,pc)} ${SCALE_TYPES[type].name.toLowerCase()}, no modo Espera.`;
   const feitos = ROUTINE.filter(r=>done[r.k]).length, s = streak();
   $('#streak').innerHTML = s ? `🔥 <b>${s}</b> dia${s>1?'s':''} seguido${s>1?'s':''}` : '<span class="muted">Pratique hoje para começar uma sequência</span>';
-  const ini = ['D','S','T','Q','Q','S','S'];
   $('#week').innerHTML = Array.from({length:7},(_,k)=>{
     const d=new Date(); d.setDate(d.getDate()-(6-k));
     const on = !!state.progress.days[dayKey(d)];
-    return `<span class="day ${on?'on':''} ${k===6?'today':''}" title="${d.toLocaleDateString('pt-BR')}">${ini[d.getDay()]}</span>`;
+    return `<span class="day ${on?'on':''} ${k===6?'today':''}" title="${d.toLocaleDateString(IDIOMAS[state.lang].html)}">${d.toLocaleDateString(IDIOMAS[state.lang].html,{weekday:'narrow'}).toUpperCase()}</span>`;
   }).join('') + `<span class="muted" style="margin-left:8px">${feitos}/${ROUTINE.length} hoje</span>`;
   $('#routine').innerHTML = ROUTINE.map((r,i)=>`<div class="ritem ${done[r.k]?'done':''}">
       <span class="rcheck">${done[r.k]?'✓':r.icon}</span>

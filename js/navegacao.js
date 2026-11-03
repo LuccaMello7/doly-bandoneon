@@ -12,7 +12,13 @@ function go(v){
 $('#nav').addEventListener('click',e=>{ if(e.target.dataset.v) go(e.target.dataset.v); });
 document.addEventListener('click',e=>{ const g=e.target.closest('[data-go]'); if(g){ e.preventDefault(); go(g.dataset.go); } });
 // Trocar Dó Ré Mi ↔ C D E redesenha tudo o que mostra nomes de notas
-$('#namesSel').onchange=e=>{ state.names=e.target.value; store.set('names',state.names); refreshAll(); renderLesson(); renderStaffAnswers(); if(fq.target!=null) showFindTarget(); if(mel.cur && !mel.running) renderMelPlayer(); if($('#scaleCard').style.display!=='none') fillScaleTonics(); fillChordSelects(); showChord(); };
+// Redesenha o que o código monta com nomes de notas ou textos do idioma (ao trocar notas ou idioma)
+function rerenderTextos(){
+  refreshAll(); renderLesson(); renderStaffAnswers(); if(fq.active) showFindTarget();
+  if(mel.cur && !mel.running){ const g=mel.cur.guide; if(g) loadScale(g.type,g.pc,g.hand,g.octs,g.start,g.dirMode); else renderMelPlayer(); }
+  renderMelList(); fillScaleTonics(); fillChordSelects(); showChord(); renderProgress();
+}
+$('#namesSel').onchange=e=>{ state.names=e.target.value; store.set('names',state.names); rerenderTextos(); };
 
 /* ================== Progresso ================== */
 // Atualiza a tela inicial (chamada sempre que o progresso é salvo)
