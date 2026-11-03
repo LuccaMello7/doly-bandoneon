@@ -12,6 +12,16 @@ App web interativo para aprender bandoneon (sistema Rheinische 142 vozes). É um
 
 O progresso, as melodias criadas e as alterações no mapa de botões ficam salvos no `localStorage` do navegador.
 
+## Som
+
+Usa amostras reais do SoundFont **Bandoneon V2.5**, de Jörg Bleymehl (2016), gravado num bandoneon ELA de 1930, com edição GM de Mike77154. A licença do autor permite o uso livre, inclusive em projetos de software. As amostras ficam em `sons/bandoneon.js`, gerado com:
+
+```
+python ferramentas/sf2_para_js.py caminho/para/Bandoneon_V2.5.sf2 sons/bandoneon.js
+```
+
+O instrumento gravado está afinado em Lá = 443 Hz. No seletor "Som", no topo do app, dá para voltar ao som sintetizado.
+
 ## Mapa de botões
 
 Transcrito dos diagramas de Omar Caccia (mão direita abrindo, mão esquerda fechando) e Matías Gobbo (mão direita fechando, mão esquerda abrindo). Ele pode ser ajustado em **Teclado → Editar layout** e exportado ou importado em JSON.

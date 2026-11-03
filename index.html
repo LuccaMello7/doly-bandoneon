@@ -115,6 +115,8 @@
     <button data-v="ritmo">Ritmo</button>
   </nav>
   <div class="row" style="margin-left:auto">
+    <span class="muted">Som:</span>
+    <select id="soundSel"><option value="samples">Bandoneon real</option><option value="synth">Sintetizado</option></select>
     <span class="muted">Notas:</span>
     <select id="namesSel"><option value="pt">Dó Ré Mi</option><option value="en">C D E</option></select>
   </div>
@@ -146,6 +148,7 @@
       <li>Pratique o <a href="#" data-go="ritmo">Ritmo</a>: marcato, síncopa e 3-3-2.</li>
     </ol>
     <div class="notice"><b>Sobre o mapa dos botões:</b> existem vários sistemas de bandoneon (Rheinische 142 vozes, 144, Einheitsbandoneon, cromático/Péguri…) e até instrumentos do mesmo sistema podem ter diferenças. O app usa o mapa do <b>Rheinische 142</b>, o padrão do tango: 71 botões (38 na mão direita e 33 na esquerda), com as notas transcritas dos diagramas de Omar Caccia e Matías Gobbo. Se o seu instrumento tiver alguma diferença, ajuste os botões em <b>Teclado → Editar layout</b>.</div>
+    <p class="muted" style="font-size:.85rem;margin-bottom:0">Som: SoundFont <i>Bandoneon V2.5</i>, de Jörg Bleymehl (gravado num bandoneon ELA de 1930; edição GM de Mike77154), de uso livre. Você pode trocar para o som sintetizado no seletor "Som", no topo da página.</p>
   </div>
 </section>
 
@@ -344,6 +347,7 @@
 </section>
 </main>
 
+<script src="sons/bandoneon.js"></script>
 <script>
 /* ================== Estado e utilidades ================== */
 const PT = ["Dó","Dó♯","Ré","Ré♯","Mi","Fá","Fá♯","Sol","Sol♯","Lá","Lá♯","Si"];
@@ -366,6 +370,7 @@ function loadLayout(){
 }
 const state = {
   names: store.get('names','pt'),
+  sound: store.get('sound','samples'),
   dir: 'open',
   showLabels: true,
   editing: false,
@@ -406,7 +411,36 @@ function ac(){
 }
 const freq = m => 440*Math.pow(2,(m-69)/12);
 const voices = {};
+
+// Amostras reais: sons/bandoneon.js (gerado do SoundFont por ferramentas/sf2_para_js.py)
+const SF = window.BANDONEON_SF || null, sfBuffers = [];
+const useSamples = () => SF && state.sound!=='synth';
+function sfBuffer(i){
+  if(!sfBuffers[i]){
+    const s=SF.samples[i], bin=atob(s.data), u8=new Uint8Array(bin.length);
+    for(let k=0;k<bin.length;k++) u8[k]=bin.charCodeAt(k);
+    const pcm=new Int16Array(u8.buffer), buf=AC.createBuffer(1,pcm.length,s.rate), ch=buf.getChannelData(0);
+    for(let k=0;k<pcm.length;k++) ch[k]=pcm[k]/32768*s.gain;
+    sfBuffers[i]=buf;
+  }
+  return sfBuffers[i];
+}
+function sfZone(midi){
+  return SF.zones.find(z=>midi>=z.lo && midi<=z.hi)
+      || SF.zones.reduce((a,b)=>Math.abs(midi-b.root)<Math.abs(midi-a.root)?b:a);
+}
+function makeSampleVoice(midi, peak, t0){
+  const c=ac(), z=sfZone(midi), s=SF.samples[z.s], src=c.createBufferSource();
+  src.buffer=sfBuffer(z.s);
+  src.playbackRate.value=Math.pow(2,(midi-z.root+z.tune/100)/12);
+  if(z.loop){ src.loop=true; src.loopStart=s.loopStart/s.rate; src.loopEnd=s.loopEnd/s.rate; }
+  const out=c.createGain(); out.gain.value=0;
+  src.connect(out).connect(master); src.start(t0);
+  out.gain.setTargetAtTime(peak*Math.pow(10,-z.atten/20), t0, 0.006);
+  return {oscs:[src], out};
+}
 function makeReed(midi, hand, peak, t0){
+  if(useSamples()) return makeSampleVoice(midi, peak, t0);
   // Simula duas lengüetas (palhetas) afinadas em oitava, como no bandoneon
   const c=ac(), f=freq(midi);
   const out=c.createGain(); out.gain.value=0;
@@ -503,6 +537,9 @@ function go(v){
 $('#nav').addEventListener('click',e=>{ if(e.target.dataset.v) go(e.target.dataset.v); });
 document.addEventListener('click',e=>{ const g=e.target.closest('[data-go]'); if(g){ e.preventDefault(); go(g.dataset.go); } });
 $('#namesSel').value=state.names;
+if(!SF){ $('#soundSel').value='synth'; $('#soundSel').disabled=true; $('#soundSel').title='Arquivo sons/bandoneon.js não encontrado'; }
+else $('#soundSel').value=state.sound;
+$('#soundSel').onchange=e=>{ state.sound=e.target.value; store.set('sound',state.sound); ac(); playNote(69,0.6,'right'); };
 $('#namesSel').onchange=e=>{ state.names=e.target.value; store.set('names',state.names); refreshAll(); renderLesson(); renderStaffAnswers(); if(fq.target!=null) showFindTarget(); if(mel.cur && !mel.running) renderMelPlayer(); if($('#scaleCard').style.display!=='none') fillScaleTonics(); };
 
 /* ================== Progresso ================== */
