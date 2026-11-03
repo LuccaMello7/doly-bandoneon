@@ -53,15 +53,54 @@ const LESSONS = [
   quiz:[{q:'Como se agrupam as 8 colcheias no ritmo 3-3-2?',o:['4+4','2+2+2+2','3+3+2','3+2+3'],a:2},
         {q:'O que caracteriza a síncopa?',o:['Acento no contratempo','Notas longas','Só tempos fortes','Ausência de acentos'],a:0}]},
 { title:'7. Rotina de estudo', html:`
-  <p>Uma rotina curta e diária rende mais que horas uma vez por semana. Sugestão de 20–30 minutos:</p>
+  <p>Uma rotina curta e diária rende mais que horas uma vez por semana. A <a href="#" data-go="inicio">tela inicial</a> mostra a sua <b>rotina de hoje</b> e quantos dias seguidos você praticou. Sugestão de 20–30 minutos:</p>
   <ol>
     <li><b>5 min</b>: fole. Notas longas abrindo e fechando, com volume estável.</li>
     <li><b>10 min</b>: mapa de botões. Escalas lentas de Dó e Sol maior, uma mão por vez. Use as <a href="#" data-go="melodias">Escalas guiadas</a> no modo Espera e o desafio <i>Encontre a nota</i>.</li>
     <li><b>5 min</b>: ritmo. Marcato e síncopa com metrônomo.</li>
-    <li><b>5–10 min</b>: repertório. Um trecho de tango simples, como "La Cumparsita" ou "El Choclo", bem devagar.</li>
+    <li><b>5–10 min</b>: repertório. Uma melodia ou um trecho de tango importado (MusicXML), bem devagar, e os acordes do acompanhamento.</li>
   </ol>
   <p>Um professor presencial é muito importante para postura, correias e mecânica do fole, que um app não consegue corrigir.</p>`,
   quiz:[{q:'O que é mais eficiente no começo?',o:['Uma sessão longa por semana','Prática curta e diária','Só tocar músicas rápidas','Só teoria'],a:1}]},
+{ title:'8. Articulação: legato, staccato e acentos', html:`
+  <p>No bandoneon, a articulação vem da combinação entre <b>dedos</b> e <b>fole</b>:</p>
+  <ul>
+    <li><b>Legato</b> (ligado): uma nota emenda na outra, sem silêncio. O fole continua andando sem parar e os dedos trocam de botão no momento exato. É mais fácil quando as notas da frase estão na <b>mesma direção</b> do fole.</li>
+    <li><b>Staccato</b> (destacado): notas curtas, com silêncio entre elas. O dedo solta o botão rápido; o fole pode continuar em movimento suave.</li>
+    <li><b>Acento</b>: um impulso rápido do fole no início da nota (ou do acorde) faz ela soar mais forte. É o que dá peso ao <i>marcato</i>.</li>
+    <li><b>Arrastre</b>: o som começa um pouco antes do tempo e cresce até o acento. Sai de um movimento de fole que acelera até o tempo forte.</li>
+  </ul>
+  <p>Experimente na aba <a href="#" data-go="teclado">Teclado</a>: toque uma escala ligada e depois destacada. Na aba <a href="#" data-go="ritmo">Ritmo</a>, ouça o padrão "Marcato com arrastre".</p>`,
+  quiz:[{q:'O que produz o acento de um acorde no bandoneon?',o:['Apertar o botão com mais força','Um impulso rápido do fole','A válvula de ar','Trocar de mão'],a:1},
+        {q:'Por que o legato é mais fácil com as notas na mesma direção do fole?',o:['Porque o fole não precisa parar para inverter','Porque as notas ficam mais agudas','Porque usa menos botões','Não faz diferença'],a:0}]},
+{ title:'9. Acordes no bandoneon', html:`
+  <p>Um acorde é formado por notas empilhadas em terças. O <b>maior</b> tem fundamental, terça maior e quinta (Dó-Mi-Sol). O <b>menor</b> tem a terça menor (Lá-Dó-Mi). O de <b>sétima</b> (dominante) acrescenta a sétima menor (Sol-Si-Ré-Fá) e "pede" para resolver no acorde seguinte.</p>
+  <p>No bandoneon bisonoro, <b>cada acorde tem uma forma abrindo e outra fechando</b>, com botões diferentes. Por isso vale aprender os acordes mais usados nas duas direções.</p>
+  <p>No acompanhamento de tango, a mão esquerda costuma tocar o <b>baixo</b> (fundamental) no tempo forte e o <b>acorde</b> nos outros tempos, ou o acorde inteiro em marcato.</p>
+  <p>Na aba <a href="#" data-go="acordes">Acordes</a> você vê as formas de cada acorde no teclado, ouve e treina. Comece por Lám, Rém, Mi7 e Dó, muito comuns em tangos em Lá menor.</p>`,
+  quiz:[{q:'Quais notas formam o acorde de Lá menor?',o:['Lá, Dó♯, Mi','Lá, Dó, Mi','Lá, Ré, Fá','Lá, Si, Dó'],a:1},
+        {q:'No bandoneon bisonoro, um mesmo acorde…',o:['Usa sempre os mesmos botões','Tem uma forma abrindo e outra fechando','Só pode ser tocado abrindo','Só existe na mão direita'],a:1}]},
+{ title:'10. Duas mãos, um fole só', html:`
+  <p>As duas mãos dividem o <b>mesmo fole</b>. Isso tem duas consequências importantes:</p>
+  <ol>
+    <li>Num dado momento, <b>as duas mãos tocam na mesma direção</b>. Uma nota da melodia e um baixo tocados juntos precisam existir na mesma direção.</li>
+    <li>Enquanto uma nota está <b>soando</b>, o fole não pode inverter, ou ela muda de altura no meio. Por isso a troca de direção acontece quando as duas mãos atacam juntas ou numa pausa.</li>
+  </ol>
+  <p>Como estudar: primeiro cada mão sozinha, depois as duas juntas bem devagar. Na aba <a href="#" data-go="melodias">Melodias</a>, abra a <i>Ode à Alegria a duas mãos</i> no modo Espera. O app planeja o fole para as duas mãos e mostra a partitura em pauta dupla.</p>`,
+  quiz:[{q:'Melodia e baixo tocados ao mesmo tempo precisam estar…',o:['Em direções opostas do fole','Na mesma direção do fole','Na mesma mão','Em oitavas iguais'],a:1},
+        {q:'O que acontece se o fole inverter enquanto uma nota está soando?',o:['Nada','A nota muda de altura','O som fica mais forte','O fole trava'],a:1}]},
+{ title:'11. Como ler uma partitura de tango', html:`
+  <p>Partituras para bandoneon solo geralmente usam <b>duas pautas</b> (sol para a direita, fá para a esquerda), como no piano. Nas partes de orquestra típica, o bandoneon muitas vezes tem <b>uma pauta só</b>, em clave de sol, com a melodia ou um contracanto. Os baixos ficam com o contrabaixo e o piano.</p>
+  <p>O que procurar ao abrir um tango:</p>
+  <ul>
+    <li><b>Forma</b>: os tangos tradicionais costumam ter duas partes (A e B), e os mais antigos às vezes uma terceira (trio). Ache onde cada parte começa.</li>
+    <li><b>Repetições</b>: barras de ritornelo, <i>D.C.</i> (volta ao começo), <i>D.S.</i> (volta ao sinal 𝄋), <i>Coda</i> (𝄌) e <i>Fine</i> (fim).</li>
+    <li><b>Tonalidade e compasso</b>: muitos tangos estão em tom menor e em 2/4 ou 4/4.</li>
+    <li><b>Indicações de caráter</b>: <i>marcato</i>, <i>legato</i>, <i>rall.</i> (desacelerando), <i>a tempo</i>, e dinâmicas como <i>p</i>, <i>f</i> e <i>sfz</i>.</li>
+  </ul>
+  <p>Dica: com uma partitura digital (MuseScore), exporte em MusicXML e use <a href="#" data-go="melodias">Melodias → Importar MusicXML</a> para praticar trecho a trecho. Prefira obras em domínio público ou partituras que você tem direito de usar.</p>`,
+  quiz:[{q:'O que significa "D.C." numa partitura?',o:['Diminuir o volume','Voltar ao começo','Dobrar o compasso','Tocar com a mão direita'],a:1},
+        {q:'Numa parte de orquestra típica, o bandoneon muitas vezes…',o:['Tem uma pauta só, em clave de sol','Não tem partitura','Lê só cifras','Usa clave de dó'],a:0}]},
 ];
 let curLesson=0, lessonAnswered={}, lessonKb=null, lessonCount={open:0,close:0}, lessonDir='open';
 function renderLessonList(){

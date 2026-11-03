@@ -260,6 +260,16 @@ teste('escala do dia sempre cabe na mão direita', () => {
   for(let k=0;k<24;k++){ const d=new Date(2026,0,1+k), {pc,type}=dailyScale(d); ok(validStarts(type,pc,'right',1).length, type+' '+pc); }
 });
 
+/* ---------- Lições ---------- */
+teste('11 lições, todas com quiz de resposta válida', () => {
+  igual(LESSONS.length, 11);
+  LESSONS.forEach(l=>{ ok(l.quiz.length, l.title); l.quiz.forEach(q=>ok(q.a>=0 && q.a<q.o.length, l.title)); });
+});
+teste('links internos das lições apontam para abas existentes', () => {
+  const abas = $$('main>section').map(s=>s.id.slice(2));
+  LESSONS.forEach(l=>[...l.html.matchAll(/data-go="([^"]+)"/g)].forEach(m=>ok(abas.includes(m[1]), l.title+' → '+m[1])));
+});
+
 /* ---------- Execução ---------- */
 (async () => {
   const linhas = [];
