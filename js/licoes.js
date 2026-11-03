@@ -89,7 +89,7 @@ function renderLesson(){
     lessonCount={open:0,close:0}; lessonDir='open';
     host.innerHTML=`<div class="row" style="margin:8px 0"><button class="btn" id="lDir">Direção: Abrindo (trocar)</button><span id="lCount" class="muted"></span></div><div id="lKb"></div>`;
     const idx=allKeyboards.indexOf(lessonKb); if(idx>=0) allKeyboards.splice(idx,1);
-    lessonKb=kb($('#lKb'),'right',{getDir:()=>lessonDir, onPress:(b,m,dir)=>{ lessonCount[dir]++; updLessonCount(noteName(m)); tryCompleteLesson(); }});
+    lessonKb=kb($('#lKb'),'right',{perRow:1, getDir:()=>lessonDir, onPress:(b,m,dir)=>{ lessonCount[dir]++; updLessonCount(noteName(m)); tryCompleteLesson(); }});
     $('#lDir').onclick=()=>{ lessonDir=lessonDir==='open'?'close':'open'; $('#lDir').textContent=`Direção: ${dirLabel(lessonDir)} (trocar)`; lessonKb.refresh(); };
     updLessonCount();
   }

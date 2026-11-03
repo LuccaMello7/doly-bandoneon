@@ -117,6 +117,14 @@ teste('botões do teclado têm descrição para leitores de tela', () => {
   ok(/abrindo, .* fechando/.test(document.querySelector('#kbRight .key').getAttribute('aria-label')));
 });
 
+
+/* ---------- Celular ---------- */
+teste('tamanho dos botões se adapta à largura da tela', () => {
+  const W = document.documentElement.clientWidth;
+  const s = autoKeySize(7.43, 2); ok(s>=30 && s<=48, 'tamanho '+s);
+  if(W>=1000) igual(s, 48, 'na tela larga deve usar o tamanho máximo');
+});
+
 /* ---------- Execução ---------- */
 (async () => {
   const linhas = [];

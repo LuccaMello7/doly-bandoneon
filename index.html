@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Escola de Bandoneon</title>
+<meta name="theme-color" content="#2a0d0f">
+<meta name="description" content="App interativo para aprender bandoneon: teclado bisonoro, escalas guiadas, melodias e ritmos de tango.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icones/icone.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icones/icone-192.png">
 <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
@@ -46,7 +52,7 @@
       <li>Pratique o <a href="#" data-go="ritmo">Ritmo</a>: marcato, síncopa e 3-3-2.</li>
     </ol>
     <div class="notice"><b>Sobre o mapa dos botões:</b> existem vários sistemas de bandoneon (Rheinische 142 vozes, 144, Einheitsbandoneon, cromático/Péguri…) e até instrumentos do mesmo sistema podem ter diferenças. O app usa o mapa do <b>Rheinische 142</b>, o padrão do tango: 71 botões (38 na mão direita e 33 na esquerda), com as notas transcritas dos diagramas de Omar Caccia e Matías Gobbo. Se o seu instrumento tiver alguma diferença, ajuste os botões em <b>Teclado → Editar layout</b>.</div>
-    <p class="muted" style="font-size:.85rem;margin-bottom:0">Som: SoundFont <i>Bandoneon V2.5</i>, de Jörg Bleymehl (gravado num bandoneon ELA de 1930; edição GM de Mike77154), de uso livre. Você pode trocar para o som sintetizado no seletor "Som", no topo da página.</p>
+    <p class="muted" style="font-size:.85rem;margin-bottom:0">Som: SoundFont <i>Bandoneon V2.5</i>, de Jörg Bleymehl (gravado num bandoneon ELA de 1930; edição GM de Mike77154), de uso livre. Você pode trocar para o som sintetizado em <a href="#" data-go="ajustes">Ajustes</a>.</p>
   </div>
 </section>
 
@@ -68,12 +74,15 @@
         <button class="btn sec" id="valveCloseBtn" title="Segure para fechar o fole sem som">Válvula: fechar (segure F)</button>
         <button class="btn sec on" id="labelsBtn">Mostrar nomes</button>
       </div>
-      <div class="row">
-        <button class="btn sec" id="editBtn">Editar layout</button>
-        <button class="btn sec" id="exportBtn">Exportar</button>
-        <button class="btn sec" id="importBtn">Importar</button>
-        <button class="btn sec" id="resetBtn">Restaurar padrão</button>
-      </div>
+      <details class="mapmenu">
+        <summary class="btn sec">Mapa de botões ▾</summary>
+        <div class="row">
+          <button class="btn sec" id="editBtn">Editar layout</button>
+          <button class="btn sec" id="exportBtn">Exportar</button>
+          <button class="btn sec" id="importBtn">Importar</button>
+          <button class="btn sec" id="resetBtn">Restaurar padrão</button>
+        </div>
+      </details>
     </div>
     <div class="instrument">
       <div class="side"><div class="label">Mão esquerda (graves)</div><div id="kbLeft"></div></div>
@@ -257,7 +266,7 @@
       <label>Nomes das notas
         <select id="namesSel"><option value="pt">Dó Ré Mi</option><option value="en">C D E</option></select></label>
     </div>
-    <div class="row" style="margin-top:12px"><button class="btn sec" id="testSound">🔊 Testar som</button><span class="muted" id="soundStatus" aria-live="polite"></span></div>
+    <div class="row" style="margin-top:12px"><button class="btn sec" id="testSound">🔊 Testar som</button><button class="btn" id="installBtn" style="display:none">📲 Instalar app</button><span class="muted" id="soundStatus" aria-live="polite"></span></div>
   </div>
   <div class="card">
     <h3 style="margin-top:0">Seus dados</h3>

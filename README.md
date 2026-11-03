@@ -20,7 +20,7 @@ Usa amostras reais do SoundFont **Bandoneon V2.5**, de Jörg Bleymehl (2016), gr
 python ferramentas/sf2_para_js.py caminho/para/Bandoneon_V2.5.sf2 sons/bandoneon.js
 ```
 
-O instrumento gravado está afinado em Lá = 443 Hz. No seletor "Som", no topo do app, dá para voltar ao som sintetizado.
+O instrumento gravado está afinado em Lá = 443 Hz. Em **Ajustes** dá para voltar ao som sintetizado e escolher a afinação (440, 442 ou 443 Hz).
 
 ## Mapa de botões
 

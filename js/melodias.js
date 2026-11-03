@@ -135,7 +135,8 @@ function fingerMelody(m){
   });
 }
 
-const mkOpts = {getDir:()=>mel.dir, onPress:(b,m,dir)=>melPress(b,m,dir)};
+const mkOpts = {getDir:()=>mel.dir, onPress:(b,m,dir)=>melPress(b,m,dir), perRow:1};
+function onKeyboardsResized(){ if(mel.running && mel.cur.notes[mel.idx]) hintBtn(mel.cur.notes[mel.idx]); }
 const mkL = kb($('#mkLeft'),'left',mkOpts), mkR = kb($('#mkRight'),'right',mkOpts);
 const melKb = () => mel.cur && mel.cur.hand==='left' ? mkL : mkR;
 const melSpeed = () => +$('#melSpeed').value/100;

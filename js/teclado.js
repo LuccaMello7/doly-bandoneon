@@ -1,15 +1,26 @@
 /* ================== Componente teclado ================== */
 let kbSeq=0;
+// Tamanho do botão conforme a largura da tela. perRow = quantos teclados lado a lado (1 ou 2)
+function autoKeySize(maxX, perRow){
+  const W = Math.min(1150, document.documentElement.clientWidth) - 48;
+  const per = perRow===1 ? 1 : (W>=860 ? 2 : 1);
+  return Math.max(30, Math.min(48, Math.floor((W/per - (per===2?130:16)) / (maxX+1))));
+}
 function createKeyboard(el, hand, opts={}){
-  const uid='k'+(kbSeq++), size=opts.size||48, dia=Math.round(size*0.8);
+  const uid='k'+(kbSeq++);
+  let size=48, dia=38;
   const held=new Set(), nodes={};
+  el.addEventListener('contextmenu', e=>e.preventDefault());
   function build(){
     el.innerHTML=''; el.className='kbd';
     const bs=state.layout[hand], maxX=Math.max(...bs.map(b=>b.x)), maxY=Math.max(...bs.map(b=>b.y));
+    size=opts.size||autoKeySize(maxX, opts.perRow); dia=Math.round(size*0.8); api.size=size;
     el.style.width=((maxX+1)*size+10)+'px'; el.style.height=((maxY+1)*size+10)+'px';
+    el.style.fontSize=Math.max(8, Math.round(size*0.21))+'px';
     for(const b of state.layout[hand]){
       const d=document.createElement('button'); d.className='key';
       Object.assign(d.style,{left:(8+b.x*size)+'px', top:(8+b.y*size)+'px', width:dia+'px', height:dia+'px'});
+      d.type='button';
       const getDir=()=>opts.getDir?opts.getDir():state.dir;
       const press=e=>{ e.preventDefault(); if(held.has(b.id)) return;
         if(state.editing && opts.editable){ editButton(b); return; }
@@ -34,7 +45,7 @@ function createKeyboard(el, hand, opts={}){
     }
   }
   const api={
-    hand, build, refresh, held,
+    hand, build, refresh, held, size, perRow:opts.perRow,
     retune(){ const dir=opts.getDir?opts.getDir():state.dir;
       for(const id of held){ const b=nodes[id].b; if(voices[uid+id]) startVoice(uid+id,b[dir],hand); } },
     silence(){ for(const id of held) stopVoice(uid+id,true); },
@@ -45,6 +56,19 @@ function createKeyboard(el, hand, opts={}){
   build();
   return api;
 }
+// Ao girar o celular ou redimensionar a janela, refaz os teclados cujo tamanho mudou
+let resizeTimer=null;
+window.addEventListener('resize', ()=>{
+  clearTimeout(resizeTimer);
+  resizeTimer=setTimeout(()=>{
+    let changed=false;
+    for(const k of allKeyboards){
+      const bs=state.layout[k.hand], maxX=Math.max(...bs.map(b=>b.x));
+      if(autoKeySize(maxX, k.perRow)!==k.size && k.held.size===0){ k.build(); changed=true; }
+    }
+    if(changed && typeof onKeyboardsResized==='function') onKeyboardsResized();
+  }, 150);
+});
 const allKeyboards=[];
 function kb(el,hand,opts){ const k=createKeyboard(el,hand,opts); allKeyboards.push(k); return k; }
 function refreshAll(){ allKeyboards.forEach(k=>k.refresh()); }

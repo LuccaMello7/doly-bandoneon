@@ -27,6 +27,10 @@ def main():
     if not nav:
         sys.exit('Nenhum navegador encontrado. Defina NAVEGADOR com o caminho do Edge ou Chrome.')
     pagina = (RAIZ / 'index.html').read_text(encoding='utf-8')
+    sw = (RAIZ / 'sw.js').read_text(encoding='utf-8')
+    faltando = [a for a in re.findall(r'(?:src|href)="((?!https?:|#|data:)[^"]+)"', pagina) if f'"{a}"' not in sw]
+    for a in faltando:
+        print(f'FALHA  sw.js não guarda "{a}" para uso offline (adicione em ARQUIVOS)')
     captura = ('<base href="../">\n<script>window.__erros=[];'
                'window.onerror=(m,s,l)=>{window.__erros.push(m+" ("+(s||"").split("/").pop()+":"+l+")");};</script>')
     pagina = pagina.replace('<head>', '<head>\n' + captura, 1)
@@ -41,7 +45,7 @@ def main():
         sys.exit('Os testes não terminaram (erro ao carregar a página?).')
     texto = html.unescape(m.group(1))
     print(texto)
-    sys.exit(1 if 'FALHA' in texto else 0)
+    sys.exit(1 if 'FALHA' in texto or faltando else 0)
 
 
 if __name__ == '__main__':
