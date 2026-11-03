@@ -19,9 +19,11 @@ const valve=d=>{ bel.valve=d; $('#valveOpenBtn').classList.toggle('on',d==='open
   $(id).addEventListener('pointerdown',()=>valve(d));
   ['pointerup','pointerleave'].forEach(t=>$(id).addEventListener(t,()=>{ if(bel.valve===d) valve(null); }));
 });
+let foleSec=0;
 function bellowsLoop(now){
   const dt=Math.min(0.1,(now-bel.last)/1000); bel.last=now;
   const notes=tkL.held.size+tkR.held.size;
+  if(notes && !bel.blocked && (foleSec+=dt)>=60 && foleSec-dt<60) logPractice('fole');
   let rate=0, dir=state.dir;
   if(bel.valve){ rate=0.45; dir=bel.valve; }
   else if(notes && !bel.blocked) rate=0.07*Math.sqrt(notes);

@@ -21,6 +21,7 @@ const ARQUIVOS = [
   "js/melodias.js",
   "js/microfone.js",
   "js/acordes.js",
+  "js/rotina.js",
   "js/musicxml.js",
   "js/navegacao.js",
   "js/ritmo.js",

@@ -225,6 +225,41 @@ teste('MusicXML: importação a duas mãos mantém a sincronia', () => {
   igual(fim('right'), fim('left'));
 });
 
+/* ---------- Revisão inteligente e rotina ---------- */
+teste('sorteio inteligente favorece os botões mais errados', () => {
+  const salvo = JSON.stringify(state.progress.btnStats);
+  state.progress.btnStats = {};
+  const L = state.layout.right, alvo = L[5];
+  L.forEach(b=>state.progress.btnStats[statKey('right',b.id,'open')] = {ok:10, err:0});
+  state.progress.btnStats[statKey('right',alvo.id,'open')] = {ok:0, err:10};
+  $('#fMode').value='smart'; fq.answer=null;
+  let n=0; for(let i=0;i<2000;i++) if(pickFindTarget('right','open')===alvo) n++;
+  state.progress.btnStats = JSON.parse(salvo);
+  ok(n/2000 > 0.15, 'frequência '+(n/2000).toFixed(3)+' (sorteio puro seria 0,026)');
+});
+teste('mapa de erros pinta os botões e some ao desligar', () => {
+  go('desafios'); const b=state.layout.right[0];
+  state.progress.btnStats[statKey('right',b.id,'open')] = {ok:0, err:3};
+  $('#fDir').value='open'; toggleHeat();
+  ok(document.querySelector('#fkRight .key').style.background.includes('rgb'), 'sem cor');
+  toggleHeat(); igual(document.querySelector('#fkRight .key').style.background, '');
+  delete state.progress.btnStats[statKey('right',b.id,'open')];
+});
+teste('rotina: atividades marcam o dia e contam a sequência', () => {
+  const salvo = JSON.stringify(state.progress.days);
+  state.progress.days = {};
+  const ontem = new Date(); ontem.setDate(ontem.getDate()-1);
+  const anteontem = new Date(); anteontem.setDate(anteontem.getDate()-2);
+  state.progress.days[dayKey(ontem)] = {ritmo:true}; state.progress.days[dayKey(anteontem)] = {fole:true};
+  igual(streak(), 2, 'sequência antes de praticar hoje');
+  logPractice('acordes'); igual(streak(), 3);
+  ok(document.querySelectorAll('#routine .ritem.done').length===1, 'item de repertório marcado');
+  state.progress.days = JSON.parse(salvo); renderRoutine();
+});
+teste('escala do dia sempre cabe na mão direita', () => {
+  for(let k=0;k<24;k++){ const d=new Date(2026,0,1+k), {pc,type}=dailyScale(d); ok(validStarts(type,pc,'right',1).length, type+' '+pc); }
+});
+
 /* ---------- Execução ---------- */
 (async () => {
   const linhas = [];

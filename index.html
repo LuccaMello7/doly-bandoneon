@@ -35,6 +35,14 @@
     <p>Aqui você aprende os fundamentos do bandoneon: como o instrumento funciona, o sistema <b>bisonoro</b> (cada botão dá uma nota abrindo e outra fechando), leitura nas duas claves e os ritmos essenciais do tango.</p>
     <p class="muted">Dica: use fones de ouvido. O app funciona offline e o seu progresso fica salvo neste navegador. Em <a href="#" data-go="ajustes">Ajustes</a> você escolhe o som, a afinação e faz backup.</p>
   </div>
+  <div class="card" id="routineCard">
+    <div class="row" style="justify-content:space-between">
+      <h2 style="margin:0">Rotina de hoje</h2>
+      <div id="streak" class="streak"></div>
+    </div>
+    <div id="week" class="week"></div>
+    <div id="routine" class="routine"></div>
+  </div>
   <div class="grid">
     <div class="card"><div class="muted">Lições concluídas</div><div class="stat" id="pLessons">0/0</div><div class="bar"><div id="pLessonsBar" style="width:0"></div></div></div>
     <div class="card"><div class="muted">Recorde: Encontre a nota</div><div class="stat" id="pFind">–</div></div>
@@ -116,8 +124,11 @@
       <label>Mão: <select id="fHand"><option value="right">Direita</option><option value="left">Esquerda</option><option value="both">Ambas</option></select></label>
       <label>Direção: <select id="fDir"><option value="open">Abrindo</option><option value="close">Fechando</option><option value="rand">Aleatória</option></select></label>
       <button class="btn" id="fStart">Começar</button>
+      <label>Sorteio: <select id="fMode"><option value="smart">Inteligente (foca nos seus erros)</option><option value="rand">Aleatório</option></select></label>
       <button class="btn sec" id="fListen">🔊 Ouvir a nota</button>
+      <button class="btn sec" id="fHeat">🔥 Mapa de erros</button>
     </div>
+    <p class="muted" id="fHeatInfo" style="display:none">Cores pela sua taxa de erro na direção escolhida em "Direção": verde = você acerta, vermelho = você erra. Botões sem cor ainda não apareceram no desafio.</p>
     <div style="text-align:center;margin-top:14px">
       <div class="target" id="fTarget">–</div>
       <div id="fDirPill" class="dirpill open" style="display:inline-block;visibility:hidden"></div>
@@ -351,6 +362,7 @@
 <script src="js/escalas.js"></script>
 <script src="js/microfone.js"></script>
 <script src="js/acordes.js"></script>
+<script src="js/rotina.js"></script>
 <script src="js/licoes.js"></script>
 <script src="js/ajustes.js"></script>
 <script src="js/init.js"></script>

@@ -116,6 +116,16 @@ button,select,a,input{touch-action:manipulation}
 .staffwrap .scur{stroke:var(--gold);stroke-width:3;opacity:.6}
 .mcard small{opacity:.7;font-size:.7em}
 .mcard .errn{text-decoration:line-through;opacity:.6}
+.streak{font-size:1.1rem}
+.week{display:flex;align-items:center;gap:6px;margin:10px 0}
+.week .day{width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.75rem;background:var(--panel2);color:var(--muted);border:1px solid var(--line)}
+.week .day.on{background:var(--gold);color:#111;border-color:var(--gold)}
+.week .day.today{outline:2px solid var(--red)}
+.routine{display:flex;flex-direction:column;gap:8px}
+.ritem{display:flex;align-items:center;gap:12px;background:var(--panel2);border-radius:10px;padding:10px 12px}
+.ritem .rcheck{font-size:1.3rem;width:30px;text-align:center}
+.ritem .rtext{flex:1;min-width:0}
+.ritem.done{opacity:.7} .ritem.done .rcheck{color:var(--green);font-weight:700}
 kbd{background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:.85em}
 
 /* Lições */

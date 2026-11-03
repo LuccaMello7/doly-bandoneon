@@ -22,4 +22,5 @@ function renderProgress(){
   const md=Object.keys(state.progress.melodies||{}).length;
   $('#pMel').textContent = md ? md : '–';
   $('#pChords').textContent = state.progress.chords!=null ? state.progress.chords+'/10' : '–';
+  if(typeof renderRoutine==='function') renderRoutine();
 }

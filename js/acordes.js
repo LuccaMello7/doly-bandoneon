@@ -99,6 +99,7 @@ function nextChordRound(){
     ch.training=false; $('#chTrainBox').style.display='none'; $('#chExplore').style.display='block';
     $('#chFeed').className='feedback'; $('#chFeed').textContent=`Fim do treino: ${ch.score}/10`;
     if(state.progress.chords==null || ch.score>state.progress.chords){ state.progress.chords=ch.score; saveProgress(); }
+    logPractice('acordes');
     showChord(); return;
   }
   const types=$$('#chTrainTypes input:checked').map(i=>i.value); if(!types.length) types.push('maior','menor');

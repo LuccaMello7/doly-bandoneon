@@ -97,7 +97,7 @@ function renderLesson(){
 function tryCompleteLesson(){
   const L=LESSONS[curLesson];
   if(L.quiz.every((_,i)=>lessonAnswered[i]) && !state.progress.lessons[curLesson] && (!lessonNeedsExercise() || lessonExerciseDone())){
-    state.progress.lessons[curLesson]=true; saveProgress(); renderLessonList();
+    state.progress.lessons[curLesson]=true; saveProgress(); renderLessonList(); logPractice('licao');
   }
 }
 const lessonNeedsExercise=()=>!!LESSONS[curLesson].html.includes('lessonKbd');

@@ -1,6 +1,26 @@
 /* ================== Desafio: Encontre a nota ================== */
-const fq={round:0,score:0,target:null,dir:'open',hand:'right',errors:0,active:false,answer:null};
-const fOpts=hand=>({ getDir:()=>fq.dir, showLabels:()=>false, sound:true, onPress:(b,m,dir,k)=>findPress(b,m,k) });
+const fq={round:0,score:0,target:null,dir:'open',hand:'right',errors:0,active:false,answer:null,heat:false};
+const fOpts=hand=>({ getDir:()=>fq.dir, showLabels:()=>fq.heat, sound:true, onPress:(b,m,dir,k)=>findPress(b,m,k) });
+// Estatística por botão e direção: {ok, err}
+state.progress.btnStats = state.progress.btnStats || {};
+const statKey = (hand,id,dir) => `${hand}|${id}|${dir}`;
+// Sorteio inteligente: botões que você mais erra (e os que ainda não viu) aparecem mais
+function findWeight(hand, b, dir){
+  const s = state.progress.btnStats[statKey(hand,b.id,dir)];
+  return s ? 0.3 + 4*(s.err+0.5)/(s.ok+s.err+1) : 2;
+}
+function pickFindTarget(hand, dir){
+  const L = state.layout[hand];
+  if($('#fMode').value!=='smart') return pick(L);
+  const w = L.map(b=>findWeight(hand,b,dir) * (b===fq.answer?0.1:1));
+  let r = Math.random()*w.reduce((a,b)=>a+b,0);
+  for(let i=0;i<L.length;i++){ r-=w[i]; if(r<=0) return L[i]; }
+  return L[L.length-1];
+}
+function recordFind(ok){
+  const k = statKey(fq.hand, fq.answer.id, fq.dir), s = state.progress.btnStats[k] = state.progress.btnStats[k] || {ok:0, err:0};
+  ok ? s.ok++ : s.err++; saveProgress();
+}
 const fkL=kb($('#fkLeft'),'left',fOpts('left')), fkR=kb($('#fkRight'),'right',fOpts('right'));
 function nextFind(){
   fkL.clearMarks(); fkR.clearMarks();
@@ -8,12 +28,13 @@ function nextFind(){
     fq.active=false; $('#fTarget').textContent=`Fim! ${fq.score}/10`;
     $('#fFeed').className='feedback'; $('#fFeed').textContent = fq.score>=8?'Excelente!':fq.score>=5?'Bom trabalho, continue treinando.':'Treine mais no Teclado com os nomes visíveis.';
     if(state.progress.find==null || fq.score>state.progress.find){ state.progress.find=fq.score; saveProgress(); }
+    logPractice('desafio');
     return;
   }
   const hs=$('#fHand').value, ds=$('#fDir').value;
   fq.hand = hs==='both'?pick(['left','right']):hs;
   fq.dir = ds==='rand'?pick(['open','close']):ds;
-  fq.answer = pick(state.layout[fq.hand]); fq.target=fq.answer[fq.dir]; fq.errors=0;
+  fq.answer = pickFindTarget(fq.hand, fq.dir); fq.target=fq.answer[fq.dir]; fq.errors=0;
   fkL.setDim(fq.hand!=='left'); fkR.setDim(fq.hand!=='right'); refreshAll();
   showFindTarget();
 }
@@ -27,7 +48,7 @@ function findPress(b,m,k){
   if(!fq.active) return;
   if(k.hand!==fq.hand){ $('#fFeed').className='feedback bad'; $('#fFeed').textContent='Essa nota está na outra mão.'; return; }
   if(m===fq.target){
-    k.mark(b.id,'ok'); fq.score += fq.errors===0?1:0; fq.round++;
+    k.mark(b.id,'ok'); fq.score += fq.errors===0?1:0; fq.round++; recordFind(fq.errors===0);
     $('#fFeed').className='feedback ok'; $('#fFeed').textContent = fq.errors?'Achou! (não conta ponto por ter errado antes)':'Certo!';
     setTimeout(nextFind,700);
   } else {
@@ -36,7 +57,26 @@ function findPress(b,m,k){
     if(fq.errors>=2) k.mark(fq.answer.id,'hint',0);
   }
 }
-$('#fStart').onclick=()=>{ ac(); Object.assign(fq,{round:0,score:0,active:true}); $('#fFeed').textContent=''; nextFind(); };
+$('#fStart').onclick=()=>{ ac(); if(fq.heat) toggleHeat(); Object.assign(fq,{round:0,score:0,active:true}); $('#fFeed').textContent=''; nextFind(); };
+// Mapa de erros: pinta cada botão de verde (acerta) a vermelho (erra)
+function paintHeat(){
+  const dir = $('#fDir').value==='close' ? 'close' : 'open'; fq.dir = dir;
+  for(const [k,hand] of [[fkL,'left'],[fkR,'right']]){
+    k.setDim(false); k.refresh();
+    for(const b of state.layout[hand]){
+      const s = state.progress.btnStats[statKey(hand,b.id,dir)];
+      k.tint(b.id, s ? `hsl(${Math.round(120*(1-s.err/(s.ok+s.err)))},60%,42%)` : '');
+    }
+  }
+}
+function toggleHeat(){
+  fq.heat = !fq.heat; $('#fHeat').classList.toggle('on', fq.heat);
+  $('#fHeatInfo').style.display = fq.heat ? 'block' : 'none';
+  if(fq.heat){ fq.active=false; $('#fTarget').textContent='Mapa de erros'; $('#fFeed').textContent=''; $('#fDirPill').style.visibility='hidden'; paintHeat(); }
+  else { [fkL,fkR].forEach(k=>{ state.layout[k.hand].forEach(b=>k.tint(b.id,'')); k.refresh(); }); $('#fTarget').textContent='–'; }
+}
+$('#fHeat').onclick=toggleHeat;
+$('#fDir').addEventListener('change', ()=>{ if(fq.heat) paintHeat(); });
 $('#fListen').onclick=()=>{ if(fq.target!=null) playNote(fq.target,0.8,fq.hand); };
 
 /* ================== Desafio: Pauta ================== */
@@ -69,6 +109,7 @@ function nextStaff(){
     sq.active=false; drawStaff(sq.clef,null);
     $('#sFeed').className='feedback'; $('#sFeed').textContent=`Fim! ${sq.score}/10`;
     if(state.progress.staff==null || sq.score>state.progress.staff){ state.progress.staff=sq.score; saveProgress(); }
+    logPractice('desafio');
     return;
   }
   const c=$('#sClef').value; sq.clef = c==='mix'?pick(['treble','bass']):c;

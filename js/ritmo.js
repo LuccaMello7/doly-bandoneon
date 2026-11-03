@@ -69,5 +69,6 @@ function tap(){
   const last=rh.errors.slice(-12), acc=Math.round(100*last.filter(e=>e<=60).length/last.length);
   $('#rStats').textContent=`Precisão (últimas ${last.length} batidas, tolerância 60 ms): ${acc}%`;
   if(last.length>=12 && (state.progress.rhythm==null || acc>state.progress.rhythm)){ state.progress.rhythm=acc; saveProgress(); }
+  if(last.length>=12) logPractice('ritmo');
 }
 $('#rPad').addEventListener('pointerdown',e=>{ e.preventDefault(); tap(); });

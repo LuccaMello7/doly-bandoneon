@@ -347,7 +347,7 @@ function finishMel(msg, score){
   if(score!=null){
     const id=mel.cur.id, prev=state.progress.melodies[id];
     if(prev==null || score>prev){ state.progress.melodies[id]=score; saveProgress(); renderMelList(); if(mel.cur.guide) renderScaleGrid(); }
-    if(typeof logPractice==='function') logPractice('melodia');
+    logPractice(mel.cur.guide ? 'escala' : 'melodia');
   }
 }
 $('#melStart').onclick = ()=>{

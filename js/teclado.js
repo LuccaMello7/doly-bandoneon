@@ -51,6 +51,7 @@ function createKeyboard(el, hand, opts={}){
     silence(){ for(const id of held) stopVoice(uid+id,true); },
     mark(id,cls,ms=600){ const n=nodes[id]; if(!n) return; n.d.classList.add(cls); if(ms) setTimeout(()=>n.d.classList.remove(cls),ms); },
     unmark(id,cls){ const n=nodes[id]; if(n) n.d.classList.remove(cls); },
+    tint(id,color){ const n=nodes[id]; if(!n) return; n.d.style.background=color; n.d.style.color=color?'#fff':''; },
     clearMarks(){ Object.values(nodes).forEach(({d})=>d.classList.remove('ok','bad','hint','chord')); },
     setDim(v){ Object.values(nodes).forEach(({d})=>d.classList.toggle('dim',v)); },
   };
