@@ -9,20 +9,15 @@
 <body>
 <header>
   <h1>🪗 Escola de Bandoneon</h1>
-  <nav id="nav">
+  <nav id="nav" aria-label="Seções do app">
     <button data-v="inicio" class="active">Início</button>
     <button data-v="licoes">Lições</button>
     <button data-v="teclado">Teclado</button>
     <button data-v="desafios">Desafios</button>
     <button data-v="melodias">Melodias</button>
     <button data-v="ritmo">Ritmo</button>
+    <button data-v="ajustes" aria-label="Ajustes">⚙ Ajustes</button>
   </nav>
-  <div class="row" style="margin-left:auto">
-    <span class="muted">Som:</span>
-    <select id="soundSel"><option value="samples">Bandoneon real</option><option value="synth">Sintetizado</option></select>
-    <span class="muted">Notas:</span>
-    <select id="namesSel"><option value="pt">Dó Ré Mi</option><option value="en">C D E</option></select>
-  </div>
 </header>
 
 <main>
@@ -31,7 +26,7 @@
   <div class="card">
     <h2>Bem-vindo!</h2>
     <p>Aqui você aprende os fundamentos do bandoneon: como o instrumento funciona, o sistema <b>bisonoro</b> (cada botão dá uma nota abrindo e outra fechando), leitura nas duas claves e os ritmos essenciais do tango.</p>
-    <p class="muted">Dica: use fones de ouvido. Tudo funciona offline neste arquivo e o seu progresso fica salvo no navegador.</p>
+    <p class="muted">Dica: use fones de ouvido. O app funciona offline e o seu progresso fica salvo neste navegador. Em <a href="#" data-go="ajustes">Ajustes</a> você escolhe o som, a afinação e faz backup.</p>
   </div>
   <div class="grid">
     <div class="card"><div class="muted">Lições concluídas</div><div class="stat" id="pLessons">0/0</div><div class="bar"><div id="pLessonsBar" style="width:0"></div></div></div>
@@ -249,6 +244,35 @@
     </div>
   </div>
 </section>
+<!-- AJUSTES -->
+<section id="v-ajustes">
+  <div class="card">
+    <h2>Ajustes</h2>
+    <div class="settings">
+      <label>Som
+        <select id="soundSel"><option value="samples">Bandoneon real (gravação)</option><option value="synth">Sintetizado</option></select></label>
+      <label>Afinação (Lá)
+        <select id="tuneSel"><option value="440">440 Hz (padrão internacional)</option><option value="442">442 Hz</option><option value="443">443 Hz (afinação da gravação)</option></select></label>
+      <label>Volume <input type="range" id="volSel" min="0" max="100"></label>
+      <label>Nomes das notas
+        <select id="namesSel"><option value="pt">Dó Ré Mi</option><option value="en">C D E</option></select></label>
+    </div>
+    <div class="row" style="margin-top:12px"><button class="btn sec" id="testSound">🔊 Testar som</button><span class="muted" id="soundStatus" aria-live="polite"></span></div>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">Seus dados</h3>
+    <p class="muted">Progresso, melodias criadas e mapa de botões ficam guardados só neste navegador. Faça um backup para não perder nada ao limpar o navegador, ou para levar tudo a outro aparelho.</p>
+    <div class="row">
+      <button class="btn" id="backupExport">Exportar backup</button>
+      <button class="btn sec" id="backupImport">Importar backup</button>
+      <button class="btn sec" id="backupReset">Apagar tudo</button>
+    </div>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">Mapa de botões</h3>
+    <p class="muted" style="margin-bottom:0">O app usa o mapa Rheinische 142. Se algum botão do seu instrumento for diferente, ajuste em <a href="#" data-go="teclado">Teclado → Editar layout</a>.</p>
+  </div>
+</section>
 </main>
 
 <script src="sons/bandoneon.js"></script>
@@ -264,6 +288,7 @@
 <script src="js/musicxml.js"></script>
 <script src="js/escalas.js"></script>
 <script src="js/licoes.js"></script>
+<script src="js/ajustes.js"></script>
 <script src="js/init.js"></script>
 </body>
 </html>

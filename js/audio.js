@@ -4,17 +4,18 @@ function ac(){
   if(!AC){
     AC = new (window.AudioContext||window.webkitAudioContext)();
     const comp = AC.createDynamicsCompressor(); comp.threshold.value=-18; comp.ratio.value=4;
-    master = AC.createGain(); master.gain.value=0.8;
+    master = AC.createGain(); master.gain.value=state.volume/100;
     master.connect(comp).connect(AC.destination);
   }
   if(AC.state==='suspended') AC.resume();
   return AC;
 }
-const freq = m => 440*Math.pow(2,(m-69)/12);
+const freq = m => state.tuning*Math.pow(2,(m-69)/12);
 const voices = {};
 
 // Amostras reais: sons/bandoneon.js (gerado do SoundFont por ferramentas/sf2_para_js.py)
 const SF = window.BANDONEON_SF || null, sfBuffers = [];
+const SF_REF_A = 443; // afinação medida das amostras (Lá ≈ 443 Hz)
 const useSamples = () => SF && state.sound!=='synth';
 function sfBuffer(i){
   if(!sfBuffers[i]){
@@ -26,6 +27,15 @@ function sfBuffer(i){
   }
   return sfBuffers[i];
 }
+// Prepara todas as amostras aos poucos (sem travar a página) logo no primeiro toque
+let sfPreloading=false;
+function preloadSamples(onProgress){
+  if(!SF || sfPreloading) return; sfPreloading=true; ac();
+  let i=0;
+  const next=()=>{ if(i>=SF.samples.length){ onProgress&&onProgress(i,i); return; }
+    sfBuffer(i++); onProgress&&onProgress(i,SF.samples.length); setTimeout(next,0); };
+  next();
+}
 function sfZone(midi){
   return SF.zones.find(z=>midi>=z.lo && midi<=z.hi)
       || SF.zones.reduce((a,b)=>Math.abs(midi-b.root)<Math.abs(midi-a.root)?b:a);
@@ -33,7 +43,7 @@ function sfZone(midi){
 function makeSampleVoice(midi, peak, t0){
   const c=ac(), z=sfZone(midi), s=SF.samples[z.s], src=c.createBufferSource();
   src.buffer=sfBuffer(z.s);
-  src.playbackRate.value=Math.pow(2,(midi-z.root+z.tune/100)/12);
+  src.playbackRate.value=Math.pow(2,(midi-z.root+z.tune/100)/12)*state.tuning/SF_REF_A;
   if(z.loop){ src.loop=true; src.loopStart=s.loopStart/s.rate; src.loopEnd=s.loopEnd/s.rate; }
   const out=c.createGain(); out.gain.value=0;
   src.connect(out).connect(master); src.start(t0);

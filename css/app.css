@@ -68,6 +68,11 @@ textarea{background:var(--panel2);color:var(--text);border:1px solid var(--line)
 .guide{background:var(--panel2);border-radius:10px;padding:12px 14px;margin-top:12px;border-left:4px solid var(--gold)}
 .guide .gstep{font-size:1.1rem;margin-top:6px}
 .guide .chg{color:var(--close);font-weight:700}
+.settings{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.settings label{display:flex;flex-direction:column;gap:4px;color:var(--muted);font-size:.9rem}
+.settings select,.settings input{font-size:1rem}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
 kbd{background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:.85em}
 
 /* Lições */

@@ -20,6 +20,8 @@ function loadLayout(){
 const state = {
   names: store.get('names','pt'),
   sound: store.get('sound','samples'),
+  tuning: store.get('tuning',443),
+  volume: store.get('volume',80),
   dir: 'open',
   showLabels: true,
   editing: false,

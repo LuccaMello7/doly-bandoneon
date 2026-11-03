@@ -28,6 +28,7 @@ function createKeyboard(el, hand, opts={}){
     const dir=opts.getDir?opts.getDir():state.dir, show=opts.showLabels?opts.showLabels():state.showLabels;
     for(const {d,b} of Object.values(nodes)){
       const m=b[dir]; d.textContent = show ? noteName(m) : '';
+      d.setAttribute('aria-label', show ? `${noteName(b.open)} abrindo, ${noteName(b.close)} fechando` : 'Botão do bandoneon');
       d.classList.toggle('sharp', [1,3,6,8,10].includes(m%12));
       d.classList.toggle('edit', state.editing && !!opts.editable);
     }

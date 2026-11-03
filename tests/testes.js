@@ -99,6 +99,24 @@ teste('som: toda nota do mapa tem amostra (transposição até 7 semitons)', () 
   }
 });
 
+
+/* ---------- Ajustes ---------- */
+teste('afinação muda a velocidade das amostras e a frequência do sintetizado', () => {
+  if(!SF) return;
+  const antes = state.tuning;
+  state.tuning = 443; const r443 = makeSampleVoice(69, 0, AC.currentTime).oscs[0].playbackRate.value;
+  state.tuning = 440; const r440 = makeSampleVoice(69, 0, AC.currentTime).oscs[0].playbackRate.value;
+  ok(Math.abs(r440/r443 - 440/443) < 1e-6); igual(Math.round(freq(69)), 440);
+  state.tuning = antes;
+});
+teste('aba Ajustes existe e o cabeçalho não tem mais seletores', () => {
+  go('ajustes'); ok($('#v-ajustes').classList.contains('active')); ok(!document.querySelector('header select'));
+  ok($('#nav [data-v="ajustes"]').hasAttribute('aria-current'));
+});
+teste('botões do teclado têm descrição para leitores de tela', () => {
+  ok(/abrindo, .* fechando/.test(document.querySelector('#kbRight .key').getAttribute('aria-label')));
+});
+
 /* ---------- Execução ---------- */
 (async () => {
   const linhas = [];
