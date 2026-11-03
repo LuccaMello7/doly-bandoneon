@@ -315,6 +315,8 @@ teste('t() traduz modelos com valores', () => {
 
 /* ---------- Execução ---------- */
 (async () => {
+  // os testes conferem textos em português: começa em pt mesmo se o navegador estiver em outro idioma
+  setLang('pt'); await esperar();
   const linhas = [];
   for(const t of TESTES){
     try{ await t.fn(); linhas.push('OK     ' + t.nome); }
