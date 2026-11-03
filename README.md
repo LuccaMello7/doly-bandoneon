@@ -1,6 +1,6 @@
 # Escola de Bandoneon
 
-App web interativo para aprender bandoneon (sistema Rheinische 142 vozes). É um único arquivo `index.html`: basta abrir no navegador, sem instalar nada.
+App web interativo para aprender bandoneon (sistema Rheinische 142 vozes). Não precisa de instalação nem de build: basta abrir o `index.html` no navegador.
 
 ## O que tem
 
@@ -25,3 +25,20 @@ O instrumento gravado está afinado em Lá = 443 Hz. No seletor "Som", no topo d
 ## Mapa de botões
 
 Transcrito dos diagramas de Omar Caccia (mão direita abrindo, mão esquerda fechando) e Matías Gobbo (mão direita fechando, mão esquerda abrindo). Ele pode ser ajustado em **Teclado → Editar layout** e exportado ou importado em JSON.
+
+## Estrutura
+
+- `index.html`: a página e as abas.
+- `css/app.css`: o visual.
+- `js/`: um arquivo por parte do app (`audio.js`, `teclado.js`, `melodias.js`, `escalas.js`…), carregados em ordem pelo `index.html`. A inicialização fica em `js/init.js`.
+- `sons/bandoneon.js`: as amostras de som.
+- `ferramentas/`: scripts auxiliares.
+- `tests/`: testes automáticos.
+
+## Testes
+
+```
+python tests/rodar_testes.py
+```
+
+O script abre o app no Edge ou Chrome em modo invisível, roda `tests/testes.js` e mostra o resultado.
