@@ -63,6 +63,7 @@
   <nav id="nav" aria-label="Secciones de la app">
     <button data-v="inicio" class="active">Inicio</button>
     <button data-v="licoes">Lecciones</button>
+    <button data-v="academia">Academia</button>
     <button data-v="teclado">Teclado</button>
     <button data-v="desafios">Desafíos</button>
     <button data-v="melodias">Melodías</button>
@@ -110,6 +111,7 @@
     <h3>Por dónde empezar</h3>
     <ol>
       <li>Haz las <a href="#" data-go="licoes">Lecciones</a> en orden.</li>
+      <li>Sigue la <a href="#" data-go="academia">Academia</a>: ejercicios en 6 niveles, con instructor, posición de las manos e informe de cada intento.</li>
       <li>Explora el <a href="#" data-go="teclado">Teclado</a>: toca, cambia la dirección del fuelle con <kbd>Espacio</kbd> y mira cómo cambian las notas.</li>
       <li>Practica en los <a href="#" data-go="desafios">Desafíos</a> hasta memorizar los botones.</li>
       <li>Practica las <b>Escalas guiadas</b> (en la pestaña <a href="#" data-go="melodias">Melodías</a>): la app explica cada paso, cada cambio de fuelle y dónde está el próximo botón.</li>
@@ -393,6 +395,72 @@
     </div>
   </div>
 </section>
+<!-- ACADEMIA: exercícios progressivos com instrutor digital (js/academia.js e js/maos.js) -->
+<section id="v-academia">
+  <div class="card">
+    <h2>Academia de Bandoneón</h2>
+    <p class="muted">Ejercicios en 6 niveles, del primer botón a canciones con las dos manos. El instructor muestra la nota, la mano, el dedo y la dirección del fuelle de cada momento, y al final recibes un informe con lo que acertaste y lo que debes repasar.</p>
+    <div class="ac-niveis" id="acNiveis" role="group" aria-label="Niveles"></div>
+  </div>
+
+  <div class="ac-layout">
+    <!-- área central: o teclado de sempre, com destaque, dedo e fole -->
+    <div class="card ac-centro" id="acCentro">
+      <div class="row ac-topo">
+        <div><b id="acExTitulo"></b><div class="muted" id="acExDesc"></div></div>
+      </div>
+      <div class="row">
+        <span class="muted">Tu fuelle:</span> <span class="dirpill open" id="acDirPill"></span>
+        <button class="btn sec" id="acDirBtn" title="Cambia la dirección del fuelle (tecla Espacio)">⇄ Cambiar fuelle <kbd>Espacio</kbd></button>
+        <label title="La app cambia sola la dirección del fuelle. En ese caso el fuelle no se evalúa."><input type="checkbox" id="acAuto"> Fuelle automático</label>
+        <label><input type="checkbox" id="acNomes" checked> Nombres en los botones</label>
+      </div>
+      <div class="ac-maolabel">Mano izquierda</div>
+      <div id="acKbLeft"></div>
+      <div class="ac-maolabel">Mano derecha</div>
+      <div id="acKbRight"></div>
+      <div class="mstrip ac-strip" id="acStrip"></div>
+      <div class="feedback" id="acFeed" aria-live="polite"></div>
+    </div>
+
+    <!-- área lateral: instrutor digital -->
+    <aside class="card ac-instrutor" id="acInstrutor" aria-label="Instructor digital">
+      <h3>Instructor</h3>
+      <div id="acAgora" aria-live="polite"></div>
+      <p class="ac-proximo" id="acProximo"></p>
+      <div class="maos" id="acMaos"></div>
+      <div class="row ac-opcoes">
+        <label><input type="checkbox" id="acMaosVer" checked> Mostrar las manos</label>
+        <label><input type="checkbox" id="acAmpliar"> Vista ampliada</label>
+      </div>
+      <p class="muted ac-validacao" id="acValidacao"></p>
+    </aside>
+  </div>
+
+  <!-- área inferior: exercícios, modo e controles -->
+  <div class="card">
+    <h3 id="acNivelTitulo" style="margin-top:0"></h3>
+    <p class="muted" id="acNivelObjetivo"></p>
+    <div class="ac-lista" id="acLista"></div>
+    <div class="ac-modos" id="acModo" role="group" aria-label="Modo">
+      <button type="button" data-modo="aprender" class="on">Aprender</button>
+      <button type="button" data-modo="praticar">Practicar</button>
+      <button type="button" data-modo="desafio">Desafío</button>
+    </div>
+    <p class="muted" id="acModoInfo"></p>
+    <div class="row ac-controles">
+      <button class="btn" id="acStart">▶ Comenzar</button>
+      <button class="btn sec" id="acOuvirBtn">🔊 Escuchar</button>
+      <label>Velocidad: <input type="range" id="acVel" min="40" max="120" step="10" value="70"> <span id="acVelVal">70%</span></label>
+      <label title="Clic en cada tiempo en el modo Desafío y al escuchar"><input type="checkbox" id="acMetro" checked> Metrónomo</label>
+      <label title="Vuelve a empezar solo mientras haya errores"><input type="checkbox" id="acRepetir"> Repetir</label>
+      <label title="Resaltado del botón, número del dedo y posición de las manos"><input type="checkbox" id="acGuia" checked> Guía de digitación</label>
+      <label title="Toca en tu bandoneón: la app revisa la nota y el ritmo por el micrófono"><input type="checkbox" id="acMic"> 🎤 Micrófono</label>
+      <span id="acTrecho">Pasaje: de la nota <input type="number" id="acDe" min="1" value="1" class="ac-num-in"> a la <input type="number" id="acAte" min="1" value="1" class="ac-num-in"></span>
+    </div>
+    <div class="ac-relatorio" id="acRelatorio" aria-live="polite"></div>
+  </div>
+</section>
 <!-- AJUSTES -->
 <section id="v-ajustes">
   <div class="card">
@@ -441,6 +509,8 @@
 <script src="../js/escalas.js"></script>
 <script src="../js/microfone.js"></script>
 <script src="../js/acordes.js"></script>
+<script src="../js/maos.js"></script>
+<script src="../js/academia.js"></script>
 <script src="../js/rotina.js"></script>
 <script src="../js/licoes.js"></script>
 <script src="../js/ajustes.js"></script>

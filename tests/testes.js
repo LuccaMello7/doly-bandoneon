@@ -286,14 +286,25 @@ function textosEmPortugues(){
   return [...achados];
 }
 async function percorrerApp(){
-  for(const v of ['inicio','teclado','desafios','melodias','acordes','ritmo','ajustes']){ go(v); await esperar(); }
+  for(const v of ['inicio','teclado','desafios','melodias','acordes','ritmo','ajustes','academia']){ go(v); await esperar(); }
   for(let i=0;i<LESSONS.length;i++){ curLesson=i; renderLesson(); await esperar(); }
   go('desafios'); $('#fStart').click(); await esperar(); $('#sStart').click(); await esperar();
   go('melodias'); $('#scaleOpen').click(); $('#scGo').click(); $('#melMode').value='wait'; $('#melStart').click(); await esperar();
   { const c=pendingNotes()[0]; melPress(c.btn,c.midi,c.dir); } await esperar(); stopMelody();
   loadMelody('ode-duas'); $('#melStart').click(); await esperar(); stopMelody();
   go('acordes'); showChord(); $('#chTrain').click(); await esperar(); $('#chStop').click(); await esperar();
-  go('ritmo'); renderSteps(); go('inicio'); await esperar();
+  go('ritmo'); renderSteps();
+  // Academia: os 6 níveis, os 3 modos, um erro, um relatório e o Desafio no tempo
+  go('academia');
+  for(const n of ACADEMIA){ $(`#acNiveis [data-nivel="${n.nivel}"]`).click(); await esperar(); }
+  carregarExercicio('n3-legato'); $('#acModo [data-modo="praticar"]').click(); $('#acAuto').checked = true; $('#acStart').click();
+  { const e = acad.eventos[[...acad.pend][0]], b = state.layout[e.mao].find(x=>x[e.fole]!==e.midi); acadToque(b, b[e.fole], e.fole, akOf(e.mao)); }
+  await esperar(); acadCompletar(); await esperar();
+  carregarExercicio('n4-alternar'); $('#acAuto').checked = false; $('#acModo [data-modo="aprender"]').click(); $('#acStart').click();
+  { const e = acad.eventos[[...acad.pend][0]], o = e.fole==='open'?'close':'open'; acadToque(e.botao, e.botao[o], o, akOf(e.mao)); }
+  await esperar(); acadParar();
+  carregarExercicio('n5-sincronia'); $('#acModo [data-modo="desafio"]').click(); $('#acStart').click(); await esperar(); acadParar();
+  go('inicio'); await esperar();
 }
 for(const lang of ['es','en']) teste(`tradução completa (${lang}): nenhum texto em português na tela`, async () => {
   setLang(lang); await esperar(); await percorrerApp();
@@ -314,6 +325,48 @@ teste('t() traduz modelos com valores', () => {
   state.lang='en'; igual(t('Esse é {}.', 'E4'), 'That is E4.'); state.lang=l;
 });
 
+// Academia: toca o momento atual com o botão e o fole pedidos
+function acadTocarCerto(){ const e = acad.eventos[[...acad.pend][0]]; acadToque(e.botao, e.botao[e.fole], e.fole, akOf(e.mao)); }
+function acadCompletar(){ let n = 0; while(acad.rodando && n++ < 500) acadTocarCerto(); }
+teste('Academia: exercícios funcionais nos 6 níveis, todos dentro do mapa', () => {
+  igual(ACADEMIA.map(n=>n.nivel), [1,2,3,4,5,6]);
+  for(const n of ACADEMIA){
+    const f = n.exercicios.filter(e=>!e.pendente);
+    if(f.length < 3) throw new Error('nível ' + n.nivel + ' com poucos exercícios');
+    for(const e of f){
+      const evs = montarEventos(e);
+      if(evs.length < 4) throw new Error(e.id + ' sem notas suficientes');
+      for(const v of evs) if(v.botao[v.fole]!==v.midi || !state.layout[v.mao].includes(v.botao)) throw new Error(e.id + ': nota fora do mapa');
+    }
+  }
+});
+teste('Academia: Aprender completo gera relatório e não afirma o dedo', () => {
+  go('academia'); carregarExercicio('n2-sequencias'); $('#acModo [data-modo="aprender"]').click(); $('#acAuto').checked = true;
+  $('#acStart').click(); acadCompletar();
+  const rel = $('#acRelatorio').textContent;
+  igual(/100%/.test(rel), true, 'precisão'); igual(/Dedilhado verificado/.test(rel), false, 'dedo verificado');
+  igual(/aguardando o dedilhado de referência/.test(rel), true, 'dedo a definir'); go('inicio');
+});
+teste('Academia: o erro mostra a diferença entre o pedido e o tocado', () => {
+  go('academia'); carregarExercicio('n4-alternar'); $('#acModo [data-modo="aprender"]').click(); $('#acAuto').checked = false;
+  $('#acStart').click(); acadSetDir(acad.grupos[0].fole);
+  const e = acad.eventos[[...acad.pend][0]], outro = e.fole==='open' ? 'close' : 'open';
+  acadToque(e.botao, e.botao[outro], outro, akOf(e.mao));
+  igual(/botão certo, fole na direção errada/.test($('#acFeed').textContent), true); acadParar(); go('inicio');
+});
+teste('Academia: dedo sugerido aparece no botão; com validador ele passa a ser verificado', () => {
+  go('academia'); carregarExercicio('n2-indicado');
+  acad.todos.forEach((e,i)=>{ e.dedo = 2 + i%2; e.alternativas = [3]; }); aplicarTrecho();
+  $('#acModo [data-modo="aprender"]').click(); $('#acAuto').checked = true; $('#acStart').click();
+  igual(document.querySelector('#acKbRight .key[data-dedo]') != null, true, 'número no botão');
+  registrarValidadorDeDedos({dedoUsado: e => e.dedo}); acadCompletar();
+  igual(/Dedilhado verificado: \d+ de \d+ certos/.test($('#acRelatorio').textContent), true);
+  registrarValidadorDeDedos(null); go('inicio');
+});
+teste('formato de texto: dedo recomendado e alternativos (@)', () => {
+  const m = parseMelody('Mi4:8/a@3,2~ Mi4:8 Ré4');
+  igual([m.notes[0].dedo, m.notes[0].alt, m.notes[0].beats, m.notes[0].force, m.notes[1].dedo], [3, [2], 1, 'open', null]);
+});
 teste('tela Início leva à página própria de Doly Costa', () => {
   igual($('.doly-link').getAttribute('href').startsWith('doly-costa/'), true); // index.html no fim quando aberto do computador
 });

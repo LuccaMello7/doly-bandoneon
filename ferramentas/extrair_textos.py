@@ -23,7 +23,7 @@ NAO_E_TEXTO = [re.compile(p) for p in (
     r'[#>\[\]]', r'^\.', r'^[a-z-]+ (ok|bad)$',            # seletores e classes CSS
     r'^[A-Z]+$', r'^Key[A-Z]$', r'^Space$', r'^NFD$',       # códigos de tecla e afins
     r'^hsl\(', r'^META-INF', r'^[\w.]+/[\w.+-]+',           # cores, caminhos, tipos de arquivo
-    r'^(título|title):', r'^mão: \{\}$',                     # texto-fonte das melodias
+    r'^(título|title):', r'^mão: \{\}$', r'^(direita|esquerda): ',                     # texto-fonte das melodias
     r'^([A-G]|Do|Re|Mi|Fa|Sol|La|Si|Dó|Ré|Fá|Lá)[#♯♭b]?$', r'^CDEFGAB$',  # nomes de notas
     r'^\{\} cents$', r'^\{\} \{\}\{\} oitava\(s\)$',
 )]

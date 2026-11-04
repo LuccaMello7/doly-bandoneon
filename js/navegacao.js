@@ -7,6 +7,8 @@ function go(v){
   $$('main>section').forEach(s=>s.classList.toggle('active',s.id==='v-'+v));
   if(v!=='ritmo' && rh.playing) toggleRhythm();
   if(v!=='melodias' && mel.running) stopMelody();
+  if(v!=='academia' && (acad.rodando || acad.demo)) acadParar();
+  if(v==='academia') acadMostrar(); // os teclados só têm largura quando a aba está visível
   window.scrollTo(0,0);
 }
 $('#nav').addEventListener('click',e=>{ if(e.target.dataset.v) go(e.target.dataset.v); });

@@ -63,6 +63,7 @@
   <nav id="nav" aria-label="App sections">
     <button data-v="inicio" class="active">Home</button>
     <button data-v="licoes">Lessons</button>
+    <button data-v="academia">Academy</button>
     <button data-v="teclado">Keyboard</button>
     <button data-v="desafios">Challenges</button>
     <button data-v="melodias">Melodies</button>
@@ -110,6 +111,7 @@
     <h3>Where to start</h3>
     <ol>
       <li>Do the <a href="#" data-go="licoes">Lessons</a> in order.</li>
+      <li>Follow the <a href="#" data-go="academia">Academy</a>: exercises in 6 levels, with an instructor, hand positions and a report on every attempt.</li>
       <li>Explore the <a href="#" data-go="teclado">Keyboard</a>: play, switch the bellows direction with <kbd>Space</kbd> and watch the notes change.</li>
       <li>Practice in the <a href="#" data-go="desafios">Challenges</a> until you memorize the buttons.</li>
       <li>Practice the <b>Guided scales</b> (in the <a href="#" data-go="melodias">Melodies</a>tab): the app explains each step, each bellows change and where the next button is.</li>
@@ -393,6 +395,72 @@
     </div>
   </div>
 </section>
+<!-- ACADEMIA: exercícios progressivos com instrutor digital (js/academia.js e js/maos.js) -->
+<section id="v-academia">
+  <div class="card">
+    <h2>Bandoneon Academy</h2>
+    <p class="muted">Exercises in 6 levels, from the first button to pieces with both hands. The instructor shows the note, hand, finger and bellows direction for each moment, and at the end you get a report on what went right and what to review.</p>
+    <div class="ac-niveis" id="acNiveis" role="group" aria-label="Levels"></div>
+  </div>
+
+  <div class="ac-layout">
+    <!-- área central: o teclado de sempre, com destaque, dedo e fole -->
+    <div class="card ac-centro" id="acCentro">
+      <div class="row ac-topo">
+        <div><b id="acExTitulo"></b><div class="muted" id="acExDesc"></div></div>
+      </div>
+      <div class="row">
+        <span class="muted">Your bellows:</span> <span class="dirpill open" id="acDirPill"></span>
+        <button class="btn sec" id="acDirBtn" title="Switches the bellows direction (Space key)">⇄ Switch bellows <kbd>Space</kbd></button>
+        <label title="The app switches the bellows direction for you. In that case the bellows is not assessed."><input type="checkbox" id="acAuto"> Auto bellows</label>
+        <label><input type="checkbox" id="acNomes" checked> Names on buttons</label>
+      </div>
+      <div class="ac-maolabel">Left hand</div>
+      <div id="acKbLeft"></div>
+      <div class="ac-maolabel">Right hand</div>
+      <div id="acKbRight"></div>
+      <div class="mstrip ac-strip" id="acStrip"></div>
+      <div class="feedback" id="acFeed" aria-live="polite"></div>
+    </div>
+
+    <!-- área lateral: instrutor digital -->
+    <aside class="card ac-instrutor" id="acInstrutor" aria-label="Digital instructor">
+      <h3>Instructor</h3>
+      <div id="acAgora" aria-live="polite"></div>
+      <p class="ac-proximo" id="acProximo"></p>
+      <div class="maos" id="acMaos"></div>
+      <div class="row ac-opcoes">
+        <label><input type="checkbox" id="acMaosVer" checked> Show the hands</label>
+        <label><input type="checkbox" id="acAmpliar"> Enlarged view</label>
+      </div>
+      <p class="muted ac-validacao" id="acValidacao"></p>
+    </aside>
+  </div>
+
+  <!-- área inferior: exercícios, modo e controles -->
+  <div class="card">
+    <h3 id="acNivelTitulo" style="margin-top:0"></h3>
+    <p class="muted" id="acNivelObjetivo"></p>
+    <div class="ac-lista" id="acLista"></div>
+    <div class="ac-modos" id="acModo" role="group" aria-label="Mode">
+      <button type="button" data-modo="aprender" class="on">Learn</button>
+      <button type="button" data-modo="praticar">Practice</button>
+      <button type="button" data-modo="desafio">Challenge</button>
+    </div>
+    <p class="muted" id="acModoInfo"></p>
+    <div class="row ac-controles">
+      <button class="btn" id="acStart">▶ Start</button>
+      <button class="btn sec" id="acOuvirBtn">🔊 Listen</button>
+      <label>Speed: <input type="range" id="acVel" min="40" max="120" step="10" value="70"> <span id="acVelVal">70%</span></label>
+      <label title="A click on every beat in Challenge mode and when listening"><input type="checkbox" id="acMetro" checked> Metronome</label>
+      <label title="Starts again by itself while there are mistakes"><input type="checkbox" id="acRepetir"> Repeat</label>
+      <label title="Button highlight, finger number and hand position"><input type="checkbox" id="acGuia" checked> Fingering Guide</label>
+      <label title="Play your own bandoneon: the app checks the note and rhythm through the microphone"><input type="checkbox" id="acMic"> 🎤 Microphone</label>
+      <span id="acTrecho">Passage: from note <input type="number" id="acDe" min="1" value="1" class="ac-num-in"> to <input type="number" id="acAte" min="1" value="1" class="ac-num-in"></span>
+    </div>
+    <div class="ac-relatorio" id="acRelatorio" aria-live="polite"></div>
+  </div>
+</section>
 <!-- AJUSTES -->
 <section id="v-ajustes">
   <div class="card">
@@ -441,6 +509,8 @@
 <script src="../js/escalas.js"></script>
 <script src="../js/microfone.js"></script>
 <script src="../js/acordes.js"></script>
+<script src="../js/maos.js"></script>
+<script src="../js/academia.js"></script>
 <script src="../js/rotina.js"></script>
 <script src="../js/licoes.js"></script>
 <script src="../js/ajustes.js"></script>

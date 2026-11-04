@@ -73,6 +73,7 @@ Se é a sua primeira vez, siga esta ordem:
 |---|---|
 | **Início** | Rotina do dia, sequência de dias praticados e seus recordes. |
 | **Lições** | 11 lições curtas, cada uma com quiz: história, partes do instrumento, sistema bisonoro, fole e articulação, leitura nas duas claves, ritmos de tango, acordes, duas mãos e como ler uma partitura de tango. |
+| **Academia** | Exercícios em **6 níveis** (botões, dedos, independência dos dedos, fole, duas mãos e músicas), cada um nos modos **Aprender** (mostra o próximo botão, o dedo e o fole e espera a nota certa), **Praticar** (no seu ritmo, apontando os erros) e **Desafio** (no tempo, com metrônomo; a velocidade sobe e os auxílios somem conforme a sua precisão). Um **instrutor** ao lado do teclado mostra a nota, a mão, o fole e a posição das mãos, e no fim vem um relatório com o que errou e o que treinar. |
 | **Teclado** | Os 71 botões nas posições reais, com som de bandoneon. Um fole simulado mostra quando ele chega ao fim, e a **válvula de ar** reposiciona o fole sem som. |
 | **Desafios** | *Encontre a nota*: o app pede uma nota e você acha o botão. O sorteio **inteligente** repete mais os botões que você erra, e o **mapa de erros** pinta o teclado do verde ao vermelho. Há também a *Leitura na pauta*. |
 | **Melodias** | Toque melodias e escalas em três modos: **Ouvir** (o app toca e mostra), **Espera** (avança quando você acerta) e **No tempo** (com metrônomo e pontuação). Funciona com uma ou duas mãos e mostra a **partitura com cursor** e a **direção sugerida do fole** em cada nota. |
@@ -85,11 +86,19 @@ Se é a sua primeira vez, siga esta ordem:
 
 ---
 
+### Sobre o dedilhado na Academia
+
+O app sabe conferir a **nota**, o **botão**, a **mão**, a **direção do fole** (na tela) e o **ritmo**. Ele **não consegue saber qual dedo você usou**: nem o toque na tela nem o microfone dizem isso. Por isso o dedo aparece sempre como *sugerido*, e o relatório nunca diz que conferiu o seu dedo. O código já tem um ponto de ligação para um validador futuro, por exemplo uma câmera que reconheça os dedos (`registrarValidadorDeDedos` em `js/academia.js`).
+
+O dedo de cada nota vem da partitura do exercício (`@dedo` no formato de texto), não de uma regra fixa por botão, porque a digitação muda conforme a frase. Os exercícios ainda estão com o dedo **a definir**: os números serão transcritos de um método de referência. Os polegares não tocam botões: o direito cuida da válvula de ar e o esquerdo fica apoiado na caixa.
+
+---
+
 ## Atalhos do teclado
 
 | Tecla | Onde | O que faz |
 |---|---|---|
-| <kbd>Espaço</kbd> | Teclado, Melodias | Inverte a direção do fole |
+| <kbd>Espaço</kbd> | Teclado, Melodias, Academia | Inverte a direção do fole |
 | <kbd>Espaço</kbd> | Ritmo | Marca a batida no modo *toque junto* |
 | <kbd>A</kbd> (segurar) | Teclado | Válvula de ar: **abre** o fole sem som |
 | <kbd>F</kbd> (segurar) | Teclado | Válvula de ar: **fecha** o fole sem som |
@@ -133,6 +142,7 @@ Cada nota é **nome + oitava : duração**. O `Dó4` é o dó central do piano.
 | `p:4` | pausa de 1 tempo |
 | `Fá#4`, `Sib3`, `G4` | sustenido, bemol, ou nomes em inglês |
 | `Sol4:4/f`, `Sol4:4/a` | força a direção do fole (fechando ou abrindo) |
+| `Sol4:4@3`, `Sol4:4@3,2` | dedo recomendado (3) e, depois da vírgula, outros dedos aceitos |
 
 **Duas mãos:** comece as linhas com `direita:` e `esquerda:`. Cada mão conta o próprio tempo, e o app junta as duas usando um fole só.
 

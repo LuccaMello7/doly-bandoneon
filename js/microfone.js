@@ -51,6 +51,7 @@ function showMic(m, cents, rms){
 }
 
 function onMicNote(m){
+  if(currentView==='academia'){ acadOuvir(m); return; }
   if(!mel.running || !mel.cur) return;
   const mode = $('#melMode').value;
   if(mode==='wait') melHear(m);

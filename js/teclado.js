@@ -5,12 +5,13 @@
 //   showLabels()  mostra ou esconde os nomes das notas
 //   onPress(b, midi, dir, api)  chamado ao apertar um botão
 //   perRow        1 se o teclado fica sozinho na linha (afeta o tamanho automático)
+//   largura()     largura disponível em px, quando o teclado fica numa área menor que a página
 //   editable, canSound, sound   edição do mapa e controle do som
 // Devolve uma api para marcar botões (dica, acerto, erro, acorde, cor do mapa de erros).
 let kbSeq=0;
 // Tamanho do botão conforme a largura da tela. perRow = quantos teclados lado a lado (1 ou 2)
-function autoKeySize(maxX, perRow){
-  const W = Math.min(1150, document.documentElement.clientWidth) - 48;
+function autoKeySize(maxX, perRow, largura){
+  const W = largura || Math.min(1150, document.documentElement.clientWidth) - 48;
   const per = perRow===1 ? 1 : (W>=860 ? 2 : 1);
   return Math.max(30, Math.min(48, Math.floor((W/per - (per===2?130:16)) / (maxX+1))));
 }
@@ -22,7 +23,7 @@ function createKeyboard(el, hand, opts={}){
   function build(){
     el.innerHTML=''; el.className='kbd';
     const bs=state.layout[hand], maxX=Math.max(...bs.map(b=>b.x)), maxY=Math.max(...bs.map(b=>b.y));
-    size=opts.size||autoKeySize(maxX, opts.perRow); dia=Math.round(size*0.8); api.size=size;
+    size=opts.size||autoKeySize(maxX, opts.perRow, opts.largura&&opts.largura()); dia=Math.round(size*0.8); api.size=size;
     el.style.width=((maxX+1)*size+10)+'px'; el.style.height=((maxY+1)*size+10)+'px';
     el.style.fontSize=Math.max(8, Math.round(size*0.21))+'px';
     for(const b of state.layout[hand]){
@@ -54,7 +55,7 @@ function createKeyboard(el, hand, opts={}){
     }
   }
   const api={
-    hand, build, refresh, held, size, perRow:opts.perRow,
+    hand, build, refresh, held, size, perRow:opts.perRow, largura:opts.largura,
     // ao inverter o fole as notas seguradas mudam de altura, como no instrumento
     retune(){ const dir=opts.getDir?opts.getDir():state.dir;
       for(const id of held){ const b=nodes[id].b; if(voices[uid+id]) startVoice(uid+id,b[dir],hand); } },
@@ -62,7 +63,10 @@ function createKeyboard(el, hand, opts={}){
     mark(id,cls,ms=600){ const n=nodes[id]; if(!n) return; n.d.classList.add(cls); if(ms) setTimeout(()=>n.d.classList.remove(cls),ms); },
     unmark(id,cls){ const n=nodes[id]; if(n) n.d.classList.remove(cls); },
     tint(id,color){ const n=nodes[id]; if(!n) return; n.d.style.background=color; n.d.style.color=color?'#fff':''; },
-    clearMarks(){ Object.values(nodes).forEach(({d})=>d.classList.remove('ok','bad','hint','chord')); },
+    clearMarks(){ Object.values(nodes).forEach(({d})=>d.classList.remove('ok','bad','hint','chord','guia','prox')); },
+    // número do dedo recomendado sobre o botão (null tira)
+    dedo(id,n){ const x=nodes[id]; if(!x) return; if(n==null) delete x.d.dataset.dedo; else x.d.dataset.dedo=n; },
+    clearDedos(){ Object.values(nodes).forEach(({d})=>{ delete d.dataset.dedo; }); },
     setDim(v){ Object.values(nodes).forEach(({d})=>d.classList.toggle('dim',v)); },
   };
   build();
@@ -76,7 +80,7 @@ window.addEventListener('resize', ()=>{
     let changed=false;
     for(const k of allKeyboards){
       const bs=state.layout[k.hand], maxX=Math.max(...bs.map(b=>b.x));
-      if(autoKeySize(maxX, k.perRow)!==k.size && k.held.size===0){ k.build(); changed=true; }
+      if(autoKeySize(maxX, k.perRow, k.largura&&k.largura())!==k.size && k.held.size===0){ k.build(); changed=true; }
     }
     if(changed && typeof onKeyboardsResized==='function') onKeyboardsResized();
   }, 150);

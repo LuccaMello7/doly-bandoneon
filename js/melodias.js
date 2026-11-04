@@ -101,7 +101,8 @@ function parseMelody(text){
     const H = hand || m.hand;
     for(const tok of line.split(/\s+/).filter(Boolean)){
       if(tok==='|') continue;
-      const t = tok.match(/^([^:\/~]+)(?::(\d+)(\.|t)?)?(?:\/([afAF]))?(~)?$/);
+      // nota[:duração][/a|/f][@dedo[,alternativos]][~]   ex.: Mi4:8/a@3,2~
+      const t = tok.match(/^([^:\/~@]+)(?::(\d+)(\.|t)?)?(?:\/([afAF]))?(?:@([1-5](?:,[1-5])*))?(~)?$/);
       if(!t){ m.bad.push(tok); continue; }
       const div = t[2]?parseInt(t[2]):4;
       if(![1,2,4,8,16,32].includes(div)){ m.bad.push(tok); continue; }
@@ -110,8 +111,10 @@ function parseMelody(text){
       const midi = parseNote(t[1]);
       if(midi==null){ m.bad.push(tok); continue; }
       const last = lastByHand[H];
-      if(last && last.tie && last.midi===midi){ last.beats+=beats; last.tie=!!t[5]; cursor[H]+=beats; continue; }
-      const n = {midi, beats, hand:H, t:cursor[H], force: t[4] ? (t[4].toLowerCase()==='a'?'open':'close') : null, tie:!!t[5]};
+      if(last && last.tie && last.midi===midi){ last.beats+=beats; last.tie=!!t[6]; cursor[H]+=beats; continue; }
+      const dedos = t[5] ? t[5].split(',').map(Number) : [];
+      const n = {midi, beats, hand:H, t:cursor[H], force: t[4] ? (t[4].toLowerCase()==='a'?'open':'close') : null, tie:!!t[6],
+                 dedo: dedos.length ? dedos[0] : null, alt: dedos.slice(1)};
       m.notes.push(n); lastByHand[H]=n; cursor[H]+=beats;
     }
   }
@@ -256,7 +259,10 @@ function loadMelody(id){
   $('#melEditor').style.display='none'; $('#melPlayer').style.display='block';
   renderMelList(); renderMelPlayer();
 }
-function onLayoutChange(){ if(mel.cur){ stopMelody(); fingerMelody(mel.cur); renderMelPlayer(); } }
+function onLayoutChange(){
+  if(mel.cur){ stopMelody(); fingerMelody(mel.cur); renderMelPlayer(); }
+  if(typeof acadAoMudarMapa==='function') acadAoMudarMapa(); // a Academia refaz os exercícios com o mapa novo
+}
 
 const noteLabel = n => n.spell ? spellName(n,true) : noteName(n.midi);
 function renderMelPlayer(){

@@ -119,6 +119,77 @@ figcaption{color:var(--muted);font-size:.85rem;margin-top:6px}
 .doly-fotos figure{margin:0}
 .doly-fotos{align-items:start}
 @media (min-width:701px){.doly-fotos .larga{grid-column:span 2}.doly-fotos .inteira{grid-column:1/-1}}
+/* Academia de Bandoneón */
+.ac-niveis{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
+.ac-nivel{display:grid;grid-template-columns:auto 1fr;gap:2px 8px;align-items:center;text-align:left;background:var(--panel2);border:2px solid var(--line);border-radius:10px;padding:8px 10px;color:var(--text);cursor:pointer;font:inherit}
+.ac-nivel.on{border-color:var(--gold)}
+.ac-num{grid-row:span 2;width:30px;height:30px;border-radius:50%;background:var(--gold);color:var(--navy);font-weight:800;display:flex;align-items:center;justify-content:center}
+.ac-ntit{font-weight:600;font-size:.9rem;line-height:1.2}
+.ac-nivel .bar{grid-column:1/-1;margin-top:4px}
+.ac-nfeitos{grid-column:1/-1;font-size:.75rem}
+.ac-layout{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:16px;align-items:start}
+.ac-centro{min-width:0}
+.ac-centro #acKbLeft,.ac-centro #acKbRight{margin:0 auto 6px}
+.ac-maolabel{font-size:.8rem;color:var(--muted);margin-top:8px}
+.ac-instrutor{position:sticky;top:90px}
+.ac-instrutor h3{margin-top:0}
+.ac-nota{font-size:2rem;font-weight:800;color:var(--gold2);line-height:1.1}
+.ac-linha{margin:4px 0;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.ac-linha .muted{min-width:60px}
+.ac-instrutor hr{border:0;border-top:1px solid var(--line);margin:8px 0}
+.ac-proximo{color:var(--muted);font-size:.9rem;border-left:3px dashed var(--gold);padding-left:8px}
+.ac-validacao{font-size:.8rem;margin-bottom:0}
+.ac-opcoes{font-size:.85rem}
+.ac-instrutor.grande .ac-nota{font-size:3rem}
+.ac-instrutor.grande .ac-linha{font-size:1.15rem}
+.ac-instrutor.grande .maos{max-width:none}
+.ac-instrutor.grande .mao-box svg{width:100%}
+.maos{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:8px 0}
+.mao-box{margin:0;text-align:center;opacity:.45;transition:opacity .2s}
+.mao-box.ativa{opacity:1}
+.mao-box.proxima{opacity:.75}
+.mao-box svg{width:100%;max-width:130px;height:auto}
+.mao-box figcaption{margin-top:0}
+.mao .palma{fill:#2a4568;stroke:#8aa0bd;stroke-width:1.5}
+.mao .dedo rect{fill:#2a4568;stroke:#8aa0bd;stroke-width:1.5}
+.mao .dedo text{fill:var(--text);font-size:11px;font-weight:700;text-anchor:middle}
+.mao .polegar rect{fill:#1d3150;stroke-dasharray:3 2}
+.mao .legenda{fill:var(--muted);font-size:9px;text-anchor:middle}
+.mao-box.sem-dedo .palma{fill:#4a3d1c;stroke:var(--gold)}
+.mao .dedo.atual rect{fill:var(--gold);stroke:var(--gold2)}
+.mao .dedo.atual text{fill:var(--navy)}
+.mao .dedo.proximo rect{stroke:var(--gold);stroke-width:2.5;stroke-dasharray:4 3}
+.key.guia{box-shadow:0 0 0 4px var(--gold),0 0 18px 6px #caa24799;animation:guia 1.4s ease-in-out infinite}
+@keyframes guia{50%{box-shadow:0 0 0 4px var(--gold),0 0 8px 2px #caa24755}}
+.key.prox{outline:2px dashed var(--gold);outline-offset:3px}
+.key[data-dedo]::after{content:attr(data-dedo);position:absolute;top:-7px;right:-7px;width:18px;height:18px;border-radius:50%;background:var(--navy);color:var(--gold2);border:2px solid var(--gold);font-size:11px;line-height:14px;font-weight:800}
+.ac-strip .mcard sup{color:var(--gold2);font-weight:800}
+.ac-lista{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;margin-bottom:12px}
+.ac-ex{display:flex;flex-direction:column;gap:3px;text-align:left;background:var(--panel2);border:2px solid var(--line);border-radius:10px;padding:10px;color:var(--text);cursor:pointer;font:inherit}
+.ac-ex.on{border-color:var(--gold)}
+.ac-ex[disabled]{opacity:.55;cursor:not-allowed}
+.ac-ex .muted{font-size:.85rem}
+.ac-ok{color:var(--green);font-weight:700;font-size:.85rem}
+.ac-pend{color:var(--gold2);font-size:.8rem}
+.ac-modos{display:inline-flex;border:1px solid var(--line);border-radius:22px;overflow:hidden}
+.ac-modos button{background:transparent;border:0;color:var(--text);padding:8px 18px;cursor:pointer;font:inherit}
+.ac-modos button.on{background:var(--gold);color:var(--navy);font-weight:700}
+.ac-controles{margin-top:8px}
+.ac-num-in{width:56px}
+.ac-relatorio:not(:empty){margin-top:14px;border-top:1px solid var(--line);padding-top:6px}
+.ac-relatorio li{margin:4px 0}
+.ac-rec{background:#1d3150;border-left:4px solid var(--gold);padding:8px 12px;border-radius:6px}
+@media (max-width:980px){
+  .ac-layout{grid-template-columns:1fr}
+  .ac-instrutor{position:static;order:-1}
+  .maos{max-width:320px}
+}
+@media (max-width:700px){
+  .ac-instrutor .ac-nota{font-size:1.5rem}
+  .ac-instrutor:not(.grande) .ac-linha{display:inline-flex;margin-right:12px}
+  .ac-instrutor:not(.grande) .maos{max-width:220px;margin:6px auto}
+  .ac-instrutor h3{display:none}
+}
 /* Celular */
 @media (max-width:700px){
   header{padding:8px 10px;gap:6px}
