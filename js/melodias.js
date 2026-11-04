@@ -228,6 +228,7 @@ function markCur(i){
   const c=$(`#melStrip .mcard[data-g="${g}"]`), strip=$('#melStrip');
   if(c){ const r=c.getBoundingClientRect(), s=strip.getBoundingClientRect(); strip.scrollLeft += (r.left+r.width/2) - (s.left+s.width/2); }
   staffCursor(g);
+  if(typeof rollIniciar==='function') rollIniciar(); // notas caindo (cascata.js)
 }
 function cardCls(i, cls){ const c=cardEl(i); if(!c) return; c.classList.remove('ok','bad'); c.classList.add(cls); }
 function hintGroup(g){
@@ -355,7 +356,7 @@ function stopMelody(){
   mel.timers.forEach(clearTimeout); mel.timers=[];
   if(mel.raf) cancelAnimationFrame(mel.raf); mel.raf=null;
   if(mel.bus){ mel.bus.disconnect(); mel.bus=null; }
-  mel.running=false; $('#melStart').textContent='▶ Começar';
+  mel.running=false; mel.rollTipo=null; $('#melStart').textContent='▶ Começar';
 }
 function finishMel(msg, score){
   stopMelody(); melFeed(msg, score==null?'':score>=80?'ok':'bad'); markCur(-1); mel.g=-1;
@@ -363,6 +364,7 @@ function finishMel(msg, score){
     const id=mel.cur.id, prev=state.progress.melodies[id];
     if(prev==null || score>prev){ state.progress.melodies[id]=score; saveProgress(); renderMelList(); if(mel.cur.guide) renderScaleGrid(); }
     logPractice(mel.cur.guide ? 'escala' : 'melodia');
+    if(score>=90) comemorar();
   }
 }
 $('#melStart').onclick = ()=>{
@@ -380,6 +382,7 @@ $('#melSpeed').oninput = e=>{ $('#melSpeedVal').textContent=e.target.value+'%'; 
 // Modo Ouvir: o app toca e mostra botões + direção
 function startListen(){
   const spb = 60/(mel.cur.bpm*melSpeed());
+  Object.assign(mel, {rollTipo:'listen', rollInicio:performance.now()/1000+0.3, rollSpb:spb});
   mel.cur.groups.forEach((g,k)=>{
     mel.timers.push(setTimeout(()=>{
       const i0=g.idxs[0]; mel.g=k; markCur(i0);
@@ -447,6 +450,7 @@ function startTimed(){
   const c=ac(), spb=60/(mel.cur.bpm*melSpeed()), t0=c.currentTime+0.4;
   mel.bus=c.createGain(); mel.bus.connect(master);
   const start=t0+4*spb; mel.events=[]; mel.upcoming=null;
+  Object.assign(mel, {rollTipo:'timed', rollInicio:start, rollSpb:spb});
   mel.cur.notes.forEach((n,i)=>{ if(!n.rest && !n.error) mel.events.push({i, t:start+n.t*spb, n, judged:false}); });
   mel.tEnd=start+mel.cur.totalBeats*spb;
   for(let bt=t0, k=0; bt<mel.tEnd-0.01; bt+=spb, k++) clickSound(bt, k<4 || k%4===0, mel.bus);

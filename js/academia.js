@@ -419,7 +419,7 @@ function acadParar(){
   if(acad.raf) cancelAnimationFrame(acad.raf); acad.raf = null;
   if(acad.bus){ acad.bus.disconnect(); acad.bus = null; }
   acad.rodando = false; acad.demo = false;
-  $('#acStart').textContent = t('▶ Começar'); $('#acOuvirBtn').textContent = t('🔊 Ouvir');
+  $('#acStart').textContent = t('▶ Começar'); $('#acOuvirBtn').textContent = t('Ouvir');
 }
 function novaRodada(){
   acad.res = acad.eventos.map(()=>({tentativas:0, primeira:null, ok:false}));
@@ -578,6 +578,7 @@ function acadFim(){
   if(!recs.length) recs.push(acad.modo==='aprender' ? t('Muito bem! Agora toque no modo Praticar, sem o destaque dos botões.')
     : acad.modo==='praticar' ? t('Muito bem! Agora tente o modo Desafio, no tempo.') : t('Muito bem! Siga para o próximo exercício.'));
   saveProgress(); renderAcadNiveis(); renderAcadLista(); logPractice('academia');
+  if(pctNotas>=90 && !errados.length && (pctRitmo==null || pctRitmo>=80)) comemorar();
   const prox = proximoExercicio();
   $('#acRelatorio').innerHTML = `<h3>${t('Resultado')}</h3><ul>${linhas.map(l=>`<li>${l}</li>`).join('')}</ul>`
     + `<p class="ac-rec"><b>${t('Recomendação:')}</b> ${recs[0]}</p>` + recs.slice(1).map(r=>`<p class="ac-rec">${r}</p>`).join('')

@@ -62,7 +62,10 @@ function createKeyboard(el, hand, opts={}){
     retune(){ const dir=opts.getDir?opts.getDir():state.dir;
       for(const id of held){ const b=nodes[id].b; if(voices[uid+id]) startVoice(uid+id,b[dir],hand); } },
     silence(){ for(const id of held) stopVoice(uid+id,true); },
-    mark(id,cls,ms=600){ const n=nodes[id]; if(!n) return; n.d.classList.add(cls); if(ms) setTimeout(()=>n.d.classList.remove(cls),ms); },
+    mark(id,cls,ms=600){ const n=nodes[id]; if(!n) return;
+      if((cls==='ok' || cls==='bad') && typeof vibrar==='function') vibrar(cls==='ok'?'ok':'erro');
+      n.d.classList.remove(cls); void n.d.offsetWidth; n.d.classList.add(cls); // remove e põe de novo: reinicia a animação
+      if(ms) setTimeout(()=>n.d.classList.remove(cls),ms); },
     unmark(id,cls){ const n=nodes[id]; if(n) n.d.classList.remove(cls); },
     tint(id,color){ const n=nodes[id]; if(!n) return; n.d.style.background=color; n.d.style.color=color?'#fff':''; },
     clearMarks(){ Object.values(nodes).forEach(({d})=>d.classList.remove('ok','bad','hint','chord','guia','prox')); },

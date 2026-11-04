@@ -61,7 +61,7 @@
 
 <main class="pagina">
   <div class="card doly-hero">
-    <img src="../../imagens/doly/disco.jpg" alt="Cover of the album Recital de Tangos, by Doly Costa" width="375" height="463">
+    <div class="doly-capa"><span class="doly-vinil" aria-hidden="true"></span><img src="../../imagens/doly/disco.jpg" alt="Cover of the album Recital de Tangos, by Doly Costa" width="375" height="463"></div>
     <div>
       <p class="muted doly-kicker">A living memory of gaúcho music</p>
       <h1>Who was Doly Costa?</h1>
@@ -99,6 +99,7 @@
 
   <div class="card">
     <h3 style="margin-top:0">Photos</h3>
+    <p class="muted">Tap a photo to enlarge it.</p>
     <div class="doly-fotos">
       <figure><a href="../../imagens/doly/juventude.jpg" target="_blank" rel="noopener"><img src="../../imagens/doly/juventude.jpg" alt="Young Doly playing the bandoneon in front of a microphone" loading="lazy" width="670" height="1057"></a><figcaption>Youth: he came to Porto Alegre to play as a staff musician in the orchestras of Rádio Gaúcha and Rádio Farroupilha.</figcaption></figure>
       <figure><a href="../../imagens/doly/estudio.jpg" target="_blank" rel="noopener"><img src="../../imagens/doly/estudio.jpg" alt="Doly wearing headphones, playing the bandoneon at a recording session" loading="lazy" width="700" height="1041"></a><figcaption>Recording for the album.</figcaption></figure>
@@ -118,8 +119,42 @@
     <div class="row"><a class="btn" href="../" data-local>Start learning</a></div>
   </div>
 </main>
+<!-- foto em tela cheia (sem JavaScript, o link abre a imagem) -->
+<div class="lupa" id="lupa" role="dialog" aria-modal="true" aria-label="Enlarged photo" hidden>
+  <figure><img alt=""><figcaption></figcaption></figure>
+  <button type="button" class="lupa-fechar" aria-label="Close">×</button>
+</div>
 <footer class="rodape"><a href="../" data-local>BanDoly: learn to play the bandoneon online, free</a></footer>
 <!-- aberto direto do computador (sem servidor), as pastas precisam do index.html no fim -->
+<script>
+// A história contada pela rolagem: a linha do tempo se acende e cada marco e foto aparece ao chegar
+// na tela. Sem movimento ("reduzir movimento" do sistema ou Animações: Reduzidas no app) tudo já
+// aparece parado; sem JavaScript, também.
+(function(){
+  var reduz = (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+  try{ reduz = reduz || localStorage.getItem('bandoneon.movimento')==='"reduzido"'; }catch(e){}
+  var tl = document.querySelector('.timeline'), lupa = document.getElementById('lupa');
+  if(!reduz && 'IntersectionObserver' in window){
+    document.documentElement.classList.add('mov');
+    var obs = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('visto'); obs.unobserve(e.target); } }); },
+                                       {threshold:0, rootMargin:'0px 0px -12% 0px'});
+    document.querySelectorAll('.timeline li, .doly-fotos figure, .pagina > .card').forEach(function(el){ obs.observe(el); });
+    var tinta = function(){ var r = tl.getBoundingClientRect(), p = (innerHeight*0.7 - r.top)/r.height; tl.style.setProperty('--p', Math.max(0, Math.min(1, p)).toFixed(3)); };
+    addEventListener('scroll', tinta, {passive:true}); addEventListener('resize', tinta); tinta();
+  }
+  document.querySelectorAll('.doly-fotos a, .doly-doc a').forEach(function(a){
+    a.addEventListener('click', function(e){
+      e.preventDefault();
+      var img = lupa.querySelector('img'), cap = a.parentNode.querySelector('figcaption');
+      img.src = a.href; img.alt = a.querySelector('img').alt; lupa.querySelector('figcaption').textContent = cap ? cap.textContent : '';
+      lupa.hidden = false; lupa.querySelector('button').focus();
+    });
+  });
+  var fechar = function(){ lupa.hidden = true; };
+  lupa.addEventListener('click', function(e){ if(e.target===lupa || e.target.closest('button')) fechar(); });
+  addEventListener('keydown', function(e){ if(e.key==='Escape' && !lupa.hidden) fechar(); });
+})();
+</script>
 <script>if(location.protocol==='file:') document.querySelectorAll('a[href$="/"]').forEach(a=>a.setAttribute('href', a.getAttribute('href')+'index.html'));</script>
 </body>
 </html>

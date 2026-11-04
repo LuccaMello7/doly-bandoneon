@@ -11,6 +11,10 @@ $('#tuneSel').onchange=e=>{ state.tuning=+e.target.value; store.set('tuning',sta
 $('#volSel').oninput=e=>{ state.volume=+e.target.value; store.set('volume',state.volume); if(master) master.gain.value=state.volume/100; };
 $('#volSel').onchange=testSound;
 $('#testSound').onclick=testSound;
+// Animações (reduzidas também quando o sistema pede) e vibração no celular (movimento.js)
+$('#movSel').value=mov.pref; $('#vibSel').value=mov.vib?'1':'0';
+$('#movSel').onchange=e=>{ mov.pref=e.target.value; store.set('movimento',mov.pref); aplicarMovimento(); };
+$('#vibSel').onchange=e=>{ mov.vib=e.target.value==='1'; store.set('vibracao',mov.vib); vibrar('ok'); };
 
 // Pré-carrega as amostras no primeiro gesto do usuário (o navegador só libera o áudio depois de um toque)
 const firstGesture=()=>{

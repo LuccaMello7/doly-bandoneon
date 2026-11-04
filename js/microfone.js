@@ -3,13 +3,14 @@
 // você tivesse apertado o botão na tela, nos modos Espera e No tempo.
 const MIC_LATENCY = 0.09; // atraso médio da detecção (s), descontado no modo No tempo
 const mic = {on:false, stream:null, src:null, analyser:null, buf:null, timer:null,
-             cand:null, candCount:0, current:null, peak:0, silent:0};
+             cand:null, candCount:0, current:null, peak:0, silent:0,
+             limiar: store.get('micLimiar', 0.008)}; // volume mínimo (medido em "Calibrar o silêncio")
 
 // YIN simplificado: devolve {freq, clarity, rms} ou null se não houver nota clara
 function detectPitch(buf, sr){
   const N = buf.length;
   let rms = 0; for(let i=0;i<N;i++) rms += buf[i]*buf[i]; rms = Math.sqrt(rms/N);
-  if(rms < 0.008) return null;
+  if(rms < Math.max(0.008, mic.limiar||0)) return null;
   const maxLag = Math.min(Math.floor(sr/60), N>>1), W = N - maxLag, minLag = Math.floor(sr/1600);
   const d = new Float32Array(maxLag+1);
   for(let lag=1; lag<=maxLag; lag++){
@@ -44,13 +45,15 @@ function micTick(){
   if(mic.candCount===3 && m!==mic.current){ mic.current=m; mic.peak=r.rms; onMicNote(m); }
 }
 function showMic(m, cents, rms){
+  if(currentView==='microfone') mcMostrar(m, cents, rms);
   const el = $('#micStatus'); if(!el) return;
-  if(m==null){ el.innerHTML = '🎤 Ouvindo… <span class="muted">(toque uma nota)</span>'; return; }
+  if(m==null){ el.innerHTML = '<svg aria-hidden="true"><use href="#i-mic"/></svg> Ouvindo… <span class="muted">(toque uma nota)</span>'; return; }
   const c = cents>0 ? '+'+cents : String(cents), cls = Math.abs(cents)<=10 ? 'ok' : 'bad';
-  el.innerHTML = `🎤 <b>${noteName(m)}</b> <span class="${cls}">${c} cents</span> <span class="micbar"><span style="width:${Math.min(100,Math.round(rms*400))}%"></span></span>`;
+  el.innerHTML = `<svg aria-hidden="true"><use href="#i-mic"/></svg> <b>${noteName(m)}</b> <span class="${cls}">${c} cents</span> <span class="micbar"><span style="width:${Math.min(100,Math.round(rms*400))}%"></span></span>`;
 }
 
 function onMicNote(m){
+  if(currentView==='microfone'){ marcar('mic'); return; }
   if(currentView==='academia'){ acadOuvir(m); return; }
   if(!mel.running || !mel.cur) return;
   const mode = $('#melMode').value;
@@ -82,6 +85,58 @@ function micStop(){
   mic.stream = mic.src = null;
   const el = $('#micStatus'); if(el) el.textContent = '';
 }
+/* ---------- Tela Bandoneon real: afinador e botões que dão a nota ouvida ---------- */
+const mcOpts = {getDir:()=>$('#mcDir').value, showLabels:()=>true};
+const mcL = kb($('#mcLeft'),'left',mcOpts), mcR = kb($('#mcRight'),'right',mcOpts);
+let mcDono = false, mcUltima = null; // mcDono: o microfone foi ligado nesta tela (e desliga ao sair dela)
+function mcEstado(){
+  $('#mcOn').lastChild.textContent = mic.on ? 'Desligar o microfone' : 'Ligar o microfone';
+  $('#mcOn').classList.toggle('sec', mic.on); $('#mcCal').disabled = !mic.on;
+  if(!mic.on){ mcMostrar(null); $('#mcCents').textContent = 'Ligue o microfone e toque uma nota.'; }
+}
+// Mostra a nota ouvida, a afinação (agulha de -50 a +50 cents), o volume e acende os botões
+function mcMostrar(m, cents, rms){
+  $('#mcNivel').style.width = m==null ? '0%' : Math.min(100, Math.round((rms||0)*400))+'%';
+  if(m==null){ $('#mcAgulha').style.left='50%'; $('#mcAfinador').classList.remove('afinado'); return; }
+  $('#mcNota').textContent = noteName(m);
+  $('#mcAgulha').style.left = (50 + Math.max(-50, Math.min(50, cents))) + '%';
+  $('#mcCents').textContent = Math.abs(cents)<=10 ? 'Afinado' : cents>0 ? `${cents} cents acima` : `${-cents} cents abaixo`;
+  $('#mcAfinador').classList.toggle('afinado', Math.abs(cents)<=10);
+  if(m===mcUltima) return;
+  mcUltima = m; const dir = $('#mcDir').value;
+  for(const [k,lado] of [[mcL,'left'],[mcR,'right']]){
+    k.clearMarks();
+    state.layout[lado].forEach(b=>{ if(micMatches(m, b[dir])) k.mark(b.id,'chord',0); });
+  }
+}
+$('#mcOn').onclick = async ()=>{
+  if(mic.on){ micStop(); mcDono=false; $('#micToggle').checked=false; $('#acMic').checked=false; }
+  else if(await micStart()){ mcDono=true; $('#mcInfo').textContent=''; }
+  mcEstado();
+};
+$('#mcDir').onchange = ()=>{ mcUltima=null; mcL.refresh(); mcR.refresh(); mcL.clearMarks(); mcR.clearMarks(); };
+// Mede o barulho do ambiente por 2 segundos: sons mais baixos que isso passam a ser ignorados
+$('#mcCal').onclick = ()=>{
+  if(!mic.on) return;
+  $('#mcCal').disabled = true; $('#mcInfo').textContent = 'Silêncio, por favor… medindo o barulho do ambiente.';
+  const medidas = [], t0 = performance.now();
+  const iv = setInterval(()=>{
+    if(!mic.on){ clearInterval(iv); return; }
+    mic.analyser.getFloatTimeDomainData(mic.buf);
+    let r = 0; for(let i=0;i<mic.buf.length;i++) r += mic.buf[i]*mic.buf[i];
+    medidas.push(Math.sqrt(r/mic.buf.length));
+    if(performance.now()-t0 < 2000) return;
+    clearInterval(iv); medidas.sort((a,b)=>a-b);
+    mic.limiar = Math.min(0.06, Math.max(0.008, 2.5*medidas[Math.floor(medidas.length*0.9)]));
+    store.set('micLimiar', mic.limiar); $('#mcCal').disabled = false;
+    $('#mcInfo').textContent = 'Pronto! O app vai ignorar os sons mais baixos que o barulho medido.';
+  }, 50);
+};
+ganchosAba.push((v, antes)=>{
+  if(antes==='microfone' && v!=='microfone' && mcDono){ micStop(); mcDono=false; mcEstado(); }
+  if(v==='microfone'){ mcL.build(); mcR.build(); mcUltima=null; mcEstado(); }
+});
+
 $('#micToggle').onchange = async e=>{
   if(e.target.checked){ if(!await micStart()) e.target.checked=false; }
   else micStop();

@@ -30,7 +30,7 @@ function nextFind(){
     fq.active=false; $('#fTarget').textContent=`Fim! ${fq.score}/10`;
     $('#fFeed').className='feedback'; $('#fFeed').textContent = fq.score>=8?'Excelente!':fq.score>=5?'Bom trabalho, continue treinando.':'Treine mais no Teclado com os nomes visíveis.';
     if(state.progress.find==null || fq.score>state.progress.find){ state.progress.find=fq.score; saveProgress(); }
-    logPractice('desafio');
+    logPractice('desafio'); if(fq.score>=8) comemorar();
     return;
   }
   const hs=$('#fHand').value, ds=$('#fDir').value;
@@ -115,7 +115,7 @@ function nextStaff(){
     sq.active=false; drawStaff(sq.clef,null);
     $('#sFeed').className='feedback'; $('#sFeed').textContent=`Fim! ${sq.score}/10`;
     if(state.progress.staff==null || sq.score>state.progress.staff){ state.progress.staff=sq.score; saveProgress(); }
-    logPractice('desafio');
+    logPractice('desafio'); if(sq.score>=8) comemorar();
     return;
   }
   const c=$('#sClef').value; sq.clef = c==='mix'?pick(['treble','bass']):c;
@@ -127,6 +127,7 @@ $('#sAnswers').addEventListener('click',e=>{
   const l=e.target.dataset.l; if(l==null||!sq.active||sq.locked) return;
   sq.locked=true; const right=sq.d%7, midi=dToMidi(sq.d);
   playNote(midi,0.6, sq.clef==='bass'?'left':'right');
+  vibrar(+l===right?'ok':'erro');
   if(+l===right){ sq.score++; $('#sFeed').className='feedback ok'; $('#sFeed').textContent=`Certo! ${noteName(midi)}`; }
   else { $('#sFeed').className='feedback bad'; $('#sFeed').textContent=`Era ${noteName(midi)}.`; }
   sq.round++; setTimeout(nextStaff,900);
@@ -136,5 +137,7 @@ $$('[data-ch]').forEach(b=>b.onclick=()=>{
   $$('[data-ch]').forEach(x=>x.classList.toggle('on',x===b));
   $('#chFind').style.display=b.dataset.ch==='find'?'block':'none';
   $('#chStaff').style.display=b.dataset.ch==='staff'?'block':'none';
+  $('#chEar').style.display=b.dataset.ch==='ear'?'block':'none';
+  if(b.dataset.ch!=='ear') eq.active=false;
 });
 renderStaffAnswers(); drawStaff('treble',null);

@@ -104,6 +104,57 @@ const LESSONS = [
   quiz:[{q:'O que significa "D.C." numa partitura?',o:['Diminuir o volume','Voltar ao começo','Dobrar o compasso','Tocar com a mão direita'],a:1},
         {q:'Numa parte de orquestra típica, o bandoneon muitas vezes…',o:['Tem uma pauta só, em clave de sol','Não tem partitura','Lê só cifras','Usa clave de dó'],a:0}]},
 ];
+// Tarefas tocadas dentro das lições ("toque agora…"). Cada passo é {mao, dir, midi}; midi null = qualquer
+// botão daquela mão. Ficam fora do texto da lição para valer nos três idiomas sem repetir o HTML.
+const TAREFAS_LICAO = {
+  0: {intro:'O Lá é a nota que a orquestra usa para afinar.', passos:[{mao:'right', dir:'open', midi:69}]},
+  1: {intro:'Sinta a diferença entre as duas caixas: graves na esquerda, agudos na direita.', passos:[{mao:'left', dir:'open', midi:null}, {mao:'right', dir:'open', midi:null}]},
+  3: {intro:'A mesma nota pode estar em botões diferentes, conforme a direção do fole.', passos:[{mao:'right', dir:'open', midi:67}, {mao:'right', dir:'close', midi:67}]},
+  4: {intro:'Na clave de sol, a 2ª linha é o Sol.', passos:[{mao:'right', dir:'open', midi:67}]},
+  8: {intro:'Lá, Dó e Mi formam o acorde de Lá menor.', passos:[{mao:'left', dir:'open', midi:57}, {mao:'left', dir:'open', midi:60}, {mao:'left', dir:'open', midi:64}]},
+  9: {intro:'Melodia na direita, baixo na esquerda, o mesmo fole.', passos:[{mao:'left', dir:'open', midi:48}, {mao:'right', dir:'open', midi:60}]},
+};
+state.progress.tarefas = state.progress.tarefas || {};
+let tarefa = null, tarefaKbs = [];
+const textoPasso = p => p.midi==null ? `Toque qualquer botão da ${p.mao==='left'?'mão esquerda':'mão direita'}`
+  : `Toque ${noteName(p.midi)} ${p.dir==='open'?'abrindo':'fechando'} na ${p.mao==='left'?'mão esquerda':'mão direita'}`;
+function montarTarefa(i){
+  tarefaKbs.forEach(k=>{ const x=allKeyboards.indexOf(k); if(x>=0) allKeyboards.splice(x,1); }); tarefaKbs = [];
+  const T = TAREFAS_LICAO[i], host = $('#lessonTarefa'); if(!T || !host) { tarefa = null; return; }
+  tarefa = {i, passo:0, erros:0};
+  host.innerHTML = `<div class="tarefa-topo"><span class="tarefa-ic"><svg aria-hidden="true"><use href="#i-keys"/></svg></span>
+    <div><b>Experimente agora</b><div class="muted">${T.intro}</div></div></div>
+    <ol class="tarefa-passos">${T.passos.map(p=>`<li>${textoPasso(p)}</li>`).join('')}</ol>
+    <div class="tarefa-fb feedback" aria-live="polite"></div>
+    <div class="tarefa-kb" data-mao="left"></div><div class="tarefa-kb" data-mao="right"></div>`;
+  for(const lado of ['left','right']) tarefaKbs.push(kb(host.querySelector(`.tarefa-kb[data-mao="${lado}"]`), lado, {perRow:1,
+    getDir:()=>tarefa && T.passos[Math.min(tarefa.passo, T.passos.length-1)].dir, onPress:(b,m,dir,k)=>tarefaToque(b,m,k)}));
+  tarefaPasso();
+}
+function tarefaPasso(){
+  const T = TAREFAS_LICAO[tarefa.i], host = $('#lessonTarefa'), feita = tarefa.passo>=T.passos.length;
+  host.querySelectorAll('.tarefa-passos li').forEach((li,k)=>{ li.classList.toggle('feito', k<tarefa.passo); li.classList.toggle('atual', k===tarefa.passo); });
+  host.classList.toggle('feita', feita);
+  if(feita){ host.querySelectorAll('.tarefa-kb').forEach(el=>el.hidden=true); return; }
+  const p = T.passos[tarefa.passo];
+  host.querySelectorAll('.tarefa-kb').forEach(el=>el.hidden = el.dataset.mao!==p.mao);
+  tarefaKbs.forEach(k=>{ k.refresh(); k.clearMarks(); });
+  tarefa.erros = 0;
+}
+function tarefaToque(b, m, k){
+  if(!tarefa) return;
+  const T = TAREFAS_LICAO[tarefa.i], p = T.passos[tarefa.passo], fb = $('#lessonTarefa .tarefa-fb'); if(!p) return;
+  if(p.midi==null || m===p.midi){
+    k.mark(b.id,'ok'); tarefa.passo++;
+    fb.className = 'tarefa-fb feedback ok'; fb.textContent = tarefa.passo>=T.passos.length ? 'Tarefa feita! Agora responda as perguntas.' : `Certo! ${noteName(m)}`;
+    if(tarefa.passo>=T.passos.length && !state.progress.tarefas[tarefa.i]){ state.progress.tarefas[tarefa.i] = true; saveProgress(); }
+    setTimeout(()=>{ if(tarefa) tarefaPasso(); }, 450);
+  } else {
+    k.mark(b.id,'bad'); tarefa.erros++;
+    fb.className = 'tarefa-fb feedback bad'; fb.textContent = `Esse é ${noteName(m)}. Tente de novo.`;
+    if(tarefa.erros>=2){ const alvo = state.layout[p.mao].find(x=>x[p.dir]===p.midi); if(alvo) k.mark(alvo.id,'hint',0); }
+  }
+}
 let curLesson=0, lessonAnswered={}, lessonKb=null, lessonCount={open:0,close:0}, lessonDir='open';
 const lessonTr = i => (LICOES_TRAD[state.lang] && LICOES_TRAD[state.lang][i]) || LESSONS[i];
 function renderLessonList(){
@@ -114,18 +165,20 @@ $('#lessonList').addEventListener('click',e=>{ const b=e.target.closest('button'
 function renderLesson(){
   renderLessonList();
   const L=LESSONS[curLesson], T=lessonTr(curLesson); lessonAnswered={}; const answered=lessonAnswered;
-  $('#lessonBody').innerHTML=`<h2>${T.title}</h2>${T.html}<h3>Verifique o que aprendeu</h3>`+
+  $('#lessonBody').innerHTML=`<h2>${T.title}</h2>${T.html}${TAREFAS_LICAO[curLesson]?'<div class="tarefa" id="lessonTarefa"></div>':''}<h3>Verifique o que aprendeu</h3>`+
     T.quiz.map((q,qi)=>`<div class="q" data-q="${qi}"><div>${q.q}</div><div class="opts">${q.o.map((o,oi)=>`<button class="btn sec" data-o="${oi}">${o}</button>`).join('')}</div><div class="fb muted"></div></div>`).join('')+
     `<div class="row" style="margin-top:12px"><button class="btn sec" id="prevL" ${curLesson===0?'disabled':''}>← Anterior</button><button class="btn" id="nextL" ${curLesson===LESSONS.length-1?'disabled':''}>Próxima →</button></div>`;
   $$('#lessonBody .q').forEach(qe=>qe.addEventListener('click',e=>{
     const o=e.target.dataset.o; if(o==null) return;
     const qi=+qe.dataset.q, q=L.quiz[qi], btn=e.target;
+    vibrar(+o===q.a?'ok':'erro');
     if(+o===q.a){ btn.classList.add('right'); qe.querySelector('.fb').textContent='Correto!'; answered[qi]=true; }
     else { btn.classList.add('wrong'); qe.querySelector('.fb').textContent='Ainda não, tente outra opção.'; }
     tryCompleteLesson();
   }));
   $('#prevL').onclick=()=>{ curLesson--; renderLesson(); };
   $('#nextL').onclick=()=>{ curLesson++; renderLesson(); };
+  montarTarefa(curLesson);
   const host=$('#lessonKbd');
   if(host){
     lessonCount={open:0,close:0}; lessonDir='open';

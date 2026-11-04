@@ -53,15 +53,17 @@ Três ideias explicam quase tudo o que o app ensina:
 
 ## Por onde começar
 
-A **tela inicial** mostra a sua **Rotina de hoje**: cinco tarefas curtas que se marcam sozinhas conforme você pratica, mais quantos dias seguidos você estudou.
+Na primeira visita o app faz **três perguntas** (se você já toca algum instrumento, se tem um bandoneon e o que quer tocar) e monta o **Seu caminho** na tela inicial: uma sequência de etapas que se marcam sozinhas conforme você pratica, com um botão para a próxima. Dá para refazer as perguntas em **Perfil → Conquistas**.
 
-Se é a sua primeira vez, siga esta ordem:
+A tela inicial também mostra a sua **Rotina de hoje**: cinco tarefas curtas que se marcam sozinhas conforme você pratica, mais quantos dias seguidos você estudou.
+
+Se preferir seguir sozinho, esta é uma boa ordem:
 
 | Passo | Onde | O que fazer |
 |---|---|---|
 | 1 | **Lições** | Leia as lições 1 a 4 e responda aos quizzes (uns 15 minutos). |
 | 2 | **Teclado** | Toque à vontade e aperte <kbd>Espaço</kbd> para ver as notas mudarem ao inverter o fole. |
-| 3 | **Melodias → 🎼 Escalas guiadas** | Faça *Dó maior* no modo **Espera**. O app explica cada passo. |
+| 3 | **Melodias → Escalas guiadas** | Faça *Dó maior* no modo **Espera**. O app explica cada passo. |
 | 4 | **Desafios** | Faça uma rodada de *Encontre a nota* para começar a decorar os botões. |
 | 5 | **Rotina de hoje** | Volte todo dia. Um pouco por dia rende mais que muito de uma vez. |
 
@@ -69,20 +71,33 @@ Se é a sua primeira vez, siga esta ordem:
 
 ## O que tem em cada aba
 
+O menu tem o **Início** e quatro áreas, cada uma com as suas abas no topo da tela:
+
+| Área | Abas |
+|---|---|
+| **Aprender** | Academia, Lições |
+| **Tocar** | Teclado, Melodias, Acordes, Bandoneon real |
+| **Treinar** | Desafios, Ritmo |
+| **Perfil** | Conquistas, Ajustes |
+
 | Aba | Para que serve |
 |---|---|
-| **Início** | Rotina do dia, sequência de dias praticados e seus recordes. |
-| **Lições** | 11 lições curtas, cada uma com quiz: história, partes do instrumento, sistema bisonoro, fole e articulação, leitura nas duas claves, ritmos de tango, acordes, duas mãos e como ler uma partitura de tango. |
-| **Academia** | Exercícios em **6 níveis** (botões, dedos, independência dos dedos, fole, duas mãos e músicas), cada um nos modos **Aprender** (mostra o próximo botão, o dedo e o fole e espera a nota certa), **Praticar** (no seu ritmo, apontando os erros) e **Desafio** (no tempo, com metrônomo; a velocidade sobe e os auxílios somem conforme a sua precisão). Um **instrutor** ao lado do teclado mostra a nota, a mão, o fole e a posição das mãos, e no fim vem um relatório com o que errou e o que treinar. No nível 7, **Minhas partituras**, você importa uma partitura (MusicXML ou MIDI) e o app transcreve cada nota para um botão, com a mão, o fole, a duração e as pausas; o botão **📄 Transcrição** mostra a tabela nota a nota. |
-| **Teclado** | Os 71 botões nas posições reais, com som de bandoneon. Um fole simulado mostra quando ele chega ao fim, e a **válvula de ar** reposiciona o fole sem som. |
-| **Desafios** | *Encontre a nota*: o app pede uma nota e você acha o botão. O sorteio **inteligente** repete mais os botões que você erra, e o **mapa de erros** pinta o teclado do verde ao vermelho. Há também a *Leitura na pauta*. |
-| **Melodias** | Toque melodias e escalas em três modos: **Ouvir** (o app toca e mostra), **Espera** (avança quando você acerta) e **No tempo** (com metrônomo e pontuação). Funciona com uma ou duas mãos e mostra a **partitura com cursor** e a **direção sugerida do fole** em cada nota. |
+| **Início** | O seu caminho de estudo, a rotina do dia, a sequência de dias praticados e os seus recordes. |
+| **Lições** | 11 lições curtas, cada uma com quiz (e, em várias delas, uma tarefa "Experimente agora" para tocar no teclado no meio da explicação): história, partes do instrumento, sistema bisonoro, fole e articulação, leitura nas duas claves, ritmos de tango, acordes, duas mãos e como ler uma partitura de tango. |
+| **Academia** | Exercícios em **6 níveis** (botões, dedos, independência dos dedos, fole, duas mãos e músicas), cada um nos modos **Aprender** (mostra o próximo botão, o dedo e o fole e espera a nota certa), **Praticar** (no seu ritmo, apontando os erros) e **Desafio** (no tempo, com metrônomo; a velocidade sobe e os auxílios somem conforme a sua precisão). Um **instrutor** ao lado do teclado mostra a nota, a mão, o fole e a posição das mãos, e no fim vem um relatório com o que errou e o que treinar. No nível 7, **Minhas partituras**, você importa uma partitura (MusicXML ou MIDI) e o app transcreve cada nota para um botão, com a mão, o fole, a duração e as pausas; o botão **Transcrição** mostra a tabela nota a nota. |
+| **Teclado** | Os 71 botões nas posições reais, com som de bandoneon. Um fole simulado mostra quando ele chega ao fim, e a **válvula de ar** reposiciona o fole sem som. No celular dá para ver **uma mão por vez**, com botões maiores. |
+| **Bandoneon real** | Para quem tem o instrumento: liga o microfone, mostra a nota ouvida num **afinador** (de -50 a +50 cents) e acende no teclado os botões que dão essa nota. O botão **Calibrar o silêncio** mede o barulho do ambiente para o app ignorar o que for mais baixo. |
+| **Desafios** | *Encontre a nota*: o app pede uma nota e você acha o botão. O sorteio **inteligente** repete mais os botões que você erra, e o **mapa de erros** pinta o teclado do verde ao vermelho. Há também a *Leitura na pauta* e o **Treino de ouvido**: o app toca uma nota e você encontra o botão só pelo som; ao errar, ele diz se a nota é mais aguda ou mais grave e toca de novo. |
+| **Melodias** | Toque melodias e escalas em três modos: **Ouvir** (o app toca e mostra), **Espera** (avança quando você acerta) e **No tempo** (com metrônomo e pontuação). Funciona com uma ou duas mãos e mostra a **partitura com cursor** e a **direção sugerida do fole** em cada nota. Para quem ainda não lê partitura, a opção **Notas caindo** mostra as notas descendo até uma linha dourada no tempo da música, coloridas pelo fole. |
 | **Acordes** | Mostra onde ficam os botões de 72 acordes (maior, m, 7, m7, m6 e °7 em todas as tônicas), abrindo e fechando, nas duas mãos. Tem treino com conferência. |
 | **Ritmo** | Os acompanhamentos do tango (marcato, síncopa, 3-3-2 e arrastre) e o modo **toque junto**, que mede se você está adiantado ou atrasado. |
-| **⚙ Ajustes** | Som (gravação real ou sintetizado), afinação (440, 442 ou 443 Hz), volume, nomes das notas (Dó Ré Mi ou C D E) e backup. |
+| **Conquistas** | 13 insígnias ganhas praticando (a última é a **Medalha Doly Costa**, por completar o caminho). Cada uma vira uma imagem para **compartilhar** no WhatsApp ou no Instagram. |
+| **Ajustes** | Som (gravação real ou sintetizado), afinação (440, 442 ou 443 Hz), volume, nomes das notas (Dó Ré Mi ou C D E), **animações** (normais ou reduzidas), **vibração** no celular e backup. |
 | 🇧🇷 / Uruguai-Argentina / 🇬🇧 | Idioma do app: português, espanhol ou inglês. Na primeira visita vale o idioma do navegador. |
 
 **Cores que aparecem no app:** 🔵 azul = *abrindo* · 🟠 laranja = *fechando* · 🟡 contorno dourado = *o próximo botão a tocar*.
+
+**Movimento:** o app usa animações curtas para mostrar o que mudou (troca de abas, acerto, erro, conquista nova). Elas somem se o sistema pedir "reduzir movimento" ou se você escolher **Animações: Reduzidas** em Ajustes; a informação continua a mesma. No celular, acerto e erro também **vibram** (dá para desligar).
 
 ---
 
@@ -109,7 +124,7 @@ No celular ou tablet, toque nos botões com os dedos. Vários dedos ao mesmo tem
 
 ## Tocando com o seu bandoneon (microfone)
 
-Na aba **Melodias**, marque **🎤 Usar microfone** e permita o acesso quando o navegador pedir. Depois escolha o modo **Espera** ou **No tempo** e toque no seu instrumento.
+Comece pela aba **Bandoneon real** (área Tocar): ligue o microfone, calibre o silêncio e toque algumas notas para ver se o app está ouvindo bem. Depois, na aba **Melodias**, marque **Usar microfone** (ou **Microfone** na Academia) e permita o acesso quando o navegador pedir. Depois escolha o modo **Espera** ou **No tempo** e toque no seu instrumento.
 
 - O app mostra a nota que está ouvindo e quanto ela está desafinada, em *cents*. Também serve como afinador.
 - O microfone não sabe para que lado o fole está andando, então o app confere só a nota.
@@ -191,17 +206,22 @@ js/                   um arquivo por parte do app, carregados em ordem pelo inde
   base.js             estado global, mapa de botões, nomes de notas, localStorage
   audio.js            motor de som (amostras e sintetizado)
   teclado.js          componente que desenha um teclado e trata os toques
+  movimento.js        animações (cascata, anéis, confete), "reduzir movimento" e vibração
+  navegacao.js        áreas e abas (go), barra de abas e progresso da tela Início
   fole.js             aba Teclado: simulação do fole e válvula
   desafios.js         Encontre a nota (com revisão inteligente) e Leitura na pauta
   ritmo.js            padrões de tango e "toque junto"
   melodias.js         player de melodias, formato de texto, fole automático e partitura
   musicxml.js         importação de partituras
   escalas.js          escalas guiadas
-  microfone.js        detecção de altura (algoritmo YIN)
+  microfone.js        detecção de altura (algoritmo YIN) e a aba Bandoneon real (afinador)
   acordes.js          dicionário e treino de acordes
   rotina.js           rotina diária e sequência de dias
   licoes.js           conteúdo das lições
   ajustes.js          aba Ajustes e backup
+  ouvido.js           Desafios → Treino de ouvido
+  cascata.js          Melodias → Notas caindo
+  trilha.js           perguntas da primeira visita, caminho de estudo, conquistas e cartão para compartilhar
   i18n.js             tradução da interface (português → espanhol / inglês)
   i18n-textos.js      dicionário de traduções
   licoes-traducao.js  lições em espanhol e inglês
@@ -217,6 +237,9 @@ tests/                testes automáticos
 - **Notas são números MIDI** (60 = Dó4) e a direção do fole é `'open'` ou `'close'`. Cada botão do mapa é `{id, x, y, open, close}`.
 - **Teclados** são criados com `kb(elemento, mão, opções)`. A aba informa a direção do fole e recebe os toques por `onPress`.
 - **Melodias** passam por três funções: `parseMelody` (lê o texto) → `buildTimeline` (agrupa as notas que começam juntas) → `fingerMelody` (escolhe a direção do fole e os botões). A direção do fole é escolhida por programação dinâmica: o menor número de trocas que respeita o tamanho do fole.
+- **Abas e áreas**: cada aba é uma `<section id="v-nome">` e tem um botão em `#subnav` com `data-area`. A lista `AREAS` em `js/navegacao.js` diz que abas cada área tem. Para fazer algo ao abrir ou sair de uma aba, use `ganchosAba.push((nova, anterior) => …)`.
+- **Caminho e conquistas** não guardam "feito" à mão: cada etapa (`ETAPAS`) e cada insígnia (`INSIGNIAS`) em `js/trilha.js` tem uma função `feito()` que olha o progresso. Só a data em que a insígnia foi ganha fica salva.
+- **Acerto e erro** no teclado passam por `api.mark(id, 'ok' | 'bad')`, que também anima o botão e vibra o celular. Para comemorar um bom resultado, chame `comemorar()`.
 - Os arquivos JS **compartilham o escopo global** e são carregados em ordem. Código que roda no carregamento só pode usar o que já foi definido nos arquivos anteriores.
 
 ### Traduções

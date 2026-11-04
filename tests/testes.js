@@ -111,7 +111,7 @@ teste('afinação muda a velocidade das amostras e a frequência do sintetizado'
 });
 teste('aba Ajustes existe e o cabeçalho não tem mais seletores', () => {
   go('ajustes'); ok($('#v-ajustes').classList.contains('active')); ok(!document.querySelector('header select'));
-  ok($('#nav [data-v="ajustes"]').hasAttribute('aria-current'));
+  ok($('#subnav [data-v="ajustes"]').hasAttribute('aria-current')); ok($('#nav [data-area="perfil"]').hasAttribute('aria-current'));
 });
 teste('botões do teclado têm descrição para leitores de tela', () => {
   ok(/abrindo, .* fechando/.test(document.querySelector('#kbRight .key').getAttribute('aria-label')));
@@ -286,9 +286,15 @@ function textosEmPortugues(){
   return [...achados];
 }
 async function percorrerApp(){
-  for(const v of ['inicio','teclado','desafios','melodias','acordes','ritmo','ajustes','academia']){ go(v); await esperar(); }
+  for(const v of ['inicio','teclado','desafios','melodias','acordes','ritmo','ajustes','academia','microfone','perfil']){ go(v); await esperar(); }
+  abrirBoasVindas(); await esperar(); $('#boasVindas').close(); trilhaAberta = true; renderTrilha(); await esperar(); trilhaAberta = false;
+  mcMostrar(69, 4, 0.1); await esperar(); mcMostrar(70, -30, 0.1); await esperar();
+  avisar('<b>Conquista nova: Bisonoro</b>'); await esperar();
   for(let i=0;i<LESSONS.length;i++){ curLesson=i; renderLesson(); await esperar(); }
   go('desafios'); $('#fStart').click(); await esperar(); $('#sStart').click(); await esperar();
+  $('[data-ch="ear"]').click(); $('#eStart').click(); await esperar();
+  { const b = state.layout[eq.hand].find(x=>x[eq.dir]!==eq.target); earPress(b, b[eq.dir], eq.hand==='left'?ekL:ekR); } await esperar();
+  eq.round = 10; nextEar(); await esperar(); $('[data-ch="find"]').click();
   go('melodias'); $('#scaleOpen').click(); $('#scGo').click(); $('#melMode').value='wait'; $('#melStart').click(); await esperar();
   { const c=pendingNotes()[0]; melPress(c.btn,c.midi,c.dir); } await esperar(); stopMelody();
   loadMelody('ode-duas'); $('#melStart').click(); await esperar(); stopMelody();
@@ -313,7 +319,7 @@ for(const lang of ['es','en']) teste(`tradução completa (${lang}): nenhum text
 });
 teste('voltar ao português restaura os textos originais', async () => {
   setLang('es'); await esperar(); setLang('pt'); await esperar();
-  igual($('#nav [data-v="licoes"]').textContent, 'Lições'); igual(document.documentElement.lang, 'pt-BR');
+  igual($('#subnav [data-v="licoes"]').textContent, 'Lições'); igual(document.documentElement.lang, 'pt-BR');
 });
 teste('formato de texto aceita palavras-chave em espanhol e inglês', () => {
   const m = parseMelody('title: X\nhand: left\nbpm: 90\nderecha: Do4 Re4\nizquierda: Do3:2');
@@ -417,3 +423,66 @@ teste('Minhas partituras: a partitura importada vira exercício com botão, fole
   const pre = document.createElement('pre'); pre.id = 'resultado-testes'; pre.textContent = linhas.join('\n');
   document.body.prepend(pre); document.title = 'TESTES-FIM';
 })();
+
+/* ---------- Etapa 3: áreas, caminho, conquistas, ouvido, notas caindo, microfone ---------- */
+teste('navegação por áreas: cada área mostra só as suas abas e volta à última usada', () => {
+  go('acordes');
+  igual($('#nav [data-area].active').dataset.area, 'tocar');
+  igual($$('#subnav [data-v]').filter(b=>!b.hidden).map(b=>b.dataset.v), ['teclado','melodias','acordes','microfone']);
+  go('licoes'); $('#nav [data-area="tocar"]').click(); igual(currentView, 'acordes');
+  $('#nav [data-area="aprender"]').click(); igual(currentView, 'licoes');
+  go('inicio'); ok($('#subnav').hidden, 'o Início não tem abas');
+});
+teste('caminho de estudo segue as respostas das perguntas iniciais', () => {
+  const antes = store.get('perfilAluno', null);
+  store.set('perfilAluno', {exp:'bandoneon', inst:'sim', obj:'conhecer'});
+  let ids = etapasDoAluno().map(e=>e.id);
+  ok(!ids.includes('conhecer') && !ids.includes('teclado') && !ids.includes('duas'), ids.join());
+  ok(ids.includes('microfone')); igual(etapasDoAluno().pop().t, 'Quem inspirou o nome');
+  store.set('perfilAluno', {exp:'nunca', inst:'nao', obj:'tango'});
+  ids = etapasDoAluno().map(e=>e.id);
+  ok(ids.includes('conhecer') && !ids.includes('microfone') && ids.includes('duas'));
+  renderTrilha(); igual($$('#trilha .etapa').length, ids.length); ok($('#trilha .etapa.atual') || $$('#trilha .etapa.feita').length===ids.length);
+  store.set('perfilAluno', antes);
+});
+teste('treino de ouvido: acerto conta ponto e o erro diz se é mais aguda ou mais grave', () => {
+  go('desafios'); $('[data-ch="ear"]').click(); $('#eStart').click();
+  const k = eq.hand==='left' ? ekL : ekR, errado = state.layout[eq.hand].find(b=>b[eq.dir]!==eq.target);
+  earPress(errado, errado[eq.dir], k); ok(/mais (aguda|grave)/.test($('#eFeed').textContent), $('#eFeed').textContent);
+  igual(eq.errors, 1);
+  eq.errors = 0; earPress(eq.answer, eq.target, k); igual(eq.score, 1); igual(eq.round, 1);
+  eq.active = false; $('[data-ch="find"]').click();
+});
+teste('conquistas: recorde novo ganha a insígnia e o cartão de compartilhar tem 1080 px', () => {
+  const antes = state.progress.find, tinha = state.progress.insignias.memoria;
+  delete state.progress.insignias.memoria; state.progress.find = 8; saveProgress();
+  ok(state.progress.insignias.memoria, 'insígnia registrada');
+  go('perfil'); ok($('#insignias .insignia.ganha [data-partilhar="memoria"]'), 'botão de compartilhar');
+  igual(desenharCartao(INSIGNIAS.find(x=>x.id==='memoria')).width, 1080);
+  state.progress.find = antes; if(tinha) state.progress.insignias.memoria = tinha; else delete state.progress.insignias.memoria;
+  saveProgress(); go('inicio');
+});
+teste('lições: a tarefa "toque agora" avança com a nota certa e não com a errada', () => {
+  curLesson = 0; renderLesson(); go('licoes');
+  const k = tarefaKbs[1], certo = state.layout.right.find(b=>b.open===69), errado = state.layout.right.find(b=>b.open!==69);
+  tarefaToque(errado, errado.open, k); igual(tarefa.passo, 0);
+  tarefaToque(certo, 69, k); igual(tarefa.passo, 1); ok(state.progress.tarefas[0]);
+  go('inicio');
+});
+teste('notas caindo desenham a melodia no quadro', () => {
+  go('melodias'); loadMelody('ode'); $('#melRollOn').checked = true; $('#melRollOn').dispatchEvent(new Event('change'));
+  rollQuadro(); ok($('#melRollCv').width > 0, 'o quadro tem tamanho');
+  $('#melRollOn').checked = false; $('#melRollOn').dispatchEvent(new Event('change')); go('inicio');
+});
+teste('Bandoneon real: a nota ouvida acende os botões que dão essa nota', () => {
+  go('microfone'); $('#mcDir').value = 'open'; mcUltima = null; mcMostrar(69, 3, 0.1);
+  igual($('#mcNota').textContent, noteName(69));
+  ok($$('#mcRight .key.chord').length >= 1, 'botão aceso na mão direita');
+  ok($('#mcAfinador').classList.contains('afinado'));
+  go('inicio');
+});
+teste('vibração e animações: Ajustes liga e desliga', () => {
+  $('#movSel').value = 'reduzido'; $('#movSel').dispatchEvent(new Event('change')); ok(document.documentElement.classList.contains('sem-mov'));
+  $('#movSel').value = 'normal'; $('#movSel').dispatchEvent(new Event('change'));
+  igual(document.documentElement.classList.contains('sem-mov'), movReduzido());
+});

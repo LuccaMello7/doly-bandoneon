@@ -1,29 +1,61 @@
 /* ================== Navegação ================== */
-// No computador o menu fica na lateral. No celular e no tablet vira uma barra embaixo com as abas
-// principais (class="principal") e o botão "Mais", que abre as outras abas por cima da barra.
+// Além do Início, o app tem 4 áreas: Aprender, Tocar, Treinar e Perfil. Cada área junta algumas
+// abas (as <section id="v-…">), que aparecem como pílulas no topo (#subnav). No computador as áreas
+// ficam no menu lateral; no celular, na barra de baixo. Tocar numa área volta à última aba usada nela.
+const AREAS = {
+  inicio:['inicio'], aprender:['academia','licoes'], tocar:['teclado','melodias','acordes','microfone'],
+  treinar:['desafios','ritmo'], perfil:['perfil','ajustes'],
+};
+const areaDe = v => Object.keys(AREAS).find(a=>AREAS[a].includes(v)) || 'inicio';
+const ultimaAba = store.get('ultimaAba', {});
+// Outras partes do app avisam aqui o que fazer ao abrir ou sair de uma aba: ganchosAba.push((nova, anterior)=>…)
+const ganchosAba = [];
 let currentView='inicio';
 // Mostra a aba v e para o que estiver tocando nas outras
 function go(v){
+  if(!$('#v-'+v)) v='inicio';
+  const anterior=currentView, area=areaDe(v);
   currentView=v;
-  $$('#nav [data-v]').forEach(b=>{ b.classList.toggle('active',b.dataset.v===v); b.toggleAttribute('aria-current', b.dataset.v===v); });
-  const principal = !!$(`#nav [data-v="${v}"].principal`);
-  $('#navMais').classList.toggle('active', !principal); abrirMais(false);
+  if(area!=='inicio'){ ultimaAba[area]=v; store.set('ultimaAba', ultimaAba); }
+  $$('#nav [data-area]').forEach(b=>{ const on=b.dataset.area===area; b.classList.toggle('active',on); b.toggleAttribute('aria-current',on); });
+  const sub=$('#subnav'); sub.hidden = AREAS[area].length<2;
+  $$('#subnav [data-v]').forEach(b=>{
+    const on=b.dataset.v===v; b.hidden = b.dataset.area!==area;
+    b.classList.toggle('active',on); b.setAttribute('aria-selected',on); b.toggleAttribute('aria-current',on);
+  });
   $$('main>section').forEach(s=>s.classList.toggle('active',s.id==='v-'+v));
+  moverIndicador();
   if(v!=='ritmo' && rh.playing) toggleRhythm();
   if(v!=='melodias' && mel.running) stopMelody();
   if(v!=='academia' && (acad.rodando || acad.demo)) acadParar();
   if(v==='academia') acadMostrar(); // os teclados só têm largura quando a aba está visível
+  ganchosAba.forEach(f=>f(v, anterior));
+  if(v!==anterior) cascata($('#v-'+v));
   window.scrollTo(0,0);
 }
-function abrirMais(abrir){ $('#nav').classList.toggle('aberto', abrir); $('#navMais').setAttribute('aria-expanded', abrir); }
+// O fundo dourado da área ativa desliza até o botão tocado
+function moverIndicador(){
+  const b=$('#nav [data-area].active'), ind=$('#navInd'); if(!b || !ind) return;
+  if(!b.offsetWidth){ ind.style.opacity=0; return; }
+  ind.style.opacity=1; ind.style.width=b.offsetWidth+'px'; ind.style.height=b.offsetHeight+'px';
+  ind.style.transform=`translate(${b.offsetLeft}px,${b.offsetTop}px)`;
+}
+window.addEventListener('resize', moverIndicador);
+if(document.fonts && document.fonts.ready) document.fonts.ready.then(moverIndicador);
 $('#nav').addEventListener('click',e=>{
-  const b=e.target.closest('button'); if(!b) return;
-  if(b.id==='navMais') abrirMais(!$('#nav').classList.contains('aberto'));
-  else if(b.dataset.v) go(b.dataset.v);
+  const b=e.target.closest('[data-area]'); if(!b) return;
+  const a=b.dataset.area, ult=ultimaAba[a];
+  go(AREAS[a].includes(ult) ? ult : AREAS[a][0]);
+});
+$('#subnav').addEventListener('click',e=>{ const b=e.target.closest('[data-v]'); if(b) go(b.dataset.v); });
+// setas do teclado do computador trocam de aba dentro da área
+$('#subnav').addEventListener('keydown',e=>{
+  if(e.key!=='ArrowRight' && e.key!=='ArrowLeft') return;
+  const abas=$$('#subnav [data-v]').filter(b=>!b.hidden), i=abas.findIndex(b=>b.dataset.v===currentView);
+  const prox=abas[(i+(e.key==='ArrowRight'?1:abas.length-1))%abas.length]; if(prox){ go(prox.dataset.v); prox.focus(); }
 });
 document.addEventListener('click',e=>{
-  const g=e.target.closest('[data-go]'); if(g){ e.preventDefault(); go(g.dataset.go); return; }
-  if(!e.target.closest('#nav')) abrirMais(false); // tocar fora fecha o "Mais"
+  const g=e.target.closest('[data-go]'); if(g){ e.preventDefault(); go(g.dataset.go); }
 });
 // Trocar Dó Ré Mi ↔ C D E redesenha tudo o que mostra nomes de notas
 // Redesenha o que o código monta com nomes de notas ou textos do idioma (ao trocar notas ou idioma)
@@ -50,4 +82,5 @@ function renderProgress(){
   $('#pChords').textContent = p.chords!=null ? p.chords+'/10' : '–'; anel('aChords', p.chords/10);
   if(typeof renderRoutine==='function') renderRoutine();
   if(typeof renderContinuar==='function') renderContinuar();
+  if(typeof renderTrilha==='function'){ renderTrilha(); checarConquistas(); }
 }

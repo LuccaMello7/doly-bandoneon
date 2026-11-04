@@ -5,6 +5,7 @@
 const bel = { level:0.15, valve:null, blocked:false, last:performance.now() };
 const canSound=()=>!bel.blocked;
 const tkOpts={ editable:true, canSound, onPress:(b,m,dir)=>{
+  if(typeof marcar==='function') marcar('teclado');
   const other = dir==='open'?'close':'open';
   $('#keyInfo').innerHTML = `<b>${noteName(m)}</b> (${dirLabel(dir).toLowerCase()}) · o mesmo botão ${dir==='open'?'fechando':'abrindo'} dá <b>${noteName(b[other])}</b>`;
 }};
@@ -15,6 +16,14 @@ function setDir(d){
   tkL.refresh(); tkR.refresh(); tkL.retune(); tkR.retune();
 }
 $('#dirBtn').onclick=()=>setDir(state.dir==='open'?'close':'open');
+// Ver uma mão por vez (no celular sobra espaço e os botões ficam maiores)
+$('#tkVer').addEventListener('click', e=>{
+  const b=e.target.closest('[data-ver]'); if(!b) return;
+  $$('#tkVer [data-ver]').forEach(x=>x.classList.toggle('on', x===b));
+  $('#tkInstrumento').dataset.ver=b.dataset.ver;
+  tkOpts.perRow = b.dataset.ver==='duas' ? undefined : 1; // uma mão sozinha usa a largura toda
+  tkL.build(); tkR.build();
+});
 $('#labelsBtn').onclick=e=>{ state.showLabels=!state.showLabels; e.target.classList.toggle('on',state.showLabels); tkL.refresh(); tkR.refresh(); };
 // Válvula de ar: move o fole sem som. d = 'open' (abrir), 'close' (fechar) ou null (solta)
 const valve=d=>{ bel.valve=d; $('#valveOpenBtn').classList.toggle('on',d==='open'); $('#valveCloseBtn').classList.toggle('on',d==='close'); };
