@@ -246,6 +246,12 @@ python ferramentas/gerar_idiomas.py
 
 Os testes avisam se as páginas estiverem desatualizadas. As bandeiras levam para a página do idioma e guardam a escolha; quem abre `bandoly.app` depois de escolher espanhol ou inglês vai direto para a sua página.
 
+**Páginas das lições.** Cada lição também tem uma página própria, para aparecer no Google: [bandoly.app/licoes](https://bandoly.app/licoes/) (e `/es/licoes/`, `/en/licoes/`), com o texto, o quiz e um botão que abre a mesma lição no app (o endereço `#licao-3` abre a lição 3; `#teclado`, `#ritmo` etc. abrem a aba). As páginas são **geradas** a partir de `js/licoes.js` e `js/licoes-traducao.js`, e o mesmo script atualiza a parte das lições no `sitemap.xml`. Depois de mudar uma lição, rode
+
+```
+python ferramentas/gerar_licoes.py
+```
+
 ### Testes
 
 ```
@@ -258,6 +264,7 @@ O script abre o app no Edge ou Chrome em modo invisível e roda `tests/testes.js
 
 - **Arquivo novo** em `index.html`? Inclua-o também em `ARQUIVOS` no `sw.js`, para funcionar offline. Os testes avisam se faltar.
 - **Mudou o `index.html` ou o dicionário?** Rode `python ferramentas/gerar_idiomas.py` para atualizar as páginas `es/` e `en/`.
+- **Mudou uma lição?** Rode `python ferramentas/gerar_licoes.py` para atualizar as páginas das lições.
 - **Lição nova?** Acrescente **no fim** da lista em `licoes.js`. O progresso é salvo pela posição da lição.
 - **Outro SoundFont?**
   ```

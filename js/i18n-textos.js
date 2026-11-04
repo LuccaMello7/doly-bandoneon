@@ -485,6 +485,7 @@ const TEXTOS = {
 '11 lições com quiz': ['11 lecciones con cuestionario', '11 lessons with quizzes'],
 'História do instrumento, sistema bisonoro, fole e articulação, leitura nas duas claves, ritmos de tango, acordes e como ler uma partitura de tango.': ['Historia del instrumento, sistema bisonoro, fuelle y articulación, lectura en las dos claves, ritmos de tango, acordes y cómo leer una partitura de tango.', 'History of the instrument, the bisonoric system, bellows and articulation, reading in both clefs, tango rhythms, chords and how to read a tango score.'],
 'Ver as lições →': ['Ver las lecciones →', 'See the lessons →'],
+'Ler as lições online →': ['Leer las lecciones online →', 'Read the lessons online →'],
 'Desafios para decorar os botões': ['Desafíos para memorizar los botones', 'Challenges to memorize the buttons'],
 'O app pede uma nota e você encontra o botão. O sorteio repete mais os botões que você erra, e o mapa de erros mostra onde treinar.': ['La app te pide una nota y tú encuentras el botón. El sorteo repite más los botones que fallas, y el mapa de errores muestra dónde practicar.', 'The app asks for a note and you find the button. The draw repeats the buttons you miss more often, and the error map shows where to practice.'],
 'Fazer um desafio →': ['Hacer un desafío →', 'Take a challenge →'],

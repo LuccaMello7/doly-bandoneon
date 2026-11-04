@@ -9,6 +9,14 @@ aplicarIdioma();
 sugerirIdioma();
 // Links para outras páginas do site (ex.: doly-costa/): aberto do computador, sem servidor, a pasta precisa do index.html
 if(location.protocol==='file:') $$('a[data-local][href$="/"]').forEach(a=>a.setAttribute('href', a.getAttribute('href')+'index.html'));
+// Endereço com #licao-3 (vindo das páginas das lições) abre a lição; #teclado, #ritmo etc. abrem a aba
+function abrirPeloEndereco(){
+  const h = decodeURIComponent(location.hash.slice(1)), m = h.match(/^licao-(\d+)$/);
+  if(m && LESSONS[m[1]-1]){ curLesson = m[1]-1; renderLesson(); go('licoes'); }
+  else if(/^[a-z]+$/.test(h) && $('#v-'+h)) go(h);
+}
+abrirPeloEndereco();
+window.addEventListener('hashchange', abrirPeloEndereco);
 observador.observe(document.body, {subtree:true, childList:true, characterData:true, attributes:true, attributeFilter:ATTRS});
 
 // PWA: funciona offline e pode ser instalado (só quando servido por http/https, ex.: GitHub Pages)

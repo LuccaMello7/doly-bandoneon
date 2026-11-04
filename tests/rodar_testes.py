@@ -32,11 +32,13 @@ def main():
     for a in faltando:
         print(f'FALHA  sw.js não guarda "{a}" para uso offline (adicione em ARQUIVOS)')
     # as páginas em espanhol e inglês precisam ser geradas de novo quando o index.html ou o dicionário mudam
-    idiomas = subprocess.run([sys.executable, str(RAIZ / 'ferramentas' / 'gerar_idiomas.py'), '--verificar'],
-                             capture_output=True, text=True, encoding='utf-8')
-    if idiomas.returncode:
-        print('FALHA  ' + (idiomas.stdout.strip() or idiomas.stderr.strip()))
-        faltando.append('idiomas')
+    # o mesmo para as páginas das lições, geradas a partir de js/licoes.js e js/licoes-traducao.js
+    for gerador in ('gerar_idiomas.py', 'gerar_licoes.py'):
+        r = subprocess.run([sys.executable, str(RAIZ / 'ferramentas' / gerador), '--verificar'],
+                           capture_output=True, text=True, encoding='utf-8')
+        if r.returncode:
+            print('FALHA  ' + (r.stdout.strip() or r.stderr.strip()))
+            faltando.append(gerador)
     captura = ('<base href="../">\n<script>window.__erros=[];'
                'window.onerror=(m,s,l)=>{window.__erros.push(m+" ("+(s||"").split("/").pop()+":"+l+")");};</script>')
     pagina = pagina.replace('<head>', '<head>\n' + captura, 1)

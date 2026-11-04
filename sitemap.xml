@@ -48,4 +48,258 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/doly-costa/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/doly-costa/"/>
   </url>
+  <!--licoes-->
+  <url>
+    <loc>https://bandoly.app/licoes/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/licoes/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/licoes/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/licoes/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/licoes/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/licoes/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/licoes/o-que-e-o-bandoneon/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/o-que-e-o-bandoneon/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/que-es-el-bandoneon/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/what-is-the-bandoneon/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/licoes/o-que-e-o-bandoneon/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/licoes/que-es-el-bandoneon/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/o-que-e-o-bandoneon/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/que-es-el-bandoneon/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/what-is-the-bandoneon/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/licoes/o-que-e-o-bandoneon/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/licoes/what-is-the-bandoneon/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/o-que-e-o-bandoneon/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/que-es-el-bandoneon/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/what-is-the-bandoneon/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/licoes/o-que-e-o-bandoneon/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/licoes/anatomia-do-instrumento/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/anatomia-do-instrumento/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/anatomia-del-instrumento/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/anatomy-of-the-instrument/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/licoes/anatomia-do-instrumento/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/licoes/anatomia-del-instrumento/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/anatomia-do-instrumento/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/anatomia-del-instrumento/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/anatomy-of-the-instrument/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/licoes/anatomia-do-instrumento/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/licoes/anatomy-of-the-instrument/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/anatomia-do-instrumento/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/anatomia-del-instrumento/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/anatomy-of-the-instrument/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/licoes/anatomia-do-instrumento/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/licoes/bisonoro-abrindo-e-fechando/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/bisonoro-abrindo-e-fechando/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/bisonoro-abriendo-y-cerrando/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/bisonoric-opening-and-closing/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/licoes/bisonoro-abrindo-e-fechando/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/licoes/bisonoro-abriendo-y-cerrando/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/bisonoro-abrindo-e-fechando/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/bisonoro-abriendo-y-cerrando/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/bisonoric-opening-and-closing/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/licoes/bisonoro-abrindo-e-fechando/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/licoes/bisonoric-opening-and-closing/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/bisonoro-abrindo-e-fechando/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/bisonoro-abriendo-y-cerrando/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/bisonoric-opening-and-closing/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/licoes/bisonoro-abrindo-e-fechando/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/licoes/fole-e-expressao/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/fole-e-expressao/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/fuelle-y-expresion/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/bellows-and-expression/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/licoes/fole-e-expressao/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/licoes/fuelle-y-expresion/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/fole-e-expressao/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/fuelle-y-expresion/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/bellows-and-expression/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/licoes/fole-e-expressao/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/licoes/bellows-and-expression/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/fole-e-expressao/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/fuelle-y-expresion/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/bellows-and-expression/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/licoes/fole-e-expressao/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/licoes/leitura-duas-claves/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/leitura-duas-claves/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/lectura-dos-claves/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/reading-two-clefs/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/licoes/leitura-duas-claves/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/licoes/lectura-dos-claves/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/leitura-duas-claves/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/lectura-dos-claves/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/reading-two-clefs/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/licoes/leitura-duas-claves/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/licoes/reading-two-clefs/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/leitura-duas-claves/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/lectura-dos-claves/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/reading-two-clefs/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/licoes/leitura-duas-claves/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/licoes/ritmos-do-tango/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/ritmos-do-tango/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/ritmos-del-tango/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/tango-rhythms/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/licoes/ritmos-do-tango/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/licoes/ritmos-del-tango/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/ritmos-do-tango/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/ritmos-del-tango/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/tango-rhythms/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/licoes/ritmos-do-tango/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/licoes/tango-rhythms/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/ritmos-do-tango/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/ritmos-del-tango/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/tango-rhythms/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/licoes/ritmos-do-tango/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/licoes/rotina-de-estudo/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/rotina-de-estudo/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/rutina-de-estudio/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/practice-routine/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/licoes/rotina-de-estudo/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/licoes/rutina-de-estudio/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/rotina-de-estudo/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/rutina-de-estudio/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/practice-routine/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/licoes/rotina-de-estudo/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/licoes/practice-routine/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/rotina-de-estudo/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/rutina-de-estudio/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/practice-routine/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/licoes/rotina-de-estudo/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/licoes/articulacao-legato-staccato-e-acentos/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/articulacao-legato-staccato-e-acentos/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/articulacion-legato-staccato-y-acentos/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/articulation-legato-staccato-and-accents/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/licoes/articulacao-legato-staccato-e-acentos/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/licoes/articulacion-legato-staccato-y-acentos/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/articulacao-legato-staccato-e-acentos/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/articulacion-legato-staccato-y-acentos/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/articulation-legato-staccato-and-accents/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/licoes/articulacao-legato-staccato-e-acentos/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/licoes/articulation-legato-staccato-and-accents/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/articulacao-legato-staccato-e-acentos/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/articulacion-legato-staccato-y-acentos/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/articulation-legato-staccato-and-accents/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/licoes/articulacao-legato-staccato-e-acentos/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/licoes/acordes-no-bandoneon/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/acordes-no-bandoneon/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/acordes-en-el-bandoneon/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/chords-on-the-bandoneon/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/licoes/acordes-no-bandoneon/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/licoes/acordes-en-el-bandoneon/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/acordes-no-bandoneon/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/acordes-en-el-bandoneon/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/chords-on-the-bandoneon/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/licoes/acordes-no-bandoneon/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/licoes/chords-on-the-bandoneon/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/acordes-no-bandoneon/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/acordes-en-el-bandoneon/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/chords-on-the-bandoneon/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/licoes/acordes-no-bandoneon/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/licoes/duas-maos-um-fole-so/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/duas-maos-um-fole-so/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/dos-manos-un-solo-fuelle/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/two-hands-one-bellows/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/licoes/duas-maos-um-fole-so/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/licoes/dos-manos-un-solo-fuelle/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/duas-maos-um-fole-so/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/dos-manos-un-solo-fuelle/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/two-hands-one-bellows/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/licoes/duas-maos-um-fole-so/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/licoes/two-hands-one-bellows/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/duas-maos-um-fole-so/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/dos-manos-un-solo-fuelle/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/two-hands-one-bellows/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/licoes/duas-maos-um-fole-so/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/licoes/como-ler-uma-partitura-de-tango/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/como-ler-uma-partitura-de-tango/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/como-leer-una-partitura-de-tango/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/how-to-read-a-tango-score/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/licoes/como-ler-uma-partitura-de-tango/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/licoes/como-leer-una-partitura-de-tango/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/como-ler-uma-partitura-de-tango/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/como-leer-una-partitura-de-tango/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/how-to-read-a-tango-score/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/licoes/como-ler-uma-partitura-de-tango/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/licoes/how-to-read-a-tango-score/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/como-ler-uma-partitura-de-tango/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/como-leer-una-partitura-de-tango/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/how-to-read-a-tango-score/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/licoes/como-ler-uma-partitura-de-tango/"/>
+  </url>
+  <!--/licoes-->
 </urlset>
