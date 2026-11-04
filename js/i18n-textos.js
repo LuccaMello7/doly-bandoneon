@@ -983,4 +983,12 @@ const TEXTOS = {
 'Tarefa feita! Agora responda as perguntas.': ['¡Tarea hecha! Ahora responde las preguntas.', 'Task done! Now answer the questions.'],
 'Toque numa foto para ampliar.': ['Toca una foto para ampliarla.', 'Tap a photo to enlarge it.'],
 'Foto ampliada': ['Foto ampliada', 'Enlarged photo'],
+'Role para conhecer a história': ['Desliza para conocer la historia', 'Scroll to read the story'],
+'Foto anterior': ['Foto anterior', 'Previous photo'],
+'Próxima foto': ['Foto siguiente', 'Next photo'],
+'Teclado com som real, lições e um caminho de estudo feito para você.': ['Teclado con sonido real, lecciones y un camino de estudio hecho para ti.', 'A keyboard with real sound, lessons and a study path made for you.'],
+'Seus recordes': ['Tus récords', 'Your records'],
+'Começar: {}': ['Empezar: {}', 'Start: {}'],
+'Continuar: {}': ['Continuar: {}', 'Continue: {}'],
+'Ver as suas conquistas': ['Ver tus logros', 'See your achievements'],
 };

@@ -120,30 +120,27 @@
 </div>
 <!-- INÍCIO -->
 <section id="v-inicio" class="active">
-  <div class="inicio-topo">
-    <div><p class="ola">Olá! 👋</p><p class="muted">Pronto para o treino de hoje?</p></div>
-    <div id="streak" class="streak"></div>
-  </div>
-  <div class="hero">
+  <div class="hero hero-novo">
     <div class="hero-txt">
-      <p class="kicker">Grátis, no navegador e no celular</p>
+      <div class="hero-ola"><span class="ola">Olá! 👋</span><span id="streak" class="streak"></span></div>
       <h1 class="hero-title">Aprenda a tocar bandoneon com o BanDoly</h1>
-      <p>Aqui você aprende os fundamentos do bandoneon: como o instrumento funciona, o sistema <b>bisonoro</b> (cada botão dá uma nota abrindo e outra fechando), leitura nas duas claves e os ritmos essenciais do tango.</p>
+      <p class="hero-sub">Teclado com som real, lições e um caminho de estudo feito para você.</p>
       <div class="row hero-cta">
-        <button type="button" class="btn" data-go="licoes"><svg aria-hidden="true"><use href="#i-play"/></svg>Começar pela primeira lição</button>
+        <button type="button" class="btn btn-grande" id="heroCta"><svg aria-hidden="true"><use href="#i-play"/></svg><span id="heroCtaTxt">Começar pela primeira lição</span></button>
         <button type="button" class="btn ghost" data-go="teclado">Tocar o teclado agora</button>
       </div>
     </div>
-    <!-- bandoneon desenhado: o fole abre e fecha -->
+    <!-- bandoneon desenhado: o fole respira, os botões acendem e as notas sobem -->
     <div class="bando" aria-hidden="true">
       <div class="caixa"><i></i><i class="a"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
       <div class="fole"></div>
       <div class="caixa"><i></i><i></i><i></i><i></i><i></i><i class="f"></i><i></i><i></i><i></i></div>
+      <div class="voa"><i></i><i></i><i></i><i></i><i></i></div>
     </div>
   </div>
-  <aside class="aviso" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></svg><p><strong>O BanDoly é um site para aprendizado e nunca substituirá os conselhos e as orientações de um professor.</strong> Use o app como apoio aos estudos e, sempre que puder, aprenda com um professor de bandoneon: ele corrige a postura, o fole e o dedilhado, coisas que um app não consegue ver.</p></aside>
-  <div class="card continuar" id="continuar" hidden></div>
-  <div class="card trilha-card" id="trilhaCard">
+  <aside class="aviso aviso-curto" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></svg><p><strong>O BanDoly é um site para aprendizado e nunca substituirá os conselhos e as orientações de um professor.</strong> Use o app como apoio aos estudos e, sempre que puder, aprenda com um professor de bandoneon: ele corrige a postura, o fole e o dedilhado, coisas que um app não consegue ver.</p></aside>
+  <div class="inicio-grade">
+    <div class="card trilha-card" data-revela id="trilhaCard">
     <div class="trilha-topo">
       <div><p class="kicker"><svg aria-hidden="true"><use href="#i-route"/></svg> Seu caminho</p><h2 class="card-tit" id="trilhaTit">Do primeiro botão ao tango</h2><p class="muted" id="trilhaSub"></p></div>
       <div class="trilha-prog"><b id="trilhaProg">0/0</b><span class="muted">etapas</span></div>
@@ -151,49 +148,33 @@
     <ol class="trilha" id="trilha"></ol>
     <button type="button" class="btn ghost trilha-mais" id="trilhaMais" aria-expanded="false">Ver o caminho inteiro</button>
   </div>
-  <div class="stats">
-    <div class="card stat-card"><svg class="anel" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="15" class="fundo"/><circle cx="18" cy="18" r="15" class="valor" id="aLessons"/></svg><div><div class="stat" id="pLessons">0/0</div><div class="muted">Lições concluídas</div></div></div>
-    <div class="card stat-card"><svg class="anel" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="15" class="fundo"/><circle cx="18" cy="18" r="15" class="valor" id="aFind"/></svg><div><div class="stat" id="pFind">–</div><div class="muted">Recorde: Encontre a nota</div></div></div>
-    <div class="card stat-card"><svg class="anel" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="15" class="fundo"/><circle cx="18" cy="18" r="15" class="valor" id="aStaff"/></svg><div><div class="stat" id="pStaff">–</div><div class="muted">Recorde: Leitura na pauta</div></div></div>
-    <div class="card stat-card"><svg class="anel" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="15" class="fundo"/><circle cx="18" cy="18" r="15" class="valor" id="aRhythm"/></svg><div><div class="stat" id="pRhythm">–</div><div class="muted">Melhor precisão rítmica</div></div></div>
-    <div class="card stat-card"><span class="stat-ic"><svg aria-hidden="true"><use href="#i-note"/></svg></span><div><div class="stat" id="pMel">–</div><div class="muted">Melodias concluídas</div></div></div>
-    <div class="card stat-card"><svg class="anel" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="15" class="fundo"/><circle cx="18" cy="18" r="15" class="valor" id="aChords"/></svg><div><div class="stat" id="pChords">–</div><div class="muted">Recorde: Acordes</div></div></div>
+    <div class="inicio-lado">
+      <div class="card continuar" id="continuar" hidden></div>
+      <div class="card recordes" data-revela="aneis">
+        <h2 class="card-tit">Seus recordes</h2>
+        <div class="mini-stats"><div class="mini-stat"><svg class="anel" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="15" class="fundo"/><circle cx="18" cy="18" r="15" class="valor" id="aLessons"/></svg><div><div class="stat" id="pLessons">0/0</div><div class="muted">Lições concluídas</div></div></div><div class="mini-stat"><svg class="anel" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="15" class="fundo"/><circle cx="18" cy="18" r="15" class="valor" id="aFind"/></svg><div><div class="stat" id="pFind">–</div><div class="muted">Recorde: Encontre a nota</div></div></div><div class="mini-stat"><svg class="anel" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="15" class="fundo"/><circle cx="18" cy="18" r="15" class="valor" id="aStaff"/></svg><div><div class="stat" id="pStaff">–</div><div class="muted">Recorde: Leitura na pauta</div></div></div><div class="mini-stat"><svg class="anel" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="15" class="fundo"/><circle cx="18" cy="18" r="15" class="valor" id="aRhythm"/></svg><div><div class="stat" id="pRhythm">–</div><div class="muted">Melhor precisão rítmica</div></div></div><div class="mini-stat"><span class="stat-ic"><svg aria-hidden="true"><use href="#i-note"/></svg></span><div><div class="stat" id="pMel">–</div><div class="muted">Melodias concluídas</div></div></div><div class="mini-stat"><svg class="anel" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="15" class="fundo"/><circle cx="18" cy="18" r="15" class="valor" id="aChords"/></svg><div><div class="stat" id="pChords">–</div><div class="muted">Recorde: Acordes</div></div></div></div>
+      </div>
+      <div class="card" id="routineCard" data-revela>
+      <h2 class="card-tit">Rotina de hoje</h2>
+      <div id="week" class="week"></div>
+      <div id="routine" class="routine"></div>
+    </div>
+    </div>
   </div>
-  <div class="tiles">
+  <div class="tiles" data-revela="cascata">
     <a class="tile t-academia" href="#" data-go="academia"><span class="tile-ic"><svg aria-hidden="true"><use href="#i-cap"/></svg></span><b>Academia</b><small>6 níveis com instrutor</small></a>
     <a class="tile t-teclado" href="#" data-go="teclado"><span class="tile-ic"><svg aria-hidden="true"><use href="#i-keys"/></svg></span><b>Teclado livre</b><small>71 botões com som real</small></a>
     <a class="tile t-melodias" href="#" data-go="melodias"><span class="tile-ic"><svg aria-hidden="true"><use href="#i-music"/></svg></span><b>Melodias</b><small>Músicas e escalas guiadas</small></a>
     <a class="tile t-ritmo" href="#" data-go="ritmo"><span class="tile-ic"><svg aria-hidden="true"><use href="#i-metro"/></svg></span><b>Ritmo</b><small>Marcato, síncopa e 3-3-2</small></a>
   </div>
-  <div class="inicio-cols">
-    <div class="card" id="routineCard">
-      <h2 class="card-tit">Rotina de hoje</h2>
-      <div id="week" class="week"></div>
-      <div id="routine" class="routine"></div>
-    </div>
-    <a class="card doly-link" href="doly-costa/" data-local>
+  <a class="card doly-link" data-revela href="doly-costa/" data-local>
       <span class="muted doly-kick">A inspiração do nome</span>
       <span class="doly-linha"><img src="imagens/doly/disco.jpg" alt="" width="64" height="79"><span><b>Quem foi Doly Costa?</b><span class="muted">Bandoneonista gaúcho, das orquestras de tango das rádios de Porto Alegre e fundador de Os Posteiros.</span></span></span>
       <span class="btn ghost">Conhecer a história <svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
     </a>
-  </div>
-  <p class="muted dica">Dica: use fones de ouvido. O app funciona offline e o seu progresso fica salvo neste navegador. Em <a href="#" data-go="ajustes">Ajustes</a> você escolhe o som, a afinação e faz backup.</p>
-  <div class="card">
-    <h2 class="card-tit">Por onde começar</h2>
-    <ol class="passos">
-      <li>Faça as <a href="#" data-go="licoes">Lições</a> em ordem.</li>
-      <li>Siga a <a href="#" data-go="academia">Academia</a>: exercícios em 6 níveis, com instrutor, posição das mãos e relatório de cada tentativa.</li>
-      <li>Explore o <a href="#" data-go="teclado">Teclado</a>: toque, troque a direção do fole com <kbd>Espaço</kbd> e veja as notas mudarem.</li>
-      <li>Treine nos <a href="#" data-go="desafios">Desafios</a> até memorizar os botões.</li>
-      <li>Pratique as <b>Escalas guiadas</b> (na aba <a href="#" data-go="melodias">Melodias</a>): o app explica cada passo, cada troca de fole e onde está o próximo botão.</li>
-      <li>Toque <a href="#" data-go="melodias">Melodias</a>: primeiro ouça, depois toque no modo Espera e por fim No tempo.</li>
-      <li>Pratique o <a href="#" data-go="ritmo">Ritmo</a>: marcato, síncopa e 3-3-2.</li>
-    </ol>
-    <div class="notice"><b>Sobre o mapa dos botões:</b> existem vários sistemas de bandoneon (Rheinische 142 vozes, 144, Einheitsbandoneon, cromático/Péguri…) e até instrumentos do mesmo sistema podem ter diferenças. O app usa o mapa do <b>Rheinische 142</b>, o padrão do tango: 71 botões (38 na mão direita e 33 na esquerda), com as notas transcritas dos diagramas de Omar Caccia e Matías Gobbo. Se o seu instrumento tiver alguma diferença, ajuste os botões em <b>Teclado → Editar layout</b>.</div>
-    <p class="muted" style="font-size:.85rem;margin-bottom:0">Som: SoundFont <i>Bandoneon V2.5</i>, de Jörg Bleymehl (gravado num bandoneon ELA de 1930; edição GM de Mike77154), de uso livre. Você pode trocar para o som sintetizado em <a href="#" data-go="ajustes">Ajustes</a>.</p>
-  </div>
-  <div class="card">
-    <h2>O que você encontra no BanDoly</h2>
+  <div class="sobre" data-revela>
+    <div class="card">
+      <h2>O que você encontra no BanDoly</h2>
     <div class="grid feats">
       <div class="feat"><span class="feat-ic"><svg aria-hidden="true"><use href="#i-keys"/></svg></span><h3>Teclado com som real</h3><p>Os 71 botões do bandoneon Rheinische 142 nas posições reais, com o som gravado de um bandoneon de 1930. Cada botão toca uma nota abrindo o fole e outra fechando.</p><a href="#" data-go="teclado">Abrir o teclado →</a></div>
       <div class="feat"><span class="feat-ic"><svg aria-hidden="true"><use href="#i-book"/></svg></span><h3>11 lições com quiz</h3><p>História do instrumento, sistema bisonoro, fole e articulação, leitura nas duas claves, ritmos de tango, acordes e como ler uma partitura de tango.</p><a href="#" data-go="licoes">Ver as lições →</a> <a href="licoes/" data-local>Ler as lições online →</a></div>
@@ -202,9 +183,12 @@
       <div class="feat"><span class="feat-ic"><svg aria-hidden="true"><use href="#i-chord"/></svg></span><h3>Acordes no bandoneon</h3><p>Onde ficam os botões de 72 acordes (maiores, menores, com sétima e diminutos) em todas as tônicas, abrindo e fechando, nas duas mãos.</p><a href="#" data-go="acordes">Ver os acordes →</a></div>
       <div class="feat"><span class="feat-ic"><svg aria-hidden="true"><use href="#i-metro"/></svg></span><h3>Ritmos do tango</h3><p>Marcato, síncopa, 3-3-2 e arrastre, com metrônomo e um modo que mede se você está adiantado ou atrasado.</p><a href="#" data-go="ritmo">Praticar o ritmo →</a></div>
     </div>
-    <p class="muted" style="margin-bottom:0">Funciona no navegador do computador e do celular, em português, espanhol e inglês. É gratuito, não precisa de cadastro e pode ser instalado como app para usar sem internet.</p>
-  </div>
-  <div class="card faq">
+    <p class="muted">Funciona no navegador do computador e do celular, em português, espanhol e inglês. É gratuito, não precisa de cadastro e pode ser instalado como app para usar sem internet.</p>
+      <div class="notice"><b>Sobre o mapa dos botões:</b> existem vários sistemas de bandoneon (Rheinische 142 vozes, 144, Einheitsbandoneon, cromático/Péguri…) e até instrumentos do mesmo sistema podem ter diferenças. O app usa o mapa do <b>Rheinische 142</b>, o padrão do tango: 71 botões (38 na mão direita e 33 na esquerda), com as notas transcritas dos diagramas de Omar Caccia e Matías Gobbo. Se o seu instrumento tiver alguma diferença, ajuste os botões em <b>Teclado → Editar layout</b>.</div>
+      <p class="muted" style="font-size:.85rem;margin-bottom:0">Som: SoundFont <i>Bandoneon V2.5</i>, de Jörg Bleymehl (gravado num bandoneon ELA de 1930; edição GM de Mike77154), de uso livre. Você pode trocar para o som sintetizado em <a href="#" data-go="ajustes">Ajustes</a>.</p>
+      <p class="muted dica">Dica: use fones de ouvido. O app funciona offline e o seu progresso fica salvo neste navegador. Em <a href="#" data-go="ajustes">Ajustes</a> você escolhe o som, a afinação e faz backup.</p>
+    </div>
+    <div class="card faq">
     <h2>Perguntas frequentes</h2>
     <details><summary>O que é o bandoneon?</summary><p>É o instrumento de fole e botões que dá voz ao tango. Foi criado na Alemanha no século XIX e se tornou o símbolo do tango de Buenos Aires e Montevidéu. É bisonoro: cada botão toca uma nota ao abrir o fole e outra ao fechar.</p></details>
     <details><summary>Preciso ter um bandoneon para usar o BanDoly?</summary><p>Não. Dá para aprender o mapa dos botões, a leitura e os ritmos só com o teclado virtual, no computador ou no celular. Se você tiver um bandoneon, o app também escuta você tocar pelo microfone e confere as notas.</p></details>
@@ -212,6 +196,7 @@
     <details><summary>Qual sistema de bandoneon o app usa?</summary><p>O Rheinische 142, o padrão do tango: 71 botões, 38 na mão direita e 33 na esquerda, cada um com uma nota abrindo e outra fechando. Se o seu instrumento for diferente, dá para ajustar os botões no Teclado.</p></details>
     <details><summary>Funciona no celular e sem internet?</summary><p>Sim. O teclado se adapta à tela do celular e aceita vários dedos ao mesmo tempo para tocar acordes. Instalando o app pelo botão em Ajustes, ele funciona mesmo sem internet.</p></details>
     <details><summary>Por onde eu começo?</summary><p>Comece pelas lições 1 a 4, depois toque à vontade no Teclado e faça a escala de Dó maior no modo Espera. A Rotina de hoje, no topo desta página, sugere cinco tarefas curtas para praticar todo dia.</p></details>
+  </div>
   </div>
 </section>
 

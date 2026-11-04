@@ -17,7 +17,7 @@ function vibrar(tipo){
 // Entrada em cascata: ao abrir uma aba, os blocos dela entram um logo depois do outro
 function cascata(sec){
   if(!sec || movReduzido() || !sec.animate) return;
-  [...sec.children].filter(el=>el.offsetParent!==null).slice(0,7).forEach((el,i)=>
+  [...sec.children].filter(el=>el.offsetParent!==null && !el.hasAttribute('data-revela')).slice(0,7).forEach((el,i)=>
     el.animate([{opacity:0, transform:'translateY(14px)'}, {opacity:1, transform:'none'}],
                {duration:420, delay:i*60, easing:'cubic-bezier(.2,.8,.2,1)', fill:'backwards'}));
 }
@@ -76,3 +76,25 @@ function avisar(html, ms=4200){
   clearTimeout(avisoTimer);
   avisoTimer = setTimeout(()=>{ el.classList.add('sai'); setTimeout(()=>{ el.hidden = true; }, movReduzido()?0:320); }, ms);
 }
+
+// Blocos que aparecem ao chegar na tela durante a rolagem (atributo data-revela).
+// data-revela="cascata": os filhos entram um depois do outro; "aneis": enche os anéis e conta os números.
+const revelador = 'IntersectionObserver' in window ? new IntersectionObserver(es=>es.forEach(e=>{
+  if(!e.isIntersecting) return;
+  const el = e.target; el.classList.add('visto'); revelador.unobserve(el);
+  if(el.dataset.revela==='aneis'){ encherAneis(el); contarNumeros(el); }
+}), {threshold:0.1, rootMargin:'0px 0px -6% 0px'}) : null;
+function revelar(raiz){
+  raiz.querySelectorAll('[data-revela]').forEach(el=>{
+    if(!revelador || movReduzido()){ el.classList.add('visto'); return; }
+    [...el.children].forEach((c,i)=>c.style.setProperty('--i', i));
+    revelador.observe(el);
+  });
+}
+revelar(document);
+// O bandoneon desenhado da tela Início: os botões acendem como se alguém tocasse
+setInterval(()=>{
+  if(typeof currentView==='undefined' || currentView!=='inicio' || movReduzido() || document.hidden) return;
+  const bs = $$('#v-inicio .bando .caixa i'); bs.forEach(b=>b.classList.remove('on'));
+  for(let k=0; k<1+rand(2); k++) pick(bs).classList.add('on');
+}, 800);

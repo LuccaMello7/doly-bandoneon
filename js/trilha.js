@@ -70,6 +70,8 @@ function renderTrilha(){
   $('#trilhaTit').textContent = OBJETIVO_TIT[p.obj] || OBJETIVO_TIT.tango;
   $('#trilhaSub').textContent = atual<0 ? 'Caminho completo! A Medalha Doly Costa é sua.' : `Próxima etapa: ${es[atual].t}`;
   $('#trilhaProg').textContent = `${n}/${es.length}`;
+  // o botão principal da tela Início leva à próxima etapa
+  $('#heroCtaTxt').textContent = atual<0 ? 'Ver as suas conquistas' : `${n===0?'Começar':'Continuar'}: ${es[atual].t}`;
   $('#trilhaCard').style.setProperty('--feito', es.length ? n/es.length : 0);
   // fechado: as feitas mais recentes, a atual e as duas seguintes
   const ini = atual<0 ? es.length-3 : Math.max(0, atual-1), fim = atual<0 ? es.length : atual+3;
@@ -88,6 +90,7 @@ $('#trilha').addEventListener('click', e=>{
   const b = e.target.closest('[data-etapa]'); if(!b) return;
   const et = ETAPAS.find(x=>x.id===b.dataset.etapa); if(et) et.ir();
 });
+$('#heroCta').onclick = ()=>{ const es = etapasDoAluno(), i = es.findIndex(e=>!e.feito()); if(i<0) go('perfil'); else es[i].ir(); };
 $('#trilhaMais').onclick = ()=>{ trilhaAberta = !trilhaAberta; renderTrilha(); };
 // marcos que o resto do app não registra
 $('.doly-link').addEventListener('click', ()=>marcar('doly'));
