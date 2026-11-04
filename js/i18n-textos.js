@@ -21,6 +21,8 @@ const TEXTOS = {
 
 // ---------- Início ----------
 'Bem-vindo ao BanDoly!': ['¡Bienvenido a BanDoly!', 'Welcome to BanDoly!'],
+'Aprenda a tocar bandoneon com o BanDoly': ['Aprende a tocar el bandoneón con BanDoly', 'Learn to play the bandoneon with BanDoly'],
+'BanDoly: aprenda a tocar bandoneon online e grátis': ['BanDoly: aprende a tocar el bandoneón online y gratis', 'BanDoly: learn to play the bandoneon online, free'],
 'Aqui você aprende os fundamentos do bandoneon: como o instrumento funciona, o sistema': ['Aquí aprendes los fundamentos del bandoneón: cómo funciona el instrumento, el sistema', 'Here you learn the basics of the bandoneon: how the instrument works, the'],
 'bisonoro': ['bisonoro', 'bisonoric'],
 '(cada botão dá uma nota abrindo e outra fechando), leitura nas duas claves e os ritmos essenciais do tango.': ['(cada botón da una nota abriendo y otra cerrando), la lectura en las dos claves y los ritmos esenciales del tango.', 'system (each button plays one note opening and another closing), reading in both clefs and the essential tango rhythms.'],
