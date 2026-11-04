@@ -29,10 +29,15 @@ function loadLayout(){
 }
 // Estado global compartilhado pelas abas. progress guarda lições concluídas, recordes,
 // estatísticas por botão (btnStats), melodias (melodies) e dias de prática (days).
-// Idioma inicial: o escolhido antes ou o do navegador (espanhol, português; o resto vê inglês)
+// Idioma: cada idioma tem o seu endereço (bandoly.app/ = pt, /es/ e /en/), com os textos já
+// traduzidos no HTML para o Google ler. es/index.html e en/index.html são gerados a partir do
+// index.html por ferramentas/gerar_idiomas.py e trazem <html data-idioma="es|en">.
+const PAGINA_IDIOMA = document.documentElement.dataset.idioma || 'pt';
+const RAIZ = PAGINA_IDIOMA==='pt' ? '' : '../'; // caminho da pasta principal a partir desta página
+// idioma do navegador (espanhol, português; o resto vê inglês): só para sugerir a página certa
 function detectLang(){ const n=(navigator.language||'pt').toLowerCase(); return n.startsWith('es')?'es':n.startsWith('pt')?'pt':'en'; }
 const state = {
-  lang: store.get('lang', null) || detectLang(),
+  lang: PAGINA_IDIOMA,
   names: store.get('names', null) || 'pt', // 'pt' = solfejo, 'en' = letras (C D E)
   sound: store.get('sound','samples'),
   tuning: store.get('tuning',443),

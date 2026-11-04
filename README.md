@@ -4,7 +4,7 @@
 
 O **BanDoly** é um app gratuito e interativo para aprender **bandoneon**, o instrumento do tango. Você toca num teclado virtual com o som de um bandoneon de verdade, segue escalas e melodias guiadas, treina acordes e ritmos e, se tiver o instrumento, pode tocar nele enquanto o app escuta pelo microfone.
 
-Funciona no navegador, no computador ou no celular, em **português, espanhol e inglês** (escolha pelas bandeiras no topo). Não precisa instalar nada nem criar conta.
+Funciona no navegador, no computador ou no celular, em **português, espanhol e inglês**: [bandoly.app](https://bandoly.app), [bandoly.app/es](https://bandoly.app/es/) e [bandoly.app/en](https://bandoly.app/en/) (ou pelas bandeiras no topo). Não precisa instalar nada nem criar conta.
 
 O nome é uma homenagem a **Doly Carlos da Costa** (Caçapava do Sul), bandoneonista gaúcho que tocou nas orquestras de tango das rádios de Porto Alegre, fundou o grupo Os Posteiros e recebeu a Medalha Simões Lopes Neto. A história dele está no app, no link *Quem foi Doly Costa?* da tela Início.
 
@@ -28,8 +28,7 @@ O nome é uma homenagem a **Doly Carlos da Costa** (Caçapava do Sul), bandoneon
 
 ## Como abrir o app
 
-**Online:** se o GitHub Pages estiver ativado neste repositório, o app fica em
-`https://luccamello7.github.io/doly-bandoneon/`. Por esse link dá para **instalar no celular** (botão *Instalar app* em Ajustes) e usar **sem internet**.
+**Online:** o app fica em **[bandoly.app](https://bandoly.app)**. Por esse link dá para **instalar no celular** (botão *Instalar app* em Ajustes) e usar **sem internet**.
 
 **No seu computador:** baixe o repositório (botão verde *Code → Download ZIP*), descompacte e abra o arquivo `index.html` no Chrome, Edge ou Firefox.
 
@@ -229,6 +228,14 @@ Depois de criar ou mudar um texto, rode o script abaixo. Ele lista o que ainda n
 python ferramentas/extrair_textos.py
 ```
 
+**Páginas em espanhol e inglês.** Cada idioma tem o seu endereço (`/`, `/es/` e `/en/`), com os textos já traduzidos no HTML, para o Google mostrar cada página no seu idioma. O `es/index.html` e o `en/index.html` são **gerados** a partir do `index.html` e do dicionário. Não edite esses dois arquivos: depois de mudar o `index.html` ou o dicionário, rode
+
+```
+python ferramentas/gerar_idiomas.py
+```
+
+Os testes avisam se as páginas estiverem desatualizadas. As bandeiras levam para a página do idioma e guardam a escolha; quem abre `bandoly.app` depois de escolher espanhol ou inglês vai direto para a sua página.
+
 ### Testes
 
 ```
@@ -240,6 +247,7 @@ O script abre o app no Edge ou Chrome em modo invisível e roda `tests/testes.js
 ### Cuidados ao mudar
 
 - **Arquivo novo** em `index.html`? Inclua-o também em `ARQUIVOS` no `sw.js`, para funcionar offline. Os testes avisam se faltar.
+- **Mudou o `index.html` ou o dicionário?** Rode `python ferramentas/gerar_idiomas.py` para atualizar as páginas `es/` e `en/`.
 - **Lição nova?** Acrescente **no fim** da lista em `licoes.js`. O progresso é salvo pela posição da lição.
 - **Outro SoundFont?**
   ```

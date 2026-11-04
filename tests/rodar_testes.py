@@ -31,6 +31,12 @@ def main():
     faltando = [a for a in re.findall(r'(?:src|href)="((?!https?:|#|data:)[^"]+)"', pagina) if f'"{a}"' not in sw]
     for a in faltando:
         print(f'FALHA  sw.js não guarda "{a}" para uso offline (adicione em ARQUIVOS)')
+    # as páginas em espanhol e inglês precisam ser geradas de novo quando o index.html ou o dicionário mudam
+    idiomas = subprocess.run([sys.executable, str(RAIZ / 'ferramentas' / 'gerar_idiomas.py'), '--verificar'],
+                             capture_output=True, text=True, encoding='utf-8')
+    if idiomas.returncode:
+        print('FALHA  ' + (idiomas.stdout.strip() or idiomas.stderr.strip()))
+        faltando.append('idiomas')
     captura = ('<base href="../">\n<script>window.__erros=[];'
                'window.onerror=(m,s,l)=>{window.__erros.push(m+" ("+(s||"").split("/").pop()+":"+l+")");};</script>')
     pagina = pagina.replace('<head>', '<head>\n' + captura, 1)
