@@ -444,7 +444,7 @@
 </section>
 <!-- ACADEMIA: exercícios progressivos com instrutor digital (js/academia.js e js/maos.js) -->
 <section id="v-academia">
-  <div class="pg-topo"><span class="pg-ic t-academia"><svg aria-hidden="true"><use href="#i-cap"/></svg></span><div><h2 class="pg-tit">Bandoneon Academy</h2><p class="muted">Exercises in 6 levels, from the first button to pieces with both hands. The instructor shows the note, hand, finger and bellows direction for each moment, and at the end you get a report on what went right and what to review.</p></div></div>
+  <div class="pg-topo"><span class="pg-ic t-academia"><svg aria-hidden="true"><use href="#i-cap"/></svg></span><div><h2 class="pg-tit">Bandoneon Academy</h2><p class="muted">Exercises in 6 levels, from the first button to pieces with both hands, plus a level for your own sheet music. The instructor shows the note, hand, finger and bellows direction for each moment, and at the end you get a report on what went right and what to review.</p></div></div>
   <aside class="aviso" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></svg><p><strong>BanDoly is a learning site and will never replace the advice and guidance of a teacher.</strong> Use the app to support your studies and, whenever you can, learn with a bandoneon teacher: they correct your posture, bellows and fingering, things an app cannot see.</p></aside>
   <div class="card">
     <div class="ac-niveis" id="acNiveis" role="group" aria-label="Levels"></div>
@@ -488,6 +488,40 @@
   <div class="card">
     <h3 id="acNivelTitulo" style="margin-top:0"></h3>
     <p class="muted" id="acNivelObjetivo"></p>
+    <!-- nível 7: importar uma partitura (js/partituras.js) -->
+    <div class="ac-partituras" id="acPartituras" hidden>
+      <div class="row">
+        <button type="button" class="btn" id="acImportar">⇪ Import sheet music</button>
+        <span class="muted">MusicXML (.mxl, .musicxml) or MIDI (.mid)</span>
+      </div>
+      <div class="ac-imp" id="acImp" hidden>
+        <p class="muted" id="acImpInfo"></p>
+        <div class="row">
+          <label>Part: <select id="acImpParte"></select></label>
+          <label>Staff: <select id="acImpPauta"></select></label>
+          <label>Hand: <select id="acImpMao"><option value="right">Right</option><option value="left">Left</option></select></label>
+          <label>Line: <select id="acImpLinha"><option value="high">Highest note (melody)</option><option value="low">Lowest note (bass)</option></select></label>
+          <label title="Shifts the music by octaves to fit the range of the chosen hand"><input type="checkbox" id="acImpOitava" checked> Fit octave to hand</label>
+        </div>
+        <div class="row" style="margin-top:10px"><button type="button" class="btn" id="acImpGo">Transcribe for the bandoneon</button><button type="button" class="btn sec" id="acImpCancelar">Cancel</button></div>
+      </div>
+      <div class="row" id="acDeMelodiasLinha" hidden>
+        <label>Or use a melody saved in Melodies: <select id="acDeMelodias"></select></label>
+        <button type="button" class="btn sec" id="acDeMelodiasBtn">Add</button>
+      </div>
+      <div class="feedback" id="acImpMsg" aria-live="polite"></div>
+      <details class="ac-pdf">
+        <summary>I have the score as a PDF or photo</summary>
+        <p>The app reads digital sheet music files, not images. To convert a PDF or a photo:</p>
+        <ol>
+          <li>Install MuseScore 4 (free) from musescore.org.</li>
+          <li>Use File → Import PDF. The conversion is done by the musescore.com website and requires a free account.</li>
+          <li>Check the notes in the converted score: automatic reading can make mistakes.</li>
+          <li>Use File → Export → MusicXML and import the file here.</li>
+        </ol>
+        <p>Use scores in the public domain or that you have the right to use.</p>
+      </details>
+    </div>
     <div class="ac-lista" id="acLista"></div>
     <div class="ac-modos" id="acModo" role="group" aria-label="Mode">
       <button type="button" data-modo="aprender" class="on">Learn</button>
@@ -503,8 +537,10 @@
       <label title="Starts again by itself while there are mistakes"><input type="checkbox" id="acRepetir"> Repeat</label>
       <label title="Button highlight, finger number and hand position"><input type="checkbox" id="acGuia" checked> Fingering Guide</label>
       <label title="Play your own bandoneon: the app checks the note and rhythm through the microphone"><input type="checkbox" id="acMic"> 🎤 Microphone</label>
+      <button type="button" class="btn sec" id="acTranscricaoBtn" aria-expanded="false">📄 Transcription</button>
       <span id="acTrecho">Passage: from note <input type="number" id="acDe" min="1" value="1" class="ac-num-in"> to <input type="number" id="acAte" min="1" value="1" class="ac-num-in"></span>
     </div>
+    <div class="ac-transcricao" id="acTranscricao" hidden></div>
     <div class="ac-relatorio" id="acRelatorio" aria-live="polite"></div>
   </div>
 </section>
@@ -559,6 +595,7 @@
 <script src="../js/acordes.js"></script>
 <script src="../js/maos.js"></script>
 <script src="../js/academia.js"></script>
+<script src="../js/partituras.js"></script>
 <script src="../js/rotina.js"></script>
 <script src="../js/licoes.js"></script>
 <script src="../js/ajustes.js"></script>

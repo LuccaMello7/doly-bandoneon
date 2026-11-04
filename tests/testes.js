@@ -329,8 +329,9 @@ teste('t() traduz modelos com valores', () => {
 function acadTocarCerto(){ const e = acad.eventos[[...acad.pend][0]]; acadToque(e.botao, e.botao[e.fole], e.fole, akOf(e.mao)); }
 function acadCompletar(){ let n = 0; while(acad.rodando && n++ < 500) acadTocarCerto(); }
 teste('Academia: exercícios funcionais nos 6 níveis, todos dentro do mapa', () => {
-  igual(ACADEMIA.map(n=>n.nivel), [1,2,3,4,5,6]);
-  for(const n of ACADEMIA){
+  // nível 7 = partituras importadas pelo usuário (começa vazio; testado em "Minhas partituras")
+  igual(ACADEMIA.map(n=>n.nivel), [1,2,3,4,5,6,7]);
+  for(const n of ACADEMIA.filter(n=>n.nivel<=6)){
     const f = n.exercicios.filter(e=>!e.pendente);
     if(f.length < 3) throw new Error('nível ' + n.nivel + ' com poucos exercícios');
     for(const e of f){
@@ -369,6 +370,37 @@ teste('formato de texto: dedo recomendado e alternativos (@)', () => {
 });
 teste('tela Início leva à página própria de Doly Costa', () => {
   igual($('.doly-link').getAttribute('href').startsWith('doly-costa/'), true); // index.html no fim quando aberto do computador
+});
+
+/* ---------- Academia · Minhas partituras ---------- */
+// MIDI mínimo, montado aqui: 120 BPM, Dó4 (semínima), pausa (semínima), Mi4 (mínima)
+const midiTeste = () => {
+  const faixa = [0,0xff,0x51,3,0x07,0xa1,0x20, 0,0x90,60,100, 0x83,0x60,0x80,60,64, 0x83,0x60,0x90,64,100, 0x87,0x40,0x80,64,64, 0,0xff,0x2f,0];
+  const n = faixa.length;
+  return new Uint8Array([0x4d,0x54,0x68,0x64, 0,0,0,6, 0,0, 0,1, 0x01,0xe0,
+                         0x4d,0x54,0x72,0x6b, 0,0,(n>>8)&255,n&255, ...faixa]).buffer;
+};
+const transcreverTeste = () => melodyFromScore(parseMidi(midiTeste()), {part:0, staff:'1', pick:'high', hand:'right', fitOctave:false});
+teste('MIDI: notas, pausa e andamento', () => {
+  const s = parseMidi(midiTeste());
+  igual(s.tempo, 120);
+  igual(s.parts[0].notes.map(n=>[n.start, n.dur, n.midi]), [[0,1,60], [2,2,64]]);
+  ok(/p:4/.test(transcreverTeste().text), 'a pausa entre as notas deve aparecer no texto');
+});
+teste('Minhas partituras: a partitura importada vira exercício com botão, fole e pausa', () => {
+  const antes = minhasPartituras().length, exAntes = acad.ex.id;
+  igual(salvarPartitura('Teste', transcreverTeste().text, 'teste.mid'), {notas:2, fora:0});
+  igual(acad.ex.nivel, 7); igual(acad.todos.length, 2);
+  ok(acad.todos.every(e=>e.botao && e.fole), 'cada nota precisa de botão e fole');
+  igual(acad.todos[1].inicio, 2, 'a segunda nota começa depois da pausa');
+  abrirTranscricao(true);
+  ok($('#acTranscricao tr.pausa'), 'a transcrição mostra a pausa');
+  igual($$('#acTranscricao tr[data-i]').length, 2);
+  abrirTranscricao(false);
+  const conf = window.confirm; window.confirm = () => true;
+  removerPartitura(acad.ex.id); window.confirm = conf;
+  igual(minhasPartituras().length, antes);
+  carregarExercicio(exAntes);
 });
 
 /* ---------- Execução ---------- */

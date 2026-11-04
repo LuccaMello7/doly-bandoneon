@@ -49,6 +49,7 @@ const ARQUIVOS = [
   "js/acordes.js",
   "js/maos.js",
   "js/academia.js",
+  "js/partituras.js",
   "js/rotina.js",
   "js/musicxml.js",
   "js/navegacao.js",
