@@ -434,3 +434,9 @@ details>summary{cursor:pointer}
 .licoes-indice li a{font-weight:700;color:var(--gold);text-decoration:none;display:block}
 .licoes-indice li a:hover{text-decoration:underline}
 .feat a+a{display:block;margin-top:4px}
+
+/* Aviso destacado: o BanDoly não substitui um professor */
+.aviso{display:flex;gap:14px;align-items:flex-start;background:linear-gradient(90deg,rgba(202,162,71,.18),rgba(202,162,71,.06));border:2px solid var(--gold);border-radius:14px;padding:14px 18px;margin:0 0 16px}
+.aviso svg{flex:none;width:28px;height:28px;fill:none;stroke:var(--gold);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;margin-top:2px}
+.aviso p{margin:0;line-height:1.5}
+.aviso strong{color:var(--gold2);display:block;margin-bottom:4px;font-size:1.02rem}

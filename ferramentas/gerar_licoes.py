@@ -40,7 +40,9 @@ TEXTOS = {
     fazer_exercicio='Fazer o exercício no app',
     pratique='Pratique no teclado do BanDoly: som real de bandoneon, desafios e melodias guiadas. Grátis e sem cadastro.',
     abrir_licao='Abrir esta lição no app', rodape='BanDoly: aprenda a tocar bandoneon online e grátis',
-    nivel='Iniciante', tipo='Lição'),
+    nivel='Iniciante', tipo='Lição',
+    aviso_forte='O BanDoly é um site para aprendizado e nunca substituirá os conselhos e as orientações de um professor.',
+    aviso_resto='Use o app como apoio aos estudos e, sempre que puder, aprenda com um professor de bandoneon: ele corrige a postura, o fole e o dedilhado, coisas que um app não consegue ver.'),
 'es': dict(
     marca='Aprende Bandoneón', marca_aria='BanDoly - Aprende Bandoneón (inicio)', nav_aria='Secciones de la app',
     abrir_app='Abrir la app', inicio='Inicio', curso='Curso de bandoneón gratis',
@@ -54,7 +56,9 @@ TEXTOS = {
     fazer_exercicio='Hacer el ejercicio en la app',
     pratique='Practica en el teclado de BanDoly: sonido real de bandoneón, desafíos y melodías guiadas. Gratis y sin registro.',
     abrir_licao='Abrir esta lección en la app', rodape='BanDoly: aprende a tocar el bandoneón online y gratis',
-    nivel='Principiante', tipo='Lección'),
+    nivel='Principiante', tipo='Lección',
+    aviso_forte='BanDoly es un sitio para aprender y nunca reemplazará los consejos y la orientación de un profesor.',
+    aviso_resto='Usa la app como apoyo para tus estudios y, siempre que puedas, aprende con un profesor de bandoneón: él corrige la postura, el fuelle y la digitación, cosas que una app no puede ver.'),
 'en': dict(
     marca='Learn Bandoneon', marca_aria='BanDoly - Learn Bandoneon (home)', nav_aria='App sections',
     abrir_app='Open the app', inicio='Home', curso='Free bandoneon course',
@@ -68,8 +72,16 @@ TEXTOS = {
     fazer_exercicio='Do the exercise in the app',
     pratique='Practice on the BanDoly keyboard: real bandoneon sound, challenges and guided melodies. Free, no sign-up.',
     abrir_licao='Open this lesson in the app', rodape='BanDoly: learn to play the bandoneon online, free',
-    nivel='Beginner', tipo='Lesson'),
+    nivel='Beginner', tipo='Lesson',
+    aviso_forte='BanDoly is a learning site and will never replace the advice and guidance of a teacher.',
+    aviso_resto='Use the app to support your studies and, whenever you can, learn with a bandoneon teacher: they correct your posture, bellows and fingering, things an app cannot see.'),
 }
+
+def aviso(T):
+    """Aviso destacado: o site é para aprendizado e não substitui um professor."""
+    return ('<aside class="aviso" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></svg>'
+            f'<p><strong>{html.escape(T["aviso_forte"])}</strong> {html.escape(T["aviso_resto"])}</p></aside>')
+
 
 STR = r"""('(?:[^'\\]|\\.)*'|"(?:[^"\\]|\\.)*")"""
 
@@ -251,6 +263,7 @@ def gerar_todas():
     <p class="muted licao-kicker"><a href="../" data-local>{e(T['inicio'])}</a> › {e(T['curso'])}</p>
     <h1>{e(T['curso'])}</h1>
     <p>{e(T['indice_intro'])}</p>
+    {aviso(T)}
     <ol class="licoes-indice">
 {itens}    </ol>
     <div class="row"><a class="btn" href="../#licao-1" data-local>{e(T['abrir_app'])}</a></div>
@@ -283,6 +296,7 @@ def gerar_todas():
 {perguntas}    </div>
     <div class="row licao-nav">{''.join(nav)}</div>
   </article>
+  {aviso(T)}
   <div class="card licao-cta">
     <p>{e(T['pratique'])}</p>
     <a class="btn" href="../../#licao-{i+1}" data-local>{e(T['abrir_licao'])}</a>

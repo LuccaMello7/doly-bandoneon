@@ -774,4 +774,7 @@ const TEXTOS = {
 'Os acompanhamentos do tango, com metrônomo e o modo toque junto.': ['Los acompañamientos del tango, con metrónomo y el modo toca junto.', 'Tango accompaniments, with a metronome and the play-along mode.'],
 'Som, afinação, nomes das notas e os seus dados.': ['Sonido, afinación, nombres de las notas y tus datos.', 'Sound, tuning, note names and your data.'],
 'Som e notas': ['Sonido y notas', 'Sound and notes'],
+// ---------- Aviso: o app não substitui um professor ----------
+'O BanDoly é um site para aprendizado e nunca substituirá os conselhos e as orientações de um professor.': ['BanDoly es un sitio para aprender y nunca reemplazará los consejos y la orientación de un profesor.', 'BanDoly is a learning site and will never replace the advice and guidance of a teacher.'],
+'Use o app como apoio aos estudos e, sempre que puder, aprenda com um professor de bandoneon: ele corrige a postura, o fole e o dedilhado, coisas que um app não consegue ver.': ['Usa la app como apoyo para tus estudios y, siempre que puedas, aprende con un profesor de bandoneón: él corrige la postura, el fuelle y la digitación, cosas que una app no puede ver.', 'Use the app to support your studies and, whenever you can, learn with a bandoneon teacher: they correct your posture, bellows and fingering, things an app cannot see.'],
 };
