@@ -9,9 +9,9 @@
 //  - alert/confirm/prompt não passam pela página: no código use t('texto', valores...).
 //  - Para conferir o que falta traduzir: python ferramentas/extrair_textos.py
 const IDIOMAS = {
-  pt: {nome:'Português', bandeira:'icones/bandeiras/br.svg', html:'pt-BR'},
-  es: {nome:'Español',   bandeira:'icones/bandeiras/es.png', html:'es'},
-  en: {nome:'English',   bandeira:'icones/bandeiras/gb.svg', html:'en'},
+  pt: {nome:'Português', bandeira:RAIZ+'icones/bandeiras/br.svg', html:'pt-BR'},
+  es: {nome:'Español',   bandeira:RAIZ+'icones/bandeiras/es.png', html:'es'},
+  en: {nome:'English',   bandeira:RAIZ+'icones/bandeiras/gb.svg', html:'en'},
 };
 const COLUNA = {es:0, en:1}; // posição de cada idioma nas traduções do dicionário
 if(!IDIOMAS[state.lang]) state.lang = 'pt';
@@ -94,8 +94,40 @@ function montarBandeiras(){
   $('#langs').innerHTML = Object.entries(IDIOMAS).map(([k,L])=>
     `<button type="button" data-lang="${k}" class="${k===state.lang?'on':''}" title="${L.nome}" aria-label="${L.nome}" translate="no"><img src="${L.bandeira}" alt="" width="30" height="20"></button>`).join('');
 }
-$('#langs').addEventListener('click', e=>{ const b=e.target.closest('[data-lang]'); if(b) setLang(b.dataset.lang); });
+$('#langs').addEventListener('click', e=>{ const b=e.target.closest('[data-lang]'); if(b) irParaIdioma(b.dataset.lang); });
 
+// Endereço da página de cada idioma, relativo à página atual (no computador, sem servidor, aponta
+// direto para o index.html de cada pasta)
+function urlIdioma(l){
+  const pasta = RAIZ + (l==='pt' ? '' : l + '/');
+  return location.protocol==='file:' ? pasta + 'index.html' : (pasta || './');
+}
+// As bandeiras levam para a página do idioma e guardam a escolha
+function irParaIdioma(l){
+  if(!IDIOMAS[l]) return;
+  store.set('lang', l);
+  if(l===PAGINA_IDIOMA) return;
+  location.href = urlIdioma(l) + location.hash;
+}
+// Na página em português: quem já escolheu espanhol ou inglês vai direto para a sua página.
+// Quem nunca escolheu e usa o navegador em outro idioma vê uma sugestão (sem redirecionar,
+// para o Google sempre encontrar cada página no seu endereço).
+function sugerirIdioma(){
+  if(PAGINA_IDIOMA!=='pt' || !location.protocol.startsWith('http')) return;
+  const salvo = store.get('lang', null);
+  if(salvo==='es' || salvo==='en'){ location.replace(urlIdioma(salvo) + location.hash); return; }
+  const nav = detectLang();
+  if(salvo || nav==='pt') return;
+  const txt = {es:['¿Prefieres usar BanDoly en español?', 'Ver en español', 'Cerrar'], en:['Prefer to use BanDoly in English?', 'View in English', 'Close']}[nav];
+  const bar = document.createElement('div');
+  bar.className = 'lang-hint'; bar.setAttribute('translate', 'no'); bar.lang = IDIOMAS[nav].html;
+  bar.innerHTML = `<span>${txt[0]}</span> <a href="${urlIdioma(nav)}" class="btn">${txt[1]}</a> <button type="button" class="btn sec" aria-label="${txt[2]}">✕</button>`;
+  bar.querySelector('a').onclick = () => store.set('lang', nav);
+  bar.querySelector('button').onclick = () => { store.set('lang', 'pt'); bar.remove(); };
+  document.querySelector('main').prepend(bar);
+}
+
+// Troca o idioma na própria página (usado pelos testes; as bandeiras usam irParaIdioma)
 function setLang(l){
   if(!IDIOMAS[l]) return;
   state.lang = l; store.set('lang', l);
