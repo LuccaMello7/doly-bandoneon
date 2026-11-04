@@ -55,7 +55,7 @@ const LESSONS = [
   quiz:[{q:'Como se agrupam as 8 colcheias no ritmo 3-3-2?',o:['4+4','2+2+2+2','3+3+2','3+2+3'],a:2},
         {q:'O que caracteriza a síncopa?',o:['Acento no contratempo','Notas longas','Só tempos fortes','Ausência de acentos'],a:0}]},
 { title:'7. Rotina de estudo', html:`
-  <p>Uma rotina curta e diária rende mais que horas uma vez por semana. A <a href="#" data-go="inicio">tela inicial</a> mostra a sua <b>rotina de hoje</b> e quantos dias seguidos você praticou. Sugestão de 20–30 minutos:</p>
+  <p>Uma rotina curta e diária rende mais que horas uma vez por semana. A aba <a href="#" data-go="estudo">Meu estudo</a>, em Aprender, mostra a sua <b>rotina de hoje</b> e quantos dias seguidos você praticou. Sugestão de 20–30 minutos:</p>
   <ol>
     <li><b>5 min</b>: fole. Notas longas abrindo e fechando, com volume estável.</li>
     <li><b>10 min</b>: mapa de botões. Escalas lentas de Dó e Sol maior, uma mão por vez. Use as <a href="#" data-go="melodias">Escalas guiadas</a> no modo Espera e o desafio <i>Encontre a nota</i>.</li>

@@ -119,7 +119,7 @@ $('#bvForm').addEventListener('change', e=>{
   const f = new FormData($('#bvForm')), p = {};
   for(const k of ['exp','inst','obj']) if(f.get(k)) p[k] = f.get(k);
   $('#boasVindas').close(); salvarPerfil(p);
-  go('inicio'); $('#trilhaCard').scrollIntoView({behavior: movReduzido()?'auto':'smooth', block:'center'});
+  go('estudo'); $('#trilhaCard').scrollIntoView({behavior: movReduzido()?'auto':'smooth', block:'center'});
   $('#trilhaCard').classList.add('destaque'); setTimeout(()=>$('#trilhaCard').classList.remove('destaque'), 1800);
 });
 $('#bvVoltar').onclick = ()=>bvMostrar(Math.max(0, bvPasso-1));
@@ -228,7 +228,7 @@ function compartilharInsignia(id){
 
 /* ---------- Ao abrir as abas ---------- */
 ganchosAba.push(v=>{
-  if(v==='inicio'){ const s=$('#v-inicio'); encherAneis(s); contarNumeros(s); }
+  if(v==='estudo'){ const s=$('#v-estudo'); encherAneis(s); contarNumeros(s); }
   if(v==='perfil') renderPerfil();
 });
 renderPerfil();

@@ -286,7 +286,7 @@ function textosEmPortugues(){
   return [...achados];
 }
 async function percorrerApp(){
-  for(const v of ['inicio','teclado','desafios','melodias','acordes','ritmo','ajustes','academia','microfone','perfil']){ go(v); await esperar(); }
+  for(const v of ['inicio','estudo','teclado','desafios','melodias','acordes','ritmo','ajustes','academia','microfone','perfil']){ go(v); await esperar(); }
   abrirBoasVindas(); await esperar(); $('#boasVindas').close(); trilhaAberta = true; renderTrilha(); await esperar(); trilhaAberta = false;
   mcMostrar(69, 4, 0.1); await esperar(); mcMostrar(70, -30, 0.1); await esperar();
   avisar('<b>Conquista nova: Bisonoro</b>'); await esperar();
@@ -430,6 +430,7 @@ teste('navegação por áreas: cada área mostra só as suas abas e volta à úl
   igual($('#nav [data-area].active').dataset.area, 'tocar');
   igual($$('#subnav [data-v]').filter(b=>!b.hidden).map(b=>b.dataset.v), ['teclado','melodias','acordes','microfone']);
   go('licoes'); $('#nav [data-area="tocar"]').click(); igual(currentView, 'acordes');
+  igual($$('#subnav [data-area="aprender"]').map(b=>b.dataset.v), ['estudo','academia','licoes']);
   $('#nav [data-area="aprender"]').click(); igual(currentView, 'licoes');
   go('inicio'); ok($('#subnav').hidden, 'o Início não tem abas');
 });

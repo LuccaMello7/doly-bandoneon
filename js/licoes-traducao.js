@@ -56,7 +56,7 @@ es: [
   quiz:[{q:'¿Cómo se agrupan las 8 corcheas en el ritmo 3-3-2?',o:['4+4','2+2+2+2','3+3+2','3+2+3']},
         {q:'¿Qué caracteriza a la síncopa?',o:['Acento en el contratiempo','Notas largas','Solo tiempos fuertes','Ausencia de acentos']}]},
 { title:'7. Rutina de estudio', html:`
-  <p>Una rutina corta y diaria rinde más que horas una vez por semana. La <a href="#" data-go="inicio">pantalla de inicio</a> muestra tu <b>rutina de hoy</b> y cuántos días seguidos practicaste. Sugerencia de 20–30 minutos:</p>
+  <p>Una rutina corta y diaria rinde más que horas una vez por semana. La pestaña <a href="#" data-go="estudo">Mi estudio</a>, en Aprender, muestra tu <b>rutina de hoy</b> y cuántos días seguidos practicaste. Sugerencia de 20–30 minutos:</p>
   <ol>
     <li><b>5 min</b>: fuelle. Notas largas abriendo y cerrando, con volumen estable.</li>
     <li><b>10 min</b>: mapa de botones. Escalas lentas de Do y Sol mayor, una mano por vez. Usa las <a href="#" data-go="melodias">Escalas guiadas</a> en el modo Espera y el desafío <i>Encuentra la nota</i>.</li>
@@ -159,7 +159,7 @@ en: [
   quiz:[{q:'How are the 8 eighth notes grouped in the 3-3-2 rhythm?',o:['4+4','2+2+2+2','3+3+2','3+2+3']},
         {q:'What characterizes the síncopa?',o:['Accent on the offbeat','Long notes','Only strong beats','No accents']}]},
 { title:'7. Practice routine', html:`
-  <p>A short daily routine pays off more than hours once a week. The <a href="#" data-go="inicio">home screen</a> shows your <b>routine for today</b> and how many days in a row you have practiced. A 20–30 minute suggestion:</p>
+  <p>A short daily routine pays off more than hours once a week. The <a href="#" data-go="estudo">My study</a> tab, under Learn, shows your <b>routine for today</b> and how many days in a row you have practiced. A 20–30 minute suggestion:</p>
   <ol>
     <li><b>5 min</b>: bellows. Long notes opening and closing, at a steady volume.</li>
     <li><b>10 min</b>: button map. Slow C and G major scales, one hand at a time. Use the <a href="#" data-go="melodias">Guided scales</a> in Wait mode and the <i>Find the note</i> challenge.</li>

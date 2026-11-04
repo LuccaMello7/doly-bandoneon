@@ -107,6 +107,7 @@
 
 <main>
 <div class="subnav" id="subnav" role="tablist" aria-label="Abas desta área" hidden>
+  <button type="button" role="tab" data-area="aprender" data-v="estudo"><svg aria-hidden="true"><use href="#i-route"/></svg>Meu estudo</button>
   <button type="button" role="tab" data-area="aprender" data-v="academia"><svg aria-hidden="true"><use href="#i-cap"/></svg>Academia</button>
   <button type="button" role="tab" data-area="aprender" data-v="licoes"><svg aria-hidden="true"><use href="#i-book"/></svg>Lições</button>
   <button type="button" role="tab" data-area="tocar" data-v="teclado"><svg aria-hidden="true"><use href="#i-keys"/></svg>Teclado</button>
@@ -139,28 +140,6 @@
     </div>
   </div>
   <aside class="aviso aviso-curto" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></svg><p><strong>O BanDoly é um site para aprendizado e nunca substituirá os conselhos e as orientações de um professor.</strong> Use o app como apoio aos estudos e, sempre que puder, aprenda com um professor de bandoneon: ele corrige a postura, o fole e o dedilhado, coisas que um app não consegue ver.</p></aside>
-  <div class="inicio-grade">
-    <div class="card trilha-card" data-revela id="trilhaCard">
-    <div class="trilha-topo">
-      <div><p class="kicker"><svg aria-hidden="true"><use href="#i-route"/></svg> Seu caminho</p><h2 class="card-tit" id="trilhaTit">Do primeiro botão ao tango</h2><p class="muted" id="trilhaSub"></p></div>
-      <div class="trilha-prog"><b id="trilhaProg">0/0</b><span class="muted">etapas</span></div>
-    </div>
-    <ol class="trilha" id="trilha"></ol>
-    <button type="button" class="btn ghost trilha-mais" id="trilhaMais" aria-expanded="false">Ver o caminho inteiro</button>
-  </div>
-    <div class="inicio-lado">
-      <div class="card continuar" id="continuar" hidden></div>
-      <div class="card recordes" data-revela="aneis">
-        <h2 class="card-tit">Seus recordes</h2>
-        <div class="mini-stats"><div class="mini-stat"><svg class="anel" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="15" class="fundo"/><circle cx="18" cy="18" r="15" class="valor" id="aLessons"/></svg><div><div class="stat" id="pLessons">0/0</div><div class="muted">Lições concluídas</div></div></div><div class="mini-stat"><svg class="anel" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="15" class="fundo"/><circle cx="18" cy="18" r="15" class="valor" id="aFind"/></svg><div><div class="stat" id="pFind">–</div><div class="muted">Recorde: Encontre a nota</div></div></div><div class="mini-stat"><svg class="anel" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="15" class="fundo"/><circle cx="18" cy="18" r="15" class="valor" id="aStaff"/></svg><div><div class="stat" id="pStaff">–</div><div class="muted">Recorde: Leitura na pauta</div></div></div><div class="mini-stat"><svg class="anel" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="15" class="fundo"/><circle cx="18" cy="18" r="15" class="valor" id="aRhythm"/></svg><div><div class="stat" id="pRhythm">–</div><div class="muted">Melhor precisão rítmica</div></div></div><div class="mini-stat"><span class="stat-ic"><svg aria-hidden="true"><use href="#i-note"/></svg></span><div><div class="stat" id="pMel">–</div><div class="muted">Melodias concluídas</div></div></div><div class="mini-stat"><svg class="anel" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="15" class="fundo"/><circle cx="18" cy="18" r="15" class="valor" id="aChords"/></svg><div><div class="stat" id="pChords">–</div><div class="muted">Recorde: Acordes</div></div></div></div>
-      </div>
-      <div class="card" id="routineCard" data-revela>
-      <h2 class="card-tit">Rotina de hoje</h2>
-      <div id="week" class="week"></div>
-      <div id="routine" class="routine"></div>
-    </div>
-    </div>
-  </div>
   <div class="tiles" data-revela="cascata">
     <a class="tile t-academia" href="#" data-go="academia"><span class="tile-ic"><svg aria-hidden="true"><use href="#i-cap"/></svg></span><b>Academia</b><small>6 níveis com instrutor</small></a>
     <a class="tile t-teclado" href="#" data-go="teclado"><span class="tile-ic"><svg aria-hidden="true"><use href="#i-keys"/></svg></span><b>Teclado livre</b><small>71 botões com som real</small></a>
@@ -189,14 +168,39 @@
       <p class="muted dica">Dica: use fones de ouvido. O app funciona offline e o seu progresso fica salvo neste navegador. Em <a href="#" data-go="ajustes">Ajustes</a> você escolhe o som, a afinação e faz backup.</p>
     </div>
     <div class="card faq">
-    <h2>Perguntas frequentes</h2>
+      <h2>Perguntas frequentes</h2>
     <details><summary>O que é o bandoneon?</summary><p>É o instrumento de fole e botões que dá voz ao tango. Foi criado na Alemanha no século XIX e se tornou o símbolo do tango de Buenos Aires e Montevidéu. É bisonoro: cada botão toca uma nota ao abrir o fole e outra ao fechar.</p></details>
     <details><summary>Preciso ter um bandoneon para usar o BanDoly?</summary><p>Não. Dá para aprender o mapa dos botões, a leitura e os ritmos só com o teclado virtual, no computador ou no celular. Se você tiver um bandoneon, o app também escuta você tocar pelo microfone e confere as notas.</p></details>
     <details><summary>O BanDoly é gratuito?</summary><p>Sim. O BanDoly é gratuito e não precisa de cadastro. O seu progresso fica salvo no próprio navegador, e você pode exportar um backup em Ajustes.</p></details>
-    <details><summary>Qual sistema de bandoneon o app usa?</summary><p>O Rheinische 142, o padrão do tango: 71 botões, 38 na mão direita e 33 na esquerda, cada um com uma nota abrindo e outra fechando. Se o seu instrumento for diferente, dá para ajustar os botões no Teclado.</p></details>
-    <details><summary>Funciona no celular e sem internet?</summary><p>Sim. O teclado se adapta à tela do celular e aceita vários dedos ao mesmo tempo para tocar acordes. Instalando o app pelo botão em Ajustes, ele funciona mesmo sem internet.</p></details>
-    <details><summary>Por onde eu começo?</summary><p>Comece pelas lições 1 a 4, depois toque à vontade no Teclado e faça a escala de Dó maior no modo Espera. A Rotina de hoje, no topo desta página, sugere cinco tarefas curtas para praticar todo dia.</p></details>
+      <a class="btn ghost faq-todas" href="perguntas-frequentes/" data-local>Ver todas as perguntas <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
   </div>
+</section>
+
+<!-- MEU ESTUDO: o caminho, o "continue de onde parou", os recordes e a rotina (js/trilha.js e js/rotina.js) -->
+<section id="v-estudo">
+  <div class="pg-topo"><span class="pg-ic t-estudo"><svg aria-hidden="true"><use href="#i-route"/></svg></span><div><h2 class="pg-tit">Meu estudo</h2><p class="muted">O seu caminho, a rotina de hoje e os seus recordes, num lugar só.</p></div></div>
+  <div class="inicio-grade">
+    <div class="card trilha-card" id="trilhaCard">
+    <div class="trilha-topo">
+      <div><p class="kicker"><svg aria-hidden="true"><use href="#i-route"/></svg> Seu caminho</p><h2 class="card-tit" id="trilhaTit">Do primeiro botão ao tango</h2><p class="muted" id="trilhaSub"></p></div>
+      <div class="trilha-prog"><b id="trilhaProg">0/0</b><span class="muted">etapas</span></div>
+    </div>
+    <ol class="trilha" id="trilha"></ol>
+    <button type="button" class="btn ghost trilha-mais" id="trilhaMais" aria-expanded="false">Ver o caminho inteiro</button>
+  </div>
+    <div class="inicio-lado">
+      <div class="card continuar" id="continuar" hidden></div>
+      <div class="card recordes">
+        <h2 class="card-tit">Seus recordes</h2>
+        <div class="mini-stats"><div class="mini-stat"><svg class="anel" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="15" class="fundo"/><circle cx="18" cy="18" r="15" class="valor" id="aLessons"/></svg><div><div class="stat" id="pLessons">0/0</div><div class="muted">Lições concluídas</div></div></div><div class="mini-stat"><svg class="anel" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="15" class="fundo"/><circle cx="18" cy="18" r="15" class="valor" id="aFind"/></svg><div><div class="stat" id="pFind">–</div><div class="muted">Recorde: Encontre a nota</div></div></div><div class="mini-stat"><svg class="anel" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="15" class="fundo"/><circle cx="18" cy="18" r="15" class="valor" id="aStaff"/></svg><div><div class="stat" id="pStaff">–</div><div class="muted">Recorde: Leitura na pauta</div></div></div><div class="mini-stat"><svg class="anel" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="15" class="fundo"/><circle cx="18" cy="18" r="15" class="valor" id="aRhythm"/></svg><div><div class="stat" id="pRhythm">–</div><div class="muted">Melhor precisão rítmica</div></div></div><div class="mini-stat"><span class="stat-ic"><svg aria-hidden="true"><use href="#i-note"/></svg></span><div><div class="stat" id="pMel">–</div><div class="muted">Melodias concluídas</div></div></div><div class="mini-stat"><svg class="anel" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="15" class="fundo"/><circle cx="18" cy="18" r="15" class="valor" id="aChords"/></svg><div><div class="stat" id="pChords">–</div><div class="muted">Recorde: Acordes</div></div></div></div>
+      </div>
+      <div class="card" id="routineCard">
+      <h2 class="card-tit">Rotina de hoje</h2>
+      <div id="week" class="week"></div>
+      <div id="routine" class="routine"></div>
+    </div>
+    </div>
   </div>
 </section>
 

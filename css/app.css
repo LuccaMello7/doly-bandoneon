@@ -807,3 +807,60 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
 /* a página do Doly usa <section> para os blocos: elas não são abas do app */
 .pagina>section{display:block}
 .pagina>section.doly-hero{display:grid}
+
+/* ================== Página de perguntas frequentes ================== */
+.faq-pagina{max-width:900px}
+.faq-topo{position:relative;isolation:isolate;text-align:center;padding:56px 10px 30px}
+.faq-topo::before{content:"";position:absolute;inset:-20% -40%;z-index:-1;pointer-events:none;
+  background:radial-gradient(30% 45% at 30% 40%,#4f9cf044,transparent 70%),radial-gradient(30% 45% at 72% 55%,#e6b45033,transparent 70%);animation:aurora 16s ease-in-out infinite alternate}
+.faq-topo h1{font-size:clamp(2.2rem,5vw,3.4rem);margin:4px 0 10px;color:#fff;line-height:1.05}
+.faq-topo .doly-kicker{color:var(--gold2);font-weight:900}
+.faq-sub{color:#d5def0;font-size:1.1rem;max-width:56ch;margin:0 auto 22px}
+.mov .faq-topo h1{animation:sobeNitido .9s .1s cubic-bezier(.2,.8,.2,1) both}
+.mov .faq-topo .faq-sub,.mov .faq-busca{animation:sobe .8s .3s cubic-bezier(.2,.8,.2,1) both}
+.mov .faq-cats{animation:sobe .8s .45s cubic-bezier(.2,.8,.2,1) both}
+/* pontos de interrogação flutuando */
+.faq-bolhas{position:absolute;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.faq-bolhas i{position:absolute;font:normal 900 34px/1 Nunito,sans-serif;color:var(--gold);opacity:.12}
+.faq-bolhas i::before{content:"?"}
+.faq-bolhas i:nth-child(1){left:6%;top:18%;font-size:54px}.faq-bolhas i:nth-child(2){left:18%;top:70%}
+.faq-bolhas i:nth-child(3){left:32%;top:8%;font-size:26px}.faq-bolhas i:nth-child(4){left:70%;top:12%;font-size:46px}
+.faq-bolhas i:nth-child(5){left:84%;top:60%;font-size:60px}.faq-bolhas i:nth-child(6){left:92%;top:22%;font-size:24px}
+.faq-bolhas i:nth-child(7){left:58%;top:78%;font-size:30px}.faq-bolhas i:nth-child(8){left:44%;top:88%;font-size:22px}
+.mov .faq-bolhas i{animation:boia 7s ease-in-out infinite alternate}
+.mov .faq-bolhas i:nth-child(2n){animation-duration:9s;animation-delay:-3s}.mov .faq-bolhas i:nth-child(3n){animation-duration:11s;animation-delay:-5s}
+@keyframes boia{to{transform:translate(14px,-22px) rotate(14deg)}}
+/* busca e categorias */
+.faq-busca{display:flex;align-items:center;gap:10px;max-width:560px;margin:0 auto 16px;background:var(--panel);border:2px solid var(--line);border-radius:999px;padding:6px 18px;box-shadow:var(--sombra);transition:border-color .25s,box-shadow .25s,transform .25s}
+.faq-busca:focus-within{border-color:var(--gold);box-shadow:0 0 0 6px #e6b45022,var(--sombra);transform:scale(1.02)}
+.faq-busca svg[aria-hidden]{color:var(--gold);width:22px;height:22px}
+.faq-busca input{flex:1;min-width:0;background:none;border:0;color:var(--text);font:600 1.02rem Nunito,sans-serif;padding:8px 0;outline:none}
+.faq-cats{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.faq-cats button{background:var(--panel);border:0;color:var(--muted);padding:8px 16px;border-radius:999px;font:800 .9rem Nunito,sans-serif;cursor:pointer;box-shadow:var(--sombra);transition:background .25s,color .25s,transform .15s}
+.faq-cats button.on{background:var(--cream);color:var(--navy)}
+@media (hover:hover){.faq-cats button:not(.on):hover{color:var(--text);transform:translateY(-2px)}}
+/* perguntas */
+.faq-grupo{margin:34px 0 0}
+.faq-item{background:var(--panel);border-radius:18px;margin:0 0 10px;box-shadow:var(--sombra);border-left:3px solid transparent;transition:border-color .3s,background .3s,transform .2s}
+.faq-item[open]{border-left-color:var(--gold);background:linear-gradient(90deg,#e6b45012,var(--panel) 40%)}
+@media (hover:hover){.faq-item:not([open]):hover{transform:translateX(4px)}}
+.faq-item summary{list-style:none;display:flex;align-items:center;gap:12px;padding:16px 18px;cursor:pointer;font-weight:800;font-size:1.05rem}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::after{content:"";flex:none;width:12px;height:12px;margin-left:auto;border-right:3px solid var(--gold);border-bottom:3px solid var(--gold);transform:rotate(45deg) translateY(-3px);transition:transform .3s cubic-bezier(.34,1.4,.5,1)}
+.faq-item[open] summary::after{transform:rotate(225deg) translate(-3px,-1px)}
+.faq-q{flex:1}
+.faq-ancora{order:2;color:var(--muted);text-decoration:none;opacity:0;transition:opacity .2s;font-weight:900}
+.faq-item summary:hover .faq-ancora,.faq-ancora:focus{opacity:1}
+.faq-resp{overflow:hidden;padding:0 18px}
+.faq-resp p{margin:0 0 16px;color:#d5def0;line-height:1.65}
+.faq-item.destaque{animation:destaque 1.8s ease}
+.mov .faq-item{opacity:0;transform:translateY(18px)}
+.mov .faq-item.visto{opacity:1;transform:none;transition:opacity .6s cubic-bezier(.2,.8,.2,1),transform .6s cubic-bezier(.2,.8,.2,1),border-color .3s,background .3s}
+.faq-vazio{text-align:center;color:var(--muted);font-weight:700;margin:40px 0}
+.faq-fim{margin-top:40px;text-align:center;background:linear-gradient(135deg,#1e4c86,#2a2a64)}
+.faq-fim .row{justify-content:center}
+.mov .faq-fim{opacity:0;transform:translateY(20px);transition:opacity .7s,transform .7s cubic-bezier(.2,.8,.2,1)}
+.mov .faq-fim.visto{opacity:1;transform:none}
+.faq-todas{margin-top:12px}
+/* Meu estudo */
+.t-estudo{background:linear-gradient(140deg,#e6b450,#c2508a)}

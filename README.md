@@ -8,6 +8,8 @@ Funciona no navegador, no computador ou no celular, em **português, espanhol e 
 
 O nome é uma homenagem a **Doly Carlos da Costa** (Caçapava do Sul), bandoneonista gaúcho que tocou nas orquestras de tango das rádios de Porto Alegre, fundou o grupo Os Posteiros e recebeu a Medalha Simões Lopes Neto. A história dele está em [bandoly.app/doly-costa](https://bandoly.app/doly-costa/) (também em espanhol e inglês).
 
+Dúvidas sobre o instrumento e sobre como começar estão em [bandoly.app/perguntas-frequentes](https://bandoly.app/perguntas-frequentes/), uma página própria (também em espanhol e inglês), com busca e categorias.
+
 ---
 
 ## Sumário
@@ -53,9 +55,9 @@ Três ideias explicam quase tudo o que o app ensina:
 
 ## Por onde começar
 
-Na primeira visita o app faz **três perguntas** (se você já toca algum instrumento, se tem um bandoneon e o que quer tocar) e monta o **Seu caminho** na tela inicial: uma sequência de etapas que se marcam sozinhas conforme você pratica, com um botão para a próxima. Dá para refazer as perguntas em **Perfil → Conquistas**.
+Na primeira visita o app faz **três perguntas** (se você já toca algum instrumento, se tem um bandoneon e o que quer tocar) e monta o **Seu caminho** na aba **Aprender → Meu estudo**: uma sequência de etapas que se marcam sozinhas conforme você pratica, com um botão para a próxima. Dá para refazer as perguntas em **Perfil → Conquistas**.
 
-A tela inicial também mostra a sua **Rotina de hoje**: cinco tarefas curtas que se marcam sozinhas conforme você pratica, mais quantos dias seguidos você estudou.
+A mesma aba mostra o **Continue de onde parou**, os seus recordes e a **Rotina de hoje**: cinco tarefas curtas que se marcam sozinhas conforme você pratica, mais quantos dias seguidos você estudou.
 
 Se preferir seguir sozinho, esta é uma boa ordem:
 
@@ -75,14 +77,15 @@ O menu tem o **Início** e quatro áreas, cada uma com as suas abas no topo da t
 
 | Área | Abas |
 |---|---|
-| **Aprender** | Academia, Lições |
+| **Aprender** | Meu estudo, Academia, Lições |
 | **Tocar** | Teclado, Melodias, Acordes, Bandoneon real |
 | **Treinar** | Desafios, Ritmo |
 | **Perfil** | Conquistas, Ajustes |
 
 | Aba | Para que serve |
 |---|---|
-| **Início** | O seu caminho de estudo, a rotina do dia, a sequência de dias praticados e os seus recordes. |
+| **Início** | A apresentação do app, com um botão que leva direto à próxima etapa do seu caminho, os atalhos e as perguntas mais comuns. |
+| **Meu estudo** | O seu caminho de estudo, o "continue de onde parou", os recordes e a rotina do dia, com a sequência de dias praticados. |
 | **Lições** | 11 lições curtas, cada uma com quiz (e, em várias delas, uma tarefa "Experimente agora" para tocar no teclado no meio da explicação): história, partes do instrumento, sistema bisonoro, fole e articulação, leitura nas duas claves, ritmos de tango, acordes, duas mãos e como ler uma partitura de tango. |
 | **Academia** | Exercícios em **6 níveis** (botões, dedos, independência dos dedos, fole, duas mãos e músicas), cada um nos modos **Aprender** (mostra o próximo botão, o dedo e o fole e espera a nota certa), **Praticar** (no seu ritmo, apontando os erros) e **Desafio** (no tempo, com metrônomo; a velocidade sobe e os auxílios somem conforme a sua precisão). Um **instrutor** ao lado do teclado mostra a nota, a mão, o fole e a posição das mãos, e no fim vem um relatório com o que errou e o que treinar. No nível 7, **Minhas partituras**, você importa uma partitura (MusicXML ou MIDI) e o app transcreve cada nota para um botão, com a mão, o fole, a duração e as pausas; o botão **Transcrição** mostra a tabela nota a nota. |
 | **Teclado** | Os 71 botões nas posições reais, com som de bandoneon. Um fole simulado mostra quando ele chega ao fim, e a **válvula de ar** reposiciona o fole sem som. No celular dá para ver **uma mão por vez**, com botões maiores. |

@@ -350,7 +350,7 @@ def main():
             if not destino.exists() or destino.read_text(encoding='utf-8') != conteudo: desatualizadas.append(caminho)
             continue
         destino.parent.mkdir(parents=True, exist_ok=True)
-        destino.write_text(conteudo, encoding='utf-8', newline='\n')
+        destino.write_bytes(conteudo.encode('utf-8'))  # bytes: mantém o \n no Windows (e funciona no Python 3.9)
     # páginas de lições que não existem mais (lição renomeada ou removida)
     esperadas = {RAIZ / c for c in paginas}
     for cod in LANGS:
