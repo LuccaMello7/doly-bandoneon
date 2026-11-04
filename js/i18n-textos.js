@@ -763,4 +763,14 @@ const TEXTOS = {
 'Continue de onde parou': ['Sigue donde lo dejaste', 'Pick up where you left off'],
 'Continuar': ['Continuar', 'Continue'],
 'Academia · Nível {}: {}': ['Academia · Nivel {}: {}', 'Academy · Level {}: {}'],
+// Visual novo: tela Início e barra de abas
+'11 lições curtas com quiz, do primeiro contato com o instrumento até a partitura de tango.': ['11 lecciones cortas con quiz, del primer contacto con el instrumento hasta la partitura de tango.', '11 short lessons with quizzes, from your first contact with the instrument to reading a tango score.'],
+'Os 71 botões com som real. Toque, troque o fole e veja como cada botão muda de nota.': ['Los 71 botones con sonido real. Toca, cambia el fuelle y mira cómo cada botón cambia de nota.', 'All 71 buttons with real sound. Play, switch the bellows and see how each button changes note.'],
+'Botões': ['Botones', 'Buttons'],
+'Rodadas rápidas para decorar os botões e treinar a leitura.': ['Rondas rápidas para memorizar los botones y practicar la lectura.', 'Quick rounds to memorise the buttons and practise reading.'],
+'Ouça, toque no modo Espera e depois no tempo. Também há escalas guiadas e importação de partituras.': ['Escucha, toca en el modo Espera y después a tiempo. También hay escalas guiadas e importación de partituras.', 'Listen, play in Wait mode and then in time. There are also guided scales and score import.'],
+'Onde ficam os botões de cada acorde, abrindo e fechando, nas duas mãos.': ['Dónde están los botones de cada acorde, abriendo y cerrando, en las dos manos.', 'Where the buttons of each chord are, opening and closing, in both hands.'],
+'Os acompanhamentos do tango, com metrônomo e o modo toque junto.': ['Los acompañamientos del tango, con metrónomo y el modo toca junto.', 'Tango accompaniments, with a metronome and the play-along mode.'],
+'Som, afinação, nomes das notas e os seus dados.': ['Sonido, afinación, nombres de las notas y tus datos.', 'Sound, tuning, note names and your data.'],
+'Som e notas': ['Sonido y notas', 'Sound and notes'],
 };

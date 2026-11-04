@@ -29,7 +29,7 @@ header{background:var(--navy-dark);border-bottom:1px solid var(--line);padding:1
 nav{display:flex;gap:6px;flex-wrap:wrap}
 nav button{display:flex;align-items:center;gap:10px;background:transparent;border:0;color:var(--muted);padding:9px 14px;border-radius:14px;cursor:pointer;font:700 .95rem Nunito,sans-serif;transition:background .15s,color .15s}
 nav button svg[aria-hidden]{width:21px;height:21px}
-nav button:hover{background:#ffffff0d;color:var(--text)}
+@media (hover:hover){nav button:hover{background:#ffffff0d;color:var(--text)}} /* no toque, o hover ficaria preso */
 nav button.active{background:linear-gradient(90deg,#e6b45026,transparent);color:var(--text);box-shadow:inset 3px 0 0 var(--gold)}
 nav button.active svg{color:var(--gold)}
 .nav-mais{display:none!important}
@@ -149,7 +149,7 @@ kbd{font-family:Nunito,sans-serif}
 .side{display:flex;flex-direction:column;align-items:center;gap:6px}
 .side .label{font-size:.85rem;color:var(--muted)}
 /* Teclado do bandoneon: os botões são posicionados em absoluto pelo JavaScript */
-.kbd{position:relative;background:radial-gradient(circle at 30% 20%,var(--navy-light),var(--navy-dark));border:3px solid #8a6f2e;border-radius:18px;padding:8px;box-shadow:inset 0 0 20px #000}
+.kbd{position:relative;background:radial-gradient(circle at 30% 20%,#1f3f68,#0a1626);border:3px solid #b8903e;border-radius:22px;padding:8px;box-shadow:inset 0 0 24px #000a,0 8px 22px #0005}
 .key{position:absolute;border-radius:50%;border:2px solid #8b7a66;background:radial-gradient(circle at 35% 30%,#fffaf0,#d8cdb8);color:#2a1a10;font-size:inherit;font-weight:700;cursor:pointer;padding:0;user-select:none;touch-action:none;transition:transform .05s}
 .key.down{transform:scale(.9);background:radial-gradient(circle at 35% 30%,#f7e6c2,var(--gold))}
 .key.ok{background:var(--green)!important;color:#fff}
@@ -159,8 +159,8 @@ kbd{font-family:Nunito,sans-serif}
 .key.edit{border-style:dashed;border-color:var(--gold)}
 .key.sharp{background:radial-gradient(circle at 35% 30%,#e9e2d4,#b9ad98)}
 .bellows-wrap{display:flex;flex-direction:column;align-items:center;gap:6px;min-width:220px}
-.bellows{height:150px;transition:width .08s linear;background:repeating-linear-gradient(90deg,var(--navy) 0 8px,var(--gold) 8px 10px,var(--navy) 10px 18px);border-top:4px solid var(--bg);border-bottom:4px solid var(--bg);border-radius:4px;width:120px}
-.dirpill{font-weight:700;padding:6px 14px;border-radius:20px}
+.bellows{height:150px;transition:width .08s linear;background:repeating-linear-gradient(90deg,#6d1f24 0 9px,#f3ead6 9px 11px,#4a1418 11px 20px);border-top:5px solid var(--gold);border-bottom:5px solid var(--gold);border-radius:4px;width:120px;box-shadow:0 6px 16px #0006}
+.dirpill{font-weight:800;padding:6px 16px;border-radius:999px;color:#fff}
 .dirpill.open{background:var(--open)} .dirpill.close{background:var(--close)}
 .warn{color:var(--red2);font-weight:700;min-height:1.5em;text-align:center}
 .info{font-size:1.05rem;min-height:1.6em}
@@ -186,7 +186,7 @@ textarea{background:var(--panel2);color:var(--text);border:1px solid var(--line)
 .guide .gstep{font-size:1.1rem;margin-top:6px}
 .guide .chg{color:var(--close);font-weight:700}
 .settings{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
-.settings label{display:flex;flex-direction:column;gap:4px;color:var(--muted);font-size:.9rem}
+.settings label{display:flex;flex-direction:column;gap:6px;color:var(--muted);font-size:.85rem;font-weight:700;background:var(--panel2);padding:12px 14px;border-radius:16px}
 .settings select,.settings input{font-size:1rem}
 :focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
@@ -351,8 +351,9 @@ figcaption{color:var(--muted);font-size:.85rem;margin-top:6px}
 kbd{background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:.85em}
 
 /* Lições */
-.lesson-list button{display:block;width:100%;text-align:left;background:var(--panel2);border:1px solid var(--line);color:var(--text);padding:10px 12px;border-radius:8px;margin-bottom:6px;cursor:pointer}
-.lesson-list button.active{border-color:var(--gold)}
+.lesson-list button{display:block;width:100%;text-align:left;background:var(--panel2);border:0;color:var(--text);padding:11px 14px;border-radius:14px;margin-bottom:6px;cursor:pointer;font:600 .95rem Nunito,sans-serif;transition:background .15s}
+.lesson-list button:hover{background:#ffffff14}
+.lesson-list button.active{background:linear-gradient(90deg,#e6b45026,var(--panel2));box-shadow:inset 3px 0 0 var(--gold)}
 .lesson-list button .done{color:var(--green);float:right}
 .lesson-layout{display:grid;grid-template-columns:260px 1fr;gap:16px}
 @media(max-width:800px){.lesson-layout{grid-template-columns:1fr}}
@@ -365,15 +366,15 @@ kbd{background:var(--panel2);border:1px solid var(--line);border-radius:4px;padd
 .answers button{min-width:64px;margin:4px}
 .feedback{font-size:1.2rem;font-weight:700;min-height:1.8em}
 .feedback.ok{color:var(--green)} .feedback.bad{color:var(--red2)}
-.target{font-size:2.2rem;font-weight:800;color:var(--gold)}
+.target{font-size:2.6rem;font-weight:900;color:var(--gold2);line-height:1.2}
 
 /* Ritmo */
 .steps{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;margin:14px 0}
-.step{height:60px;border-radius:8px;background:var(--panel2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--muted)}
-.step.hit1{background:#2c5684;color:#fff} .step.hit2{background:var(--gold);color:var(--navy)}
+.step{height:60px;border-radius:14px;background:var(--panel2);border:0;display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--muted);transition:transform .08s}
+.step.hit1{background:#2f62a8;color:#fff} .step.hit2{background:var(--gold);color:#1b1404}
 .step.now{outline:3px solid var(--gold);transform:scale(1.05)}
-.pad{width:100%;height:90px;font-size:1.3rem;border-radius:12px;border:2px dashed var(--gold);background:var(--soft);color:var(--gold);cursor:pointer}
-.pad:active{background:var(--gold);color:var(--navy)}
+.pad{width:100%;height:110px;font:900 1.3rem Nunito,sans-serif;letter-spacing:.08em;border-radius:22px;border:0;background:linear-gradient(135deg,#1e4c86,#2a2a64);color:var(--gold2);cursor:pointer;box-shadow:0 8px 20px #0005;transition:transform .06s}
+.pad:active{background:var(--gold);color:#1b1404;transform:scale(.98)}
 
 /* Apresentação na tela inicial */
 .hero-cta{margin:4px 0 14px}
@@ -392,3 +393,30 @@ kbd{background:var(--panel2);border:1px solid var(--line);border-radius:4px;padd
 .lang-hint{display:flex;flex-wrap:wrap;align-items:center;gap:10px;background:var(--soft);border:1px solid var(--gold);border-radius:10px;padding:10px 14px;margin-bottom:16px}
 .lang-hint span{flex:1;min-width:180px}
 .lang-hint a.btn{text-decoration:none}
+
+/* ================== Etapa 2: cabeçalho de cada aba e controles agrupados ================== */
+.pg-topo{display:flex;align-items:center;gap:14px;margin:2px 0 18px}
+.pg-topo p{margin:2px 0 0;max-width:80ch}
+.pg-tit{margin:0;font-size:1.65rem;line-height:1.15}
+.pg-ic{width:52px;height:52px;flex:none;border-radius:16px;display:grid;place-items:center;color:#fff;box-shadow:0 6px 16px #0004}
+.pg-ic svg[aria-hidden]{width:27px;height:27px}
+.t-licoes{background:linear-gradient(140deg,#e0577f,#b23a62)} .t-desafios{background:linear-gradient(140deg,#e36f4f,#b8492f)}
+.t-acordes{background:linear-gradient(140deg,#2b9bb0,#1d6f80)} .t-ajustes{background:linear-gradient(140deg,#5d6f8c,#3e4c66)}
+/* rótulos com seletor ficam em "pílulas", mais fáceis de ver e de tocar */
+.card .row>label{display:inline-flex;align-items:center;gap:8px;background:#ffffff0a;padding:6px 10px;border-radius:12px;color:var(--muted);font-weight:700;font-size:.9rem}
+.card .row>label select,.card .row>label input{color:var(--text)}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;margin-bottom:6px}
+.grupo{display:flex;flex-wrap:wrap;align-items:center;gap:6px;background:#ffffff08;padding:6px;border-radius:16px}
+.grupo-tit{font-size:.72rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:0 6px}
+.segmento{display:inline-flex;background:var(--panel);border-radius:16px;padding:4px;gap:4px;margin-bottom:16px;box-shadow:var(--sombra)}
+.segmento .btn{background:transparent;color:var(--muted);box-shadow:none}
+.segmento .btn.on{background:var(--gold);color:#1b1404}
+.side .label{font-weight:800;letter-spacing:.04em}
+details>summary{cursor:pointer}
+.feedback{font-weight:900}
+.answers button{border-radius:12px}
+@media (max-width:700px){
+  .pg-topo{gap:12px;margin-bottom:14px}.pg-tit{font-size:1.35rem}.pg-ic{width:44px;height:44px;border-radius:14px}
+  .pg-topo p{font-size:.9rem}
+  .grupo{width:100%}
+}

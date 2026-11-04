@@ -187,6 +187,7 @@
 
 <!-- LIÇÕES -->
 <section id="v-licoes">
+  <div class="pg-topo"><span class="pg-ic t-licoes"><svg aria-hidden="true"><use href="#i-book"/></svg></span><div><h2 class="pg-tit">Lecciones</h2><p class="muted">11 lecciones cortas con quiz, del primer contacto con el instrumento hasta la partitura de tango.</p></div></div>
   <div class="lesson-layout">
     <div class="card lesson-list" id="lessonList"></div>
     <div class="card" id="lessonBody"></div>
@@ -195,12 +196,15 @@
 
 <!-- TECLADO -->
 <section id="v-teclado">
+  <div class="pg-topo"><span class="pg-ic t-teclado"><svg aria-hidden="true"><use href="#i-keys"/></svg></span><div><h2 class="pg-tit">Teclado</h2><p class="muted">Los 71 botones con sonido real. Toca, cambia el fuelle y mira cómo cada botón cambia de nota.</p></div></div>
   <div class="card">
-    <div class="row" style="justify-content:space-between">
-      <div class="row">
+    <div class="toolbar">
+      <div class="grupo"><span class="grupo-tit">Fuelle</span>
         <button class="btn" id="dirBtn">Cambiar dirección (Espacio)</button>
         <button class="btn sec" id="valveOpenBtn" title="Mantén para abrir el fuelle sin sonido">Válvula: abrir (mantén A)</button>
         <button class="btn sec" id="valveCloseBtn" title="Mantén para cerrar el fuelle sin sonido">Válvula: cerrar (mantén F)</button>
+      </div>
+      <div class="grupo"><span class="grupo-tit">Botones</span>
         <button class="btn sec on" id="labelsBtn">Mostrar nombres</button>
       </div>
       <details class="mapmenu">
@@ -229,11 +233,10 @@
 
 <!-- DESAFIOS -->
 <section id="v-desafios">
-  <div class="card">
-    <div class="row">
-      <button class="btn sec on" data-ch="find">Encuentra la nota</button>
-      <button class="btn sec" data-ch="staff">Lectura en el pentagrama</button>
-    </div>
+  <div class="pg-topo"><span class="pg-ic t-desafios"><svg aria-hidden="true"><use href="#i-target"/></svg></span><div><h2 class="pg-tit">Desafíos</h2><p class="muted">Rondas rápidas para memorizar los botones y practicar la lectura.</p></div></div>
+  <div class="segmento" role="group" aria-label="Desafío">
+    <button class="btn sec on" data-ch="find">Encuentra la nota</button>
+    <button class="btn sec" data-ch="staff">Lectura en el pentagrama</button>
   </div>
 
   <div class="card" id="chFind">
@@ -275,6 +278,7 @@
 
 <!-- MELODIAS -->
 <section id="v-melodias">
+  <div class="pg-topo"><span class="pg-ic t-melodias"><svg aria-hidden="true"><use href="#i-music"/></svg></span><div><h2 class="pg-tit">Melodías</h2><p class="muted">Escucha, toca en el modo Espera y después a tiempo. También hay escalas guiadas e importación de partituras.</p></div></div>
   <div class="card melbar">
     <div class="row">
       <label class="grow">Melodía <select id="melSelect" aria-label="Elegir melodía"></select></label>
@@ -369,8 +373,8 @@
 
 <!-- ACORDES -->
 <section id="v-acordes">
+  <div class="pg-topo"><span class="pg-ic t-acordes"><svg aria-hidden="true"><use href="#i-chord"/></svg></span><div><h2 class="pg-tit">Acordes</h2><p class="muted">Dónde están los botones de cada acorde, abriendo y cerrando, en las dos manos.</p></div></div>
   <div class="card">
-    <h2>Acordes</h2>
     <div id="chExplore">
       <div class="row">
         <label>Tónica: <select id="chRoot"></select></label>
@@ -414,6 +418,7 @@
 
 <!-- RITMO -->
 <section id="v-ritmo">
+  <div class="pg-topo"><span class="pg-ic t-ritmo"><svg aria-hidden="true"><use href="#i-metro"/></svg></span><div><h2 class="pg-tit">Ritmo</h2><p class="muted">Los acompañamientos del tango, con metrónomo y el modo toca junto.</p></div></div>
   <div class="card">
     <h2>Ritmos del tango</h2>
     <div class="row">
@@ -438,9 +443,8 @@
 </section>
 <!-- ACADEMIA: exercícios progressivos com instrutor digital (js/academia.js e js/maos.js) -->
 <section id="v-academia">
+  <div class="pg-topo"><span class="pg-ic t-academia"><svg aria-hidden="true"><use href="#i-cap"/></svg></span><div><h2 class="pg-tit">Academia de Bandoneón</h2><p class="muted">Ejercicios en 6 niveles, del primer botón a canciones con las dos manos. El instructor muestra la nota, la mano, el dedo y la dirección del fuelle de cada momento, y al final recibes un informe con lo que acertaste y lo que debes repasar.</p></div></div>
   <div class="card">
-    <h2>Academia de Bandoneón</h2>
-    <p class="muted">Ejercicios en 6 niveles, del primer botón a canciones con las dos manos. El instructor muestra la nota, la mano, el dedo y la dirección del fuelle de cada momento, y al final recibes un informe con lo que acertaste y lo que debes repasar.</p>
     <div class="ac-niveis" id="acNiveis" role="group" aria-label="Niveles"></div>
   </div>
 
@@ -504,8 +508,9 @@
 </section>
 <!-- AJUSTES -->
 <section id="v-ajustes">
+  <div class="pg-topo"><span class="pg-ic t-ajustes"><svg aria-hidden="true"><use href="#i-gear"/></svg></span><div><h2 class="pg-tit">Ajustes</h2><p class="muted">Sonido, afinación, nombres de las notas y tus datos.</p></div></div>
   <div class="card">
-    <h2>Ajustes</h2>
+    <h3 style="margin-top:0">Sonido y notas</h3>
     <div class="settings">
       <label>Sonido
         <select id="soundSel"><option value="samples">Bandoneón real (grabación)</option><option value="synth">Sintetizado</option></select></label>
