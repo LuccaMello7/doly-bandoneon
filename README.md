@@ -73,7 +73,7 @@ Se é a sua primeira vez, siga esta ordem:
 |---|---|
 | **Início** | Rotina do dia, sequência de dias praticados e seus recordes. |
 | **Lições** | 11 lições curtas, cada uma com quiz: história, partes do instrumento, sistema bisonoro, fole e articulação, leitura nas duas claves, ritmos de tango, acordes, duas mãos e como ler uma partitura de tango. |
-| **Academia** | Exercícios em **6 níveis** (botões, dedos, independência dos dedos, fole, duas mãos e músicas), cada um nos modos **Aprender** (mostra o próximo botão, o dedo e o fole e espera a nota certa), **Praticar** (no seu ritmo, apontando os erros) e **Desafio** (no tempo, com metrônomo; a velocidade sobe e os auxílios somem conforme a sua precisão). Um **instrutor** ao lado do teclado mostra a nota, a mão, o fole e a posição das mãos, e no fim vem um relatório com o que errou e o que treinar. |
+| **Academia** | Exercícios em **6 níveis** (botões, dedos, independência dos dedos, fole, duas mãos e músicas), cada um nos modos **Aprender** (mostra o próximo botão, o dedo e o fole e espera a nota certa), **Praticar** (no seu ritmo, apontando os erros) e **Desafio** (no tempo, com metrônomo; a velocidade sobe e os auxílios somem conforme a sua precisão). Um **instrutor** ao lado do teclado mostra a nota, a mão, o fole e a posição das mãos, e no fim vem um relatório com o que errou e o que treinar. No nível 7, **Minhas partituras**, você importa uma partitura (MusicXML ou MIDI) e o app transcreve cada nota para um botão, com a mão, o fole, a duração e as pausas; o botão **📄 Transcrição** mostra a tabela nota a nota. |
 | **Teclado** | Os 71 botões nas posições reais, com som de bandoneon. Um fole simulado mostra quando ele chega ao fim, e a **válvula de ar** reposiciona o fole sem som. |
 | **Desafios** | *Encontre a nota*: o app pede uma nota e você acha o botão. O sorteio **inteligente** repete mais os botões que você erra, e o **mapa de erros** pinta o teclado do verde ao vermelho. Há também a *Leitura na pauta*. |
 | **Melodias** | Toque melodias e escalas em três modos: **Ouvir** (o app toca e mostra), **Espera** (avança quando você acerta) e **No tempo** (com metrônomo e pontuação). Funciona com uma ou duas mãos e mostra a **partitura com cursor** e a **direção sugerida do fole** em cada nota. |
@@ -246,6 +246,12 @@ python ferramentas/gerar_idiomas.py
 
 Os testes avisam se as páginas estiverem desatualizadas. As bandeiras levam para a página do idioma e guardam a escolha; quem abre `bandoly.app` depois de escolher espanhol ou inglês vai direto para a sua página.
 
+**Páginas das lições.** Cada lição também tem uma página própria, para aparecer no Google: [bandoly.app/licoes](https://bandoly.app/licoes/) (e `/es/licoes/`, `/en/licoes/`), com o texto, o quiz e um botão que abre a mesma lição no app (o endereço `#licao-3` abre a lição 3; `#teclado`, `#ritmo` etc. abrem a aba). As páginas são **geradas** a partir de `js/licoes.js` e `js/licoes-traducao.js`, e o mesmo script atualiza a parte das lições no `sitemap.xml`. Depois de mudar uma lição, rode
+
+```
+python ferramentas/gerar_licoes.py
+```
+
 ### Testes
 
 ```
@@ -258,6 +264,7 @@ O script abre o app no Edge ou Chrome em modo invisível e roda `tests/testes.js
 
 - **Arquivo novo** em `index.html`? Inclua-o também em `ARQUIVOS` no `sw.js`, para funcionar offline. Os testes avisam se faltar.
 - **Mudou o `index.html` ou o dicionário?** Rode `python ferramentas/gerar_idiomas.py` para atualizar as páginas `es/` e `en/`.
+- **Mudou uma lição?** Rode `python ferramentas/gerar_licoes.py` para atualizar as páginas das lições.
 - **Lição nova?** Acrescente **no fim** da lista em `licoes.js`. O progresso é salvo pela posição da lição.
 - **Outro SoundFont?**
   ```

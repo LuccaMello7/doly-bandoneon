@@ -120,6 +120,7 @@
       <div class="caixa"><i></i><i></i><i></i><i></i><i></i><i class="f"></i><i></i><i></i><i></i></div>
     </div>
   </div>
+  <aside class="aviso" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></svg><p><strong>BanDoly es un sitio para aprender y nunca reemplazará los consejos y la orientación de un profesor.</strong> Usa la app como apoyo para tus estudios y, siempre que puedas, aprende con un profesor de bandoneón: él corrige la postura, el fuelle y la digitación, cosas que una app no puede ver.</p></aside>
   <div class="card continuar" id="continuar" hidden></div>
   <div class="stats">
     <div class="card stat-card"><svg class="anel" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="15" class="fundo"/><circle cx="18" cy="18" r="15" class="valor" id="aLessons"/></svg><div><div class="stat" id="pLessons">0/0</div><div class="muted">Lecciones completadas</div></div></div>
@@ -166,7 +167,7 @@
     <h2>Qué encuentras en BanDoly</h2>
     <div class="grid feats">
       <div class="feat"><span class="feat-ic"><svg aria-hidden="true"><use href="#i-keys"/></svg></span><h3>Teclado con sonido real</h3><p>Los 71 botones del bandoneón Rheinische 142 en sus posiciones reales, con el sonido grabado de un bandoneón de 1930. Cada botón toca una nota al abrir el fuelle y otra al cerrarlo.</p><a href="#" data-go="teclado">Abrir el teclado →</a></div>
-      <div class="feat"><span class="feat-ic"><svg aria-hidden="true"><use href="#i-book"/></svg></span><h3>11 lecciones con cuestionario</h3><p>Historia del instrumento, sistema bisonoro, fuelle y articulación, lectura en las dos claves, ritmos de tango, acordes y cómo leer una partitura de tango.</p><a href="#" data-go="licoes">Ver las lecciones →</a></div>
+      <div class="feat"><span class="feat-ic"><svg aria-hidden="true"><use href="#i-book"/></svg></span><h3>11 lecciones con cuestionario</h3><p>Historia del instrumento, sistema bisonoro, fuelle y articulación, lectura en las dos claves, ritmos de tango, acordes y cómo leer una partitura de tango.</p><a href="#" data-go="licoes">Ver las lecciones →</a> <a href="licoes/" data-local>Leer las lecciones online →</a></div>
       <div class="feat"><span class="feat-ic"><svg aria-hidden="true"><use href="#i-target"/></svg></span><h3>Desafíos para memorizar los botones</h3><p>La app te pide una nota y tú encuentras el botón. El sorteo repite más los botones que fallas, y el mapa de errores muestra dónde practicar.</p><a href="#" data-go="desafios">Hacer un desafío →</a></div>
       <div class="feat"><span class="feat-ic"><svg aria-hidden="true"><use href="#i-music"/></svg></span><h3>Escalas y melodías guiadas</h3><p>Escalas en todas las tonalidades y melodías con una o dos manos, con partitura, la dirección del fuelle sugerida y un modo que espera a que aciertes.</p><a href="#" data-go="melodias">Tocar una melodía →</a></div>
       <div class="feat"><span class="feat-ic"><svg aria-hidden="true"><use href="#i-chord"/></svg></span><h3>Acordes en el bandoneón</h3><p>Dónde están los botones de 72 acordes (mayores, menores, con séptima y disminuidos) en todas las tónicas, abriendo y cerrando, en las dos manos.</p><a href="#" data-go="acordes">Ver los acordes →</a></div>
@@ -443,7 +444,8 @@
 </section>
 <!-- ACADEMIA: exercícios progressivos com instrutor digital (js/academia.js e js/maos.js) -->
 <section id="v-academia">
-  <div class="pg-topo"><span class="pg-ic t-academia"><svg aria-hidden="true"><use href="#i-cap"/></svg></span><div><h2 class="pg-tit">Academia de Bandoneón</h2><p class="muted">Ejercicios en 6 niveles, del primer botón a canciones con las dos manos. El instructor muestra la nota, la mano, el dedo y la dirección del fuelle de cada momento, y al final recibes un informe con lo que acertaste y lo que debes repasar.</p></div></div>
+  <div class="pg-topo"><span class="pg-ic t-academia"><svg aria-hidden="true"><use href="#i-cap"/></svg></span><div><h2 class="pg-tit">Academia de Bandoneón</h2><p class="muted">Ejercicios en 6 niveles, del primer botón a canciones con las dos manos, y un nivel para tus propias partituras. El instructor muestra la nota, la mano, el dedo y la dirección del fuelle de cada momento, y al final recibes un informe con lo que acertaste y lo que debes repasar.</p></div></div>
+  <aside class="aviso" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></svg><p><strong>BanDoly es un sitio para aprender y nunca reemplazará los consejos y la orientación de un profesor.</strong> Usa la app como apoyo para tus estudios y, siempre que puedas, aprende con un profesor de bandoneón: él corrige la postura, el fuelle y la digitación, cosas que una app no puede ver.</p></aside>
   <div class="card">
     <div class="ac-niveis" id="acNiveis" role="group" aria-label="Niveles"></div>
   </div>
@@ -486,6 +488,40 @@
   <div class="card">
     <h3 id="acNivelTitulo" style="margin-top:0"></h3>
     <p class="muted" id="acNivelObjetivo"></p>
+    <!-- nível 7: importar uma partitura (js/partituras.js) -->
+    <div class="ac-partituras" id="acPartituras" hidden>
+      <div class="row">
+        <button type="button" class="btn" id="acImportar">⇪ Importar partitura</button>
+        <span class="muted">MusicXML (.mxl, .musicxml) o MIDI (.mid)</span>
+      </div>
+      <div class="ac-imp" id="acImp" hidden>
+        <p class="muted" id="acImpInfo"></p>
+        <div class="row">
+          <label>Parte: <select id="acImpParte"></select></label>
+          <label>Pentagrama: <select id="acImpPauta"></select></label>
+          <label>Mano: <select id="acImpMao"><option value="right">Derecha</option><option value="left">Izquierda</option></select></label>
+          <label>Línea: <select id="acImpLinha"><option value="high">Nota más aguda (melodía)</option><option value="low">Nota más grave (bajo)</option></select></label>
+          <label title="Desplaza la música en octavas para que entre en la extensión de la mano elegida"><input type="checkbox" id="acImpOitava" checked> Ajustar octava a la mano</label>
+        </div>
+        <div class="row" style="margin-top:10px"><button type="button" class="btn" id="acImpGo">Transcribir para el bandoneón</button><button type="button" class="btn sec" id="acImpCancelar">Cancelar</button></div>
+      </div>
+      <div class="row" id="acDeMelodiasLinha" hidden>
+        <label>O usa una melodía guardada en Melodías: <select id="acDeMelodias"></select></label>
+        <button type="button" class="btn sec" id="acDeMelodiasBtn">Agregar</button>
+      </div>
+      <div class="feedback" id="acImpMsg" aria-live="polite"></div>
+      <details class="ac-pdf">
+        <summary>Tengo la partitura en PDF o en foto</summary>
+        <p>La app lee archivos de partitura digital, no imágenes. Para convertir un PDF o una foto:</p>
+        <ol>
+          <li>Instala MuseScore 4 (gratis) desde musescore.org.</li>
+          <li>Usa Archivo → Importar PDF. La conversión la hace el sitio musescore.com y pide una cuenta gratuita.</li>
+          <li>Revisa las notas en la partitura convertida: la lectura automática puede equivocarse.</li>
+          <li>Usa Archivo → Exportar → MusicXML e importa el archivo aquí.</li>
+        </ol>
+        <p>Usa partituras de dominio público o que tengas derecho a usar.</p>
+      </details>
+    </div>
     <div class="ac-lista" id="acLista"></div>
     <div class="ac-modos" id="acModo" role="group" aria-label="Modo">
       <button type="button" data-modo="aprender" class="on">Aprender</button>
@@ -501,8 +537,10 @@
       <label title="Vuelve a empezar solo mientras haya errores"><input type="checkbox" id="acRepetir"> Repetir</label>
       <label title="Resaltado del botón, número del dedo y posición de las manos"><input type="checkbox" id="acGuia" checked> Guía de digitación</label>
       <label title="Toca en tu bandoneón: la app revisa la nota y el ritmo por el micrófono"><input type="checkbox" id="acMic"> 🎤 Micrófono</label>
+      <button type="button" class="btn sec" id="acTranscricaoBtn" aria-expanded="false">📄 Transcripción</button>
       <span id="acTrecho">Pasaje: de la nota <input type="number" id="acDe" min="1" value="1" class="ac-num-in"> a la <input type="number" id="acAte" min="1" value="1" class="ac-num-in"></span>
     </div>
+    <div class="ac-transcricao" id="acTranscricao" hidden></div>
     <div class="ac-relatorio" id="acRelatorio" aria-live="polite"></div>
   </div>
 </section>
@@ -557,6 +595,7 @@
 <script src="../js/acordes.js"></script>
 <script src="../js/maos.js"></script>
 <script src="../js/academia.js"></script>
+<script src="../js/partituras.js"></script>
 <script src="../js/rotina.js"></script>
 <script src="../js/licoes.js"></script>
 <script src="../js/ajustes.js"></script>

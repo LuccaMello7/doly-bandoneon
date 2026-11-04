@@ -61,6 +61,9 @@ function acadParesDeDirecao(n){
   return {bpm:60, notes, pronto:true};
 }
 const melodiaPronta = id => BUILTIN_MELODIES.find(m=>m.id===id).text;
+// Nível 7: partituras importadas pelo usuário (js/partituras.js), guardadas neste navegador
+const minhasPartituras = () => store.get('acadPartituras', []);
+const escHtml = s => { const d = document.createElement('div'); d.textContent = s; return d.innerHTML.replace(/\x22/g, '&quot;'); };
 
 const ACADEMIA = [
 {nivel:1, titulo:'Reconhecimento dos botões', objetivo:'Aprender onde fica cada nota, nas duas mãos e nas duas direções do fole.', exercicios:[
@@ -108,6 +111,8 @@ const ACADEMIA = [
   {id:'n6-lam', titulo:'Lá menor harmônica', desc:'A escala com a cor do tango, com trocas de fole.', texto:melodiaPronta('esc-lam'), foleManual:true},
   {id:'n6-ode-duas', titulo:'Ode à Alegria a duas mãos', desc:'Melodia e baixos juntos: o desafio final.', texto:melodiaPronta('ode-duas'), foleManual:true},
 ]},
+{nivel:7, titulo:'Minhas partituras', objetivo:'Importe uma partitura (MusicXML ou MIDI): o app transcreve cada nota para um botão, com a mão, a direção do fole, a duração e as pausas. Depois é só treinar nos modos Aprender, Praticar e Desafio.',
+  get exercicios(){ return minhasPartituras().map(p=>({id:p.id, titulo:p.titulo, desc:p.desc, texto:p.texto, minha:true})); }},
 ];
 const todosExercicios = () => ACADEMIA.flatMap(n=>n.exercicios.map(e=>({...e, nivel:n.nivel})));
 const exercicioPorId = id => todosExercicios().find(e=>e.id===id);
@@ -152,7 +157,7 @@ function renderAcadNiveis(){
     const f = acadFuncionais(n), feitos = f.filter(e=>acadConcluido(e.id)).length;
     return `<button type="button" class="ac-nivel${n.nivel===acad.nivel?' on':''}" data-nivel="${n.nivel}">`
       + `<span class="ac-num">${n.nivel}</span><span class="ac-ntit">${n.titulo}</span>`
-      + `<span class="bar"><span style="width:${Math.round(100*feitos/f.length)}%"></span></span>`
+      + `<span class="bar"><span style="width:${f.length ? Math.round(100*feitos/f.length) : 0}%"></span></span>`
       + `<span class="muted ac-nfeitos">${t('{}/{} concluídos', feitos, f.length)}</span></button>`;
   }).join('');
 }
@@ -160,22 +165,31 @@ function renderAcadLista(){
   const n = ACADEMIA.find(x=>x.nivel===acad.nivel);
   $('#acNivelTitulo').textContent = t('Nível {}: {}', n.nivel, t(n.titulo));
   $('#acNivelObjetivo').textContent = n.objetivo;
+  $('#acPartituras').hidden = n.nivel!==7;
+  if(n.nivel===7 && !n.exercicios.length){ $('#acLista').innerHTML = `<p class="muted">${t('Nenhuma partitura ainda. Importe a primeira acima.')}</p>`; return; }
   $('#acLista').innerHTML = n.exercicios.map(e=>{
     const p = state.progress.academia[e.id], melhor = p ? Math.max(p.melhor.aprender||0, p.melhor.praticar||0, p.melhor.desafio||0) : null;
     const st = e.pendente ? `<span class="ac-pend">${'Aguardando o dedilhado de referência'}</span>`
       : acadConcluido(e.id) ? `<span class="ac-ok">✓ ${melhor}%</span>` : melhor!=null ? `<span class="muted">${melhor}%</span>` : '';
-    return `<button type="button" class="ac-ex${acad.ex&&acad.ex.id===e.id?' on':''}" data-ex="${e.id}"${e.pendente?' disabled':''}>`
-      + `<b>${e.titulo}</b><span class="muted">${e.desc}</span>${st}</button>`;
+    const tit = e.minha ? escHtml(e.titulo) : e.titulo, desc = e.minha ? escHtml(e.desc) : e.desc;
+    const botao = `<button type="button" class="ac-ex${acad.ex&&acad.ex.id===e.id?' on':''}" data-ex="${e.id}"${e.pendente?' disabled':''}>`
+      + `<b>${tit}</b><span class="muted">${desc}</span>${st}</button>`;
+    // partituras do usuário: botão para remover
+    return e.minha ? `<div class="ac-ex-minha">${botao}<button type="button" class="ac-del" data-del="${e.id}" title="${t('Remover')}" aria-label="${t('Remover')}">✕</button></div>` : botao;
   }).join('');
 }
 $('#acNiveis').addEventListener('click', ev=>{
   const b = ev.target.closest('[data-nivel]'); if(!b) return;
   acad.nivel = +b.dataset.nivel; store.set('acadNivel', acad.nivel);
   renderAcadNiveis(); renderAcadLista();
-  const n = ACADEMIA.find(x=>x.nivel===acad.nivel);
-  carregarExercicio((acadFuncionais(n).find(e=>!acadConcluido(e.id)) || acadFuncionais(n)[0]).id);
+  const n = ACADEMIA.find(x=>x.nivel===acad.nivel), f = acadFuncionais(n);
+  if(f.length) carregarExercicio((f.find(e=>!acadConcluido(e.id)) || f[0]).id);
 });
-$('#acLista').addEventListener('click', ev=>{ const b = ev.target.closest('[data-ex]'); if(b && !b.disabled) carregarExercicio(b.dataset.ex); });
+$('#acLista').addEventListener('click', ev=>{
+  const d = ev.target.closest('[data-del]');
+  if(d){ removerPartitura(d.dataset.del); return; }
+  const b = ev.target.closest('[data-ex]'); if(b && !b.disabled) carregarExercicio(b.dataset.ex);
+});
 
 /* ---------- Carregar um exercício ---------- */
 function montarEventos(ex){
@@ -201,12 +215,13 @@ function carregarExercicio(id){
   acad.todos = montarEventos(ex);
   const p = progEx(ex.id);
   $('#acVel').value = p.vel || (ex.nivel>=3 && ex.nivel<=5 ? 60 : 70); $('#acVelVal').textContent = $('#acVel').value+'%';
-  $('#acAuto').checked = !ex.foleManual && ex.nivel<4;
+  $('#acAuto').checked = ex.minha || (!ex.foleManual && ex.nivel<4); // nas partituras importadas o fole começa automático
   $('#acNomes').checked = ex.nomes!==false;
   $('#acDe').value = 1; $('#acAte').value = acad.todos.length; $('#acDe').max = $('#acAte').max = acad.todos.length;
   $('#acTrecho').style.display = ex.semTempo ? 'none' : '';
   $('#acExTitulo').textContent = ex.titulo; $('#acExDesc').textContent = ex.desc;
   $('#acRelatorio').innerHTML = ''; acadFeed('');
+  if(typeof acadTranscricao==='function') acadTranscricao(); // js/partituras.js (carregado depois)
   aplicarTrecho(); renderAcadNiveis(); renderAcadLista(); refreshAll(); acadValidacaoTexto();
 }
 // Usa só as notas do trecho escolhido (da nota "de" até "até"), com o tempo recomeçando do zero
@@ -605,6 +620,7 @@ function acadMostrar(){
     if(autoKeySize(maxX, 1, acadLarguraTeclado()) !== k.size) k.build(); });
   if(acad.ex) acadDica(acad.rodando ? acad.g : -1);
   $('#acMic').checked = mic.on; acadValidacaoTexto();
+  if(typeof acListaMelodias==='function') acListaMelodias(); // melodias salvas depois em Melodias
 }
 function acadAoMudarMapa(){ if(acad.ex) carregarExercicio(acad.ex.id); }
 // Tela Início: "Continue de onde parou" com o exercício atual da Academia (só depois da 1ª tentativa)
