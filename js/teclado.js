@@ -11,7 +11,9 @@
 let kbSeq=0;
 // Tamanho do botão conforme a largura da tela. perRow = quantos teclados lado a lado (1 ou 2)
 function autoKeySize(maxX, perRow, largura){
-  const W = largura || Math.min(1150, document.documentElement.clientWidth) - 48;
+  // largura da área de conteúdo (no computador o menu lateral ocupa parte da tela)
+  const main = document.querySelector('main'), area = main && main.clientWidth ? main.clientWidth : document.documentElement.clientWidth;
+  const W = largura || Math.min(1150, area) - 48;
   const per = perRow===1 ? 1 : (W>=860 ? 2 : 1);
   return Math.max(30, Math.min(48, Math.floor((W/per - (per===2?130:16)) / (maxX+1))));
 }

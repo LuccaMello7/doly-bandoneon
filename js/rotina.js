@@ -16,11 +16,11 @@ function openDailyScale(){
 }
 
 const ROUTINE = [
-  {k:'fole',       icon:'🌬️', t:'Aquecimento de fole', d:'1 minuto de notas longas no Teclado, abrindo e fechando com volume estável.', go:()=>go('teclado')},
-  {k:'escala',     icon:'🎼', t:'Escala do dia',        d:'', go:openDailyScale},
-  {k:'desafio',    icon:'🎯', t:'Encontre a nota',      d:'Uma rodada de 10 no sorteio inteligente (ou a leitura na pauta).', go:()=>go('desafios')},
-  {k:'repertorio', icon:'🎵', t:'Melodia ou acordes',   d:'Termine uma melodia no modo Espera ou No tempo, ou um treino de acordes.', go:()=>go('melodias')},
-  {k:'ritmo',      icon:'🥁', t:'Ritmo',                d:'Toque junto até registrar a precisão (12 batidas).', go:()=>go('ritmo')},
+  {k:'fole',       icon:'bellows', t:'Aquecimento de fole', d:'1 minuto de notas longas no Teclado, abrindo e fechando com volume estável.', go:()=>go('teclado')},
+  {k:'escala',     icon:'music',   t:'Escala do dia',        d:'', go:openDailyScale},
+  {k:'desafio',    icon:'target',  t:'Encontre a nota',      d:'Uma rodada de 10 no sorteio inteligente (ou a leitura na pauta).', go:()=>go('desafios')},
+  {k:'repertorio', icon:'note',    t:'Melodia ou acordes',   d:'Termine uma melodia no modo Espera ou No tempo, ou um treino de acordes.', go:()=>go('melodias')},
+  {k:'ritmo',      icon:'metro',   t:'Ritmo',                d:'Toque junto até registrar a precisão (12 batidas).', go:()=>go('ritmo')},
 ];
 const KIND_TO_ROUTINE = {melodia:'repertorio', acordes:'repertorio'};
 
@@ -39,14 +39,15 @@ function renderRoutine(){
   const done = state.progress.days[dayKey()] || {}, {pc,type} = dailyScale();
   ROUTINE[1].d = `Hoje: ${tonicLabel(type,pc)} ${SCALE_TYPES[type].name.toLowerCase()}, no modo Espera.`;
   const feitos = ROUTINE.filter(r=>done[r.k]).length, s = streak();
-  $('#streak').innerHTML = s ? `🔥 <b>${s}</b> dia${s>1?'s':''} seguido${s>1?'s':''}` : '<span class="muted">Pratique hoje para começar uma sequência</span>';
+  $('#streak').classList.toggle('vazio', !s);
+  $('#streak').innerHTML = s ? `<svg aria-hidden="true"><use href="#i-flame"/></svg> <b>${s}</b> dia${s>1?'s':''} seguido${s>1?'s':''}` : '<span class="muted">Pratique hoje para começar uma sequência</span>';
   $('#week').innerHTML = Array.from({length:7},(_,k)=>{
     const d=new Date(); d.setDate(d.getDate()-(6-k));
     const on = !!state.progress.days[dayKey(d)];
     return `<span class="day ${on?'on':''} ${k===6?'today':''}" title="${d.toLocaleDateString(IDIOMAS[state.lang].html)}">${d.toLocaleDateString(IDIOMAS[state.lang].html,{weekday:'narrow'}).toUpperCase()}</span>`;
   }).join('') + `<span class="muted" style="margin-left:8px">${feitos}/${ROUTINE.length} hoje</span>`;
   $('#routine').innerHTML = ROUTINE.map((r,i)=>`<div class="ritem ${done[r.k]?'done':''}">
-      <span class="rcheck">${done[r.k]?'✓':r.icon}</span>
+      <span class="rcheck ic-${r.k}"><svg aria-hidden="true"><use href="#i-${done[r.k]?'check':r.icon}"/></svg></span>
       <div class="rtext"><b>${r.t}</b><div class="muted">${r.d}</div></div>
       <button class="btn sec" data-r="${i}">${done[r.k]?'De novo':'Ir'}</button></div>`).join('');
 }

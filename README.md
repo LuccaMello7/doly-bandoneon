@@ -269,6 +269,7 @@ O script abre o app no Edge ou Chrome em modo invisível e roda `tests/testes.js
 
 ## Créditos
 
+- **Fonte:** *Nunito*, de Vernon Adams e Jacques Le Bailly (SIL Open Font License), guardada em `fontes/` para funcionar sem internet.
 - **Fotos e documentos de Doly Costa:** acervo particular.
 - **Som:** SoundFont *Bandoneon V2.5*, de **Jörg Bleymehl** (2016), gravado num bandoneon ELA de 1930, com edição GM de Mike77154. O autor permite o uso livre, inclusive em projetos de software. As gravações estão afinadas em Lá ≈ 443 Hz.
 - **Mapa de botões (Rheinische 142):** transcrito dos diagramas de **Omar Caccia** (mão direita abrindo, mão esquerda fechando) e **Matías Gobbo** (mão direita fechando, mão esquerda abrindo). Se o seu instrumento tiver alguma diferença, ajuste em *Teclado → Mapa de botões → Editar layout*.

@@ -607,6 +607,15 @@ function acadMostrar(){
   $('#acMic').checked = mic.on; acadValidacaoTexto();
 }
 function acadAoMudarMapa(){ if(acad.ex) carregarExercicio(acad.ex.id); }
+// Tela Início: "Continue de onde parou" com o exercício atual da Academia (só depois da 1ª tentativa)
+function renderContinuar(){
+  const el = $('#continuar'); if(!el || typeof acad==='undefined' || !acad.ex) return;
+  const usou = Object.keys(state.progress.academia||{}).length > 0;
+  el.hidden = !usou; if(!usou) return;
+  el.innerHTML = `<div><p class="kicker">${t('Continue de onde parou')}</p><b>${t('Academia · Nível {}: {}', acad.ex.nivel, t(acad.ex.titulo))}</b>`
+    + `<div class="muted">${acad.ex.desc}</div></div>`
+    + `<button type="button" class="btn" data-go="academia"><svg aria-hidden="true"><use href="#i-play"/></svg>${t('Continuar')}</button>`;
+}
 
 // Estado inicial
 maos.montar($('#acMaos'));
@@ -615,5 +624,5 @@ if(store.get('acAmpliar', false)){ $('#acAmpliar').checked = true; $('#acInstrut
 acadSetDir('open');
 renderAcadNiveis();
 carregarExercicio(exercicioPorId(store.get('acadEx', '')) ? store.get('acadEx') : 'n1-direita');
-acad.nivel = acad.ex.nivel; renderAcadNiveis(); renderAcadLista();
+acad.nivel = acad.ex.nivel; renderAcadNiveis(); renderAcadLista(); renderContinuar();
 $(`#acModo [data-modo="${store.get('acadModo','aprender')}"]`).click();
