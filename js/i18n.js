@@ -105,7 +105,7 @@ function setLang(l){
 }
 function aplicarIdioma(){
   document.documentElement.lang = IDIOMAS[state.lang].html;
-  document.title = t('BanDoly - Aprenda Bandoneon');
+  document.title = t('BanDoly: aprenda a tocar bandoneon online e grátis');
   montarBandeiras();
   traduzArvore(document.body);
 }
