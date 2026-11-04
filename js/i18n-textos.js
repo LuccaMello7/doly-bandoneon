@@ -564,5 +564,8 @@ const TEXTOS = {
 'LP "Os Posteiros".': ['LP "Os Posteiros".', 'LP "Os Posteiros".'],
 'LP Os Posteiros, com a capa e o disco de vinil': ['LP Os Posteiros, con la tapa y el disco de vinilo', 'Os Posteiros LP, with its cover and vinyl record'],
 'Começar a aprender': ['Empezar a aprender', 'Start learning'],
-'Voltar ao início': ['Volver al inicio', 'Back to home'],
+// cabeçalho e busca da página doly-costa/
+'Doly Costa: o bandoneonista que inspirou o BanDoly': ['Doly Costa: el bandoneonista que inspiró BanDoly', 'Doly Costa: the bandoneon player who inspired BanDoly'],
+'A história de Doly Carlos da Costa, bandoneonista de Caçapava do Sul: orquestras de tango nas rádios de Porto Alegre, o grupo Os Posteiros e a Medalha Simões Lopes Neto.': ['La historia de Doly Carlos da Costa, bandoneonista de Caçapava do Sul: orquestas de tango en las radios de Porto Alegre, el grupo Os Posteiros y la Medalla Simões Lopes Neto.', 'The story of Doly Carlos da Costa, a bandoneon player from Caçapava do Sul, Brazil: tango orchestras on Porto Alegre radio, the group Os Posteiros and the Simões Lopes Neto Medal.'],
+'Abrir o app': ['Abrir la app', 'Open the app'],
 };

@@ -286,7 +286,7 @@ function textosEmPortugues(){
   return [...achados];
 }
 async function percorrerApp(){
-  for(const v of ['inicio','teclado','desafios','melodias','acordes','ritmo','ajustes','doly']){ go(v); await esperar(); }
+  for(const v of ['inicio','teclado','desafios','melodias','acordes','ritmo','ajustes']){ go(v); await esperar(); }
   for(let i=0;i<LESSONS.length;i++){ curLesson=i; renderLesson(); await esperar(); }
   go('desafios'); $('#fStart').click(); await esperar(); $('#sStart').click(); await esperar();
   go('melodias'); $('#scaleOpen').click(); $('#scGo').click(); $('#melMode').value='wait'; $('#melStart').click(); await esperar();
@@ -314,10 +314,8 @@ teste('t() traduz modelos com valores', () => {
   state.lang='en'; igual(t('Esse é {}.', 'E4'), 'That is E4.'); state.lang=l;
 });
 
-teste('página Quem foi Doly Costa? abre pelo link da tela Início', async () => {
-  go('inicio'); $('.doly-link').click(); await esperar();
-  igual($('#v-doly').classList.contains('active'), true);
-  igual($$('#v-doly .timeline li').length, 7); go('inicio');
+teste('tela Início leva à página própria de Doly Costa', () => {
+  igual($('.doly-link').getAttribute('href').startsWith('doly-costa/'), true); // index.html no fim quando aberto do computador
 });
 
 /* ---------- Execução ---------- */

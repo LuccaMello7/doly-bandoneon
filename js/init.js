@@ -7,6 +7,8 @@ renderProgress();
 // Idioma: traduz a página e passa a traduzir tudo o que o código escrever depois
 aplicarIdioma();
 sugerirIdioma();
+// Links para outras páginas do site (ex.: doly-costa/): aberto do computador, sem servidor, a pasta precisa do index.html
+if(location.protocol==='file:') $$('a[data-local][href$="/"]').forEach(a=>a.setAttribute('href', a.getAttribute('href')+'index.html'));
 observador.observe(document.body, {subtree:true, childList:true, characterData:true, attributes:true, attributeFilter:ATTRS});
 
 // PWA: funciona offline e pode ser instalado (só quando servido por http/https, ex.: GitHub Pages)

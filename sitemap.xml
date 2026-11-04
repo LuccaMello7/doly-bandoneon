@@ -24,4 +24,28 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/"/>
   </url>
+  <url>
+    <loc>https://bandoly.app/doly-costa/</loc>
+    <lastmod>2026-11-04</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/doly-costa/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/doly-costa/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/doly-costa/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/doly-costa/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/doly-costa/</loc>
+    <lastmod>2026-11-04</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/doly-costa/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/doly-costa/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/doly-costa/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/doly-costa/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/doly-costa/</loc>
+    <lastmod>2026-11-04</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/doly-costa/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/doly-costa/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/doly-costa/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/doly-costa/"/>
+  </url>
 </urlset>

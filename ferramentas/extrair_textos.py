@@ -3,7 +3,7 @@
 Uso:  python ferramentas/extrair_textos.py          (mostra os textos sem tradução)
       python ferramentas/extrair_textos.py --todos  (mostra todos os textos encontrados)
 
-Percorre o index.html (textos e atributos title/aria-label/alt/placeholder) e os
+Percorre o index.html e o doly-costa/index.html (textos e atributos title/aria-label/alt/placeholder) e os
 arquivos js/*.js (textos entre aspas e templates). Em templates, cada ${...} vira {}
 e as tags HTML separam os pedaços, do mesmo jeito que o navegador mostra o texto.
 As lições têm tradução própria (js/licoes-traducao.js) e ficam de fora.
@@ -28,7 +28,7 @@ NAO_E_TEXTO = [re.compile(p) for p in (
     r'^\{\} cents$', r'^\{\} \{\}\{\} oitava\(s\)$',
 )]
 # Iguais em todos os idiomas: nomes próprios, símbolos e exemplos de notas do formato de texto
-IGUAIS = {'Ban', 'Doly', 'Idioma / Language', 'Rheinische 142', 'Bandoneon V2.5', 'm7', 'm6', '442 Hz',
+IGUAIS = {'Ban', 'Doly', 'Idioma / Language', 'Português', 'Español', 'English', 'Rheinische 142', 'Bandoneon V2.5', 'm7', 'm6', '442 Hz',
           'bpm: 80', 'metronome per-minute'}
 NAO_E_TEXTO.append(re.compile(r'^[A-Za-zÀ-ÿ]{1,3}[#♯♭b]?\d'))  # Sol4, Bb5, Dó4:4, Mi4:8t…
 # Formas "cruas" de frases que o dicionário cobre com outra chave (montadas em partes no código)
@@ -101,8 +101,9 @@ def textos_js(src):
 
 def coletar():
     vistos = {}
-    for t in textos_html((RAIZ / 'index.html').read_text(encoding='utf-8')):
-        vistos.setdefault(t, 'index.html')
+    for pag in ('index.html', 'doly-costa/index.html'):
+        for t in textos_html((RAIZ / pag).read_text(encoding='utf-8')):
+            vistos.setdefault(t, pag)
     for f in sorted((RAIZ / 'js').glob('*.js')):
         if f.name in IGNORAR_JS: continue
         src = f.read_text(encoding='utf-8')

@@ -101,7 +101,10 @@ button,select,a,input{touch-action:manipulation}
 .doly-link b{color:var(--gold2);font-size:1.1rem}
 .doly-hero{display:grid;grid-template-columns:minmax(160px,260px) 1fr;gap:22px;align-items:start}
 .doly-hero img{width:100%;height:auto;border-radius:8px;box-shadow:0 4px 18px #0006}
-.doly-hero h2{margin:2px 0 6px;color:var(--gold2)}
+.doly-hero h1{margin:2px 0 6px;color:var(--gold2);font-size:1.6rem}
+header nav a.btn,.pagina a.btn{text-decoration:none}
+.rodape{text-align:center;padding:10px 20px 30px;font-size:.9rem}
+.rodape a{color:var(--muted)}
 .doly-kicker{text-transform:uppercase;letter-spacing:.12em;font-size:.8rem;margin:0}
 .doly-sub{font-style:italic;color:var(--cream)}
 .timeline{list-style:none;margin:0;padding:0 0 0 22px;border-left:2px solid var(--gold)}
@@ -169,9 +172,9 @@ figcaption{color:var(--muted);font-size:.85rem;margin-top:6px}
 .ritem .rtext{flex:1;min-width:0}
 .ritem.done{opacity:.7} .ritem.done .rcheck{color:var(--green);font-weight:700}
 .langs{display:flex;gap:6px;margin-left:auto}
-.langs button{background:none;border:2px solid transparent;border-radius:6px;padding:2px;cursor:pointer;opacity:.6}
-.langs button.on{border-color:var(--gold);opacity:1}
-.langs button:hover{opacity:1}
+.langs button,.langs a{background:none;border:2px solid transparent;border-radius:6px;padding:2px;cursor:pointer;opacity:.6}
+.langs button.on,.langs a.on{border-color:var(--gold);opacity:1}
+.langs button:hover,.langs a:hover{opacity:1}
 .langs img{display:block;width:30px;height:20px;object-fit:cover;border-radius:2px}
 kbd{background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:.85em}
 
