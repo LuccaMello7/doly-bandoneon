@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<!-- Gerado por ferramentas/gerar_idiomas.py a partir do index.html. Não edite à mão: mude o index.html ou o dicionário e rode o script. -->
+<html lang="es" data-idioma="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BanDoly: aprende a tocar el bandoneón online y gratis</title>
+<meta name="description" content="Aprende bandoneón gratis en el navegador: teclado con sonido real, lecciones, escalas, acordes y ritmos de tango. Funciona en el celular, sin registro.">
+<link rel="canonical" href="https://bandoly.app/es/">
+<!-- o mesmo conteúdo em cada idioma (es/ e en/ são gerados por ferramentas/gerar_idiomas.py) -->
+<link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/">
+<link rel="alternate" hreflang="es" href="https://bandoly.app/es/">
+<link rel="alternate" hreflang="en" href="https://bandoly.app/en/">
+<link rel="alternate" hreflang="x-default" href="https://bandoly.app/">
+<meta name="theme-color" content="#0e2847">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<!-- prévia do link no WhatsApp, Instagram, Facebook e X -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="BanDoly">
+<meta property="og:url" content="https://bandoly.app/es/">
+<meta property="og:title" content="BanDoly: aprende a tocar el bandoneón online y gratis">
+<meta property="og:description" content="Teclado con sonido real de bandoneón, lecciones, escalas, acordes y ritmos de tango. En el navegador o en el celular, sin registro.">
+<meta property="og:image" content="https://bandoly.app/icones/compartilhar-es.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Logo de BanDoly: un bandoneonista dibujado en dorado sobre azul marino">
+<meta property="og:locale" content="es_ES">
+<meta property="og:locale:alternate" content="pt_BR">
+<meta property="og:locale:alternate" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<!-- dados estruturados: dizem ao Google que é um app educativo gratuito -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "BanDoly",
+  "alternateName": "BanDoly - Aprenda Bandoneon",
+  "url": "https://bandoly.app/",
+  "description": "App gratuito para aprender bandoneon: teclado bisonoro Rheinische 142 com som real, lições, escalas guiadas, melodias, acordes e ritmos de tango.",
+  "image": "https://bandoly.app/icones/icone-512.png",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Web, Android, iOS, Windows, macOS",
+  "inLanguage": ["pt-BR", "es", "en"],
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "BRL" },
+  "about": { "@type": "Thing", "name": "Bandoneon", "sameAs": "https://pt.wikipedia.org/wiki/Bandoneon" },
+  "educationalUse": "Aprender a tocar bandoneon",
+  "author": { "@type": "Person", "name": "Lucca Mello" }
+}
+</script>
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="icon" href="../favicon.ico" sizes="48x48">
+<link rel="icon" href="../icones/icone-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="../icones/icone-192.png">
+<link rel="stylesheet" href="../css/app.css">
+</head>
+<body>
+<header>
+  <a class="brand" href="#" data-go="inicio" aria-label="BanDoly - Aprende Bandoneón (inicio)">
+    <img src="../icones/logo-cabecalho.png" alt="" width="44" height="44">
+    <span class="brand-text"><span class="brand-name" translate="no">Ban<b>Doly</b></span><span class="brand-sub">Aprende Bandoneón</span></span>
+  </a>
+  <nav id="nav" aria-label="Secciones de la app">
+    <button data-v="inicio" class="active">Inicio</button>
+    <button data-v="licoes">Lecciones</button>
+    <button data-v="teclado">Teclado</button>
+    <button data-v="desafios">Desafíos</button>
+    <button data-v="melodias">Melodías</button>
+    <button data-v="acordes">Acordes</button>
+    <button data-v="ritmo">Ritmo</button>
+    <button data-v="ajustes" aria-label="Ajustes">⚙ Ajustes</button>
+  </nav>
+  <div id="langs" class="langs" role="group" aria-label="Idioma / Language"></div>
+</header>
+
+<main>
+<!-- INÍCIO -->
+<section id="v-inicio" class="active">
+  <div class="card">
+    <img class="hero-logo" src="../icones/icone-512.png" alt="Logo de BanDoly: un bandoneonista dibujado en dorado sobre azul marino" width="132" height="132">
+    <h1 class="hero-title">Aprende a tocar el bandoneón con BanDoly</h1>
+    <p>Aquí aprendes los fundamentos del bandoneón: cómo funciona el instrumento, el sistema <b>bisonoro</b> (cada botón da una nota abriendo y otra cerrando), la lectura en las dos claves y los ritmos esenciales del tango.</p>
+    <div class="row hero-cta">
+      <button type="button" class="btn" data-go="licoes">Empezar por la primera lección</button>
+      <button type="button" class="btn sec" data-go="teclado">Tocar el teclado ahora</button>
+    </div>
+    <p class="muted">Consejo: usa auriculares. La app funciona sin conexión y tu progreso queda guardado en este navegador. En <a href="#" data-go="ajustes">Ajustes</a> eliges el sonido, la afinación y haces copias de seguridad.</p>
+  </div>
+  <div class="card" id="routineCard">
+    <div class="row" style="justify-content:space-between">
+      <h2 style="margin:0">Rutina de hoy</h2>
+      <div id="streak" class="streak"></div>
+    </div>
+    <div id="week" class="week"></div>
+    <div id="routine" class="routine"></div>
+  </div>
+  <div class="grid">
+    <div class="card"><div class="muted">Lecciones completadas</div><div class="stat" id="pLessons">0/0</div><div class="bar"><div id="pLessonsBar" style="width:0"></div></div></div>
+    <div class="card"><div class="muted">Récord: Encuentra la nota</div><div class="stat" id="pFind">–</div></div>
+    <div class="card"><div class="muted">Récord: Lectura en el pentagrama</div><div class="stat" id="pStaff">–</div></div>
+    <div class="card"><div class="muted">Mejor precisión rítmica</div><div class="stat" id="pRhythm">–</div></div>
+    <div class="card"><div class="muted">Melodías completadas</div><div class="stat" id="pMel">–</div></div>
+    <div class="card"><div class="muted">Récord: Acordes</div><div class="stat" id="pChords">–</div></div>
+  </div>
+  <div class="card">
+    <h3>Por dónde empezar</h3>
+    <ol>
+      <li>Haz las <a href="#" data-go="licoes">Lecciones</a> en orden.</li>
+      <li>Explora el <a href="#" data-go="teclado">Teclado</a>: toca, cambia la dirección del fuelle con <kbd>Espacio</kbd> y mira cómo cambian las notas.</li>
+      <li>Practica en los <a href="#" data-go="desafios">Desafíos</a> hasta memorizar los botones.</li>
+      <li>Practica las <b>Escalas guiadas</b> (en la pestaña <a href="#" data-go="melodias">Melodías</a>): la app explica cada paso, cada cambio de fuelle y dónde está el próximo botón.</li>
+      <li>Toca <a href="#" data-go="melodias">Melodías</a>: primero escucha, después toca en el modo Espera y por último A tempo.</li>
+      <li>Practica el <a href="#" data-go="ritmo">Ritmo</a>: marcato, síncopa y 3-3-2.</li>
+    </ol>
+    <div class="notice"><b>Sobre el mapa de botones:</b> existen varios sistemas de bandoneón (Rheinische 142 voces, 144, Einheitsbandoneon, cromático/Péguri…) e incluso instrumentos del mismo sistema pueden tener diferencias. La app usa el mapa del <b>Rheinische 142</b>, el estándar del tango: 71 botones (38 en la mano derecha y 33 en la izquierda), con las notas transcritas de los diagramas de Omar Caccia y Matías Gobbo. Si tu instrumento tiene alguna diferencia, ajusta los botones en <b>Teclado → Editar mapa</b>.</div>
+    <p class="muted" style="font-size:.85rem;margin-bottom:0">Sonido: SoundFont <i>Bandoneon V2.5</i>, de Jörg Bleymehl (grabado en un bandoneón ELA de 1930; edición GM de Mike77154), de uso libre. Puedes cambiar al sonido sintetizado en <a href="#" data-go="ajustes">Ajustes</a>.</p>
+  </div>
+  <div class="card">
+    <h2>Qué encuentras en BanDoly</h2>
+    <div class="grid feats">
+      <div class="feat"><h3>Teclado con sonido real</h3><p>Los 71 botones del bandoneón Rheinische 142 en sus posiciones reales, con el sonido grabado de un bandoneón de 1930. Cada botón toca una nota al abrir el fuelle y otra al cerrarlo.</p><a href="#" data-go="teclado">Abrir el teclado →</a></div>
+      <div class="feat"><h3>11 lecciones con cuestionario</h3><p>Historia del instrumento, sistema bisonoro, fuelle y articulación, lectura en las dos claves, ritmos de tango, acordes y cómo leer una partitura de tango.</p><a href="#" data-go="licoes">Ver las lecciones →</a></div>
+      <div class="feat"><h3>Desafíos para memorizar los botones</h3><p>La app te pide una nota y tú encuentras el botón. El sorteo repite más los botones que fallas, y el mapa de errores muestra dónde practicar.</p><a href="#" data-go="desafios">Hacer un desafío →</a></div>
+      <div class="feat"><h3>Escalas y melodías guiadas</h3><p>Escalas en todas las tonalidades y melodías con una o dos manos, con partitura, la dirección del fuelle sugerida y un modo que espera a que aciertes.</p><a href="#" data-go="melodias">Tocar una melodía →</a></div>
+      <div class="feat"><h3>Acordes en el bandoneón</h3><p>Dónde están los botones de 72 acordes (mayores, menores, con séptima y disminuidos) en todas las tónicas, abriendo y cerrando, en las dos manos.</p><a href="#" data-go="acordes">Ver los acordes →</a></div>
+      <div class="feat"><h3>Ritmos del tango</h3><p>Marcato, síncopa, 3-3-2 y arrastre, con metrónomo y un modo que mide si vas adelantado o atrasado.</p><a href="#" data-go="ritmo">Practicar el ritmo →</a></div>
+    </div>
+    <p class="muted" style="margin-bottom:0">Funciona en el navegador de la computadora y del celular, en portugués, español e inglés. Es gratis, no necesita registro y se puede instalar como app para usarla sin internet.</p>
+  </div>
+  <div class="card faq">
+    <h2>Preguntas frecuentes</h2>
+    <details><summary>¿Qué es el bandoneón?</summary><p>Es el instrumento de fuelle y botones que le da voz al tango. Fue creado en Alemania en el siglo XIX y se convirtió en el símbolo del tango de Buenos Aires y Montevideo. Es bisonoro: cada botón toca una nota al abrir el fuelle y otra al cerrarlo.</p></details>
+    <details><summary>¿Necesito tener un bandoneón para usar BanDoly?</summary><p>No. Puedes aprender el mapa de los botones, la lectura y los ritmos solo con el teclado virtual, en la computadora o en el celular. Si tienes un bandoneón, la app también te escucha tocar por el micrófono y comprueba las notas.</p></details>
+    <details><summary>¿BanDoly es gratis?</summary><p>Sí. BanDoly es gratis y no necesita registro. Tu progreso se guarda en el propio navegador, y puedes exportar una copia de seguridad en Ajustes.</p></details>
+    <details><summary>¿Qué sistema de bandoneón usa la app?</summary><p>El Rheinische 142, el estándar del tango: 71 botones, 38 en la mano derecha y 33 en la izquierda, cada uno con una nota abriendo y otra cerrando. Si tu instrumento es diferente, puedes ajustar los botones en el Teclado.</p></details>
+    <details><summary>¿Funciona en el celular y sin internet?</summary><p>Sí. El teclado se adapta a la pantalla del celular y acepta varios dedos a la vez para tocar acordes. Si instalas la app con el botón de Ajustes, funciona incluso sin internet.</p></details>
+    <details><summary>¿Por dónde empiezo?</summary><p>Empieza por las lecciones 1 a 4, luego toca libremente en el Teclado y haz la escala de Do mayor en el modo Espera. La Rutina de hoy, arriba en esta página, sugiere cinco tareas cortas para practicar cada día.</p></details>
+  </div>
+</section>
+
+<!-- LIÇÕES -->
+<section id="v-licoes">
+  <div class="lesson-layout">
+    <div class="card lesson-list" id="lessonList"></div>
+    <div class="card" id="lessonBody"></div>
+  </div>
+</section>
+
+<!-- TECLADO -->
+<section id="v-teclado">
+  <div class="card">
+    <div class="row" style="justify-content:space-between">
+      <div class="row">
+        <button class="btn" id="dirBtn">Cambiar dirección (Espacio)</button>
+        <button class="btn sec" id="valveOpenBtn" title="Mantén para abrir el fuelle sin sonido">Válvula: abrir (mantén A)</button>
+        <button class="btn sec" id="valveCloseBtn" title="Mantén para cerrar el fuelle sin sonido">Válvula: cerrar (mantén F)</button>
+        <button class="btn sec on" id="labelsBtn">Mostrar nombres</button>
+      </div>
+      <details class="mapmenu">
+        <summary class="btn sec">Mapa de botones ▾</summary>
+        <div class="row">
+          <button class="btn sec" id="editBtn">Editar mapa</button>
+          <button class="btn sec" id="exportBtn">Exportar</button>
+          <button class="btn sec" id="importBtn">Importar</button>
+          <button class="btn sec" id="resetBtn">Restaurar original</button>
+        </div>
+      </details>
+    </div>
+    <div class="instrument">
+      <div class="side"><div class="label">Mano izquierda (graves)</div><div id="kbLeft"></div></div>
+      <div class="bellows-wrap">
+        <div id="dirPill" class="dirpill open">⟵ ABRIENDO ⟶</div>
+        <div class="bellows" id="bellows"></div>
+        <div class="warn" id="bellowsWarn"></div>
+      </div>
+      <div class="side"><div class="label">Mano derecha (agudos)</div><div id="kbRight"></div></div>
+    </div>
+    <div class="info" id="keyInfo">Toca un botón (clic o toque en la pantalla). En el celular o la tablet puedes tocar acordes con varios dedos.</div>
+    <div class="muted" id="editHelp" style="display:none">Modo edición: haz clic en un botón e indica las notas abriendo y cerrando (ej.: <code>Sol4</code>, <code>F#3</code>, <code>Bb5</code> o número MIDI).</div>
+  </div>
+</section>
+
+<!-- DESAFIOS -->
+<section id="v-desafios">
+  <div class="card">
+    <div class="row">
+      <button class="btn sec on" data-ch="find">Encuentra la nota</button>
+      <button class="btn sec" data-ch="staff">Lectura en el pentagrama</button>
+    </div>
+  </div>
+
+  <div class="card" id="chFind">
+    <h2>Encuentra la nota</h2>
+    <p class="muted">La app muestra una nota y la dirección del fuelle. Encuentra el botón correcto. Diez rondas; después de dos errores aparece una pista.</p>
+    <div class="row">
+      <label>Mano: <select id="fHand"><option value="right">Derecha</option><option value="left">Izquierda</option><option value="both">Ambas</option></select></label>
+      <label>Dirección: <select id="fDir"><option value="open">Abriendo</option><option value="close">Cerrando</option><option value="rand">Aleatoria</option></select></label>
+      <button class="btn" id="fStart">Comenzar</button>
+      <label>Sorteo: <select id="fMode"><option value="smart">Inteligente (se enfoca en tus errores)</option><option value="rand">Aleatorio</option></select></label>
+      <button class="btn sec" id="fListen">🔊 Escuchar la nota</button>
+      <button class="btn sec" id="fHeat">🔥 Mapa de errores</button>
+    </div>
+    <p class="muted" id="fHeatInfo" style="display:none">Colores según tu tasa de error en la dirección elegida en "Dirección": verde = aciertas, rojo = te equivocas. Los botones sin color todavía no aparecieron en el desafío.</p>
+    <div style="text-align:center;margin-top:14px">
+      <div class="target" id="fTarget">–</div>
+      <div id="fDirPill" class="dirpill open" style="display:inline-block;visibility:hidden"></div>
+      <div class="feedback" id="fFeed"></div>
+      <div class="muted" id="fScore"></div>
+    </div>
+    <div class="instrument">
+      <div class="side"><div class="label">Izquierda</div><div id="fkLeft"></div></div>
+      <div class="side"><div class="label">Derecha</div><div id="fkRight"></div></div>
+    </div>
+  </div>
+
+  <div class="card" id="chStaff" style="display:none">
+    <h2>Lectura en el pentagrama</h2>
+    <p class="muted">En el bandoneón, la mano derecha suele leer en <b>clave de sol</b> y la izquierda en <b>clave de fa</b>. Di el nombre de la nota.</p>
+    <div class="row">
+      <label>Clave: <select id="sClef"><option value="treble">Sol (mano derecha)</option><option value="bass">Fa (mano izquierda)</option><option value="mix">Mezcladas</option></select></label>
+      <button class="btn" id="sStart">Comenzar</button>
+    </div>
+    <div class="staff" style="text-align:center;margin-top:14px"><svg id="staffSvg" width="320" height="150" viewBox="0 0 320 150"></svg></div>
+    <div class="answers" id="sAnswers" style="text-align:center"></div>
+    <div style="text-align:center"><div class="feedback" id="sFeed"></div><div class="muted" id="sScore"></div></div>
+  </div>
+</section>
+
+<!-- MELODIAS -->
+<section id="v-melodias">
+  <div class="card melbar">
+    <div class="row">
+      <label class="grow">Melodía <select id="melSelect" aria-label="Elegir melodía"></select></label>
+      <button class="btn" id="scaleOpen">🎼 Escalas guiadas</button>
+      <button class="btn sec" id="melNew">+ Nueva</button>
+      <button class="btn sec" id="melImportBtn">⇪ Importar MusicXML</button>
+    </div>
+  </div>
+  <div>
+    <div>
+      <div class="card" id="scaleCard" style="display:none">
+        <h2 style="margin-top:0">Escalas guiadas</h2>
+        <div class="row">
+          <label>Tipo: <select id="scType"></select></label>
+          <label>Tónica: <select id="scTonic"></select></label>
+          <label>Mano: <select id="scHand"><option value="right">Derecha</option><option value="left">Izquierda</option></select></label>
+          <label>Octavas: <select id="scOct"><option value="1">1</option><option value="2">2</option></select></label>
+          <label>Empezar en: <select id="scStart"></select></label>
+          <label>Sentido: <select id="scDir"><option value="updown">Sube y baja</option><option value="up">Solo sube</option></select></label>
+          <button class="btn" id="scGo">Generar escala</button>
+          <button class="btn sec" id="scClose">Cerrar</button>
+        </div>
+        <div class="feedback bad" id="scErr"></div>
+        <details><summary class="muted">Tu progreso en las escalas (haz clic en una celda para abrirla)</summary><div id="scGrid"></div></details>
+      </div>
+      <div class="card" id="melPlayer">
+        <h2 id="melTitle" style="margin-bottom:4px"></h2>
+        <p class="muted" id="melDesc" style="margin-top:0"></p>
+        <div class="row">
+          <label>Modo: <select id="melMode"><option value="listen">Escuchar</option><option value="wait">Espera</option><option value="timed">A tempo</option></select></label>
+          <label>Velocidad: <input type="range" id="melSpeed" min="40" max="120" step="10" value="70"> <span id="melSpeedVal">70%</span></label>
+          <label title="La app cambia sola la dirección del fuelle. Ideal para empezar."><input type="checkbox" id="melAuto"> Fuelle automático</label>
+          <label title="Toca tu bandoneón: la app escucha por el micrófono y revisa las notas (modos Espera y A tempo)"><input type="checkbox" id="micToggle"> 🎤 Usar micrófono</label>
+          <label><input type="checkbox" id="melStaffOn"> 𝄞 Partitura</label>
+          <button class="btn" id="melStart">▶ Comenzar</button>
+          <button class="btn sec" id="melEdit">Editar</button>
+        </div>
+        <div class="notice" id="melWarn" style="display:none;margin-top:10px"></div>
+        <div class="guide" id="melGuide" style="display:none"><details id="guideIntroBox" open><summary>Sobre esta escala</summary><div id="guideIntro"></div></details><div class="gstep" id="guideStep"></div></div>
+        <div class="staffwrap" id="melStaff" aria-hidden="true"></div>
+        <div class="mstrip" id="melStrip"></div>
+        <div style="text-align:center">
+          <div id="melDirPill" class="dirpill open" style="display:inline-block">⟵ ABRIENDO ⟶</div>
+          <div id="micStatus" aria-live="polite"></div>
+          <div class="feedback" id="melFeed"></div>
+          <div class="muted" id="melStat"></div>
+        </div>
+        <div class="instrument">
+          <div class="side" id="mkLeftWrap"><div class="label">Mano izquierda</div><div id="mkLeft"></div></div>
+          <div class="side" id="mkRightWrap"><div class="label">Mano derecha</div><div id="mkRight"></div></div>
+        </div>
+        <p class="muted">El botón con borde dorado es el próximo a tocar. El color de cada nota muestra la dirección sugerida del fuelle: <span class="dirpill open" style="padding:1px 8px">abriendo</span> <span class="dirpill close" style="padding:1px 8px">cerrando</span>. Cambia la dirección con <kbd>Espacio</kbd> o marca "Fuelle automático".</p>
+      </div>
+      <div class="card" id="melImport" style="display:none">
+        <h3 style="margin-top:0">Importar MusicXML</h3>
+        <p class="muted" id="impInfo"></p>
+        <div class="row">
+          <label>Parte: <select id="impPart"></select></label>
+          <label>Pentagrama: <select id="impStaff"></select></label>
+          <label>Mano: <select id="impHand"><option value="right">Derecha</option><option value="left">Izquierda</option></select></label>
+          <label>Línea: <select id="impPick"><option value="high">Nota más aguda (melodía)</option><option value="low">Nota más grave (bajo)</option></select></label>
+          <label title="Mueve la melodía por octavas para que entre en el registro de la mano elegida"><input type="checkbox" id="impOct" checked> Ajustar octava a la mano</label>
+        </div>
+        <div class="row" style="margin-top:10px"><button class="btn" id="impGo">Generar melodía</button><button class="btn sec" id="impCancel">Cancelar</button></div>
+        <div class="feedback bad" id="impErr"></div>
+        <p class="muted" style="margin-bottom:0">En MuseScore: <i>Archivo → Exportar → MusicXML</i> (.mxl o .musicxml). Si hay acordes o varias voces, la app toma la nota más aguda (o la más grave) de cada momento. Las notas de adorno (apoyaturas) se ignoran.</p>
+      </div>
+      <div class="card" id="melEditor" style="display:none">
+        <h3 style="margin-top:0">Editor de melodía</h3>
+        <textarea id="melText" rows="11" spellcheck="false"></textarea>
+        <div class="row" style="margin-top:8px">
+          <button class="btn" id="melSave">Guardar y usar</button>
+          <button class="btn sec" id="melCancel">Cancelar</button>
+          <button class="btn sec" id="melDelete">Eliminar</button>
+        </div>
+        <div class="feedback bad" id="melErr"></div>
+        <details open><summary><b>Cómo escribir</b></summary>
+          <ul class="muted">
+            <li>Encabezado: <code>título:</code>, <code>mão: direita</code> o <code>mão: esquerda</code>, <code>bpm: 80</code> y, si quieres, <code>descrição:</code>.</li>
+            <li>Cada nota es <code>nome+oitava:duração</code>. Ejemplos: <code>Dó4:4</code>, <code>Fá#4:8</code>, <code>Sib3:2</code>, <code>G4:4</code>.</li>
+            <li>Duraciones: <code>1</code> redonda, <code>2</code> blanca, <code>4</code> negra, <code>8</code> corchea, <code>16</code> semicorchea. Puntillo: <code>Mi4:4.</code>. Sin duración, vale negra.</li>
+            <li>Tresillos: agrega <code>t</code>, por ejemplo <code>Mi4:8t</code> (corchea de tresillo). Ligadura: termina la nota con <code>~</code> para sumarla a la siguiente de la misma altura (<code>Sol4:2~ | Sol4:4</code>).</li>
+            <li>Dos manos: empieza una línea con <code>direita:</code> o <code>esquerda:</code>. Cada mano tiene su propio tiempo, y las líneas siguientes continúan en la misma mano. La app combina las dos con un solo fuelle.</li>
+            <li>Silencio: <code>p:4</code>. Las barras de compás <code>|</code> son opcionales y solo sirven para organizar.</li>
+            <li>Para forzar la dirección del fuelle, agrega <code>/a</code> (abriendo) o <code>/f</code> (cerrando): <code>Sol4:4/f</code>.</li>
+          </ul>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACORDES -->
+<section id="v-acordes">
+  <div class="card">
+    <h2>Acordes</h2>
+    <div id="chExplore">
+      <div class="row">
+        <label>Tónica: <select id="chRoot"></select></label>
+        <label>Tipo: <select id="chType"></select></label>
+        <label>Mano: <select id="chHand"><option value="left">Izquierda (acompañamiento)</option><option value="right">Derecha</option></select></label>
+        <label>Fuelle: <select id="chDir"><option value="open">Abriendo</option><option value="close">Cerrando</option></select></label>
+      </div>
+      <h3 id="chTitle" style="color:var(--gold);font-size:1.4rem;margin:14px 0 2px"></h3>
+      <p class="muted" id="chNotes" style="margin-top:0"></p>
+      <div class="row" id="chVoicings"></div>
+      <div class="row" style="margin-top:10px">
+        <button class="btn" id="chPlay">▶ Escuchar acorde</button>
+        <button class="btn sec" id="chArp">Arpegio</button>
+      </div>
+      <p class="muted">En el bandoneón cada acorde se aprende dos veces, abriendo y cerrando, con botones diferentes. Las opciones son las posiciones más compactas del mapa, con el bajo en la tónica primero. "Inversión" significa otra nota del acorde en el bajo.</p>
+      <div class="row" id="chTrainTypes">
+        <span class="muted">Entrenar:</span>
+        <label><input type="checkbox" value="maior" checked> Mayor</label>
+        <label><input type="checkbox" value="menor" checked> Menor</label>
+        <label><input type="checkbox" value="dom7" checked> 7</label>
+        <label><input type="checkbox" value="m7"> m7</label>
+        <label><input type="checkbox" value="m6"> m6</label>
+        <label><input type="checkbox" value="dim7"> °7</label>
+        <button class="btn" id="chTrain">🎯 Entrenar acordes</button>
+      </div>
+    </div>
+    <div id="chTrainBox" style="display:none;text-align:center">
+      <div class="target" id="chTarget"></div>
+      <div id="chTrainDir" class="dirpill open" style="display:inline-block"></div>
+      <p class="muted">Toca los botones del acorde (vuelve a tocar para desmarcar) y haz clic en Verificar. Puedes duplicar notas; la 5.ª es opcional en los acordes con séptima.</p>
+      <div class="row" style="justify-content:center"><button class="btn" id="chCheck">Verificar</button><button class="btn sec" id="chStop">Detener entrenamiento</button></div>
+      <div class="muted" id="chScore"></div>
+    </div>
+    <div class="feedback" id="chFeed" style="text-align:center" aria-live="polite"></div>
+    <div class="instrument">
+      <div class="side" id="ckLeftWrap"><div class="label">Mano izquierda</div><div id="ckLeft"></div></div>
+      <div class="side" id="ckRightWrap" style="display:none"><div class="label">Mano derecha</div><div id="ckRight"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- RITMO -->
+<section id="v-ritmo">
+  <div class="card">
+    <h2>Ritmos del tango</h2>
+    <div class="row">
+      <label>Patrón: <select id="rPattern"></select></label>
+      <label>BPM: <input type="range" id="rBpm" min="50" max="140" value="70"> <span id="rBpmVal">70</span></label>
+      <label><input type="checkbox" id="rClick" checked> Metrónomo</label>
+      <button class="btn" id="rPlay">▶ Tocar</button>
+    </div>
+    <p id="rDesc" class="muted"></p>
+    <div class="steps" id="rSteps"></div>
+    <div class="muted" style="text-align:center">Compás de 4/4 dividido en corcheas: 1 y 2 y 3 y 4 y</div>
+  </div>
+  <div class="card">
+    <h3>Toca junto</h3>
+    <p class="muted">Con el patrón sonando, golpea el botón de abajo (o presiona <kbd>Espacio</kbd>) junto con cada acento. La app mide si vas adelantado o atrasado.</p>
+    <button class="pad" id="rPad">TOCA AQUÍ</button>
+    <div style="text-align:center;margin-top:10px">
+      <div class="feedback" id="rFeed"></div>
+      <div class="muted" id="rStats"></div>
+    </div>
+  </div>
+</section>
+<!-- AJUSTES -->
+<section id="v-ajustes">
+  <div class="card">
+    <h2>Ajustes</h2>
+    <div class="settings">
+      <label>Sonido
+        <select id="soundSel"><option value="samples">Bandoneón real (grabación)</option><option value="synth">Sintetizado</option></select></label>
+      <label>Afinación (La)
+        <select id="tuneSel"><option value="440">440 Hz (estándar internacional)</option><option value="442">442 Hz</option><option value="443">443 Hz (afinación de la grabación)</option></select></label>
+      <label>Volumen <input type="range" id="volSel" min="0" max="100"></label>
+      <label>Nombres de las notas
+        <select id="namesSel"><option value="pt">Do Re Mi</option><option value="en">C D E</option></select></label>
+    </div>
+    <div class="row" style="margin-top:12px"><button class="btn sec" id="testSound">🔊 Probar sonido</button><button class="btn" id="installBtn" style="display:none">📲 Instalar app</button><span class="muted" id="soundStatus" aria-live="polite"></span></div>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">Tus datos</h3>
+    <p class="muted">El progreso, las melodías creadas y el mapa de botones se guardan solo en este navegador. Haz una copia de seguridad para no perder nada al limpiar el navegador o para llevar todo a otro dispositivo.</p>
+    <div class="row">
+      <button class="btn" id="backupExport">Exportar copia</button>
+      <button class="btn sec" id="backupImport">Importar copia</button>
+      <button class="btn sec" id="backupReset">Borrar todo</button>
+    </div>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">Mapa de botones</h3>
+    <p class="muted" style="margin-bottom:0">La app usa el mapa Rheinische 142. Si algún botón de tu instrumento es diferente, ajústalo en <a href="#" data-go="teclado">Teclado → Editar mapa</a>.</p>
+  </div>
+</section>
+</main>
+
+<script src="../sons/bandoneon.js"></script>
+<script src="../js/base.js"></script>
+<script src="../js/i18n-textos.js"></script>
+<script src="../js/i18n.js"></script>
+<script src="../js/licoes-traducao.js"></script>
+<script src="../js/audio.js"></script>
+<script src="../js/teclado.js"></script>
+<script src="../js/navegacao.js"></script>
+<script src="../js/fole.js"></script>
+<script src="../js/desafios.js"></script>
+<script src="../js/ritmo.js"></script>
+<script src="../js/atalhos.js"></script>
+<script src="../js/melodias.js"></script>
+<script src="../js/musicxml.js"></script>
+<script src="../js/escalas.js"></script>
+<script src="../js/microfone.js"></script>
+<script src="../js/acordes.js"></script>
+<script src="../js/rotina.js"></script>
+<script src="../js/licoes.js"></script>
+<script src="../js/ajustes.js"></script>
+<script src="../js/init.js"></script>
+</body>
+</html>

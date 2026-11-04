@@ -6,6 +6,11 @@
 <title>BanDoly: aprenda a tocar bandoneon online e grátis</title>
 <meta name="description" content="Aprenda bandoneon grátis no navegador: teclado com som real, lições, escalas, acordes e ritmos de tango. Funciona no celular, sem cadastro.">
 <link rel="canonical" href="https://bandoly.app/">
+<!-- o mesmo conteúdo em cada idioma (es/ e en/ são gerados por ferramentas/gerar_idiomas.py) -->
+<link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/">
+<link rel="alternate" hreflang="es" href="https://bandoly.app/es/">
+<link rel="alternate" hreflang="en" href="https://bandoly.app/en/">
+<link rel="alternate" hreflang="x-default" href="https://bandoly.app/">
 <meta name="theme-color" content="#0e2847">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <!-- prévia do link no WhatsApp, Instagram, Facebook e X -->
@@ -74,6 +79,10 @@
     <img class="hero-logo" src="icones/icone-512.png" alt="Logo do BanDoly: um bandoneonista desenhado em dourado sobre azul-marinho" width="132" height="132">
     <h1 class="hero-title">Aprenda a tocar bandoneon com o BanDoly</h1>
     <p>Aqui você aprende os fundamentos do bandoneon: como o instrumento funciona, o sistema <b>bisonoro</b> (cada botão dá uma nota abrindo e outra fechando), leitura nas duas claves e os ritmos essenciais do tango.</p>
+    <div class="row hero-cta">
+      <button type="button" class="btn" data-go="licoes">Começar pela primeira lição</button>
+      <button type="button" class="btn sec" data-go="teclado">Tocar o teclado agora</button>
+    </div>
     <p class="muted">Dica: use fones de ouvido. O app funciona offline e o seu progresso fica salvo neste navegador. Em <a href="#" data-go="ajustes">Ajustes</a> você escolhe o som, a afinação e faz backup.</p>
   </div>
   <div class="card" id="routineCard">
@@ -104,6 +113,27 @@
     </ol>
     <div class="notice"><b>Sobre o mapa dos botões:</b> existem vários sistemas de bandoneon (Rheinische 142 vozes, 144, Einheitsbandoneon, cromático/Péguri…) e até instrumentos do mesmo sistema podem ter diferenças. O app usa o mapa do <b>Rheinische 142</b>, o padrão do tango: 71 botões (38 na mão direita e 33 na esquerda), com as notas transcritas dos diagramas de Omar Caccia e Matías Gobbo. Se o seu instrumento tiver alguma diferença, ajuste os botões em <b>Teclado → Editar layout</b>.</div>
     <p class="muted" style="font-size:.85rem;margin-bottom:0">Som: SoundFont <i>Bandoneon V2.5</i>, de Jörg Bleymehl (gravado num bandoneon ELA de 1930; edição GM de Mike77154), de uso livre. Você pode trocar para o som sintetizado em <a href="#" data-go="ajustes">Ajustes</a>.</p>
+  </div>
+  <div class="card">
+    <h2>O que você encontra no BanDoly</h2>
+    <div class="grid feats">
+      <div class="feat"><h3>Teclado com som real</h3><p>Os 71 botões do bandoneon Rheinische 142 nas posições reais, com o som gravado de um bandoneon de 1930. Cada botão toca uma nota abrindo o fole e outra fechando.</p><a href="#" data-go="teclado">Abrir o teclado →</a></div>
+      <div class="feat"><h3>11 lições com quiz</h3><p>História do instrumento, sistema bisonoro, fole e articulação, leitura nas duas claves, ritmos de tango, acordes e como ler uma partitura de tango.</p><a href="#" data-go="licoes">Ver as lições →</a></div>
+      <div class="feat"><h3>Desafios para decorar os botões</h3><p>O app pede uma nota e você encontra o botão. O sorteio repete mais os botões que você erra, e o mapa de erros mostra onde treinar.</p><a href="#" data-go="desafios">Fazer um desafio →</a></div>
+      <div class="feat"><h3>Escalas e melodias guiadas</h3><p>Escalas em todas as tonalidades e melodias com uma ou duas mãos, com partitura, a direção do fole sugerida e um modo que espera você acertar.</p><a href="#" data-go="melodias">Tocar uma melodia →</a></div>
+      <div class="feat"><h3>Acordes no bandoneon</h3><p>Onde ficam os botões de 72 acordes (maiores, menores, com sétima e diminutos) em todas as tônicas, abrindo e fechando, nas duas mãos.</p><a href="#" data-go="acordes">Ver os acordes →</a></div>
+      <div class="feat"><h3>Ritmos do tango</h3><p>Marcato, síncopa, 3-3-2 e arrastre, com metrônomo e um modo que mede se você está adiantado ou atrasado.</p><a href="#" data-go="ritmo">Praticar o ritmo →</a></div>
+    </div>
+    <p class="muted" style="margin-bottom:0">Funciona no navegador do computador e do celular, em português, espanhol e inglês. É gratuito, não precisa de cadastro e pode ser instalado como app para usar sem internet.</p>
+  </div>
+  <div class="card faq">
+    <h2>Perguntas frequentes</h2>
+    <details><summary>O que é o bandoneon?</summary><p>É o instrumento de fole e botões que dá voz ao tango. Foi criado na Alemanha no século XIX e se tornou o símbolo do tango de Buenos Aires e Montevidéu. É bisonoro: cada botão toca uma nota ao abrir o fole e outra ao fechar.</p></details>
+    <details><summary>Preciso ter um bandoneon para usar o BanDoly?</summary><p>Não. Dá para aprender o mapa dos botões, a leitura e os ritmos só com o teclado virtual, no computador ou no celular. Se você tiver um bandoneon, o app também escuta você tocar pelo microfone e confere as notas.</p></details>
+    <details><summary>O BanDoly é gratuito?</summary><p>Sim. O BanDoly é gratuito e não precisa de cadastro. O seu progresso fica salvo no próprio navegador, e você pode exportar um backup em Ajustes.</p></details>
+    <details><summary>Qual sistema de bandoneon o app usa?</summary><p>O Rheinische 142, o padrão do tango: 71 botões, 38 na mão direita e 33 na esquerda, cada um com uma nota abrindo e outra fechando. Se o seu instrumento for diferente, dá para ajustar os botões no Teclado.</p></details>
+    <details><summary>Funciona no celular e sem internet?</summary><p>Sim. O teclado se adapta à tela do celular e aceita vários dedos ao mesmo tempo para tocar acordes. Instalando o app pelo botão em Ajustes, ele funciona mesmo sem internet.</p></details>
+    <details><summary>Por onde eu começo?</summary><p>Comece pelas lições 1 a 4, depois toque à vontade no Teclado e faça a escala de Dó maior no modo Espera. A Rotina de hoje, no topo desta página, sugere cinco tarefas curtas para praticar todo dia.</p></details>
   </div>
 </section>
 
