@@ -279,13 +279,14 @@ function textosEmPortugues(){
   for(let n=w.nextNode(); n; n=w.nextNode()){
     const p = n.parentNode;
     if(['SCRIPT','STYLE','TEXTAREA','CODE'].includes(p.nodeName) || p.closest('[translate="no"],#resultado-testes')) continue;
-    const s = n.nodeValue.replace(/\s+/g,' ').trim();
+    // nomes próprios (cidades, prêmios, festivais) ficam em português em qualquer idioma
+    const s = n.nodeValue.replace(/\s+/g,' ').trim().replace(/Caçapava do Sul|Simões Lopes Neto|Moenda da Canção|Santo Antônio da Patrulha|Rádio/g,'');
     if(s && PARECE_PT.test(s)) achados.add(s);
   }
   return [...achados];
 }
 async function percorrerApp(){
-  for(const v of ['inicio','teclado','desafios','melodias','acordes','ritmo','ajustes']){ go(v); await esperar(); }
+  for(const v of ['inicio','teclado','desafios','melodias','acordes','ritmo','ajustes','doly']){ go(v); await esperar(); }
   for(let i=0;i<LESSONS.length;i++){ curLesson=i; renderLesson(); await esperar(); }
   go('desafios'); $('#fStart').click(); await esperar(); $('#sStart').click(); await esperar();
   go('melodias'); $('#scaleOpen').click(); $('#scGo').click(); $('#melMode').value='wait'; $('#melStart').click(); await esperar();
@@ -311,6 +312,12 @@ teste('formato de texto aceita palavras-chave em espanhol e inglês', () => {
 teste('t() traduz modelos com valores', () => {
   const l = state.lang; state.lang='es'; igual(t('Rodada {}/10 · Acertos: {}', 3, 2), 'Ronda 3/10 · Aciertos: 2');
   state.lang='en'; igual(t('Esse é {}.', 'E4'), 'That is E4.'); state.lang=l;
+});
+
+teste('página Quem foi Doly Costa? abre pelo link da tela Início', async () => {
+  go('inicio'); $('.doly-link').click(); await esperar();
+  igual($('#v-doly').classList.contains('active'), true);
+  igual($$('#v-doly .timeline li').length, 7); go('inicio');
 });
 
 /* ---------- Execução ---------- */

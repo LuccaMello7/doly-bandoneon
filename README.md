@@ -6,6 +6,8 @@ O **BanDoly** é um app gratuito e interativo para aprender **bandoneon**, o ins
 
 Funciona no navegador, no computador ou no celular, em **português, espanhol e inglês** (escolha pelas bandeiras no topo). Não precisa instalar nada nem criar conta.
 
+O nome é uma homenagem a **Doly Carlos da Costa** (Caçapava do Sul), bandoneonista gaúcho que tocou nas orquestras de tango das rádios de Porto Alegre, fundou o grupo Os Posteiros e recebeu a Medalha Simões Lopes Neto. A história dele está no app, no link *Quem foi Doly Costa?* da tela Início.
+
 ---
 
 ## Sumário
@@ -249,5 +251,6 @@ O script abre o app no Edge ou Chrome em modo invisível e roda `tests/testes.js
 
 ## Créditos
 
+- **Fotos e documentos de Doly Costa:** acervo particular.
 - **Som:** SoundFont *Bandoneon V2.5*, de **Jörg Bleymehl** (2016), gravado num bandoneon ELA de 1930, com edição GM de Mike77154. O autor permite o uso livre, inclusive em projetos de software. As gravações estão afinadas em Lá ≈ 443 Hz.
 - **Mapa de botões (Rheinische 142):** transcrito dos diagramas de **Omar Caccia** (mão direita abrindo, mão esquerda fechando) e **Matías Gobbo** (mão direita fechando, mão esquerda abrindo). Se o seu instrumento tiver alguma diferença, ajuste em *Teclado → Mapa de botões → Editar layout*.

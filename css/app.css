@@ -92,12 +92,37 @@ button,select,a,input{touch-action:manipulation}
 .mapmenu summary::-webkit-details-marker{display:none}
 .mapmenu[open] .row{margin-top:8px}
 .kbd{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+/* Página "Quem foi Doly Costa?" */
+.doly-link{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--text);border-color:var(--gold)}
+.doly-link:hover{background:var(--panel2)}
+.doly-link img{border-radius:6px;object-fit:cover}
+.doly-link>span{display:flex;flex-direction:column;gap:2px}
+.doly-link b{color:var(--gold2);font-size:1.1rem}
+.doly-hero{display:grid;grid-template-columns:minmax(160px,260px) 1fr;gap:22px;align-items:start}
+.doly-hero img{width:100%;height:auto;border-radius:8px;box-shadow:0 4px 18px #0006}
+.doly-hero h2{margin:2px 0 6px;color:var(--gold2)}
+.doly-kicker{text-transform:uppercase;letter-spacing:.12em;font-size:.8rem;margin:0}
+.doly-sub{font-style:italic;color:var(--cream)}
+.timeline{list-style:none;margin:0;padding:0 0 0 22px;border-left:2px solid var(--gold)}
+.timeline li{position:relative;margin:0 0 20px}
+.timeline li::before{content:"";position:absolute;left:-29px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--gold);border:2px solid var(--panel)}
+.timeline li p{margin:4px 0 0}
+.tl-ano{display:block;color:var(--gold2);font-size:.85rem;font-weight:600;letter-spacing:.04em}
+.doly-doc{margin:12px 0 0;max-width:560px}
+.doly-doc img,.doly-fotos img{width:100%;height:auto;border-radius:6px;display:block}
+figcaption{color:var(--muted);font-size:.85rem;margin-top:6px}
+.doly-fotos{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.doly-fotos figure{margin:0}
+.doly-fotos{align-items:start}
+@media (min-width:701px){.doly-fotos .larga{grid-column:span 2}.doly-fotos .inteira{grid-column:1/-1}}
 /* Celular */
 @media (max-width:700px){
   header{padding:8px 10px;gap:6px}
   .brand img{width:36px;height:36px}
   .brand-name{font-size:1.2rem}
   .hero-logo{width:84px;height:84px}
+  .doly-hero{grid-template-columns:1fr}
+  .doly-hero img{max-width:240px;margin:0 auto}
   nav{flex-wrap:nowrap;overflow-x:auto;width:100%;scrollbar-width:none;padding-bottom:2px}
   nav::-webkit-scrollbar{display:none}
   nav button{flex:0 0 auto;padding:6px 12px}
