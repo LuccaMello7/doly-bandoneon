@@ -112,6 +112,7 @@
   <button type="button" role="tab" data-area="aprender" data-v="estudo"><svg aria-hidden="true"><use href="#i-route"/></svg>My study</button>
   <button type="button" role="tab" data-area="aprender" data-v="academia"><svg aria-hidden="true"><use href="#i-cap"/></svg>Academy</button>
   <button type="button" role="tab" data-area="aprender" data-v="licoes"><svg aria-hidden="true"><use href="#i-book"/></svg>Lessons</button>
+  <button type="button" role="tab" data-area="aprender" data-v="teoria"><svg aria-hidden="true"><use href="#i-note"/></svg>Theory</button>
   <button type="button" role="tab" data-area="tocar" data-v="teclado"><svg aria-hidden="true"><use href="#i-keys"/></svg>Keyboard</button>
   <button type="button" role="tab" data-area="tocar" data-v="melodias"><svg aria-hidden="true"><use href="#i-music"/></svg>Melodies</button>
   <button type="button" role="tab" data-area="tocar" data-v="acordes"><svg aria-hidden="true"><use href="#i-chord"/></svg>Chords</button>
@@ -217,6 +218,15 @@
   </div>
 </section>
 
+<!-- TEORIA MUSICAL (js/teoria.js) -->
+<section id="v-teoria">
+  <div class="pg-topo"><span class="pg-ic t-teoria"><svg aria-hidden="true"><use href="#i-note"/></svg></span><div><h2 class="pg-tit">Music theory</h2><p class="muted">The basics for reading music and understanding the exercises: notes, staff, note values, time signatures, scales and chords. All with sound.</p></div></div>
+  <div class="te-layout">
+    <nav class="card te-lista" id="teLista" aria-label="Theory topics"></nav>
+    <div class="card te-conteudo" id="teConteudo" aria-live="polite"></div>
+  </div>
+</section>
+
 <!-- TECLADO -->
 <section id="v-teclado">
   <div class="pg-topo"><span class="pg-ic t-teclado"><svg aria-hidden="true"><use href="#i-keys"/></svg></span><div><h2 class="pg-tit">Keyboard</h2><p class="muted">All 71 buttons with real sound. Play, switch the bellows and see how each button changes note.</p></div></div>
@@ -273,6 +283,7 @@
     <button class="btn sec on" data-ch="find">Find the note</button>
     <button class="btn sec" data-ch="staff">Staff reading</button>
     <button class="btn sec" data-ch="ear">Ear</button>
+    <button class="btn sec" data-ch="pautabot">Staff to bandoneon</button>
   </div>
 
   <div class="card" id="chFind">
@@ -318,6 +329,27 @@
     <div class="instrument">
       <div class="side"><div class="label">Left</div><div id="ekLeft"></div></div>
       <div class="side"><div class="label">Right</div><div id="ekRight"></div></div>
+    </div>
+  </div>
+
+  <div class="card" id="chPauta" style="display:none">
+    <h2>Staff to bandoneon</h2>
+    <p class="muted">The note appears on the staff and you play the button that gives that note, in the bellows direction shown. It is the bridge between reading music and playing. Ten rounds; after two mistakes the right button glows.</p>
+    <div class="row">
+      <label>Hand: <select id="pHand"><option value="right">Right (treble clef)</option><option value="left">Left (bass clef)</option></select></label>
+      <label>Direction: <select id="pDir"><option value="open">Opening</option><option value="close">Closing</option><option value="rand">Random</option></select></label>
+      <label>Notes: <select id="pNotas"><option value="naturais">Natural notes only (C, D, E…)</option><option value="todas">All</option></select></label>
+      <button class="btn" id="pStart">Start</button>
+    </div>
+    <div class="pauta-desafio">
+      <div class="staff" id="pPauta"></div>
+      <div id="pDirPill" class="dirpill open" style="display:inline-block;visibility:hidden"></div>
+      <div class="feedback" id="pFeed" aria-live="polite"></div>
+      <div class="muted" id="pScore"></div>
+    </div>
+    <div class="instrument">
+      <div class="side"><div class="label">Left</div><div id="pkLeft"></div></div>
+      <div class="side"><div class="label">Right</div><div id="pkRight"></div></div>
     </div>
   </div>
 
@@ -506,51 +538,18 @@
 <section id="v-academia">
   <div class="pg-topo"><span class="pg-ic t-academia"><svg aria-hidden="true"><use href="#i-cap"/></svg></span><div><h2 class="pg-tit">Bandoneon Academy</h2><p class="muted">Exercises in 6 levels, from the first button to pieces with both hands, plus a level for your own sheet music. The instructor shows the note, hand, finger and bellows direction for each moment, and at the end you get a report on what went right and what to review.</p></div></div>
   <div class="card tarefa-aviso" hidden></div>
-  <aside class="aviso" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></svg><p><strong>BanDoly is a learning site and will never replace the advice and guidance of a teacher.</strong> Use the app to support your studies and, whenever you can, learn with a bandoneon teacher: they correct your posture, bellows and fingering, things an app cannot see.</p></aside>
-  <div class="card">
-    <div class="ac-niveis" id="acNiveis" role="group" aria-label="Levels"></div>
-  </div>
-
-  <div class="ac-layout">
-    <!-- área central: o teclado de sempre, com destaque, dedo e fole -->
-    <div class="card ac-centro" id="acCentro">
-      <div class="row ac-topo">
-        <div><b id="acExTitulo"></b><div class="muted" id="acExDesc"></div></div>
-      </div>
-      <div class="row">
-        <span class="muted">Your bellows:</span> <span class="dirpill open" id="acDirPill"></span>
-        <button class="btn sec" id="acDirBtn" title="Switches the bellows direction (Space key)">⇄ Switch bellows <kbd>Space</kbd></button>
-        <label title="The app switches the bellows direction for you. In that case the bellows is not assessed."><input type="checkbox" id="acAuto"> Auto bellows</label>
-        <label><input type="checkbox" id="acNomes" checked> Names on buttons</label>
-      </div>
-      <div class="ac-maolabel">Left hand</div>
-      <div id="acKbLeft"></div>
-      <div class="ac-maolabel">Right hand</div>
-      <div id="acKbRight"></div>
-      <div class="mstrip ac-strip" id="acStrip"></div>
-      <div class="feedback" id="acFeed" aria-live="polite"></div>
-      <div class="ac-dedo-pop" id="acDedoPop" hidden></div>
+  <aside class="aviso aviso-curto" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></svg><p><strong>BanDoly is a learning site and will never replace the advice and guidance of a teacher.</strong> Use the app to support your studies and, whenever you can, learn with a bandoneon teacher: they correct your posture, bellows and fingering, things an app cannot see.</p></aside>
+  <!-- 1. escolher: níveis em fileira e os exercícios do nível (recolhe enquanto você toca) -->
+  <div class="card ac-escolha" id="acEscolha">
+    <div class="ac-resumo" id="acResumo">
+      <span class="ac-resumo-num" id="acResumoNum"></span>
+      <div class="ac-resumo-txt"><span class="muted" id="acResumoNivel"></span><b id="acResumoTit"></b></div>
+      <button type="button" class="btn sec" id="acTrocar">Change exercise</button>
     </div>
-
-    <!-- área lateral: instrutor digital -->
-    <aside class="card ac-instrutor" id="acInstrutor" aria-label="Digital instructor">
-      <h3>Instructor</h3>
-      <div class="ac-prog" aria-hidden="true"><span id="acProgTxt" class="muted"></span><span class="ac-prog-bar"><i id="acProgBar"></i></span></div>
-      <div id="acAgora" aria-live="polite"></div>
-      <p class="ac-proximo" id="acProximo"></p>
-      <div class="maos" id="acMaos"></div>
-      <div class="row ac-opcoes">
-        <label><input type="checkbox" id="acMaosVer" checked> Show the hands</label>
-        <label><input type="checkbox" id="acAmpliar"> Enlarged view</label>
-      </div>
-      <p class="muted ac-validacao" id="acValidacao"></p>
-    </aside>
-  </div>
-
-  <!-- área inferior: exercícios, modo e controles -->
-  <div class="card">
-    <h3 id="acNivelTitulo" style="margin-top:0"></h3>
-    <p class="muted" id="acNivelObjetivo"></p>
+    <div class="ac-escolha-corpo">
+      <div class="ac-niveis" id="acNiveis" role="group" aria-label="Levels"></div>
+      <h3 id="acNivelTitulo"></h3>
+      <p class="muted" id="acNivelObjetivo"></p>
     <!-- nível 7: importar uma partitura (js/partituras.js) -->
     <div class="ac-partituras" id="acPartituras" hidden>
       <div class="row">
@@ -585,25 +584,76 @@
         <p>Use scores in the public domain or that you have the right to use.</p>
       </details>
     </div>
-    <div class="ac-lista" id="acLista"></div>
+      <div class="ac-lista" id="acLista"></div>
+    </div>
+  </div>
+
+  <!-- 2. ajustar e começar: a barra fica logo acima do teclado -->
+  <div class="card ac-barra" id="acBarra">
     <div class="ac-modos" id="acModo" role="group" aria-label="Mode">
       <button type="button" data-modo="aprender" class="on">Learn</button>
       <button type="button" data-modo="praticar">Practice</button>
       <button type="button" data-modo="desafio">Challenge</button>
     </div>
-    <p class="muted" id="acModoInfo"></p>
-    <div class="row ac-controles">
-      <button class="btn" id="acStart">▶ Start</button>
-      <button class="btn sec" id="acOuvirBtn">Listen</button>
-      <label>Speed: <input type="range" id="acVel" min="40" max="120" step="10" value="70"> <span id="acVelVal">70%</span></label>
-      <label title="A click on every beat in Challenge mode and when listening"><input type="checkbox" id="acMetro" checked> Metronome</label>
-      <label title="Starts again by itself while there are mistakes"><input type="checkbox" id="acRepetir"> Repeat</label>
-      <label title="Button highlight, finger number and hand position"><input type="checkbox" id="acGuia" checked> Fingering Guide</label>
-      <label title="Play your own bandoneon: the app checks the note and rhythm through the microphone"><input type="checkbox" id="acMic"> <svg aria-hidden="true"><use href="#i-mic"/></svg> Microphone</label>
-      <button type="button" class="btn sec" id="acTranscricaoBtn" aria-expanded="false"><svg aria-hidden="true"><use href="#i-file"/></svg>Transcription</button>
-      <button type="button" class="btn sec" id="acDigitar" title="Choose the finger for each note (for teachers)">Edit fingering</button>
-      <span id="acTrecho">Passage: from note <input type="number" id="acDe" min="1" value="1" class="ac-num-in"> to <input type="number" id="acAte" min="1" value="1" class="ac-num-in"></span>
+    <button class="btn btn-grande" id="acStart">▶ Start</button>
+    <button class="btn sec" id="acOuvirBtn">Listen</button>
+    <label class="ac-vel">Speed <input type="range" id="acVel" min="40" max="120" step="10" value="70"> <span id="acVelVal">70%</span></label>
+    <details class="ac-mais" id="acMais">
+      <summary class="btn sec"><svg aria-hidden="true"><use href="#i-gear"/></svg>More options</summary>
+      <div class="ac-mais-painel">
+        <label title="A click on every beat in Challenge mode and when listening"><input type="checkbox" id="acMetro" checked> Metronome</label>
+        <label title="Starts again by itself while there are mistakes"><input type="checkbox" id="acRepetir"> Repeat</label>
+        <label title="Button highlight, finger number and hand position"><input type="checkbox" id="acGuia" checked> Fingering Guide</label>
+        <label title="Play your own bandoneon: the app checks the note and rhythm through the microphone"><input type="checkbox" id="acMic"> <svg aria-hidden="true"><use href="#i-mic"/></svg> Microphone</label>
+        <span id="acTrecho">Passage: from note <input type="number" id="acDe" min="1" value="1" class="ac-num-in"> to <input type="number" id="acAte" min="1" value="1" class="ac-num-in"></span>
+        <div class="row">
+          <button type="button" class="btn sec" id="acTranscricaoBtn" aria-expanded="false"><svg aria-hidden="true"><use href="#i-file"/></svg>Transcription</button>
+          <button type="button" class="btn sec" id="acDigitar" title="Choose the finger for each note (for teachers)">Edit fingering</button>
+        </div>
+      </div>
+    </details>
+    <p class="muted ac-modo-info" id="acModoInfo"></p>
+  </div>
+
+  <!-- 3. tocar: o teclado (só a mão do exercício, ou as duas com o fole no meio) e o instrutor -->
+  <div class="ac-layout">
+    <div class="card ac-centro" id="acCentro">
+      <div class="row ac-topo">
+        <div><b id="acExTitulo"></b><div class="muted" id="acExDesc"></div></div>
+      </div>
+      <div class="row">
+        <span class="muted">Your bellows:</span> <span class="dirpill open" id="acDirPill"></span>
+        <button class="btn sec" id="acDirBtn" title="Switches the bellows direction (Space key)">⇄ Switch bellows <kbd>Space</kbd></button>
+        <label title="The app switches the bellows direction for you. In that case the bellows is not assessed."><input type="checkbox" id="acAuto"> Auto bellows</label>
+        <label><input type="checkbox" id="acNomes" checked> Names on buttons</label>
+      </div>
+      <div class="ac-teclados" id="acTeclados" data-maos="duas">
+        <div class="ac-mao" id="acMaoE"><div class="ac-maolabel">Left hand</div><div id="acKbLeft"></div></div>
+        <div class="ac-fole-meio" aria-hidden="true"><span class="ac-fole-mini open" id="acFoleMini"></span></div>
+        <div class="ac-mao" id="acMaoD"><div class="ac-maolabel">Right hand</div><div id="acKbRight"></div></div>
+      </div>
+      <div class="mstrip ac-strip" id="acStrip"></div>
+      <div class="feedback" id="acFeed" aria-live="polite"></div>
+      <div class="ac-dedo-pop" id="acDedoPop" hidden></div>
     </div>
+
+    <!-- área lateral: instrutor digital -->
+    <aside class="card ac-instrutor" id="acInstrutor" aria-label="Digital instructor">
+      <h3>Instructor</h3>
+      <div class="ac-prog" aria-hidden="true"><span id="acProgTxt" class="muted"></span><span class="ac-prog-bar"><i id="acProgBar"></i></span></div>
+      <div id="acAgora" aria-live="polite"></div>
+      <p class="ac-proximo" id="acProximo"></p>
+      <div class="maos" id="acMaos"></div>
+      <div class="row ac-opcoes">
+        <label><input type="checkbox" id="acMaosVer" checked> Show the hands</label>
+        <label><input type="checkbox" id="acAmpliar"> Enlarged view</label>
+      </div>
+      <p class="muted ac-validacao" id="acValidacao"></p>
+    </aside>
+  </div>
+
+  <!-- 4. depois de tocar: transcrição e relatório -->
+  <div class="card ac-pos" id="acPos">
     <div class="ac-transcricao" id="acTranscricao" hidden></div>
     <div class="ac-relatorio" id="acRelatorio" aria-live="polite"></div>
   </div>
@@ -861,6 +911,8 @@
 <script src="../js/cascata.js"></script>
 <script src="../js/trilha.js"></script>
 <script src="../js/professor.js"></script>
+<script src="../js/teoria-textos.js"></script>
+<script src="../js/teoria.js"></script>
 <script src="../js/contato.js"></script>
 <script src="../js/init.js"></script>
 </body>

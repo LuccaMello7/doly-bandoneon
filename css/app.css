@@ -1087,3 +1087,130 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
 .feat a{position:relative}
 .feat a::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:2px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .3s}
 @media (hover:hover){.feat a:hover{text-decoration:none}.feat a:hover::after{transform:scaleX(1)}}
+
+/* ================== Academia: escolher → ajustar → tocar ================== */
+/* níveis numa fileira: número com anel de progresso, nome curto embaixo */
+.ac-escolha{transition:padding .3s}
+.ac-niveis{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;margin-bottom:14px}
+.ac-nivel{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;background:transparent;border:0;border-radius:16px;padding:10px 6px;color:var(--muted);cursor:pointer;font:inherit;transition:background .25s,color .25s,transform .25s cubic-bezier(.34,1.4,.5,1)}
+.ac-nivel .ac-num{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;position:relative;background:conic-gradient(var(--gold) calc(var(--p,0)*360deg),#ffffff14 0);grid-row:auto}
+.ac-nivel .ac-num::before{content:"";position:absolute;inset:5px;border-radius:50%;background:var(--panel2)}
+.ac-nivel .ac-num b{position:relative;font-size:1.15rem;color:var(--text)}
+.ac-nivel .ac-ntit{font-size:.78rem;font-weight:800;line-height:1.2}
+.ac-nivel .ac-nfeitos{font-size:.7rem}
+.ac-nivel.on{background:#e6b45014;color:var(--text)}
+.ac-nivel.on .ac-num::before{background:var(--gold)}
+.ac-nivel.on .ac-num b{color:#1b1404}
+.ac-nivel.completo .ac-num::after{content:"✓";position:absolute;right:-2px;top:-2px;width:18px;height:18px;border-radius:50%;background:var(--green);color:#06281a;font-size:.7rem;font-weight:900;display:grid;place-items:center}
+@media (hover:hover){.ac-nivel:not(.on):hover{background:#ffffff0a;transform:translateY(-2px)}}
+.ac-escolha h3{margin:0 0 2px}
+/* recolhida enquanto você toca */
+.ac-resumo{display:none;align-items:center;gap:14px}
+.ac-resumo-num{width:40px;height:40px;flex:none;border-radius:50%;display:grid;place-items:center;background:var(--gold);color:#1b1404;font-weight:900}
+.ac-resumo-txt{flex:1;display:flex;flex-direction:column;min-width:0}
+.ac-resumo-txt .muted{font-size:.8rem}
+.ac-escolha.recolhido{padding-top:12px;padding-bottom:12px}
+.ac-escolha.recolhido .ac-resumo{display:flex;animation:sobe .35s both}
+.ac-escolha.recolhido .ac-escolha-corpo{display:none}
+.ac-escolha:not(.recolhido) .ac-escolha-corpo{animation:sobe .4s cubic-bezier(.2,.8,.2,1) both}
+/* barra de controle: modo, começar, ouvir, velocidade e mais opções */
+.ac-barra{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;z-index:12}
+@media (min-width:1000px){.ac-barra{position:sticky;top:10px;box-shadow:0 10px 26px #0006}}
+.ac-barra .ac-modos{margin:0}
+.ac-vel{display:inline-flex;align-items:center;gap:8px;font-weight:700;color:var(--muted)}
+.ac-vel input{width:110px}
+.ac-modo-info{flex-basis:100%;margin:0;font-size:.88rem}
+.ac-mais{position:relative}
+.ac-mais summary{list-style:none}
+.ac-mais summary::-webkit-details-marker{display:none}
+.ac-mais[open] summary{background:var(--cream);color:var(--navy)}
+.ac-mais-painel{position:absolute;right:0;top:calc(100% + 8px);z-index:30;width:min(360px,90vw);display:flex;flex-direction:column;gap:8px;background:var(--navy-dark);border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:0 18px 40px #000b;animation:sobe .25s both}
+.ac-mais-painel>label,.ac-mais-painel>span{display:flex;align-items:center;gap:8px;font-weight:700}
+@media (max-width:700px){.ac-mais-painel{right:auto;left:0}}
+/* teclados: uma mão centralizada, ou as duas lado a lado com o fole no meio */
+.ac-teclados{display:flex;justify-content:center;align-items:center;gap:14px;flex-wrap:wrap;margin:8px 0}
+.ac-mao{display:flex;flex-direction:column;align-items:center}
+.ac-mao .ac-maolabel{margin:0 0 6px;font-weight:800}
+.ac-fole-meio{display:none}
+.ac-teclados[data-maos="duas"] .ac-fole-meio{display:flex;align-items:center;justify-content:center;width:56px;align-self:stretch}
+.ac-fole-mini{width:44px;height:120px;border-radius:4px;border-top:4px solid var(--gold);border-bottom:4px solid var(--gold);background:repeating-linear-gradient(90deg,#6d1f24 0 6px,#f3ead6 6px 7px,#4a1418 7px 13px);transition:box-shadow .3s}
+.ac-fole-mini.open{box-shadow:0 0 0 3px var(--open),0 0 18px #4f9cf066}
+.ac-fole-mini.close{box-shadow:0 0 0 3px var(--close),0 0 18px #f08a4b66}
+@media (max-width:759px){.ac-teclados{flex-direction:column}.ac-teclados[data-maos="duas"] .ac-fole-meio{width:auto;height:30px}.ac-fole-mini{width:120px;height:22px}}
+.ac-pos:has(>.ac-transcricao[hidden]):has(>.ac-relatorio:empty){display:none}
+.ac-pos .ac-relatorio:not(:empty){margin-top:0;border-top:0;padding-top:0}
+
+/* ================== Teoria musical ================== */
+.t-teoria{background:linear-gradient(140deg,#3ccf8e,#1f8f6a)}
+.te-layout{display:grid;grid-template-columns:260px minmax(0,1fr);gap:18px;align-items:start}
+.te-lista{display:flex;flex-direction:column;gap:6px;position:sticky;top:20px}
+.te-item{display:flex;align-items:center;gap:10px;text-align:left;background:transparent;border:0;border-radius:14px;padding:9px 10px;color:var(--muted);font:700 .93rem Nunito,sans-serif;cursor:pointer;transition:background .2s,color .2s,transform .2s;animation:sobe .4s backwards;animation-delay:calc(var(--i,0)*40ms)}
+.te-num{width:30px;height:30px;flex:none;border-radius:50%;display:grid;place-items:center;background:var(--panel2);font-weight:900;color:var(--text)}
+.te-num svg[aria-hidden]{width:16px;height:16px}
+.te-item.feito .te-num{background:var(--green);color:#06281a}
+.te-item.on{background:#e6b45018;color:var(--text)}
+.te-item.on .te-num{background:var(--gold);color:#1b1404}
+@media (hover:hover){.te-item:not(.on):hover{background:#ffffff0a;color:var(--text);transform:translateX(3px)}}
+.te-conteudo.troca>*{animation:sobe .45s cubic-bezier(.2,.8,.2,1) backwards}
+.te-conteudo.troca>*:nth-child(2){animation-delay:.05s}.te-conteudo.troca>*:nth-child(3){animation-delay:.1s}.te-conteudo.troca>*:nth-child(4){animation-delay:.15s}
+.te-cab{display:flex;align-items:center;gap:14px;margin-bottom:6px}
+.te-cab h3{margin:0;font-size:1.4rem}.te-cab .kicker{margin:0}
+.te-texto p{line-height:1.65;color:#d5def0}
+.te-widget{background:#ffffff08;border-radius:18px;padding:14px;margin:14px 0}
+.te-dica{margin:10px 0 0;font-size:.88rem}
+.te-q{margin-top:16px}
+.te-pratica{margin-top:12px}
+.te-nav{justify-content:space-between;margin-top:16px}
+.te-notas{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:8px}
+.te-nota{display:flex;flex-direction:column;align-items:center;gap:2px;background:var(--cream);color:var(--navy);border:0;border-radius:12px;padding:14px 4px 10px;cursor:pointer;box-shadow:0 4px 0 #b9ab8c;font:inherit;transition:transform .1s;animation:sobe .4s backwards;animation-delay:calc(var(--i,0)*40ms)}
+.te-nota b{font-size:1.05rem}.te-nota small{opacity:.6}
+.te-nota:active{transform:translateY(3px);box-shadow:0 1px 0 #b9ab8c}
+.te-nota.soa,.te-cromatica button.soa,.te-acorde.soa{animation:certo .45s cubic-bezier(.34,1.4,.5,1)}
+.te-cromatica{display:grid;grid-template-columns:repeat(13,minmax(0,1fr));gap:4px}
+.te-cromatica button{height:64px;border:0;border-radius:10px;background:var(--cream);color:var(--navy);font:800 .72rem Nunito,sans-serif;cursor:pointer;display:flex;align-items:flex-end;justify-content:center;padding-bottom:6px}
+.te-cromatica button.preta{background:#1b1b1b;color:#f3e9d2;height:46px}
+.te-claves{margin-bottom:10px}
+.staff svg.pauta{background:#f6efe2;border-radius:12px;max-width:100%;display:block}
+.pauta .pl{stroke:#2a2a2a;stroke-width:1.3}
+.pauta .pc{fill:#222;font-family:"Segoe UI Symbol","Noto Music",serif}
+.pauta .cab{fill:#111}.pauta .cab-vazia{fill:#f6efe2;stroke:#111;stroke-width:1.8}
+.pauta .ph{stroke:#111;stroke-width:1.6}
+.pauta .nota.acesa .cab{fill:#b8862a}.pauta .nota.acesa .ph{stroke:#b8862a}
+.pauta .nota.certa .cab{fill:#1f8f5f}.pauta .nota.errada .cab{fill:#c0392b}
+.pauta .nota{transition:opacity .2s}
+.pauta .nota.entra,.pauta .nota.acesa{animation:notaPauta .4s cubic-bezier(.34,1.4,.5,1)}
+@keyframes notaPauta{from{opacity:0;transform:translateY(-8px)}}
+.te-alvo{fill:transparent;cursor:pointer}
+.te-alvo:hover{fill:#e6b45033}
+.te-nome{text-align:center;margin:10px 0 0}
+.figura{width:34px;height:56px;flex:none}
+.figura .cab{fill:var(--text)}.figura .cab-vazia{fill:none;stroke:var(--text);stroke-width:2}
+.figura .ph,.figura .pb{stroke:var(--text);stroke-width:2;fill:none}
+.te-figuras{display:flex;flex-direction:column;gap:8px}
+.te-fig{display:flex;align-items:center;gap:14px;background:var(--panel2);border-radius:14px;padding:8px 12px;transition:box-shadow .3s,background .3s;animation:sobe .4s backwards;animation-delay:calc(var(--i,0)*50ms)}
+.te-fig>div{flex:1;display:flex;flex-direction:column}
+.te-fig.tocando{background:#e6b45018;box-shadow:inset 3px 0 0 var(--gold)}
+.te-tempos{display:flex;gap:10px;margin-top:12px}
+.te-tempos span{flex:1;height:64px;border-radius:14px;display:grid;place-items:center;font-weight:900;font-size:1.3rem;background:var(--panel2);color:var(--muted);transition:transform .1s,background .1s}
+.te-tempos span.forte{box-shadow:inset 0 -4px 0 var(--gold)}
+.te-tempos span.agora{background:var(--gold);color:#1b1404;transform:scale(1.06)}
+.te-passos{display:flex;gap:6px;justify-content:center;margin-top:10px;flex-wrap:wrap}
+.te-passos span{min-width:42px;text-align:center;padding:5px 8px;border-radius:999px;background:#4f9cf033;color:var(--open);font-weight:900}
+.te-passos span.semi{background:#f08a4b33;color:var(--close)}
+.te-acordes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.te-acorde{display:flex;flex-direction:column;align-items:center;gap:4px;background:var(--panel2);border:0;border-radius:16px;padding:10px;color:var(--text);font:inherit;cursor:pointer;transition:transform .25s cubic-bezier(.34,1.4,.5,1);animation:sobe .4s backwards;animation-delay:calc(var(--i,0)*60ms)}
+.te-acorde .staff{width:100%}
+@media (hover:hover){.te-acorde:hover{transform:translateY(-3px)}}
+@media (max-width:860px){
+  .te-layout{grid-template-columns:minmax(0,1fr)}
+  .te-lista{position:static;flex-direction:row;overflow-x:auto;scrollbar-width:none}
+  .te-item{flex:none}
+  .te-notas{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .te-acordes{grid-template-columns:minmax(0,1fr)}
+  .ac-niveis{grid-template-columns:repeat(7,minmax(84px,1fr));overflow-x:auto;scrollbar-width:none}
+}
+/* desafio Pauta no bandoneon */
+.pauta-desafio{display:flex;flex-direction:column;align-items:center;gap:8px;margin:14px 0}
+.pauta-desafio .staff{width:min(340px,100%)}
+
+.te-widget .te-pauta svg.pauta{max-width:520px;margin:0 auto}

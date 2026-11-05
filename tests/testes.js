@@ -292,7 +292,7 @@ function textosEmPortugues(){
   return [...achados];
 }
 async function percorrerApp(){
-  for(const v of ['inicio','estudo','teclado','desafios','melodias','acordes','ritmo','ajustes','academia','microfone','perfil','professor']){ go(v); await esperar(); }
+  for(const v of ['inicio','estudo','teoria','teclado','desafios','melodias','acordes','ritmo','ajustes','academia','microfone','perfil','professor']){ go(v); await esperar(); }
   abrirControles(); await esperar(); ligarPc(true); await esperar(); ligarPc(false); $('#ctlDialog').close();
   abrirSugestao(); await esperar(); $('#sugDialog').close(); compartilhar(t('Relatório do BanDoly'), 'x'); await esperar(); $('#partilha').close();
   store.set('tarefa', {ex:'n3-escada', modo:'praticar', vel:70, prof:'', msg:''}); renderTarefa(); await esperar(); store.set('tarefa', null); renderTarefa();
@@ -302,6 +302,10 @@ async function percorrerApp(){
   avisar('<b>Conquista nova: Bisonoro</b>'); await esperar();
   for(let i=0;i<LESSONS.length;i++){ curLesson=i; renderLesson(); await esperar(); }
   go('desafios'); $('#fStart').click(); await esperar(); $('#sStart').click(); await esperar();
+  $('[data-ch="pautabot"]').click(); $('#pStart').click(); await esperar();
+  { const b = state.layout[pq.hand].find(x=>x[pq.dir]!==pq.target); pautaPress(b, b[pq.dir], pq.hand==='left'?pkL:pkR); } await esperar(); pq.round = 10; nextPauta(); await esperar();
+  go('teoria'); for(let i=0;i<TEORIA.length;i++){ teoriaAtual = i; renderTeoria(); await esperar(); $('#teConteudo [data-o="0"]').click(); await esperar(); }
+  teoriaAtual = 1; renderTeoria(); $('#teConteudo [data-d]').dispatchEvent(new MouseEvent('click', {bubbles:true})); await esperar(); go('desafios');
   $('[data-ch="ear"]').click(); $('#eStart').click(); await esperar();
   { const b = state.layout[eq.hand].find(x=>x[eq.dir]!==eq.target); earPress(b, b[eq.dir], eq.hand==='left'?ekL:ekR); } await esperar();
   eq.round = 10; nextEar(); await esperar(); $('[data-ch="find"]').click();
@@ -440,7 +444,7 @@ teste('navegação por áreas: cada área mostra só as suas abas e volta à úl
   igual($('#nav [data-area].active').dataset.area, 'tocar');
   igual($$('#subnav [data-v]').filter(b=>!b.hidden).map(b=>b.dataset.v), ['teclado','melodias','acordes','microfone']);
   go('licoes'); $('#nav [data-area="tocar"]').click(); igual(currentView, 'acordes');
-  igual($$('#subnav [data-area="aprender"]').map(b=>b.dataset.v), ['estudo','academia','licoes']);
+  igual($$('#subnav [data-area="aprender"]').map(b=>b.dataset.v), ['estudo','academia','licoes','teoria']);
   $('#nav [data-area="aprender"]').click(); igual(currentView, 'licoes');
   go('inicio'); ok($('#subnav').hidden, 'o Início não tem abas');
 });
@@ -568,4 +572,32 @@ teste('sugestão: o texto leva o tipo, a mensagem e as informações técnicas',
   abrirSugestao(); $('#sugTexto').value = 'O botão travou'; $$('#sugForm [name="tipo"]').find(r=>r.value==='erro').checked = true;
   const {titulo, corpo} = textoSugestao(); ok(/\[Erro\] O botão travou/.test(titulo) || /O botão travou/.test(titulo), titulo);
   ok(corpo.includes(navigator.userAgent)); $('#sugDialog').close();
+});
+
+/* ---------- Teoria musical, Pauta no bandoneon e a Academia reorganizada ---------- */
+teste('teoria: 7 tópicos, a pauta toca a nota clicada e o teste rápido marca o tópico', () => {
+  go('teoria'); igual(TEORIA.length, 7); igual($$('#teLista [data-t]').length, 7);
+  teoriaAtual = 1; renderTeoria();
+  $('#teConteudo [data-d="32"]').dispatchEvent(new MouseEvent('click', {bubbles:true}));
+  ok($('#teConteudo .te-nome').textContent.includes(noteName(dToMidi(32))), 'nome da nota da 2ª linha');
+  const antes = state.progress.teoria.pauta; delete state.progress.teoria.pauta;
+  const q = $('#teConteudo .te-q'); q.querySelector(`[data-o="${q.dataset.a}"]`).click();
+  ok(state.progress.teoria.pauta, 'tópico concluído');
+  if(!antes) delete state.progress.teoria.pauta; saveProgress(); go('inicio');
+});
+teste('pauta no bandoneon: a nota da pauta é a do botão pedido e o acerto conta ponto', () => {
+  go('desafios'); $('[data-ch="pautabot"]').click(); $('#pHand').value = 'right'; $('#pStart').click();
+  const n = $('#pPauta .nota'); ok(n, 'nota desenhada'); ok(pq.target>=55 && pq.target<=84, 'na faixa da clave de sol');
+  pautaPress(pq.answer, pq.target, pkR); igual(pq.score, 1);
+  pq.active = false; $('[data-ch="find"]').click(); go('inicio');
+});
+teste('Academia: exercício de uma mão mostra só aquela mão; o de duas mostra as duas com o fole', () => {
+  go('academia'); carregarExercicio('n3-escada');
+  igual($('#acTeclados').dataset.maos, 'right'); ok($('#acMaoE').hidden && !$('#acMaoD').hidden);
+  carregarExercicio('n5-sincronia'); igual($('#acTeclados').dataset.maos, 'duas'); ok(!$('#acMaoE').hidden && !$('#acMaoD').hidden);
+  $('#acModo [data-modo="aprender"]').click(); $('#acStart').click();
+  ok($('#acEscolha').classList.contains('recolhido'), 'a escolha recolhe ao começar');
+  igual($('#acResumoTit').textContent, acad.ex.titulo);
+  $('#acTrocar').click(); ok(!$('#acEscolha').classList.contains('recolhido')); ok(!acad.rodando);
+  go('inicio');
 });

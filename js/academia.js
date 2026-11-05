@@ -127,7 +127,11 @@ const progEx = id => state.progress.academia[id] = state.progress.academia[id] |
 
 const acOpts = {getDir:()=>acad.dir, showLabels:()=>acadMostraNomes(), onPress:(b,m,dir,k)=>acadToque(b,m,dir,k),
                 onRelease:b=>acadSoltou(b), perRow:1, largura:()=>acadLarguraTeclado()};
-function acadLarguraTeclado(){ const c=$('#acCentro'); return c && c.clientWidth ? c.clientWidth - 30 : 0; }
+function acadLarguraTeclado(){
+  const c=$('#acCentro'); if(!c || !c.clientWidth) return 0;
+  return acadLadoALado() ? (c.clientWidth - 40 - 70)/2 : Math.min(620, c.clientWidth - 30);
+}
+const acadLadoALado = () => { const c=$('#acCentro'); return $('#acTeclados').dataset.maos==='duas' && c && c.clientWidth>=760; };
 const akL = kb($('#acKbLeft'),'left',acOpts), akR = kb($('#acKbRight'),'right',acOpts);
 const akOf = hand => hand==='left' ? akL : akR;
 const acadVel = () => +$('#acVel').value/100;
@@ -156,9 +160,9 @@ function acadConcluido(id){ const p = state.progress.academia[id]; return !!p &&
 function renderAcadNiveis(){
   $('#acNiveis').innerHTML = ACADEMIA.map(n=>{
     const f = acadFuncionais(n), feitos = f.filter(e=>acadConcluido(e.id)).length;
-    return `<button type="button" class="ac-nivel${n.nivel===acad.nivel?' on':''}" data-nivel="${n.nivel}">`
-      + `<span class="ac-num">${n.nivel}</span><span class="ac-ntit">${n.titulo}</span>`
-      + `<span class="bar"><span style="width:${f.length ? Math.round(100*feitos/f.length) : 0}%"></span></span>`
+    const p = f.length ? feitos/f.length : 0;
+    return `<button type="button" class="ac-nivel${n.nivel===acad.nivel?' on':''}${p===1?' completo':''}" data-nivel="${n.nivel}" style="--p:${p}">`
+      + `<span class="ac-num"><b>${n.nivel}</b></span><span class="ac-ntit">${n.titulo}</span>`
       + `<span class="muted ac-nfeitos">${t('{}/{} concluídos', feitos, f.length)}</span></button>`;
   }).join('');
 }
@@ -237,8 +241,23 @@ function aplicarTrecho(){
   acad.eventos = sel.map((e,k)=>({...e, k, inicio:e.inicio-t0}));
   acad.grupos = agruparEventos(acad.eventos);
   acad.g = -1; acad.pend = new Set();
-  renderFaixa(); acadInstrutor(0); acadPrevia();
+  renderFaixa(); acadInstrutor(0); acadPrevia(); acadMaos(); acadResumo();
 }
+// Só a mão que o exercício usa; com as duas, lado a lado e com o fole no meio, como no instrumento
+function acadMaos(){
+  const usa = new Set(acad.eventos.map(e=>e.mao)), m = usa.size===1 ? [...usa][0] : 'duas';
+  $('#acTeclados').dataset.maos = m;
+  $('#acMaoE').hidden = m==='right'; $('#acMaoD').hidden = m==='left';
+  if($('#acCentro').clientWidth) acadMostrar();
+}
+// Escolha recolhida enquanto você toca: uma linha com o nível e o exercício, e o botão de trocar
+function acadResumo(){
+  if(!acad.ex) return;
+  $('#acResumoNum').textContent = acad.ex.nivel; $('#acResumoTit').textContent = t(acad.ex.titulo);
+  const n = ACADEMIA.find(x=>x.nivel===acad.ex.nivel); $('#acResumoNivel').textContent = t('Nível {}: {}', n.nivel, t(n.titulo));
+}
+function acadRecolher(sim){ $('#acEscolha').classList.toggle('recolhido', sim); }
+$('#acTrocar').onclick = ()=>{ acadParar(); acadPrevia(); acadRecolher(false); $('#acEscolha').scrollIntoView({behavior: movReduzido()?'auto':'smooth', block:'start'}); };
 ['#acDe','#acAte'].forEach(s=>$(s).addEventListener('change', ()=>{ acadParar(); aplicarTrecho(); }));
 $('#acVel').oninput = e=>{ $('#acVelVal').textContent = e.target.value+'%'; };
 
@@ -364,6 +383,7 @@ function acadFeed(msg, cls=''){ const f=$('#acFeed'); f.className='feedback '+cl
 /* ---------- Fole ---------- */
 function acadSetDir(d){
   acad.dir = d;
+  const fm = $('#acFoleMini'); if(fm) fm.className = 'ac-fole-mini ' + d;
   const p = $('#acDirPill'); p.className = 'dirpill '+d; p.textContent = d==='open' ? t('⟵ ABRINDO ⟶') : t('⟶ FECHANDO ⟵');
   akL.refresh(); akR.refresh(); akL.retune(); akR.retune();
 }
@@ -493,7 +513,7 @@ function novaRodada(){
 $('#acStart').onclick = ()=>{
   if(acad.rodando || acad.demo){ acadParar(); acadPrevia(); acadFeed(t('Parado.')); return; }
   if(!acad.eventos.length) return;
-  ac(); acad.rodando = true; novaRodada(); renderFaixa();
+  ac(); acad.rodando = true; novaRodada(); renderFaixa(); acadRecolher(true); $('#acMais').open = false;
   $('#acStart').textContent = t('■ Parar'); acadFeed('');
   // nível 1: notas novas a cada rodada, mas só ao apertar Começar depois de uma rodada (tocar o botão da prévia usa as notas mostradas)
   if(acad.ex.nivel===1 && acad.ex.gerar && acad.sortearDeNovo && !acad.autoInicio){ acad.todos = montarEventos(acad.ex); aplicarTrecho(); acad.rodando = true; novaRodada(); }

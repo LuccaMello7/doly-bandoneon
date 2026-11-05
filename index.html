@@ -111,6 +111,7 @@
   <button type="button" role="tab" data-area="aprender" data-v="estudo"><svg aria-hidden="true"><use href="#i-route"/></svg>Meu estudo</button>
   <button type="button" role="tab" data-area="aprender" data-v="academia"><svg aria-hidden="true"><use href="#i-cap"/></svg>Academia</button>
   <button type="button" role="tab" data-area="aprender" data-v="licoes"><svg aria-hidden="true"><use href="#i-book"/></svg>Lições</button>
+  <button type="button" role="tab" data-area="aprender" data-v="teoria"><svg aria-hidden="true"><use href="#i-note"/></svg>Teoria</button>
   <button type="button" role="tab" data-area="tocar" data-v="teclado"><svg aria-hidden="true"><use href="#i-keys"/></svg>Teclado</button>
   <button type="button" role="tab" data-area="tocar" data-v="melodias"><svg aria-hidden="true"><use href="#i-music"/></svg>Melodias</button>
   <button type="button" role="tab" data-area="tocar" data-v="acordes"><svg aria-hidden="true"><use href="#i-chord"/></svg>Acordes</button>
@@ -216,6 +217,15 @@
   </div>
 </section>
 
+<!-- TEORIA MUSICAL (js/teoria.js) -->
+<section id="v-teoria">
+  <div class="pg-topo"><span class="pg-ic t-teoria"><svg aria-hidden="true"><use href="#i-note"/></svg></span><div><h2 class="pg-tit">Teoria musical</h2><p class="muted">O básico para ler partitura e entender os exercícios: notas, pauta, figuras, compasso, escalas e acordes. Tudo com som.</p></div></div>
+  <div class="te-layout">
+    <nav class="card te-lista" id="teLista" aria-label="Tópicos de teoria"></nav>
+    <div class="card te-conteudo" id="teConteudo" aria-live="polite"></div>
+  </div>
+</section>
+
 <!-- TECLADO -->
 <section id="v-teclado">
   <div class="pg-topo"><span class="pg-ic t-teclado"><svg aria-hidden="true"><use href="#i-keys"/></svg></span><div><h2 class="pg-tit">Teclado</h2><p class="muted">Os 71 botões com som real. Toque, troque o fole e veja como cada botão muda de nota.</p></div></div>
@@ -272,6 +282,7 @@
     <button class="btn sec on" data-ch="find">Encontre a nota</button>
     <button class="btn sec" data-ch="staff">Leitura na pauta</button>
     <button class="btn sec" data-ch="ear">Ouvido</button>
+    <button class="btn sec" data-ch="pautabot">Pauta no bandoneon</button>
   </div>
 
   <div class="card" id="chFind">
@@ -317,6 +328,27 @@
     <div class="instrument">
       <div class="side"><div class="label">Esquerda</div><div id="ekLeft"></div></div>
       <div class="side"><div class="label">Direita</div><div id="ekRight"></div></div>
+    </div>
+  </div>
+
+  <div class="card" id="chPauta" style="display:none">
+    <h2>Pauta no bandoneon</h2>
+    <p class="muted">A nota aparece na pauta e você toca o botão que dá essa nota, na direção do fole indicada. É a ponte entre ler a partitura e tocar. Dez rodadas; depois de dois erros o botão certo brilha.</p>
+    <div class="row">
+      <label>Mão: <select id="pHand"><option value="right">Direita (clave de sol)</option><option value="left">Esquerda (clave de fá)</option></select></label>
+      <label>Direção: <select id="pDir"><option value="open">Abrindo</option><option value="close">Fechando</option><option value="rand">Aleatória</option></select></label>
+      <label>Notas: <select id="pNotas"><option value="naturais">Só as naturais (Dó, Ré, Mi…)</option><option value="todas">Todas</option></select></label>
+      <button class="btn" id="pStart">Começar</button>
+    </div>
+    <div class="pauta-desafio">
+      <div class="staff" id="pPauta"></div>
+      <div id="pDirPill" class="dirpill open" style="display:inline-block;visibility:hidden"></div>
+      <div class="feedback" id="pFeed" aria-live="polite"></div>
+      <div class="muted" id="pScore"></div>
+    </div>
+    <div class="instrument">
+      <div class="side"><div class="label">Esquerda</div><div id="pkLeft"></div></div>
+      <div class="side"><div class="label">Direita</div><div id="pkRight"></div></div>
     </div>
   </div>
 
@@ -505,51 +537,18 @@
 <section id="v-academia">
   <div class="pg-topo"><span class="pg-ic t-academia"><svg aria-hidden="true"><use href="#i-cap"/></svg></span><div><h2 class="pg-tit">Academia de Bandoneón</h2><p class="muted">Exercícios em 6 níveis, do primeiro botão até músicas com as duas mãos, e um nível para as suas próprias partituras. O instrutor mostra a nota, a mão, o dedo e a direção do fole de cada momento, e no fim você recebe um relatório com o que acertou e o que revisar.</p></div></div>
   <div class="card tarefa-aviso" hidden></div>
-  <aside class="aviso" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></svg><p><strong>O BanDoly é um site para aprendizado e nunca substituirá os conselhos e as orientações de um professor.</strong> Use o app como apoio aos estudos e, sempre que puder, aprenda com um professor de bandoneon: ele corrige a postura, o fole e o dedilhado, coisas que um app não consegue ver.</p></aside>
-  <div class="card">
-    <div class="ac-niveis" id="acNiveis" role="group" aria-label="Níveis"></div>
-  </div>
-
-  <div class="ac-layout">
-    <!-- área central: o teclado de sempre, com destaque, dedo e fole -->
-    <div class="card ac-centro" id="acCentro">
-      <div class="row ac-topo">
-        <div><b id="acExTitulo"></b><div class="muted" id="acExDesc"></div></div>
-      </div>
-      <div class="row">
-        <span class="muted">Seu fole:</span> <span class="dirpill open" id="acDirPill"></span>
-        <button class="btn sec" id="acDirBtn" title="Troca a direção do fole (tecla Espaço)">⇄ Trocar fole <kbd>Espaço</kbd></button>
-        <label title="O app troca a direção do fole sozinho. Nesse caso o fole não é avaliado."><input type="checkbox" id="acAuto"> Fole automático</label>
-        <label><input type="checkbox" id="acNomes" checked> Nomes nos botões</label>
-      </div>
-      <div class="ac-maolabel">Mão esquerda</div>
-      <div id="acKbLeft"></div>
-      <div class="ac-maolabel">Mão direita</div>
-      <div id="acKbRight"></div>
-      <div class="mstrip ac-strip" id="acStrip"></div>
-      <div class="feedback" id="acFeed" aria-live="polite"></div>
-      <div class="ac-dedo-pop" id="acDedoPop" hidden></div>
+  <aside class="aviso aviso-curto" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></svg><p><strong>O BanDoly é um site para aprendizado e nunca substituirá os conselhos e as orientações de um professor.</strong> Use o app como apoio aos estudos e, sempre que puder, aprenda com um professor de bandoneon: ele corrige a postura, o fole e o dedilhado, coisas que um app não consegue ver.</p></aside>
+  <!-- 1. escolher: níveis em fileira e os exercícios do nível (recolhe enquanto você toca) -->
+  <div class="card ac-escolha" id="acEscolha">
+    <div class="ac-resumo" id="acResumo">
+      <span class="ac-resumo-num" id="acResumoNum"></span>
+      <div class="ac-resumo-txt"><span class="muted" id="acResumoNivel"></span><b id="acResumoTit"></b></div>
+      <button type="button" class="btn sec" id="acTrocar">Trocar exercício</button>
     </div>
-
-    <!-- área lateral: instrutor digital -->
-    <aside class="card ac-instrutor" id="acInstrutor" aria-label="Instrutor digital">
-      <h3>Instrutor</h3>
-      <div class="ac-prog" aria-hidden="true"><span id="acProgTxt" class="muted"></span><span class="ac-prog-bar"><i id="acProgBar"></i></span></div>
-      <div id="acAgora" aria-live="polite"></div>
-      <p class="ac-proximo" id="acProximo"></p>
-      <div class="maos" id="acMaos"></div>
-      <div class="row ac-opcoes">
-        <label><input type="checkbox" id="acMaosVer" checked> Mostrar as mãos</label>
-        <label><input type="checkbox" id="acAmpliar"> Visualização ampliada</label>
-      </div>
-      <p class="muted ac-validacao" id="acValidacao"></p>
-    </aside>
-  </div>
-
-  <!-- área inferior: exercícios, modo e controles -->
-  <div class="card">
-    <h3 id="acNivelTitulo" style="margin-top:0"></h3>
-    <p class="muted" id="acNivelObjetivo"></p>
+    <div class="ac-escolha-corpo">
+      <div class="ac-niveis" id="acNiveis" role="group" aria-label="Níveis"></div>
+      <h3 id="acNivelTitulo"></h3>
+      <p class="muted" id="acNivelObjetivo"></p>
     <!-- nível 7: importar uma partitura (js/partituras.js) -->
     <div class="ac-partituras" id="acPartituras" hidden>
       <div class="row">
@@ -584,25 +583,76 @@
         <p>Use partituras em domínio público ou que você tem direito de usar.</p>
       </details>
     </div>
-    <div class="ac-lista" id="acLista"></div>
+      <div class="ac-lista" id="acLista"></div>
+    </div>
+  </div>
+
+  <!-- 2. ajustar e começar: a barra fica logo acima do teclado -->
+  <div class="card ac-barra" id="acBarra">
     <div class="ac-modos" id="acModo" role="group" aria-label="Modo">
       <button type="button" data-modo="aprender" class="on">Aprender</button>
       <button type="button" data-modo="praticar">Praticar</button>
       <button type="button" data-modo="desafio">Desafio</button>
     </div>
-    <p class="muted" id="acModoInfo"></p>
-    <div class="row ac-controles">
-      <button class="btn" id="acStart">▶ Começar</button>
-      <button class="btn sec" id="acOuvirBtn">Ouvir</button>
-      <label>Velocidade: <input type="range" id="acVel" min="40" max="120" step="10" value="70"> <span id="acVelVal">70%</span></label>
-      <label title="Clique a cada tempo no modo Desafio e ao ouvir"><input type="checkbox" id="acMetro" checked> Metrônomo</label>
-      <label title="Recomeça sozinho enquanto houver erros"><input type="checkbox" id="acRepetir"> Repetir</label>
-      <label title="Destaque do botão, número do dedo e posição das mãos"><input type="checkbox" id="acGuia" checked> Guia de Dedilhado</label>
-      <label title="Toque no seu bandoneon: o app confere a nota e o ritmo pelo microfone"><input type="checkbox" id="acMic"> <svg aria-hidden="true"><use href="#i-mic"/></svg> Microfone</label>
-      <button type="button" class="btn sec" id="acTranscricaoBtn" aria-expanded="false"><svg aria-hidden="true"><use href="#i-file"/></svg>Transcrição</button>
-      <button type="button" class="btn sec" id="acDigitar" title="Escolha o dedo de cada nota (para professores)">Editar digitação</button>
-      <span id="acTrecho">Trecho: da nota <input type="number" id="acDe" min="1" value="1" class="ac-num-in"> até <input type="number" id="acAte" min="1" value="1" class="ac-num-in"></span>
+    <button class="btn btn-grande" id="acStart">▶ Começar</button>
+    <button class="btn sec" id="acOuvirBtn">Ouvir</button>
+    <label class="ac-vel">Velocidade <input type="range" id="acVel" min="40" max="120" step="10" value="70"> <span id="acVelVal">70%</span></label>
+    <details class="ac-mais" id="acMais">
+      <summary class="btn sec"><svg aria-hidden="true"><use href="#i-gear"/></svg>Mais opções</summary>
+      <div class="ac-mais-painel">
+        <label title="Clique a cada tempo no modo Desafio e ao ouvir"><input type="checkbox" id="acMetro" checked> Metrônomo</label>
+        <label title="Recomeça sozinho enquanto houver erros"><input type="checkbox" id="acRepetir"> Repetir</label>
+        <label title="Destaque do botão, número do dedo e posição das mãos"><input type="checkbox" id="acGuia" checked> Guia de Dedilhado</label>
+        <label title="Toque no seu bandoneon: o app confere a nota e o ritmo pelo microfone"><input type="checkbox" id="acMic"> <svg aria-hidden="true"><use href="#i-mic"/></svg> Microfone</label>
+        <span id="acTrecho">Trecho: da nota <input type="number" id="acDe" min="1" value="1" class="ac-num-in"> até <input type="number" id="acAte" min="1" value="1" class="ac-num-in"></span>
+        <div class="row">
+          <button type="button" class="btn sec" id="acTranscricaoBtn" aria-expanded="false"><svg aria-hidden="true"><use href="#i-file"/></svg>Transcrição</button>
+          <button type="button" class="btn sec" id="acDigitar" title="Escolha o dedo de cada nota (para professores)">Editar digitação</button>
+        </div>
+      </div>
+    </details>
+    <p class="muted ac-modo-info" id="acModoInfo"></p>
+  </div>
+
+  <!-- 3. tocar: o teclado (só a mão do exercício, ou as duas com o fole no meio) e o instrutor -->
+  <div class="ac-layout">
+    <div class="card ac-centro" id="acCentro">
+      <div class="row ac-topo">
+        <div><b id="acExTitulo"></b><div class="muted" id="acExDesc"></div></div>
+      </div>
+      <div class="row">
+        <span class="muted">Seu fole:</span> <span class="dirpill open" id="acDirPill"></span>
+        <button class="btn sec" id="acDirBtn" title="Troca a direção do fole (tecla Espaço)">⇄ Trocar fole <kbd>Espaço</kbd></button>
+        <label title="O app troca a direção do fole sozinho. Nesse caso o fole não é avaliado."><input type="checkbox" id="acAuto"> Fole automático</label>
+        <label><input type="checkbox" id="acNomes" checked> Nomes nos botões</label>
+      </div>
+      <div class="ac-teclados" id="acTeclados" data-maos="duas">
+        <div class="ac-mao" id="acMaoE"><div class="ac-maolabel">Mão esquerda</div><div id="acKbLeft"></div></div>
+        <div class="ac-fole-meio" aria-hidden="true"><span class="ac-fole-mini open" id="acFoleMini"></span></div>
+        <div class="ac-mao" id="acMaoD"><div class="ac-maolabel">Mão direita</div><div id="acKbRight"></div></div>
+      </div>
+      <div class="mstrip ac-strip" id="acStrip"></div>
+      <div class="feedback" id="acFeed" aria-live="polite"></div>
+      <div class="ac-dedo-pop" id="acDedoPop" hidden></div>
     </div>
+
+    <!-- área lateral: instrutor digital -->
+    <aside class="card ac-instrutor" id="acInstrutor" aria-label="Instrutor digital">
+      <h3>Instrutor</h3>
+      <div class="ac-prog" aria-hidden="true"><span id="acProgTxt" class="muted"></span><span class="ac-prog-bar"><i id="acProgBar"></i></span></div>
+      <div id="acAgora" aria-live="polite"></div>
+      <p class="ac-proximo" id="acProximo"></p>
+      <div class="maos" id="acMaos"></div>
+      <div class="row ac-opcoes">
+        <label><input type="checkbox" id="acMaosVer" checked> Mostrar as mãos</label>
+        <label><input type="checkbox" id="acAmpliar"> Visualização ampliada</label>
+      </div>
+      <p class="muted ac-validacao" id="acValidacao"></p>
+    </aside>
+  </div>
+
+  <!-- 4. depois de tocar: transcrição e relatório -->
+  <div class="card ac-pos" id="acPos">
     <div class="ac-transcricao" id="acTranscricao" hidden></div>
     <div class="ac-relatorio" id="acRelatorio" aria-live="polite"></div>
   </div>
@@ -860,6 +910,8 @@
 <script src="js/cascata.js"></script>
 <script src="js/trilha.js"></script>
 <script src="js/professor.js"></script>
+<script src="js/teoria-textos.js"></script>
+<script src="js/teoria.js"></script>
 <script src="js/contato.js"></script>
 <script src="js/init.js"></script>
 </body>
