@@ -1,0 +1,25 @@
+BanDoly - Aprenda Bandoneon
+Copyright (c) 2026 Lucca Mello. Todos os direitos reservados.
+
+O código, os textos, as lições, a teoria musical, os exercícios, o desenho e as demais
+partes originais deste projeto pertencem ao autor. Eles podem ser vistos e usados no site
+https://bandoly.app, mas não podem ser copiados, modificados, redistribuídos, publicados
+em outro lugar nem usados em outros projetos, comerciais ou não, sem autorização prévia
+e por escrito do autor.
+
+Partes de terceiros, com as suas próprias licenças (não cobertas pelo texto acima):
+- Fonte Nunito (pasta fontes/), de Vernon Adams e Jacques Le Bailly: SIL Open Font License 1.1.
+- Som do bandoneon (sons/bandoneon.js), convertido do SoundFont "Bandoneon V2.5", de
+  Jörg Bleymehl (edição GM de Mike77154), distribuído para uso livre.
+- Fotos e documentos de Doly Carlos da Costa (pasta imagens/doly/): pertencem aos seus
+  titulares e são usados com permissão; não podem ser reproduzidos a partir deste projeto.
+- "El Choclo", de Ángel Villoldo (1903): obra em domínio público.
+
+Para pedir autorização: https://github.com/LuccaMello7/doly-bandoneon/issues
+
+---
+
+English summary: Copyright (c) 2026 Lucca Mello. All rights reserved. You may view and use
+the app at https://bandoly.app, but you may not copy, modify, redistribute or reuse this
+project, in whole or in part, without the author's prior written permission. Third-party
+parts listed above keep their own licenses.
