@@ -19,11 +19,13 @@ function go(v){
   if(area!=='inicio'){ ultimaAba[area]=v; store.set('ultimaAba', ultimaAba); }
   $$('#nav [data-area]').forEach(b=>{ const on=b.dataset.area===area; b.classList.toggle('active',on); b.toggleAttribute('aria-current',on); });
   const sub=$('#subnav'); sub.hidden = AREAS[area].length<2;
+  const vSub = v==='teoria' ? 'licoes' : v; // Teoria é a segunda trilha da aba Lições
   $$('#subnav [data-v]').forEach(b=>{
-    const on=b.dataset.v===v; b.hidden = b.dataset.area!==area;
+    const on=b.dataset.v===vSub; b.hidden = b.dataset.area!==area;
     b.classList.toggle('active',on); b.setAttribute('aria-selected',on); b.toggleAttribute('aria-current',on);
   });
   $$('main>section').forEach(s=>s.classList.toggle('active',s.id==='v-'+v));
+  construirPendentes(); // teclados desta aba que ainda não foram desenhados
   moverIndicador();
   if(v!=='ritmo' && rh.playing) toggleRhythm();
   if(v!=='melodias' && mel.running) stopMelody();

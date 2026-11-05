@@ -140,6 +140,7 @@ $$('[data-ch]').forEach(b=>b.onclick=()=>{
   $('#chEar').style.display=b.dataset.ch==='ear'?'block':'none';
   $('#chPauta').style.display=b.dataset.ch==='pautabot'?'block':'none';
   if(b.dataset.ch!=='pautabot' && typeof pq!=='undefined') pq.active=false;
+  construirPendentes();
   if(b.dataset.ch!=='ear') eq.active=false;
 });
 renderStaffAnswers(); drawStaff('treble',null);

@@ -51,6 +51,7 @@
 <link rel="icon" href="favicon.ico" sizes="48x48">
 <link rel="icon" href="icones/icone-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="icones/icone-192.png">
+<link rel="preload" href="fontes/nunito-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/app.css">
 </head>
 <body class="app-shell">
@@ -111,7 +112,6 @@
   <button type="button" role="tab" data-area="aprender" data-v="estudo"><svg aria-hidden="true"><use href="#i-route"/></svg>Meu estudo</button>
   <button type="button" role="tab" data-area="aprender" data-v="academia"><svg aria-hidden="true"><use href="#i-cap"/></svg>Academia</button>
   <button type="button" role="tab" data-area="aprender" data-v="licoes"><svg aria-hidden="true"><use href="#i-book"/></svg>Lições</button>
-  <button type="button" role="tab" data-area="aprender" data-v="teoria"><svg aria-hidden="true"><use href="#i-note"/></svg>Teoria</button>
   <button type="button" role="tab" data-area="tocar" data-v="teclado"><svg aria-hidden="true"><use href="#i-keys"/></svg>Teclado</button>
   <button type="button" role="tab" data-area="tocar" data-v="melodias"><svg aria-hidden="true"><use href="#i-music"/></svg>Melodias</button>
   <button type="button" role="tab" data-area="tocar" data-v="acordes"><svg aria-hidden="true"><use href="#i-chord"/></svg>Acordes</button>
@@ -159,7 +159,7 @@
       <h2>O que você encontra no BanDoly</h2>
     <div class="grid feats" data-revela="cascata">
       <div class="feat"><span class="feat-ic"><svg aria-hidden="true"><use href="#i-keys"/></svg></span><h3>Teclado com som real</h3><p>Os 71 botões do bandoneon Rheinische 142 nas posições reais, com o som gravado de um bandoneon de 1930. Cada botão toca uma nota abrindo o fole e outra fechando.</p><a href="#" data-go="teclado">Abrir o teclado →</a></div>
-      <div class="feat"><span class="feat-ic"><svg aria-hidden="true"><use href="#i-book"/></svg></span><h3>11 lições com quiz</h3><p>História do instrumento, sistema bisonoro, fole e articulação, leitura nas duas claves, ritmos de tango, acordes e como ler uma partitura de tango.</p><a href="#" data-go="licoes">Ver as lições →</a> <a href="licoes/" data-local>Ler as lições online →</a></div>
+      <div class="feat"><span class="feat-ic"><svg aria-hidden="true"><use href="#i-book"/></svg></span><h3>11 lições com quiz</h3><p>História do instrumento, sistema bisonoro, fole e articulação, leitura nas duas claves, ritmos de tango, acordes e como ler uma partitura de tango.</p><a href="#" data-go="licoes">Ver as lições →</a> <a href="licoes/" data-local>Ler as lições online →</a> <a href="teoria/" data-local>Teoria musical online →</a></div>
       <div class="feat"><span class="feat-ic"><svg aria-hidden="true"><use href="#i-target"/></svg></span><h3>Desafios para decorar os botões</h3><p>O app pede uma nota e você encontra o botão. O sorteio repete mais os botões que você erra, e o mapa de erros mostra onde treinar.</p><a href="#" data-go="desafios">Fazer um desafio →</a></div>
       <div class="feat"><span class="feat-ic"><svg aria-hidden="true"><use href="#i-music"/></svg></span><h3>Escalas e melodias guiadas</h3><p>Escalas em todas as tonalidades e melodias com uma ou duas mãos, com partitura, a direção do fole sugerida e um modo que espera você acertar.</p><a href="#" data-go="melodias">Tocar uma melodia →</a></div>
       <div class="feat"><span class="feat-ic"><svg aria-hidden="true"><use href="#i-chord"/></svg></span><h3>Acordes no bandoneon</h3><p>Onde ficam os botões de 72 acordes (maiores, menores, com sétima e diminutos) em todas as tônicas, abrindo e fechando, nas duas mãos.</p><a href="#" data-go="acordes">Ver os acordes →</a></div>
@@ -211,6 +211,7 @@
 <!-- LIÇÕES -->
 <section id="v-licoes">
   <div class="pg-topo"><span class="pg-ic t-licoes"><svg aria-hidden="true"><use href="#i-book"/></svg></span><div><h2 class="pg-tit">Lições</h2><p class="muted">11 lições curtas com quiz, do primeiro contato com o instrumento até a partitura de tango.</p></div></div>
+  <div class="segmento trilhas" role="group" aria-label="Trilha de estudo"><button type="button" class="btn sec on" data-go="licoes"><svg aria-hidden="true"><use href="#i-bellows"/></svg>O bandoneon · 11 lições</button><button type="button" class="btn sec" data-go="teoria"><svg aria-hidden="true"><use href="#i-note"/></svg>Teoria musical · 7 tópicos</button></div>
   <div class="lesson-layout">
     <div class="card lesson-list" id="lessonList"></div>
     <div class="card" id="lessonBody"></div>
@@ -220,6 +221,7 @@
 <!-- TEORIA MUSICAL (js/teoria.js) -->
 <section id="v-teoria">
   <div class="pg-topo"><span class="pg-ic t-teoria"><svg aria-hidden="true"><use href="#i-note"/></svg></span><div><h2 class="pg-tit">Teoria musical</h2><p class="muted">O básico para ler partitura e entender os exercícios: notas, pauta, figuras, compasso, escalas e acordes. Tudo com som.</p></div></div>
+  <div class="segmento trilhas" role="group" aria-label="Trilha de estudo"><button type="button" class="btn sec" data-go="licoes"><svg aria-hidden="true"><use href="#i-bellows"/></svg>O bandoneon · 11 lições</button><button type="button" class="btn sec on" data-go="teoria"><svg aria-hidden="true"><use href="#i-note"/></svg>Teoria musical · 7 tópicos</button></div>
   <div class="te-layout">
     <nav class="card te-lista" id="teLista" aria-label="Tópicos de teoria"></nav>
     <div class="card te-conteudo" id="teConteudo" aria-live="polite"></div>
@@ -440,7 +442,7 @@
       </div>
       <div class="card" id="melEditor" style="display:none">
         <h3 style="margin-top:0">Editor de melodia</h3>
-        <textarea id="melText" rows="11" spellcheck="false"></textarea>
+        <textarea id="melText" rows="11" spellcheck="false" aria-label="Texto da melodia"></textarea>
         <div class="row" style="margin-top:8px">
           <button class="btn" id="melSave">Salvar e usar</button>
           <button class="btn sec" id="melCancel">Cancelar</button>
@@ -604,7 +606,7 @@
         <label title="Recomeça sozinho enquanto houver erros"><input type="checkbox" id="acRepetir"> Repetir</label>
         <label title="Destaque do botão, número do dedo e posição das mãos"><input type="checkbox" id="acGuia" checked> Guia de Dedilhado</label>
         <label title="Toque no seu bandoneon: o app confere a nota e o ritmo pelo microfone"><input type="checkbox" id="acMic"> <svg aria-hidden="true"><use href="#i-mic"/></svg> Microfone</label>
-        <span id="acTrecho">Trecho: da nota <input type="number" id="acDe" min="1" value="1" class="ac-num-in"> até <input type="number" id="acAte" min="1" value="1" class="ac-num-in"></span>
+        <span id="acTrecho">Trecho: da nota <input type="number" id="acDe" min="1" value="1" class="ac-num-in" aria-label="Primeira nota do trecho"> até <input type="number" id="acAte" min="1" value="1" class="ac-num-in" aria-label="Última nota do trecho"></span>
         <div class="row">
           <button type="button" class="btn sec" id="acTranscricaoBtn" aria-expanded="false"><svg aria-hidden="true"><use href="#i-file"/></svg>Transcrição</button>
           <button type="button" class="btn sec" id="acDigitar" title="Escolha o dedo de cada nota (para professores)">Editar digitação</button>
@@ -866,7 +868,7 @@
     <h2 id="sugTit">Enviar sugestão ou reportar erro</h2>
     <p class="muted">A sua mensagem ajuda a melhorar o BanDoly. Ela vai pelo GitHub (precisa de uma conta gratuita) ou, se preferir, copie o texto e mande como quiser.</p>
     <div class="sug-tipos" role="radiogroup" aria-label="Tipo de mensagem"><label class="op"><input type="radio" name="tipo" value="sugestao" checked><span>Sugestão</span></label><label class="op"><input type="radio" name="tipo" value="erro"><span>Erro</span></label><label class="op"><input type="radio" name="tipo" value="elogio"><span>Elogio</span></label></div>
-    <textarea id="sugTexto" rows="5" placeholder="Conte o que aconteceu ou o que você gostaria de ver no app."></textarea>
+    <textarea id="sugTexto" rows="5" aria-label="Sua mensagem" placeholder="Conte o que aconteceu ou o que você gostaria de ver no app."></textarea>
     <label class="ctl-liga"><input type="checkbox" id="sugTec" checked> Incluir informações técnicas (navegador, aba aberta, idioma e tamanho da tela)</label>
     <div class="row bv-acoes"><button type="button" class="btn" id="sugGithub">Enviar pelo GitHub</button><button type="button" class="btn" id="sugEmail" hidden>Enviar por e-mail</button><button type="button" class="btn sec" id="sugCopiar">Copiar o texto</button><button type="button" class="btn ghost" id="sugFechar">Fechar</button></div>
     <p class="muted" id="sugMsg" aria-live="polite"></p>
@@ -874,7 +876,7 @@
 </dialog>
 <dialog class="boas janela" id="partilha" aria-labelledby="partilhaTit">
   <h2 id="partilhaTit"></h2>
-  <textarea id="partilhaTexto" rows="7" readonly></textarea>
+  <textarea id="partilhaTexto" rows="7" readonly aria-label="Texto para enviar"></textarea>
   <div class="row bv-acoes"><button type="button" class="btn" id="partilhaNativo">Compartilhar</button><button type="button" class="btn sec" id="partilhaWhats">WhatsApp</button><button type="button" class="btn sec" id="partilhaEmail">E-mail</button><button type="button" class="btn sec" id="partilhaCopiar">Copiar</button><button type="button" class="btn ghost" id="partilhaFechar">Fechar</button></div>
   <p class="muted" id="partilhaMsg" aria-live="polite"></p>
 </dialog>
@@ -882,37 +884,37 @@
 <canvas class="confete" id="confete" aria-hidden="true" hidden></canvas>
 </main>
 
-<script src="js/base.js"></script>
-<script src="js/i18n-textos.js"></script>
-<script src="js/i18n.js"></script>
-<script src="js/licoes-traducao.js"></script>
-<script src="js/audio.js"></script>
-<script src="js/teclado.js"></script>
-<script src="js/movimento.js"></script>
-<script src="js/navegacao.js"></script>
-<script src="js/fole.js"></script>
-<script src="js/desafios.js"></script>
-<script src="js/ritmo.js"></script>
-<script src="js/atalhos.js"></script>
-<script src="js/controles.js"></script>
-<script src="js/melodias.js"></script>
-<script src="js/musicxml.js"></script>
-<script src="js/escalas.js"></script>
-<script src="js/microfone.js"></script>
-<script src="js/acordes.js"></script>
-<script src="js/maos.js"></script>
-<script src="js/academia.js"></script>
-<script src="js/partituras.js"></script>
-<script src="js/rotina.js"></script>
-<script src="js/licoes.js"></script>
-<script src="js/ajustes.js"></script>
-<script src="js/ouvido.js"></script>
-<script src="js/cascata.js"></script>
-<script src="js/trilha.js"></script>
-<script src="js/professor.js"></script>
-<script src="js/teoria-textos.js"></script>
-<script src="js/teoria.js"></script>
-<script src="js/contato.js"></script>
-<script src="js/init.js"></script>
+<script src="js/base.js" defer></script>
+<script src="js/i18n-textos.js" defer></script>
+<script src="js/i18n.js" defer></script>
+<script src="js/licoes-traducao.js" defer></script>
+<script src="js/audio.js" defer></script>
+<script src="js/teclado.js" defer></script>
+<script src="js/movimento.js" defer></script>
+<script src="js/navegacao.js" defer></script>
+<script src="js/fole.js" defer></script>
+<script src="js/desafios.js" defer></script>
+<script src="js/ritmo.js" defer></script>
+<script src="js/atalhos.js" defer></script>
+<script src="js/controles.js" defer></script>
+<script src="js/melodias.js" defer></script>
+<script src="js/musicxml.js" defer></script>
+<script src="js/escalas.js" defer></script>
+<script src="js/microfone.js" defer></script>
+<script src="js/acordes.js" defer></script>
+<script src="js/maos.js" defer></script>
+<script src="js/academia.js" defer></script>
+<script src="js/partituras.js" defer></script>
+<script src="js/rotina.js" defer></script>
+<script src="js/licoes.js" defer></script>
+<script src="js/ajustes.js" defer></script>
+<script src="js/ouvido.js" defer></script>
+<script src="js/cascata.js" defer></script>
+<script src="js/trilha.js" defer></script>
+<script src="js/professor.js" defer></script>
+<script src="js/teoria-textos.js" defer></script>
+<script src="js/teoria.js" defer></script>
+<script src="js/contato.js" defer></script>
+<script src="js/init.js" defer></script>
 </body>
 </html>

@@ -8,6 +8,8 @@ Funciona no navegador, no computador ou no celular, em **português, espanhol e 
 
 O nome é uma homenagem a **Doly Carlos da Costa** (Caçapava do Sul), bandoneonista gaúcho que tocou nas orquestras de tango das rádios de Porto Alegre, fundou o grupo Os Posteiros e recebeu a Medalha Simões Lopes Neto. A história dele está em [bandoly.app/doly-costa](https://bandoly.app/doly-costa/) (também em espanhol e inglês).
 
+A teoria musical também tem páginas próprias em [bandoly.app/teoria](https://bandoly.app/teoria/).
+
 Dúvidas sobre o instrumento e sobre como começar estão em [bandoly.app/perguntas-frequentes](https://bandoly.app/perguntas-frequentes/), uma página própria (também em espanhol e inglês), com busca e categorias.
 
 ---
@@ -77,7 +79,7 @@ O menu tem o **Início** e quatro áreas, cada uma com as suas abas no topo da t
 
 | Área | Abas |
 |---|---|
-| **Aprender** | Meu estudo, Academia, Lições, Teoria |
+| **Aprender** | Meu estudo, Academia, Lições (com duas trilhas: o bandoneon e a teoria musical) |
 | **Tocar** | Teclado, Melodias, Acordes, Bandoneon real |
 | **Treinar** | Desafios, Ritmo |
 | **Perfil** | Conquistas, Para professores, Ajustes |
@@ -88,7 +90,7 @@ O menu tem o **Início** e quatro áreas, cada uma com as suas abas no topo da t
 | **Meu estudo** | O seu caminho de estudo, o "continue de onde parou", os recordes e a rotina do dia, com a sequência de dias praticados. |
 | **Lições** | 11 lições curtas, cada uma com quiz (e, em várias delas, uma tarefa "Experimente agora" para tocar no teclado no meio da explicação): história, partes do instrumento, sistema bisonoro, fole e articulação, leitura nas duas claves, ritmos de tango, acordes, duas mãos e como ler uma partitura de tango. |
 | **Academia** | Primeiro você escolhe o nível e o exercício (a escolha se recolhe numa linha enquanto você toca), depois o modo e a velocidade numa barra logo acima do teclado. O teclado mostra só a mão que o exercício usa; com as duas mãos, elas ficam lado a lado com o fole no meio. Exercícios em **6 níveis** (botões, dedos, independência dos dedos, fole, duas mãos e músicas), cada um nos modos **Aprender** (mostra o próximo botão, o dedo e o fole e espera a nota certa), **Praticar** (no seu ritmo, apontando os erros) e **Desafio** (no tempo, com metrônomo; a velocidade sobe e os auxílios somem conforme a sua precisão). Um **instrutor** ao lado do teclado mostra a nota, a mão, o fole e a posição das mãos, e no fim vem um relatório com o que errou e o que treinar. No nível 7, **Minhas partituras**, você importa uma partitura (MusicXML ou MIDI) e o app transcreve cada nota para um botão, com a mão, o fole, a duração e as pausas; o botão **Transcrição** mostra a tabela nota a nota. |
-| **Teoria** | Sete tópicos curtos de teoria musical com som: notas e oitavas, a pauta e as claves (a pauta toca a nota clicada), sustenido e bemol, figuras e pausas (cada figura toca no tempo), compasso, escalas e acordes. Cada tópico tem um teste rápido e um atalho para praticar. |
+| **Lições → Teoria musical** | Sete tópicos curtos de teoria musical com som: notas e oitavas, a pauta e as claves (a pauta toca a nota clicada), sustenido e bemol, figuras e pausas (cada figura toca no tempo), compasso, escalas e acordes. Cada tópico tem um teste rápido e um atalho para praticar. |
 | **Teclado** | Os 71 botões nas posições reais, com som de bandoneon. Um fole simulado mostra quando ele chega ao fim, e a **válvula de ar** reposiciona o fole sem som. No celular dá para ver **uma mão por vez**, com botões maiores. |
 | **Bandoneon real** | Para quem tem o instrumento: liga o microfone, mostra a nota ouvida num **afinador** (de -50 a +50 cents) e acende no teclado os botões que dão essa nota. O botão **Calibrar o silêncio** mede o barulho do ambiente para o app ignorar o que for mais baixo. |
 | **Desafios** | *Encontre a nota*: o app pede uma nota e você acha o botão. O sorteio **inteligente** repete mais os botões que você erra, e o **mapa de erros** pinta o teclado do verde ao vermelho. Há também a *Leitura na pauta*, a **Pauta no bandoneon** (a nota aparece na pauta e você toca o botão: a ponte entre ler e tocar) e o **Treino de ouvido**: o app toca uma nota e você encontra o botão só pelo som; ao errar, ele diz se a nota é mais aguda ou mais grave e toca de novo. |
@@ -260,6 +262,8 @@ tests/                testes automáticos
 - **Abas e áreas**: cada aba é uma `<section id="v-nome">` e tem um botão em `#subnav` com `data-area`. A lista `AREAS` em `js/navegacao.js` diz que abas cada área tem. Para fazer algo ao abrir ou sair de uma aba, use `ganchosAba.push((nova, anterior) => …)`.
 - **Caminho e conquistas** não guardam "feito" à mão: cada etapa (`ETAPAS`) e cada insígnia (`INSIGNIAS`) em `js/trilha.js` tem uma função `feito()` que olha o progresso. Só a data em que a insígnia foi ganha fica salva.
 - **Acerto e erro** no teclado passam por `api.mark(id, 'ok' | 'bad')`, que também anima o botão e vibra o celular. Para comemorar um bom resultado, chame `comemorar()`.
+- **Desempenho**: os scripts têm `defer`; cada teclado só é desenhado quando a aba dele aparece (`construirPendentes`, em `js/teclado.js`); o som gravado é baixado no primeiro toque. Evite ler medidas do layout (`offsetWidth`, `clientWidth`) de coisas escondidas durante o carregamento: isso obriga o navegador a montar a página inteira antes da hora.
+- **Páginas para o Google**: `ferramentas/gerar_licoes.py` (lições) e `ferramentas/gerar_teoria.py` (teoria) geram as páginas a partir do conteúdo do app; os testes avisam se estiverem desatualizadas.
 - Os arquivos JS **compartilham o escopo global** e são carregados em ordem. Código que roda no carregamento só pode usar o que já foi definido nos arquivos anteriores.
 
 ### Traduções

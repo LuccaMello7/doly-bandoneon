@@ -13,12 +13,13 @@ if(location.protocol==='file:') $$('a[data-local][href$="/"]').forEach(a=>a.setA
 function abrirPeloEndereco(){
   const h = decodeURIComponent(location.hash.slice(1)), m = h.match(/^licao-(\d+)$/);
   if(h.startsWith('tarefa=')){ abrirTarefa(h.slice(7)); return; } // link de tarefa mandado pelo professor (js/professor.js)
+  const tm = h.match(/^teoria-(\d+)$/);
+  if(tm && TEORIA[tm[1]-1]){ abrirTeoria(tm[1]-1); return; }
   if(m && LESSONS[m[1]-1]){ curLesson = m[1]-1; renderLesson(); go('licoes'); }
   else if(/^[a-z]+$/.test(h) && $('#v-'+h)) go(h);
 }
 abrirPeloEndereco();
-// o som gravado chega depois que a tela já respondeu (o primeiro toque usa o sintetizado se ainda não tiver chegado)
-if(document.readyState==='complete') carregarSons(); else window.addEventListener('load', ()=>carregarSons());
+// o som gravado (3,3 MB) é baixado no primeiro toque ou tecla (js/ajustes.js): quem só visita a página não baixa
 window.addEventListener('hashchange', abrirPeloEndereco);
 observador.observe(document.body, {subtree:true, childList:true, characterData:true, attributes:true, attributeFilter:ATTRS});
 

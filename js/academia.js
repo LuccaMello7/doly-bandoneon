@@ -248,7 +248,7 @@ function acadMaos(){
   const usa = new Set(acad.eventos.map(e=>e.mao)), m = usa.size===1 ? [...usa][0] : 'duas';
   $('#acTeclados').dataset.maos = m;
   $('#acMaoE').hidden = m==='right'; $('#acMaoD').hidden = m==='left';
-  if($('#acCentro').clientWidth) acadMostrar();
+  if(typeof currentView!=='undefined' && currentView==='academia') acadMostrar(); // ler a largura com a aba fechada forçaria o layout da página
 }
 // Escolha recolhida enquanto você toca: uma linha com o nível e o exercício, e o botão de trocar
 function acadResumo(){
@@ -351,6 +351,7 @@ function renderDicas(gi){
 function animarInstrutor(gi){
   const n = acad.grupos.length, bar = $('#acProgBar');
   if(bar){ bar.style.width = (n ? 100*Math.max(0,gi)/n : 0) + '%'; $('#acProgTxt').textContent = n ? `Momento ${Math.min(n, Math.max(0,gi)+1)} de ${n}` : ''; }
+  if(typeof currentView==='undefined' || currentView!=='academia') return; // com a aba fechada não há o que animar (e ler offsetWidth forçaria o layout)
   const el = $('#acAgora'); el.classList.remove('troca'); void el.offsetWidth; el.classList.add('troca');
 }
 function pulsoInstrutor(tipo){

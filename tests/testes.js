@@ -444,7 +444,8 @@ teste('navegação por áreas: cada área mostra só as suas abas e volta à úl
   igual($('#nav [data-area].active').dataset.area, 'tocar');
   igual($$('#subnav [data-v]').filter(b=>!b.hidden).map(b=>b.dataset.v), ['teclado','melodias','acordes','microfone']);
   go('licoes'); $('#nav [data-area="tocar"]').click(); igual(currentView, 'acordes');
-  igual($$('#subnav [data-area="aprender"]').map(b=>b.dataset.v), ['estudo','academia','licoes','teoria']);
+  igual($$('#subnav [data-area="aprender"]').map(b=>b.dataset.v), ['estudo','academia','licoes']);
+  go('teoria'); ok($('#subnav [data-v="licoes"]').classList.contains('active'), 'Teoria acende o botão Lições'); go('licoes'); go('acordes');
   $('#nav [data-area="aprender"]').click(); igual(currentView, 'licoes');
   go('inicio'); ok($('#subnav').hidden, 'o Início não tem abas');
 });

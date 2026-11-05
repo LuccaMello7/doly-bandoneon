@@ -33,7 +33,7 @@ def main():
         print(f'FALHA  sw.js não guarda "{a}" para uso offline (adicione em ARQUIVOS)')
     # as páginas em espanhol e inglês precisam ser geradas de novo quando o index.html ou o dicionário mudam
     # o mesmo para as páginas das lições, geradas a partir de js/licoes.js e js/licoes-traducao.js
-    for gerador in ('gerar_idiomas.py', 'gerar_licoes.py'):
+    for gerador in ('gerar_idiomas.py', 'gerar_licoes.py', 'gerar_teoria.py'):
         r = subprocess.run([sys.executable, str(RAIZ / 'ferramentas' / gerador), '--verificar'],
                            capture_output=True, text=True, encoding='utf-8')
         if r.returncode:
@@ -42,7 +42,7 @@ def main():
     captura = ('<base href="../">\n<script>window.__erros=[];'
                'window.onerror=(m,s,l)=>{window.__erros.push(m+" ("+(s||"").split("/").pop()+":"+l+")");};</script>')
     pagina = pagina.replace('<head>', '<head>\n' + captura, 1)
-    pagina = pagina.replace('</body>', '<script src="tests/testes.js"></script>\n</body>', 1)
+    pagina = pagina.replace('</body>', '<script src="tests/testes.js" defer></script>\n</body>', 1)  # defer: roda depois dos scripts do app
     saida = RAIZ / 'tests' / '_execucao.html'
     saida.write_text(pagina, encoding='utf-8')
     cmd = [nav, '--headless', '--disable-gpu', '--allow-file-access-from-files', '--autoplay-policy=no-user-gesture-required',

@@ -23,6 +23,7 @@ function createKeyboard(el, hand, opts={}){
   const held=new Set(), nodes={};
   el.addEventListener('contextmenu', e=>e.preventDefault());
   function build(){
+    api.pendente=false; pendentes.delete(api);
     el.innerHTML=''; el.className='kbd';
     const bs=state.layout[hand], maxX=Math.max(...bs.map(b=>b.x)), maxY=Math.max(...bs.map(b=>b.y));
     size=opts.size||autoKeySize(maxX, opts.perRow, opts.largura&&opts.largura()); dia=Math.round(size*0.8); api.size=size;
@@ -82,9 +83,18 @@ function createKeyboard(el, hand, opts={}){
     clearDedos(){ Object.values(nodes).forEach(({d})=>{ delete d.dataset.dedo; }); },
     setDim(v){ Object.values(nodes).forEach(({d})=>d.classList.toggle('dim',v)); },
   };
-  build();
+  // teclado numa aba escondida: só é desenhado quando aparecer (a tela inicial abre bem mais rápido)
+  if(escondido(el) && !opts.size){ api.pendente=true; pendentes.add(api); if(vigiaTeclados) vigiaTeclados.observe(el); }
+  else build();
   return api;
 }
+const pendentes=new Set();
+// Escondido sem perguntar ao navegador (offsetParent obrigaria a calcular o layout da página inteira
+// antes da hora): numa aba que não está aberta, ou dentro de algo com hidden ou display:none
+const escondido = el => { const sec = el.closest('main>section'); return (sec && !sec.classList.contains('active')) || !!el.closest('[hidden],[style*="display:none"],[style*="display: none"]'); };
+// desenha os teclados que ficaram visíveis (chamada ao trocar de aba e ao mostrar um painel)
+function construirPendentes(){ for(const k of [...pendentes]) if(k.el.offsetParent!==null) k.build(); }
+const vigiaTeclados = 'IntersectionObserver' in window ? new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting)) construirPendentes(); }) : null;
 // Ao girar o celular ou redimensionar a janela, refaz os teclados cujo tamanho mudou
 let resizeTimer=null;
 window.addEventListener('resize', ()=>{
@@ -92,6 +102,7 @@ window.addEventListener('resize', ()=>{
   resizeTimer=setTimeout(()=>{
     let changed=false;
     for(const k of allKeyboards){
+      if(k.pendente) continue;
       const bs=state.layout[k.hand], maxX=Math.max(...bs.map(b=>b.x));
       if(autoKeySize(maxX, k.perRow, k.largura&&k.largura())!==k.size && k.held.size===0){ k.build(); changed=true; }
     }

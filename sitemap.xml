@@ -326,4 +326,174 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/licoes/como-ler-uma-partitura-de-tango/"/>
   </url>
   <!--/licoes-->
+  <!--teoria-->
+  <url>
+    <loc>https://bandoly.app/teoria/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/teoria/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/teoria/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/teoria/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/teoria/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/teoria/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/teoria/as-notas-e-as-oitavas/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/as-notas-e-as-oitavas/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/las-notas-y-las-octavas/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/notes-and-octaves/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/teoria/as-notas-e-as-oitavas/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/teoria/las-notas-y-las-octavas/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/as-notas-e-as-oitavas/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/las-notas-y-las-octavas/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/notes-and-octaves/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/teoria/as-notas-e-as-oitavas/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/teoria/notes-and-octaves/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/as-notas-e-as-oitavas/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/las-notas-y-las-octavas/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/notes-and-octaves/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/teoria/as-notas-e-as-oitavas/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/teoria/a-pauta-e-as-claves/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/a-pauta-e-as-claves/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/el-pentagrama-y-las-claves/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/the-staff-and-the-clefs/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/teoria/a-pauta-e-as-claves/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/teoria/el-pentagrama-y-las-claves/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/a-pauta-e-as-claves/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/el-pentagrama-y-las-claves/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/the-staff-and-the-clefs/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/teoria/a-pauta-e-as-claves/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/teoria/the-staff-and-the-clefs/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/a-pauta-e-as-claves/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/el-pentagrama-y-las-claves/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/the-staff-and-the-clefs/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/teoria/a-pauta-e-as-claves/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/teoria/sustenido-bemol-e-bequadro/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/sustenido-bemol-e-bequadro/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/sostenido-bemol-y-becuadro/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/sharp-flat-and-natural/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/teoria/sustenido-bemol-e-bequadro/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/teoria/sostenido-bemol-y-becuadro/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/sustenido-bemol-e-bequadro/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/sostenido-bemol-y-becuadro/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/sharp-flat-and-natural/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/teoria/sustenido-bemol-e-bequadro/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/teoria/sharp-flat-and-natural/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/sustenido-bemol-e-bequadro/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/sostenido-bemol-y-becuadro/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/sharp-flat-and-natural/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/teoria/sustenido-bemol-e-bequadro/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/teoria/figuras-e-pausas/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/figuras-e-pausas/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/figuras-y-silencios/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/note-values-and-rests/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/teoria/figuras-e-pausas/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/teoria/figuras-y-silencios/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/figuras-e-pausas/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/figuras-y-silencios/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/note-values-and-rests/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/teoria/figuras-e-pausas/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/teoria/note-values-and-rests/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/figuras-e-pausas/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/figuras-y-silencios/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/note-values-and-rests/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/teoria/figuras-e-pausas/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/teoria/compasso-e-tempo/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/compasso-e-tempo/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/compas-y-tiempo/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/time-signature-and-beat/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/teoria/compasso-e-tempo/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/teoria/compas-y-tiempo/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/compasso-e-tempo/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/compas-y-tiempo/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/time-signature-and-beat/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/teoria/compasso-e-tempo/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/teoria/time-signature-and-beat/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/compasso-e-tempo/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/compas-y-tiempo/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/time-signature-and-beat/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/teoria/compasso-e-tempo/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/teoria/tonalidade-e-escalas/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/tonalidade-e-escalas/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/tonalidad-y-escalas/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/keys-and-scales/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/teoria/tonalidade-e-escalas/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/teoria/tonalidad-y-escalas/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/tonalidade-e-escalas/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/tonalidad-y-escalas/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/keys-and-scales/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/teoria/tonalidade-e-escalas/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/teoria/keys-and-scales/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/tonalidade-e-escalas/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/tonalidad-y-escalas/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/keys-and-scales/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/teoria/tonalidade-e-escalas/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/teoria/acordes/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/acordes/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/acordes/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/chords/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/teoria/acordes/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/teoria/acordes/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/acordes/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/acordes/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/chords/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/teoria/acordes/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/teoria/chords/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/acordes/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/acordes/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/chords/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/teoria/acordes/"/>
+  </url>
+  <!--/teoria-->
 </urlset>

@@ -90,10 +90,6 @@ h3{margin-bottom:6px;font-weight:800}
 select,input[type=range],input[type=checkbox]{accent-color:var(--gold)}
 select,input[type=number],input[type=text],textarea{background:var(--panel2);color:var(--text);border:1px solid var(--line);padding:7px 10px;border-radius:10px;font:inherit}
 kbd{font-family:Nunito,sans-serif}
-
-/* Tela Início */
-.inicio-topo{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
-.inicio-topo p{margin:0}
 .ola{font-size:1.6rem;font-weight:900}
 .streak{display:inline-flex;align-items:center;gap:6px;background:#f08a4b22;color:#ffb27f;padding:8px 14px;border-radius:999px;font-weight:800;white-space:nowrap}
 .streak.vazio{background:#ffffff0d;white-space:normal;font-size:.9rem;max-width:260px}
@@ -113,14 +109,10 @@ kbd{font-family:Nunito,sans-serif}
 .continuar{display:flex;align-items:center;justify-content:space-between;gap:16px;border:1px solid #e6b45055}
 .continuar .kicker{margin-bottom:2px}
 .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-bottom:18px}
-.stat-card{display:flex;align-items:center;gap:14px;margin:0;padding:16px 18px}
-.stat-card .muted{font-size:.85rem;line-height:1.3}
 .anel{width:62px!important;height:62px!important;flex:none;transform:rotate(-90deg)}
 .anel circle{fill:none;stroke-width:4;stroke-linecap:round}
 .anel .fundo{stroke:#ffffff14}
 .anel .valor{stroke:var(--gold);stroke-dasharray:0 100;transition:stroke-dasharray .6s ease}
-.stat-card:nth-child(2) .valor{stroke:var(--open)} .stat-card:nth-child(3) .valor{stroke:var(--violet)}
-.stat-card:nth-child(4) .valor{stroke:var(--green)} .stat-card:nth-child(6) .valor{stroke:var(--close)}
 .stat-ic{width:62px;height:62px;flex:none;border-radius:50%;display:grid;place-items:center;background:#ef6f9a22;color:var(--pink)}
 .stat-ic svg[aria-hidden]{width:28px;height:28px}
 .tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:18px}
@@ -131,7 +123,6 @@ kbd{font-family:Nunito,sans-serif}
 .tile b{font-size:1.05rem}.tile small{opacity:.88}
 .t-academia{background:linear-gradient(140deg,#3b6fd6,#2a4fa8)} .t-teclado{background:linear-gradient(140deg,#d98a2b,#b0611c)}
 .t-melodias{background:linear-gradient(140deg,#7a5be0,#5a3fb8)} .t-ritmo{background:linear-gradient(140deg,#2aa57a,#1c7a5a)}
-.inicio-cols{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:18px;align-items:start}
 .dica{font-size:.9rem;text-align:center;margin:4px 0 22px}
 .feat-ic{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:#e6b4501f;color:var(--gold);margin-bottom:8px}
 .feat-ic svg[aria-hidden]{width:22px;height:22px}
@@ -142,11 +133,10 @@ kbd{font-family:Nunito,sans-serif}
   .bando .caixa{width:56px;height:90px;padding:8px 6px;gap:4px}.bando .caixa i{width:9px;height:9px}
   .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
   .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .inicio-cols{grid-template-columns:minmax(0,1fr)}
 }
 @media (max-width:520px){
   .hero .hero-title{font-size:1.6rem}
-  .stats{gap:10px}.stat-card{flex-direction:column;align-items:flex-start;gap:8px;padding:14px}
+  .stats{gap:10px}
   .anel{width:48px!important;height:48px!important}.stat-ic{width:48px;height:48px}
   .continuar{flex-direction:column;align-items:stretch}
 }
@@ -923,16 +913,9 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
 /* sugestão: tipo da mensagem em pílulas */
 .sug-tipos{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
 .sug-tipos .op{margin:0;padding:8px 14px}
-/* para professores */
-.t-professor{background:linear-gradient(140deg,#3b6fd6,#8b7cf6)}
-.pr-form{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
-.pr-form>label{display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:.88rem;color:var(--muted)}
-.pr-form>label.ctl-liga{flex-direction:row;color:var(--text)}
-.pr-form .pr-largo{grid-column:1/-1}
-.pr-form select,.pr-form input[type=text],.pr-form textarea{width:100%;font:600 1rem Nunito,sans-serif}
 .pr-saida{display:flex;gap:8px;margin-top:12px;animation:sobe .35s both}
 .pr-saida input{flex:1;min-width:0;font-size:.85rem}
-@media (max-width:600px){.pr-form{grid-template-columns:1fr}.pr-saida{flex-direction:column}}
+@media (max-width:600px){.pr-saida{flex-direction:column}}
 /* aviso de tarefa recebida */
 .tarefa-aviso{display:flex;align-items:center;gap:14px;flex-wrap:wrap;border:1px solid var(--gold);background:linear-gradient(120deg,#3a2a0e,var(--panel) 65%);animation:sobe .45s cubic-bezier(.2,.8,.2,1) both}
 .tarefa-aviso>div:nth-child(2){flex:1 1 240px}
@@ -1214,3 +1197,17 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
 .pauta-desafio .staff{width:min(340px,100%)}
 
 .te-widget .te-pauta svg.pauta{max-width:520px;margin:0 auto}
+
+/* ================== Acessibilidade: contraste ==================
+   O texto branco sobre o azul de "abrindo" e o laranja de "fechando" ficava abaixo do mínimo (4,5:1).
+   Os mesmos tons, um pouco mais escuros, onde há texto em cima. */
+:root{--open-texto:#1f6fd8;--close-texto:#c2410c}
+.dirpill.open{background:var(--open-texto)} .dirpill.close{background:var(--close-texto)}
+.mcard.open .d{background:var(--open-texto)} .mcard.close .d{background:var(--close-texto)}
+.key.ok{color:#06281a!important}
+.key.bad{background:#c0392b!important}
+.te-passos span{color:#8cc0ff}.te-passos span.semi{color:#ffb27f}
+
+/* Lições: duas trilhas (o bandoneon e a teoria musical) na mesma aba */
+.trilhas{margin-bottom:16px}
+.trilhas .btn{gap:8px}

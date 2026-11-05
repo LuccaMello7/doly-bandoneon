@@ -172,6 +172,7 @@ $('#teConteudo').addEventListener('click', e=>{
   const n = e.target.closest('[data-nav]'); if(n && !n.disabled){ teoriaAtual += +n.dataset.nav; renderTeoria(); $('#v-teoria').scrollIntoView({behavior: movReduzido()?'auto':'smooth', block:'start'}); }
 });
 ganchosAba.push(v=>{ if(v==='teoria') renderTeoria(); });
+function abrirTeoria(i){ teoriaAtual = i; go('teoria'); }
 
 /* ---------- Desafio: Pauta no bandoneon ---------- */
 // A nota aparece na pauta (clave de sol para a mão direita, de fá para a esquerda) e o aluno toca o
