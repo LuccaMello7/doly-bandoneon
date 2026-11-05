@@ -352,7 +352,7 @@ teste('Academia: Aprender completo gera relatório e não afirma o dedo', () => 
   $('#acStart').click(); acadCompletar();
   const rel = $('#acRelatorio').textContent;
   igual(/100%/.test(rel), true, 'precisão'); igual(/Dedilhado verificado/.test(rel), false, 'dedo verificado');
-  igual(/aguardando o dedilhado de referência/.test(rel), true, 'dedo a definir'); go('inicio');
+  igual(/não indica nem confere o dedo/.test(rel), true, 'sem dedo de referência'); go('inicio');
 });
 teste('Academia: o erro mostra a diferença entre o pedido e o tocado', () => {
   go('academia'); carregarExercicio('n4-alternar'); $('#acModo [data-modo="aprender"]').click(); $('#acAuto').checked = false;
@@ -486,4 +486,23 @@ teste('vibração e animações: Ajustes liga e desliga', () => {
   $('#movSel').value = 'reduzido'; $('#movSel').dispatchEvent(new Event('change')); ok(document.documentElement.classList.contains('sem-mov'));
   $('#movSel').value = 'normal'; $('#movSel').dispatchEvent(new Event('change'));
   igual(document.documentElement.classList.contains('sem-mov'), movReduzido());
+});
+
+teste('Academia: tocar o botão que brilha começa o exercício com a nota mostrada', () => {
+  go('academia'); carregarExercicio('n1-direita'); $('#acModo [data-modo="aprender"]').click(); $('#acAuto').checked = true;
+  ok(!acad.rodando, 'ainda parado');
+  const e = acad.eventos[acad.grupos[0].ks[0]];
+  ok(document.querySelector(`#acKbRight .key.guia`), 'o primeiro botão brilha antes de começar');
+  acadToque(e.botao, e.botao[e.fole], e.fole, akOf(e.mao));
+  ok(acad.rodando, 'começou'); igual(acad.g, 1, 'avançou para a segunda nota'); ok(acad.res[0].ok, 'a primeira nota contou');
+  ok($('#acProgTxt').textContent.includes('2'), 'barra de progresso avançou');
+  acadParar(); go('inicio');
+});
+teste('Academia: dicas de posição vêm do mapa e nunca citam um dedo', () => {
+  go('academia'); carregarExercicio('n3-escada');
+  for(let i=0;i<acad.grupos.length;i++){
+    const ds = dicasPosicao(i); ok(ds.length>0, 'momento '+i+' sem dica');
+    ok(ds.every(d=>!/dedo/i.test(d.txt)), ds.map(d=>d.txt).join(' | '));
+  }
+  go('inicio');
 });

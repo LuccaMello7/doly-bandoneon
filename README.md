@@ -108,7 +108,7 @@ O menu tem o **Início** e quatro áreas, cada uma com as suas abas no topo da t
 
 O app sabe conferir a **nota**, o **botão**, a **mão**, a **direção do fole** (na tela) e o **ritmo**. Ele **não consegue saber qual dedo você usou**: nem o toque na tela nem o microfone dizem isso. Por isso o dedo aparece sempre como *sugerido*, e o relatório nunca diz que conferiu o seu dedo. O código já tem um ponto de ligação para um validador futuro, por exemplo uma câmera que reconheça os dedos (`registrarValidadorDeDedos` em `js/academia.js`).
 
-O dedo de cada nota vem da partitura do exercício (`@dedo` no formato de texto), não de uma regra fixa por botão, porque a digitação muda conforme a frase. Os exercícios ainda estão com o dedo **a definir**: os números serão transcritos de um método de referência. Os polegares não tocam botões: o direito cuida da válvula de ar e o esquerdo fica apoiado na caixa.
+O dedo de cada nota vem da partitura do exercício (`@dedo` no formato de texto), não de uma regra fixa por botão, porque a digitação muda conforme a frase. Como não encontramos uma fonte com a digitação nota a nota dos exercícios, o app **não indica dedo** nos exercícios prontos. No lugar, o instrutor dá **dicas de posição tiradas do mapa**: se o próximo botão é vizinho, se fica longe, se o fole vai inverter, se a próxima nota é na outra mão ou se as próximas notas ficam na mesma região. Quando uma partitura importada traz o dedo, ele aparece como sugestão. Os polegares não tocam botões: o direito cuida da válvula de ar e o esquerdo fica apoiado na caixa.
 
 ---
 

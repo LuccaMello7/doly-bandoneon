@@ -864,3 +864,27 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
 .faq-todas{margin-top:12px}
 /* Meu estudo */
 .t-estudo{background:linear-gradient(140deg,#e6b450,#c2508a)}
+
+/* Academia: instrutor com movimento */
+.ac-prog{display:flex;flex-direction:column;gap:4px;margin:-2px 0 10px;font-size:.78rem}
+.ac-prog-bar{height:6px;border-radius:9px;background:#ffffff14;overflow:hidden}
+.ac-prog-bar i{display:block;height:100%;width:0;border-radius:9px;background:linear-gradient(90deg,var(--gold),var(--gold2));transition:width .45s cubic-bezier(.2,.8,.2,1)}
+#acAgora.troca .ac-nota{animation:notaEntra .45s cubic-bezier(.34,1.4,.5,1) both}
+#acAgora.troca .ac-linha{animation:sobe .4s cubic-bezier(.2,.8,.2,1) both}
+#acAgora.troca .ac-linha:nth-of-type(2){animation-delay:.05s}#acAgora.troca .ac-linha:nth-of-type(3){animation-delay:.1s}
+#acAgora.troca .ac-dicas li{animation:sobe .45s cubic-bezier(.2,.8,.2,1) both}
+#acAgora.troca .ac-dicas li:nth-child(1){animation-delay:.12s}#acAgora.troca .ac-dicas li:nth-child(2){animation-delay:.2s}#acAgora.troca .ac-dicas li:nth-child(3){animation-delay:.28s}
+@keyframes notaEntra{from{opacity:0;transform:translateY(12px) scale(.85)}}
+.ac-instrutor{transition:box-shadow .3s}
+.ac-instrutor.ok{animation:instrOk .55s ease}
+.ac-instrutor.erro{animation:instrErro .4s ease}
+@keyframes instrOk{30%{box-shadow:0 0 0 3px var(--green),0 0 26px #3ccf8e66}}
+@keyframes instrErro{20%,60%{translate:-5px 0;box-shadow:0 0 0 3px var(--red)}40%,80%{translate:5px 0}}
+.ac-dicas{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-direction:column;gap:6px}
+.ac-dicas li{position:relative;padding:8px 10px 8px 34px;border-radius:12px;background:#ffffff0a;font-size:.88rem;line-height:1.4}
+.ac-dicas li::before{content:"";position:absolute;left:10px;top:10px;width:16px;height:16px;border-radius:50%;background:var(--gold)}
+.ac-dicas .dica-fole::before{background:var(--close)} .ac-dicas .dica-mao::before{background:var(--violet)}
+.ac-dicas .dica-perto::before,.ac-dicas .dica-regiao::before{background:var(--green)} .ac-dicas .dica-longe::before{background:var(--red2)}
+.ac-dicas .dica-mesmo::before{background:var(--open)} .ac-dicas .dica-fim::before{background:var(--muted)}
+.mao .dedo rect,.mao .palma{transition:fill .25s,stroke .25s}
+.ac-strip .mcard{transition:transform .25s cubic-bezier(.34,1.4,.5,1),background .25s}

@@ -233,7 +233,7 @@ function aplicarTrecho(){
   acad.eventos = sel.map((e,k)=>({...e, k, inicio:e.inicio-t0}));
   acad.grupos = agruparEventos(acad.eventos);
   acad.g = -1; acad.pend = new Set();
-  renderFaixa(); acadInstrutor(0); acadDica(-1);
+  renderFaixa(); acadInstrutor(0); acadPrevia();
 }
 ['#acDe','#acAte'].forEach(s=>$(s).addEventListener('change', ()=>{ acadParar(); aplicarTrecho(); }));
 $('#acVel').oninput = e=>{ $('#acVelVal').textContent = e.target.value+'%'; };
@@ -264,9 +264,10 @@ function acadInstrutor(gi){
   $('#acAgora').innerHTML = evs.map(e=>`<div class="ac-nota">${oculto ? '?' : noteName(e.midi)}</div>`
     + `<div class="ac-linha"><span class="muted">${t('Mão')}</span> <b>${t(e.mao==='left'?'Esquerda':'Direita')}</b></div>`
     + (aj.fole ? `<div class="ac-linha"><span class="muted">${t('Fole')}</span> <span class="dirpill ${e.fole}">${e.fole==='open'?'⟵ ':'⟶ '}${dirLabel(e.fole)}${e.fole==='open'?' ⟶':' ⟵'}</span></div>` : '')
-    + (aj.dedo ? `<div class="ac-linha"><span class="muted">${t('Dedo')}</span> <b>${textoDedo(e)}</b></div>` : '')
+    + (aj.dedo && e.dedo!=null ? `<div class="ac-linha"><span class="muted">${t('Dedo')}</span> <b>${textoDedo(e)}</b></div>` : '')
     + (acad.modo==='desafio' && !acad.ex.semTempo ? `<div class="ac-linha"><span class="muted">${t('Duração')}</span> ${t('{} tempo(s)', +e.duracao.toFixed(2))}</div>` : '')
-  ).join('<hr>');
+  ).join('<hr>') + (oculto ? '' : renderDicas(gi));
+  animarInstrutor(gi);
   const pe = prox ? prox.ks.map(k=>acad.eventos[k]) : [];
   $('#acProximo').textContent = !prox ? t('Próximo: fim do exercício') : oculto || aj.faixa==='nomes' ? t('Próximo: {}', pe.map(e=>noteName(e.midi)).join(' + '))
     : t('Próximo: {}', pe.map(e=>`${nomeEvento(e)} (${maoNome(e.mao)})${aj.dedo && e.dedo!=null ? ', ' + t('dedo {}', e.dedo) : ''}`).join(' + '));
@@ -289,11 +290,67 @@ function acadDica(gi){
   });
   if(aj.brilho && prox) prox.ks.map(k=>acad.eventos[k]).forEach(e=>{ if(!g.ks.some(k=>acad.eventos[k].botao===e.botao)) akOf(e.mao).mark(e.botao.id,'prox',0); });
 }
+/* ---------- Dicas de posição (sem afirmar o dedo) ----------
+   Sem um dedilhado de referência, o instrutor não indica dedo. Ele olha o mapa: a distância até o próximo
+   botão da mesma mão, se o fole inverte, se a próxima nota é na outra mão e se as próximas notas ficam na
+   mesma região. Uma unidade do mapa é mais ou menos a distância entre dois botões vizinhos. As direções
+   (acima, à direita…) são as do teclado na tela. */
+const distBotoes = (a, b) => Math.hypot(a.x-b.x, a.y-b.y);
+function rumo(a, b){
+  const dx = b.x-a.x, dy = b.y-a.y, v = Math.abs(dy)<0.45 ? '' : dy>0 ? 'abaixo' : 'acima', h = Math.abs(dx)<0.45 ? '' : dx>0 ? 'à direita' : 'à esquerda';
+  return [v, h].filter(Boolean).join(' e ');
+}
+function dicasPosicao(gi){
+  const g = acad.grupos[gi], prox = acad.grupos[gi+1]; if(!g) return [];
+  if(!prox) return [{tipo:'fim', txt:'Última nota do exercício.'}];
+  const evs = g.ks.map(k=>acad.eventos[k]), pe = prox.ks.map(k=>acad.eventos[k]), dicas = [];
+  if(prox.fole!==g.fole) dicas.push({tipo:'fole', txt: acadFoleAuto() ? 'Na próxima nota o fole inverte (o app troca sozinho).' : 'Na próxima nota o fole inverte: prepare a troca de direção.'});
+  for(const e of evs){
+    const n = pe.find(x=>x.mao===e.mao);
+    if(!n){ if(pe.length && evs.length===1) dicas.push({tipo:'mao', txt:`A próxima nota é na ${pe[0].mao==='left'?'mão esquerda':'mão direita'}.`}); continue; }
+    const d = distBotoes(e.botao, n.botao), r = rumo(e.botao, n.botao);
+    if(n.botao===e.botao) dicas.push({tipo:'mesmo', txt: n.fole!==e.fole ? 'A próxima nota é no mesmo botão, com o fole ao contrário.' : 'A próxima nota repete o mesmo botão: solte e aperte de novo.'});
+    else if(d<=1.35 && r) dicas.push({tipo:'perto', txt:`O próximo botão é vizinho (${r}): dá para alcançar sem mover a mão.`});
+    else if(d<=3 && r) dicas.push({tipo:'medio', txt:`O próximo botão fica a ${Math.max(2, Math.round(d))} botões daqui (${r}): um pequeno deslocamento da mão.`});
+    else if(r) dicas.push({tipo:'longe', txt:`O próximo botão está longe (${r}): prepare a mão com antecedência.`});
+  }
+  // as próximas notas da mesma mão ficam juntas? então a mão pode ficar parada
+  const e0 = evs[0], seq = acad.eventos.filter(x=>x.k>=e0.k && x.mao===e0.mao).slice(0, 4);
+  if(seq.length>=3 && seq.every(a=>seq.every(b=>distBotoes(a.botao, b.botao)<=2.2)) && new Set(seq.map(x=>x.botao)).size>1)
+    dicas.push({tipo:'regiao', txt:`As próximas ${seq.length} notas ficam na mesma região: mantenha a mão no lugar.`});
+  return dicas;
+}
+function renderDicas(gi){
+  const ds = dicasPosicao(gi); if(!ds.length) return '';
+  return `<ul class="ac-dicas">${ds.map(d=>`<li class="dica-${d.tipo}">${d.txt}</li>`).join('')}</ul>`;
+}
+// A nota nova entra animada e a barra mostra em que ponto do exercício você está
+function animarInstrutor(gi){
+  const n = acad.grupos.length, bar = $('#acProgBar');
+  if(bar){ bar.style.width = (n ? 100*Math.max(0,gi)/n : 0) + '%'; $('#acProgTxt').textContent = n ? `Momento ${Math.min(n, Math.max(0,gi)+1)} de ${n}` : ''; }
+  const el = $('#acAgora'); el.classList.remove('troca'); void el.offsetWidth; el.classList.add('troca');
+}
+function pulsoInstrutor(tipo){
+  const el = $('#acInstrutor'); el.classList.remove('ok','erro'); void el.offsetWidth; el.classList.add(tipo);
+}
+// Prévia antes de começar: o primeiro botão já brilha, e tocá-lo começa o exercício
+function acadPrevia(){
+  acadDica(-1);
+  const g = acad.grupos[0], aj = acadAjuda(); if(!g || acad.rodando || acad.demo) return;
+  if(aj.brilho) g.ks.map(k=>acad.eventos[k]).forEach(e=>akOf(e.mao).mark(e.botao.id,'guia',0));
+  acadFeed(acad.modo==='desafio' && !acad.ex.semTempo ? t('Aperte Começar: há uma contagem de 4 tempos antes das notas.')
+    : aj.brilho ? t('Toque o botão que brilha para começar.') : t('Toque a primeira nota para começar, ou aperte Começar.'));
+}
+function acadComecarPorToque(){
+  if(acad.modo==='desafio' && !acad.ex.semTempo) return false; // no tempo, a contagem precisa vir antes
+  acad.autoInicio = true; $('#acStart').click(); acad.autoInicio = false;
+  return acad.rodando;
+}
 function acadValidacaoTexto(){
   const el = $('#acValidacao'); if(!el) return;
   const temDedo = acad.eventos.some(e=>e.dedo!=null);
   const dedo = validadorDeDedos ? t('Dedo: verificado pelo validador de dedos.')
-    : temDedo ? t('Dedo: apenas sugerido. O app não identifica qual dedo você usa.') : t('Dedo: a definir (aguardando o dedilhado de referência).');
+    : temDedo ? t('Dedo: apenas sugerido. O app não identifica qual dedo você usa.') : t('Dedo: o app não indica nem confere o dedo. As dicas seguem a posição dos botões no teclado da tela.');
   const fonte = mic.on ? t('Microfone: o app confere a nota e o ritmo; botão e fole não são verificados.')
     : t('Tela: o app confere a nota, o botão, a mão, o fole virtual e o ritmo.');
   el.textContent = fonte + ' ' + dedo;
@@ -350,7 +407,8 @@ function registrar(e, a, toque, agora){
 /* ---------- Toques ---------- */
 const agoraSeg = () => performance.now()/1000;
 function acadToque(b, m, dir, k){
-  if(acad.demo || !acad.rodando) return;
+  if(acad.demo) return;
+  if(!acad.rodando && !acadComecarPorToque()) return;
   const toque = {botao:b, mao:k.hand, midi:m, fole:dir, fonte:'tela'};
   if(acad.modo==='desafio' && !acad.ex.semTempo) toqueNoTempo(toque, ac().currentTime - (AC.outputLatency||0));
   else toqueEspera(toque);
@@ -377,12 +435,13 @@ function toqueEspera(toque){
     registrar(hit.e, hit.a, toque, agora); acad.pend.delete(hit.e.k);
     akOf(hit.e.mao).unmark(hit.e.botao.id,'guia'); akOf(hit.e.mao).mark(hit.e.botao.id,'ok',350);
     const extra = hit.a.botao==='alternativo' ? ' ' + t('(outro botão com a mesma nota; o sugerido é o destacado)') : '';
-    acadFeed(acad.pend.size ? t('Certo! Falta a outra nota deste momento.') : t('Certo!') + extra, 'ok');
+    acadFeed(acad.pend.size ? t('Certo! Falta a outra nota deste momento.') : t('Certo!') + extra, 'ok'); pulsoInstrutor('ok');
     if(!acad.pend.size){ faixaMarca(acad.g, acad.grupos[acad.g].ks.some(k=>acad.res[k].tentativas>1) ? 'bad' : 'ok'); avancar(); }
   } else {
     const c = cands.find(c=>toque.botao && c.e.mao===toque.mao && c.e.botao.id===toque.botao.id) || cands.find(c=>c.e.mao===toque.mao) || cands[0];
     registrar(c.e, c.a, toque, agora); acad.erros++;
     if(toque.botao) akOf(toque.mao).mark(toque.botao.id,'bad',400);
+    pulsoInstrutor('erro');
     acadFeed(t('Pedido: {} ({}); {}.', nomeEvento(c.e), maoNome(c.e.mao), diferenca(c.e, c.a, toque)), 'bad');
     // no Praticar o botão certo só aparece depois de 2 erros na mesma nota
     if(acad.modo!=='aprender' && !acad.ex.semAjuda && acad.res[c.e.k].tentativas>=2) akOf(c.e.mao).mark(c.e.botao.id,'guia',0);
@@ -428,13 +487,15 @@ function novaRodada(){
   $('#acRelatorio').innerHTML = '';
 }
 $('#acStart').onclick = ()=>{
-  if(acad.rodando || acad.demo){ acadParar(); acadFeed(t('Parado.')); acadDica(-1); return; }
+  if(acad.rodando || acad.demo){ acadParar(); acadPrevia(); acadFeed(t('Parado.')); return; }
   if(!acad.eventos.length) return;
   ac(); acad.rodando = true; novaRodada(); renderFaixa();
   $('#acStart').textContent = t('■ Parar'); acadFeed('');
-  if(acad.ex.nivel===1 && acad.ex.gerar){ acad.todos = montarEventos(acad.ex); aplicarTrecho(); novaRodada(); } // novo sorteio a cada rodada
+  // nível 1: notas novas a cada rodada, mas só ao apertar Começar depois de uma rodada (tocar o botão da prévia usa as notas mostradas)
+  if(acad.ex.nivel===1 && acad.ex.gerar && acad.sortearDeNovo && !acad.autoInicio){ acad.todos = montarEventos(acad.ex); aplicarTrecho(); acad.rodando = true; novaRodada(); }
+  acad.sortearDeNovo = false; acadInstrutor(0);
   if(acad.modo==='desafio' && !acad.ex.semTempo) iniciarNoTempo(); else avancar();
-  if(window.innerWidth<980) $('#acInstrutor').scrollIntoView({block:'start', behavior:'smooth'}); // no celular o instrutor fica logo acima do teclado
+  if(window.innerWidth<980 && !acad.autoInicio) $('#acInstrutor').scrollIntoView({block:'start', behavior:'smooth'}); // no celular o instrutor fica logo acima do teclado
 };
 $('#acOuvirBtn').onclick = ()=>{
   if(acad.demo || acad.rodando){ acadParar(); acadDica(-1); return; }
@@ -451,7 +512,7 @@ $('#acOuvirBtn').onclick = ()=>{
       evs.forEach(e=>akOf(e.mao).mark(e.botao.id,'down', e.duracao*spb*900));
     }, 300 + g.inicio*spb*1000));
   });
-  acad.timers.push(setTimeout(()=>{ acadParar(); acadDica(-1); renderFaixa(); acadInstrutor(0); acadFeed(t('Agora é a sua vez: aperte Começar.')); }, 600 + totalTempos()*spb*1000));
+  acad.timers.push(setTimeout(()=>{ acadParar(); renderFaixa(); acadInstrutor(0); acadPrevia(); }, 600 + totalTempos()*spb*1000));
 };
 const totalTempos = () => Math.max(0, ...acad.eventos.map(e=>e.inicio+e.duracao));
 function iniciarNoTempo(){
@@ -487,7 +548,7 @@ function faixas(ns){ // [3,4,5,9] → "3–5, 9"
 }
 function acadFim(){
   const noTempo = acad.modo==='desafio' && !acad.ex.semTempo;
-  acadParar(); acadDica(-1); $$('#acStrip .mcard.cur').forEach(x=>x.classList.remove('cur'));
+  acadParar(); acadDica(-1); acad.sortearDeNovo = true; $$('#acStrip .mcard.cur').forEach(x=>x.classList.remove('cur'));
   const evs = acad.eventos, R = acad.res, N = evs.length, de = +$('#acDe').value;
   const num = e => e.k + de; // número da nota no exercício inteiro
   const certas = evs.filter(e=>R[e.k].primeira && R[e.k].primeira.certo);
@@ -516,7 +577,7 @@ function acadFim(){
   if(dedos.some(d=>d==='verificado'||d==='incorreto')){
     const ok = dedos.filter(d=>d==='verificado').length, tot = dedos.filter(d=>d==='verificado'||d==='incorreto').length;
     linhas.push(t('Dedilhado verificado: {} de {} certos.', ok, tot));
-  } else linhas.push(evs.some(e=>e.dedo!=null) ? t('Dedilhado: apenas sugerido. O app não identifica qual dedo você usou, então ele não entra na nota.') : t('Dedilhado: ainda não definido para este exercício (aguardando o dedilhado de referência).'));
+  } else linhas.push(evs.some(e=>e.dedo!=null) ? t('Dedilhado: apenas sugerido. O app não identifica qual dedo você usou, então ele não entra na nota.') : t('Dedilhado: o app não indica nem confere o dedo neste exercício. Escolha a digitação com o seu professor.'));
   linhas.push(t('Tempo de conclusão: {}.', `${Math.floor(seg/60)}:${String(seg%60).padStart(2,'0')}`));
   // erros, com a diferença entre o pedido e o tocado
   const errados = evs.filter(e=>!(R[e.k].primeira && R[e.k].primeira.certo));
@@ -606,7 +667,7 @@ $('#acModo').addEventListener('click', ev=>{
   $('#acModoInfo').textContent = {aprender:'O app mostra o próximo botão, o dedo e o fole. Só avança quando você toca a nota certa.',
     praticar:'A sequência inteira aparece na faixa. Toque no seu ritmo; o botão certo só aparece depois de 2 erros.',
     desafio:'No tempo, com contagem e metrônomo. Os auxílios diminuem conforme a sua precisão.'}[acad.modo];
-  renderFaixa(); acadInstrutor(0); acadDica(-1); acadFeed('');
+  renderFaixa(); acadInstrutor(0); acadPrevia();
 });
 ['#acGuia','#acMaosVer','#acNomes'].forEach(s=>$(s).addEventListener('change', ()=>{ store.set(s.slice(1), $(s).checked); renderFaixa(); acadInstrutor(Math.max(0,acad.g)); if(acad.rodando) acadDica(acad.g); refreshAll(); }));
 $('#acAmpliar').addEventListener('change', e=>{ $('#acInstrutor').classList.toggle('grande', e.target.checked); store.set('acAmpliar', e.target.checked); });
@@ -619,7 +680,7 @@ $('#acMic').onchange = async e=>{
 function acadMostrar(){
   [akL, akR].forEach(k=>{ const bs = state.layout[k.hand], maxX = Math.max(...bs.map(b=>b.x));
     if(autoKeySize(maxX, 1, acadLarguraTeclado()) !== k.size) k.build(); });
-  if(acad.ex) acadDica(acad.rodando ? acad.g : -1);
+  if(acad.ex){ if(acad.rodando) acadDica(acad.g); else if(!acad.demo) acadPrevia(); }
   $('#acMic').checked = mic.on; acadValidacaoTexto();
   if(typeof acListaMelodias==='function') acListaMelodias(); // melodias salvas depois em Melodias
 }
