@@ -44,6 +44,8 @@ const ETAPAS = [
    feito:()=>licaoFeita(8) && state.progress.chords!=null, ir:()=>licaoFeita(8) ? go('acordes') : abrirLicao(8)},
   {id:'melodia', t:'Uma melodia inteira', d:'Termine uma melodia no modo Espera com 80% ou mais.',
    feito:()=>Object.entries(melodiasFeitas()).some(([k,v])=>!k.startsWith('esc:') && v>=80), ir:()=>go('melodias')},
+  {id:'tango', t:'Seu primeiro tango', d:'A introdução de El Choclo (Ángel Villoldo, 1903), em Melodias. Termine no modo Espera.',
+   para:p=>p.obj!=='conhecer', feito:()=>melodiasFeitas()['choclo-intro']!=null, ir:()=>{ go('melodias'); loadMelody('choclo-intro'); $('#melMode').value='wait'; }},
   {id:'duas', t:'Duas mãos, um fole só', d:'Lição 10 e a Ode à Alegria a duas mãos.',
    para:p=>p.obj!=='conhecer', feito:()=>licaoFeita(9) && melodiasFeitas()['ode-duas']!=null,
    ir:()=>{ if(!licaoFeita(9)) abrirLicao(9); else { go('melodias'); loadMelody('ode-duas'); } }},

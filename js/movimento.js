@@ -98,3 +98,8 @@ setInterval(()=>{
   const bs = $$('#v-inicio .bando .caixa i'); bs.forEach(b=>b.classList.remove('on'));
   for(let k=0; k<1+rand(2); k++) pick(bs).classList.add('on');
 }, 800);
+// "O que você encontra no BanDoly": a luz do cartão segue o mouse
+document.addEventListener('pointermove', e=>{
+  const f = e.target.closest && e.target.closest('.feat'); if(!f || movReduzido()) return;
+  const r = f.getBoundingClientRect(); f.style.setProperty('--mx', (e.clientX-r.left)+'px'); f.style.setProperty('--my', (e.clientY-r.top)+'px');
+}, {passive:true});

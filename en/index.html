@@ -157,7 +157,7 @@
   <div class="sobre" data-revela>
     <div class="card">
       <h2>What you will find in BanDoly</h2>
-    <div class="grid feats">
+    <div class="grid feats" data-revela="cascata">
       <div class="feat"><span class="feat-ic"><svg aria-hidden="true"><use href="#i-keys"/></svg></span><h3>Keyboard with real sound</h3><p>The 71 buttons of the Rheinische 142 bandoneon in their real positions, with the recorded sound of a 1930 bandoneon. Each button plays one note opening the bellows and another closing.</p><a href="#" data-go="teclado">Open the keyboard →</a></div>
       <div class="feat"><span class="feat-ic"><svg aria-hidden="true"><use href="#i-book"/></svg></span><h3>11 lessons with quizzes</h3><p>History of the instrument, the bisonoric system, bellows and articulation, reading in both clefs, tango rhythms, chords and how to read a tango score.</p><a href="#" data-go="licoes">See the lessons →</a> <a href="licoes/" data-local>Read the lessons online →</a></div>
       <div class="feat"><span class="feat-ic"><svg aria-hidden="true"><use href="#i-target"/></svg></span><h3>Challenges to memorize the buttons</h3><p>The app asks for a note and you find the button. The draw repeats the buttons you miss more often, and the error map shows where to practice.</p><a href="#" data-go="desafios">Take a challenge →</a></div>
@@ -224,8 +224,8 @@
     <div class="toolbar">
       <div class="grupo"><span class="grupo-tit">Bellows</span>
         <button class="btn" id="dirBtn">Switch direction (Space)</button>
-        <button class="btn sec" id="valveOpenBtn" title="Hold to open the bellows silently">Air valve: open (hold A)</button>
-        <button class="btn sec" id="valveCloseBtn" title="Hold to close the bellows silently">Air valve: close (hold F)</button>
+        <button class="btn sec" id="valveOpenBtn" title="Hold to open the bellows silently">Air valve: open (hold A or ←)</button>
+        <button class="btn sec" id="valveCloseBtn" title="Hold to close the bellows silently">Air valve: close (hold F or →)</button>
       </div>
       <div class="grupo"><span class="grupo-tit">Buttons</span>
         <button class="btn sec on" id="labelsBtn">Show names</button>
@@ -341,6 +341,7 @@
     <div class="row">
       <label class="grow">Melody <select id="melSelect" aria-label="Choose melody"></select></label>
       <button class="btn" id="scaleOpen"><svg aria-hidden="true"><use href="#i-music"/></svg>Guided scales</button>
+      <button class="btn sec destaque-tango" id="melTango"><svg aria-hidden="true"><use href="#i-music"/></svg>Tango: El Choclo</button>
       <button class="btn sec" id="melNew">+ New</button>
       <button class="btn sec" id="melImportBtn"><svg aria-hidden="true"><use href="#i-upload"/></svg>Import MusicXML</button>
     </div>
@@ -656,31 +657,78 @@
 
 <!-- PARA PROFESSORES: tarefa por link, relatório do aluno e digitação (js/professor.js) -->
 <section id="v-professor">
-  <div class="pg-topo"><span class="pg-ic t-professor"><svg aria-hidden="true"><use href="#i-cap"/></svg></span><div><h2 class="pg-tit">For teachers</h2><p class="muted">Send exercises to your students by link and get the report of each attempt. No sign-up, no cost.</p></div></div>
-  <div class="inicio-grade">
-    <div class="card">
-      <h3 style="margin-top:0">Create an assignment</h3>
-      <div class="pr-form">
-        <label class="pr-largo">Exercise <select id="prEx"></select></label>
-        <label>Mode <select id="prModo"><option value="aprender">Learn</option><option value="praticar" selected>Practice</option><option value="desafio">Challenge</option></select></label>
-        <label>Speed <select id="prVel"><option value="40">40%</option><option value="50">50%</option><option value="60">60%</option><option value="70" selected>70%</option><option value="80">80%</option><option value="90">90%</option><option value="100">100%</option><option value="110">110%</option><option value="120">120%</option></select></label>
-        <label class="pr-largo">Your name <input type="text" id="prNome" maxlength="40" placeholder="E.g. Ms Ana"></label>
-        <label class="pr-largo">Message for the student <textarea id="prMsg" rows="3" maxlength="300" placeholder="Ex.: toque três vezes no modo Praticar antes da aula de quinta."></textarea></label>
-        <label class="ctl-liga pr-largo"><input type="checkbox" id="prDedos"> Include the fingering I set <span class="muted" id="prDedosInfo"></span></label>
+  <div class="pr-hero">
+    <div class="pr-hero-txt">
+      <p class="kicker"><svg aria-hidden="true"><use href="#i-cap"/></svg> For teachers</p>
+      <h2 class="pr-hero-tit">Send your student an assignment in three steps</h2>
+      <p>The student opens the link and finds the exercise ready, with your message. At the end, they send you the report. No sign-up, no cost and no server.</p>
+      <div class="pr-chips"><span><svg aria-hidden="true"><use href="#i-share"/></svg>Link by WhatsApp</span><span><svg aria-hidden="true"><use href="#i-file"/></svg>Report of every attempt</span><span><svg aria-hidden="true"><use href="#i-keys"/></svg>Your fingering</span></div>
+    </div>
+    <div class="pr-arte" aria-hidden="true">
+      <span class="pr-pessoa prof"><svg aria-hidden="true"><use href="#i-cap"/></svg></span>
+      <svg class="pr-caminho" viewBox="0 0 200 80" preserveAspectRatio="none"><path d="M10 60 C 60 0, 140 0, 190 40"/></svg>
+      <span class="pr-envelope"><svg aria-hidden="true"><use href="#i-share"/></svg></span>
+      <span class="pr-pessoa aluno"><svg aria-hidden="true"><use href="#i-user"/></svg></span>
+    </div>
+  </div>
+  <div class="pr-grade">
+    <div class="pr-passos">
+      <div class="card pr-passo" data-passo="1">
+        <div class="pr-passo-tit"><span class="pr-num">1</span><div><h3>Choose the exercise</h3><p class="muted">Every Academy exercise and your own scores.</p></div></div>
+        <label class="pr-busca"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.5-4.5"/></svg><input type="search" id="prBusca" placeholder="Search exercises (e.g. scale, bellows, tango)" aria-label="Search exercises" autocomplete="off"></label>
+        <div class="pr-niveis" id="prNiveis" role="group" aria-label="Level"></div>
+        <div class="pr-exs" id="prExs" role="listbox" aria-label="Exercises"></div>
+        <select id="prEx" hidden aria-hidden="true"></select>
       </div>
-      <button type="button" class="btn btn-grande" id="prGerar">Create the assignment link</button>
-      <div class="pr-saida" id="prSaida" hidden><input type="text" id="prLink" readonly aria-label="Assignment link"><button type="button" class="btn" id="prEnviar"><svg aria-hidden="true"><use href="#i-share"/></svg>Send to the student</button></div>
+      <div class="card pr-passo" data-passo="2">
+        <div class="pr-passo-tit"><span class="pr-num">2</span><div><h3>Set up the practice</h3><p class="muted">The mode and speed the student will start with.</p></div></div>
+        <div class="pr-modos" id="prModos" role="radiogroup" aria-label="Mode"><button type="button" role="radio" data-modo="aprender" aria-checked="false"><span class="pr-modo-ic"><svg aria-hidden="true"><use href="#i-target"/></svg></span><b>Learn</b><small>The right button glows and the app waits for the note.</small></button><button type="button" role="radio" data-modo="praticar" class="on" aria-checked="true"><span class="pr-modo-ic"><svg aria-hidden="true"><use href="#i-keys"/></svg></span><b>Practice</b><small>At the student's pace, pointing out mistakes.</small></button><button type="button" role="radio" data-modo="desafio" aria-checked="false"><span class="pr-modo-ic"><svg aria-hidden="true"><use href="#i-metro"/></svg></span><b>Challenge</b><small>In time, with a metronome and a score.</small></button></div>
+        <select id="prModo" hidden aria-hidden="true"><option value="aprender">Learn</option><option value="praticar" selected>Practice</option><option value="desafio">Challenge</option></select>
+        <label class="pr-vel"><span>Speed</span><input type="range" id="prVel" min="40" max="120" step="10" value="70"><b id="prVelTxt">70%</b></label>
+        <div class="pr-dedos">
+          <label class="ctl-liga"><input type="checkbox" id="prDedos"> Include the fingering I set</label>
+          <span class="muted" id="prDedosInfo"></span>
+          <button type="button" class="btn ghost" id="prDefDedos"><svg aria-hidden="true"><use href="#i-keys"/></svg>Set the fingering in the Academy</button>
+        </div>
+      </div>
+      <div class="card pr-passo" data-passo="3">
+        <div class="pr-passo-tit"><span class="pr-num">3</span><div><h3>Write to the student</h3><p class="muted">Your name and a short message appear on the assignment notice.</p></div></div>
+        <label class="pr-campo"><span>Your name</span><input type="text" id="prNome" maxlength="40" placeholder="E.g. Ms Ana"></label>
+        <label class="pr-campo"><span>Message</span><textarea id="prMsg" rows="3" maxlength="300" placeholder="Ex.: toque três vezes no modo Praticar antes da aula de quinta."></textarea></label>
+        <div class="pr-sugs" id="prSugs"><span class="muted">Suggestions:</span><button type="button" class="pr-sug">Play it three times before the next lesson.</button><button type="button" class="pr-sug">Start slowly and only then speed up.</button><button type="button" class="pr-sug">Tell me which passage was hardest.</button></div>
+      </div>
     </div>
-    <div class="card">
-      <h3 style="margin-top:0">How it works</h3>
-      <ol class="passos">
-        <li>Choose the exercise, mode and speed, write a message and create the link.</li>
-        <li>Send the link to your student by WhatsApp or email. When they open it, the exercise is ready in the Academy, with your message.</li>
-        <li>At the end of each attempt, the student taps "Send to teacher" and you get the report: correct notes, rhythm, bellows and the passages to review.</li>
-        <li>To set the fingering, open the exercise in the Academy and tap "Edit fingering": choose the finger for each note. It goes along in the link.</li>
-      </ol>
-      <p class="muted" style="margin-bottom:0">Your own scores (My scores) can go in the link too: the student gets the music already transcribed to the buttons. Nothing goes through a server: everything travels inside the link.</p>
-    </div>
+    <aside class="pr-lado">
+      <div class="card pr-previa">
+        <p class="kicker"><svg aria-hidden="true"><use href="#i-user"/></svg> What the student will see</p>
+        <div class="pr-previa-aviso" id="prPrevia"></div>
+        <ul class="pr-resumo" id="prResumo"></ul>
+        <button type="button" class="btn btn-grande" id="prGerar"><svg aria-hidden="true"><use href="#i-share"/></svg>Create the assignment link</button>
+        <div class="pr-saida" id="prSaida" hidden>
+          <input type="text" id="prLink" readonly aria-label="Assignment link">
+          <div class="pr-acoes">
+            <button type="button" class="btn" id="prCopiar"><svg aria-hidden="true"><use href="#i-check"/></svg><span>Copy the link</span></button>
+            <button type="button" class="btn sec" id="prWhats">WhatsApp</button>
+            <button type="button" class="btn sec" id="prEnviar">More options</button>
+          </div>
+          <p class="pr-ok" id="prCopiado" aria-live="polite"></p>
+        </div>
+      </div>
+      <div class="card pr-hist">
+        <h3>Sent assignments</h3>
+        <ul id="prHist"></ul>
+      </div>
+    </aside>
+  </div>
+  <div class="card pr-como">
+    <h3>How it works</h3>
+    <ol class="pr-linha">
+      <li><span class="pr-linha-ic"><svg aria-hidden="true"><use href="#i-share"/></svg></span><b>You send the link</b><span class="muted">By WhatsApp, email or however you like.</span></li>
+      <li><span class="pr-linha-ic"><svg aria-hidden="true"><use href="#i-cap"/></svg></span><b>The student opens it and practises</b><span class="muted">The exercise is ready in the Academy, with your message.</span></li>
+      <li><span class="pr-linha-ic"><svg aria-hidden="true"><use href="#i-file"/></svg></span><b>You get the report</b><span class="muted">Correct notes, rhythm, bellows and the passages to review.</span></li>
+      <li><span class="pr-linha-ic"><svg aria-hidden="true"><use href="#i-keys"/></svg></span><b>The fingering goes along</b><span class="muted">In "Edit fingering", in the Academy, choose the finger for each note.</span></li>
+    </ol>
+    <p class="muted" style="margin-bottom:0">Your own scores (My scores) can go in the link too: the student gets the music already transcribed to the buttons. Nothing goes through a server: everything travels inside the link.</p>
   </div>
 </section>
 

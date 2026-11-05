@@ -22,13 +22,19 @@ teste('nomes de notas e leitura de notas digitadas', () => {
 
 /* ---------- Fole e válvula ---------- */
 teste('válvula: A abre e F fecha sem mudar a direção', () => {
-  go('teclado'); bel.level = 0.5; setDir('open');
+  ligarPc(false); go('teclado'); bel.level = 0.5; setDir('open');
   tecla('keydown','KeyF'); passarTempoFole(400); tecla('keyup','KeyF');
   ok(bel.level < 0.5, 'F deveria fechar'); igual(state.dir, 'open');
   const l = bel.level; tecla('keydown','KeyA'); passarTempoFole(400); tecla('keyup','KeyA');
   ok(bel.level > l, 'A deveria abrir'); igual(bel.valve, null);
 });
+teste('setas seguram a válvula mesmo com o teclado do computador tocando notas', () => {
+  const antes = pc.ligado; ligarPc(true); go('teclado'); bel.level = 0.5; setDir('open');
+  tecla('keydown','ArrowRight'); passarTempoFole(400); tecla('keyup','ArrowRight');
+  ok(bel.level < 0.5, '→ deveria fechar'); igual(bel.valve, null); ligarPc(antes);
+});
 teste('fole no limite bloqueia e a válvula libera', () => {
+  ligarPc(false);
   bel.level = 1; setDir('open'); bel.blocked = true;
   tecla('keydown','KeyF'); passarTempoFole(200); tecla('keyup','KeyF');
   igual(bel.blocked, false);

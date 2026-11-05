@@ -255,6 +255,7 @@ function renderMelList(){
     h = `<optgroup label="Escala guiada"><option value="${mel.cur.id}" selected>${esc(mel.cur.title)}${best!=null?` — ${best}%`:''}</option></optgroup>` + h; }
   $('#melSelect').innerHTML = h;
 }
+$('#melTango').onclick = ()=>{ loadMelody('choclo-intro'); $('#melTitle').scrollIntoView({behavior: movReduzido()?'auto':'smooth', block:'center'}); };
 $('#melSelect').onchange = e=>{ if(!e.target.value.startsWith('esc:')) loadMelody(e.target.value); };
 
 function loadMelody(id){

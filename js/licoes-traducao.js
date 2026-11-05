@@ -34,7 +34,7 @@ es: [
     <li>Si el fuelle llega al final, usa la <b>válvula de aire</b> para reubicarlo en silencio.</li>
     <li>Nunca fuerces el fuelle sin presionar botones ni la válvula: eso daña el instrumento.</li>
   </ul>
-  <p>En la pestaña <a href="#" data-go="teclado">Teclado</a> el fuelle está simulado: si tocas mucho tiempo en la misma dirección, llega al final. Usa <kbd>Espacio</kbd> para cambiar la dirección. Para reubicar el fuelle en silencio, mantén <kbd>A</kbd> (válvula abriendo) o <kbd>F</kbd> (válvula cerrando).</p>`,
+  <p>En la pestaña <a href="#" data-go="teclado">Teclado</a> el fuelle está simulado: si tocas mucho tiempo en la misma dirección, llega al final. Usa <kbd>Espacio</kbd> para cambiar la dirección. Para reubicar el fuelle en silencio, mantén <kbd>←</kbd> o <kbd>A</kbd> (válvula abriendo) y <kbd>→</kbd> o <kbd>F</kbd> (válvula cerrando). Con el teclado de la computadora tocando notas, usa las flechas.</p>`,
   quiz:[{q:'¿Qué controla principalmente el volumen y la expresión en el bandoneón?',o:['La fuerza de los dedos en los botones','El fuelle','La válvula de aire','Las correas']},
         {q:'El fuelle está casi totalmente abierto y la frase no terminó. Lo mejor habría sido…',o:['Forzar más','Haber planificado el cambio antes, o usar la válvula en un silencio','Soltar las correas','Tocar más rápido']}]},
 { title:'5. Lectura: dos claves', html:`
@@ -137,7 +137,7 @@ en: [
     <li>If the bellows runs out, use the <b>air valve</b> to reposition it silently.</li>
     <li>Never force the bellows without pressing buttons or the valve: it damages the instrument.</li>
   </ul>
-  <p>On the <a href="#" data-go="teclado">Keyboard</a> tab the bellows is simulated: if you play too long in one direction, it runs out. Use <kbd>Space</kbd> to switch direction. To reposition the bellows silently, hold <kbd>A</kbd> (valve opening) or <kbd>F</kbd> (valve closing).</p>`,
+  <p>On the <a href="#" data-go="teclado">Keyboard</a> tab the bellows is simulated: if you play too long in one direction, it runs out. Use <kbd>Space</kbd> to switch direction. To reposition the bellows silently, hold <kbd>←</kbd> or <kbd>A</kbd> (valve opening) and <kbd>→</kbd> or <kbd>F</kbd> (valve closing). When the computer keyboard is playing notes, use the arrows.</p>`,
   quiz:[{q:'What mainly controls volume and expression on the bandoneon?',o:['Finger pressure on the buttons','The bellows','The air valve','The straps']},
         {q:'The bellows is almost fully open and the phrase is not over. The best move would have been…',o:['Pushing harder','Planning the change earlier, or using the valve in a rest','Loosening the straps','Playing faster']}]},
 { title:'5. Reading: two clefs', html:`

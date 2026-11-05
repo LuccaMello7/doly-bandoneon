@@ -157,7 +157,7 @@
   <div class="sobre" data-revela>
     <div class="card">
       <h2>Qué encuentras en BanDoly</h2>
-    <div class="grid feats">
+    <div class="grid feats" data-revela="cascata">
       <div class="feat"><span class="feat-ic"><svg aria-hidden="true"><use href="#i-keys"/></svg></span><h3>Teclado con sonido real</h3><p>Los 71 botones del bandoneón Rheinische 142 en sus posiciones reales, con el sonido grabado de un bandoneón de 1930. Cada botón toca una nota al abrir el fuelle y otra al cerrarlo.</p><a href="#" data-go="teclado">Abrir el teclado →</a></div>
       <div class="feat"><span class="feat-ic"><svg aria-hidden="true"><use href="#i-book"/></svg></span><h3>11 lecciones con cuestionario</h3><p>Historia del instrumento, sistema bisonoro, fuelle y articulación, lectura en las dos claves, ritmos de tango, acordes y cómo leer una partitura de tango.</p><a href="#" data-go="licoes">Ver las lecciones →</a> <a href="licoes/" data-local>Leer las lecciones online →</a></div>
       <div class="feat"><span class="feat-ic"><svg aria-hidden="true"><use href="#i-target"/></svg></span><h3>Desafíos para memorizar los botones</h3><p>La app te pide una nota y tú encuentras el botón. El sorteo repite más los botones que fallas, y el mapa de errores muestra dónde practicar.</p><a href="#" data-go="desafios">Hacer un desafío →</a></div>
@@ -224,8 +224,8 @@
     <div class="toolbar">
       <div class="grupo"><span class="grupo-tit">Fuelle</span>
         <button class="btn" id="dirBtn">Cambiar dirección (Espacio)</button>
-        <button class="btn sec" id="valveOpenBtn" title="Mantén para abrir el fuelle sin sonido">Válvula: abrir (mantén A)</button>
-        <button class="btn sec" id="valveCloseBtn" title="Mantén para cerrar el fuelle sin sonido">Válvula: cerrar (mantén F)</button>
+        <button class="btn sec" id="valveOpenBtn" title="Mantén para abrir el fuelle sin sonido">Válvula: abrir (mantén A o ←)</button>
+        <button class="btn sec" id="valveCloseBtn" title="Mantén para cerrar el fuelle sin sonido">Válvula: cerrar (mantén F o →)</button>
       </div>
       <div class="grupo"><span class="grupo-tit">Botones</span>
         <button class="btn sec on" id="labelsBtn">Mostrar nombres</button>
@@ -341,6 +341,7 @@
     <div class="row">
       <label class="grow">Melodía <select id="melSelect" aria-label="Elegir melodía"></select></label>
       <button class="btn" id="scaleOpen"><svg aria-hidden="true"><use href="#i-music"/></svg>Escalas guiadas</button>
+      <button class="btn sec destaque-tango" id="melTango"><svg aria-hidden="true"><use href="#i-music"/></svg>Tango: El Choclo</button>
       <button class="btn sec" id="melNew">+ Nueva</button>
       <button class="btn sec" id="melImportBtn"><svg aria-hidden="true"><use href="#i-upload"/></svg>Importar MusicXML</button>
     </div>
@@ -656,31 +657,78 @@
 
 <!-- PARA PROFESSORES: tarefa por link, relatório do aluno e digitação (js/professor.js) -->
 <section id="v-professor">
-  <div class="pg-topo"><span class="pg-ic t-professor"><svg aria-hidden="true"><use href="#i-cap"/></svg></span><div><h2 class="pg-tit">Para profesores</h2><p class="muted">Envía ejercicios a tus alumnos por enlace y recibe el informe de cada intento. Sin registro y sin costo.</p></div></div>
-  <div class="inicio-grade">
-    <div class="card">
-      <h3 style="margin-top:0">Armar una tarea</h3>
-      <div class="pr-form">
-        <label class="pr-largo">Ejercicio <select id="prEx"></select></label>
-        <label>Modo <select id="prModo"><option value="aprender">Aprender</option><option value="praticar" selected>Practicar</option><option value="desafio">Desafío</option></select></label>
-        <label>Velocidad <select id="prVel"><option value="40">40%</option><option value="50">50%</option><option value="60">60%</option><option value="70" selected>70%</option><option value="80">80%</option><option value="90">90%</option><option value="100">100%</option><option value="110">110%</option><option value="120">120%</option></select></label>
-        <label class="pr-largo">Tu nombre <input type="text" id="prNome" maxlength="40" placeholder="Ej.: Prof. Ana"></label>
-        <label class="pr-largo">Mensaje para el alumno <textarea id="prMsg" rows="3" maxlength="300" placeholder="Ex.: toque três vezes no modo Praticar antes da aula de quinta."></textarea></label>
-        <label class="ctl-liga pr-largo"><input type="checkbox" id="prDedos"> Incluir la digitación que definí <span class="muted" id="prDedosInfo"></span></label>
+  <div class="pr-hero">
+    <div class="pr-hero-txt">
+      <p class="kicker"><svg aria-hidden="true"><use href="#i-cap"/></svg> Para profesores</p>
+      <h2 class="pr-hero-tit">Envía una tarea a tu alumno en tres pasos</h2>
+      <p>El alumno abre el enlace y encuentra el ejercicio listo, con tu mensaje. Al final, te envía el informe. Sin registro, sin costo y sin servidor.</p>
+      <div class="pr-chips"><span><svg aria-hidden="true"><use href="#i-share"/></svg>Enlace por WhatsApp</span><span><svg aria-hidden="true"><use href="#i-file"/></svg>Informe de cada intento</span><span><svg aria-hidden="true"><use href="#i-keys"/></svg>Tu digitación</span></div>
+    </div>
+    <div class="pr-arte" aria-hidden="true">
+      <span class="pr-pessoa prof"><svg aria-hidden="true"><use href="#i-cap"/></svg></span>
+      <svg class="pr-caminho" viewBox="0 0 200 80" preserveAspectRatio="none"><path d="M10 60 C 60 0, 140 0, 190 40"/></svg>
+      <span class="pr-envelope"><svg aria-hidden="true"><use href="#i-share"/></svg></span>
+      <span class="pr-pessoa aluno"><svg aria-hidden="true"><use href="#i-user"/></svg></span>
+    </div>
+  </div>
+  <div class="pr-grade">
+    <div class="pr-passos">
+      <div class="card pr-passo" data-passo="1">
+        <div class="pr-passo-tit"><span class="pr-num">1</span><div><h3>Elige el ejercicio</h3><p class="muted">Todos los ejercicios de la Academia y tus partituras.</p></div></div>
+        <label class="pr-busca"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.5-4.5"/></svg><input type="search" id="prBusca" placeholder="Buscar ejercicio (ej.: escala, fuelle, tango)" aria-label="Buscar ejercicio" autocomplete="off"></label>
+        <div class="pr-niveis" id="prNiveis" role="group" aria-label="Nivel"></div>
+        <div class="pr-exs" id="prExs" role="listbox" aria-label="Ejercicios"></div>
+        <select id="prEx" hidden aria-hidden="true"></select>
       </div>
-      <button type="button" class="btn btn-grande" id="prGerar">Generar el enlace de la tarea</button>
-      <div class="pr-saida" id="prSaida" hidden><input type="text" id="prLink" readonly aria-label="Enlace de la tarea"><button type="button" class="btn" id="prEnviar"><svg aria-hidden="true"><use href="#i-share"/></svg>Enviar al alumno</button></div>
+      <div class="card pr-passo" data-passo="2">
+        <div class="pr-passo-tit"><span class="pr-num">2</span><div><h3>Ajusta la práctica</h3><p class="muted">El modo y la velocidad con que el alumno va a empezar.</p></div></div>
+        <div class="pr-modos" id="prModos" role="radiogroup" aria-label="Modo"><button type="button" role="radio" data-modo="aprender" aria-checked="false"><span class="pr-modo-ic"><svg aria-hidden="true"><use href="#i-target"/></svg></span><b>Aprender</b><small>El botón correcto brilla y la app espera la nota.</small></button><button type="button" role="radio" data-modo="praticar" class="on" aria-checked="true"><span class="pr-modo-ic"><svg aria-hidden="true"><use href="#i-keys"/></svg></span><b>Practicar</b><small>Al ritmo del alumno, señalando los errores.</small></button><button type="button" role="radio" data-modo="desafio" aria-checked="false"><span class="pr-modo-ic"><svg aria-hidden="true"><use href="#i-metro"/></svg></span><b>Desafío</b><small>A tiempo, con metrónomo y puntuación.</small></button></div>
+        <select id="prModo" hidden aria-hidden="true"><option value="aprender">Aprender</option><option value="praticar" selected>Practicar</option><option value="desafio">Desafío</option></select>
+        <label class="pr-vel"><span>Velocidad</span><input type="range" id="prVel" min="40" max="120" step="10" value="70"><b id="prVelTxt">70%</b></label>
+        <div class="pr-dedos">
+          <label class="ctl-liga"><input type="checkbox" id="prDedos"> Incluir la digitación que definí</label>
+          <span class="muted" id="prDedosInfo"></span>
+          <button type="button" class="btn ghost" id="prDefDedos"><svg aria-hidden="true"><use href="#i-keys"/></svg>Definir la digitación en la Academia</button>
+        </div>
+      </div>
+      <div class="card pr-passo" data-passo="3">
+        <div class="pr-passo-tit"><span class="pr-num">3</span><div><h3>Escribe al alumno</h3><p class="muted">Tu nombre y un mensaje corto aparecen en el aviso de la tarea.</p></div></div>
+        <label class="pr-campo"><span>Tu nombre</span><input type="text" id="prNome" maxlength="40" placeholder="Ej.: Prof. Ana"></label>
+        <label class="pr-campo"><span>Mensaje</span><textarea id="prMsg" rows="3" maxlength="300" placeholder="Ex.: toque três vezes no modo Praticar antes da aula de quinta."></textarea></label>
+        <div class="pr-sugs" id="prSugs"><span class="muted">Sugerencias:</span><button type="button" class="pr-sug">Tócalo tres veces antes de la próxima clase.</button><button type="button" class="pr-sug">Empieza despacio y solo después aumenta la velocidad.</button><button type="button" class="pr-sug">Cuéntame en qué pasaje tuviste más dificultad.</button></div>
+      </div>
     </div>
-    <div class="card">
-      <h3 style="margin-top:0">Cómo funciona</h3>
-      <ol class="passos">
-        <li>Elige el ejercicio, el modo y la velocidad, escribe un mensaje y genera el enlace.</li>
-        <li>Envía el enlace al alumno por WhatsApp o correo. Al abrirlo, el ejercicio ya aparece listo en la Academia, con tu mensaje.</li>
-        <li>Al final de cada intento, el alumno toca "Enviar al profesor" y recibes el informe: notas correctas, ritmo, fuelle y los pasajes para repasar.</li>
-        <li>Para registrar la digitación, abre el ejercicio en la Academia y toca "Editar digitación": elige el dedo de cada nota. Va junto en el enlace.</li>
-      </ol>
-      <p class="muted" style="margin-bottom:0">Las partituras propias (Mis partituras) también pueden ir en el enlace: el alumno recibe la música ya transcrita a los botones. Nada pasa por un servidor: todo va dentro del propio enlace.</p>
-    </div>
+    <aside class="pr-lado">
+      <div class="card pr-previa">
+        <p class="kicker"><svg aria-hidden="true"><use href="#i-user"/></svg> Cómo lo va a ver el alumno</p>
+        <div class="pr-previa-aviso" id="prPrevia"></div>
+        <ul class="pr-resumo" id="prResumo"></ul>
+        <button type="button" class="btn btn-grande" id="prGerar"><svg aria-hidden="true"><use href="#i-share"/></svg>Generar el enlace de la tarea</button>
+        <div class="pr-saida" id="prSaida" hidden>
+          <input type="text" id="prLink" readonly aria-label="Enlace de la tarea">
+          <div class="pr-acoes">
+            <button type="button" class="btn" id="prCopiar"><svg aria-hidden="true"><use href="#i-check"/></svg><span>Copiar el enlace</span></button>
+            <button type="button" class="btn sec" id="prWhats">WhatsApp</button>
+            <button type="button" class="btn sec" id="prEnviar">Más opciones</button>
+          </div>
+          <p class="pr-ok" id="prCopiado" aria-live="polite"></p>
+        </div>
+      </div>
+      <div class="card pr-hist">
+        <h3>Tareas enviadas</h3>
+        <ul id="prHist"></ul>
+      </div>
+    </aside>
+  </div>
+  <div class="card pr-como">
+    <h3>Cómo funciona</h3>
+    <ol class="pr-linha">
+      <li><span class="pr-linha-ic"><svg aria-hidden="true"><use href="#i-share"/></svg></span><b>Envías el enlace</b><span class="muted">Por WhatsApp, correo o como prefieras.</span></li>
+      <li><span class="pr-linha-ic"><svg aria-hidden="true"><use href="#i-cap"/></svg></span><b>El alumno abre y practica</b><span class="muted">El ejercicio aparece listo en la Academia, con tu mensaje.</span></li>
+      <li><span class="pr-linha-ic"><svg aria-hidden="true"><use href="#i-file"/></svg></span><b>Recibes el informe</b><span class="muted">Notas correctas, ritmo, fuelle y los pasajes para repasar.</span></li>
+      <li><span class="pr-linha-ic"><svg aria-hidden="true"><use href="#i-keys"/></svg></span><b>La digitación va junto</b><span class="muted">En "Editar digitación", en la Academia, elige el dedo de cada nota.</span></li>
+    </ol>
+    <p class="muted" style="margin-bottom:0">Las partituras propias (Mis partituras) también pueden ir en el enlace: el alumno recibe la música ya transcrita a los botones. Nada pasa por un servidor: todo va dentro del propio enlace.</p>
   </div>
 </section>
 

@@ -125,7 +125,7 @@ No celular ou tablet, toque nos botões com os dedos. Vários dedos ao mesmo tem
 
 ### Teclado do computador, controlador MIDI e pressão do fole
 
-Em **Teclado → Tocar com → Teclado do computador**, as teclas passam a tocar os botões: as quatro fileiras do teclado ficam sobre as fileiras de botões de cada mão (à esquerda do teclado, a mão esquerda). **Mapa e controles** mostra qual nota cada tecla toca e permite trocar qualquer tecla: toque **Editar o mapa**, depois um botão na tela e a tecla desejada. Com o teclado ligado, <kbd>Espaço</kbd> troca o fole, <kbd>←</kbd> e <kbd>→</kbd> seguram a válvula de ar e <kbd>↑</kbd> e <kbd>↓</kbd> mudam a pressão do fole.
+No computador, **as teclas do computador já tocam os botões** (dá para desligar em **Teclado → Tocar com → Teclado do computador**): as quatro fileiras do teclado ficam sobre as fileiras de botões de cada mão (à esquerda do teclado, a mão esquerda). **Mapa e controles** mostra qual nota cada tecla toca e permite trocar qualquer tecla: toque **Editar o mapa**, depois um botão na tela e a tecla desejada. Na aba Teclado, <kbd>Espaço</kbd> troca o fole, <kbd>←</kbd> e <kbd>→</kbd> seguram a válvula de ar (com o teclado desligado, <kbd>A</kbd> e <kbd>F</kbd> também) e <kbd>↑</kbd> e <kbd>↓</kbd> mudam a pressão do fole.
 
 Um **controlador MIDI** (teclado MIDI ou bandoneon digital, no Chrome ou no Edge) também toca: cada nota acende o botão que dá essa nota na direção atual do fole. Na mesma janela dá para **ensinar** um botão específico para uma nota e **aprender** dois controles do aparelho: um para a pressão do fole (pedal de expressão, roda ou botão giratório) e outro para a direção do fole (por exemplo, o pedal de sustentação).
 

@@ -796,7 +796,7 @@ svg.filete[aria-hidden]{width:120px;height:40px;color:var(--gold)}
 [data-revela]{transition:opacity .7s cubic-bezier(.2,.8,.2,1),transform .7s cubic-bezier(.2,.8,.2,1)}
 html:not(.sem-mov) [data-revela]:not([data-revela="cascata"]):not(.visto){opacity:0;transform:translateY(26px)}
 html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
-[data-revela="cascata"].visto>*{animation:sobe .6s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0)*80ms)}
+[data-revela="cascata"].visto>*{animation:sobe .6s cubic-bezier(.2,.8,.2,1) backwards;animation-delay:calc(var(--i,0)*80ms)}
 .trilha-card.visto .etapa{animation:sobe .5s cubic-bezier(.2,.8,.2,1) both}
 .trilha-card.visto .etapa:nth-child(2){animation-delay:.08s}.trilha-card.visto .etapa:nth-child(3){animation-delay:.16s}.trilha-card.visto .etapa:nth-child(4){animation-delay:.24s}
 @media (max-width:999px){
@@ -948,3 +948,142 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
 .dedo-linha button.on{background:var(--gold);color:#1b1404}
 .ac-enviar{margin-top:12px}
 #acDigitar.on{background:var(--cream);color:var(--navy)}
+
+/* ================== Para professores (etapa 2): passo a passo com prévia ================== */
+.pr-hero{position:relative;overflow:hidden;isolation:isolate;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:24px;align-items:center;padding:30px 34px;border-radius:26px;margin-bottom:18px;background:linear-gradient(135deg,#2a3f8a,#3b2a6e 55%,#5a2a5e);box-shadow:0 10px 30px #0004}
+.pr-hero::before{content:"";position:absolute;inset:-40%;z-index:-1;background:radial-gradient(30% 40% at 25% 40%,#8b7cf655,transparent 70%),radial-gradient(28% 36% at 75% 60%,#e6b45033,transparent 70%);animation:aurora 16s ease-in-out infinite alternate}
+.pr-hero .kicker{display:flex;align-items:center;gap:6px;color:var(--gold2)}
+.pr-hero-tit{font-size:clamp(1.6rem,3vw,2.3rem);line-height:1.12;margin:4px 0 10px;animation:sobeNitido .8s cubic-bezier(.2,.8,.2,1) both}
+.pr-hero p{color:#d5def0;max-width:60ch}
+.pr-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.pr-chips span{display:inline-flex;align-items:center;gap:6px;background:#ffffff1a;border:1px solid #ffffff26;border-radius:999px;padding:6px 12px;font-weight:800;font-size:.85rem;animation:sobe .6s both}
+.pr-chips span:nth-child(2){animation-delay:.1s}.pr-chips span:nth-child(3){animation-delay:.2s}
+/* o link viajando do professor ao aluno */
+.pr-arte{position:relative;height:150px}
+.pr-pessoa{position:absolute;bottom:14px;width:64px;height:64px;border-radius:50%;display:grid;place-items:center;color:#fff;box-shadow:0 8px 20px #0006}
+.pr-pessoa svg[aria-hidden]{width:30px;height:30px}
+.pr-pessoa.prof{left:0;background:linear-gradient(140deg,#3b6fd6,#8b7cf6)}
+.pr-pessoa.aluno{right:0;background:linear-gradient(140deg,#e6b450,#c2508a);animation:recebe 3.6s ease-in-out infinite}
+.pr-caminho{position:absolute;left:30px;top:10px;height:110px;width:calc(100% - 60px);fill:none;stroke:#ffffff55;stroke-width:2;stroke-dasharray:6 6;animation:tracejado 1.2s linear infinite}
+.pr-envelope{position:absolute;left:12px;top:40px;width:40px;height:40px;border-radius:12px;background:var(--gold);color:#1b1404;display:grid;place-items:center;box-shadow:0 6px 16px #0006;animation:voa 3.6s cubic-bezier(.45,.05,.4,1) infinite}
+@keyframes tracejado{to{stroke-dashoffset:-12}}
+@keyframes voa{0%{transform:translate(0,40px) scale(.6);opacity:0}12%{opacity:1;transform:translate(30px,0) scale(1)}50%{transform:translate(110px,-28px)}82%{opacity:1;transform:translate(200px,20px)}92%,100%{opacity:0;transform:translate(210px,40px) scale(.6)}}
+@keyframes recebe{0%,82%,100%{transform:none}88%{transform:scale(1.12)}}
+.pr-grade{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:18px;align-items:start;margin-bottom:18px}
+.pr-passos{display:flex;flex-direction:column;gap:18px}
+.pr-passos .card,.pr-lado .card{margin:0}
+.pr-passo{animation:sobe .6s cubic-bezier(.2,.8,.2,1) both}
+.pr-passo:nth-child(2){animation-delay:.08s}.pr-passo:nth-child(3){animation-delay:.16s}
+.pr-passo-tit{display:flex;gap:14px;align-items:center;margin-bottom:14px}
+.pr-passo-tit h3{margin:0}.pr-passo-tit p{margin:0}
+.pr-num{width:42px;height:42px;flex:none;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:1.15rem;background:linear-gradient(140deg,var(--gold2),var(--gold));color:#1b1404;box-shadow:0 0 0 6px #e6b45022}
+.pr-busca{display:flex;align-items:center;gap:10px;background:var(--panel2);border:2px solid transparent;border-radius:999px;padding:4px 16px;margin-bottom:10px;transition:border-color .25s,box-shadow .25s}
+.pr-busca:focus-within{border-color:var(--gold);box-shadow:0 0 0 5px #e6b45022}
+.pr-busca svg[aria-hidden]{color:var(--gold)}
+.pr-busca input{flex:1;min-width:0;background:none;border:0;color:var(--text);font:600 1rem Nunito,sans-serif;padding:8px 0;outline:none}
+.pr-niveis{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.pr-niveis button{background:var(--panel2);border:0;color:var(--muted);padding:6px 12px;border-radius:999px;font:800 .82rem Nunito,sans-serif;cursor:pointer;transition:background .2s,color .2s}
+.pr-niveis button.on{background:var(--cream);color:var(--navy)}
+.pr-exs{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;max-height:360px;overflow-y:auto;padding:4px 4px 4px 0}
+.pr-ex{position:relative;text-align:left;display:flex;flex-direction:column;gap:3px;background:var(--panel2);border:2px solid transparent;border-radius:16px;padding:12px 14px;color:var(--text);font:inherit;cursor:pointer;transition:transform .25s cubic-bezier(.34,1.4,.5,1),border-color .2s,background .2s;animation:sobe .4s backwards;animation-delay:calc(var(--i,0)*25ms)}
+.pr-ex b{font-size:.95rem;line-height:1.25;padding-right:24px}.pr-ex small{color:var(--muted);font-size:.78rem;line-height:1.3}
+.pr-ex-nivel{font-size:.68rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--nv,var(--gold))}
+.pr-ex.nivel-1{--nv:#4f9cf0}.pr-ex.nivel-2{--nv:#8b7cf6}.pr-ex.nivel-3{--nv:#3ccf8e}.pr-ex.nivel-4{--nv:#f08a4b}.pr-ex.nivel-5{--nv:#ef6f9a}.pr-ex.nivel-6{--nv:#e6b450}.pr-ex.nivel-7{--nv:#f3e9d2}
+@media (hover:hover){.pr-ex:hover{transform:translateY(-3px);border-color:#ffffff22}}
+.pr-ex.on{border-color:var(--nv,var(--gold));background:linear-gradient(160deg,#ffffff14,var(--panel2))}
+.pr-ex.on::after{content:"✓";position:absolute;top:10px;right:10px;width:22px;height:22px;border-radius:50%;background:var(--nv,var(--gold));color:#1b1404;font-weight:900;font-size:.8rem;display:grid;place-items:center;animation:surgeMarca .35s cubic-bezier(.34,1.4,.5,1)}
+.pr-vazio{grid-column:1/-1;text-align:center;padding:20px}
+.pr-modos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px}
+.pr-modos button{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;background:var(--panel2);border:2px solid transparent;border-radius:16px;padding:12px;color:var(--text);font:inherit;cursor:pointer;transition:transform .25s cubic-bezier(.34,1.4,.5,1),border-color .2s,background .2s}
+.pr-modos small{color:var(--muted);font-size:.78rem;line-height:1.3}
+.pr-modo-ic{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:#ffffff12;color:var(--gold);transition:background .2s,color .2s}
+.pr-modos button.on{border-color:var(--gold);background:linear-gradient(160deg,#e6b4501f,var(--panel2))}
+.pr-modos button.on .pr-modo-ic{background:var(--gold);color:#1b1404;animation:pula .5s}
+@media (hover:hover){.pr-modos button:not(.on):hover{transform:translateY(-2px)}}
+.pr-vel{display:flex;align-items:center;gap:12px;font-weight:800;margin-bottom:14px}
+.pr-vel input{flex:1}
+.pr-vel b{min-width:4ch;color:var(--gold2);font-size:1.1rem}
+.pr-dedos{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;background:#ffffff08;border-radius:14px;padding:10px 12px}
+.pr-dedos .muted{flex:1 1 200px;font-size:.85rem}
+.pr-campo{display:flex;flex-direction:column;gap:6px;font-weight:800;font-size:.88rem;color:var(--muted);margin-bottom:12px}
+.pr-campo input,.pr-campo textarea{width:100%;font:600 1rem Nunito,sans-serif;color:var(--text)}
+.pr-sugs{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.pr-sug{background:#ffffff0d;border:1px dashed #ffffff33;color:var(--text);border-radius:999px;padding:6px 12px;font:700 .82rem Nunito,sans-serif;cursor:pointer;transition:background .2s,border-color .2s,transform .2s}
+@media (hover:hover){.pr-sug:hover{background:#e6b4501f;border-color:var(--gold);transform:translateY(-2px)}}
+/* lado: prévia, link e histórico (fica parado enquanto você rola os passos) */
+.pr-lado{display:flex;flex-direction:column;gap:18px;position:sticky;top:20px}
+.pr-previa{border:1px solid #e6b45040}
+.pr-previa .kicker{display:flex;align-items:center;gap:6px}
+.pr-previa-aviso{display:flex;flex-direction:column;gap:10px;border:1px solid var(--gold);border-radius:18px;padding:14px;background:linear-gradient(140deg,#3a2a0e,var(--panel2) 70%);margin:8px 0 12px}
+.pr-previa-aviso.muda{animation:pulsoPrevia .45s ease}
+@keyframes pulsoPrevia{40%{box-shadow:0 0 0 4px #e6b45044;transform:scale(1.01)}}
+.pr-previa-aviso .tarefa-ic{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--gold);color:#1b1404}
+.pr-previa-aviso .btn[disabled]{opacity:.85;cursor:default}
+.pr-resumo{list-style:none;margin:0 0 14px;padding:0;display:flex;flex-direction:column;gap:6px}
+.pr-resumo li{display:flex;align-items:center;gap:8px;font-size:.9rem}
+.pr-resumo svg[aria-hidden]{color:var(--gold);width:18px;height:18px}
+.pr-previa .btn-grande{width:100%}
+.pr-saida:not([hidden]){display:flex;flex-direction:column;align-items:stretch;gap:8px;margin-top:12px;animation:sobe .35s both}
+.pr-saida input{width:100%;font-size:.85rem}
+.pr-acoes{display:flex;gap:8px;flex-wrap:wrap}
+.pr-acoes .btn{flex:1 1 auto}
+#prCopiar.feito{animation:certo .5s cubic-bezier(.34,1.4,.5,1);background:var(--green);color:#06281a}
+.pr-ok{color:var(--green);font-weight:800;min-height:1.3em;margin:0}
+.pr-hist h3{margin-top:0}
+.pr-hist ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.pr-hist li{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--panel2);border-radius:12px;padding:8px 10px;animation:sobe .35s both}
+.pr-hist li>div{display:flex;flex-direction:column;min-width:0}
+.pr-hist li.muted{background:none;padding:0;font-size:.88rem}
+/* como funciona: uma linha do tempo de quatro passos */
+.pr-como h3{margin-top:0}
+.pr-linha{list-style:none;margin:0 0 14px;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;position:relative}
+.pr-linha::before{content:"";position:absolute;left:24px;right:24px;top:24px;height:2px;background:linear-gradient(90deg,var(--gold),#8b7cf6);opacity:.5}
+.pr-linha li{position:relative;display:flex;flex-direction:column;gap:4px;animation:sobe .6s both}
+.pr-linha li:nth-child(2){animation-delay:.1s}.pr-linha li:nth-child(3){animation-delay:.2s}.pr-linha li:nth-child(4){animation-delay:.3s}
+.pr-linha-ic{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:var(--panel2);border:2px solid var(--gold);color:var(--gold);margin-bottom:6px;position:relative;z-index:1}
+.pr-linha .muted{font-size:.85rem;line-height:1.35}
+@media (max-width:999px){
+  .pr-hero{grid-template-columns:minmax(0,1fr);padding:24px 22px}.pr-arte{height:120px;max-width:300px}
+  .pr-grade{grid-template-columns:minmax(0,1fr)}.pr-lado{position:static}
+  .pr-linha{grid-template-columns:repeat(2,minmax(0,1fr))}.pr-linha::before{display:none}
+}
+@media (max-width:560px){.pr-modos{grid-template-columns:1fr}.pr-linha{grid-template-columns:1fr}}
+
+/* El Choclo em destaque em Melodias */
+.destaque-tango{background:linear-gradient(120deg,#6d1f24,#4a1418)!important;color:var(--cream)!important;border:1px solid #e6b45066!important}
+@media (hover:hover){.destaque-tango:hover{box-shadow:0 6px 18px #6d1f2488}}
+
+/* ================== "O que você encontra no BanDoly": cartões com movimento ================== */
+.feat{position:relative;overflow:hidden;isolation:isolate;transition:transform .4s cubic-bezier(.34,1.4,.5,1),box-shadow .35s,background .35s}
+/* luz que segue o mouse (js/movimento.js põe --mx e --my) */
+.feat::after{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(260px circle at var(--mx,50%) var(--my,0%),#e6b45024,transparent 60%);opacity:0;transition:opacity .35s;pointer-events:none}
+/* borda que brilha percorrendo o cartão */
+@property --ang{syntax:'<angle>';inherits:false;initial-value:0deg}
+.feat::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;pointer-events:none;
+  background:conic-gradient(from var(--ang),transparent 0 70%,#f0c96e 80%,transparent 90%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .35s}
+@keyframes giraBorda{to{--ang:360deg}}
+@media (hover:hover){
+  .feat:hover{transform:translateY(-6px);box-shadow:0 18px 34px #0007;background:#1f3a60}
+  .feat:hover::after{opacity:1}
+  .feat:hover::before{opacity:1;animation:giraBorda 2.4s linear infinite}
+  .feat:hover .feat-ic{background:var(--gold);color:#1b1404}
+  .feat:hover h3{color:var(--gold2)}
+}
+.feat-ic{transition:background .3s,color .3s}
+.feat h3{transition:color .3s}
+/* cada ícone tem o seu movimento: ao aparecer na tela e ao passar o mouse */
+@keyframes icTecla{30%{transform:translateY(3px) scale(.9)}60%{transform:translateY(-3px)}}
+@keyframes icLivro{40%{transform:perspective(200px) rotateY(-50deg)}}
+@keyframes icAlvo{0%{box-shadow:0 0 0 0 #e6b45088}100%{box-shadow:0 0 0 16px #e6b45000}}
+@keyframes icNota{25%{transform:translateY(-6px) rotate(-8deg)}55%{transform:translateY(0) rotate(6deg)}}
+@keyframes icAcorde{25%,75%{transform:translateX(-3px)}50%{transform:translateX(3px)}}
+@keyframes icMetro{25%{transform:rotate(-18deg)}75%{transform:rotate(18deg)}}
+.feats .feat:nth-child(1) .feat-ic{--anim:icTecla}.feats .feat:nth-child(2) .feat-ic{--anim:icLivro}
+.feats .feat:nth-child(3) .feat-ic{--anim:icAlvo}.feats .feat:nth-child(4) .feat-ic{--anim:icNota}
+.feats .feat:nth-child(5) .feat-ic{--anim:icAcorde}.feats .feat:nth-child(6) .feat-ic{--anim:icMetro;transform-origin:50% 90%}
+.feats.visto .feat .feat-ic{animation:var(--anim) .8s cubic-bezier(.34,1.4,.5,1) both;animation-delay:calc(.35s + var(--i,0)*90ms)}
+@media (hover:hover){.feats .feat:hover .feat-ic{animation:var(--anim) .7s cubic-bezier(.34,1.4,.5,1)}}
+.feat a{position:relative}
+.feat a::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:2px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .3s}
+@media (hover:hover){.feat a:hover{text-decoration:none}.feat a:hover::after{transform:scaleX(1)}}

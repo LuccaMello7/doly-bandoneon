@@ -33,7 +33,7 @@ const LESSONS = [
     <li>Se o fole chegar ao fim, use a <b>válvula de ar</b> para reposicioná-lo em silêncio.</li>
     <li>Nunca force o fole sem apertar botões nem a válvula, porque isso danifica o instrumento.</li>
   </ul>
-  <p>Na aba <a href="#" data-go="teclado">Teclado</a> o fole é simulado: se você tocar muito tempo na mesma direção, ele chega ao fim. Use <kbd>Espaço</kbd> para trocar a direção. Para reposicionar o fole em silêncio, segure <kbd>A</kbd> (válvula abrindo) ou <kbd>F</kbd> (válvula fechando).</p>`,
+  <p>Na aba <a href="#" data-go="teclado">Teclado</a> o fole é simulado: se você tocar muito tempo na mesma direção, ele chega ao fim. Use <kbd>Espaço</kbd> para trocar a direção. Para reposicionar o fole em silêncio, segure <kbd>←</kbd> ou <kbd>A</kbd> (válvula abrindo) e <kbd>→</kbd> ou <kbd>F</kbd> (válvula fechando). Com o teclado do computador tocando notas, use as setas.</p>`,
   quiz:[{q:'O que controla principalmente o volume e a expressão no bandoneon?',o:['A força dos dedos nos botões','O fole','A válvula de ar','As correias'],a:1},
         {q:'O fole está quase todo aberto e a frase ainda não acabou. O melhor seria…',o:['Forçar mais','Ter planejado a troca antes, ou usar a válvula numa pausa','Soltar as correias','Tocar mais rápido'],a:1}]},
 { title:'5. Leitura: duas claves', html:`

@@ -35,16 +35,61 @@ $('#partilhaEmail').onclick = ()=>{ location.href = 'mailto:?subject=' + encodeU
 $('#partilhaNativo').onclick = ()=>navigator.share({title:$('#partilhaTit').textContent, text:partilhaTexto}).catch(()=>{});
 $('#partilhaFechar').onclick = ()=>$('#partilha').close();
 
-/* ---------- Montar uma tarefa (aba Para professores) ---------- */
+/* ---------- Montar uma tarefa (aba Para professores) ----------
+   Três passos: (1) o exercício, em cartões com busca e filtro por nível; (2) o modo, a velocidade e a
+   digitação; (3) o nome e a mensagem. Ao lado, a prévia de como o aluno vai ver, o link e o histórico.
+   Os seletores escondidos #prEx e #prModo guardam a escolha (o resto do código lê deles). */
 const MODOS = {aprender:'Aprender', praticar:'Praticar', desafio:'Desafio'};
+let prNivel = 'todos';
+const semAcentoPr = s => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 function preencherExerciciosProfessor(){
-  const sel = $('#prEx'), atual = sel.value;
-  sel.innerHTML = ACADEMIA.map(n=>{
-    const ex = n.exercicios.filter(e=>!e.pendente); if(!ex.length) return '';
-    return `<optgroup label="${escHtml(t('Nível {}: {}', n.nivel, t(n.titulo)))}">${ex.map(e=>`<option value="${e.id}">${escHtml(t(e.titulo))}</option>`).join('')}</optgroup>`;
-  }).join('');
-  if(atual && exercicioPorId(atual)) sel.value = atual; else if(acad.ex) sel.value = acad.ex.id;
+  const sel = $('#prEx'), atual = sel.value || (acad.ex && acad.ex.id);
+  const niveis = ACADEMIA.filter(n=>n.exercicios.some(e=>!e.pendente));
+  sel.innerHTML = niveis.map(n=>n.exercicios.filter(e=>!e.pendente).map(e=>`<option value="${e.id}">${escHtml(t(e.titulo))}</option>`).join('')).join('');
+  $('#prNiveis').innerHTML = `<button type="button" data-nivel="todos" class="${prNivel==='todos'?'on':''}">${t('Todos')}</button>`
+    + niveis.map(n=>`<button type="button" data-nivel="${n.nivel}" class="${prNivel==n.nivel?'on':''}" title="${escHtml(t(n.titulo))}">${n.nivel===7 ? t('Minhas') : t('Nível {}', n.nivel)}</button>`).join('');
+  sel.value = exercicioPorId(atual) && !exercicioPorId(atual).pendente ? atual : sel.options[0].value;
+  renderCartoesProfessor();
 }
+function renderCartoesProfessor(){
+  const busca = semAcentoPr($('#prBusca').value.trim()), escolhido = $('#prEx').value;
+  const cards = ACADEMIA.filter(n=>prNivel==='todos' || prNivel==n.nivel).flatMap(n=>n.exercicios.filter(e=>!e.pendente).map(e=>({e, n})))
+    .filter(({e, n})=>!busca || semAcentoPr(`${t(e.titulo)} ${t(e.desc||'')} ${t(n.titulo)}`).includes(busca));
+  $('#prExs').innerHTML = cards.length ? cards.map(({e, n}, i)=>`<button type="button" role="option" class="pr-ex nivel-${n.nivel} ${e.id===escolhido?'on':''}" data-ex="${e.id}" aria-selected="${e.id===escolhido}" style="--i:${i}">
+      <span class="pr-ex-nivel">${n.nivel===7 ? t('Minhas partituras') : t('Nível {}', n.nivel)}</span><b>${escHtml(t(e.titulo))}</b><small>${escHtml(t(e.desc||''))}</small></button>`).join('')
+    : `<p class="muted pr-vazio">${t('Nenhum exercício encontrado.')}</p>`;
+}
+$('#prNiveis').addEventListener('click', e=>{ const b = e.target.closest('[data-nivel]'); if(!b) return; prNivel = b.dataset.nivel; preencherExerciciosProfessor(); });
+$('#prBusca').addEventListener('input', renderCartoesProfessor);
+$('#prExs').addEventListener('click', e=>{ const b = e.target.closest('[data-ex]'); if(!b) return; $('#prEx').value = b.dataset.ex; $('#prEx').onchange(); });
+$('#prModos').addEventListener('click', e=>{ const b = e.target.closest('[data-modo]'); if(!b) return; $('#prModo').value = b.dataset.modo; sincronizarProfessor(); });
+$('#prVel').addEventListener('input', sincronizarProfessor);
+['#prNome','#prMsg','#prDedos'].forEach(id=>$(id).addEventListener('input', sincronizarProfessor));
+$('#prDedos').addEventListener('change', sincronizarProfessor);
+$('#prSugs').addEventListener('click', e=>{ const b = e.target.closest('.pr-sug'); if(!b) return; $('#prMsg').value = b.textContent; sincronizarProfessor(); $('#prMsg').focus(); });
+$('#prDefDedos').onclick = ()=>{ const id = $('#prEx').value; go('academia'); carregarExercicio(id); if(!editandoDedos) alternarEdicaoDedos(); $('#acStrip').scrollIntoView({behavior: movReduzido()?'auto':'smooth', block:'center'}); };
+// Mostra a escolha atual em todo lugar: cartões, modos, velocidade, digitação, prévia e resumo
+function sincronizarProfessor(){
+  const ex = exercicioPorId($('#prEx').value); if(!ex) return;
+  const modo = $('#prModo').value, vel = $('#prVel').value, tem = !!digitacaoDe(ex.id) && !ex.gerar;
+  $$('#prExs [data-ex]').forEach(b=>{ const on = b.dataset.ex===ex.id; b.classList.toggle('on', on); b.setAttribute('aria-selected', on); });
+  $$('#prModos [data-modo]').forEach(b=>{ const on = b.dataset.modo===modo; b.classList.toggle('on', on); b.setAttribute('aria-checked', on); });
+  $('#prVelTxt').textContent = vel + '%';
+  $('#prVel').style.setProperty('--v', (vel-40)/80);
+  $('#prDedos').disabled = !tem; if(!tem) $('#prDedos').checked = false;
+  $('#prDedosInfo').textContent = ex.gerar ? 'Este exercício é sorteado a cada rodada: não dá para fixar a digitação.'
+    : tem ? 'Você já definiu a digitação deste exercício.' : 'Este exercício ainda não tem digitação definida por você.';
+  $('#prDefDedos').hidden = !!ex.gerar;
+  const tf = {ex:ex.id, modo, vel:+vel, prof:$('#prNome').value.trim(), msg:$('#prMsg').value.trim()};
+  const pr = $('#prPrevia'); pr.innerHTML = avisoTarefaHTML(tf, true);
+  pr.classList.remove('muda'); void pr.offsetWidth; pr.classList.add('muda');
+  $('#prResumo').innerHTML = [
+    ['cap', t('Nível {} · {}', ex.nivel, t(ex.titulo))], ['target', t('Modo {}', t(MODOS[modo]))], ['metro', t('Velocidade {}%', vel)],
+    ['keys', $('#prDedos').checked ? t('Com a sua digitação') : t('Sem digitação: o instrutor dá dicas de posição')],
+  ].map(([i, x])=>`<li><svg aria-hidden="true"><use href="#i-${i}"/></svg>${escHtml(x)}</li>`).join('');
+  $('#prSaida').hidden = true;
+}
+$('#prEx').onchange = ()=>{ const ex = exercicioPorId($('#prEx').value); $('#prDedos').checked = !!(ex && digitacaoDe(ex.id)); sincronizarProfessor(); };
 function linkTarefa(){
   const ex = exercicioPorId($('#prEx').value); if(!ex) return '';
   const d = {v:1, ex:ex.id, modo:$('#prModo').value, vel:+$('#prVel').value, prof:$('#prNome').value.trim(), msg:$('#prMsg').value.trim()};
@@ -53,16 +98,34 @@ function linkTarefa(){
   const base = location.protocol==='file:' ? location.href.split('#')[0] : location.origin + location.pathname;
   return base + '#tarefa=' + b64url.para(JSON.stringify(d));
 }
+function textoTarefa(url){
+  const ex = exercicioPorId($('#prEx').value), nome = $('#prNome').value.trim(), msg = $('#prMsg').value.trim();
+  return t('Tarefa de bandoneon{}: {} (modo {}). Abra no BanDoly: {}', nome ? ' (' + nome + ')' : '', t(ex.titulo), t(MODOS[$('#prModo').value]), url) + (msg ? '\n\n' + msg : '');
+}
 $('#prGerar').onclick = ()=>{
   store.set('profNome', $('#prNome').value.trim());
   const url = linkTarefa(); if(!url) return;
-  $('#prLink').value = url; $('#prSaida').hidden = false;
-  const ex = exercicioPorId($('#prEx').value), nome = $('#prNome').value.trim();
-  $('#prSaida').dataset.texto = t('Tarefa de bandoneon{}: {} (modo {}). Abra no BanDoly: {}', nome ? ' (' + nome + ')' : '', t(ex.titulo), t(MODOS[$('#prModo').value]), url);
+  $('#prLink').value = url; $('#prSaida').hidden = false; $('#prCopiado').textContent = '';
+  $('#prSaida').dataset.texto = textoTarefa(url);
+  // histórico das últimas tarefas, para mandar de novo
+  const ex = exercicioPorId($('#prEx').value), h = store.get('profHist', []).filter(x=>x.link!==url);
+  h.unshift({data:dayKey(), titulo:ex.titulo, modo:$('#prModo').value, link:url, texto:$('#prSaida').dataset.texto}); store.set('profHist', h.slice(0, 8));
+  renderHistorico();
 };
+$('#prCopiar').onclick = async ()=>{
+  try{ await navigator.clipboard.writeText($('#prSaida').dataset.texto); }catch(e){ $('#prLink').select(); document.execCommand('copy'); }
+  $('#prCopiado').textContent = 'Copiado! Agora é só colar na conversa com o aluno.';
+  const b = $('#prCopiar'); b.classList.remove('feito'); void b.offsetWidth; b.classList.add('feito');
+};
+$('#prWhats').onclick = ()=>window.open('https://wa.me/?text=' + encodeURIComponent($('#prSaida').dataset.texto), '_blank', 'noopener');
 $('#prEnviar').onclick = ()=>compartilhar(t('Tarefa do BanDoly'), $('#prSaida').dataset.texto);
-$('#prEx').onchange = ()=>{ const tem = !!digitacaoDe($('#prEx').value); $('#prDedos').disabled = !tem; $('#prDedos').checked = tem;
-  $('#prDedosInfo').textContent = tem ? '' : 'Este exercício ainda não tem digitação definida por você.'; };
+function renderHistorico(){
+  const h = store.get('profHist', []);
+  $('#prHist').innerHTML = h.length ? h.map((x, i)=>`<li><div><b>${escHtml(t(x.titulo))}</b><span class="muted">${new Date(x.data+'T12:00').toLocaleDateString(IDIOMAS[state.lang].html)} · ${t(MODOS[x.modo]||'Praticar')}</span></div>
+      <button type="button" class="btn ghost" data-hist="${i}">${t('Mandar de novo')}</button></li>`).join('')
+    : `<li class="muted">${t('As tarefas que você gerar aparecem aqui para mandar de novo.')}</li>`;
+}
+$('#prHist').addEventListener('click', e=>{ const b = e.target.closest('[data-hist]'); if(!b) return; const x = store.get('profHist', [])[+b.dataset.hist]; if(x) compartilhar(t('Tarefa do BanDoly'), x.texto); });
 $('#prNome').value = store.get('profNome', '');
 
 /* ---------- Abrir uma tarefa recebida (#tarefa=… no endereço) ---------- */
@@ -86,16 +149,16 @@ function comecarTarefa(){
   if(tf.vel){ $('#acVel').value = tf.vel; $('#acVelVal').textContent = tf.vel + '%'; }
   renderTarefa();
 }
+function avisoTarefaHTML(tf, previa){
+  const ex = exercicioPorId(tf.ex); if(!ex) return '';
+  return `<span class="tarefa-ic"><svg aria-hidden="true"><use href="#i-cap"/></svg></span>
+    <div><b>${tf.prof ? `Tarefa de ${escHtml(tf.prof)}` : 'Tarefa do professor'}: ${escHtml(t(ex.titulo))}</b>
+    <div class="muted">${tf.msg ? escHtml(tf.msg) : `Modo ${t(MODOS[tf.modo]||'Praticar')}, ${tf.vel||70}% da velocidade.`}</div></div>
+    <div class="row"><button type="button" class="btn" ${previa ? 'tabindex="-1" disabled' : 'data-tarefa="abrir"'}>Fazer a tarefa</button>${previa ? '' : '<button type="button" class="btn ghost" data-tarefa="fim">Dispensar</button>'}</div>`;
+}
 function renderTarefa(){
   const tf = store.get('tarefa', null), ok = tf && exercicioPorId(tf.ex);
-  $$('.tarefa-aviso').forEach(el=>{
-    el.hidden = !ok; if(!ok) return;
-    const ex = exercicioPorId(tf.ex);
-    el.innerHTML = `<span class="tarefa-ic"><svg aria-hidden="true"><use href="#i-cap"/></svg></span>
-      <div><b>${tf.prof ? `Tarefa de ${escHtml(tf.prof)}` : 'Tarefa do professor'}: ${escHtml(t(ex.titulo))}</b>
-      <div class="muted">${tf.msg ? escHtml(tf.msg) : `Modo ${t(MODOS[tf.modo]||'Praticar')}, ${tf.vel||70}% da velocidade.`}</div></div>
-      <div class="row"><button type="button" class="btn" data-tarefa="abrir">Fazer a tarefa</button><button type="button" class="btn ghost" data-tarefa="fim">Dispensar</button></div>`;
-  });
+  $$('.tarefa-aviso').forEach(el=>{ el.hidden = !ok; if(ok) el.innerHTML = avisoTarefaHTML(tf, false); });
 }
 document.addEventListener('click', e=>{
   const b = e.target.closest('[data-tarefa]'); if(!b) return;
@@ -153,5 +216,5 @@ $('#acDedoPop').addEventListener('click', e=>{
 });
 document.addEventListener('click', e=>{ if(!e.target.closest('#acDedoPop,#acStrip')) $('#acDedoPop').hidden = true; });
 
-ganchosAba.push(v=>{ if(v==='professor'){ preencherExerciciosProfessor(); $('#prEx').onchange(); } if(v==='academia' || v==='estudo') renderTarefa(); });
+ganchosAba.push(v=>{ if(v==='professor'){ preencherExerciciosProfessor(); $('#prEx').onchange(); renderHistorico(); } if(v==='academia' || v==='estudo') renderTarefa(); });
 renderTarefa();

@@ -26,7 +26,9 @@ function mapaPcPadrao(){
   }
   return mapa;
 }
-const pc = {ligado: store.get('pcLigado', false), mapa: store.get('mapaPc', null) || mapaPcPadrao(), seguradas:{}, atribuindo:false, alvo:null, layout:null};
+// ligado por padrão no computador (tela com mouse); no celular e no tablet começa desligado
+const temTecladoFisico = () => !!(window.matchMedia && matchMedia('(hover: hover) and (pointer: fine)').matches);
+const pc = {ligado: store.get('pcLigado', temTecladoFisico()), mapa: store.get('mapaPc', null) || mapaPcPadrao(), seguradas:{}, atribuindo:false, alvo:null, layout:null};
 // letra que aparece na tecla (no Chrome/Edge, a do layout do usuário: ABNT2 mostra Ç no lugar do ;)
 if(navigator.keyboard && navigator.keyboard.getLayoutMap) navigator.keyboard.getLayoutMap().then(m=>{ pc.layout = m; marcarTodas(); renderMapaPc(); }).catch(()=>{});
 function rotuloTecla(cod){
@@ -52,12 +54,14 @@ function soltarTudo(){
   pc.seguradas = {};
 }
 document.addEventListener('keydown', e=>{
-  if(!pc.ligado || e.ctrlKey || e.metaKey || e.altKey) return;
+  if(e.ctrlKey || e.metaKey || e.altKey) return;
   if(['INPUT','SELECT','TEXTAREA'].includes(e.target.tagName)) return;
   if(pc.atribuindo){ atribuirTecla(e); return; }
   if(document.querySelector('dialog[open]')) return;
-  if(e.code==='ArrowUp' || e.code==='ArrowDown'){ e.preventDefault(); setPressao(pressaoFole + (e.code==='ArrowUp'?0.1:-0.1)); return; }
+  // setas, na aba Teclado: ← e → seguram a válvula de ar; ↑ e ↓ mudam a pressão do fole
+  if(currentView==='teclado' && (e.code==='ArrowUp' || e.code==='ArrowDown')){ e.preventDefault(); setPressao(pressaoFole + (e.code==='ArrowUp'?0.1:-0.1)); return; }
   if(currentView==='teclado' && (e.code==='ArrowLeft' || e.code==='ArrowRight')){ e.preventDefault(); if(!e.repeat) valve(e.code==='ArrowLeft'?'open':'close'); return; }
+  if(!pc.ligado) return;
   const m = pc.mapa[e.code]; if(!m) return;
   e.preventDefault(); if(e.repeat || pc.seguradas[e.code]) return;
   const k = tecladoVisivel(m.mao); if(!k) return;
@@ -104,8 +108,8 @@ function ligarPc(sim){
   pc.ligado = sim; store.set('pcLigado', sim); soltarTudo(); marcarTodas();
   $('#pcBtn').classList.toggle('on', sim); $('#pcLigado').checked = sim;
   // com o teclado ligado, a válvula sai do A e do F e vai para as setas
-  $('#valveOpenBtn').textContent = sim ? 'Válvula: abrir (segure ←)' : 'Válvula: abrir (segure A)';
-  $('#valveCloseBtn').textContent = sim ? 'Válvula: fechar (segure →)' : 'Válvula: fechar (segure F)';
+  $('#valveOpenBtn').textContent = sim ? 'Válvula: abrir (segure ←)' : 'Válvula: abrir (segure A ou ←)';
+  $('#valveCloseBtn').textContent = sim ? 'Válvula: fechar (segure →)' : 'Válvula: fechar (segure F ou →)';
 }
 $('#pcBtn').onclick = ()=>ligarPc(!pc.ligado);
 $('#pcLigado').onchange = e=>ligarPc(e.target.checked);
@@ -200,7 +204,13 @@ $('#midiForca').onchange = e=>{ midiCtl.forca = e.target.checked; store.set('mid
 
 /* ---------- Janela "Controles de tocar" ---------- */
 function abrirControles(){ pc.verDir = null; renderMapaPc(); renderMidi(); mostrarPressao(); $('#ctlDialog').showModal(); }
-$$('[data-controles]').forEach(b=>b.addEventListener('click', abrirControles));
+document.addEventListener('click', e=>{ if(e.target.closest('[data-controles]')){ e.preventDefault(); abrirControles(); } });
+// na primeira visita à aba Teclado, um aviso mostra que as teclas já tocam os botões
+ganchosAba.push(v=>{
+  if(v!=='teclado' || store.get('pcDica', false) || !pc.ligado) return;
+  store.set('pcDica', true);
+  setTimeout(()=>avisar(`<span class="toast-ic"><svg aria-hidden="true"><use href="#i-keys"/></svg></span><span><b>${t('As teclas do computador tocam os botões')}</b><br><span class="muted">${t('A letra de cada tecla aparece no botão. Você pode mudar o mapa.')}</span></span><button type="button" class="btn sec" data-controles>${t('Ver o mapa')}</button>`, 8000), 500);
+});
 $('#ctlFechar').onclick = ()=>$('#ctlDialog').close();
 
 ligarPc(pc.ligado); mostrarPressao();
