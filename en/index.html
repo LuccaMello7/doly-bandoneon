@@ -103,6 +103,7 @@
     <button type="button" data-area="perfil"><svg aria-hidden="true"><use href="#i-user"/></svg>Profile</button>
     <span class="nav-ind" id="navInd" aria-hidden="true"></span>
   </nav>
+  <button type="button" class="sug-btn" data-sugestao aria-label="Send a suggestion or report a bug"><svg aria-hidden="true"><use href="#i-question"/></svg><span>Feedback</span></button>
   <div id="langs" class="langs" role="group" aria-label="Idioma / Language"></div>
 </header>
 
@@ -118,6 +119,7 @@
   <button type="button" role="tab" data-area="treinar" data-v="desafios"><svg aria-hidden="true"><use href="#i-target"/></svg>Challenges</button>
   <button type="button" role="tab" data-area="treinar" data-v="ritmo"><svg aria-hidden="true"><use href="#i-metro"/></svg>Rhythm</button>
   <button type="button" role="tab" data-area="perfil" data-v="perfil"><svg aria-hidden="true"><use href="#i-trophy"/></svg>Achievements</button>
+  <button type="button" role="tab" data-area="perfil" data-v="professor"><svg aria-hidden="true"><use href="#i-cap"/></svg>For teachers</button>
   <button type="button" role="tab" data-area="perfil" data-v="ajustes"><svg aria-hidden="true"><use href="#i-gear"/></svg>Settings</button>
 </div>
 <!-- INÍCIO -->
@@ -181,6 +183,7 @@
 <!-- MEU ESTUDO: o caminho, o "continue de onde parou", os recordes e a rotina (js/trilha.js e js/rotina.js) -->
 <section id="v-estudo">
   <div class="pg-topo"><span class="pg-ic t-estudo"><svg aria-hidden="true"><use href="#i-route"/></svg></span><div><h2 class="pg-tit">My study</h2><p class="muted">Your path, today's routine and your records, all in one place.</p></div></div>
+  <div class="card tarefa-aviso" hidden></div>
   <div class="inicio-grade">
     <div class="card trilha-card" id="trilhaCard">
     <div class="trilha-topo">
@@ -230,6 +233,13 @@
       <div class="grupo"><span class="grupo-tit">View</span>
         <span class="segmento mini" id="tkVer" role="group" aria-label="Visible hands"><button class="btn sec on" data-ver="duas">Both hands</button><button class="btn sec" data-ver="left">Left</button><button class="btn sec" data-ver="right">Right</button></span>
       </div>
+      <div class="grupo"><span class="grupo-tit">Play with</span>
+        <button class="btn sec" id="pcBtn" title="Play the buttons with your computer keys">Computer keyboard</button>
+        <button class="btn sec" data-controles>Map and controls</button>
+      </div>
+      <div class="grupo grupo-pressao"><span class="grupo-tit">Bellows pressure</span>
+        <input type="range" class="pressao-in" min="0" max="100" aria-label="Bellows pressure"><span class="pressao-val">70%</span>
+      </div>
       <details class="mapmenu">
         <summary class="btn sec">Button map ▾</summary>
         <div class="row">
@@ -240,6 +250,7 @@
         </div>
       </details>
     </div>
+    <div class="pc-atribuir" id="pcAtribuir" hidden><span id="pcAtribuirMsg" aria-live="polite"></span><button type="button" class="btn" id="pcAtribuirFim">Done</button></div>
     <p class="girar"><svg aria-hidden="true"><use href="#i-rotate"/></svg> Tip: turn your phone sideways for more room, or view one hand at a time.</p>
     <div class="instrument" id="tkInstrumento">
       <div class="side"><div class="label">Left hand (bass)</div><div id="kbLeft"></div></div>
@@ -493,6 +504,7 @@
 <!-- ACADEMIA: exercícios progressivos com instrutor digital (js/academia.js e js/maos.js) -->
 <section id="v-academia">
   <div class="pg-topo"><span class="pg-ic t-academia"><svg aria-hidden="true"><use href="#i-cap"/></svg></span><div><h2 class="pg-tit">Bandoneon Academy</h2><p class="muted">Exercises in 6 levels, from the first button to pieces with both hands, plus a level for your own sheet music. The instructor shows the note, hand, finger and bellows direction for each moment, and at the end you get a report on what went right and what to review.</p></div></div>
+  <div class="card tarefa-aviso" hidden></div>
   <aside class="aviso" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></svg><p><strong>BanDoly is a learning site and will never replace the advice and guidance of a teacher.</strong> Use the app to support your studies and, whenever you can, learn with a bandoneon teacher: they correct your posture, bellows and fingering, things an app cannot see.</p></aside>
   <div class="card">
     <div class="ac-niveis" id="acNiveis" role="group" aria-label="Levels"></div>
@@ -516,6 +528,7 @@
       <div id="acKbRight"></div>
       <div class="mstrip ac-strip" id="acStrip"></div>
       <div class="feedback" id="acFeed" aria-live="polite"></div>
+      <div class="ac-dedo-pop" id="acDedoPop" hidden></div>
     </div>
 
     <!-- área lateral: instrutor digital -->
@@ -587,6 +600,7 @@
       <label title="Button highlight, finger number and hand position"><input type="checkbox" id="acGuia" checked> Fingering Guide</label>
       <label title="Play your own bandoneon: the app checks the note and rhythm through the microphone"><input type="checkbox" id="acMic"> <svg aria-hidden="true"><use href="#i-mic"/></svg> Microphone</label>
       <button type="button" class="btn sec" id="acTranscricaoBtn" aria-expanded="false"><svg aria-hidden="true"><use href="#i-file"/></svg>Transcription</button>
+      <button type="button" class="btn sec" id="acDigitar" title="Choose the finger for each note (for teachers)">Edit fingering</button>
       <span id="acTrecho">Passage: from note <input type="number" id="acDe" min="1" value="1" class="ac-num-in"> to <input type="number" id="acAte" min="1" value="1" class="ac-num-in"></span>
     </div>
     <div class="ac-transcricao" id="acTranscricao" hidden></div>
@@ -640,6 +654,36 @@
   <div class="insignias" id="insignias"></div>
 </section>
 
+<!-- PARA PROFESSORES: tarefa por link, relatório do aluno e digitação (js/professor.js) -->
+<section id="v-professor">
+  <div class="pg-topo"><span class="pg-ic t-professor"><svg aria-hidden="true"><use href="#i-cap"/></svg></span><div><h2 class="pg-tit">For teachers</h2><p class="muted">Send exercises to your students by link and get the report of each attempt. No sign-up, no cost.</p></div></div>
+  <div class="inicio-grade">
+    <div class="card">
+      <h3 style="margin-top:0">Create an assignment</h3>
+      <div class="pr-form">
+        <label class="pr-largo">Exercise <select id="prEx"></select></label>
+        <label>Mode <select id="prModo"><option value="aprender">Learn</option><option value="praticar" selected>Practice</option><option value="desafio">Challenge</option></select></label>
+        <label>Speed <select id="prVel"><option value="40">40%</option><option value="50">50%</option><option value="60">60%</option><option value="70" selected>70%</option><option value="80">80%</option><option value="90">90%</option><option value="100">100%</option><option value="110">110%</option><option value="120">120%</option></select></label>
+        <label class="pr-largo">Your name <input type="text" id="prNome" maxlength="40" placeholder="E.g. Ms Ana"></label>
+        <label class="pr-largo">Message for the student <textarea id="prMsg" rows="3" maxlength="300" placeholder="Ex.: toque três vezes no modo Praticar antes da aula de quinta."></textarea></label>
+        <label class="ctl-liga pr-largo"><input type="checkbox" id="prDedos"> Include the fingering I set <span class="muted" id="prDedosInfo"></span></label>
+      </div>
+      <button type="button" class="btn btn-grande" id="prGerar">Create the assignment link</button>
+      <div class="pr-saida" id="prSaida" hidden><input type="text" id="prLink" readonly aria-label="Assignment link"><button type="button" class="btn" id="prEnviar"><svg aria-hidden="true"><use href="#i-share"/></svg>Send to the student</button></div>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">How it works</h3>
+      <ol class="passos">
+        <li>Choose the exercise, mode and speed, write a message and create the link.</li>
+        <li>Send the link to your student by WhatsApp or email. When they open it, the exercise is ready in the Academy, with your message.</li>
+        <li>At the end of each attempt, the student taps "Send to teacher" and you get the report: correct notes, rhythm, bellows and the passages to review.</li>
+        <li>To set the fingering, open the exercise in the Academy and tap "Edit fingering": choose the finger for each note. It goes along in the link.</li>
+      </ol>
+      <p class="muted" style="margin-bottom:0">Your own scores (My scores) can go in the link too: the student gets the music already transcribed to the buttons. Nothing goes through a server: everything travels inside the link.</p>
+    </div>
+  </div>
+</section>
+
 <!-- AJUSTES -->
 <section id="v-ajustes">
   <div class="pg-topo"><span class="pg-ic t-ajustes"><svg aria-hidden="true"><use href="#i-gear"/></svg></span><div><h2 class="pg-tit">Settings</h2><p class="muted">Sound, tuning, note names and your data.</p></div></div>
@@ -659,6 +703,11 @@
         <select id="vibSel"><option value="1">On</option><option value="0">Off</option></select></label>
     </div>
     <div class="row" style="margin-top:12px"><button class="btn sec" id="testSound"><svg aria-hidden="true"><use href="#i-volume"/></svg>Test sound</button><button class="btn" id="installBtn" style="display:none"><svg aria-hidden="true"><use href="#i-download"/></svg>Install app</button><span class="muted" id="soundStatus" aria-live="polite"></span></div>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">Get in touch</h3>
+    <p class="muted">Found a bug or have an idea for BanDoly? Your message helps improve the app.</p>
+    <div class="row"><button type="button" class="btn" data-sugestao><svg aria-hidden="true"><use href="#i-question"/></svg>Send a suggestion or report a bug</button><button type="button" class="btn sec" data-controles>Playing controls</button></div>
   </div>
   <div class="card">
     <h3 style="margin-top:0">Your data</h3>
@@ -686,11 +735,56 @@
     <div class="row bv-acoes"><button type="button" class="btn ghost" id="bvVoltar" hidden>Back</button><button class="btn ghost" value="pular" id="bvPular">Skip</button></div>
   </form>
 </dialog>
+<dialog class="boas janela" id="ctlDialog" aria-labelledby="ctlTit">
+  <h2 id="ctlTit">Playing controls</h2>
+  <div class="ctl-sec">
+    <h3>Computer keyboard</h3>
+    <label class="ctl-liga"><input type="checkbox" id="pcLigado"> Play the buttons with the computer keys</label>
+    <div class="pc-mapa" id="pcMapa" translate="no"></div>
+    <div class="row"><span class="muted" id="pcMapaDir"></span><button type="button" class="btn ghost" id="pcMapaTroca">See the other direction</button></div>
+    <p class="muted">Blue: left hand. Gold: right hand. With the keyboard on, Space switches the bellows, ← and → hold the air valve and ↑ and ↓ change the bellows pressure.</p>
+    <div class="row"><button type="button" class="btn" id="pcEditar">Edit the map</button><button type="button" class="btn sec" id="pcPadrao">Restore the default</button></div>
+  </div>
+  <div class="ctl-sec">
+    <h3>MIDI controller</h3>
+    <p class="muted">A MIDI keyboard or digital bandoneon connected to the computer (in Chrome or Edge). Each note lights up the button that gives that note in the current bellows direction.</p>
+    <div class="row"><button type="button" class="btn" id="midiLigar">Connect the MIDI controller</button><span class="muted" id="midiAparelhos"></span></div>
+    <div class="ctl-grade">
+      <div><b>Bellows pressure</b><span class="muted" id="midiCcPressao">none</span><button type="button" class="btn sec" id="midiAprPressao">Learn</button></div>
+      <div><b>Bellows direction</b><span class="muted" id="midiCcFole">none</span><button type="button" class="btn sec" id="midiAprFole">Learn</button></div>
+      <div><b>Taught buttons</b><span class="muted" id="midiEnsinados"></span><span class="row"><button type="button" class="btn sec" id="midiEnsinar">Teach a button</button><button type="button" class="btn ghost" id="midiApagar">Clear</button></span></div>
+    </div>
+    <label class="ctl-liga"><input type="checkbox" id="midiForca"> Key velocity changes the volume</label>
+    <p class="muted" id="midiMsg" aria-live="polite"></p>
+  </div>
+  <div class="ctl-sec">
+    <h3>Bellows expression</h3>
+    <p class="muted">On the bandoneon, the volume comes from the pressure on the bellows. More pressure: a louder sound and the bellows move faster.</p>
+    <label class="ctl-pressao">Bellows pressure <input type="range" class="pressao-in" min="0" max="100"> <span class="pressao-val">70%</span></label>
+  </div>
+  <div class="row bv-acoes"><button type="button" class="btn" id="ctlFechar">Close</button></div>
+</dialog>
+<dialog class="boas janela" id="sugDialog" aria-labelledby="sugTit">
+  <form method="dialog" id="sugForm">
+    <h2 id="sugTit">Send a suggestion or report a bug</h2>
+    <p class="muted">Your message helps improve BanDoly. It goes through GitHub (you need a free account) or, if you prefer, copy the text and send it however you like.</p>
+    <div class="sug-tipos" role="radiogroup" aria-label="Message type"><label class="op"><input type="radio" name="tipo" value="sugestao" checked><span>Suggestion</span></label><label class="op"><input type="radio" name="tipo" value="erro"><span>Bug</span></label><label class="op"><input type="radio" name="tipo" value="elogio"><span>Praise</span></label></div>
+    <textarea id="sugTexto" rows="5" placeholder="Conte o que aconteceu ou o que você gostaria de ver no app."></textarea>
+    <label class="ctl-liga"><input type="checkbox" id="sugTec" checked> Include technical details (browser, open tab, language and screen size)</label>
+    <div class="row bv-acoes"><button type="button" class="btn" id="sugGithub">Send via GitHub</button><button type="button" class="btn" id="sugEmail" hidden>Send by email</button><button type="button" class="btn sec" id="sugCopiar">Copy the text</button><button type="button" class="btn ghost" id="sugFechar">Close</button></div>
+    <p class="muted" id="sugMsg" aria-live="polite"></p>
+  </form>
+</dialog>
+<dialog class="boas janela" id="partilha" aria-labelledby="partilhaTit">
+  <h2 id="partilhaTit"></h2>
+  <textarea id="partilhaTexto" rows="7" readonly></textarea>
+  <div class="row bv-acoes"><button type="button" class="btn" id="partilhaNativo">Share</button><button type="button" class="btn sec" id="partilhaWhats">WhatsApp</button><button type="button" class="btn sec" id="partilhaEmail">E-mail</button><button type="button" class="btn sec" id="partilhaCopiar">Copy</button><button type="button" class="btn ghost" id="partilhaFechar">Close</button></div>
+  <p class="muted" id="partilhaMsg" aria-live="polite"></p>
+</dialog>
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 <canvas class="confete" id="confete" aria-hidden="true" hidden></canvas>
 </main>
 
-<script src="../sons/bandoneon.js"></script>
 <script src="../js/base.js"></script>
 <script src="../js/i18n-textos.js"></script>
 <script src="../js/i18n.js"></script>
@@ -703,6 +797,7 @@
 <script src="../js/desafios.js"></script>
 <script src="../js/ritmo.js"></script>
 <script src="../js/atalhos.js"></script>
+<script src="../js/controles.js"></script>
 <script src="../js/melodias.js"></script>
 <script src="../js/musicxml.js"></script>
 <script src="../js/escalas.js"></script>
@@ -717,6 +812,8 @@
 <script src="../js/ouvido.js"></script>
 <script src="../js/cascata.js"></script>
 <script src="../js/trilha.js"></script>
+<script src="../js/professor.js"></script>
+<script src="../js/contato.js"></script>
 <script src="../js/init.js"></script>
 </body>
 </html>

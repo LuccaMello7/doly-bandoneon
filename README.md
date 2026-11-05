@@ -80,7 +80,7 @@ O menu tem o **Início** e quatro áreas, cada uma com as suas abas no topo da t
 | **Aprender** | Meu estudo, Academia, Lições |
 | **Tocar** | Teclado, Melodias, Acordes, Bandoneon real |
 | **Treinar** | Desafios, Ritmo |
-| **Perfil** | Conquistas, Ajustes |
+| **Perfil** | Conquistas, Para professores, Ajustes |
 
 | Aba | Para que serve |
 |---|---|
@@ -123,7 +123,23 @@ O dedo de cada nota vem da partitura do exercício (`@dedo` no formato de texto)
 
 No celular ou tablet, toque nos botões com os dedos. Vários dedos ao mesmo tempo formam um acorde.
 
+### Teclado do computador, controlador MIDI e pressão do fole
+
+Em **Teclado → Tocar com → Teclado do computador**, as teclas passam a tocar os botões: as quatro fileiras do teclado ficam sobre as fileiras de botões de cada mão (à esquerda do teclado, a mão esquerda). **Mapa e controles** mostra qual nota cada tecla toca e permite trocar qualquer tecla: toque **Editar o mapa**, depois um botão na tela e a tecla desejada. Com o teclado ligado, <kbd>Espaço</kbd> troca o fole, <kbd>←</kbd> e <kbd>→</kbd> seguram a válvula de ar e <kbd>↑</kbd> e <kbd>↓</kbd> mudam a pressão do fole.
+
+Um **controlador MIDI** (teclado MIDI ou bandoneon digital, no Chrome ou no Edge) também toca: cada nota acende o botão que dá essa nota na direção atual do fole. Na mesma janela dá para **ensinar** um botão específico para uma nota e **aprender** dois controles do aparelho: um para a pressão do fole (pedal de expressão, roda ou botão giratório) e outro para a direção do fole (por exemplo, o pedal de sustentação).
+
+A **pressão do fole** muda o volume em tempo real e a velocidade com que o fole simulado anda, como no instrumento.
+
 ---
+
+## Para professores
+
+Em **Perfil → Para professores** você monta uma **tarefa**: escolhe o exercício da Academia (inclusive uma partitura sua), o modo, a velocidade e escreve uma mensagem. O app gera um **link**; ao abrir, o aluno encontra o exercício pronto, com a mensagem. No fim de cada tentativa, o botão **Enviar ao professor** manda o relatório por WhatsApp, e-mail ou cópia. Para registrar a digitação, use **Editar digitação** na Academia: escolha o dedo de cada nota tocando na faixa. Ela aparece para o aluno como "digitação do professor" e pode ir junto no link. Tudo viaja dentro do próprio link, sem servidor nem cadastro.
+
+## Sugestões e erros
+
+O botão **Sugestões** (no menu) e **Ajustes → Fale com a gente** abrem um formulário que manda a mensagem como uma *issue* no GitHub do projeto, já preenchida (pede uma conta gratuita do GitHub), ou copia o texto para enviar por outro meio.
 
 ## Tocando com o seu bandoneon (microfone)
 

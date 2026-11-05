@@ -39,7 +39,7 @@ function bellowsLoop(now){
   if(notes && !bel.blocked && (foleSec+=dt)>=60 && foleSec-dt<60) logPractice('fole');
   let rate=0, dir=state.dir;
   if(bel.valve){ rate=0.45; dir=bel.valve; }
-  else if(notes && !bel.blocked) rate=0.07*Math.sqrt(notes);
+  else if(notes && !bel.blocked) rate=0.07*Math.sqrt(notes)*(0.45+pressaoFole); // mais pressão, mais ar: o fole anda mais rápido
   if(rate){
     bel.level += (dir==='open'?1:-1)*rate*dt;
     if(bel.level>=1 || bel.level<=0){

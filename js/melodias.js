@@ -61,6 +61,12 @@ direita: Mi4 Mi4 Fá4 Sol4 | Sol4 Fá4 Mi4 Ré4 | Dó4 Dó4 Ré4 Mi4 | Mi4:4. R�
 Mi4 Mi4 Fá4 Sol4 | Sol4 Fá4 Mi4 Ré4 | Dó4 Dó4 Ré4 Mi4 | Ré4:4. Dó4:8 Dó4:2
 esquerda: Dó3:2 Dó3:2 | Sol2:2 Sol2:2 | Dó3:2 Dó3:2 | Sol2:2 Sol2:2 |
 Dó3:2 Dó3:2 | Sol2:2 Sol2:2 | Dó3:2 Dó3:2 | Sol2:2 Dó3:2`},
+{id:'choclo-intro', text:`título: El Choclo (introdução)
+mão: direita
+bpm: 72
+descrição: Ángel Villoldo, 1903. A introdução de um dos tangos mais famosos, em domínio público.
+Sol5:8 Mi5:8 Dó#5:8 Sol5:8 | Fá#5:8 Ré5:8 Si4:8 Fá#5:8 | Mi5:8 Dó#5:8 Lá#4:8 Mi5:8 | Ré5:4 p:4 |
+Sol5:8 Mi5:8 Dó#5:8 Sol5:8 | Fá#5:8 Ré5:8 Si4:8 Fá#5:8 | Mi5:8 Dó#5:8 Lá#4:8 Dó#5:8 | Ré5:8 Lá4:8 p:4`},
 ];
 // Modelo de "Nova melodia" no idioma atual (o leitor aceita as palavras-chave nos três idiomas)
 const melTemplate = () => ({

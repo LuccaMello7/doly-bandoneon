@@ -40,7 +40,8 @@ nav button.active svg{transform:scale(1.12)}
   .app-shell>header{position:fixed;left:0;top:0;bottom:0;width:var(--lateral);flex-direction:column;flex-wrap:nowrap;align-items:stretch;gap:4px;padding:20px 14px;border:0;border-right:1px solid var(--line);overflow-y:auto}
   .app-shell>header .brand{margin:0 6px 18px}
   .app-shell>header nav{flex-direction:column;flex-wrap:nowrap;gap:4px}
-  .app-shell>header .langs{margin:auto 0 0;padding:14px 8px 0}
+  .app-shell>header .sug-btn{margin-top:auto}
+  .app-shell>header .langs{margin:0;padding:14px 8px 0}
   .app-shell main{margin-left:var(--lateral)}
 }
 /* celular e tablet: as cinco áreas numa barra embaixo */
@@ -888,3 +889,62 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
 .ac-dicas .dica-mesmo::before{background:var(--open)} .ac-dicas .dica-fim::before{background:var(--muted)}
 .mao .dedo rect,.mao .palma{transition:fill .25s,stroke .25s}
 .ac-strip .mcard{transition:transform .25s cubic-bezier(.34,1.4,.5,1),background .25s}
+
+/* ================== Sugestões, controles de tocar, professores ================== */
+.sug-btn{display:flex;align-items:center;gap:10px;background:transparent;border:0;color:var(--muted);padding:10px 14px;border-radius:14px;cursor:pointer;font:700 .9rem Nunito,sans-serif;transition:color .2s,background .2s}
+@media (hover:hover){.sug-btn:hover{color:var(--text);background:#ffffff0d}}
+.sug-btn svg[aria-hidden]{width:20px;height:20px}
+@media (max-width:999px){.sug-btn{padding:6px;margin-left:auto}.sug-btn span{display:none}.app-shell>header .langs{margin-left:4px}}
+/* janelas (controles, sugestão, compartilhar): texto à esquerda e rolagem própria */
+.boas.janela{max-width:720px;text-align:left;max-height:calc(100vh - 40px);overflow-y:auto}
+.boas.janela h2{text-align:center}
+.janela textarea{width:100%;margin:10px 0;font-family:Nunito,sans-serif;font-size:1rem}
+.ctl-sec{background:#ffffff08;border-radius:18px;padding:14px 16px;margin:12px 0}
+.ctl-sec h3{margin:0 0 6px}
+.ctl-liga{display:flex;align-items:center;gap:8px;font-weight:700;margin:6px 0}
+.ctl-grade{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin:10px 0}
+.ctl-grade>div{display:flex;flex-direction:column;gap:6px;align-items:flex-start;background:#ffffff08;border-radius:14px;padding:10px 12px}
+.ctl-pressao{display:flex;align-items:center;gap:10px;font-weight:700}
+.ctl-pressao input{flex:1}
+.grupo-pressao input{width:120px}
+.pressao-val{font-weight:800;color:var(--gold2);min-width:3.2ch}
+/* mapa do teclado do computador */
+.pc-mapa{display:flex;flex-direction:column;gap:6px;margin:12px 0;overflow-x:auto;padding-bottom:4px}
+.pc-fileira{display:flex;gap:5px;padding-left:var(--recuo,0)}
+.pc-tecla{flex:none;width:46px;height:48px;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--panel2);border:1px solid var(--line);box-shadow:0 3px 0 #0006;line-height:1.1}
+.pc-tecla b{font-size:.95rem}.pc-tecla small{font-size:.68rem;color:var(--muted)}
+.pc-tecla.left{background:#1e4c86;border-color:#4f9cf0}.pc-tecla.right{background:#5a4512;border-color:var(--gold)}
+.pc-tecla.left small,.pc-tecla.right small{color:#fff}
+.pc-tecla.livre{opacity:.45}
+.pc-outras{flex-wrap:wrap;border-top:1px dashed var(--line);padding-top:6px}
+.pc-atribuir{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:#e6b4501f;border:1px solid var(--gold);border-radius:14px;padding:10px 14px;margin:8px 0;font-weight:700;animation:sobe .3s both}
+/* letra da tecla do computador no botão (no lugar do brilho de madrepérola) */
+.key[data-tecla]::before{content:attr(data-tecla);inset:auto;right:-4px;bottom:-4px;width:16px;height:16px;border-radius:5px;background:#0d1b2e;color:var(--gold2);font:800 9px/16px Nunito,sans-serif;text-align:center;border:1px solid var(--gold)}
+/* sugestão: tipo da mensagem em pílulas */
+.sug-tipos{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.sug-tipos .op{margin:0;padding:8px 14px}
+/* para professores */
+.t-professor{background:linear-gradient(140deg,#3b6fd6,#8b7cf6)}
+.pr-form{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.pr-form>label{display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:.88rem;color:var(--muted)}
+.pr-form>label.ctl-liga{flex-direction:row;color:var(--text)}
+.pr-form .pr-largo{grid-column:1/-1}
+.pr-form select,.pr-form input[type=text],.pr-form textarea{width:100%;font:600 1rem Nunito,sans-serif}
+.pr-saida{display:flex;gap:8px;margin-top:12px;animation:sobe .35s both}
+.pr-saida input{flex:1;min-width:0;font-size:.85rem}
+@media (max-width:600px){.pr-form{grid-template-columns:1fr}.pr-saida{flex-direction:column}}
+/* aviso de tarefa recebida */
+.tarefa-aviso{display:flex;align-items:center;gap:14px;flex-wrap:wrap;border:1px solid var(--gold);background:linear-gradient(120deg,#3a2a0e,var(--panel) 65%);animation:sobe .45s cubic-bezier(.2,.8,.2,1) both}
+.tarefa-aviso>div:nth-child(2){flex:1 1 240px}
+.tarefa-aviso .tarefa-ic{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:var(--gold);color:#1b1404;flex:none}
+/* editor de digitação */
+.ac-centro{position:relative}
+#acStrip.editando .mcard{cursor:pointer;outline:2px dashed #e6b45066;outline-offset:2px}
+#acStrip.editando .mcard:hover{outline-color:var(--gold)}
+.ac-dedo-pop{position:absolute;z-index:20;background:var(--navy-dark);border:1px solid var(--gold);border-radius:14px;padding:10px;box-shadow:0 14px 30px #000a;animation:sobe .25s both;min-width:220px}
+.dedo-linha{display:flex;align-items:center;gap:6px;margin:4px 0}
+.dedo-linha span{flex:1;font-weight:800}
+.dedo-linha button{width:34px;height:34px;border-radius:10px;border:0;background:var(--panel2);color:var(--text);font:800 .95rem Nunito,sans-serif;cursor:pointer}
+.dedo-linha button.on{background:var(--gold);color:#1b1404}
+.ac-enviar{margin-top:12px}
+#acDigitar.on{background:var(--cream);color:var(--navy)}

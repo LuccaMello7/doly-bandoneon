@@ -92,8 +92,8 @@ teste('escalas: pelo menos 231 das 240 combinações cabem no instrumento', () =
 });
 
 /* ---------- Som ---------- */
-teste('som: toda nota do mapa tem amostra (transposição até 7 semitons)', () => {
-  if(!SF) return;
+teste('som: o arquivo de amostras chega depois e toda nota do mapa tem amostra (transposição até 7 semitons)', async () => {
+  await carregarSons(); ok(SF, 'amostras não carregaram');
   for(const h of ['left','right']) for(const b of state.layout[h]) for(const d of ['open','close']){
     const z = sfZone(b[d]); ok(Math.abs(b[d]-z.root) <= 7, 'nota ' + b[d]);
   }
@@ -101,8 +101,8 @@ teste('som: toda nota do mapa tem amostra (transposição até 7 semitons)', () 
 
 
 /* ---------- Ajustes ---------- */
-teste('afinação muda a velocidade das amostras e a frequência do sintetizado', () => {
-  if(!SF) return;
+teste('afinação muda a velocidade das amostras e a frequência do sintetizado', async () => {
+  await carregarSons(); ac();
   const antes = state.tuning;
   state.tuning = 443; const r443 = makeSampleVoice(69, 0, AC.currentTime).oscs[0].playbackRate.value;
   state.tuning = 440; const r440 = makeSampleVoice(69, 0, AC.currentTime).oscs[0].playbackRate.value;
@@ -152,8 +152,8 @@ teste('detecção de altura: senoides e timbres com harmônicos', () => {
   igual(detectPitch(new Float32Array(2048),sr), null, 'silêncio');
   state.tuning=a;
 });
-teste('detecção de altura no som gravado do bandoneon (todas as amostras)', () => {
-  if(!SF) return; const a=state.tuning; state.tuning=443;
+teste('detecção de altura no som gravado do bandoneon (todas as amostras)', async () => {
+  await carregarSons(); ac(); if(!SF) throw new Error('amostras não carregaram'); const a=state.tuning; state.tuning=443;
   SF.samples.forEach((s,i)=>{
     const ch=sfBuffer(i).getChannelData(0), z=SF.zones.find(z=>z.s===i);
     const r=detectPitch(ch.slice(s.loopStart, s.loopStart+2048), s.rate); ok(r, s.name+' sem detecção');
@@ -286,7 +286,11 @@ function textosEmPortugues(){
   return [...achados];
 }
 async function percorrerApp(){
-  for(const v of ['inicio','estudo','teclado','desafios','melodias','acordes','ritmo','ajustes','academia','microfone','perfil']){ go(v); await esperar(); }
+  for(const v of ['inicio','estudo','teclado','desafios','melodias','acordes','ritmo','ajustes','academia','microfone','perfil','professor']){ go(v); await esperar(); }
+  abrirControles(); await esperar(); ligarPc(true); await esperar(); ligarPc(false); $('#ctlDialog').close();
+  abrirSugestao(); await esperar(); $('#sugDialog').close(); compartilhar(t('Relatório do BanDoly'), 'x'); await esperar(); $('#partilha').close();
+  store.set('tarefa', {ex:'n3-escada', modo:'praticar', vel:70, prof:'', msg:''}); renderTarefa(); await esperar(); store.set('tarefa', null); renderTarefa();
+  $('#prGerar').click(); await esperar();
   abrirBoasVindas(); await esperar(); $('#boasVindas').close(); trilhaAberta = true; renderTrilha(); await esperar(); trilhaAberta = false;
   mcMostrar(69, 4, 0.1); await esperar(); mcMostrar(70, -30, 0.1); await esperar();
   avisar('<b>Conquista nova: Bisonoro</b>'); await esperar();
@@ -505,4 +509,57 @@ teste('Academia: dicas de posição vêm do mapa e nunca citam um dedo', () => {
     ok(ds.every(d=>!/dedo/i.test(d.txt)), ds.map(d=>d.txt).join(' | '));
   }
   go('inicio');
+});
+
+/* ---------- Controles: teclado do computador, MIDI, pressão; professores; sugestão ---------- */
+teste('teclado do computador: o mapa padrão cobre as duas mãos e a tecla toca o botão', () => {
+  const mapa = mapaPcPadrao(), botoes = Object.values(mapa);
+  ok(botoes.filter(b=>b.mao==='left').length >= 18 && botoes.filter(b=>b.mao==='right').length >= 24, 'teclas mapeadas');
+  igual(new Set(botoes.map(b=>b.mao+b.id)).size, botoes.length, 'uma tecla por botão');
+  go('teclado'); const antes = pc.ligado, mapaAntes = pc.mapa; pc.mapa = mapa; ligarPc(true);
+  const cod = Object.keys(mapa).find(c=>mapa[c].mao==='right'), alvo = mapa[cod];
+  document.dispatchEvent(new KeyboardEvent('keydown', {code:cod, bubbles:true}));
+  ok(tkR.held.has(alvo.id), 'botão apertado'); ok(document.querySelector(`#kbRight .key[data-tecla]`), 'letra da tecla no botão');
+  document.dispatchEvent(new KeyboardEvent('keyup', {code:cod, bubbles:true}));
+  ok(!tkR.held.has(alvo.id), 'botão solto');
+  pc.mapa = mapaAntes; ligarPc(antes); go('inicio');
+});
+teste('teclado do computador: editar o mapa troca a tecla de um botão', () => {
+  go('teclado'); const mapaAntes = JSON.stringify(pc.mapa), antes = pc.ligado;
+  comecarAtribuir(); const b = state.layout.left[0];
+  tkL.tocar(b.id); ok(!tkL.held.has(b.id), 'no modo editar, o toque não toca');
+  document.dispatchEvent(new KeyboardEvent('keydown', {code:'KeyJ', bubbles:true}));
+  igual(pc.mapa.KeyJ, {mao:'left', id:b.id});
+  pararAtribuir(); pc.mapa = JSON.parse(mapaAntes); salvarMapaPc(); ligarPc(antes); go('inicio');
+});
+teste('MIDI: a nota acha o botão na direção atual e a pressão muda o volume', () => {
+  go('teclado'); setDir('open'); const b = state.layout.right.find(x=>x.open===69);
+  midiNota(69, 1); ok(tkR.held.has(b.id) || state.layout.right.some(x=>x.open===69 && tkR.held.has(x.id)), 'botão do Lá abrindo');
+  midiSolta(69); igual(tkR.held.size, 0);
+  const p0 = pressaoFole; midiCtl.cc.pressao = 11; midiControle(11, 0.25); igual(Math.round(pressaoFole*100), 25);
+  midiCtl.cc.fole = 64; midiControle(64, 1); igual(state.dir, 'close'); midiControle(64, 0); igual(state.dir, 'open');
+  setPressao(p0); go('inicio');
+});
+teste('professor: o link da tarefa abre o exercício com modo, velocidade, mensagem e digitação', () => {
+  go('professor'); $('#prEx').value = 'n3-escada'; $('#prModo').value = 'desafio'; $('#prVel').value = '60';
+  $('#prNome').value = 'Prof. Teste'; $('#prMsg').value = 'Três vezes'; salvarDedo('n3-escada', 'n3-escada#1', 3); $('#prDedos').checked = true;
+  const url = linkTarefa(); ok(url.includes('#tarefa='));
+  salvarDedo('n3-escada', 'n3-escada#1', null);
+  abrirTarefa(url.split('#tarefa=')[1]);
+  igual(currentView, 'academia'); igual(acad.ex.id, 'n3-escada'); igual(acad.modo, 'desafio'); igual($('#acVel').value, '60');
+  ok(/Prof\. Teste/.test($('#v-academia .tarefa-aviso').textContent), 'aviso com o nome do professor');
+  igual(acad.todos[0].dedo, 3); igual(acad.todos[0].fonte, 'professor');
+  store.set('tarefa', null); renderTarefa(); salvarDedo('n3-escada', 'n3-escada#1', null); carregarExercicio('n3-escada'); go('inicio');
+});
+teste('professor: o relatório ganha o botão de enviar ao professor', async () => {
+  go('academia'); carregarExercicio('n2-sequencias'); $('#acModo [data-modo="aprender"]').click(); $('#acAuto').checked = true;
+  $('#acStart').click(); acadCompletar(); await new Promise(r=>setTimeout(r,10));
+  ok($('#acEnviarRel'), 'botão no relatório'); $('#acEnviarRel').click();
+  ok(/Relatório da Academia/.test($('#partilhaTexto').value) || /Academy report/.test($('#partilhaTexto').value), 'texto do relatório');
+  $('#partilha').close(); go('inicio');
+});
+teste('sugestão: o texto leva o tipo, a mensagem e as informações técnicas', () => {
+  abrirSugestao(); $('#sugTexto').value = 'O botão travou'; $$('#sugForm [name="tipo"]').find(r=>r.value==='erro').checked = true;
+  const {titulo, corpo} = textoSugestao(); ok(/\[Erro\] O botão travou/.test(titulo) || /O botão travou/.test(titulo), titulo);
+  ok(corpo.includes(navigator.userAgent)); $('#sugDialog').close();
 });

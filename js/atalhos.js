@@ -8,6 +8,7 @@ document.addEventListener('keydown',e=>{
     else if(currentView==='melodias'){ e.preventDefault(); if(!e.repeat && !$('#melAuto').checked) setMelDir(mel.dir==='open'?'close':'open'); }
     else if(currentView==='academia'){ e.preventDefault(); if(!e.repeat && !acadFoleAuto()) acadSetDir(acad.dir==='open'?'close':'open'); }
   }
-  if(currentView==='teclado' && (e.code==='KeyA'||e.code==='KeyF')){ e.preventDefault(); valve(e.code==='KeyA'?'open':'close'); }
+  if(currentView==='teclado' && (e.code==='KeyA'||e.code==='KeyF') && !(typeof pc!=='undefined' && pc.ligado)){ e.preventDefault(); // com o teclado do computador ligado, A e F tocam notas
+    valve(e.code==='KeyA'?'open':'close'); }
 });
 document.addEventListener('keyup',e=>{ if((e.code==='KeyA' && bel.valve==='open') || (e.code==='KeyF' && bel.valve==='close')) valve(null); });

@@ -2,8 +2,13 @@
 $('#namesSel').value=state.names;
 $('#tuneSel').value=String(state.tuning);
 $('#volSel').value=state.volume;
-if(!SF){ $('#soundSel').value='synth'; $('#soundSel').disabled=true; $('#soundStatus').textContent='Arquivo sons/bandoneon.js não encontrado: usando som sintetizado.'; }
-else $('#soundSel').value=state.sound;
+// o som gravado é baixado depois que o app abriu (audio.js): enquanto isso, o seletor mostra que está chegando
+$('#soundSel').value=state.sound;
+if(!SF) $('#soundStatus').textContent='Baixando o som do bandoneon…';
+document.addEventListener('sons-prontos', ()=>{
+  if(SF){ $('#soundStatus').textContent=''; return; }
+  $('#soundSel').value='synth'; $('#soundSel').disabled=true; $('#soundStatus').textContent='Arquivo sons/bandoneon.js não encontrado: usando som sintetizado.';
+});
 
 const testSound=()=>{ ac(); [60,64,67,72].forEach((m,i)=>playNote(m,0.5,'right',AC.currentTime+i*0.25)); };
 $('#soundSel').onchange=e=>{ state.sound=e.target.value; store.set('sound',state.sound); testSound(); };
@@ -19,7 +24,7 @@ $('#vibSel').onchange=e=>{ mov.vib=e.target.value==='1'; store.set('vibracao',mo
 // Pré-carrega as amostras no primeiro gesto do usuário (o navegador só libera o áudio depois de um toque)
 const firstGesture=()=>{
   document.removeEventListener('pointerdown',firstGesture,true); document.removeEventListener('keydown',firstGesture,true);
-  preloadSamples((i,n)=>{ $('#soundStatus').textContent = i<n ? `Carregando sons… ${i}/${n}` : 'Sons carregados.'; });
+  carregarSons().then(()=>preloadSamples((i,n)=>{ $('#soundStatus').textContent = i<n ? `Carregando sons… ${i}/${n}` : 'Sons carregados.'; }));
 };
 document.addEventListener('pointerdown',firstGesture,true); document.addEventListener('keydown',firstGesture,true);
 

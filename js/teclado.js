@@ -33,19 +33,22 @@ function createKeyboard(el, hand, opts={}){
       Object.assign(d.style,{left:(8+b.x*size)+'px', top:(8+b.y*size)+'px', width:dia+'px', height:dia+'px'});
       d.type='button';
       const getDir=()=>opts.getDir?opts.getDir():state.dir;
-      const press=e=>{ e.preventDefault(); if(held.has(b.id)) return;
+      // vel = força do toque (controlador MIDI); o toque na tela e o teclado do computador valem 1
+      const press=(e, vel=1)=>{ if(e) e.preventDefault(); if(held.has(b.id)) return;
+        if(typeof interceptarToque==='function' && interceptarToque(b, hand, api)) return; // mapa do teclado / MIDI aprendendo
         if(state.editing && opts.editable){ editButton(b); return; }
         const dir=getDir(), midi=b[dir]; held.add(b.id); d.classList.add('down');
-        if(opts.sound!==false && (!opts.canSound || opts.canSound())) startVoice(uid+b.id, midi, hand);
+        if(opts.sound!==false && (!opts.canSound || opts.canSound())) startVoice(uid+b.id, midi, hand, vel);
         opts.onPress && opts.onPress(b, midi, dir, api);
       };
       const release=()=>{ if(!held.has(b.id)) return; held.delete(b.id); d.classList.remove('down'); stopVoice(uid+b.id); opts.onRelease&&opts.onRelease(b); };
       // Eventos de ponteiro servem para mouse e toque (vários dedos = acorde). Sair do botão solta a nota.
       d.addEventListener('pointerdown',press);
       ['pointerup','pointerleave','pointercancel'].forEach(t=>d.addEventListener(t,release));
-      el.appendChild(d); nodes[b.id]={d,b};
+      el.appendChild(d); nodes[b.id]={d,b,press,release};
     }
     refresh();
+    if(typeof marcarTeclas==='function') marcarTeclas(api); // letra da tecla do computador em cada botão
   }
   function refresh(){
     const dir=opts.getDir?opts.getDir():state.dir, show=opts.showLabels?opts.showLabels():state.showLabels;
@@ -57,7 +60,12 @@ function createKeyboard(el, hand, opts={}){
     }
   }
   const api={
-    hand, build, refresh, held, size, perRow:opts.perRow, largura:opts.largura,
+    hand, el, build, refresh, held, size, perRow:opts.perRow, largura:opts.largura,
+    direcao:()=>opts.getDir?opts.getDir():state.dir,
+    // tocar e soltar um botão sem o mouse (teclado do computador e controlador MIDI)
+    tocar(id, vel=1){ const n=nodes[id]; if(n) n.press(null, vel); },
+    soltar(id){ const n=nodes[id]; if(n) n.release(); },
+    tecla(id, rotulo){ const n=nodes[id]; if(!n) return; if(rotulo) n.d.dataset.tecla=rotulo; else delete n.d.dataset.tecla; },
     // ao inverter o fole as notas seguradas mudam de altura, como no instrumento
     retune(){ const dir=opts.getDir?opts.getDir():state.dir;
       for(const id of held){ const b=nodes[id].b; if(voices[uid+id]) startVoice(uid+id,b[dir],hand); } },

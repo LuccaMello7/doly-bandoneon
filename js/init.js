@@ -12,10 +12,13 @@ if(location.protocol==='file:') $$('a[data-local][href$="/"]').forEach(a=>a.setA
 // Endereço com #licao-3 (vindo das páginas das lições) abre a lição; #teclado, #ritmo etc. abrem a aba
 function abrirPeloEndereco(){
   const h = decodeURIComponent(location.hash.slice(1)), m = h.match(/^licao-(\d+)$/);
+  if(h.startsWith('tarefa=')){ abrirTarefa(h.slice(7)); return; } // link de tarefa mandado pelo professor (js/professor.js)
   if(m && LESSONS[m[1]-1]){ curLesson = m[1]-1; renderLesson(); go('licoes'); }
   else if(/^[a-z]+$/.test(h) && $('#v-'+h)) go(h);
 }
 abrirPeloEndereco();
+// o som gravado chega depois que a tela já respondeu (o primeiro toque usa o sintetizado se ainda não tiver chegado)
+if(document.readyState==='complete') carregarSons(); else window.addEventListener('load', ()=>carregarSons());
 window.addEventListener('hashchange', abrirPeloEndereco);
 observador.observe(document.body, {subtree:true, childList:true, characterData:true, attributes:true, attributeFilter:ATTRS});
 

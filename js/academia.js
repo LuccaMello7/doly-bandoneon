@@ -109,6 +109,7 @@ const ACADEMIA = [
   {id:'n6-estrelinha', titulo:'Brilha, brilha estrelinha', desc:'Melodia simples com digitação guiada.', texto:melodiaPronta('estrelinha'), foleManual:true},
   {id:'n6-ode', titulo:'Ode à Alegria', desc:'Um pouco mais longa, com ritmo pontuado.', texto:melodiaPronta('ode'), foleManual:true},
   {id:'n6-lam', titulo:'Lá menor harmônica', desc:'A escala com a cor do tango, com trocas de fole.', texto:melodiaPronta('esc-lam'), foleManual:true},
+  {id:'n6-choclo', titulo:'El Choclo: introdução', desc:'O primeiro tango: oito compassos em colcheias, com o cromatismo do Lá#.', texto:melodiaPronta('choclo-intro'), foleManual:true},
   {id:'n6-ode-duas', titulo:'Ode à Alegria a duas mãos', desc:'Melodia e baixos juntos: o desafio final.', texto:melodiaPronta('ode-duas'), foleManual:true},
 ]},
 {nivel:7, titulo:'Minhas partituras', objetivo:'Importe uma partitura (MusicXML ou MIDI): o app transcreve cada nota para um botão, com a mão, a direção do fole, a duração e as pausas. Depois é só treinar nos modos Aprender, Praticar e Desafio.',
@@ -198,8 +199,11 @@ function montarEventos(ex){
   else { m = parseMelody(ex.texto); if(ex.bpm) m.bpm = ex.bpm; buildTimeline(m); fingerMelody(m); }
   const notas = m.notes.filter(n=>!n.rest && !n.error && n.btn);
   acad.bpm = m.bpm;
-  return notas.map((n,k)=>({k, id:`${ex.id}#${k+1}`, exercicio:ex.id, botao:n.btn, mao:n.hand, midi:n.midi, fole:n.dir,
-    dedo:n.dedo ?? null, alternativas:n.alt || [], inicio:n.t, duracao:n.beats}));
+  // a digitação definida pelo professor (js/professor.js) vale mais que a da partitura
+  const dg = typeof digitacaoDe==='function' && !ex.gerar ? digitacaoDe(ex.id) : null;
+  return notas.map((n,k)=>{ const id = `${ex.id}#${k+1}`, prof = dg && dg[id]!=null;
+    return {k, id, exercicio:ex.id, botao:n.btn, mao:n.hand, midi:n.midi, fole:n.dir,
+      dedo: prof ? dg[id] : n.dedo ?? null, fonte: prof ? 'professor' : null, alternativas:n.alt || [], inicio:n.t, duracao:n.beats}; });
 }
 function agruparEventos(evs){
   const gs = [];
@@ -255,7 +259,7 @@ function faixaMarca(i, cls){ const c = $(`#acStrip [data-g="${i}"]`); if(!c) ret
 function textoDedo(e){
   if(e.dedo==null) return t('a definir (aguardando o dedilhado de referência)');
   const alt = e.alternativas.length ? ' ' + t('(também: {})', e.alternativas.join(', ')) : '';
-  return `${e.dedo} · ${t(DEDOS[e.dedo])}${alt}`;
+  return `${e.dedo} · ${t(DEDOS[e.dedo])}${alt}${e.fonte==='professor' ? ' · ' + t('digitação do professor') : ''}`;
 }
 function acadInstrutor(gi){
   const aj = acadAjuda(), g = acad.grupos[gi], prox = acad.grupos[gi+1];
@@ -639,6 +643,7 @@ function acadFim(){
   if(!recs.length) recs.push(acad.modo==='aprender' ? t('Muito bem! Agora toque no modo Praticar, sem o destaque dos botões.')
     : acad.modo==='praticar' ? t('Muito bem! Agora tente o modo Desafio, no tempo.') : t('Muito bem! Siga para o próximo exercício.'));
   saveProgress(); renderAcadNiveis(); renderAcadLista(); logPractice('academia');
+  if(typeof aposRelatorio==='function') setTimeout(aposRelatorio, 0); // botão "Enviar ao professor" (js/professor.js)
   if(pctNotas>=90 && !errados.length && (pctRitmo==null || pctRitmo>=80)) comemorar();
   const prox = proximoExercicio();
   $('#acRelatorio').innerHTML = `<h3>${t('Resultado')}</h3><ul>${linhas.map(l=>`<li>${l}</li>`).join('')}</ul>`
