@@ -602,6 +602,21 @@ teste('Academia: exercício de uma mão mostra só aquela mão; o de duas mostra
   $('#acTrocar').click(); ok(!$('#acEscolha').classList.contains('recolhido')); ok(!acad.rodando);
   go('inicio');
 });
+teste('fole: avisa perto do fim, o botão da mensagem troca a direção e o modo sem limite é opcional', () => {
+  const antes = {level:bel.level, livre:bel.livre, dir:state.dir};
+  go('teclado'); setFoleLivre(false); setDir('open'); bel.level = 0.9; atualizarAvisoFole();
+  ok($('#bellows').classList.contains('quase'), 'fole laranja perto do fim');
+  ok($('#bellowsWarn [data-troca-fole]'), 'mensagem com o botão Trocar direção');
+  bel.level = 1; bel.blocked = true; atualizarAvisoFole();
+  ok($('#bellows').classList.contains('fim'), 'no fim fica vermelho');
+  $('#bellowsWarn [data-troca-fole]').click(); igual(state.dir, 'close');
+  ok(!bel.blocked, 'trocar a direção libera o som');
+  ok(!store.get('foleLivre', false), 'sem limite vem desligado');
+  $('#foleLivreBtn').click(); ok(bel.livre && store.get('foleLivre', false), 'ligou e salvou');
+  setDir('open'); bel.level = 0.9; atualizarAvisoFole();
+  ok(!$('#bellows').classList.contains('quase'), 'no modo livre não há aviso');
+  setFoleLivre(antes.livre); setDir(antes.dir); bel.level = antes.level; go('inicio');
+});
 teste('nomes das notas: ligados por padrão em todas as telas e uma caixa desliga em todas', () => {
   const antes = state.showLabels, nomeEm = sel => $$(sel+' .key').some(k=>k.textContent.trim()!=='');
   setMostrarNomes(true); go('desafios'); construirPendentes();

@@ -1,8 +1,11 @@
 /* ================== Teclado livre + fole ================== */
 // Aba Teclado com simulação do fole. bel.level vai de 0 (fechado) a 1 (todo aberto). Tocar move o
 // fole na direção atual (mais rápido com mais notas). No limite, o som para até inverter a direção
-// ou reposicionar o fole pela válvula de ar.
-const bel = { level:0.15, valve:null, blocked:false, last:performance.now() };
+// ou reposicionar o fole pela válvula de ar. Perto do fim (85%) o fole fica laranja, pulsa e o celular
+// vibra; no fim a mensagem traz o botão "Trocar direção". No modo "Fole sem limite" (opcional, desligado
+// por padrão) o fole volta sozinho para 15% e o som continua: bom para explorar, mas não é como no instrumento.
+const bel = { level:0.15, valve:null, blocked:false, estado:'', livre:store.get('foleLivre', false), last:performance.now() };
+const FOLE_QUASE = 0.85;
 const canSound=()=>!bel.blocked;
 const tkOpts={ editable:true, canSound, onPress:(b,m,dir)=>{
   if(typeof marcar==='function') marcar('teclado');
@@ -11,11 +14,29 @@ const tkOpts={ editable:true, canSound, onPress:(b,m,dir)=>{
 }};
 const tkL = kb($('#kbLeft'),'left',tkOpts), tkR = kb($('#kbRight'),'right',tkOpts);
 function setDir(d){
-  state.dir=d; bel.blocked=false; $('#bellowsWarn').textContent='';
+  state.dir=d; bel.blocked=false;
   const p=$('#dirPill'); p.className='dirpill '+d; p.textContent = d==='open'?'⟵ ABRINDO ⟶':'⟶ FECHANDO ⟵';
   tkL.refresh(); tkR.refresh(); tkL.retune(); tkR.retune();
 }
 $('#dirBtn').onclick=()=>setDir(state.dir==='open'?'close':'open');
+// aviso do fole: o botão dentro da mensagem troca a direção (no celular não há tecla Espaço)
+$('#bellowsWarn').addEventListener('click', e=>{ if(e.target.closest('[data-troca-fole]')) $('#dirBtn').click(); });
+function avisoFole(estado){
+  const w=$('#bellowsWarn'), b=$('#bellows');
+  b.classList.toggle('quase', estado==='quase'); b.classList.toggle('fim', estado==='fim'); w.classList.toggle('quase', estado==='quase');
+  const botao = `<button type="button" class="btn btn-troca" data-troca-fole>${t('Trocar direção')}</button>`;
+  if(estado==='quase'){ vibrar('ok'); w.innerHTML = `<span>${t('Quase no fim: prepare a troca de direção.')}</span> ${botao}`; }
+  else if(estado==='fim') w.innerHTML = `<span>${t(state.dir==='open' ? 'Fole todo aberto! Troque para fechar (Espaço) ou feche pela válvula (F).' : 'Fole todo fechado! Troque para abrir (Espaço) ou abra pela válvula (A).')}</span> ${botao}`;
+  else w.textContent='';
+}
+// modo livre: ligar explica que no bandoneon de verdade não é assim
+function setFoleLivre(v){
+  bel.livre=!!v; store.set('foleLivre', bel.livre);
+  const b=$('#foleLivreBtn'); b.classList.toggle('on', bel.livre); b.setAttribute('aria-pressed', bel.livre);
+}
+$('#foleLivreBtn').onclick=()=>{ setFoleLivre(!bel.livre);
+  if(bel.livre) avisar(t('Fole sem limite: ao chegar no fim, o fole volta sozinho e o som continua. No bandoneon de verdade é preciso trocar a direção.')); };
+setFoleLivre(bel.livre);
 // Ver uma mão por vez (no celular sobra espaço e os botões ficam maiores)
 $('#tkVer').addEventListener('click', e=>{
   const b=e.target.closest('[data-ver]'); if(!b) return;
@@ -33,6 +54,12 @@ const valve=d=>{ bel.valve=d; $('#valveOpenBtn').classList.toggle('on',d==='open
 });
 let foleSec=0; // segundos tocando: 1 minuto marca o "aquecimento de fole" da rotina
 // Laço de animação (~60 vezes por segundo): atualiza a posição do fole e o desenho
+// libera o som quando o fole sai do limite e mostra o aviso certo (perto do fim, no fim ou nenhum)
+function atualizarAvisoFole(){
+  if(bel.blocked && (state.dir==='open' ? bel.level<0.97 : bel.level>0.03)) bel.blocked=false;
+  const estado = bel.blocked ? 'fim' : !bel.livre && (state.dir==='open' ? bel.level>=FOLE_QUASE : bel.level<=1-FOLE_QUASE) ? 'quase' : '';
+  if(estado!==bel.estado){ bel.estado=estado; avisoFole(estado); }
+}
 function bellowsLoop(now){
   const dt=Math.min(0.1,(now-bel.last)/1000); bel.last=now;
   const notes=tkL.held.size+tkR.held.size;
@@ -43,15 +70,13 @@ function bellowsLoop(now){
   if(rate){
     bel.level += (dir==='open'?1:-1)*rate*dt;
     if(bel.level>=1 || bel.level<=0){
-      bel.level=Math.max(0,Math.min(1,bel.level));
-      if(!bel.valve && notes && !bel.blocked){
-        bel.blocked=true; tkL.silence(); tkR.silence();
-        $('#bellowsWarn').textContent = state.dir==='open' ? 'Fole todo aberto! Troque para fechar (Espaço) ou feche pela válvula (F).' : 'Fole todo fechado! Troque para abrir (Espaço) ou abra pela válvula (A).';
-      }
+      if(bel.livre && !bel.valve) bel.level = bel.level>=1 ? 0.15 : 0.85; // modo livre: recomeça e o som segue
+      else bel.level=Math.max(0,Math.min(1,bel.level));
+      if(!bel.livre && !bel.valve && notes && !bel.blocked){ bel.blocked=true; tkL.silence(); tkR.silence(); }
     }
   }
   // com a válvula o fole sai do limite e o som volta
-  if(bel.blocked && (state.dir==='open' ? bel.level<0.97 : bel.level>0.03)){ bel.blocked=false; $('#bellowsWarn').textContent=''; }
+  atualizarAvisoFole();
   $('#bellows').style.width=(30+bel.level*220)+'px';
   requestAnimationFrame(bellowsLoop);
 }

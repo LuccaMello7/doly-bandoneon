@@ -165,6 +165,15 @@ kbd{font-family:Nunito,sans-serif}
 .dirpill{font-weight:800;padding:6px 16px;border-radius:999px;color:#fff}
 .dirpill.open{background:var(--open)} .dirpill.close{background:var(--close)}
 .warn{color:var(--red2);font-weight:700;min-height:1.5em;text-align:center}
+/* fole perto do fim: laranja e pulsando; no fim: vermelho. A mensagem traz o botão para trocar a direção */
+.warn.quase{color:#f0a060}
+.bellows-wrap .warn{max-width:280px}
+.warn .btn-troca{margin:6px 0 0 6px;padding:6px 14px;font-size:.88rem}
+.bellows.quase{border-color:#f08a4b;animation:folePulsa .9s ease-in-out infinite}
+.bellows.fim{border-color:var(--red2)}
+@keyframes folePulsa{50%{box-shadow:0 0 0 5px #f08a4b55,0 6px 16px #0006}}
+.sem-mov .bellows.quase{animation:none}
+@media (prefers-reduced-motion:reduce){.bellows.quase{animation:none}}
 .info{font-size:1.05rem;min-height:1.6em}
 a{color:var(--gold)}
 /* Melodias: faixa de notas, partitura e explicação das escalas */
