@@ -1233,3 +1233,38 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
 /* Lições: duas trilhas (o bandoneon e a teoria musical) na mesma aba */
 .trilhas{margin-bottom:16px}
 .trilhas .btn{gap:8px}
+
+/* ===== Celular e tablet: botões e controles ===== */
+/* grade com 1 coluna: sem min-width:0 o conteúdo largo empurra a página para o lado */
+.lesson-layout>*{min-width:0}
+/* nomes dos níveis da Academia não cortam no meio da palavra */
+/* "Ir" da rotina: alvo de toque maior */
+.rotina [data-r],[data-r].btn{min-width:64px;justify-content:center}
+/* em telas de toque, botões com pelo menos 42 px de altura e sem o atalho do teclado do computador */
+@media (pointer:coarse){
+  .btn,summary.btn{min-height:42px}
+}
+@media (hover:none) and (pointer:coarse){
+  #pcBtn{display:none}
+}
+@media (max-width:700px){
+  /* abas de cada área: todas visíveis, divididas por igual, ícone em cima do nome */
+  .subnav{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:6px;overflow:visible;margin-bottom:14px}
+  .subnav button{flex-direction:column;justify-content:center;gap:4px;padding:8px 4px;border-radius:14px;font-size:.74rem;line-height:1.15;text-align:center;white-space:normal;min-height:58px}
+  .subnav button svg[aria-hidden]{width:20px;height:20px}
+  /* opções dos exercícios: seletores e controles deslizantes ocupam a linha toda; caixinhas, meia linha */
+  .card .row>label:has(select),.card .row>label:has(input[type=range]){flex:1 1 100%;display:flex}
+  .card .row>label:has(select) select,.card .row>label:has(input[type=range]) input[type=range]{flex:1;min-width:0}
+  .card .row>label:has(input[type=checkbox]){flex:1 1 calc(50% - 4px)}
+  /* faixa de ação: a explicação vai para baixo do botão */
+  .acao .acao-dica{flex-basis:100%}
+  .acao .btn.sec{flex:1 1 0}
+  /* níveis da Academia: um pouco mais largos para o nome caber */
+  .ac-niveis{grid-template-columns:repeat(7,minmax(108px,1fr))}
+  .ac-nivel .ac-ntit{font-size:.72rem}
+  /* conquistas em duas colunas */
+  .insignias{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .insignia{padding:16px 10px 14px;border-radius:18px}
+}
+/* Ajustes: a caixinha fica ao lado do texto, não em cima */
+.settings label:has(input[type=checkbox]){flex-direction:row;align-items:center;gap:10px}

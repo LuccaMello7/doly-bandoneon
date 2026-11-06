@@ -128,6 +128,7 @@ function montarTarefa(i){
     <div class="tarefa-fb feedback" aria-live="polite"></div>
     <div class="tarefa-kb" data-mao="left"></div><div class="tarefa-kb" data-mao="right"></div>`;
   for(const lado of ['left','right']) tarefaKbs.push(kb(host.querySelector(`.tarefa-kb[data-mao="${lado}"]`), lado, {perRow:1,
+    largura:()=>host.clientWidth>100 ? host.clientWidth - 40 : 0, // cabe na caixa "Experimente agora", que é mais estreita que a página
     getDir:()=>tarefa && T.passos[Math.min(tarefa.passo, T.passos.length-1)].dir, onPress:(b,m,dir,k)=>tarefaToque(b,m,k)}));
   tarefaPasso();
 }
