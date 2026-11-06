@@ -296,8 +296,10 @@
     <div class="row">
       <label>Mano: <select id="fHand"><option value="right">Derecha</option><option value="left">Izquierda</option><option value="both">Ambas</option></select></label>
       <label>Dirección: <select id="fDir"><option value="open">Abriendo</option><option value="close">Cerrando</option><option value="rand">Aleatoria</option></select></label>
-      <button class="btn" id="fStart">Comenzar</button>
       <label>Sorteo: <select id="fMode"><option value="smart">Inteligente (se enfoca en tus errores)</option><option value="rand">Aleatorio</option></select></label>
+    </div>
+    <div class="acao">
+      <button class="btn btn-grande" id="fStart"><svg aria-hidden="true"><use href="#i-play"/></svg>Comenzar</button>
       <button class="btn sec" id="fListen"><svg aria-hidden="true"><use href="#i-volume"/></svg>Escuchar la nota</button>
       <button class="btn sec" id="fHeat"><svg aria-hidden="true"><use href="#i-flame"/></svg>Mapa de errores</button>
     </div>
@@ -321,7 +323,9 @@
       <label>Mano: <select id="eHand"><option value="right">Derecha</option><option value="left">Izquierda</option></select></label>
       <label>Dirección: <select id="eDir"><option value="open">Abriendo</option><option value="close">Cerrando</option><option value="rand">Aleatoria</option></select></label>
       <label>Notas: <select id="eNotas"><option value="naturais">Solo las naturales (Do, Re, Mi…)</option><option value="todas">Todas</option></select></label>
-      <button class="btn" id="eStart">Comenzar</button>
+    </div>
+    <div class="acao">
+      <button class="btn btn-grande" id="eStart"><svg aria-hidden="true"><use href="#i-play"/></svg>Comenzar</button>
       <button class="btn sec" id="eReplay" disabled><svg aria-hidden="true"><use href="#i-volume"/></svg>Escuchar de nuevo</button>
     </div>
     <div class="ouvido">
@@ -343,8 +347,8 @@
       <label>Mano: <select id="pHand"><option value="right">Derecha (clave de sol)</option><option value="left">Izquierda (clave de fa)</option></select></label>
       <label>Dirección: <select id="pDir"><option value="open">Abriendo</option><option value="close">Cerrando</option><option value="rand">Aleatoria</option></select></label>
       <label>Notas: <select id="pNotas"><option value="naturais">Solo las naturales (Do, Re, Mi…)</option><option value="todas">Todas</option></select></label>
-      <button class="btn" id="pStart">Comenzar</button>
     </div>
+    <div class="acao"><button class="btn btn-grande" id="pStart"><svg aria-hidden="true"><use href="#i-play"/></svg>Comenzar</button></div>
     <div class="pauta-desafio">
       <div class="staff" id="pPauta"></div>
       <div id="pDirPill" class="dirpill open" style="display:inline-block;visibility:hidden"></div>
@@ -362,8 +366,8 @@
     <p class="muted">En el bandoneón, la mano derecha suele leer en <b>clave de sol</b> y la izquierda en <b>clave de fa</b>. Di el nombre de la nota.</p>
     <div class="row">
       <label>Clave: <select id="sClef"><option value="treble">Sol (mano derecha)</option><option value="bass">Fa (mano izquierda)</option><option value="mix">Mezcladas</option></select></label>
-      <button class="btn" id="sStart">Comenzar</button>
     </div>
+    <div class="acao"><button class="btn btn-grande" id="sStart"><svg aria-hidden="true"><use href="#i-play"/></svg>Comenzar</button></div>
     <div class="staff" style="text-align:center;margin-top:14px"><svg id="staffSvg" width="320" height="150" viewBox="0 0 320 150"></svg></div>
     <div class="answers" id="sAnswers" style="text-align:center"></div>
     <div style="text-align:center"><div class="feedback" id="sFeed"></div><div class="muted" id="sScore"></div></div>
@@ -409,7 +413,9 @@
           <label title="Toca tu bandoneón: la app escucha por el micrófono y revisa las notas (modos Espera y A tempo)"><input type="checkbox" id="micToggle"> <svg aria-hidden="true"><use href="#i-mic"/></svg> Usar micrófono</label>
           <label><input type="checkbox" id="melStaffOn"> 𝄞 Partitura</label>
           <label title="Las notas bajan hasta la línea dorada al ritmo de la música"><input type="checkbox" id="melRollOn"> Notas que caen</label>
-          <button class="btn" id="melStart">▶ Comenzar</button>
+        </div>
+        <div class="acao">
+          <button class="btn btn-grande" id="melStart">▶ Comenzar</button>
           <button class="btn sec" id="melEdit">Editar</button>
         </div>
         <div class="notice" id="melWarn" style="display:none;margin-top:10px"></div>
@@ -522,8 +528,8 @@
       <label>Patrón: <select id="rPattern"></select></label>
       <label>BPM: <input type="range" id="rBpm" min="50" max="140" value="70"> <span id="rBpmVal">70</span></label>
       <label><input type="checkbox" id="rClick" checked> Metrónomo</label>
-      <button class="btn" id="rPlay">▶ Tocar</button>
     </div>
+    <div class="acao"><button class="btn btn-grande" id="rPlay">▶ Tocar</button></div>
     <p id="rDesc" class="muted"></p>
     <div class="steps" id="rSteps"></div>
     <div class="muted" style="text-align:center">Compás de 4/4 dividido en corcheas: 1 y 2 y 3 y 4 y</div>
@@ -594,13 +600,12 @@
 
   <!-- 2. ajustar e começar: a barra fica logo acima do teclado -->
   <div class="card ac-barra" id="acBarra">
+    <div class="ac-ajustes">
     <div class="ac-modos" id="acModo" role="group" aria-label="Modo">
       <button type="button" data-modo="aprender" class="on">Aprender</button>
       <button type="button" data-modo="praticar">Practicar</button>
       <button type="button" data-modo="desafio">Desafío</button>
     </div>
-    <button class="btn btn-grande" id="acStart">▶ Comenzar</button>
-    <button class="btn sec" id="acOuvirBtn">Escuchar</button>
     <label class="ac-vel">Velocidad <input type="range" id="acVel" min="40" max="120" step="10" value="70"> <span id="acVelVal">70%</span></label>
     <details class="ac-mais" id="acMais">
       <summary class="btn sec"><svg aria-hidden="true"><use href="#i-gear"/></svg>Más opciones</summary>
@@ -616,7 +621,12 @@
         </div>
       </div>
     </details>
-    <p class="muted ac-modo-info" id="acModoInfo"></p>
+    </div>
+    <div class="acao">
+      <button class="btn btn-grande" id="acStart">▶ Comenzar</button>
+      <button class="btn sec" id="acOuvirBtn">Escuchar</button>
+      <p class="muted ac-modo-info acao-dica" id="acModoInfo"></p>
+    </div>
   </div>
 
   <!-- 3. tocar: o teclado (só a mão do exercício, ou as duas com o fole no meio) e o instrutor -->
