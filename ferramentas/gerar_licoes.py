@@ -208,6 +208,8 @@ def pagina(cod, prof, titulo, descricao, urls, corpo, dados, tipo_og='article'):
 <link rel="icon" href="{raiz}icones/icone-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="{raiz}icones/icone-192.png">
 <link rel="stylesheet" href="{raiz}css/app.css">
+<!-- contagem de visitas: GoatCounter, sem cookies e sem dados pessoais (painel: bandoly.goatcounter.com) -->
+<script data-goatcounter="https://bandoly.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </head>
 <body>
 <header>
