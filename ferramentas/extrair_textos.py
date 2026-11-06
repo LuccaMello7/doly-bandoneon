@@ -31,7 +31,10 @@ NAO_E_TEXTO = [re.compile(p) for p in (
 )]
 # Iguais em todos os idiomas: nomes próprios, símbolos e exemplos de notas do formato de texto
 IGUAIS = {'T T S T T T S', 'T S T T S T T', 'S T T T S T T', 'T T T S T T S', 'T+S', 'Ban', 'Doly', '×', '‹', '›', 'WhatsApp', 'E-mail', 'Idioma / Language', 'Português', 'Español', 'English', 'Rheinische 142', 'Bandoneon V2.5', 'm7', 'm6', '442 Hz',
-          'bpm: 80', 'metronome per-minute'}
+          'bpm: 80', 'metronome per-minute',
+          # vídeos do Doly (translate="no"): nomes de músicas e de canais do YouTube
+          'Cena de Campanha', 'Sarau do Solar', 'Pampa Pietá', 'De Catres e Corredores', 'Edgar Paiva',
+          'Museu WK - Acordeões e Bandoneões', 'Almir Sampaio Barbosa', 'Adriano Lima Gaúcho'}
 NAO_E_TEXTO.append(re.compile(r'^[A-Za-zÀ-ÿ]{1,3}[#♯♭b]?\d'))  # Sol4, Bb5, Dó4:4, Mi4:8t…
 # Formas "cruas" de frases que o dicionário cobre com outra chave (montadas em partes no código)
 COBERTOS = {'Opção {}: {}{}{}', 'Prepare-se…', 'Não entendi:', 'Direção: Abrindo (trocar)',

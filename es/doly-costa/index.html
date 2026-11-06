@@ -96,9 +96,30 @@
         <p>Fue reconocido en la categoría Instrumentista por la Asamblea Legislativa de Rio Grande do Sul.</p></li>
       <li><span class="tl-ano">2011</span><b>Homenaje en la 25ª Moenda da Canção</b>
         <p>Recibió un homenaje durante la edición conmemorativa del festival en Santo Antônio da Patrulha.</p></li>
-      <li><span class="tl-ano">2026</span><b>Homenaje en Caçapava do Sul</b>
-        <p>Homenaje en el 4º Encuentro de Bandoneón, en su ciudad natal, a los 97 años y todavía en actividad.</p></li>
     </ol>
+  </section>
+
+  <section class="card doly-sec" id="videos">
+    <h2 class="doly-tit">Videos</h2>
+    <p class="muted">Doly en el bandoneón, en grabaciones publicadas en YouTube. El video solo se carga cuando lo tocas.</p>
+    <div class="doly-videos">
+      <figure class="doly-video">
+        <a class="yt" href="https://www.youtube.com/watch?v=6EaVwZ8S1Gs" data-yt="6EaVwZ8S1Gs" target="_blank" rel="noopener" aria-label="Ver el video: Cena de Campanha"><img src="../../imagens/doly/videos/6EaVwZ8S1Gs.jpg" alt="" loading="lazy" width="480" height="360"><span class="yt-play" aria-hidden="true"></span></a>
+        <figcaption><b translate="no">Cena de Campanha</b>Leopoldo Rassier y Os Posteiros. Música de Alcy Cheuiche, Doly Costa y Nilo Brum. <small>Video del canal <span translate="no">Edgar Paiva</span> en YouTube.</small></figcaption>
+      </figure>
+      <figure class="doly-video">
+        <a class="yt" href="https://www.youtube.com/watch?v=QlmlAmMgwCo" data-yt="QlmlAmMgwCo" target="_blank" rel="noopener" aria-label="Ver el video: Sarau do Solar"><img src="../../imagens/doly/videos/QlmlAmMgwCo.jpg" alt="" loading="lazy" width="480" height="360"><span class="yt-play" aria-hidden="true"></span></a>
+        <figcaption><b translate="no">Sarau do Solar</b>Doly Costa Quarteto, en el programa Sarau do Solar. <small>Video del canal <span translate="no">Museu WK - Acordeões e Bandoneões</span> en YouTube.</small></figcaption>
+      </figure>
+      <figure class="doly-video">
+        <a class="yt" href="https://www.youtube.com/watch?v=OVtpaH-jgOQ" data-yt="OVtpaH-jgOQ" target="_blank" rel="noopener" aria-label="Ver el video: Pampa Pietá"><img src="../../imagens/doly/videos/OVtpaH-jgOQ.jpg" alt="" loading="lazy" width="480" height="360"><span class="yt-play" aria-hidden="true"></span></a>
+        <figcaption><b translate="no">Pampa Pietá</b>Délcio Tavares y Os Posteiros en Galpão Crioulo, en 1988. <small>Video del canal <span translate="no">Almir Sampaio Barbosa</span> en YouTube.</small></figcaption>
+      </figure>
+      <figure class="doly-video">
+        <a class="yt" href="https://www.youtube.com/watch?v=BEmbtYr9ljQ" data-yt="BEmbtYr9ljQ" target="_blank" rel="noopener" aria-label="Ver el video: De Catres e Corredores"><img src="../../imagens/doly/videos/BEmbtYr9ljQ.jpg" alt="" loading="lazy" width="640" height="360"><span class="yt-play" aria-hidden="true"></span></a>
+        <figcaption><b translate="no">De Catres e Corredores</b>José Carlos Batista de Deus y Doly Costa. <small>Video del canal <span translate="no">Adriano Lima Gaúcho</span> en YouTube.</small></figcaption>
+      </figure>
+    </div>
   </section>
 
   <section class="card doly-sec" id="fotos">
@@ -146,7 +167,7 @@
     document.documentElement.classList.add('mov');
     var obs = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('visto'); obs.unobserve(e.target); } }); },
                                        {threshold:0, rootMargin:'0px 0px -12% 0px'});
-    document.querySelectorAll('.timeline li, .doly-fotos figure, .pagina > .card, .doly-tit').forEach(function(el){ obs.observe(el); });
+    document.querySelectorAll('.timeline li, .doly-fotos figure, .doly-video, .pagina > .card, .doly-tit').forEach(function(el){ obs.observe(el); });
     var pedido = false;
     var quadro = function(){
       pedido = false;
@@ -165,6 +186,17 @@
       capa.addEventListener('pointerleave', function(){ capa.style.setProperty('--rx','0deg'); capa.style.setProperty('--ry','0deg'); });
     }
   }
+  // vídeos: a miniatura vira o player do YouTube (sem cookies) só no clique; abrir outro fecha o anterior
+  var aberto = null;
+  document.querySelectorAll('.yt').forEach(function(a){ a.addEventListener('click', function(e){
+    e.preventDefault();
+    if(aberto){ aberto.f.replaceChild(aberto.a, aberto.f.firstElementChild); }
+    var f = document.createElement('iframe');
+    f.src = 'https://www.youtube-nocookie.com/embed/' + a.dataset.yt + '?autoplay=1&rel=0';
+    f.title = a.getAttribute('aria-label'); f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen'; f.allowFullscreen = true;
+    f.className = 'yt-player'; aberto = {f: a.parentNode, a: a};
+    a.parentNode.replaceChild(f, a); f.focus();
+  }); });
   // foto em tela cheia, com anterior e próxima (setas do teclado e deslizar o dedo também funcionam)
   var atual = 0, img = lupa.querySelector('img'), legenda = lupa.querySelector('figcaption');
   var mostrar = function(i){
