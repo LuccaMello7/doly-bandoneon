@@ -602,3 +602,15 @@ teste('Academia: exercício de uma mão mostra só aquela mão; o de duas mostra
   $('#acTrocar').click(); ok(!$('#acEscolha').classList.contains('recolhido')); ok(!acad.rodando);
   go('inicio');
 });
+teste('nomes das notas: ligados por padrão em todas as telas e uma caixa desliga em todas', () => {
+  const antes = state.showLabels, nomeEm = sel => $$(sel+' .key').some(k=>k.textContent.trim()!=='');
+  setMostrarNomes(true); go('desafios'); construirPendentes();
+  ok(nomeEm('#fkRight'), 'Encontre a nota mostra os nomes');
+  const caixa = $('#chFind .nomesToggle'); caixa.checked = false; caixa.dispatchEvent(new Event('change'));
+  ok(!state.showLabels && store.get('mostrarNomes', true)===false, 'preferência salva');
+  ok(!nomeEm('#fkRight'), 'some do teclado');
+  ok($$('.nomesToggle').every(c=>!c.checked), 'todas as caixas acompanham');
+  go('academia'); carregarExercicio('n1-sem-ajuda'); setMostrarNomes(true);
+  ok(!acadMostraNomes(), '"Sem auxílio visual" continua sem nomes');
+  setMostrarNomes(antes); go('inicio');
+});

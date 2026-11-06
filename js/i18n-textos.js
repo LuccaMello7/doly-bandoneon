@@ -82,6 +82,7 @@ const TEXTOS = {
 'Segure para fechar o fole sem som': ['Mantén para cerrar el fuelle sin sonido', 'Hold to close the bellows silently'],
 'Válvula: fechar (segure F)': ['Válvula: cerrar (mantén F)', 'Air valve: close (hold F)'],
 'Mostrar nomes': ['Mostrar nombres', 'Show names'],
+'Mostrar os nomes nos botões': ['Mostrar los nombres en los botones', 'Show the names on the buttons'],
 'Mapa de botões ▾': ['Mapa de botones ▾', 'Button map ▾'],
 'Editar layout': ['Editar mapa', 'Edit layout'],
 'Exportar': ['Exportar', 'Export'],

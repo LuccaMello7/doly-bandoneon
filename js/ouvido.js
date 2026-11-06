@@ -4,7 +4,7 @@
 // Ao errar, o app diz se a nota ouvida é mais aguda ou mais grave e toca de novo para comparar.
 const eq = {round:0, score:0, dir:'open', hand:'right', answer:null, target:null, errors:0, active:false};
 state.progress.ouvido = state.progress.ouvido ?? null;
-const eOpts = {getDir:()=>eq.dir, showLabels:()=>false, onPress:(b,m,dir,k)=>earPress(b,m,k)};
+const eOpts = {getDir:()=>eq.dir, onPress:(b,m,dir,k)=>earPress(b,m,k)};
 const ekL = kb($('#ekLeft'),'left',eOpts), ekR = kb($('#ekRight'),'right',eOpts);
 const NATURAIS = [0,2,4,5,7,9,11];
 

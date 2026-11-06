@@ -24,7 +24,7 @@ $('#tkVer').addEventListener('click', e=>{
   tkOpts.perRow = b.dataset.ver==='duas' ? undefined : 1; // uma mão sozinha usa a largura toda
   tkL.build(); tkR.build();
 });
-$('#labelsBtn').onclick=e=>{ state.showLabels=!state.showLabels; e.target.classList.toggle('on',state.showLabels); tkL.refresh(); tkR.refresh(); };
+$('#labelsBtn').onclick=()=>setMostrarNomes(!state.showLabels);
 // Válvula de ar: move o fole sem som. d = 'open' (abrir), 'close' (fechar) ou null (solta)
 const valve=d=>{ bel.valve=d; $('#valveOpenBtn').classList.toggle('on',d==='open'); $('#valveCloseBtn').classList.toggle('on',d==='close'); };
 [['#valveOpenBtn','open'],['#valveCloseBtn','close']].forEach(([id,d])=>{

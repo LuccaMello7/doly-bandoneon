@@ -112,4 +112,14 @@ window.addEventListener('resize', ()=>{
 const allKeyboards=[];
 function kb(el,hand,opts){ const k=createKeyboard(el,hand,opts); allKeyboards.push(k); return k; }
 function refreshAll(){ allKeyboards.forEach(k=>k.refresh()); }
+// Nomes das notas nos botões: uma preferência só para o app todo, ligada por padrão. Toda caixa
+// .nomesToggle (Desafios, Melodias, Acordes, Academia, Ajustes…) e o botão do Teclado mudam a mesma coisa.
+function setMostrarNomes(v){
+  state.showLabels = !!v; store.set('mostrarNomes', state.showLabels);
+  $$('.nomesToggle').forEach(c=>c.checked = state.showLabels);
+  const b = $('#labelsBtn'); if(b) b.classList.toggle('on', state.showLabels);
+  refreshAll();
+}
+$$('.nomesToggle').forEach(c=>{ c.checked = state.showLabels; c.addEventListener('change', ()=>setMostrarNomes(c.checked)); });
+if($('#labelsBtn')) $('#labelsBtn').classList.toggle('on', state.showLabels);
 function rebuildAll(){ allKeyboards.forEach(k=>k.build()); onLayoutChange(); }

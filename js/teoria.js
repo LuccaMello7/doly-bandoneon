@@ -179,7 +179,7 @@ function abrirTeoria(i){ teoriaAtual = i; go('teoria'); }
 // botão que dá essa nota na direção indicada. Dez rodadas; depois de dois erros o botão certo brilha.
 const pq = {round:0, score:0, dir:'open', hand:'right', answer:null, target:null, errors:0, active:false};
 state.progress.pautabot = state.progress.pautabot ?? null;
-const pOpts = {getDir:()=>pq.dir, showLabels:()=>false, onPress:(b,m,dir,k)=>pautaPress(b,m,k)};
+const pOpts = {getDir:()=>pq.dir, onPress:(b,m,dir,k)=>pautaPress(b,m,k)};
 const pkL = kb($('#pkLeft'),'left',pOpts), pkR = kb($('#pkRight'),'right',pOpts);
 const FAIXA_PAUTA = {right:[55,84], left:[38,64]}; // o que dá para ler sem muitas linhas suplementares
 function pautaFeed(msg, cls=''){ const f = $('#pFeed'); f.className = 'feedback '+cls; f.textContent = msg; }

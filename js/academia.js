@@ -67,10 +67,10 @@ const escHtml = s => { const d = document.createElement('div'); d.textContent = 
 
 const ACADEMIA = [
 {nivel:1, titulo:'Reconhecimento dos botões', objetivo:'Aprender onde fica cada nota, nas duas mãos e nas duas direções do fole.', exercicios:[
-  {id:'n1-direita', titulo:'Notas da mão direita', desc:'Encontre 10 notas sorteadas na mão direita.', gerar:()=>acadSorteio(['right'],['open','close'],10), semTempo:true, nomes:false},
-  {id:'n1-esquerda', titulo:'Notas da mão esquerda', desc:'Encontre 10 notas sorteadas na mão esquerda.', gerar:()=>acadSorteio(['left'],['open','close'],10), semTempo:true, nomes:false},
-  {id:'n1-direcao', titulo:'Abrindo e fechando', desc:'Cada botão dá duas notas. Toque o mesmo botão abrindo e depois fechando: troque o fole (Espaço) entre as duas.', gerar:()=>acadParesDeDirecao(5), semTempo:true, nomes:false, foleManual:true},
-  {id:'n1-sem-ajuda', titulo:'Sem auxílio visual', desc:'Etapa avançada: encontre as notas sem destaque e sem nomes nos botões.', gerar:()=>acadSorteio(['left','right'],['open','close'],10), semTempo:true, nomes:false, semAjuda:true},
+  {id:'n1-direita', titulo:'Notas da mão direita', desc:'Encontre 10 notas sorteadas na mão direita.', gerar:()=>acadSorteio(['right'],['open','close'],10), semTempo:true},
+  {id:'n1-esquerda', titulo:'Notas da mão esquerda', desc:'Encontre 10 notas sorteadas na mão esquerda.', gerar:()=>acadSorteio(['left'],['open','close'],10), semTempo:true},
+  {id:'n1-direcao', titulo:'Abrindo e fechando', desc:'Cada botão dá duas notas. Toque o mesmo botão abrindo e depois fechando: troque o fole (Espaço) entre as duas.', gerar:()=>acadParesDeDirecao(5), semTempo:true, foleManual:true},
+  {id:'n1-sem-ajuda', titulo:'Sem auxílio visual', desc:'Etapa avançada: encontre as notas sem destaque e sem nomes nos botões.', gerar:()=>acadSorteio(['left','right'],['open','close'],10), semTempo:true, semAjuda:true},
 ]},
 {nivel:2, titulo:'Reconhecimento dos dedos', objetivo:'Associar cada botão ao dedo recomendado. Os botões são tocados pelos dedos 2 a 5; os polegares cuidam da válvula de ar (direito) e do apoio (esquerdo).', exercicios:[
   {id:'n2-indicado', titulo:'Botão e dedo indicados', desc:'Toque cada botão destacado, olhando o dedo indicado no instrutor.', texto:'direita: Dó4:2 Mi4:2 | Sol4:2 Mi4:2 | Ré4:2 Fá4:2 | Mi4:1', bpm:60},
@@ -224,7 +224,6 @@ function carregarExercicio(id){
   const p = progEx(ex.id);
   $('#acVel').value = p.vel || (ex.nivel>=3 && ex.nivel<=5 ? 60 : 70); $('#acVelVal').textContent = $('#acVel').value+'%';
   $('#acAuto').checked = ex.minha || (!ex.foleManual && ex.nivel<4); // nas partituras importadas o fole começa automático
-  $('#acNomes').checked = ex.nomes!==false;
   $('#acDe').value = 1; $('#acAte').value = acad.todos.length; $('#acDe').max = $('#acAte').max = acad.todos.length;
   $('#acTrecho').style.display = ex.semTempo ? 'none' : '';
   $('#acExTitulo').textContent = ex.titulo; $('#acExDesc').textContent = ex.desc;
@@ -695,7 +694,7 @@ $('#acModo').addEventListener('click', ev=>{
     desafio:'No tempo, com contagem e metrônomo. Os auxílios diminuem conforme a sua precisão.'}[acad.modo];
   renderFaixa(); acadInstrutor(0); acadPrevia();
 });
-['#acGuia','#acMaosVer','#acNomes'].forEach(s=>$(s).addEventListener('change', ()=>{ store.set(s.slice(1), $(s).checked); renderFaixa(); acadInstrutor(Math.max(0,acad.g)); if(acad.rodando) acadDica(acad.g); refreshAll(); }));
+['#acGuia','#acMaosVer','#acNomes'].forEach(s=>$(s).addEventListener('change', ()=>{ if(s!=='#acNomes') store.set(s.slice(1), $(s).checked); renderFaixa(); acadInstrutor(Math.max(0,acad.g)); if(acad.rodando) acadDica(acad.g); refreshAll(); }));
 $('#acAmpliar').addEventListener('change', e=>{ $('#acInstrutor').classList.toggle('grande', e.target.checked); store.set('acAmpliar', e.target.checked); });
 $('#acMic').onchange = async e=>{
   if(e.target.checked){ if(!await micStart()) e.target.checked = false; }
@@ -723,7 +722,7 @@ function renderContinuar(){
 
 // Estado inicial
 maos.montar($('#acMaos'));
-['acGuia','acMaosVer','acNomes'].forEach(id=>{ const v = store.get(id, null); if(v!=null) $('#'+id).checked = v; });
+['acGuia','acMaosVer'].forEach(id=>{ const v = store.get(id, null); if(v!=null) $('#'+id).checked = v; });
 if(store.get('acAmpliar', false)){ $('#acAmpliar').checked = true; $('#acInstrutor').classList.add('grande'); }
 acadSetDir('open');
 renderAcadNiveis();

@@ -86,7 +86,7 @@ function micStop(){
   const el = $('#micStatus'); if(el) el.textContent = '';
 }
 /* ---------- Tela Bandoneon real: afinador e botões que dão a nota ouvida ---------- */
-const mcOpts = {getDir:()=>$('#mcDir').value, showLabels:()=>true};
+const mcOpts = {getDir:()=>$('#mcDir').value};
 const mcL = kb($('#mcLeft'),'left',mcOpts), mcR = kb($('#mcRight'),'right',mcOpts);
 let mcDono = false, mcUltima = null; // mcDono: o microfone foi ligado nesta tela (e desliga ao sair dela)
 function mcEstado(){

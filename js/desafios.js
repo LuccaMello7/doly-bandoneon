@@ -2,7 +2,7 @@
 // O app sorteia um botão e uma direção, mostra a nota e o aluno procura o botão.
 // fq = estado da rodada (hand/dir sorteados, answer = botão certo, target = nota MIDI).
 const fq={round:0,score:0,target:null,dir:'open',hand:'right',errors:0,active:false,answer:null,heat:false};
-const fOpts=hand=>({ getDir:()=>fq.dir, showLabels:()=>fq.heat, sound:true, onPress:(b,m,dir,k)=>findPress(b,m,k) });
+const fOpts=hand=>({ getDir:()=>fq.dir, showLabels:()=>fq.heat || state.showLabels, sound:true, onPress:(b,m,dir,k)=>findPress(b,m,k) });
 // Estatística por botão e direção: {ok, err}
 state.progress.btnStats = state.progress.btnStats || {};
 const statKey = (hand,id,dir) => `${hand}|${id}|${dir}`;

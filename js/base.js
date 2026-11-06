@@ -43,7 +43,7 @@ const state = {
   tuning: store.get('tuning',443),
   volume: store.get('volume',80),
   dir: 'open',
-  showLabels: true,
+  showLabels: store.get('mostrarNomes', true), // nomes das notas nos botões: ligado por padrão
   editing: false,
   layout: loadLayout(),
   progress: store.get('progress', {lessons:{}, find:null, staff:null, rhythm:null}),
