@@ -197,7 +197,7 @@ button,select,a,input{touch-action:manipulation}
 .mapmenu summary::-webkit-details-marker{display:none}
 .mapmenu[open] .row{margin-top:8px}
 .kbd{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
-/* Página "Quem foi Doly Costa?" */
+/* Página "Quem é Doly Costa?" */
 .doly-link{display:flex;flex-direction:column;align-items:flex-start;gap:12px;text-decoration:none;color:var(--text);transition:transform .15s}
 .doly-link:hover{transform:translateY(-2px)}
 .doly-kick{font-weight:900;letter-spacing:.1em;text-transform:uppercase;font-size:.75rem;color:var(--gold)!important}
@@ -213,6 +213,7 @@ header nav a.btn,.pagina a.btn{text-decoration:none}
 .rodape a{color:var(--muted)}
 .doly-kicker{text-transform:uppercase;letter-spacing:.12em;font-size:.8rem;margin:0}
 .doly-sub{font-style:italic;color:var(--cream)}
+.doly-hoje{font-weight:800;color:var(--gold)}
 .timeline{list-style:none;margin:0;padding:0 0 0 22px;border-left:2px solid var(--gold)}
 .timeline li{position:relative;margin:0 0 20px}
 .timeline li::before{content:"";position:absolute;left:-29px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--gold);border:2px solid var(--panel)}

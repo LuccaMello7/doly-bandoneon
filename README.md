@@ -6,7 +6,7 @@ O **BanDoly** é um app gratuito e interativo para aprender **bandoneon**, o ins
 
 Funciona no navegador, no computador ou no celular, em **português, espanhol e inglês**: [bandoly.app](https://bandoly.app), [bandoly.app/es](https://bandoly.app/es/) e [bandoly.app/en](https://bandoly.app/en/) (ou pelas bandeiras no topo). Não precisa instalar nada nem criar conta.
 
-O nome é uma homenagem a **Doly Carlos da Costa** (Caçapava do Sul), bandoneonista gaúcho que tocou nas orquestras de tango das rádios de Porto Alegre, fundou o grupo Os Posteiros e recebeu a Medalha Simões Lopes Neto. A história dele está em [bandoly.app/doly-costa](https://bandoly.app/doly-costa/) (também em espanhol e inglês).
+O nome é uma homenagem a **Doly Carlos da Costa** (Caçapava do Sul), bandoneonista gaúcho que, aos 97 anos, ainda toca. Ele tocou nas orquestras de tango das rádios de Porto Alegre, fundou o grupo Os Posteiros e recebeu a Medalha Simões Lopes Neto. A história dele está em [bandoly.app/doly-costa](https://bandoly.app/doly-costa/) (também em espanhol e inglês).
 
 A teoria musical também tem páginas próprias em [bandoly.app/teoria](https://bandoly.app/teoria/).
 

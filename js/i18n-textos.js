@@ -514,10 +514,12 @@ const TEXTOS = {
 // ---------- Descrição e prévia de links (<head>; usadas por ferramentas/gerar_idiomas.py) ----------
 'Aprenda bandoneon grátis no navegador: teclado com som real, lições, escalas, acordes e ritmos de tango. Funciona no celular, sem cadastro.': ['Aprende bandoneón gratis en el navegador: teclado con sonido real, lecciones, escalas, acordes y ritmos de tango. Funciona en el celular, sin registro.', 'Learn the bandoneon for free in your browser: keyboard with real sound, lessons, scales, chords and tango rhythms. Works on your phone, no sign-up.'],
 'Teclado com som real de bandoneon, lições, escalas, acordes e ritmos de tango. No navegador ou no celular, sem cadastro.': ['Teclado con sonido real de bandoneón, lecciones, escalas, acordes y ritmos de tango. En el navegador o en el celular, sin registro.', 'Keyboard with real bandoneon sound, lessons, scales, chords and tango rhythms. In your browser or on your phone, no sign-up.'],
-// Página "Quem foi Doly Costa?"
+// Página "Quem é Doly Costa?"
 'A inspiração do nome': ['La inspiración del nombre', 'The inspiration behind the name'],
-'Quem foi Doly Costa? →': ['¿Quién fue Doly Costa? →', 'Who was Doly Costa? →'],
-'Quem foi Doly Costa?': ['¿Quién fue Doly Costa?', 'Who was Doly Costa?'],
+'Quem é Doly Costa? →': ['¿Quién es Doly Costa? →', 'Who is Doly Costa? →'],
+'Quem é Doly Costa?': ['¿Quién es Doly Costa?', 'Who is Doly Costa?'],
+'Hoje, aos 97 anos, Doly continua tocando bandoneón.': ['Hoy, a los 97 años, Doly sigue tocando el bandoneón.', 'Today, at 97, Doly still plays the bandoneon.'],
+'E a história continua: aos 97 anos, Doly ainda toca o seu bandoneón.': ['Y la historia continúa: a los 97 años, Doly todavía toca su bandoneón.', 'And the story goes on: at 97, Doly still plays his bandoneon.'],
 'Memória viva da música gaúcha': ['Memoria viva de la música gaúcha', 'A living memory of gaúcho music'],
 'Doly Carlos da Costa: uma vida dedicada ao bandoneón e à cultura gaúcha.': ['Doly Carlos da Costa: una vida dedicada al bandoneón y a la cultura gaúcha.', 'Doly Carlos da Costa: a life devoted to the bandoneon and to gaúcho culture.'],
 'Natural de Caçapava do Sul, Doly Carlos da Costa construiu uma trajetória dedicada à música, ao bandoneón e à valorização das tradições do Rio Grande do Sul.': ['Nacido en Caçapava do Sul, Doly Carlos da Costa construyó una trayectoria dedicada a la música, al bandoneón y a la valoración de las tradiciones de Rio Grande do Sul.', 'Born in Caçapava do Sul, Doly Carlos da Costa built a career devoted to music, to the bandoneon and to the traditions of Rio Grande do Sul, in southern Brazil.'],
@@ -543,7 +545,7 @@ const TEXTOS = {
 'Homenagem na 25ª Moenda da Canção': ['Homenaje en la 25ª Moenda da Canção', 'Tribute at the 25th Moenda da Canção'],
 'Recebeu homenagem durante a edição comemorativa do festival em Santo Antônio da Patrulha.': ['Recibió un homenaje durante la edición conmemorativa del festival en Santo Antônio da Patrulha.', 'He was honored during the festival\'s anniversary edition in Santo Antônio da Patrulha.'],
 'Homenagem em Caçapava do Sul': ['Homenaje en Caçapava do Sul', 'Tribute in Caçapava do Sul'],
-'Homenagem anunciada para o 4º Encontro de Bandoneón, em sua cidade natal.': ['Homenaje anunciado para el 4º Encuentro de Bandoneón, en su ciudad natal.', 'A tribute announced for the 4th Bandoneon Gathering in his hometown.'],
+'Homenagem no 4º Encontro de Bandoneón, em sua cidade natal, aos 97 anos e ainda em atividade.': ['Homenaje en el 4º Encuentro de Bandoneón, en su ciudad natal, a los 97 años y todavía en actividad.', 'Honoured at the 4th Bandoneon Gathering in his hometown, at 97 and still playing.'],
 'Fotos': ['Fotos', 'Photos'],
 'Doly jovem tocando bandoneón diante de um microfone': ['Doly joven tocando el bandoneón frente a un micrófono', 'Young Doly playing the bandoneon in front of a microphone'],
 'Doly com fones de ouvido, tocando bandoneón em uma gravação': ['Doly con auriculares, tocando el bandoneón en una grabación', 'Doly wearing headphones, playing the bandoneon at a recording session'],
@@ -567,7 +569,7 @@ const TEXTOS = {
 'Começar a aprender': ['Empezar a aprender', 'Start learning'],
 // cabeçalho e busca da página doly-costa/
 'Doly Costa: o bandoneonista que inspirou o BanDoly': ['Doly Costa: el bandoneonista que inspiró BanDoly', 'Doly Costa: the bandoneon player who inspired BanDoly'],
-'A história de Doly Carlos da Costa, bandoneonista de Caçapava do Sul: orquestras de tango nas rádios de Porto Alegre, o grupo Os Posteiros e a Medalha Simões Lopes Neto.': ['La historia de Doly Carlos da Costa, bandoneonista de Caçapava do Sul: orquestas de tango en las radios de Porto Alegre, el grupo Os Posteiros y la Medalla Simões Lopes Neto.', 'The story of Doly Carlos da Costa, a bandoneon player from Caçapava do Sul, Brazil: tango orchestras on Porto Alegre radio, the group Os Posteiros and the Simões Lopes Neto Medal.'],
+'A história de Doly Carlos da Costa, bandoneonista de Caçapava do Sul que, aos 97 anos, ainda toca: orquestras de tango nas rádios de Porto Alegre, o grupo Os Posteiros e a Medalha Simões Lopes Neto.': ['La historia de Doly Carlos da Costa, bandoneonista de Caçapava do Sul que, a los 97 años, todavía toca: orquestas de tango en las radios de Porto Alegre, el grupo Os Posteiros y la Medalla Simões Lopes Neto.', 'The story of Doly Carlos da Costa, a bandoneon player from Caçapava do Sul, Brazil, who still plays at 97: tango orchestras on Porto Alegre radio, the group Os Posteiros and the Simões Lopes Neto Medal.'],
 'Abrir o app': ['Abrir la app', 'Open the app'],
 // Academia de Bandoneón
 'Academia': ['Academia', 'Academy'],
@@ -759,7 +761,7 @@ const TEXTOS = {
 '71 botões com som real': ['71 botones con sonido real', '71 buttons with real sound'],
 'Músicas e escalas guiadas': ['Canciones y escalas guiadas', 'Guided songs and scales'],
 'Marcato, síncopa e 3-3-2': ['Marcato, síncopa y 3-3-2', 'Marcato, syncopation and 3-3-2'],
-'Bandoneonista gaúcho, das orquestras de tango das rádios de Porto Alegre e fundador de Os Posteiros.': ['Bandoneonista gaúcho, de las orquestas de tango de las radios de Porto Alegre y fundador de Os Posteiros.', 'A bandoneon player from southern Brazil, from the tango orchestras of Porto Alegre radio, and founder of Os Posteiros.'],
+'Bandoneonista gaúcho de 97 anos que ainda toca. Passou pelas orquestras de tango das rádios de Porto Alegre e fundou Os Posteiros.': ['Bandoneonista gaúcho de 97 años que todavía toca. Pasó por las orquestas de tango de las radios de Porto Alegre y fundó Os Posteiros.', 'A 97-year-old bandoneon player from southern Brazil who still plays. He played in the tango orchestras of Porto Alegre radio and founded Os Posteiros.'],
 'Conhecer a história': ['Conocer la historia', 'Read the story'],
 'Continue de onde parou': ['Sigue donde lo dejaste', 'Pick up where you left off'],
 'Continuar': ['Continuar', 'Continue'],
@@ -1026,7 +1028,7 @@ const TEXTOS = {
 'O meu progresso fica salvo?': ['¿Mi progreso queda guardado?', 'Is my progress saved?'],
 'Fica salvo no próprio navegador, sem cadastro. Para não perder nada ao limpar o navegador, ou para levar tudo a outro aparelho, use o backup em Perfil → Ajustes.': ['Queda guardado en el propio navegador, sin registro. Para no perder nada al limpiar el navegador, o para llevar todo a otro dispositivo, usa la copia de seguridad en Perfil → Ajustes.', 'It is saved in your own browser, with no sign-up. So you lose nothing when you clear the browser, or to take everything to another device, use the backup in Profile → Settings.'],
 'Por que o nome BanDoly?': ['¿Por qué el nombre BanDoly?', 'Why the name BanDoly?'],
-'É uma homenagem a Doly Costa, bandoneonista gaúcho de Caçapava do Sul: bandoneon + Doly.': ['Es un homenaje a Doly Costa, bandoneonista gaúcho de Caçapava do Sul: bandoneón + Doly.', 'It is a tribute to Doly Costa, a bandoneon player from Caçapava do Sul in southern Brazil: bandoneon + Doly.'],
+'É uma homenagem a Doly Costa, bandoneonista gaúcho de Caçapava do Sul que, aos 97 anos, ainda toca: bandoneon + Doly.': ['Es un homenaje a Doly Costa, bandoneonista gaúcho de Caçapava do Sul que, a los 97 años, todavía toca: bandoneón + Doly.', 'It is a tribute to Doly Costa, a bandoneon player from Caçapava do Sul in southern Brazil who, at 97, still plays: bandoneon + Doly.'],
 'Perguntas frequentes sobre o bandoneon | BanDoly': ['Preguntas frecuentes sobre el bandoneón | BanDoly', 'Bandoneon FAQ | BanDoly'],
 'Respostas sobre o bandoneon e sobre como começar: quantos botões ele tem, o que é bisonoro, se é difícil, que instrumento comprar e como o BanDoly ajuda a estudar.': ['Respuestas sobre el bandoneón y sobre cómo empezar: cuántos botones tiene, qué es bisonoro, si es difícil, qué instrumento comprar y cómo BanDoly ayuda a estudiar.', 'Answers about the bandoneon and how to start: how many buttons it has, what bisonoric means, whether it is hard, which instrument to buy and how BanDoly helps you study.'],
 'Perguntas frequentes sobre o bandoneon': ['Preguntas frecuentes sobre el bandoneón', 'Frequently asked questions about the bandoneon'],

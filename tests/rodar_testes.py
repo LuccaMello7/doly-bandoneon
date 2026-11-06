@@ -6,7 +6,7 @@ Monta tests/_execucao.html (o index.html + tests/testes.js), abre no Edge ou
 Chrome em modo headless e mostra o resultado. Sai com código 1 se algo falhar.
 Para usar outro navegador, defina a variável de ambiente NAVEGADOR com o caminho.
 """
-import html, os, re, subprocess, sys
+import html, os, re, subprocess, sys, tempfile
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
@@ -45,7 +45,8 @@ def main():
     pagina = pagina.replace('</body>', '<script src="tests/testes.js" defer></script>\n</body>', 1)  # defer: roda depois dos scripts do app
     saida = RAIZ / 'tests' / '_execucao.html'
     saida.write_text(pagina, encoding='utf-8')
-    cmd = [nav, '--headless', '--disable-gpu', '--allow-file-access-from-files', '--autoplay-policy=no-user-gesture-required',
+    perfil = Path(tempfile.gettempdir()) / 'bandoly-testes-perfil'  # perfil próprio: não depende do navegador aberto
+    cmd = [nav, '--headless', f'--user-data-dir={perfil}', '--disable-gpu', '--allow-file-access-from-files', '--autoplay-policy=no-user-gesture-required',
            '--virtual-time-budget=30000', '--dump-dom', saida.as_uri()]
     dom = subprocess.run(cmd, capture_output=True, text=True, encoding='utf-8', timeout=180).stdout
     m = re.search(r'<pre id="resultado-testes">(.*?)</pre>', dom, re.S)

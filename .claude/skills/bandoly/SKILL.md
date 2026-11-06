@@ -166,6 +166,10 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
   substituições exatas que confirmam `count == 1`. Depois, `node --check js/*.js`.
 - **Comentários "engolem" código:** ao inserir `// comentário` numa linha que continua depois, o resto da
   linha vira comentário. Já quebrou `teclado.js` e `atalhos.js`. Sempre rode `node --check`.
+- **Edge invisível pelo Git Bash** às vezes não grava nada (nem testes, nem capturas), sobretudo com o Edge
+  do dono aberto. Rode `python tests\rodar_testes.py` e as capturas pelo **PowerShell**
+  (`Start-Process ... -Wait`, com `--user-data-dir` próprio).
+- O Doly está vivo: em 2026 tem **97 anos e ainda toca**. Escreva sobre ele no presente ("Quem é Doly Costa?").
 - Em laço no bash, use `"$W/$h.png"`. Com `"$W\\$h.png"` o `$h` não é expandido.
 - **Lighthouse:** a página do PageSpeed só mostra resultados com JavaScript, a API grátis tem cota diária e
   o `lighthouse@9` local trava com o Edge. Peça ao dono a lista de itens que falharam.
