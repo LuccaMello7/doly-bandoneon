@@ -620,7 +620,7 @@
     </div>
   </div>
 </section>
-<!-- ACADEMIA: exercícios progressivos com instrutor digital (js/academia.js e js/maos.js) -->
+<!-- ACADEMIA: exercícios progressivos com instrutor digital (js/academia.js) -->
 <section id="v-academia">
   <div class="pg-topo"><span class="pg-ic t-academia"><svg aria-hidden="true"><use href="#i-cap"/></svg></span><div><h2 class="pg-tit">Academia de Bandoneón</h2><p class="muted">Exercícios em 6 níveis, do primeiro botão até músicas com as duas mãos, e um nível para as suas próprias partituras. O instrutor mostra a nota, a mão, o dedo e a direção do fole de cada momento, e no fim você recebe um relatório com o que acertou e o que revisar.</p></div></div>
   <div class="card tarefa-aviso" hidden></div>
@@ -738,10 +738,7 @@
         <div class="ac-prox-box" id="acProxBox" hidden><span class="ac-rotulo">Próximo</span><div id="acProximo"></div></div>
       </div>
       <div class="ac-dicas-box" id="acDicas"></div>
-      <!-- as mãos só aparecem quando há digitação (do professor): sem dedo definido, não acrescentam nada -->
-      <div class="maos" id="acMaos"></div>
       <div class="row ac-opcoes">
-        <label id="acMaosOp" hidden><input type="checkbox" id="acMaosVer" checked> Mostrar as mãos</label>
         <label><input type="checkbox" id="acAmpliar"> Visualização ampliada</label>
       </div>
       <p class="muted ac-validacao" id="acValidacao"></p>
@@ -999,7 +996,6 @@
 <script src="js/escalas.js" defer></script>
 <script src="js/microfone.js" defer></script>
 <script src="js/acordes.js" defer></script>
-<script src="js/maos.js" defer></script>
 <script src="js/academia.js" defer></script>
 <script src="js/partituras.js" defer></script>
 <script src="js/rotina.js" defer></script>

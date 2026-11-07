@@ -53,9 +53,9 @@ function scheduler(){
   rh.hitTimes=rh.hitTimes.filter(t=>t>c.currentTime-2);
 }
 function toggleRhythm(){
-  if(rh.playing){ clearInterval(rh.timer); rh.playing=false; $('#rPlay').textContent='▶ Tocar'; $$('.step').forEach(x=>x.classList.remove('now')); return; }
+  if(rh.playing){ clearInterval(rh.timer); rh.playing=false; $('#rPlay').textContent='▶ Tocar'; botaoRodando($('#rPlay'), false); $$('.step').forEach(x=>x.classList.remove('now')); return; }
   const c=ac(); rh.playing=true; rh.step=0; rh.next=c.currentTime+0.6; rh.hitTimes=[]; rh.errors=[];
-  rh.timer=setInterval(scheduler,25); $('#rPlay').textContent='■ Parar'; $('#rFeed').textContent=''; $('#rStats').textContent='';
+  rh.timer=setInterval(scheduler,25); $('#rPlay').textContent='■ Parar'; botaoRodando($('#rPlay'), true); $('#rFeed').textContent=''; $('#rStats').textContent='';
 }
 $('#rPlay').onclick=toggleRhythm;
 // Compara o toque com a batida mais próxima, descontando a latência de saída do áudio

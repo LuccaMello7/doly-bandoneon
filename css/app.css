@@ -249,7 +249,7 @@ figcaption{color:var(--muted);font-size:.85rem;margin-top:6px}
 .ac-maolabel{font-size:.8rem;color:var(--muted);margin-top:8px}
 .ac-instrutor{position:sticky;top:20px}
 .ac-instrutor h3{margin-top:0}
-.ac-nota{font-size:2rem;font-weight:800;color:var(--gold2);line-height:1.1}
+.ac-nota{font-size:2.6rem;font-weight:900;color:var(--gold2);line-height:1.05;letter-spacing:-.01em}
 .ac-linha{margin:4px 0;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .ac-linha .muted{min-width:60px}
 .ac-instrutor hr{border:0;border-top:1px solid var(--line);margin:8px 0}
@@ -257,23 +257,6 @@ figcaption{color:var(--muted);font-size:.85rem;margin-top:6px}
 .ac-opcoes{font-size:.85rem}
 .ac-instrutor.grande .ac-nota{font-size:3rem}
 .ac-instrutor.grande .ac-chip{font-size:1.05rem}.ac-instrutor.grande .ac-prox-nota{font-size:2rem}
-.ac-instrutor.grande .maos{max-width:none}
-.ac-instrutor.grande .mao-box svg{width:100%}
-.maos{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:8px 0}
-.mao-box{margin:0;text-align:center;opacity:.45;transition:opacity .2s}
-.mao-box.ativa{opacity:1}
-.mao-box.proxima{opacity:.75}
-.mao-box svg{width:100%;max-width:130px;height:auto}
-.mao-box figcaption{margin-top:0}
-.mao .palma{fill:#2a4568;stroke:#8aa0bd;stroke-width:1.5}
-.mao .dedo rect{fill:#2a4568;stroke:#8aa0bd;stroke-width:1.5}
-.mao .dedo text{fill:var(--text);font-size:11px;font-weight:700;text-anchor:middle}
-.mao .polegar rect{fill:#1d3150;stroke-dasharray:3 2}
-.mao .legenda{fill:var(--muted);font-size:9px;text-anchor:middle}
-.mao-box.sem-dedo .palma{fill:#4a3d1c;stroke:var(--gold)}
-.mao .dedo.atual rect{fill:var(--gold);stroke:var(--gold2)}
-.mao .dedo.atual text{fill:var(--navy)}
-.mao .dedo.proximo rect{stroke:var(--gold);stroke-width:2.5;stroke-dasharray:4 3}
 .key.guia{box-shadow:0 0 0 4px var(--gold),0 0 18px 6px #caa24799;animation:guia 1.4s ease-in-out infinite}
 @keyframes guia{50%{box-shadow:0 0 0 4px var(--gold),0 0 8px 2px #caa24755}}
 /* o próximo botão: tracejado dourado mais forte, "respirando" (o mesmo do cartão Próximo do instrutor) */
@@ -300,12 +283,10 @@ figcaption{color:var(--muted);font-size:.85rem;margin-top:6px}
 @media (max-width:980px){
   .ac-layout{grid-template-columns:1fr}
   .ac-instrutor{order:-1}
-  .maos{max-width:320px}
 }
 @media (max-width:700px){
   .ac-instrutor .ac-nota{font-size:1.5rem}
   .ac-instrutor:not(.grande) .ac-linha{display:inline-flex;margin-right:12px}
-  .ac-instrutor:not(.grande) .maos{max-width:220px;margin:6px auto}
   .ac-instrutor h3{display:none}
 }
 /* Celular */
@@ -964,7 +945,6 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
 .ac-dicas .dica-fole::before{background:var(--close)} .ac-dicas .dica-mao::before{background:var(--violet)}
 .ac-dicas .dica-perto::before,.ac-dicas .dica-regiao::before{background:var(--green)} .ac-dicas .dica-longe::before{background:var(--red2)}
 .ac-dicas .dica-mesmo::before{background:var(--open)} .ac-dicas .dica-fim::before{background:var(--muted)}
-.mao .dedo rect,.mao .palma{transition:fill .25s,stroke .25s}
 .ac-strip .mcard{transition:transform .25s cubic-bezier(.34,1.4,.5,1),background .25s}
 
 /* ================== Sugestões, controles de tocar, professores ================== */
@@ -1542,14 +1522,22 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
 /* celular e tablet: o instrutor vira uma barra fixa logo acima do teclado, com Agora e Próximo lado a lado */
 @media (max-width:980px){
   .ac-instrutor{position:sticky;top:62px;z-index:15;padding:10px 14px;box-shadow:0 12px 26px #0009}
-  .ac-instrutor h3,.ac-instrutor .ac-opcoes,.ac-instrutor .ac-validacao,.ac-instrutor .maos,.ac-dicas-box{display:none!important}
+  .ac-instrutor h3,.ac-instrutor .ac-opcoes,.ac-instrutor .ac-validacao,.ac-dicas-box{display:none!important}
   .ac-instrutor .ac-prog{margin:0 0 8px}
   .ac-ap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:10px;align-items:stretch}
   .ac-agora-box{padding:0}
   .ac-prox-box{margin:0}
-  .ac-instrutor .ac-nota{font-size:1.6rem}
+  .ac-instrutor .ac-nota{font-size:1.9rem}
   .ac-prox-nota{font-size:1.25rem}
   .ac-chip{font-size:.78rem;padding:3px 8px}
   .ac-instrutor .dirpill:not(.mini){padding:3px 10px;font-size:.82rem}
   .ac-dicas-cel{display:block;margin-top:10px}
 }
+
+/* Botão de começar enquanto algo roda: deixa de ser dourado e vira "Parar" (ou "Recomeçar" nos Desafios), escuro com
+   borda dourada e um anel que pulsa: fica claro que está tocando e onde tocar para parar. Vermelho fica só para erro. */
+.btn.rodando{background:var(--navy-dark);color:var(--gold2);box-shadow:inset 0 0 0 2px var(--gold);animation:rodandoPulsa 1.8s ease-out infinite}
+.btn.rodando:hover{background:#13253c;color:var(--gold2);box-shadow:inset 0 0 0 2px var(--gold2)}
+.btn.rodando svg{fill:none}
+@keyframes rodandoPulsa{0%{box-shadow:inset 0 0 0 2px var(--gold),0 0 0 0 #e6b45066}70%,100%{box-shadow:inset 0 0 0 2px var(--gold),0 0 0 12px #e6b45000}}
+.sem-mov .btn.rodando{animation:none}

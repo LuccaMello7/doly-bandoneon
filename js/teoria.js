@@ -190,7 +190,7 @@ function desenhaPautaDesafio(cls){
 function nextPauta(){
   pkL.clearMarks(); pkR.clearMarks();
   if(pq.round>=10){
-    pq.active = false; $('#pDirPill').style.visibility = 'hidden';
+    pq.active = false; botoesDesafio(); $('#pDirPill').style.visibility = 'hidden';
     pautaFeed(`Fim! ${pq.score}/10`, pq.score>=8?'ok':''); $('#pScore').textContent = '';
     if(state.progress.pautabot==null || pq.score>state.progress.pautabot){ state.progress.pautabot = pq.score; saveProgress(); }
     logPractice('desafio'); if(pq.score>=8) comemorar(); return;

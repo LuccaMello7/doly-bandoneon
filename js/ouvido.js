@@ -17,7 +17,7 @@ function earFeed(msg, cls=''){ const f=$('#eFeed'); f.className='feedback '+cls;
 function nextEar(){
   ekL.clearMarks(); ekR.clearMarks();
   if(eq.round>=10){
-    eq.active=false; $('#eReplay').disabled=true; $('#eDirPill').style.visibility='hidden';
+    eq.active=false; botoesDesafio(); $('#eReplay').disabled=true; $('#eDirPill').style.visibility='hidden';
     earFeed(eq.score>=8 ? `Fim! ${eq.score}/10. Que ouvido!` : `Fim! ${eq.score}/10`, eq.score>=8?'ok':'');
     $('#eScore').textContent = '';
     if(state.progress.ouvido==null || eq.score>state.progress.ouvido){ state.progress.ouvido=eq.score; saveProgress(); }

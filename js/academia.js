@@ -274,6 +274,8 @@ function renderFaixa(){
 function faixaMarca(i, cls){ const c = $(`#acStrip [data-g="${i}"]`); if(!c) return;
   if(cls==='cur'){ $$('#acStrip .mcard.cur').forEach(x=>x.classList.remove('cur')); c.classList.add('cur'); c.scrollIntoView({block:'nearest', inline:'center'}); }
   else { c.classList.remove('ok','bad'); c.classList.add(cls); } }
+// Nomes dos dedos (quando um professor define a digitação). No bandoneon os botões são tocados pelos dedos 2 a 5.
+const DEDOS = {1:'Polegar', 2:'Indicador', 3:'Médio', 4:'Anelar', 5:'Mínimo'};
 function textoDedo(e){
   if(e.dedo==null) return t('a definir (aguardando o dedilhado de referência)');
   const alt = e.alternativas.length ? ' ' + t('(também: {})', e.alternativas.join(', ')) : '';
@@ -285,7 +287,7 @@ const pilulaFole = (d, mini) => `<span class="dirpill ${d}${mini?' mini':''}">${
 function acadInstrutor(gi){
   const aj = acadAjuda(), g = acad.grupos[gi], prox = acad.grupos[gi+1];
   if(!g){ $('#acAgora').innerHTML = `<div class="muted">${t('Escolha um exercício e um modo, depois aperte Começar.')}</div>`;
-    $('#acProxBox').hidden = true; $('#acDicas').innerHTML = ''; $('#acDicasCel').innerHTML = ''; $('#acMaos').style.display = 'none'; maos.destacar({}); return; }
+    $('#acProxBox').hidden = true; $('#acDicas').innerHTML = ''; $('#acDicasCel').innerHTML = ''; return; }
   const evs = g.ks.map(k=>acad.eventos[k]), oculto = aj.faixa==='oculta' && !(acad.ex.semAjuda);
   $('#acAgora').innerHTML = evs.map(e=>`<div class="ac-nota">${oculto ? '?' : noteName(e.midi)}</div><div class="ac-chips">`
     + `<span class="ac-chip"><span class="muted">${t('Mão')}</span> <b>${t(e.mao==='left'?'Esquerda':'Direita')}</b></span>`
@@ -302,16 +304,6 @@ function acadInstrutor(gi){
     : pe.map(e=>`<div class="ac-prox-nota">${noteName(e.midi)}</div><div class="ac-chips">${aj.fole ? pilulaFole(e.fole, true) : ''}`
         + `<span class="ac-chip">${maoNome(e.mao)}</span>${aj.dedo && e.dedo!=null ? `<span class="ac-chip">${t('dedo {}', e.dedo)}</span>` : ''}</div>`).join('');
   animarInstrutor(gi);
-  // mãos: só quando o exercício tem digitação (do professor). Dedo atual aceso, o da próxima nota tracejado.
-  const temDedo = acad.eventos.some(e=>e.dedo!=null);
-  $('#acMaosOp').hidden = !temDedo;
-  $('#acMaos').style.display = aj.maos && temDedo && $('#acMaosVer').checked ? '' : 'none';
-  const info = {};
-  for(const lado of ['left','right']){
-    const a = evs.find(e=>e.mao===lado), p = pe.find(e=>e.mao===lado);
-    info[lado] = {ativa:!!a, atual:a ? a.dedo : null, proximo:p ? p.dedo : null, proximaMao:!!p};
-  }
-  maos.destacar(info);
 }
 function acadDica(gi){
   akL.clearMarks(); akR.clearMarks(); akL.clearDedos(); akR.clearDedos();
@@ -513,7 +505,7 @@ function acadParar(){
   if(acad.raf) cancelAnimationFrame(acad.raf); acad.raf = null;
   if(acad.bus){ acad.bus.disconnect(); acad.bus = null; }
   acad.rodando = false; acad.demo = false;
-  $('#acStart').textContent = t('▶ Começar'); $('#acOuvirBtn').textContent = t('Ouvir');
+  $('#acStart').textContent = t('▶ Começar'); $('#acOuvirBtn').textContent = t('Ouvir'); botaoRodando($('#acStart'), false); botaoRodando($('#acOuvirBtn'), false);
 }
 function novaRodada(){
   acad.res = acad.eventos.map(()=>({tentativas:0, primeira:null, ok:false}));
@@ -525,7 +517,7 @@ $('#acStart').onclick = ()=>{
   if(acad.rodando || acad.demo){ acadParar(); acadPrevia(); acadFeed(t('Parado.')); return; }
   if(!acad.eventos.length) return;
   ac(); acad.rodando = true; novaRodada(); renderFaixa(); acadRecolher(true); $('#acMais').open = false;
-  $('#acStart').textContent = t('■ Parar'); acadFeed('');
+  $('#acStart').textContent = t('■ Parar'); botaoRodando($('#acStart'), true); acadFeed('');
   // nível 1: notas novas a cada rodada, mas só ao apertar Começar depois de uma rodada (tocar o botão da prévia usa as notas mostradas)
   if(acad.ex.nivel===1 && acad.ex.gerar && acad.sortearDeNovo && !acad.autoInicio){ acad.todos = montarEventos(acad.ex); aplicarTrecho(); acad.rodando = true; novaRodada(); }
   acad.sortearDeNovo = false; acadInstrutor(0);
@@ -535,7 +527,7 @@ $('#acStart').onclick = ()=>{
 $('#acOuvirBtn').onclick = ()=>{
   if(acad.demo || acad.rodando){ acadParar(); acadDica(-1); return; }
   if(!acad.eventos.length) return;
-  ac(); acad.demo = true; renderFaixa(); $('#acOuvirBtn').textContent = t('■ Parar');
+  ac(); acad.demo = true; renderFaixa(); $('#acOuvirBtn').textContent = t('■ Parar'); botaoRodando($('#acOuvirBtn'), true);
   const c = ac(), spb = 60/(acad.bpm*acadVel()), t0 = c.currentTime + 0.3;
   if($('#acMetro').checked) for(let bt=0; bt < totalTempos(); bt++) clickSound(t0 + bt*spb, bt%4===0);
   acad.grupos.forEach((g,i)=>{
@@ -705,7 +697,7 @@ $('#acModo').addEventListener('click', ev=>{
     desafio:'No tempo, com contagem e metrônomo. Os auxílios diminuem conforme a sua precisão.'}[acad.modo];
   renderFaixa(); acadInstrutor(0); acadPrevia();
 });
-['#acGuia','#acMaosVer','#acNomes'].forEach(s=>$(s).addEventListener('change', ()=>{ if(s!=='#acNomes') store.set(s.slice(1), $(s).checked); renderFaixa(); acadInstrutor(Math.max(0,acad.g)); if(acad.rodando) acadDica(acad.g); refreshAll(); }));
+['#acGuia','#acNomes'].forEach(s=>$(s).addEventListener('change', ()=>{ if(s!=='#acNomes') store.set(s.slice(1), $(s).checked); renderFaixa(); acadInstrutor(Math.max(0,acad.g)); if(acad.rodando) acadDica(acad.g); refreshAll(); }));
 $('#acAmpliar').addEventListener('change', e=>{ $('#acInstrutor').classList.toggle('grande', e.target.checked); store.set('acAmpliar', e.target.checked); });
 $('#acMic').onchange = async e=>{
   if(e.target.checked){ if(!await micStart()) e.target.checked = false; }
@@ -732,8 +724,7 @@ function renderContinuar(){
 }
 
 // Estado inicial
-maos.montar($('#acMaos'));
-['acGuia','acMaosVer'].forEach(id=>{ const v = store.get(id, null); if(v!=null) $('#'+id).checked = v; });
+['acGuia'].forEach(id=>{ const v = store.get(id, null); if(v!=null) $('#'+id).checked = v; });
 if(store.get('acAmpliar', false)){ $('#acAmpliar').checked = true; $('#acInstrutor').classList.add('grande'); }
 acadSetDir('open');
 renderAcadNiveis();

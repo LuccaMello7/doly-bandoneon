@@ -67,6 +67,8 @@ function confete(){
   requestAnimationFrame(quadro);
 }
 function comemorar(){ confete(); vibrar('vitoria'); }
+// Botão de começar enquanto algo roda: muda de cor (css .btn.rodando) e avisa o leitor de tela
+function botaoRodando(b, sim){ if(!b) return; b.classList.toggle('rodando', !!sim); b.setAttribute('aria-pressed', String(!!sim)); }
 
 // Aviso flutuante (conquista nova, tarefa feita…)
 let avisoTimer = null;

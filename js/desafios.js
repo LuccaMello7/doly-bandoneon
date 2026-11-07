@@ -2,6 +2,12 @@
 // O app sorteia um botão e uma direção, mostra a nota e o aluno procura o botão.
 // fq = estado da rodada (hand/dir sorteados, answer = botão certo, target = nota MIDI).
 const fq={round:0,score:0,target:null,dir:'open',hand:'right',errors:0,active:false,answer:null,heat:false};
+// Durante a rodada o botão Começar de cada desafio vira "Recomeçar" e muda de cor; volta no fim ou ao trocar
+function botoesDesafio(){
+  [['#fStart',()=>fq.active], ['#sStart',()=>sq.active], ['#eStart',()=>typeof eq!=='undefined' && eq.active], ['#pStart',()=>typeof pq!=='undefined' && pq.active]]
+    .forEach(([id, ativo])=>{ const b = $(id); if(!b) return; const sim = !!ativo(); botaoRodando(b, sim);
+      const txt = [...b.childNodes].reverse().find(n=>n.nodeType===3 && n.nodeValue.trim()); if(txt) txt.nodeValue = sim ? 'Recomeçar' : 'Começar'; });
+}
 // durante a rodada, sem nomes nos botões: senão o desafio é só achar a palavra escrita
 const fOpts=hand=>({ getDir:()=>fq.dir, showLabels:()=>fq.heat || (!fq.active && state.showLabels), sound:true, onPress:(b,m,dir,k)=>findPress(b,m,k) });
 // Estatística por botão e direção: {ok, err}
@@ -28,7 +34,7 @@ const fkL=kb($('#fkLeft'),'left',fOpts('left')), fkR=kb($('#fkRight'),'right',fO
 function nextFind(){
   fkL.clearMarks(); fkR.clearMarks();
   if(fq.round>=10){
-    fq.active=false; refreshAll(); $('#fTarget').textContent=`Fim! ${fq.score}/10`;
+    fq.active=false; refreshAll(); botoesDesafio(); $('#fTarget').textContent=`Fim! ${fq.score}/10`;
     $('#fFeed').className='feedback'; $('#fFeed').textContent = fq.score>=8?'Excelente!':fq.score>=5?'Bom trabalho, continue treinando.':'Treine mais no Teclado com os nomes visíveis.';
     if(state.progress.find==null || fq.score>state.progress.find){ state.progress.find=fq.score; saveProgress(); }
     logPractice('desafio'); if(fq.score>=8) comemorar();
@@ -76,7 +82,7 @@ function paintHeat(){
 function toggleHeat(){
   fq.heat = !fq.heat; $('#fHeat').classList.toggle('on', fq.heat);
   $('#fHeatInfo').style.display = fq.heat ? 'block' : 'none';
-  if(fq.heat){ fq.active=false; $('#fTarget').textContent='Mapa de erros'; $('#fFeed').textContent=''; $('#fDirPill').style.visibility='hidden'; paintHeat(); }
+  if(fq.heat){ fq.active=false; botoesDesafio(); $('#fTarget').textContent='Mapa de erros'; $('#fFeed').textContent=''; $('#fDirPill').style.visibility='hidden'; paintHeat(); }
   else { [fkL,fkR].forEach(k=>{ state.layout[k.hand].forEach(b=>k.tint(b.id,'')); k.refresh(); }); $('#fTarget').textContent='–'; }
 }
 $('#fHeat').onclick=toggleHeat;
@@ -113,7 +119,7 @@ function renderStaffAnswers(){
 }
 function nextStaff(){
   if(sq.round>=10){
-    sq.active=false; drawStaff(sq.clef,null);
+    sq.active=false; botoesDesafio(); drawStaff(sq.clef,null);
     $('#sFeed').className='feedback'; $('#sFeed').textContent=`Fim! ${sq.score}/10`;
     if(state.progress.staff==null || sq.score>state.progress.staff){ state.progress.staff=sq.score; saveProgress(); }
     logPractice('desafio'); if(sq.score>=8) comemorar();

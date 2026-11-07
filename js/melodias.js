@@ -383,7 +383,7 @@ function stopMelody(){
   mel.timers.forEach(clearTimeout); mel.timers=[];
   if(mel.raf) cancelAnimationFrame(mel.raf); mel.raf=null;
   if(mel.bus){ mel.bus.disconnect(); mel.bus=null; }
-  mel.running=false; mel.rollTipo=null; $('#melStart').textContent='▶ Começar';
+  mel.running=false; mel.rollTipo=null; $('#melStart').textContent='▶ Começar'; botaoRodando($('#melStart'), false);
 }
 function finishMel(msg, score){
   stopMelody(); melFeed(msg, score==null?'':score>=80?'ok':'bad'); markCur(-1); mel.g=-1;
@@ -398,7 +398,7 @@ $('#melStart').onclick = ()=>{
   if(mel.running){ stopMelody(); melFeed('Parado.'); return; }
   if(!playableNotes().length) return;
   ac(); $$('#melStrip .mcard').forEach(c=>c.classList.remove('ok','bad'));
-  mel.running=true; mel.errors=0; mel.hits=0; $('#melStart').textContent='■ Parar'; melFeed('');
+  mel.running=true; mel.errors=0; mel.hits=0; $('#melStart').textContent='■ Parar'; botaoRodando($('#melStart'), true); melFeed('');
   ({listen:startListen, wait:startWait, timed:startTimed})[$('#melMode').value]();
   if(window.innerWidth<700) $('#guideIntroBox').open=false; // no celular, mais espaço para praticar
   $('#melStrip').scrollIntoView({block:'start', behavior:'smooth'});

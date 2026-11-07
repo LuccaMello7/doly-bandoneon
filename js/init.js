@@ -19,6 +19,9 @@ function abrirPeloEndereco(){
   else if(/^[a-z]+$/.test(h) && $('#v-'+h)) go(h);
 }
 abrirPeloEndereco();
+// Desafios: o Começar de cada um muda para "Recomeçar" ao começar e volta ao trocar de desafio (js/desafios.js)
+['#fStart','#sStart','#eStart','#pStart'].forEach(id=>$(id).addEventListener('click', botoesDesafio));
+$$('[data-ch]').forEach(b=>b.addEventListener('click', ()=>setTimeout(botoesDesafio)));
 // o som gravado (3,3 MB) é baixado no primeiro toque ou tecla (js/ajustes.js): quem só visita a página não baixa
 window.addEventListener('hashchange', abrirPeloEndereco);
 observador.observe(document.body, {subtree:true, childList:true, characterData:true, attributes:true, attributeFilter:ATTRS});
