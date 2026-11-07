@@ -61,6 +61,26 @@ direita: Mi4 Mi4 Fá4 Sol4 | Sol4 Fá4 Mi4 Ré4 | Dó4 Dó4 Ré4 Mi4 | Mi4:4. R�
 Mi4 Mi4 Fá4 Sol4 | Sol4 Fá4 Mi4 Ré4 | Dó4 Dó4 Ré4 Mi4 | Ré4:4. Dó4:8 Dó4:2
 esquerda: Dó3:2 Dó3:2 | Sol2:2 Sol2:2 | Dó3:2 Dó3:2 | Sol2:2 Sol2:2 |
 Dó3:2 Dó3:2 | Sol2:2 Sol2:2 | Dó3:2 Dó3:2 | Sol2:2 Dó3:2`},
+{id:'cumparsita', text:`título: La Cumparsita
+mão: direita
+bpm: 66
+descrição: Gerardo Matos Rodríguez, 1916. A primeira parte do tango mais famoso do mundo, em domínio público. Melodia transcrita da edição de Tony Wilkinson (IMSLP, CC BY 3.0).
+Ré4:8 Dó5:8 Lá4:8 Fá#4:8 | p:16 Ré4:16 Mib4:16 Ré4:16 Dó#4:8 Ré4:8 | Ré4:8 Ré5:8 Sib4:8 Sol4:8 | p:16 Ré4:16 Mib4:16 Ré4:16 Dó#4:8 Ré4:8 |
+Ré4:8 Dó5:8 Lá4:8 Fá#4:8 | p:16 Ré4:16 Mib4:16 Ré4:16 Dó#4:8 Ré4:8 | Ré4:8 Ré5:8 Sib4:8 Sol4:8 | p:16 Ré4:16 Mib4:16 Ré4:16 Dó#4:8 Ré4:8 |
+Dó5:2 | p:16 Ré5:16 Mib5:16 Ré5:16 Mib5:8 Fá5:8 | Ré5:8 Sib4:8~ Sib4:4 | p:16 Dó#5:16 Ré5:16 Dó#5:16 Ré5:8 Mib5:8 |
+Dó5:8 Lá4:8~ Lá4:4 | p:16 Dó5:16 Sib4:16 Lá4:16 Sol4:8 Fá#4:8 | Sol4:2`},
+{id:'tico-tico', text:`título: Tico-tico no fubá
+mão: direita
+bpm: 80
+descrição: Zequinha de Abreu, 1917. A primeira parte do choro, em domínio público. Melodia transcrita da edição Musica Brasilis (CC BY-SA), a uma voz.
+Fá4:16 Mi4:16 Lá4:8~ Lá4:16 Mi4:16 Ré#4:16 Mi4:16 | Fá4:16 Mi4:16 Sol#4:8~ Sol#4:16 Mi4:16 Ré#4:16 Mi4:16 |
+Fá4:16 Mi4:16 Ré5:16 Si4:16 Sol#4:16 Mi4:16 Ré4:16 Réb4:16 | Dó4:4~ Dó4:16 Lá4:16 Láb4:16 Sol4:16 |
+Fá4:16 Lá4:16 Ré5:8~ Ré5:16 Dó5:16 Lá4:16 Fá4:16 | Mi4:16 Lá4:16 Dó5:8~ Dó5:16 Dó5:16 Si4:16 Lá#4:16 |
+Si4:16 Si3:16 Ré#4:16 Fá#4:16 Si4:16 Ré#5:16 Si5:16 Lá5:16 | Sol#5:16 Mi6:8 Si5:16 Mi6:16 Mi4:16 Ré#4:16 Mi4:16 |
+Fá4:16 Mi4:16 Lá4:8~ Lá4:16 Mi4:16 Ré#4:16 Mi4:16 | Fá4:16 Mi4:16 Sol#4:8~ Sol#4:16 Mi4:16 Ré#4:16 Mi4:16 |
+Fá4:16 Mi4:16 Ré5:16 Si4:16 Sol#4:16 Mi4:16 Ré4:16 Réb4:16 | Dó4:4~ Dó4:16 Lá4:16 Láb4:16 Sol4:16 |
+Fá4:16 Lá4:16 Ré5:8~ Ré5:16 Lá4:16 Fá4:16 Lá4:16 | p:16 Dó5:16 Mi4:16 Dó5:16 p:16 Dó5:16 Mi4:16 Dó5:16 |
+p:16 Mi4:16 Sol#4:16 Si4:16 Mi5:16 Ré5:16 Dó5:16 Si4:16 | Lá4:8 Mi5:8 Lá5:4`},
 {id:'choclo-intro', text:`título: El Choclo (introdução)
 mão: direita
 bpm: 72

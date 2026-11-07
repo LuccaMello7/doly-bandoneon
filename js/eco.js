@@ -11,7 +11,7 @@
 // mostra o botão certo e espera.
 const ECO_MUSICAS = [
   {id:'estrelinha', dif:1}, {id:'esc-do', dif:1}, {id:'ode', dif:1}, {id:'esq-do', dif:2}, {id:'arpejos', dif:2},
-  {id:'esc-sol', dif:2}, {id:'esc-lam', dif:2}, {id:'esq-baixos', dif:2}, {id:'cromatica', dif:3}, {id:'choclo-intro', dif:3},
+  {id:'esc-sol', dif:2}, {id:'esc-lam', dif:2}, {id:'esq-baixos', dif:2}, {id:'cromatica', dif:3}, {id:'cumparsita', dif:2}, {id:'choclo-intro', dif:3}, {id:'tico-tico', dif:3},
 ];
 state.progress.eco = state.progress.eco || {}; // {id: {pts, estrelas}}
 const eco = {id:ECO_MUSICAS[0].id, m:null, seq:[], k:2, ajuda:'ver', vel:1, ini:0, fimT:0, alvo:0, pos:0, rodada:0, rodadas:0,
