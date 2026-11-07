@@ -123,7 +123,7 @@
   <button type="button" role="tab" data-area="tocar" data-v="acordes"><svg aria-hidden="true"><use href="#i-chord"/></svg>Chords</button>
   <button type="button" role="tab" data-area="tocar" data-v="microfone"><svg aria-hidden="true"><use href="#i-mic"/></svg>Real bandoneon</button>
   <button type="button" role="tab" data-area="treinar" data-v="desafios"><svg aria-hidden="true"><use href="#i-target"/></svg>Challenges</button>
-  <button type="button" role="tab" data-area="treinar" data-v="eco"><svg aria-hidden="true"><use href="#i-eco"/></svg>Echo</button>
+  <button type="button" role="tab" data-area="treinar" data-v="eco"><svg aria-hidden="true"><use href="#i-eco"/></svg><span translate="no">RepeTCHÊ</span></button>
   <button type="button" role="tab" data-area="treinar" data-v="ritmo"><svg aria-hidden="true"><use href="#i-metro"/></svg>Rhythm</button>
   <button type="button" role="tab" data-area="perfil" data-v="perfil"><svg aria-hidden="true"><use href="#i-trophy"/></svg>Achievements</button>
   <button type="button" role="tab" data-area="perfil" data-v="professor"><svg aria-hidden="true"><use href="#i-cap"/></svg>For teachers</button>
@@ -156,7 +156,7 @@
   </div>
   <aside class="aviso aviso-curto" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></svg><p><strong>BanDoly is a learning site and will never replace the advice and guidance of a teacher.</strong> Use the app to support your studies and, whenever you can, learn with a bandoneon teacher: they correct your posture, bellows and fingering, things an app cannot see.</p></aside>
   <div class="tiles" data-revela="cascata">
-    <a class="tile t-eco tile-larga" href="#" data-go="eco"><span class="tile-ic"><svg aria-hidden="true"><use href="#i-eco"/></svg></span><span class="tile-txt"><b>Echo <span class="tile-novo">New</span></b><small>The bandoneon plays, you repeat. How far can your memory go?</small></span><span class="tile-pontos" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></a>
+    <a class="tile t-eco tile-larga" href="#" data-go="eco"><span class="tile-ic tile-av"><img class="gaucho-av" src="../imagens/repetche/avatar.jpg" alt="" width="80" height="80"></span><span class="tile-txt"><b><span translate="no">RepeTCHÊ</span> <span class="tile-novo">New</span></b><small>The bandoneon plays, you repeat. How far can your memory go?</small></span><span class="tile-pontos" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></a>
     <a class="tile t-academia" href="#" data-go="academia"><span class="tile-ic"><svg aria-hidden="true"><use href="#i-cap"/></svg></span><b>Academy</b><small>6 levels with an instructor</small></a>
     <a class="tile t-teclado" href="#" data-go="teclado"><span class="tile-ic"><svg aria-hidden="true"><use href="#i-keys"/></svg></span><b>Free keyboard</b><small>71 buttons with real sound</small></a>
     <a class="tile t-melodias" href="#" data-go="melodias"><span class="tile-ic"><svg aria-hidden="true"><use href="#i-music"/></svg></span><b>Melodies</b><small>Guided songs and scales</small></a>
@@ -540,9 +540,9 @@
   </div>
 </section>
 
-<!-- ECO: o bandoneon toca, você repete (js/eco.js) -->
+<!-- RepeTCHÊ: o bandoneon toca, você repete (js/eco.js). O gaúcho é imagens/repetche/ -->
 <section id="v-eco" class="eco">
-  <div class="pg-topo"><span class="pg-ic t-eco"><svg aria-hidden="true"><use href="#i-eco"/></svg></span><div><h2 class="pg-tit">Echo</h2><p class="muted">The bandoneon plays, you repeat. Each round the tune grows, until you play it all by ear.</p></div></div>
+  <div class="pg-topo"><span class="pg-ic t-eco pg-av"><img class="gaucho-av" src="../imagens/repetche/avatar.jpg" alt="" width="80" height="80"></span><div><h2 class="pg-tit"><span translate="no">RepeTCHÊ</span></h2><p class="muted">The bandoneon plays, you repeat. Each round the tune grows, until you play it all by ear.</p></div></div>
   <div class="card eco-escolha" id="ecoEscolha">
     <h2 class="card-tit">Choose the tune</h2>
     <div class="eco-musicas" id="ecoMusicas" role="radiogroup" aria-label="Tune"></div>
@@ -579,10 +579,11 @@
       <button class="btn sec" id="ecoRepetir" disabled><svg aria-hidden="true"><use href="#i-volume"/></svg>Hear it again</button>
       <button class="btn ghost" id="ecoParar">Stop</button>
     </div>
+    <div class="gaucho" id="ecoGaucho" aria-hidden="true"><span class="gaucho-balao" translate="no">Muy bueno!</span><span class="gaucho-img"></span></div>
   </div>
 
   <div class="card eco-fim" id="ecoFimCard" hidden>
-    <svg class="filete" aria-hidden="true"><use href="#i-filete"/></svg>
+    <div class="gaucho gaucho-fim" aria-hidden="true"><span class="gaucho-balao" translate="no">Muy bueno!</span><span class="gaucho-img"></span></div>
     <h2 id="ecoFimTit">Tune complete!</h2>
     <p class="muted" id="ecoFimMusica"></p>
     <div class="eco-estrelas" id="ecoFimEstrelas" role="img"></div>

@@ -1,5 +1,7 @@
-/* ================== Eco: o bandoneon toca, você repete ================== */
-// Jogo de memória musical, aba Treinar → Eco. O app toca o começo de uma música e o aluno repete; a cada
+/* ================== RepeTCHÊ: o bandoneon toca, você repete ================== */
+// Jogo de memória musical, aba Treinar → RepeTCHÊ (no código, "eco"). A cada sequência certa o gaúcho
+// (imagens/repetche/gaucho.jpg, dois quadros: virado para um lado e para o outro) sobe e diz "Muy bueno!".
+// O app toca o começo de uma música e o aluno repete; a cada
 // rodada entram mais notas (2 por padrão). Para não virar centenas de notas, a música é dividida em
 // trechos (4 rodadas cada): completou um trecho, começa o próximo. As músicas são as das Melodias que
 // estão em domínio público, e as notas, os botões e a direção do fole vêm do mesmo motor (fingerMelody).
@@ -116,6 +118,12 @@ function ecoFaiscas(){
     f.appendChild(s); setTimeout(()=>s.remove(), 900);
   }
 }
+// O gaúcho sobe pelo canto, toca balançando e diz "Muy bueno!"; desce sozinho (sem animação: só aparece e some)
+let ecoGauchoTimer = 0;
+function ecoGaucho(){
+  const g = $('#ecoGaucho'); g.classList.remove('aparece'); void g.offsetWidth; g.classList.add('aparece');
+  clearTimeout(ecoGauchoTimer); ecoGauchoTimer = setTimeout(()=>g.classList.remove('aparece'), 1800);
+}
 function ecoFeed(msg, cls=''){ const f = $('#ecoFeed'); f.className = 'feedback ' + cls; f.textContent = msg; }
 
 /* ---------- O jogo ---------- */
@@ -195,10 +203,10 @@ function ecoRodadaFeita(){
   ecoFaixa(perfeita ? 'Perfeito!' : 'Muito bem!', perfeita ? 'perfeito' : 'bem',
            (bonus ? `+${bonus} pontos` : '') + (fimTrecho && !fimMusica ? (bonus ? ' · ' : '') + 'Trecho completo!' : ''));
   if(perfeita) ecoFaiscas();
-  vibrar('ok');
+  vibrar('ok'); ecoGaucho();
   if(fimMusica){ ecoTimer(ecoFim, 1300); return; }
   if(fimTrecho){ eco.ini = eco.alvo; eco.fimT = ecoFimTrecho(eco.ini); }
-  ecoTimer(ecoRodada, 1400);
+  ecoTimer(ecoRodada, 1800); // dá tempo do gaúcho aparecer e descer
 }
 function ecoFim(){
   ecoLimpar(); eco.fase = 'fim';
@@ -207,6 +215,7 @@ function ecoFim(){
   state.progress.eco[eco.id] = {pts: Math.max(eco.pontos, ant ? ant.pts : 0), estrelas: Math.max(estrelas, ant ? ant.estrelas : 0)};
   logPractice('desafio'); saveProgress(); renderEcoMusicas();
   $('#ecoJogo').hidden = true; const f = $('#ecoFimCard'); f.hidden = false;
+  const gf = f.querySelector('.gaucho-fim'); gf.classList.remove('danca'); void gf.offsetWidth; gf.classList.add('danca');
   $('#ecoFimTit').textContent = estrelas===3 ? 'Perfeito! Música completa!' : 'Música completa!';
   $('#ecoFimMusica').textContent = eco.m.title;
   $('#ecoFimEstrelas').innerHTML = ecoEstrelas(estrelas);
@@ -224,7 +233,7 @@ function ecoFim(){
   f.scrollIntoView({block:'center', behavior: movReduzido()?'auto':'smooth'});
   if(estrelas===3 || (recorde && ant)) setTimeout(comemorar, 700); else vibrar('ok');
 }
-function ecoParar(){ ecoLimpar(); eco.fase = ''; $('#ecoJogo').hidden = true; $('#ecoFimCard').hidden = true; $('#ecoEscolha').hidden = false; }
+function ecoParar(){ ecoLimpar(); $('#ecoGaucho').classList.remove('aparece'); eco.fase = ''; $('#ecoJogo').hidden = true; $('#ecoFimCard').hidden = true; $('#ecoEscolha').hidden = false; }
 
 $('#ecoStart').onclick = ecoComecar;
 $('#ecoParar').onclick = ecoParar;

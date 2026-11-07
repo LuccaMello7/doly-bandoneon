@@ -56,7 +56,7 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
 - Início + 4 áreas, em `AREAS` (navegacao.js):
   - **aprender:** estudo, academia, licoes, teoria;
   - **tocar:** teclado, melodias, acordes, microfone;
-  - **treinar:** desafios, eco (o bandoneon toca, você repete: js/eco.js), ritmo;
+  - **treinar:** desafios, eco (o jogo RepeTCHÊ: o bandoneon toca, você repete; js/eco.js e o gaúcho em imagens/repetche/), ritmo;
   - **perfil:** perfil, professor, ajustes.
 - Cada aba é `<section id="v-nome">`. O botão dela fica em `#subnav`, com `data-area` e `data-v`.
 - `go(v)` troca de aba. Para agir ao entrar ou sair de uma aba: `ganchosAba.push((nova, anterior)=>…)`.

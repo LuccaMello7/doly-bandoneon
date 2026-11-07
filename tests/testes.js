@@ -286,7 +286,7 @@ function textosEmPortugues(){
     const p = n.parentNode;
     if(['SCRIPT','STYLE','TEXTAREA','CODE'].includes(p.nodeName) || p.closest('[translate="no"],#resultado-testes')) continue;
     // nomes próprios (cidades, prêmios, festivais) ficam em português em qualquer idioma
-    const s = n.nodeValue.replace(/\s+/g,' ').trim().replace(/Caçapava do Sul|Simões Lopes Neto|Moenda da Canção|Tafona da Canção Nativa|Santo Antônio da Patrulha|Rádio/g,'');
+    const s = n.nodeValue.replace(/\s+/g,' ').trim().replace(/Caçapava do Sul|Simões Lopes Neto|Moenda da Canção|Tafona da Canção Nativa|Santo Antônio da Patrulha|Rádio|RepeTCHÊ/g,'');
     if(s && PARECE_PT.test(s)) achados.add(s);
   }
   return [...achados];

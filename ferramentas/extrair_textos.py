@@ -37,7 +37,8 @@ IGUAIS = {'T T S T T T S', 'T S T T S T T', 'S T T T S T T', 'T T T S T T S', 'T
           'Museu WK - Acordeões e Bandoneões', 'Almir Sampaio Barbosa', 'Adriano Lima Gaúcho',
           'Adiós Nonino', 'Quejas de Bandoneón', 'Oblivion', 'Tangos Ontem, Hoje e Sempre', 'Lucca Mello',
           'bruniinhars', 'Camila García',
-          '(display-mode: standalone)', 'MacIntel'}  # código do convite para instalar (init.js)
+          '(display-mode: standalone)', 'MacIntel',  # código do convite para instalar (init.js)
+          'RepeTCHÊ', 'Muy bueno!'}  # nome do jogo e a fala do gaúcho: iguais em todos os idiomas
 NAO_E_TEXTO.append(re.compile(r'^[A-Za-zÀ-ÿ]{1,3}[#♯♭b]?\d'))  # Sol4, Bb5, Dó4:4, Mi4:8t…
 # Formas "cruas" de frases que o dicionário cobre com outra chave (montadas em partes no código)
 COBERTOS = {'Opção {}: {}{}{}', 'Prepare-se…', 'Não entendi:', 'Direção: Abrindo (trocar)',
