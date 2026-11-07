@@ -120,7 +120,18 @@ function ecoFaiscas(){
 }
 // O gaúcho sobe pelo canto, toca balançando e diz "Muy bueno!"; desce sozinho (sem animação: só aparece e some)
 let ecoGauchoTimer = 0;
+// A voz dele (sons/muy-bueno.mp3, 13 KB): só é baixada quando o jogo começa; dá para desligar nas opções
+const ecoVoz = new Audio(); ecoVoz.preload = 'auto';
+const ecoVozLigada = () => $('#ecoVozOn').checked;
+function ecoPrepararVoz(){ if(!ecoVoz.src && ecoVozLigada()){ ecoVoz.src = RAIZ + 'sons/muy-bueno.mp3'; ecoVoz.load(); } }
+function ecoFalar(){
+  if(!ecoVozLigada()) return; ecoPrepararVoz();
+  try{ ecoVoz.currentTime = 0; ecoVoz.volume = Math.min(1, state.volume/100); const p = ecoVoz.play(); if(p && p.catch) p.catch(()=>{}); }catch(e){}
+}
+$('#ecoVozOn').checked = store.get('ecoVoz', true);
+$('#ecoVozOn').addEventListener('change', e=>{ store.set('ecoVoz', e.target.checked); if(e.target.checked) ecoFalar(); }); // ligou: ouve como fica
 function ecoGaucho(){
+  ecoFalar();
   const g = $('#ecoGaucho'); g.classList.remove('aparece'); void g.offsetWidth; g.classList.add('aparece');
   clearTimeout(ecoGauchoTimer); ecoGauchoTimer = setTimeout(()=>g.classList.remove('aparece'), 1800);
 }
@@ -129,7 +140,7 @@ function ecoFeed(msg, cls=''){ const f = $('#ecoFeed'); f.className = 'feedback 
 /* ---------- O jogo ---------- */
 function ecoLimpar(){ eco.timers.forEach(clearTimeout); eco.timers = []; ecoL.clearMarks(); ecoR.clearMarks(); }
 function ecoComecar(){
-  ac(); ecoLimpar();
+  ac(); ecoLimpar(); ecoPrepararVoz();
   const {m, seq} = ecoMusica(eco.id);
   Object.assign(eco, {m, seq, k:+$('#ecoPasso').value, ajuda:$('#ecoAjuda').value, vel:+$('#ecoVel').value, hand:m.hand==='left'?'left':'right',
     ini:0, alvo:0, pos:0, rodada:0, pontos:0, mostrados:0, combo:0, maxCombo:0, erros:0, errosRodada:0, fase:'contagem'});

@@ -687,3 +687,11 @@ teste('Eco: a música cresce de 2 em 2, o acerto pontua, o erro mostra o botão 
 teste('Eco: todas as músicas têm notas com botão e fole', () => {
   for(const x of ECO_MUSICAS){ const {seq} = ecoMusica(x.id); ok(seq.length>=8 && seq.every(n=>n.btn && n.dir), x.id); }
 });
+teste('RepeTCHÊ: o gaúcho aparece e fala, e a voz pode ser desligada', () => {
+  const antes = $('#ecoVozOn').checked;
+  $('#ecoVozOn').checked = true; ecoGaucho();
+  ok($('#ecoGaucho').classList.contains('aparece'), 'o gaúcho sobe');
+  ok(ecoVoz.src.endsWith('sons/muy-bueno.mp3'), 'a voz é o arquivo gravado');
+  $('#ecoVozOn').checked = false; ok(!ecoVozLigada(), 'desligada');
+  $('#ecoVozOn').checked = antes; $('#ecoGaucho').classList.remove('aparece');
+});

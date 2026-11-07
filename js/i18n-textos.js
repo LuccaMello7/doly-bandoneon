@@ -83,6 +83,7 @@ const TEXTOS = {
 'Válvula: fechar (segure F)': ['Válvula: cerrar (mantén F)', 'Air valve: close (hold F)'],
 'Mostrar nomes': ['Mostrar nombres', 'Show names'],
 'Trocar direção': ['Cambiar dirección', 'Change direction'],
+'Voz do gaúcho': ['Voz del gaucho', 'Gaucho voice'],
 'Perfeito!': ['¡Perfecto!', 'Perfect!'],
 'Sequência': ['Racha', 'Streak'],
 'Novo': ['Nuevo', 'New'],
