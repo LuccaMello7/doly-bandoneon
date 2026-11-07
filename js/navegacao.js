@@ -4,7 +4,7 @@
 // ficam no menu lateral; no celular, na barra de baixo. Tocar numa área volta à última aba usada nela.
 const AREAS = {
   inicio:['inicio'], aprender:['estudo','academia','licoes','teoria'], tocar:['teclado','melodias','acordes','microfone'],
-  treinar:['desafios','ritmo'], perfil:['perfil','professor','ajustes'],
+  treinar:['desafios','eco','ritmo'], perfil:['perfil','professor','ajustes'],
 };
 const areaDe = v => Object.keys(AREAS).find(a=>AREAS[a].includes(v)) || 'inicio';
 const ultimaAba = store.get('ultimaAba', {});

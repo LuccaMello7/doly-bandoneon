@@ -92,6 +92,7 @@
   <symbol id="i-filete" viewBox="0 0 120 40"><path d="M60 21c-6-13-27-14-31-1-3 9 8 14 14 8 4-4 1-10-4-9"/><path d="M60 21c6-13 27-14 31-1 3 9-8 14-14 8-4-4-1-10 4-9"/><path d="M29 20c-9 1-14 7-25 2M91 20c9 1 14 7 25 2"/><path d="M60 6c4 4 4 10 0 15-4-5-4-11 0-15z"/><circle cx="60" cy="30" r="2.5"/></symbol>
   <symbol id="i-expand" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></symbol>
   <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-eco" viewBox="0 0 24 24"><circle cx="5" cy="12" r="2"/><path d="M10 8.5a4.5 4.5 0 0 1 0 7M13.5 5.5a8.5 8.5 0 0 1 0 13M17 3a12 12 0 0 1 0 18"/></symbol>
   <symbol id="i-question" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7v.5M12 17h.01"/></symbol>
 </svg>
 <header>
@@ -121,6 +122,7 @@
   <button type="button" role="tab" data-area="tocar" data-v="acordes"><svg aria-hidden="true"><use href="#i-chord"/></svg>Acordes</button>
   <button type="button" role="tab" data-area="tocar" data-v="microfone"><svg aria-hidden="true"><use href="#i-mic"/></svg>Bandoneon real</button>
   <button type="button" role="tab" data-area="treinar" data-v="desafios"><svg aria-hidden="true"><use href="#i-target"/></svg>Desafios</button>
+  <button type="button" role="tab" data-area="treinar" data-v="eco"><svg aria-hidden="true"><use href="#i-eco"/></svg>Eco</button>
   <button type="button" role="tab" data-area="treinar" data-v="ritmo"><svg aria-hidden="true"><use href="#i-metro"/></svg>Ritmo</button>
   <button type="button" role="tab" data-area="perfil" data-v="perfil"><svg aria-hidden="true"><use href="#i-trophy"/></svg>Conquistas</button>
   <button type="button" role="tab" data-area="perfil" data-v="professor"><svg aria-hidden="true"><use href="#i-cap"/></svg>Para professores</button>
@@ -153,6 +155,7 @@
   </div>
   <aside class="aviso aviso-curto" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></svg><p><strong>O BanDoly é um site para aprendizado e nunca substituirá os conselhos e as orientações de um professor.</strong> Use o app como apoio aos estudos e, sempre que puder, aprenda com um professor de bandoneon: ele corrige a postura, o fole e o dedilhado, coisas que um app não consegue ver.</p></aside>
   <div class="tiles" data-revela="cascata">
+    <a class="tile t-eco tile-larga" href="#" data-go="eco"><span class="tile-ic"><svg aria-hidden="true"><use href="#i-eco"/></svg></span><span class="tile-txt"><b>Eco <span class="tile-novo">Novo</span></b><small>O bandoneon toca, você repete. Até onde vai a sua memória?</small></span><span class="tile-pontos" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></a>
     <a class="tile t-academia" href="#" data-go="academia"><span class="tile-ic"><svg aria-hidden="true"><use href="#i-cap"/></svg></span><b>Academia</b><small>6 níveis com instrutor</small></a>
     <a class="tile t-teclado" href="#" data-go="teclado"><span class="tile-ic"><svg aria-hidden="true"><use href="#i-keys"/></svg></span><b>Teclado livre</b><small>71 botões com som real</small></a>
     <a class="tile t-melodias" href="#" data-go="melodias"><span class="tile-ic"><svg aria-hidden="true"><use href="#i-music"/></svg></span><b>Melodias</b><small>Músicas e escalas guiadas</small></a>
@@ -532,6 +535,63 @@
     <div class="instrument">
       <div class="side" id="ckLeftWrap"><div class="label">Mão esquerda</div><div id="ckLeft"></div></div>
       <div class="side" id="ckRightWrap" style="display:none"><div class="label">Mão direita</div><div id="ckRight"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ECO: o bandoneon toca, você repete (js/eco.js) -->
+<section id="v-eco" class="eco">
+  <div class="pg-topo"><span class="pg-ic t-eco"><svg aria-hidden="true"><use href="#i-eco"/></svg></span><div><h2 class="pg-tit">Eco</h2><p class="muted">O bandoneon toca, você repete. A cada rodada a música cresce, até você tocar tudo de ouvido.</p></div></div>
+  <div class="card eco-escolha" id="ecoEscolha">
+    <h2 class="card-tit">Escolha a música</h2>
+    <div class="eco-musicas" id="ecoMusicas" role="radiogroup" aria-label="Música"></div>
+    <div class="row eco-opcoes">
+      <label>Ajuda: <select id="ecoAjuda"><option value="ver">Ver e ouvir (os botões acendem)</option><option value="fole">Só o fole (os botões não acendem)</option><option value="ouvido">Só ouvindo</option></select></label>
+      <label>A cada rodada: <select id="ecoPasso"><option value="2">+2 notas</option><option value="3">+3 notas</option><option value="4">+4 notas</option></select></label>
+      <label>Velocidade: <select id="ecoVel"><option value="0.75">Devagar</option><option value="1" selected>Normal</option></select></label>
+    </div>
+    <div class="acao">
+      <button class="btn btn-grande" id="ecoStart"><svg aria-hidden="true"><use href="#i-play"/></svg>Começar</button>
+      <p class="muted acao-dica">A música vem em trechos curtos. O fole troca de direção sozinho: preste atenção nos botões.</p>
+    </div>
+  </div>
+
+  <div class="card eco-jogo" id="ecoJogo" hidden>
+    <div class="eco-topo">
+      <b class="eco-musica-tit" id="ecoMusicaTit"></b>
+      <div class="eco-hud">
+        <div class="eco-hud-item"><span>Rodada</span><b><span id="ecoRodada">0</span><small>/<span id="ecoRodadas">0</span></small></b></div>
+        <div class="eco-hud-item"><span>Pontos</span><b id="ecoPontos">0</b></div>
+        <div class="eco-hud-item eco-combo" id="ecoCombo" data-mult="1"><span>Sequência</span><b><svg aria-hidden="true"><use href="#i-flame"/></svg><span id="ecoSeq">0</span><small class="eco-mult" id="ecoComboN">×1</small></b></div>
+      </div>
+    </div>
+    <div class="eco-faixa" id="ecoFaixa" aria-live="polite"><span class="eco-ondas" aria-hidden="true"><i></i><i></i><i></i></span><b id="ecoFaixaTxt"></b><small id="ecoFaixaSub"></small></div>
+    <div class="eco-trilha" id="ecoTrilha" aria-hidden="true"></div>
+    <div class="bar eco-barra"><div id="ecoBarra"></div></div>
+    <div class="eco-palco">
+      <div id="ecoDir" class="dirpill open">Abrindo</div>
+      <div class="eco-kb" id="ecoKbL" hidden></div>
+      <div class="eco-kb" id="ecoKbR"></div>
+    </div>
+    <div class="feedback" id="ecoFeed" aria-live="polite"></div>
+    <div class="row eco-controles">
+      <button class="btn sec" id="ecoRepetir" disabled><svg aria-hidden="true"><use href="#i-volume"/></svg>Ouvir de novo</button>
+      <button class="btn ghost" id="ecoParar">Parar</button>
+    </div>
+  </div>
+
+  <div class="card eco-fim" id="ecoFimCard" hidden>
+    <svg class="filete" aria-hidden="true"><use href="#i-filete"/></svg>
+    <h2 id="ecoFimTit">Música completa!</h2>
+    <p class="muted" id="ecoFimMusica"></p>
+    <div class="eco-estrelas" id="ecoFimEstrelas" role="img"></div>
+    <div class="eco-fim-pts"><b id="ecoFimPts">0</b><span>pontos</span></div>
+    <p class="eco-recorde" id="ecoRecorde" hidden><svg aria-hidden="true"><use href="#i-trophy"/></svg>Novo recorde!</p>
+    <p class="muted" id="ecoFimInfo"></p>
+    <div class="row eco-fim-acoes">
+      <button class="btn btn-grande" id="ecoDeNovo"><svg aria-hidden="true"><use href="#i-play"/></svg>Jogar de novo</button>
+      <button class="btn sec" id="ecoProxima">Próxima música <svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+      <button class="btn ghost" id="ecoOutra">Escolher outra</button>
     </div>
   </div>
 </section>
@@ -941,6 +1001,7 @@
 <script src="js/licoes.js" defer></script>
 <script src="js/ajustes.js" defer></script>
 <script src="js/ouvido.js" defer></script>
+<script src="js/eco.js" defer></script>
 <script src="js/cascata.js" defer></script>
 <script src="js/trilha.js" defer></script>
 <script src="js/professor.js" defer></script>

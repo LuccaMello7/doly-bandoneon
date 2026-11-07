@@ -1336,3 +1336,152 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
 }
 /* Ajustes: a caixinha fica ao lado do texto, não em cima */
 .settings label:has(input[type=checkbox]){flex-direction:row;align-items:center;gap:10px}
+
+/* ================== Eco (js/eco.js): jogo de memória musical ================== */
+/* O movimento conta o jogo: as notas novas entram pulando na trilha, a faixa muda a cada fase,
+   os pontos sobem do botão, a sequência esquenta e o fim mostra as estrelas uma a uma.
+   Tudo com "backwards" ou estado final igual ao normal: sem movimento, a tela fica certa. */
+.t-eco{background:linear-gradient(140deg,#1fb5c9,#137a9a)}
+.pg-ic.t-eco svg{animation:ecoIcone 2.4s ease-in-out infinite}
+@keyframes ecoIcone{0%,100%{transform:none}50%{transform:scale(1.1)}}
+/* cartão largo na tela Início */
+.tile-larga{grid-column:1/-1;flex-direction:row;align-items:center;gap:16px;position:relative;overflow:hidden}
+.tile-larga .tile-ic{margin:0;flex:none}
+.tile-txt{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0;position:relative;z-index:1}
+.tile-novo{display:inline-block;margin-left:6px;padding:1px 8px;border-radius:999px;background:var(--gold);color:#1b1404;font-size:.7rem;font-weight:900;letter-spacing:.06em;text-transform:uppercase;vertical-align:2px;animation:ecoNovo 2s ease-in-out infinite}
+@keyframes ecoNovo{0%,100%{box-shadow:0 0 0 0 #e6b45088}50%{box-shadow:0 0 0 6px #e6b45000}}
+.tile-pontos{display:flex;align-items:flex-end;gap:6px;height:36px;flex:none}
+.tile-pontos i{width:10px;height:10px;border-radius:50%;background:#ffffffd9;animation:ecoOnda 1.6s ease-in-out infinite;animation-delay:calc(var(--n,0)*.12s)}
+.tile-pontos i:nth-child(1){--n:0}.tile-pontos i:nth-child(2){--n:1}.tile-pontos i:nth-child(3){--n:2}.tile-pontos i:nth-child(4){--n:3}
+.tile-pontos i:nth-child(5){--n:4}.tile-pontos i:nth-child(6){--n:5}.tile-pontos i:nth-child(7){--n:6}.tile-pontos i:nth-child(8){--n:7}
+@keyframes ecoOnda{0%,100%{transform:translateY(0);opacity:.5}40%{transform:translateY(-18px);opacity:1}}
+@media (max-width:700px){.tile-pontos{display:none}}
+
+/* escolher a música */
+.eco-musicas{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr));gap:12px;margin:6px 0 16px}
+.eco-musica{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;background:var(--panel2);border:2px solid var(--line);border-radius:16px;padding:12px 14px;color:var(--text);font:inherit;cursor:pointer;
+  transition:transform .2s cubic-bezier(.34,1.4,.5,1),border-color .2s,box-shadow .2s;animation:ecoCarta .45s cubic-bezier(.2,.8,.2,1) backwards;animation-delay:calc(var(--i,0)*45ms)}
+@keyframes ecoCarta{from{opacity:0;transform:translateY(14px) scale(.96)}}
+.eco-musica:hover{transform:translateY(-3px);border-color:#1fb5c9aa;box-shadow:0 10px 22px #0006}
+.eco-musica.on{border-color:var(--gold);box-shadow:0 0 0 3px #e6b45033,0 10px 24px #0006;background:linear-gradient(160deg,#1f3a60,var(--panel2))}
+.eco-musica.on::after{content:"";position:absolute;top:10px;right:12px;width:10px;height:10px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--gold)}
+.eco-musica b{font-size:1rem;line-height:1.25}
+.eco-dif{display:flex;gap:3px}
+.eco-dif i{width:16px;height:5px;border-radius:3px;background:#ffffff22}
+.eco-dif[data-dif="1"] i:nth-child(-n+1),.eco-dif[data-dif="2"] i:nth-child(-n+2),.eco-dif[data-dif="3"] i{background:#1fb5c9}
+.eco-dif[data-dif="3"] i{background:var(--close)}
+.eco-mini-estrelas{display:flex;gap:2px}
+.eco-mini-estrelas svg,.eco-estrelas svg{fill:#ffffff1a;stroke:#ffffff33;stroke-width:1.2}
+.eco-mini-estrelas svg{width:16px;height:16px}
+.eco-mini-estrelas svg.on,.eco-estrelas svg.on{fill:var(--gold);stroke:var(--gold2)}
+.eco-rec{font-weight:800;color:var(--gold2)} .eco-rec.novo{color:#5fd6e6}
+
+/* o jogo */
+.eco-jogo{position:relative;overflow:hidden;animation:ecoEntra .5s cubic-bezier(.2,.8,.2,1) backwards}
+@keyframes ecoEntra{from{opacity:0;transform:translateY(18px) scale(.98)}}
+.eco-topo{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px;margin-bottom:12px}
+.eco-musica-tit{font-size:1.15rem;color:var(--gold2)}
+.eco-hud{display:flex;gap:8px;flex-wrap:wrap}
+.eco-hud-item{display:flex;flex-direction:column;align-items:center;min-width:84px;background:var(--panel2);border-radius:14px;padding:6px 12px}
+.eco-hud-item>span{font-size:.7rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.eco-hud-item>b{font-size:1.35rem;line-height:1.2;font-variant-numeric:tabular-nums;display:flex;align-items:center;gap:4px}
+.eco-hud-item small{font-size:.8rem;color:var(--muted)}
+#ecoPontos.sobe{animation:ecoSobePts .35s cubic-bezier(.34,1.6,.5,1)}
+@keyframes ecoSobePts{40%{transform:scale(1.25);color:var(--gold2)}}
+.eco-combo svg{width:20px;height:20px;fill:none;stroke:var(--muted);transition:stroke .3s}
+.eco-hud-item small.eco-mult{display:none;margin-left:2px;padding:0 6px;border-radius:999px;background:#f08a4b;color:#1b1404;font-size:.78rem;font-weight:900}
+.eco-combo.quente small.eco-mult{display:inline-block;animation:ecoFaixaEntra .4s cubic-bezier(.34,1.6,.5,1) backwards}
+.eco-combo[data-mult="3"] small.eco-mult,.eco-combo[data-mult="4"] small.eco-mult{background:#ffd36e}
+.eco-combo.quente{background:linear-gradient(160deg,#5a2a14,#3a1f14);box-shadow:0 0 0 1px #f08a4b66,0 0 18px #f08a4b44}
+.eco-combo.quente svg{stroke:#ffb15c;fill:#f08a4b55;animation:ecoChama .7s ease-in-out infinite alternate}
+.eco-combo[data-mult="3"] svg,.eco-combo[data-mult="4"] svg{stroke:#ffd36e;fill:#f0a04b88}
+.eco-combo[data-mult="4"]{box-shadow:0 0 0 1px #ffd36e88,0 0 26px #f0a04b77}
+@keyframes ecoChama{to{transform:scale(1.15) rotate(-6deg)}}
+.eco-combo.estoura{animation:ecoEstoura .6s cubic-bezier(.34,1.6,.5,1)}
+@keyframes ecoEstoura{30%{transform:scale(1.25) rotate(-3deg)}}
+
+/* faixa da fase: Rodada / Ouça… / Sua vez! / Perfeito! */
+.eco-faixa{position:relative;display:flex;align-items:center;justify-content:center;gap:4px 12px;flex-wrap:wrap;min-height:64px;border-radius:18px;padding:10px 16px;margin-bottom:12px;
+  background:var(--panel2);text-align:center;transition:background .3s}
+.eco-faixa b{font-size:1.6rem;line-height:1.1}
+.eco-faixa small{width:100%;color:var(--muted);font-weight:700}
+.eco-faixa small:empty{display:none}
+.eco-faixa.conta b{font-size:2.4rem;color:var(--gold2);animation:ecoConta .5s cubic-bezier(.2,.8,.2,1) backwards}
+@keyframes ecoConta{from{opacity:0;transform:scale(2.2)}}
+.eco-faixa.rodada b,.eco-faixa.bem b{animation:ecoFaixaEntra .5s cubic-bezier(.34,1.5,.5,1) backwards}
+.eco-faixa.rodada small{color:#5fd6e6;animation:ecoFaixaEntra .5s .15s cubic-bezier(.34,1.5,.5,1) backwards}
+@keyframes ecoFaixaEntra{from{opacity:0;transform:translateY(10px) scale(.8)}}
+.eco-faixa.ouvir{background:linear-gradient(90deg,#123c56,#14506a,#123c56);background-size:200% 100%;animation:ecoBrilho 1.6s linear infinite}
+@keyframes ecoBrilho{to{background-position:-200% 0}}
+.eco-ondas{display:none;align-items:center;gap:3px;height:24px}
+.eco-faixa.ouvir .eco-ondas{display:inline-flex}
+.eco-ondas i{width:4px;height:100%;border-radius:2px;background:#5fd6e6;animation:ecoBarras .8s ease-in-out infinite alternate}
+.eco-ondas i:nth-child(2){animation-delay:.2s}.eco-ondas i:nth-child(3){animation-delay:.4s}
+@keyframes ecoBarras{from{transform:scaleY(.3)}to{transform:scaleY(1)}}
+.eco-faixa.vez{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#1b1404}
+.eco-faixa.vez small{color:#3b2a08}
+.eco-faixa.vez b{animation:ecoVez .55s cubic-bezier(.34,1.7,.5,1) backwards}
+@keyframes ecoVez{from{transform:scale(.4);opacity:0}}
+.eco-faixa.perfeito{background:linear-gradient(135deg,#1f9e6e,#3ccf8e);color:#04150d}
+.eco-faixa.perfeito small{color:#063a24}
+.eco-faixa.perfeito b{animation:ecoPerfeito .7s cubic-bezier(.34,1.7,.5,1) backwards}
+@keyframes ecoPerfeito{from{transform:scale(.3) rotate(-8deg);opacity:0}60%{transform:scale(1.15) rotate(2deg)}}
+.eco-faisca{position:absolute;left:50%;top:50%;width:8px;height:8px;margin:-4px;border-radius:50%;background:#fff6c8;box-shadow:0 0 8px var(--gold2);pointer-events:none;
+  animation:ecoFaisca .85s cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes ecoFaisca{from{transform:rotate(var(--a)) translateX(0) scale(1);opacity:1}to{transform:rotate(var(--a)) translateX(var(--r)) scale(.2);opacity:0}}
+
+/* trilha: um ponto por nota da música */
+.eco-trilha{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:0 0 10px}
+.eco-trilha i{width:14px;height:14px;border-radius:50%;background:#ffffff14;transition:background .3s,box-shadow .3s,transform .3s}
+.eco-trilha i.trecho{background:#ffffff2e}
+.eco-trilha i.rodada{background:#5fd6e6;box-shadow:0 0 8px #5fd6e666}
+.eco-trilha i.feito{background:var(--green)}
+.eco-trilha i.novo{animation:ecoPop .5s cubic-bezier(.34,1.8,.5,1) backwards;animation-delay:var(--d,0ms)}
+@keyframes ecoPop{from{transform:scale(0)}60%{transform:scale(1.6)}}
+.eco-trilha i.soa{animation:ecoSoa .4s ease-out}
+@keyframes ecoSoa{40%{transform:scale(1.7);background:#fff;box-shadow:0 0 14px #5fd6e6}}
+.eco-trilha i.atual{background:var(--gold);box-shadow:0 0 0 3px #e6b45055;animation:ecoAtual 1s ease-in-out infinite}
+@keyframes ecoAtual{50%{box-shadow:0 0 0 7px #e6b45000;transform:scale(1.2)}}
+.eco-trilha i.ok{background:var(--green);animation:ecoOk .45s cubic-bezier(.34,1.8,.5,1)}
+@keyframes ecoOk{40%{transform:scale(1.7);box-shadow:0 0 14px var(--green)}}
+.eco-trilha i.erro{background:var(--red2)}
+.eco-trilha.treme{animation:errado .36s ease}
+.eco-barra{margin-bottom:14px}
+.eco-barra>div{height:100%;width:0;border-radius:6px;background:linear-gradient(90deg,#1fb5c9,var(--green));transition:width .7s cubic-bezier(.2,.8,.2,1)}
+
+/* palco: pílula do fole e o teclado da mão da música */
+.eco-palco{display:flex;flex-direction:column;align-items:center;gap:10px}
+.eco-palco .dirpill{transition:background .25s}
+.eco-kb[hidden]{display:none}
+.eco-flutua{position:absolute;z-index:5;transform:translate(-50%,-50%);font-weight:900;font-size:1rem;color:#fff;text-shadow:0 2px 6px #000c;pointer-events:none;animation:ecoFlutua .9s cubic-bezier(.2,.8,.2,1) forwards}
+.eco-flutua.combo{color:#ffd36e;font-size:1.15rem}
+.eco-flutua.erro{color:var(--red2)}
+@keyframes ecoFlutua{from{opacity:0;transform:translate(-50%,-30%) scale(.6)}20%{opacity:1;transform:translate(-50%,-80%) scale(1.15)}to{opacity:0;transform:translate(-50%,-220%) scale(1)}}
+.eco-controles{justify-content:center;margin-top:10px}
+#ecoFeed{text-align:center;min-height:1.5em}
+
+/* fim: estrelas uma a uma, pontos contando, recorde brilhando */
+.eco-fim{text-align:center;animation:ecoEntra .5s cubic-bezier(.2,.8,.2,1) backwards}
+.eco-fim .filete{width:120px;height:40px;stroke:var(--gold);fill:none;stroke-width:2}
+.eco-fim h2{margin:4px 0 2px;color:var(--gold2)}
+.eco-estrelas{display:flex;justify-content:center;gap:10px;margin:14px 0 6px}
+.eco-estrelas svg{width:58px;height:58px;animation:ecoEstrela .6s cubic-bezier(.34,1.7,.5,1) backwards}
+.eco-estrelas svg:nth-child(1){animation-delay:.25s}.eco-estrelas svg:nth-child(2){animation-delay:.5s;width:72px;height:72px}.eco-estrelas svg:nth-child(3){animation-delay:.75s}
+.eco-estrelas svg.on{filter:drop-shadow(0 0 12px #e6b45088)}
+@keyframes ecoEstrela{from{opacity:0;transform:scale(0) rotate(-90deg)}}
+.eco-fim-pts b{display:block;font-size:2.6rem;line-height:1.1;font-variant-numeric:tabular-nums}
+.eco-fim-pts span{color:var(--muted);font-weight:700}
+.eco-recorde{display:inline-flex;align-items:center;gap:8px;margin:12px 0 0;padding:6px 14px;border-radius:999px;font-weight:900;color:#1b1404;
+  background:linear-gradient(110deg,var(--gold) 40%,#fff3c9 50%,var(--gold) 60%);background-size:250% 100%;animation:ecoRecorde 2.2s linear infinite, ecoFaixaEntra .5s 1.2s backwards}
+.eco-recorde[hidden]{display:none}
+.eco-recorde svg{width:18px;height:18px}
+@keyframes ecoRecorde{from{background-position:100% 0}to{background-position:-150% 0}}
+.eco-fim-acoes{justify-content:center;margin-top:16px}
+@media (max-width:700px){
+  .eco-hud{width:100%}.eco-hud-item{flex:1;min-width:0}
+  .eco-faixa b{font-size:1.35rem}
+  .eco-musicas{grid-template-columns:1fr 1fr}
+  .eco-musica{padding:10px 12px}
+}
+/* sem movimento: tudo parado, a informação continua igual */
+.sem-mov .eco *,.sem-mov .tile-larga *,.sem-mov .eco-faixa{animation:none!important}

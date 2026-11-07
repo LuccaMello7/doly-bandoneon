@@ -292,7 +292,11 @@ function textosEmPortugues(){
   return [...achados];
 }
 async function percorrerApp(){
-  for(const v of ['inicio','estudo','teoria','teclado','desafios','melodias','acordes','ritmo','ajustes','academia','microfone','perfil','professor']){ go(v); await esperar(); }
+  for(const v of ['inicio','estudo','teoria','teclado','desafios','melodias','acordes','eco','ritmo','ajustes','academia','microfone','perfil','professor']){ go(v); await esperar(); }
+  // Eco: a faixa, o placar e a tela do fim passam pela tradução
+  { const antes = state.progress.eco[eco.id]; go('eco'); ecoComecar(); await esperar(); ecoLimpar(); ecoRodada(); await esperar(); ecoLimpar();
+    ecoOuvir(); await esperar(); ecoLimpar(); ecoSuaVez(); await esperar(); ecoRodadaFeita(); await esperar(); ecoLimpar(); ecoFim(); await esperar();
+    if(antes) state.progress.eco[eco.id] = antes; else delete state.progress.eco[eco.id]; ecoParar(); }
   abrirControles(); await esperar(); ligarPc(true); await esperar(); ligarPc(false); $('#ctlDialog').close();
   abrirSugestao(); await esperar(); $('#sugDialog').close(); compartilhar(t('Relatório do BanDoly'), 'x'); await esperar(); $('#partilha').close();
   store.set('tarefa', {ex:'n3-escada', modo:'praticar', vel:70, prof:'', msg:''}); renderTarefa(); await esperar(); store.set('tarefa', null); renderTarefa();
@@ -654,4 +658,32 @@ teste('dicas de tecla: aparecem só com teclado', () => {
   ok(getComputedStyle($('#dirBtn .so-teclado')).display === 'none', 'sem teclado, sem "(Espaço)"');
   igual(comTeclado(), false);
   document.documentElement.classList.toggle('tem-teclado', tem); go('inicio');
+});
+teste('Eco: a música cresce de 2 em 2, o acerto pontua, o erro mostra o botão e o fim dá estrelas', () => {
+  const antes = state.progress.eco.estrelinha;
+  go('eco'); eco.id = 'estrelinha'; $('#ecoPasso').value = '2'; $('#ecoAjuda').value = 'ver';
+  ecoComecar(); ecoLimpar();
+  ok(!$('#ecoJogo').hidden && $('#ecoEscolha').hidden, 'a escolha dá lugar ao jogo');
+  igual(eco.seq.length, 42); igual(eco.fimT, 8); igual(eco.rodadas, 21);
+  igual($$('#ecoTrilha i').length, 42);
+  ecoRodada(); ecoLimpar(); igual(eco.alvo, 2);
+  ecoSuaVez(); const k = ecoKb(), n0 = eco.seq[0], n1 = eco.seq[1];
+  ecoPress(n0.btn, n0.midi, k); igual(eco.pos, 1); igual(eco.pontos, 10);
+  const errado = state.layout[eco.hand].find(b=>b[eco.dir]!==n1.midi);
+  ecoPress(errado, errado[eco.dir], k);
+  igual(eco.pos, 1); igual(eco.erros, 1); igual(eco.combo, 0);
+  ok($('#ecoFeed').classList.contains('bad'), 'o erro avisa');
+  ecoPress(n1.btn, n1.midi, k); ecoLimpar();
+  igual(eco.fase, 'entre'); igual(eco.pontos, 20);
+  ecoRodada(); ecoLimpar(); igual(eco.alvo, 4); igual(eco.pos, 0);
+  ecoSuaVez(); eco.seq.slice(0,4).forEach(n=>ecoPress(n.btn, n.midi, k)); ecoLimpar();
+  ok(eco.pontos > 20 + 40, 'rodada perfeita ganha bônus');
+  eco.erros = 0; ecoFim();
+  ok(!$('#ecoFimCard').hidden, 'tela do fim'); igual(state.progress.eco.estrelinha.estrelas, 3);
+  igual($$('#ecoFimEstrelas svg.on').length, 3);
+  if(antes) state.progress.eco.estrelinha = antes; else delete state.progress.eco.estrelinha;
+  saveProgress(); ecoParar(); go('inicio');
+});
+teste('Eco: todas as músicas têm notas com botão e fole', () => {
+  for(const x of ECO_MUSICAS){ const {seq} = ecoMusica(x.id); ok(seq.length>=8 && seq.every(n=>n.btn && n.dir), x.id); }
 });
