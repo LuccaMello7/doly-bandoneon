@@ -253,11 +253,10 @@ figcaption{color:var(--muted);font-size:.85rem;margin-top:6px}
 .ac-linha{margin:4px 0;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .ac-linha .muted{min-width:60px}
 .ac-instrutor hr{border:0;border-top:1px solid var(--line);margin:8px 0}
-.ac-proximo{color:var(--muted);font-size:.9rem;border-left:3px dashed var(--gold);padding-left:8px}
 .ac-validacao{font-size:.8rem;margin-bottom:0}
 .ac-opcoes{font-size:.85rem}
 .ac-instrutor.grande .ac-nota{font-size:3rem}
-.ac-instrutor.grande .ac-linha{font-size:1.15rem}
+.ac-instrutor.grande .ac-chip{font-size:1.05rem}.ac-instrutor.grande .ac-prox-nota{font-size:2rem}
 .ac-instrutor.grande .maos{max-width:none}
 .ac-instrutor.grande .mao-box svg{width:100%}
 .maos{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:8px 0}
@@ -277,7 +276,10 @@ figcaption{color:var(--muted);font-size:.85rem;margin-top:6px}
 .mao .dedo.proximo rect{stroke:var(--gold);stroke-width:2.5;stroke-dasharray:4 3}
 .key.guia{box-shadow:0 0 0 4px var(--gold),0 0 18px 6px #caa24799;animation:guia 1.4s ease-in-out infinite}
 @keyframes guia{50%{box-shadow:0 0 0 4px var(--gold),0 0 8px 2px #caa24755}}
-.key.prox{outline:2px dashed var(--gold);outline-offset:3px}
+/* o próximo botão: tracejado dourado mais forte, "respirando" (o mesmo do cartão Próximo do instrutor) */
+.key.prox{outline:3px dashed var(--gold2);outline-offset:4px;animation:proxPulsa 1.6s ease-in-out infinite}
+@keyframes proxPulsa{50%{outline-offset:7px}}
+.sem-mov .key.prox{animation:none}
 .key[data-dedo]::after{content:attr(data-dedo);position:absolute;top:-7px;right:-7px;width:18px;height:18px;border-radius:50%;background:var(--navy);color:var(--gold2);border:2px solid var(--gold);font-size:11px;line-height:14px;font-weight:800}
 .ac-strip .mcard sup{color:var(--gold2);font-weight:800}
 .ac-lista{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;margin-bottom:12px}
@@ -297,7 +299,7 @@ figcaption{color:var(--muted);font-size:.85rem;margin-top:6px}
 .ac-rec{background:#1d3150;border-left:4px solid var(--gold);padding:8px 12px;border-radius:6px}
 @media (max-width:980px){
   .ac-layout{grid-template-columns:1fr}
-  .ac-instrutor{position:static;order:-1}
+  .ac-instrutor{order:-1}
   .maos{max-width:320px}
 }
 @media (max-width:700px){
@@ -944,11 +946,12 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
 .ac-prog{display:flex;flex-direction:column;gap:4px;margin:-2px 0 10px;font-size:.78rem}
 .ac-prog-bar{height:6px;border-radius:9px;background:#ffffff14;overflow:hidden}
 .ac-prog-bar i{display:block;height:100%;width:0;border-radius:9px;background:linear-gradient(90deg,var(--gold),var(--gold2));transition:width .45s cubic-bezier(.2,.8,.2,1)}
-#acAgora.troca .ac-nota{animation:notaEntra .45s cubic-bezier(.34,1.4,.5,1) both}
-#acAgora.troca .ac-linha{animation:sobe .4s cubic-bezier(.2,.8,.2,1) both}
-#acAgora.troca .ac-linha:nth-of-type(2){animation-delay:.05s}#acAgora.troca .ac-linha:nth-of-type(3){animation-delay:.1s}
-#acAgora.troca .ac-dicas li{animation:sobe .45s cubic-bezier(.2,.8,.2,1) both}
-#acAgora.troca .ac-dicas li:nth-child(1){animation-delay:.12s}#acAgora.troca .ac-dicas li:nth-child(2){animation-delay:.2s}#acAgora.troca .ac-dicas li:nth-child(3){animation-delay:.28s}
+#acInstrutor.troca .ac-nota{animation:notaEntra .45s cubic-bezier(.34,1.4,.5,1) both}
+#acInstrutor.troca .ac-chips{animation:sobe .4s .05s cubic-bezier(.2,.8,.2,1) backwards}
+#acInstrutor.troca .ac-prox-box{animation:proxEntra .5s .1s cubic-bezier(.34,1.4,.5,1) backwards}
+@keyframes proxEntra{from{opacity:0;transform:translateX(16px)}}
+.troca .ac-dicas li{animation:sobe .45s cubic-bezier(.2,.8,.2,1) backwards}
+.troca .ac-dicas li:nth-child(1){animation-delay:.18s}.troca .ac-dicas li:nth-child(2){animation-delay:.26s}.troca .ac-dicas li:nth-child(3){animation-delay:.34s}
 @keyframes notaEntra{from{opacity:0;transform:translateY(12px) scale(.85)}}
 .ac-instrutor{transition:box-shadow .3s}
 .ac-instrutor.ok{animation:instrOk .55s ease}
@@ -1521,3 +1524,32 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
 .sem-mov .gaucho.aparece .gaucho-balao{opacity:1;transform:none}
 /* sem movimento: tudo parado, a informação continua igual */
 .sem-mov .eco *,.sem-mov .tile-larga *,.sem-mov .eco-faixa{animation:none!important}
+
+/* Instrutor da Academia: "Agora" grande, "Próximo" num cartão tracejado, dicas discretas */
+.ac-rotulo{display:block;font-size:.7rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.ac-agora-box{padding-bottom:10px}
+.ac-chips{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:6px}
+.ac-chip{display:inline-flex;gap:6px;align-items:center;background:#ffffff0d;border-radius:999px;padding:4px 10px;font-size:.88rem}
+.ac-prox-box{margin:2px 0 12px;padding:10px 12px;border:2px dashed var(--gold2);border-radius:14px;background:#e6b45014}
+.ac-prox-box .ac-rotulo{color:var(--gold2)}
+.ac-prox-nota{font-size:1.5rem;font-weight:800;line-height:1.15}
+.ac-prox-box.fim{border-style:solid;border-color:var(--line);background:transparent}
+.ac-prox-box.fim .ac-prox-nota{font-size:1rem;color:var(--muted);font-weight:700}
+.dirpill.mini{padding:2px 10px;font-size:.8rem}
+.ac-dicas-box .ac-dicas{margin-top:0}
+.ac-dicas-box .ac-dicas li,.ac-dicas-cel .ac-dicas li{font-size:.84rem;color:#c9d4e4}
+.ac-dicas-cel{display:none}
+/* celular e tablet: o instrutor vira uma barra fixa logo acima do teclado, com Agora e Próximo lado a lado */
+@media (max-width:980px){
+  .ac-instrutor{position:sticky;top:62px;z-index:15;padding:10px 14px;box-shadow:0 12px 26px #0009}
+  .ac-instrutor h3,.ac-instrutor .ac-opcoes,.ac-instrutor .ac-validacao,.ac-instrutor .maos,.ac-dicas-box{display:none!important}
+  .ac-instrutor .ac-prog{margin:0 0 8px}
+  .ac-ap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:10px;align-items:stretch}
+  .ac-agora-box{padding:0}
+  .ac-prox-box{margin:0}
+  .ac-instrutor .ac-nota{font-size:1.6rem}
+  .ac-prox-nota{font-size:1.25rem}
+  .ac-chip{font-size:.78rem;padding:3px 8px}
+  .ac-instrutor .dirpill:not(.mini){padding:3px 10px;font-size:.82rem}
+  .ac-dicas-cel{display:block;margin-top:10px}
+}

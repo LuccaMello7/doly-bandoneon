@@ -279,22 +279,33 @@ function textoDedo(e){
   const alt = e.alternativas.length ? ' ' + t('(também: {})', e.alternativas.join(', ')) : '';
   return `${e.dedo} · ${t(DEDOS[e.dedo])}${alt}${e.fonte==='professor' ? ' · ' + t('digitação do professor') : ''}`;
 }
+// Instrutor: "Agora" (a nota grande, a mão e o fole) e "Próximo" num cartão próprio, tracejado como o próximo
+// botão no teclado. As dicas de posição vêm depois, mais discretas (no celular, embaixo do teclado).
+const pilulaFole = (d, mini) => `<span class="dirpill ${d}${mini?' mini':''}">${mini ? dirLabel(d) : (d==='open'?'⟵ ':'⟶ ') + dirLabel(d) + (d==='open'?' ⟶':' ⟵')}</span>`;
 function acadInstrutor(gi){
   const aj = acadAjuda(), g = acad.grupos[gi], prox = acad.grupos[gi+1];
-  if(!g){ $('#acAgora').innerHTML = `<div class="muted">${t('Escolha um exercício e um modo, depois aperte Começar.')}</div>`; $('#acProximo').textContent=''; maos.destacar({}); return; }
+  if(!g){ $('#acAgora').innerHTML = `<div class="muted">${t('Escolha um exercício e um modo, depois aperte Começar.')}</div>`;
+    $('#acProxBox').hidden = true; $('#acDicas').innerHTML = ''; $('#acDicasCel').innerHTML = ''; $('#acMaos').style.display = 'none'; maos.destacar({}); return; }
   const evs = g.ks.map(k=>acad.eventos[k]), oculto = aj.faixa==='oculta' && !(acad.ex.semAjuda);
-  $('#acAgora').innerHTML = evs.map(e=>`<div class="ac-nota">${oculto ? '?' : noteName(e.midi)}</div>`
-    + `<div class="ac-linha"><span class="muted">${t('Mão')}</span> <b>${t(e.mao==='left'?'Esquerda':'Direita')}</b></div>`
-    + (aj.fole ? `<div class="ac-linha"><span class="muted">${t('Fole')}</span> <span class="dirpill ${e.fole}">${e.fole==='open'?'⟵ ':'⟶ '}${dirLabel(e.fole)}${e.fole==='open'?' ⟶':' ⟵'}</span></div>` : '')
-    + (aj.dedo && e.dedo!=null ? `<div class="ac-linha"><span class="muted">${t('Dedo')}</span> <b>${textoDedo(e)}</b></div>` : '')
-    + (acad.modo==='desafio' && !acad.ex.semTempo ? `<div class="ac-linha"><span class="muted">${t('Duração')}</span> ${t('{} tempo(s)', +e.duracao.toFixed(2))}</div>` : '')
-  ).join('<hr>') + (oculto ? '' : renderDicas(gi));
-  animarInstrutor(gi);
+  $('#acAgora').innerHTML = evs.map(e=>`<div class="ac-nota">${oculto ? '?' : noteName(e.midi)}</div><div class="ac-chips">`
+    + `<span class="ac-chip"><span class="muted">${t('Mão')}</span> <b>${t(e.mao==='left'?'Esquerda':'Direita')}</b></span>`
+    + (aj.fole ? pilulaFole(e.fole) : '')
+    + (aj.dedo && e.dedo!=null ? `<span class="ac-chip"><span class="muted">${t('Dedo')}</span> <b>${textoDedo(e)}</b></span>` : '')
+    + (acad.modo==='desafio' && !acad.ex.semTempo ? `<span class="ac-chip"><span class="muted">${t('Duração')}</span> ${t('{} tempo(s)', +e.duracao.toFixed(2))}</span>` : '')
+    + '</div>').join('<hr>');
+  const dicas = oculto ? '' : renderDicas(gi); $('#acDicas').innerHTML = dicas; $('#acDicasCel').innerHTML = dicas;
   const pe = prox ? prox.ks.map(k=>acad.eventos[k]) : [];
-  $('#acProximo').textContent = !prox ? t('Próximo: fim do exercício') : oculto || aj.faixa==='nomes' ? t('Próximo: {}', pe.map(e=>noteName(e.midi)).join(' + '))
-    : t('Próximo: {}', pe.map(e=>`${nomeEvento(e)} (${maoNome(e.mao)})${aj.dedo && e.dedo!=null ? ', ' + t('dedo {}', e.dedo) : ''}`).join(' + '));
-  // mãos: dedo atual (aceso) e o da próxima nota (tracejado)
-  $('#acMaos').style.display = aj.maos && $('#acMaosVer').checked ? '' : 'none';
+  const pb = $('#acProxBox'); pb.hidden = false; pb.classList.toggle('fim', !prox);
+  $('#acProximo').innerHTML = !prox ? `<div class="ac-prox-nota">${t('Fim do exercício')}</div>`
+    : oculto ? '<div class="ac-prox-nota">?</div>' // tocando de memória: o próximo também fica escondido
+    : aj.faixa==='nomes' ? `<div class="ac-prox-nota">${pe.map(e=>noteName(e.midi)).join(' + ')}</div>`
+    : pe.map(e=>`<div class="ac-prox-nota">${noteName(e.midi)}</div><div class="ac-chips">${aj.fole ? pilulaFole(e.fole, true) : ''}`
+        + `<span class="ac-chip">${maoNome(e.mao)}</span>${aj.dedo && e.dedo!=null ? `<span class="ac-chip">${t('dedo {}', e.dedo)}</span>` : ''}</div>`).join('');
+  animarInstrutor(gi);
+  // mãos: só quando o exercício tem digitação (do professor). Dedo atual aceso, o da próxima nota tracejado.
+  const temDedo = acad.eventos.some(e=>e.dedo!=null);
+  $('#acMaosOp').hidden = !temDedo;
+  $('#acMaos').style.display = aj.maos && temDedo && $('#acMaosVer').checked ? '' : 'none';
   const info = {};
   for(const lado of ['left','right']){
     const a = evs.find(e=>e.mao===lado), p = pe.find(e=>e.mao===lado);
@@ -351,7 +362,7 @@ function animarInstrutor(gi){
   const n = acad.grupos.length, bar = $('#acProgBar');
   if(bar){ bar.style.width = (n ? 100*Math.max(0,gi)/n : 0) + '%'; $('#acProgTxt').textContent = n ? `Momento ${Math.min(n, Math.max(0,gi)+1)} de ${n}` : ''; }
   if(typeof currentView==='undefined' || currentView!=='academia') return; // com a aba fechada não há o que animar (e ler offsetWidth forçaria o layout)
-  const el = $('#acAgora'); el.classList.remove('troca'); void el.offsetWidth; el.classList.add('troca');
+  [$('#acInstrutor'), $('#acDicasCel')].forEach(el=>{ el.classList.remove('troca'); void el.offsetWidth; el.classList.add('troca'); });
 }
 function pulsoInstrutor(tipo){
   const el = $('#acInstrutor'); el.classList.remove('ok','erro'); void el.offsetWidth; el.classList.add(tipo);

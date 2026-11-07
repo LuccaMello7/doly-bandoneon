@@ -704,3 +704,13 @@ teste('RepeTCHÊ: tocar numa música já começa o jogo', () => {
   ok(!$('#ecoStart'), 'sem botão Começar separado');
   ecoParar(); eco.id = id0; store.set('ecoMusica', id0); go('inicio');
 });
+teste('Academia: o instrutor mostra Agora e Próximo separados, e as mãos só com digitação', () => {
+  go('academia'); carregarExercicio('n3-legato'); acadInstrutor(0);
+  const n0 = acad.grupos[0].ks.map(k=>acad.eventos[k])[0], n1 = acad.grupos[1].ks.map(k=>acad.eventos[k])[0];
+  igual($('#acAgora .ac-nota').textContent, noteName(n0.midi));
+  ok(!$('#acProxBox').hidden, 'cartão Próximo visível');
+  igual($('#acProximo .ac-prox-nota').textContent, noteName(n1.midi));
+  ok(!acad.eventos.some(e=>e.dedo!=null) ? $('#acMaos').style.display==='none' && $('#acMaosOp').hidden : true, 'sem digitação, sem mãos');
+  acadInstrutor(acad.grupos.length-1); ok($('#acProxBox').classList.contains('fim'), 'no último momento: fim do exercício');
+  go('inicio');
+});

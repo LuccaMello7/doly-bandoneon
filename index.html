@@ -724,6 +724,7 @@
       </div>
       <div class="mstrip ac-strip" id="acStrip"></div>
       <div class="feedback" id="acFeed" aria-live="polite"></div>
+      <div class="ac-dicas-cel" id="acDicasCel"></div>
       <div class="ac-dedo-pop" id="acDedoPop" hidden></div>
     </div>
 
@@ -731,11 +732,16 @@
     <aside class="card ac-instrutor" id="acInstrutor" aria-label="Instrutor digital">
       <h3>Instrutor</h3>
       <div class="ac-prog" aria-hidden="true"><span id="acProgTxt" class="muted"></span><span class="ac-prog-bar"><i id="acProgBar"></i></span></div>
-      <div id="acAgora" aria-live="polite"></div>
-      <p class="ac-proximo" id="acProximo"></p>
+      <!-- "Agora" em destaque e "Próximo" num cartão tracejado (o mesmo tracejado do próximo botão no teclado) -->
+      <div class="ac-ap">
+        <div class="ac-agora-box"><span class="ac-rotulo">Agora</span><div id="acAgora" aria-live="polite"></div></div>
+        <div class="ac-prox-box" id="acProxBox" hidden><span class="ac-rotulo">Próximo</span><div id="acProximo"></div></div>
+      </div>
+      <div class="ac-dicas-box" id="acDicas"></div>
+      <!-- as mãos só aparecem quando há digitação (do professor): sem dedo definido, não acrescentam nada -->
       <div class="maos" id="acMaos"></div>
       <div class="row ac-opcoes">
-        <label><input type="checkbox" id="acMaosVer" checked> Mostrar as mãos</label>
+        <label id="acMaosOp" hidden><input type="checkbox" id="acMaosVer" checked> Mostrar as mãos</label>
         <label><input type="checkbox" id="acAmpliar"> Visualização ampliada</label>
       </div>
       <p class="muted ac-validacao" id="acValidacao"></p>
