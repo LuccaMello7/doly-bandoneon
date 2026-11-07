@@ -181,9 +181,13 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
   (`dicasPosicao`). O app **nunca afirma ter conferido o dedo**.
 - Transcreva só de partitura legível. Se a imagem não deixa ler com segurança, diga isso e peça uma
   melhor ou um MusicXML. Foi assim com o "Canto" de El Choclo: só a introdução entrou.
-- **Direitos autorais:** música só entra pronta se estiver em domínio público (na Argentina, 70 anos após
-  a morte do autor). Recusadas por estarem protegidas: Nada (Dames), Adiós Nonino (Piazzolla), El sueño
-  del pibe (Puey). O usuário pode importá-las para uso pessoal.
+- **Direitos autorais:** música só entra pronta se estiver em domínio público (no Brasil e na Argentina,
+  70 anos após a morte do autor). Recusadas por estarem protegidas: Nada (Dames), Adiós Nonino (Piazzolla),
+  El sueño del pibe (Puey), Hino do Grêmio (Lupicínio Rodrigues, livre só em 2045). O usuário pode
+  importá-las para uso pessoal.
+- **Já transcritas de partitura** (fonte na descrição de cada uma): La Cumparsita, parte A (edição Tony
+  Wilkinson, IMSLP, CC BY 3.0) e Tico-tico no fubá, parte A (Musica Brasilis, CC BY-SA). Uma voz só: onde a
+  mão direita tem duas vozes, fica a que conduz a melodia.
 - Fotos do Doly: só com autorização da família. Áudio e vídeo dele também: vídeo do YouTube "não
   listado", com fachada que só carrega no clique e `youtube-nocookie`, ou áudio próprio com o vinil girando.
 - Não publique o e-mail pessoal do dono sem ele pedir.
@@ -206,6 +210,17 @@ E="/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe"; W=$(cygpath -w
 - Celular: uma página com `<iframe style="width:390px">` e `--allow-file-access-from-files`.
 - Desempenho: injete `performance.now()` entre os scripts e compare antes e depois.
 
+### Transcrever partituras e tratar mídia
+- PDF → imagem: `pip install pymupdf`, renderize a 300–400 dpi e recorte cada sistema.
+- `ferramentas/medir_notas.py` (precisa de numpy, pillow e scipy) acha as 5 linhas da pauta e a posição de
+  cada cabeça de nota (0 = linha de baixo, 1 = 1º espaço…). Use para confirmar a leitura nota a nota;
+  posições "x,5" na impressão antiga = ilegível, não adivinhe.
+- Depois de escrever no formato de texto, confira que cada compasso soma a fórmula de compasso e compare a
+  pauta desenhada nas Melodias com a partitura.
+- Áudio e vídeo: `pip install imageio-ffmpeg` traz o ffmpeg. Corte, normalize (`loudnorm`) e grave MP4 H.264
+  com `-movflags +faststart`. Vídeo não entra em `ARQUIVOS` do `sw.js` (o service worker deixa passar os
+  pedidos com Range).
+
 ## 10. Como o dono gosta de trabalhar
 
 - Pede melhorias amplas ("faça todas"). Implemente, teste, publique e então relate em pt-BR, de forma
@@ -217,6 +232,16 @@ E="/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe"; W=$(cygpath -w
 ## 11. Pendências conhecidas
 
 - Testes com aprendizes e professores reais, num celular real e com o bandoneon no microfone.
+- Músicas:
+  - **Prenda Minha:** a edição de Mário de Andrade (1928, IMSLP #865527) é ilegível demais. Transcrever da
+    versão para piano de Ernani Braga (IMSLP #731321, Ricordi 1947, domínio público) quando o dono baixar.
+  - **Hino Rio-Grandense:** melodia de Mendanha (1838) é livre, mas a versão cantada hoje tem revisão de
+    Antônio Corte Real (1934), com data de morte não confirmada. Precisa de partitura (não há no site do
+    Estado, só MP3) e de confirmar os direitos dessa versão. Alternativa livre: a partitura de 1887 (jornal
+    *A Federação*, Hemeroteca Digital).
+  - Sugeridas, com partitura em domínio público no IMSLP: Gaúcho (O Corta-jaca), de Chiquinha Gonzaga, e
+    Odeon, de Ernesto Nazareth.
+  - Ideia: RepeTCHÊ aceitar as músicas do próprio aluno (Melodias e partituras importadas), para uso pessoal.
 - Do dono:
   - foto nítida do Canto de El Choclo;
   - páginas de um método de digitação (ex.: Pedro Maffia), como referência e não como regra;
