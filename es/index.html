@@ -91,6 +91,8 @@
   <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
   <!-- ornamento inspirado no fileteado porteño: volutas e uma folha no centro -->
   <symbol id="i-filete" viewBox="0 0 120 40"><path d="M60 21c-6-13-27-14-31-1-3 9 8 14 14 8 4-4 1-10-4-9"/><path d="M60 21c6-13 27-14 31-1 3 9-8 14-14 8-4-4-1-10 4-9"/><path d="M29 20c-9 1-14 7-25 2M91 20c9 1 14 7 25 2"/><path d="M60 6c4 4 4 10 0 15-4-5-4-11 0-15z"/><circle cx="60" cy="30" r="2.5"/></symbol>
+  <symbol id="i-expand" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
   <symbol id="i-question" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7v.5M12 17h.01"/></symbol>
 </svg>
 <header>
@@ -144,6 +146,11 @@
       <div class="caixa"><i></i><i></i><i></i><i></i><i></i><i class="f"></i><i></i><i></i><i></i></div>
       <div class="voa"><i></i><i></i><i></i><i></i><i></i></div>
     </div>
+  </div>
+  <div class="card instalar" id="instalarCard" hidden>
+    <img src="../icones/icone-192.png" alt="" width="52" height="52">
+    <div class="instalar-txt"><b>Instala BanDoly en el celular</b><span class="muted" id="instalarTxt">Se abre directo desde la pantalla de inicio, más rápido e incluso sin internet.</span><span class="muted" id="instalarIos" hidden>En el iPhone: toca Compartir y luego “Agregar a inicio”.</span></div>
+    <div class="instalar-acoes"><button type="button" class="btn" id="instalarSim"><svg aria-hidden="true"><use href="#i-download"/></svg>Instalar</button><button type="button" class="btn ghost" id="instalarNao">Ahora no</button></div>
   </div>
   <aside class="aviso aviso-curto" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></svg><p><strong>BanDoly es un sitio para aprender y nunca reemplazará los consejos y la orientación de un profesor.</strong> Usa la app como apoyo para tus estudios y, siempre que puedas, aprende con un profesor de bandoneón: él corrige la postura, el fuelle y la digitación, cosas que una app no puede ver.</p></aside>
   <div class="tiles" data-revela="cascata">
@@ -234,12 +241,16 @@
 <!-- TECLADO -->
 <section id="v-teclado">
   <div class="pg-topo"><span class="pg-ic t-teclado"><svg aria-hidden="true"><use href="#i-keys"/></svg></span><div><h2 class="pg-tit">Teclado</h2><p class="muted">Los 71 botones con sonido real. Toca, cambia el fuelle y mira cómo cada botón cambia de nota.</p></div></div>
-  <div class="card">
+  <div class="card tk-card" id="tkCard">
+    <!-- tela cheia (js/fole.js): esta barra só aparece nela; o seletor de mãos e o fole vêm para cá -->
+    <div class="tk-cheia-barra" id="tkCheiaBarra" hidden><button type="button" class="btn sec" id="tkCheiaSair"><svg aria-hidden="true"><use href="#i-x"/></svg>Salir</button></div>
+    <!-- no celular: o instrumento vem antes dos ajustes e este atalho fica no topo -->
+    <div class="tk-rapido"><button type="button" class="btn btn-grande" data-tk-cheia><svg aria-hidden="true"><use href="#i-expand"/></svg>Tocar en pantalla completa</button><span class="muted">Solo el instrumento y el fuelle, con los botones más grandes.</span></div>
     <div class="toolbar">
       <div class="grupo"><span class="grupo-tit">Fuelle</span>
-        <button class="btn" id="dirBtn">Cambiar dirección (Espacio)</button>
-        <button class="btn sec" id="valveOpenBtn" title="Mantén para abrir el fuelle sin sonido">Válvula: abrir (mantén A o ←)</button>
-        <button class="btn sec" id="valveCloseBtn" title="Mantén para cerrar el fuelle sin sonido">Válvula: cerrar (mantén F o →)</button>
+        <button class="btn" id="dirBtn">Cambiar dirección<span class="so-teclado"> (Espacio)</span></button>
+        <button class="btn sec" id="valveOpenBtn" title="Mantén para abrir el fuelle sin sonido">Válvula: abrir<span class="so-teclado"> (mantén A o ←)</span></button>
+        <button class="btn sec" id="valveCloseBtn" title="Mantén para cerrar el fuelle sin sonido">Válvula: cerrar<span class="so-teclado"> (mantén F o →)</span></button>
         <button class="btn sec" id="foleLivreBtn" aria-pressed="false" title="Modo libre: al llegar al final, el fuelle vuelve solo. En un bandoneón de verdad no es así.">Fuelle sin límite</button>
       </div>
       <div class="grupo"><span class="grupo-tit">Botones</span>
@@ -247,6 +258,7 @@
       </div>
       <div class="grupo"><span class="grupo-tit">Ver</span>
         <span class="segmento mini" id="tkVer" role="group" aria-label="Manos visibles"><button class="btn sec on" data-ver="duas">Dos manos</button><button class="btn sec" data-ver="left">Izquierda</button><button class="btn sec" data-ver="right">Derecha</button></span>
+        <button class="btn sec" data-tk-cheia><svg aria-hidden="true"><use href="#i-expand"/></svg>Pantalla completa</button>
       </div>
       <div class="grupo"><span class="grupo-tit">Tocar con</span>
         <button class="btn sec" id="pcBtn" title="Toca los botones con las teclas de la computadora">Teclado de la computadora</button>
@@ -269,8 +281,8 @@
     <p class="girar"><svg aria-hidden="true"><use href="#i-rotate"/></svg> Consejo: gira el celular para tocar con más espacio, o mira una mano por vez.</p>
     <div class="instrument" id="tkInstrumento">
       <div class="side"><div class="label">Mano izquierda (graves)</div><div id="kbLeft"></div></div>
-      <div class="bellows-wrap">
-        <div id="dirPill" class="dirpill open">⟵ ABRIENDO ⟶</div>
+      <div class="bellows-wrap" id="foleBox">
+        <button type="button" id="dirPill" class="dirpill open" title="Toca para cambiar la dirección del fuelle">⟵ ABRIENDO ⟶</button>
         <div class="bellows" id="bellows"></div>
         <div class="warn" id="bellowsWarn"></div>
       </div>
@@ -298,12 +310,12 @@
       <label>Mano: <select id="fHand"><option value="right">Derecha</option><option value="left">Izquierda</option><option value="both">Ambas</option></select></label>
       <label>Dirección: <select id="fDir"><option value="open">Abriendo</option><option value="close">Cerrando</option><option value="rand">Aleatoria</option></select></label>
       <label>Sorteo: <select id="fMode"><option value="smart">Inteligente (se enfoca en tus errores)</option><option value="rand">Aleatorio</option></select></label>
-      <label class="nomes-chk"><input type="checkbox" class="nomesToggle" checked> Nombres de las notas</label>
     </div>
     <div class="acao">
       <button class="btn btn-grande" id="fStart"><svg aria-hidden="true"><use href="#i-play"/></svg>Comenzar</button>
       <button class="btn sec" id="fListen"><svg aria-hidden="true"><use href="#i-volume"/></svg>Escuchar la nota</button>
       <button class="btn sec" id="fHeat"><svg aria-hidden="true"><use href="#i-flame"/></svg>Mapa de errores</button>
+      <p class="muted acao-dica">Durante el desafío los nombres de los botones se ocultan.</p>
     </div>
     <p class="muted" id="fHeatInfo" style="display:none">Colores según tu tasa de error en la dirección elegida en "Dirección": verde = aciertas, rojo = te equivocas. Los botones sin color todavía no aparecieron en el desafío.</p>
     <div style="text-align:center;margin-top:14px">
@@ -542,7 +554,7 @@
   </div>
   <div class="card">
     <h3>Toca junto</h3>
-    <p class="muted">Con el patrón sonando, golpea el botón de abajo (o presiona <kbd>Espacio</kbd>) junto con cada acento. La app mide si vas adelantado o atrasado.</p>
+    <p class="muted">Con el patrón sonando, golpea el botón de abajo<span class="so-teclado"> (o presiona <kbd>Espacio</kbd>)</span> junto con cada acento. La app mide si vas adelantado o atrasado.</p>
     <button class="pad" id="rPad">TOCA AQUÍ</button>
     <div style="text-align:center;margin-top:10px">
       <div class="feedback" id="rFeed"></div>
@@ -643,7 +655,7 @@
       </div>
       <div class="row">
         <span class="muted">Tu fuelle:</span> <span class="dirpill open" id="acDirPill"></span>
-        <button class="btn sec" id="acDirBtn" title="Cambia la dirección del fuelle (tecla Espacio)">⇄ Cambiar fuelle <kbd>Espacio</kbd></button>
+        <button class="btn sec" id="acDirBtn" title="Cambia la dirección del fuelle (tecla Espacio)">⇄ Cambiar fuelle <kbd class="so-teclado">Espacio</kbd></button>
         <label title="La app cambia sola la dirección del fuelle. En ese caso el fuelle no se evalúa."><input type="checkbox" id="acAuto"> Fuelle automático</label>
         <label><input type="checkbox" id="acNomes" class="nomesToggle" checked> Nombres en los botones</label>
       </div>
@@ -847,7 +859,7 @@
   <form method="dialog" id="bvForm">
     <svg class="filete" aria-hidden="true"><use href="#i-filete"/></svg>
     <h2 id="bvTit">¡Bienvenido a BanDoly!</h2>
-    <p class="muted">Tres preguntas rápidas para armar tu camino de estudio.</p>
+    <p class="muted">BanDoly es una app gratuita para aprender bandoneón. Tres preguntas rápidas arman tu camino de estudio.</p>
     <div class="bv-pontos" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
     <fieldset class="bv-passo on" data-passo="0"><legend>¿Ya tocaste algún instrumento?</legend><label class="op"><input type="radio" name="exp" value="nunca"><span class="op-ic"><svg aria-hidden="true"><use href="#i-note"/></svg></span><span>Nunca toqué</span></label><label class="op"><input type="radio" name="exp" value="outro"><span class="op-ic"><svg aria-hidden="true"><use href="#i-music"/></svg></span><span>Toco otro instrumento</span></label><label class="op"><input type="radio" name="exp" value="bandoneon"><span class="op-ic"><svg aria-hidden="true"><use href="#i-bellows"/></svg></span><span>Ya toco el bandoneón</span></label></fieldset>
     <fieldset class="bv-passo" data-passo="1"><legend>¿Tienes un bandoneón a mano?</legend><label class="op"><input type="radio" name="inst" value="sim"><span class="op-ic"><svg aria-hidden="true"><use href="#i-bellows"/></svg></span><span>Sí, tengo uno</span></label><label class="op"><input type="radio" name="inst" value="nao"><span class="op-ic"><svg aria-hidden="true"><use href="#i-keys"/></svg></span><span>Todavía no: voy a usar el teclado de la app</span></label></fieldset>

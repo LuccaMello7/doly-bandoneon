@@ -5,6 +5,7 @@
 //   showLabels()  mostra ou esconde os nomes das notas
 //   onPress(b, midi, dir, api)  chamado ao apertar um botão
 //   perRow        1 se o teclado fica sozinho na linha (afeta o tamanho automático)
+//   size, diaFator tamanho fixo da casa de cada botão e quanto dela o círculo ocupa (padrão 0,8)
 //   largura()     largura disponível em px, quando o teclado fica numa área menor que a página
 //   editable, canSound, sound   edição do mapa e controle do som
 // Devolve uma api para marcar botões (dica, acerto, erro, acorde, cor do mapa de erros).
@@ -26,7 +27,7 @@ function createKeyboard(el, hand, opts={}){
     api.pendente=false; pendentes.delete(api);
     el.innerHTML=''; el.className='kbd';
     const bs=state.layout[hand], maxX=Math.max(...bs.map(b=>b.x)), maxY=Math.max(...bs.map(b=>b.y));
-    size=opts.size||autoKeySize(maxX, opts.perRow, opts.largura&&opts.largura()); dia=Math.round(size*0.8); api.size=size;
+    size=opts.size||autoKeySize(maxX, opts.perRow, opts.largura&&opts.largura()); dia=Math.round(size*(opts.diaFator||0.8)); api.size=size;
     el.style.width=((maxX+1)*size+10)+'px'; el.style.height=((maxY+1)*size+10)+'px';
     el.style.fontSize=Math.max(8, Math.round(size*0.21))+'px';
     for(const b of state.layout[hand]){

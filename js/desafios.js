@@ -2,7 +2,8 @@
 // O app sorteia um botão e uma direção, mostra a nota e o aluno procura o botão.
 // fq = estado da rodada (hand/dir sorteados, answer = botão certo, target = nota MIDI).
 const fq={round:0,score:0,target:null,dir:'open',hand:'right',errors:0,active:false,answer:null,heat:false};
-const fOpts=hand=>({ getDir:()=>fq.dir, showLabels:()=>fq.heat || state.showLabels, sound:true, onPress:(b,m,dir,k)=>findPress(b,m,k) });
+// durante a rodada, sem nomes nos botões: senão o desafio é só achar a palavra escrita
+const fOpts=hand=>({ getDir:()=>fq.dir, showLabels:()=>fq.heat || (!fq.active && state.showLabels), sound:true, onPress:(b,m,dir,k)=>findPress(b,m,k) });
 // Estatística por botão e direção: {ok, err}
 state.progress.btnStats = state.progress.btnStats || {};
 const statKey = (hand,id,dir) => `${hand}|${id}|${dir}`;
@@ -27,7 +28,7 @@ const fkL=kb($('#fkLeft'),'left',fOpts('left')), fkR=kb($('#fkRight'),'right',fO
 function nextFind(){
   fkL.clearMarks(); fkR.clearMarks();
   if(fq.round>=10){
-    fq.active=false; $('#fTarget').textContent=`Fim! ${fq.score}/10`;
+    fq.active=false; refreshAll(); $('#fTarget').textContent=`Fim! ${fq.score}/10`;
     $('#fFeed').className='feedback'; $('#fFeed').textContent = fq.score>=8?'Excelente!':fq.score>=5?'Bom trabalho, continue treinando.':'Treine mais no Teclado com os nomes visíveis.';
     if(state.progress.find==null || fq.score>state.progress.find){ state.progress.find=fq.score; saveProgress(); }
     logPractice('desafio'); if(fq.score>=8) comemorar();

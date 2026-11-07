@@ -440,7 +440,8 @@ function melPress(b, m, dir){
     } else {
       mel.errors++; cardCls(mel.idx,'bad');
       const same=ns.find(n=>n.btn.id===b.id);
-      melFeed(same ? `Botão certo, mas o fole está ${dirLabel(dir).toLowerCase()}. Troque a direção (Espaço).` : `Esse é ${noteName(m)}.`, 'bad');
+      melFeed(same ? (comTeclado() ? `Botão certo, mas o fole está ${dirLabel(dir).toLowerCase()}. Troque a direção (Espaço).`
+                            : `Botão certo, mas o fole está ${dirLabel(dir).toLowerCase()}. Troque a direção do fole.`) : `Esse é ${noteName(m)}.`, 'bad');
     }
   } else if(mode==='timed') timedPress(m);
 }

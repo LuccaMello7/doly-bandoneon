@@ -22,9 +22,29 @@ $('#movSel').onchange=e=>{ mov.pref=e.target.value; store.set('movimento',mov.pr
 $('#vibSel').onchange=e=>{ mov.vib=e.target.value==='1'; store.set('vibracao',mov.vib); vibrar('ok'); };
 
 // Pré-carrega as amostras no primeiro gesto do usuário (o navegador só libera o áudio depois de um toque)
+// Se o som gravado demora a chegar (internet lenta), um aviso discreto no topo mostra o progresso: até lá
+// as notas saem com o som sintetizado e, sem o aviso, parece que o app tem um som diferente ou nenhum.
+let somAviso=null, somTimer=0, somPronto=false;
+function somStatus(txt){
+  if(somPronto) return;
+  if(!somAviso){ somAviso=document.createElement('div'); somAviso.className='som-carregando'; somAviso.setAttribute('role','status'); document.body.appendChild(somAviso); }
+  somAviso.innerHTML=`<span class="som-roda" aria-hidden="true"></span><span>${txt}</span>`;
+}
+function somAcabou(){
+  somPronto=true; clearTimeout(somTimer);
+  const a=somAviso; somAviso=null; if(!a) return;
+  a.classList.add('sai'); setTimeout(()=>a.remove(), 400);
+}
 const firstGesture=()=>{
   document.removeEventListener('pointerdown',firstGesture,true); document.removeEventListener('keydown',firstGesture,true);
-  carregarSons().then(()=>preloadSamples((i,n)=>{ $('#soundStatus').textContent = i<n ? `Carregando sons… ${i}/${n}` : 'Sons carregados.'; }));
+  somTimer=setTimeout(()=>somStatus('Carregando o som do bandoneon…'), 500); // rápido (já no cache): nem aparece
+  carregarSons().then(sf=>{
+    if(!sf){ somAcabou(); return; }
+    preloadSamples((i,n)=>{
+      $('#soundStatus').textContent = i<n ? `Carregando sons… ${i}/${n}` : 'Sons carregados.';
+      if(i>=n) somAcabou(); else if(somAviso) somStatus(`Preparando o som… ${Math.round(100*i/n)}%`);
+    });
+  });
 };
 document.addEventListener('pointerdown',firstGesture,true); document.addEventListener('keydown',firstGesture,true);
 

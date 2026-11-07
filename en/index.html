@@ -91,6 +91,8 @@
   <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
   <!-- ornamento inspirado no fileteado porteño: volutas e uma folha no centro -->
   <symbol id="i-filete" viewBox="0 0 120 40"><path d="M60 21c-6-13-27-14-31-1-3 9 8 14 14 8 4-4 1-10-4-9"/><path d="M60 21c6-13 27-14 31-1 3 9-8 14-14 8-4-4-1-10 4-9"/><path d="M29 20c-9 1-14 7-25 2M91 20c9 1 14 7 25 2"/><path d="M60 6c4 4 4 10 0 15-4-5-4-11 0-15z"/><circle cx="60" cy="30" r="2.5"/></symbol>
+  <symbol id="i-expand" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
   <symbol id="i-question" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7v.5M12 17h.01"/></symbol>
 </svg>
 <header>
@@ -144,6 +146,11 @@
       <div class="caixa"><i></i><i></i><i></i><i></i><i></i><i class="f"></i><i></i><i></i><i></i></div>
       <div class="voa"><i></i><i></i><i></i><i></i><i></i></div>
     </div>
+  </div>
+  <div class="card instalar" id="instalarCard" hidden>
+    <img src="../icones/icone-192.png" alt="" width="52" height="52">
+    <div class="instalar-txt"><b>Install BanDoly on your phone</b><span class="muted" id="instalarTxt">Opens straight from your home screen, faster and even offline.</span><span class="muted" id="instalarIos" hidden>On iPhone: tap Share, then “Add to Home Screen”.</span></div>
+    <div class="instalar-acoes"><button type="button" class="btn" id="instalarSim"><svg aria-hidden="true"><use href="#i-download"/></svg>Install</button><button type="button" class="btn ghost" id="instalarNao">Not now</button></div>
   </div>
   <aside class="aviso aviso-curto" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></svg><p><strong>BanDoly is a learning site and will never replace the advice and guidance of a teacher.</strong> Use the app to support your studies and, whenever you can, learn with a bandoneon teacher: they correct your posture, bellows and fingering, things an app cannot see.</p></aside>
   <div class="tiles" data-revela="cascata">
@@ -234,12 +241,16 @@
 <!-- TECLADO -->
 <section id="v-teclado">
   <div class="pg-topo"><span class="pg-ic t-teclado"><svg aria-hidden="true"><use href="#i-keys"/></svg></span><div><h2 class="pg-tit">Keyboard</h2><p class="muted">All 71 buttons with real sound. Play, switch the bellows and see how each button changes note.</p></div></div>
-  <div class="card">
+  <div class="card tk-card" id="tkCard">
+    <!-- tela cheia (js/fole.js): esta barra só aparece nela; o seletor de mãos e o fole vêm para cá -->
+    <div class="tk-cheia-barra" id="tkCheiaBarra" hidden><button type="button" class="btn sec" id="tkCheiaSair"><svg aria-hidden="true"><use href="#i-x"/></svg>Exit</button></div>
+    <!-- no celular: o instrumento vem antes dos ajustes e este atalho fica no topo -->
+    <div class="tk-rapido"><button type="button" class="btn btn-grande" data-tk-cheia><svg aria-hidden="true"><use href="#i-expand"/></svg>Play full screen</button><span class="muted">Just the instrument and the bellows, with bigger buttons.</span></div>
     <div class="toolbar">
       <div class="grupo"><span class="grupo-tit">Bellows</span>
-        <button class="btn" id="dirBtn">Switch direction (Space)</button>
-        <button class="btn sec" id="valveOpenBtn" title="Hold to open the bellows silently">Air valve: open (hold A or ←)</button>
-        <button class="btn sec" id="valveCloseBtn" title="Hold to close the bellows silently">Air valve: close (hold F or →)</button>
+        <button class="btn" id="dirBtn">Change direction<span class="so-teclado"> (Space)</span></button>
+        <button class="btn sec" id="valveOpenBtn" title="Hold to open the bellows silently">Air valve: open<span class="so-teclado"> (hold A or ←)</span></button>
+        <button class="btn sec" id="valveCloseBtn" title="Hold to close the bellows silently">Air valve: close<span class="so-teclado"> (hold F or →)</span></button>
         <button class="btn sec" id="foleLivreBtn" aria-pressed="false" title="Free mode: when it reaches the end, the bellows resets by itself. A real bandoneon does not work like this.">Endless bellows</button>
       </div>
       <div class="grupo"><span class="grupo-tit">Buttons</span>
@@ -247,6 +258,7 @@
       </div>
       <div class="grupo"><span class="grupo-tit">View</span>
         <span class="segmento mini" id="tkVer" role="group" aria-label="Visible hands"><button class="btn sec on" data-ver="duas">Both hands</button><button class="btn sec" data-ver="left">Left</button><button class="btn sec" data-ver="right">Right</button></span>
+        <button class="btn sec" data-tk-cheia><svg aria-hidden="true"><use href="#i-expand"/></svg>Full screen</button>
       </div>
       <div class="grupo"><span class="grupo-tit">Play with</span>
         <button class="btn sec" id="pcBtn" title="Play the buttons with your computer keys">Computer keyboard</button>
@@ -269,8 +281,8 @@
     <p class="girar"><svg aria-hidden="true"><use href="#i-rotate"/></svg> Tip: turn your phone sideways for more room, or view one hand at a time.</p>
     <div class="instrument" id="tkInstrumento">
       <div class="side"><div class="label">Left hand (bass)</div><div id="kbLeft"></div></div>
-      <div class="bellows-wrap">
-        <div id="dirPill" class="dirpill open">⟵ OPENING ⟶</div>
+      <div class="bellows-wrap" id="foleBox">
+        <button type="button" id="dirPill" class="dirpill open" title="Tap to switch the bellows direction">⟵ OPENING ⟶</button>
         <div class="bellows" id="bellows"></div>
         <div class="warn" id="bellowsWarn"></div>
       </div>
@@ -298,12 +310,12 @@
       <label>Hand: <select id="fHand"><option value="right">Right</option><option value="left">Left</option><option value="both">Both</option></select></label>
       <label>Direction: <select id="fDir"><option value="open">Opening</option><option value="close">Closing</option><option value="rand">Random</option></select></label>
       <label>Selection: <select id="fMode"><option value="smart">Smart (focuses on your mistakes)</option><option value="rand">Random</option></select></label>
-      <label class="nomes-chk"><input type="checkbox" class="nomesToggle" checked> Note names</label>
     </div>
     <div class="acao">
       <button class="btn btn-grande" id="fStart"><svg aria-hidden="true"><use href="#i-play"/></svg>Start</button>
       <button class="btn sec" id="fListen"><svg aria-hidden="true"><use href="#i-volume"/></svg>Hear the note</button>
       <button class="btn sec" id="fHeat"><svg aria-hidden="true"><use href="#i-flame"/></svg>Mistake map</button>
+      <p class="muted acao-dica">During the challenge the button names are hidden.</p>
     </div>
     <p class="muted" id="fHeatInfo" style="display:none">Colors show your mistake rate in the direction chosen under "Direction": green = you get it right, red = you get it wrong. Buttons without color have not come up yet.</p>
     <div style="text-align:center;margin-top:14px">
@@ -542,7 +554,7 @@
   </div>
   <div class="card">
     <h3>Tap along</h3>
-    <p class="muted">With the pattern playing, tap the button below (or press <kbd>Space</kbd>) along with each accent. The app measures whether you are early or late.</p>
+    <p class="muted">With the pattern playing, tap the button below<span class="so-teclado"> (or press <kbd>Space</kbd>)</span> along with each accent. The app measures whether you are early or late.</p>
     <button class="pad" id="rPad">TAP HERE</button>
     <div style="text-align:center;margin-top:10px">
       <div class="feedback" id="rFeed"></div>
@@ -643,7 +655,7 @@
       </div>
       <div class="row">
         <span class="muted">Your bellows:</span> <span class="dirpill open" id="acDirPill"></span>
-        <button class="btn sec" id="acDirBtn" title="Switches the bellows direction (Space key)">⇄ Switch bellows <kbd>Space</kbd></button>
+        <button class="btn sec" id="acDirBtn" title="Switches the bellows direction (Space key)">⇄ Switch bellows <kbd class="so-teclado">Space</kbd></button>
         <label title="The app switches the bellows direction for you. In that case the bellows is not assessed."><input type="checkbox" id="acAuto"> Auto bellows</label>
         <label><input type="checkbox" id="acNomes" class="nomesToggle" checked> Names on buttons</label>
       </div>
@@ -847,7 +859,7 @@
   <form method="dialog" id="bvForm">
     <svg class="filete" aria-hidden="true"><use href="#i-filete"/></svg>
     <h2 id="bvTit">Welcome to BanDoly!</h2>
-    <p class="muted">Three quick questions to build your study path.</p>
+    <p class="muted">BanDoly is a free app for learning the bandoneon. Three quick questions set up your study path.</p>
     <div class="bv-pontos" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
     <fieldset class="bv-passo on" data-passo="0"><legend>Have you ever played an instrument?</legend><label class="op"><input type="radio" name="exp" value="nunca"><span class="op-ic"><svg aria-hidden="true"><use href="#i-note"/></svg></span><span>Never</span></label><label class="op"><input type="radio" name="exp" value="outro"><span class="op-ic"><svg aria-hidden="true"><use href="#i-music"/></svg></span><span>I play another instrument</span></label><label class="op"><input type="radio" name="exp" value="bandoneon"><span class="op-ic"><svg aria-hidden="true"><use href="#i-bellows"/></svg></span><span>I already play the bandoneon</span></label></fieldset>
     <fieldset class="bv-passo" data-passo="1"><legend>Do you have a bandoneon at hand?</legend><label class="op"><input type="radio" name="inst" value="sim"><span class="op-ic"><svg aria-hidden="true"><use href="#i-bellows"/></svg></span><span>Yes, I have one</span></label><label class="op"><input type="radio" name="inst" value="nao"><span class="op-ic"><svg aria-hidden="true"><use href="#i-keys"/></svg></span><span>Not yet: I'll use the app's keyboard</span></label></fieldset>

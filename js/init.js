@@ -28,3 +28,21 @@ if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigat
 let installPrompt=null;
 window.addEventListener('beforeinstallprompt', e=>{ e.preventDefault(); installPrompt=e; $('#installBtn').style.display='inline-block'; });
 $('#installBtn').onclick=async()=>{ if(!installPrompt) return; installPrompt.prompt(); await installPrompt.userChoice; installPrompt=null; $('#installBtn').style.display='none'; };
+// Convite para instalar, na tela Início: a partir da 2ª vez que a pessoa abre o app, se ainda não instalou e
+// não disse "Agora não". No Android o botão abre a instalação do navegador; no iPhone não existe esse
+// botão, então o cartão ensina o caminho (Compartilhar → Adicionar à Tela de Início).
+const aberturas = store.get('aberturas', 0) + 1; store.set('aberturas', aberturas);
+const instalado = () => (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone===true;
+const ehIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform==='MacIntel' && navigator.maxTouchPoints>1);
+function convidarInstalar(){
+  if(instalado() || store.get('instalarNao', false) || aberturas<2) return;
+  if(!installPrompt && !ehIOS) return;
+  $('#instalarSim').hidden = !installPrompt; $('#instalarIos').hidden = !!installPrompt; $('#instalarTxt').hidden = !installPrompt;
+  $('#instalarNao').textContent = installPrompt ? 'Agora não' : 'Entendi';
+  $('#instalarCard').hidden = false;
+}
+window.addEventListener('beforeinstallprompt', ()=>setTimeout(convidarInstalar));
+window.addEventListener('appinstalled', ()=>{ $('#instalarCard').hidden = true; });
+if(ehIOS) convidarInstalar();
+$('#instalarSim').onclick = async()=>{ if(!installPrompt) return; installPrompt.prompt(); await installPrompt.userChoice; installPrompt=null; $('#instalarCard').hidden = true; };
+$('#instalarNao').onclick = ()=>{ store.set('instalarNao', true); $('#instalarCard').hidden = true; };

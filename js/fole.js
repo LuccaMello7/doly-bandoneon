@@ -6,6 +6,8 @@
 // por padrão) o fole volta sozinho para 15% e o som continua: bom para explorar, mas não é como no instrumento.
 const bel = { level:0.15, valve:null, blocked:false, estado:'', livre:store.get('foleLivre', false), last:performance.now() };
 const FOLE_QUASE = 0.85;
+// há teclado de verdade? (classe posta por js/controles.js) Sem ele, os textos não falam de Espaço, A ou F
+const comTeclado = ()=>document.documentElement.classList.contains('tem-teclado');
 const canSound=()=>!bel.blocked;
 const tkOpts={ editable:true, canSound, onPress:(b,m,dir)=>{
   if(typeof marcar==='function') marcar('teclado');
@@ -26,7 +28,9 @@ function avisoFole(estado){
   b.classList.toggle('quase', estado==='quase'); b.classList.toggle('fim', estado==='fim'); w.classList.toggle('quase', estado==='quase');
   const botao = `<button type="button" class="btn btn-troca" data-troca-fole>${t('Trocar direção')}</button>`;
   if(estado==='quase'){ vibrar('ok'); w.innerHTML = `<span>${t('Quase no fim: prepare a troca de direção.')}</span> ${botao}`; }
-  else if(estado==='fim') w.innerHTML = `<span>${t(state.dir==='open' ? 'Fole todo aberto! Troque para fechar (Espaço) ou feche pela válvula (F).' : 'Fole todo fechado! Troque para abrir (Espaço) ou abra pela válvula (A).')}</span> ${botao}`;
+  else if(estado==='fim') w.innerHTML = `<span>${t(state.dir==='open'
+    ? (comTeclado() ? 'Fole todo aberto! Troque para fechar (Espaço) ou feche pela válvula (F).' : 'Fole todo aberto! Troque a direção ou feche pela válvula.')
+    : (comTeclado() ? 'Fole todo fechado! Troque para abrir (Espaço) ou abra pela válvula (A).' : 'Fole todo fechado! Troque a direção ou abra pela válvula.'))}</span> ${botao}`;
   else w.textContent='';
 }
 // modo livre: ligar explica que no bandoneon de verdade não é assim
@@ -43,8 +47,61 @@ $('#tkVer').addEventListener('click', e=>{
   $$('#tkVer [data-ver]').forEach(x=>x.classList.toggle('on', x===b));
   $('#tkInstrumento').dataset.ver=b.dataset.ver;
   tkOpts.perRow = b.dataset.ver==='duas' ? undefined : 1; // uma mão sozinha usa a largura toda
-  tkL.build(); tkR.build();
+  if(tkCheia) ajustarCheia(); else { tkL.build(); tkR.build(); }
 });
+// tocar na pílula do fole (ABRINDO/FECHANDO) troca a direção: no celular fica bem entre as mãos
+$('#dirPill').onclick=()=>$('#dirBtn').click();
+
+// Tela cheia: só o instrumento e o fole, com os botões do maior tamanho que cabe na tela (no celular
+// deitado eles ficam bem maiores). Usa a tela cheia do navegador quando existe; no iPhone, que não tem,
+// o cartão cobre a página. O seletor de mãos e o fole sobem para a barra de cima e voltam ao sair.
+const tkCard=$('#tkCard'), tkBarra=$('#tkCheiaBarra'), tkVolta={};
+let tkCheia=false, tkCheiaTimer=0;
+const tkMover=el=>{ tkVolta[el.id]=[el.parentNode, el.nextSibling]; tkBarra.appendChild(el); };
+const tkDevolver=el=>{ const [p,n]=tkVolta[el.id]; p.insertBefore(el, n); };
+// tamanho do botão: o maior que deixa a(s) mão(s) inteira(s) na tela. Com duas mãos, testa lado a lado e
+// uma embaixo da outra e fica com o arranjo que dá botões maiores (no celular deitado, em geral lado a lado).
+function tamanhoCheia(){
+  const ver=$('#tkInstrumento').dataset.ver||'duas', maos=ver==='duas' ? ['left','right'] : [ver];
+  const W=tkCard.clientWidth-24, H=tkCard.clientHeight-tkBarra.offsetHeight-28;
+  const cabe=(w,h)=>Math.min(...maos.map(m=>{ const L=state.layout[m];
+    return Math.min((w-14)/(Math.max(...L.map(b=>b.x))+1), (h-14)/(Math.max(...L.map(b=>b.y))+1)); }));
+  const emPe = maos.length>1 ? cabe(W, (H-12)/2) : cabe(W, H), deLado = maos.length>1 ? cabe((W-16)/2, H) : 0;
+  $('#tkInstrumento').classList.toggle('lado', deLado>emPe);
+  return Math.max(24, Math.min(84, Math.floor(Math.max(emPe, deLado))));
+}
+function ajustarCheia(){
+  if(!tkCheia) return;
+  tkCard.style.setProperty('--barra', tkBarra.offsetHeight+'px');
+  tkOpts.size=tamanhoCheia(); tkOpts.diaFator=0.88; tkL.build(); tkR.build(); // círculo maior: alvo maior para o dedo
+}
+function entrarCheia(){
+  if(tkCheia) return; tkCheia=true;
+  tkMover($('#tkVer')); tkMover($('#foleBox'));
+  tkBarra.hidden=false; tkCard.classList.add('cheia'); document.documentElement.classList.add('tk-cheia-on');
+  const fs=tkCard.requestFullscreen||tkCard.webkitRequestFullscreen;
+  if(fs){ try{ const p=fs.call(tkCard); if(p && p.catch) p.catch(()=>{}); }catch(e){} }
+  ajustarCheia(); $('#tkCheiaSair').focus();
+}
+function sairCheia(){
+  if(!tkCheia) return; tkCheia=false;
+  tkDevolver($('#tkVer')); tkDevolver($('#foleBox'));
+  tkBarra.hidden=true; tkCard.classList.remove('cheia'); $('#tkInstrumento').classList.remove('lado');
+  document.documentElement.classList.remove('tk-cheia-on');
+  if(document.fullscreenElement||document.webkitFullscreenElement){
+    const ex=document.exitFullscreen||document.webkitExitFullscreen;
+    try{ const p=ex.call(document); if(p && p.catch) p.catch(()=>{}); }catch(e){}
+  }
+  delete tkOpts.size; delete tkOpts.diaFator; tkL.build(); tkR.build();
+}
+$$('[data-tk-cheia]').forEach(b=>b.addEventListener('click', entrarCheia));
+$('#tkCheiaSair').onclick=sairCheia;
+// saiu da tela cheia do navegador (Esc, gesto de voltar): sai também do modo; e refaz o tamanho quando a tela muda
+['fullscreenchange','webkitfullscreenchange'].forEach(ev=>document.addEventListener(ev, ()=>{
+  if(tkCheia && !(document.fullscreenElement||document.webkitFullscreenElement)) sairCheia(); else ajustarCheia(); }));
+window.addEventListener('resize', ()=>{ if(tkCheia){ clearTimeout(tkCheiaTimer); tkCheiaTimer=setTimeout(ajustarCheia, 150); } });
+document.addEventListener('keydown', e=>{ if(e.key==='Escape' && tkCheia) sairCheia(); });
+ganchosAba.push(nova=>{ if(nova!=='teclado') sairCheia(); });
 $('#labelsBtn').onclick=()=>setMostrarNomes(!state.showLabels);
 // Válvula de ar: move o fole sem som. d = 'open' (abrir), 'close' (fechar) ou null (solta)
 const valve=d=>{ bel.valve=d; $('#valveOpenBtn').classList.toggle('on',d==='open'); $('#valveCloseBtn').classList.toggle('on',d==='close'); };

@@ -619,13 +619,39 @@ teste('fole: avisa perto do fim, o botão da mensagem troca a direção e o modo
 });
 teste('nomes das notas: ligados por padrão em todas as telas e uma caixa desliga em todas', () => {
   const antes = state.showLabels, nomeEm = sel => $$(sel+' .key').some(k=>k.textContent.trim()!=='');
-  setMostrarNomes(true); go('desafios'); construirPendentes();
-  ok(nomeEm('#fkRight'), 'Encontre a nota mostra os nomes');
-  const caixa = $('#chFind .nomesToggle'); caixa.checked = false; caixa.dispatchEvent(new Event('change'));
+  setMostrarNomes(true); go('desafios'); construirPendentes(); fq.active = false; refreshAll();
+  ok(nomeEm('#fkRight'), 'Encontre a nota mostra os nomes antes de começar');
+  fq.active = true; refreshAll(); ok(!nomeEm('#fkRight'), 'durante a rodada os nomes somem');
+  fq.active = false; refreshAll(); ok(nomeEm('#fkRight'), 'e voltam no fim');
+  const caixa = $('#chEar .nomesToggle'); caixa.checked = false; caixa.dispatchEvent(new Event('change'));
   ok(!state.showLabels && store.get('mostrarNomes', true)===false, 'preferência salva');
   ok(!nomeEm('#fkRight'), 'some do teclado');
   ok($$('.nomesToggle').every(c=>!c.checked), 'todas as caixas acompanham');
   go('academia'); carregarExercicio('n1-sem-ajuda'); setMostrarNomes(true);
   ok(!acadMostraNomes(), '"Sem auxílio visual" continua sem nomes');
   setMostrarNomes(antes); go('inicio');
+});
+teste('teclado em tela cheia: botões maiores, mãos e fole na barra, e tudo volta ao sair', () => {
+  go('teclado'); construirPendentes();
+  const antes = tkR.size, verPai = $('#tkVer').parentNode;
+  $('[data-tk-cheia]').click();
+  ok(tkCard.classList.contains('cheia') && !tkBarra.hidden, 'entrou');
+  ok(tkBarra.contains($('#tkVer')) && tkBarra.contains($('#dirPill')), 'mãos e fole na barra');
+  const cabeNaTela = id => { const r = $(id).getBoundingClientRect(); return r.bottom <= innerHeight + 1 && r.right <= innerWidth + 1; };
+  ok(cabeNaTela('#kbLeft') && cabeNaTela('#kbRight'), `as duas mãos inteiras na tela (${antes} → ${tkR.size}px)`);
+  const duas = tkR.size; $('#tkVer [data-ver="right"]').click();
+  ok(tkR.size >= duas && cabeNaTela('#kbRight'), `uma mão só fica maior (${tkR.size}px)`);
+  $('#tkVer [data-ver="duas"]').click();
+  const d = state.dir; $('#dirPill').click(); ok(state.dir !== d, 'tocar na pílula troca a direção'); setDir(d);
+  go('inicio');
+  ok(!tkCard.classList.contains('cheia') && $('#tkVer').parentNode === verPai, 'sair da aba sai da tela cheia e devolve tudo');
+  ok(tkOpts.size === undefined, 'tamanho automático de novo');
+});
+teste('dicas de tecla: aparecem só com teclado', () => {
+  const tem = document.documentElement.classList.contains('tem-teclado');
+  document.documentElement.classList.remove('tem-teclado');
+  go('teclado');
+  ok(getComputedStyle($('#dirBtn .so-teclado')).display === 'none', 'sem teclado, sem "(Espaço)"');
+  igual(comTeclado(), false);
+  document.documentElement.classList.toggle('tem-teclado', tem); go('inicio');
 });

@@ -29,6 +29,9 @@ function mapaPcPadrao(){
 // ligado por padrão no computador (tela com mouse); no celular e no tablet começa desligado
 const temTecladoFisico = () => !!(window.matchMedia && matchMedia('(hover: hover) and (pointer: fine)').matches);
 const pc = {ligado: store.get('pcLigado', temTecladoFisico()), mapa: store.get('mapaPc', null) || mapaPcPadrao(), seguradas:{}, atribuindo:false, alvo:null, layout:null};
+// Sem teclado físico (celular, tablet) as dicas de tecla (.so-teclado) somem; voltam se o aluno ligar o teclado do computador
+const marcarTemTeclado = ()=>document.documentElement.classList.toggle('tem-teclado', temTecladoFisico() || pc.ligado);
+marcarTemTeclado();
 // letra que aparece na tecla (no Chrome/Edge, a do layout do usuário: ABNT2 mostra Ç no lugar do ;)
 if(navigator.keyboard && navigator.keyboard.getLayoutMap) navigator.keyboard.getLayoutMap().then(m=>{ pc.layout = m; marcarTodas(); renderMapaPc(); }).catch(()=>{});
 function rotuloTecla(cod){
@@ -108,8 +111,9 @@ function ligarPc(sim){
   pc.ligado = sim; store.set('pcLigado', sim); soltarTudo(); marcarTodas();
   $('#pcBtn').classList.toggle('on', sim); $('#pcLigado').checked = sim;
   // com o teclado ligado, a válvula sai do A e do F e vai para as setas
-  $('#valveOpenBtn').textContent = sim ? 'Válvula: abrir (segure ←)' : 'Válvula: abrir (segure A ou ←)';
-  $('#valveCloseBtn').textContent = sim ? 'Válvula: fechar (segure →)' : 'Válvula: fechar (segure F ou →)';
+  $('#valveOpenBtn').innerHTML = `Válvula: abrir<span class="so-teclado"> ${sim ? '(segure ←)' : '(segure A ou ←)'}</span>`;
+  $('#valveCloseBtn').innerHTML = `Válvula: fechar<span class="so-teclado"> ${sim ? '(segure →)' : '(segure F ou →)'}</span>`;
+  marcarTemTeclado();
 }
 $('#pcBtn').onclick = ()=>ligarPc(!pc.ligado);
 $('#pcLigado').onchange = e=>ligarPc(e.target.checked);

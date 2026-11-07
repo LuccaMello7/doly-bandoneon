@@ -239,4 +239,4 @@ ganchosAba.push(v=>{
 });
 renderPerfil();
 // primeira visita: as perguntas aparecem na tela Início (quem chega por um link para uma aba não é interrompido)
-if(!perfilAluno() && !location.hash) setTimeout(()=>{ if(currentView==='inicio' && !perfilAluno()) abrirBoasVindas(); }, 600);
+if(!perfilAluno() && !location.hash) setTimeout(()=>{ if(currentView==='inicio' && !perfilAluno()) abrirBoasVindas(); }, 1200);

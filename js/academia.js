@@ -69,7 +69,7 @@ const ACADEMIA = [
 {nivel:1, titulo:'Reconhecimento dos botões', objetivo:'Aprender onde fica cada nota, nas duas mãos e nas duas direções do fole.', exercicios:[
   {id:'n1-direita', titulo:'Notas da mão direita', desc:'Encontre 10 notas sorteadas na mão direita.', gerar:()=>acadSorteio(['right'],['open','close'],10), semTempo:true},
   {id:'n1-esquerda', titulo:'Notas da mão esquerda', desc:'Encontre 10 notas sorteadas na mão esquerda.', gerar:()=>acadSorteio(['left'],['open','close'],10), semTempo:true},
-  {id:'n1-direcao', titulo:'Abrindo e fechando', desc:'Cada botão dá duas notas. Toque o mesmo botão abrindo e depois fechando: troque o fole (Espaço) entre as duas.', gerar:()=>acadParesDeDirecao(5), semTempo:true, foleManual:true},
+  {id:'n1-direcao', titulo:'Abrindo e fechando', desc:'Cada botão dá duas notas. Toque o mesmo botão abrindo e depois fechando: troque o fole entre as duas.', gerar:()=>acadParesDeDirecao(5), semTempo:true, foleManual:true},
   {id:'n1-sem-ajuda', titulo:'Sem auxílio visual', desc:'Etapa avançada: encontre as notas sem destaque e sem nomes nos botões.', gerar:()=>acadSorteio(['left','right'],['open','close'],10), semTempo:true, semAjuda:true},
 ]},
 {nivel:2, titulo:'Reconhecimento dos dedos', objetivo:'Associar cada botão ao dedo recomendado. Os botões são tocados pelos dedos 2 a 5; os polegares cuidam da válvula de ar (direito) e do apoio (esquerdo).', exercicios:[

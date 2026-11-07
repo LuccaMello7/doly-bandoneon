@@ -104,7 +104,7 @@
     <h2 class="doly-tit">Vídeos</h2>
     <p class="muted">Doly ao bandoneón, em gravações publicadas no YouTube. O vídeo só carrega quando você toca nele.</p>
     <div class="doly-videos">
-      <figure class="doly-video">
+      <figure class="doly-video destaque">
         <a class="yt" href="https://www.youtube.com/watch?v=pvjzxZ0KdsY" data-yt="pvjzxZ0KdsY" target="_blank" rel="noopener" aria-label="Assistir ao vídeo: Adiós Nonino"><img src="../imagens/doly/videos/pvjzxZ0KdsY.jpg" alt="" loading="lazy" width="640" height="360"><span class="yt-play" aria-hidden="true"></span></a>
         <figcaption><b translate="no">Adiós Nonino</b>Doly, aos 96 anos, toca em casa para os amigos Mano Monteiro, João Henriques, Evandro Gomes e Ênio. <small>Vídeo do canal <span translate="no">Lucca Mello</span> no YouTube.</small></figcaption>
       </figure>
@@ -137,6 +137,7 @@
         <figcaption><b translate="no">De Catres e Corredores</b>José Carlos Batista de Deus e Doly Costa. <small>Vídeo do canal <span translate="no">Adriano Lima Gaúcho</span> no YouTube.</small></figcaption>
       </figure>
     </div>
+    <button type="button" class="btn ghost doly-mais" hidden>Ver mais vídeos</button>
   </section>
 
   <section class="card doly-sec" id="fotos">
@@ -202,6 +203,12 @@
         capa.style.setProperty('--rx', ((e.clientY-q.top)/q.height - .5)*-14 + 'deg'); capa.style.setProperty('--ry', ((e.clientX-q.left)/q.width - .5)*14 + 'deg'); });
       capa.addEventListener('pointerleave', function(){ capa.style.setProperty('--rx','0deg'); capa.style.setProperty('--ry','0deg'); });
     }
+  }
+  // vídeos: o primeiro em destaque e os outros recolhidos atrás de "Ver mais" (sem JavaScript, aparecem todos)
+  var lista = document.querySelector('.doly-videos'), mais = document.querySelector('.doly-mais');
+  if(lista && mais && lista.children.length > 5){
+    lista.classList.add('recolhido'); mais.hidden = false;
+    mais.addEventListener('click', function(){ lista.classList.remove('recolhido'); mais.hidden = true; lista.children[5].querySelector('a,iframe').focus(); });
   }
   // vídeos: a miniatura vira o player do YouTube (sem cookies) só no clique; abrir outro fecha o anterior
   var aberto = null;
