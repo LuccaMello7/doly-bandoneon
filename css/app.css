@@ -1483,32 +1483,39 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
   .eco-musicas{grid-template-columns:1fr 1fr}
   .eco-musica{padding:10px 12px}
 }
-/* RepeTCHÊ: o gaúcho (imagens/repetche/gaucho.jpg tem dois quadros lado a lado; alternar entre eles faz ele balançar tocando) */
+/* RepeTCHÊ: o gaúcho animado (vídeos em imagens/repetche/: o curto diz "Muy bueno!", o do fim vai do começo até a fala) */
 .pg-av,.tile-av{overflow:hidden;padding:0}
 .gaucho-av{width:100%;height:100%;object-fit:cover;display:block}
 .tile-larga .tile-av{width:56px;height:56px;border-radius:50%;border:3px solid #ffffffb0;box-shadow:0 6px 16px #0005}
 .pg-av{border-radius:50%;border:3px solid var(--gold)}
 .pg-ic.t-eco.pg-av img{animation:none}
 .gaucho{position:absolute;right:14px;bottom:0;z-index:6;display:flex;align-items:flex-start;gap:6px;pointer-events:none;transform:translateY(115%)}
-.gaucho-img{display:block;width:118px;aspect-ratio:5/7;border-radius:18px 18px 0 0;background:url(../imagens/repetche/gaucho.jpg) 0 0/200% 100% no-repeat;
+.gaucho-img{display:block;width:150px;aspect-ratio:400/424;object-fit:cover;border-radius:18px 18px 0 0;background:#3a2414;
   border:3px solid var(--gold);border-bottom:0;box-shadow:0 -6px 24px #0009}
 .gaucho-balao{position:relative;margin-top:14px;background:#fff;color:#1b1404;font-weight:900;font-size:1.15rem;padding:8px 14px;border-radius:18px 18px 4px 18px;
   box-shadow:0 8px 20px #0007;white-space:nowrap;opacity:0;transform:scale(.4);transform-origin:100% 100%}
 .gaucho-balao::after{content:"";position:absolute;right:-7px;bottom:6px;border:8px solid transparent;border-left-color:#fff;border-right:0}
 .gaucho.aparece{animation:gauchoSobe 1.8s cubic-bezier(.34,1.4,.5,1) both}
-.gaucho.aparece .gaucho-img,.gaucho-fim.danca .gaucho-img{animation:gauchoToca .36s steps(1) infinite}
 .gaucho.aparece .gaucho-balao{animation:gauchoBalao 1.8s cubic-bezier(.34,1.6,.5,1) both}
 @keyframes gauchoSobe{0%{transform:translateY(115%)}20%,82%{transform:translateY(0)}100%{transform:translateY(115%)}}
-@keyframes gauchoToca{0%{background-position:0 0}50%{background-position:100% 0}}
 @keyframes gauchoBalao{0%,16%{opacity:0;transform:scale(.4) rotate(-8deg)}28%,76%{opacity:1;transform:none}90%,100%{opacity:0;transform:scale(.85)}}
-/* tela do fim: ele dança uns segundos ao lado do balão */
+/* tela do fim: o vídeo do começo até ele dizer "Muy bueno!" */
 .gaucho-fim{position:relative;right:auto;bottom:auto;transform:none;justify-content:center;align-items:center;margin:0 auto 8px}
-.gaucho-fim .gaucho-img{width:132px;border-radius:20px;border-bottom:3px solid var(--gold);box-shadow:0 10px 26px #0008}
-.gaucho-fim.danca .gaucho-img{animation:gauchoToca .36s steps(1) 9, ecoEntra .5s cubic-bezier(.2,.8,.2,1) backwards}
+.gaucho-fim .gaucho-img{width:220px;border-radius:20px;border-bottom:3px solid var(--gold);box-shadow:0 10px 26px #0008}
+.gaucho-fim.danca .gaucho-img{animation:ecoEntra .5s cubic-bezier(.2,.8,.2,1) backwards}
 .gaucho-fim .gaucho-balao{opacity:1;transform:none;margin-top:0}
-.gaucho-fim.danca .gaucho-balao{animation:gauchoBalaoFim .55s .5s cubic-bezier(.34,1.7,.5,1) backwards}
+.gaucho-fim.danca .gaucho-balao{animation:gauchoBalaoFim .55s 2.4s cubic-bezier(.34,1.7,.5,1) backwards} /* o balão aparece quando ele fala */
 @keyframes gauchoBalaoFim{from{opacity:0;transform:scale(.3) rotate(-10deg)}}
-@media (max-width:700px){.gaucho-img{width:92px}.gaucho-balao{font-size:1rem}.gaucho-fim .gaucho-img{width:116px}}
+@media (max-width:700px){.gaucho-img{width:112px}.gaucho-balao{font-size:1rem}.gaucho-fim .gaucho-img{width:170px}}
+/* cartões de música: são o botão de começar (o ▶ aparece ao passar o mouse e fica no cartão escolhido) */
+.eco-opcoes{margin-bottom:16px}
+.eco-escolha-tit{margin-bottom:2px}.eco-dica{margin:0 0 4px}
+.eco-jogar{position:absolute;right:12px;bottom:12px;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--gold);color:#1b1404;
+  box-shadow:0 6px 14px #0007;opacity:0;transform:scale(.6);transition:opacity .2s,transform .25s cubic-bezier(.34,1.6,.5,1)}
+.eco-jogar svg{width:18px;height:18px;fill:currentColor;stroke:none;margin-left:2px}
+.eco-musica:hover .eco-jogar,.eco-musica:focus-visible .eco-jogar{opacity:1;transform:none}
+.eco-musica.on::after{display:none}
+@media (hover:none){.eco-jogar{opacity:1;transform:none;width:32px;height:32px}}
 /* sem movimento: ele aparece parado com o balão e some depois */
 .sem-mov .gaucho.aparece{transform:none}
 .sem-mov .gaucho.aparece .gaucho-balao{opacity:1;transform:none}

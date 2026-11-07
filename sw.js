@@ -1,7 +1,7 @@
 // Service worker: guarda o app no aparelho para funcionar offline.
 // Estratégia "rede primeiro": online sempre pega a versão mais nova; offline usa o cache.
 // Ao adicionar um arquivo novo ao index.html, inclua-o em ARQUIVOS (os testes conferem).
-const CACHE = 'bandoly-v33'; // mudar o nome apaga o cache antigo na ativação
+const CACHE = 'bandoly-v34'; // mudar o nome apaga o cache antigo na ativação
 const ARQUIVOS = [
   "./",
   "css/app.css",
@@ -42,7 +42,7 @@ const ARQUIVOS = [
   "js/desafios.js",
   "js/escalas.js",
   "js/fole.js",
-  "js/movimento.js", "js/ouvido.js", "js/eco.js", "imagens/repetche/gaucho.jpg", "imagens/repetche/avatar.jpg", "js/cascata.js", "js/trilha.js", "js/controles.js", "js/professor.js", "js/contato.js", "js/teoria-textos.js", "js/teoria.js", "js/init.js",
+  "js/movimento.js", "js/ouvido.js", "js/eco.js", "imagens/repetche/avatar.jpg", "imagens/repetche/gaucho-muy-bueno.jpg", "imagens/repetche/gaucho-fim.jpg", "js/cascata.js", "js/trilha.js", "js/controles.js", "js/professor.js", "js/contato.js", "js/teoria-textos.js", "js/teoria.js", "js/init.js",
   "icones/bandeiras/gb.svg",
   "icones/bandeiras/es.png",
   "icones/bandeiras/br.svg",
@@ -62,7 +62,7 @@ const ARQUIVOS = [
   "js/ritmo.js",
   "js/teclado.js",
   "manifest.webmanifest",
-  "sons/bandoneon.js", "sons/muy-bueno.mp3"
+  "sons/bandoneon.js"
 ];
 
 self.addEventListener('install', e => {
@@ -75,9 +75,10 @@ self.addEventListener('activate', e => {
 });
 self.addEventListener('fetch', e => {
   if(e.request.method !== 'GET' || new URL(e.request.url).origin !== location.origin) return;
+  if(e.request.headers.has('range')) return; // vídeo e áudio pedem pedaços: o navegador cuida sozinho
   e.respondWith(
     fetch(e.request).then(r => {
-      if(r.ok){ const copia = r.clone(); caches.open(CACHE).then(c => c.put(e.request, copia)); }
+      if(r.ok && r.status !== 206){ const copia = r.clone(); caches.open(CACHE).then(c => c.put(e.request, copia)); }
       return r;
     }).catch(() => caches.match(e.request, {ignoreSearch: true}))
   );

@@ -543,18 +543,15 @@
 <section id="v-eco" class="eco">
   <div class="pg-topo"><span class="pg-ic t-eco pg-av"><img class="gaucho-av" src="imagens/repetche/avatar.jpg" alt="" width="80" height="80"></span><div><h2 class="pg-tit"><span translate="no">RepeTCHÊ</span></h2><p class="muted">O bandoneon toca, você repete. A cada rodada a música cresce, até você tocar tudo de ouvido.</p></div></div>
   <div class="card eco-escolha" id="ecoEscolha">
-    <h2 class="card-tit">Escolha a música</h2>
-    <div class="eco-musicas" id="ecoMusicas" role="radiogroup" aria-label="Música"></div>
     <div class="row eco-opcoes">
       <label>Ajuda: <select id="ecoAjuda"><option value="ver">Ver e ouvir (os botões acendem)</option><option value="fole">Só o fole (os botões não acendem)</option><option value="ouvido">Só ouvindo</option></select></label>
       <label>A cada rodada: <select id="ecoPasso"><option value="2">+2 notas</option><option value="3">+3 notas</option><option value="4">+4 notas</option></select></label>
       <label>Velocidade: <select id="ecoVel"><option value="0.75">Devagar</option><option value="1" selected>Normal</option></select></label>
       <label class="nomes-chk"><input type="checkbox" id="ecoVozOn" checked> Voz do gaúcho</label>
     </div>
-    <div class="acao">
-      <button class="btn btn-grande" id="ecoStart"><svg aria-hidden="true"><use href="#i-play"/></svg>Começar</button>
-      <p class="muted acao-dica">A música vem em trechos curtos. O fole troca de direção sozinho: preste atenção nos botões.</p>
-    </div>
+    <h2 class="card-tit eco-escolha-tit">Escolha a música</h2>
+    <p class="muted eco-dica">Toque numa música para começar. Ela vem em trechos curtos, e o fole troca de direção sozinho: preste atenção nos botões.</p>
+    <div class="eco-musicas" id="ecoMusicas" aria-label="Música"></div>
   </div>
 
   <div class="card eco-jogo" id="ecoJogo" hidden>
@@ -579,11 +576,11 @@
       <button class="btn sec" id="ecoRepetir" disabled><svg aria-hidden="true"><use href="#i-volume"/></svg>Ouvir de novo</button>
       <button class="btn ghost" id="ecoParar">Parar</button>
     </div>
-    <div class="gaucho" id="ecoGaucho" aria-hidden="true"><span class="gaucho-balao" translate="no">Muy bueno!</span><span class="gaucho-img"></span></div>
+    <div class="gaucho" id="ecoGaucho" aria-hidden="true"><span class="gaucho-balao" translate="no">Muy bueno!</span><video class="gaucho-img" id="ecoGauchoVid" playsinline preload="none"></video></div>
   </div>
 
   <div class="card eco-fim" id="ecoFimCard" hidden>
-    <div class="gaucho gaucho-fim" aria-hidden="true"><span class="gaucho-balao" translate="no">Muy bueno!</span><span class="gaucho-img"></span></div>
+    <div class="gaucho gaucho-fim" aria-hidden="true"><span class="gaucho-balao" translate="no">Muy bueno!</span><video class="gaucho-img" id="ecoFimVid" playsinline preload="none"></video></div>
     <h2 id="ecoFimTit">Música completa!</h2>
     <p class="muted" id="ecoFimMusica"></p>
     <div class="eco-estrelas" id="ecoFimEstrelas" role="img"></div>

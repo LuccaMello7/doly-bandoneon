@@ -83,6 +83,7 @@ const TEXTOS = {
 'Válvula: fechar (segure F)': ['Válvula: cerrar (mantén F)', 'Air valve: close (hold F)'],
 'Mostrar nomes': ['Mostrar nombres', 'Show names'],
 'Trocar direção': ['Cambiar dirección', 'Change direction'],
+'Toque numa música para começar. Ela vem em trechos curtos, e o fole troca de direção sozinho: preste atenção nos botões.': ['Toca una música para empezar. Viene en tramos cortos, y el fuelle cambia de dirección solo: presta atención a los botones.', 'Tap a tune to start. It comes in short sections, and the bellows changes direction by itself: focus on the buttons.'],
 'Voz do gaúcho': ['Voz del gaucho', 'Gaucho voice'],
 'Perfeito!': ['¡Perfecto!', 'Perfect!'],
 'Sequência': ['Racha', 'Streak'],

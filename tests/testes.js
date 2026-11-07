@@ -691,7 +691,16 @@ teste('RepeTCHÊ: o gaúcho aparece e fala, e a voz pode ser desligada', () => {
   const antes = $('#ecoVozOn').checked;
   $('#ecoVozOn').checked = true; ecoGaucho();
   ok($('#ecoGaucho').classList.contains('aparece'), 'o gaúcho sobe');
-  ok(ecoVoz.src.endsWith('sons/muy-bueno.mp3'), 'a voz é o arquivo gravado');
-  $('#ecoVozOn').checked = false; ok(!ecoVozLigada(), 'desligada');
+  ok(ecoVid.src.endsWith('imagens/repetche/gaucho-muy-bueno.mp4'), 'o vídeo do gaúcho');
+  ok(!ecoVid.muted, 'com a voz');
+  $('#ecoVozOn').checked = false; ecoTocarVideo(ecoVid); ok(ecoVid.muted, 'voz desligada: vídeo sem som');
+  ecoVid.pause();
   $('#ecoVozOn').checked = antes; $('#ecoGaucho').classList.remove('aparece');
+});
+teste('RepeTCHÊ: tocar numa música já começa o jogo', () => {
+  go('eco'); renderEcoMusicas(); const id0 = eco.id;
+  $('#ecoMusicas [data-id="ode"]').click(); ecoLimpar();
+  igual(eco.id, 'ode'); ok(!$('#ecoJogo').hidden && $('#ecoEscolha').hidden, 'o jogo abriu');
+  ok(!$('#ecoStart'), 'sem botão Começar separado');
+  ecoParar(); eco.id = id0; store.set('ecoMusica', id0); go('inicio');
 });

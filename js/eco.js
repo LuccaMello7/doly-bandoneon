@@ -1,6 +1,6 @@
 /* ================== RepeTCHÊ: o bandoneon toca, você repete ================== */
-// Jogo de memória musical, aba Treinar → RepeTCHÊ (no código, "eco"). A cada sequência certa o gaúcho
-// (imagens/repetche/gaucho.jpg, dois quadros: virado para um lado e para o outro) sobe e diz "Muy bueno!".
+// Jogo de memória musical, aba Treinar → RepeTCHÊ (no código, "eco"). Tocar numa música começa o jogo.
+// A cada sequência certa o gaúcho animado (vídeo em imagens/repetche/) sobe pelo canto e diz "Muy bueno!".
 // O app toca o começo de uma música e o aluno repete; a cada
 // rodada entram mais notas (2 por padrão). Para não virar centenas de notas, a música é dividida em
 // trechos (4 rodadas cada): completou um trecho, começa o próximo. As músicas são as das Melodias que
@@ -39,7 +39,8 @@ function ecoEstrelas(n, total=3){
 function renderEcoMusicas(){
   $('#ecoMusicas').innerHTML = ECO_MUSICAS.map((x,i)=>{
     const {m, seq} = ecoMusica(x.id), r = state.progress.eco[x.id];
-    return `<button type="button" class="eco-musica ${x.id===eco.id?'on':''}" data-id="${x.id}" role="radio" aria-checked="${x.id===eco.id}" style="--i:${i}">
+    return `<button type="button" class="eco-musica ${x.id===eco.id?'on':''}" data-id="${x.id}" style="--i:${i}">
+      <span class="eco-jogar" aria-hidden="true"><svg><use href="#i-play"/></svg></span>
       <span class="eco-dif" data-dif="${x.dif}" aria-label="Dificuldade ${x.dif} de 3"><i></i><i></i><i></i></span>
       <b>${m.title}</b><small class="muted">${seq.length} notas · ${m.hand==='left'?'mão esquerda':'mão direita'}</small>
       <span class="eco-mini-estrelas" aria-label="${r ? r.estrelas : 0} de 3 estrelas">${ecoEstrelas(r ? r.estrelas : 0)}</span>
@@ -50,8 +51,8 @@ function renderEcoMusicas(){
 $('#ecoMusicas').addEventListener('click', e=>{
   const b = e.target.closest('[data-id]'); if(!b) return;
   eco.id = b.dataset.id; store.set('ecoMusica', eco.id);
-  $$('#ecoMusicas [data-id]').forEach(x=>{ const on = x===b; x.classList.toggle('on', on); x.setAttribute('aria-checked', on); });
-  const {seq} = ecoMusica(eco.id); playNote(seq[0].midi, 0.35, seq[0].hand); // uma prévia da primeira nota
+  $$('#ecoMusicas [data-id]').forEach(x=>x.classList.toggle('on', x===b));
+  ecoComecar(); // tocar na música já começa
 });
 ['ecoAjuda','ecoPasso','ecoVel'].forEach(id=>{ const v = store.get(id, null); if(v!=null && $('#'+id)) $('#'+id).value = v;
   $('#'+id).addEventListener('change', e=>store.set(id, e.target.value)); });
@@ -120,18 +121,28 @@ function ecoFaiscas(){
 }
 // O gaúcho sobe pelo canto, toca balançando e diz "Muy bueno!"; desce sozinho (sem animação: só aparece e some)
 let ecoGauchoTimer = 0;
-// A voz dele (sons/muy-bueno.mp3, 13 KB): só é baixada quando o jogo começa; dá para desligar nas opções
-const ecoVoz = new Audio(); ecoVoz.preload = 'auto';
+// Os vídeos do gaúcho: o curto (1,2 s, só o "Muy bueno!") a cada sequência certa e o do começo até a fala (3,5 s)
+// na tela do fim. Só são baixados quando o jogo começa. "Voz do gaúcho" desligada: o vídeo toca sem som.
+// Sem animação (Animações: Reduzidas) ele aparece parado, no primeiro quadro.
+const ecoVid = $('#ecoGauchoVid'), ecoFimVid = $('#ecoFimVid');
 const ecoVozLigada = () => $('#ecoVozOn').checked;
-function ecoPrepararVoz(){ if(!ecoVoz.src && ecoVozLigada()){ ecoVoz.src = RAIZ + 'sons/muy-bueno.mp3'; ecoVoz.load(); } }
-function ecoFalar(){
-  if(!ecoVozLigada()) return; ecoPrepararVoz();
-  try{ ecoVoz.currentTime = 0; ecoVoz.volume = Math.min(1, state.volume/100); const p = ecoVoz.play(); if(p && p.catch) p.catch(()=>{}); }catch(e){}
+function ecoPrepararGaucho(){
+  if(ecoVid.getAttribute('src')) return;
+  const pasta = RAIZ + 'imagens/repetche/';
+  ecoVid.poster = pasta + 'gaucho-muy-bueno.jpg'; ecoVid.src = pasta + 'gaucho-muy-bueno.mp4'; ecoVid.preload = 'auto';
+  ecoFimVid.poster = pasta + 'gaucho-fim.jpg'; ecoFimVid.src = pasta + 'gaucho-fim.mp4'; ecoFimVid.preload = 'auto';
+}
+function ecoTocarVideo(v){
+  ecoPrepararGaucho(); v.muted = !ecoVozLigada(); v.volume = Math.min(1, state.volume/100);
+  try{ v.currentTime = 0; }catch(e){}
+  if(movReduzido()){ v.pause(); return; }
+  // fora de um toque (ex.: a tela do fim) o celular pode bloquear o som: aí toca sem som
+  try{ const p = v.play(); if(p && p.catch) p.catch(()=>{ v.muted = true; const q = v.play(); if(q && q.catch) q.catch(()=>{}); }); }catch(e){}
 }
 $('#ecoVozOn').checked = store.get('ecoVoz', true);
-$('#ecoVozOn').addEventListener('change', e=>{ store.set('ecoVoz', e.target.checked); if(e.target.checked) ecoFalar(); }); // ligou: ouve como fica
+$('#ecoVozOn').addEventListener('change', e=>{ store.set('ecoVoz', e.target.checked); if(e.target.checked) ecoTocarVideo(ecoVid); }); // ligou: ouve como fica
 function ecoGaucho(){
-  ecoFalar();
+  ecoTocarVideo(ecoVid);
   const g = $('#ecoGaucho'); g.classList.remove('aparece'); void g.offsetWidth; g.classList.add('aparece');
   clearTimeout(ecoGauchoTimer); ecoGauchoTimer = setTimeout(()=>g.classList.remove('aparece'), 1800);
 }
@@ -140,7 +151,7 @@ function ecoFeed(msg, cls=''){ const f = $('#ecoFeed'); f.className = 'feedback 
 /* ---------- O jogo ---------- */
 function ecoLimpar(){ eco.timers.forEach(clearTimeout); eco.timers = []; ecoL.clearMarks(); ecoR.clearMarks(); }
 function ecoComecar(){
-  ac(); ecoLimpar(); ecoPrepararVoz();
+  ac(); ecoLimpar(); ecoPrepararGaucho();
   const {m, seq} = ecoMusica(eco.id);
   Object.assign(eco, {m, seq, k:+$('#ecoPasso').value, ajuda:$('#ecoAjuda').value, vel:+$('#ecoVel').value, hand:m.hand==='left'?'left':'right',
     ini:0, alvo:0, pos:0, rodada:0, pontos:0, mostrados:0, combo:0, maxCombo:0, erros:0, errosRodada:0, fase:'contagem'});
@@ -227,6 +238,7 @@ function ecoFim(){
   logPractice('desafio'); saveProgress(); renderEcoMusicas();
   $('#ecoJogo').hidden = true; const f = $('#ecoFimCard'); f.hidden = false;
   const gf = f.querySelector('.gaucho-fim'); gf.classList.remove('danca'); void gf.offsetWidth; gf.classList.add('danca');
+  ecoTocarVideo(ecoFimVid);
   $('#ecoFimTit').textContent = estrelas===3 ? 'Perfeito! Música completa!' : 'Música completa!';
   $('#ecoFimMusica').textContent = eco.m.title;
   $('#ecoFimEstrelas').innerHTML = ecoEstrelas(estrelas);
@@ -244,13 +256,12 @@ function ecoFim(){
   f.scrollIntoView({block:'center', behavior: movReduzido()?'auto':'smooth'});
   if(estrelas===3 || (recorde && ant)) setTimeout(comemorar, 700); else vibrar('ok');
 }
-function ecoParar(){ ecoLimpar(); $('#ecoGaucho').classList.remove('aparece'); eco.fase = ''; $('#ecoJogo').hidden = true; $('#ecoFimCard').hidden = true; $('#ecoEscolha').hidden = false; }
+function ecoParar(){ ecoLimpar(); $('#ecoGaucho').classList.remove('aparece'); ecoVid.pause(); ecoFimVid.pause(); eco.fase = ''; $('#ecoJogo').hidden = true; $('#ecoFimCard').hidden = true; $('#ecoEscolha').hidden = false; }
 
-$('#ecoStart').onclick = ecoComecar;
 $('#ecoParar').onclick = ecoParar;
 $('#ecoRepetir').onclick = ()=>{ if(eco.fase==='vez'){ ecoTrilha(); ecoOuvir(); } };
 $('#ecoDeNovo').onclick = ecoComecar;
-$('#ecoOutra').onclick = ecoParar;
+$('#ecoOutra').onclick = ()=>{ ecoParar(); $('#ecoEscolha').scrollIntoView({block:'start', behavior: movReduzido()?'auto':'smooth'}); };
 $('#ecoProxima').onclick = ()=>{
   const i = ECO_MUSICAS.findIndex(x=>x.id===eco.id); eco.id = ECO_MUSICAS[Math.min(i+1, ECO_MUSICAS.length-1)].id;
   store.set('ecoMusica', eco.id); renderEcoMusicas(); ecoComecar();
