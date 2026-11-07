@@ -55,6 +55,7 @@ function showMic(m, cents, rms){
 function onMicNote(m){
   if(currentView==='microfone'){ marcar('mic'); return; }
   if(currentView==='academia'){ acadOuvir(m); return; }
+  if(currentView==='eco'){ if(typeof ecoMicNota==='function') ecoMicNota(m); return; }
   if(!mel.running || !mel.cur) return;
   const mode = $('#melMode').value;
   if(mode==='wait') melHear(m);
@@ -110,7 +111,7 @@ function mcMostrar(m, cents, rms){
   }
 }
 $('#mcOn').onclick = async ()=>{
-  if(mic.on){ micStop(); mcDono=false; $('#micToggle').checked=false; $('#acMic').checked=false; }
+  if(mic.on){ micStop(); mcDono=false; $('#micToggle').checked=false; $('#acMic').checked=false; $('#ecoMicOn').checked=false; }
   else if(await micStart()){ mcDono=true; $('#mcInfo').textContent=''; }
   mcEstado();
 };

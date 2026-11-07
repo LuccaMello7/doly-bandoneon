@@ -723,3 +723,36 @@ teste('botão de começar muda de cor enquanto roda (Melodias e Desafios)', () =
   fq.round = 10; nextFind(); ok(!$('#fStart').classList.contains('rodando') && /Começar/.test($('#fStart').textContent), 'no fim volta a Começar');
   go('inicio');
 });
+teste('aviso do professor: recolhido mostra só a linha curta, e "Ler o aviso" abre', () => {
+  const a = $('#v-inicio .aviso-curto'), antes = a.classList.contains('recolhido');
+  a.classList.add('recolhido');
+  ok(getComputedStyle(a.querySelector('.aviso-linha')).display !== 'none' && getComputedStyle(a.querySelector('p:not(.aviso-linha)')).display === 'none', 'linha curta');
+  a.querySelector('.aviso-ler').click(); ok(!a.classList.contains('recolhido'), 'abriu o texto inteiro');
+  a.classList.toggle('recolhido', antes);
+});
+teste('Academia em tela cheia: botões maiores, sai ao trocar de aba', () => {
+  go('academia'); carregarExercicio('n3-legato'); construirPendentes();
+  $('#acCheiaBtn').click();
+  ok($('#v-academia').classList.contains('ac-cheia') && !$('#acCheiaSair').hidden, 'entrou');
+  ok(acOpts.size >= 24, `tamanho calculado (${acOpts.size}px)`);
+  go('inicio');
+  ok(!$('#v-academia').classList.contains('ac-cheia') && acOpts.size === undefined, 'saiu e voltou ao tamanho automático');
+});
+teste('RepeTCHÊ: suas músicas, música do dia e nota ouvida pelo microfone', () => {
+  const salvas = store.get('melodies', []), dias = {...state.progress.ecoDias}, prog = state.progress.eco[ecoDoDia()];
+  store.set('melodies', salvas.concat([{id:'u-teste-eco', text:'título: Minha do teste\nmão: direita\nbpm: 80\nDó4 Ré4 Mi4 Fá4 | Sol4 Lá4 Si4 Dó5'}]));
+  go('eco');
+  ok($('#ecoSuas [data-id="u-teste-eco"]'), 'a melodia do aluno aparece em Suas músicas');
+  ok(ECO_MUSICAS.some(x=>x.id===ecoDoDia()) && ecoDoDia()===ecoDoDia(), 'música do dia é uma das prontas e não muda no mesmo dia');
+  ok($('#ecoDia [data-id]'), 'cartão da música do dia');
+  // microfone: na sua vez, a nota certa (ou a oitava de cima) conta como acerto
+  eco.id = 'u-teste-eco'; ecoComecar(); ecoLimpar(); ecoRodada(); ecoLimpar(); ecoSuaVez();
+  ecoMicNota(eco.seq[0].midi + 12); igual(eco.pos, 1, 'oitava de cima vale');
+  ecoMicNota(eco.seq[1].midi + 1); igual(eco.erros, 1, 'nota errada conta erro');
+  ecoParar();
+  // fazer a música do dia marca o dia
+  eco.id = ecoDoDia(); ecoComecar(); ecoLimpar(); delete state.progress.ecoDias[dayKey()]; ecoFim();
+  ok(state.progress.ecoDias[dayKey()] && ecoSequenciaDias() >= 1 && !$('#ecoDiaFeita').hidden, 'dia marcado e aviso no fim');
+  state.progress.ecoDias = dias; if(prog) state.progress.eco[ecoDoDia()] = prog; else delete state.progress.eco[ecoDoDia()];
+  store.set('melodies', salvas); saveProgress(); ecoParar(); go('inicio');
+});

@@ -56,7 +56,7 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
 - Início + 4 áreas, em `AREAS` (navegacao.js):
   - **aprender:** estudo, academia, licoes, teoria;
   - **tocar:** teclado, melodias, acordes, microfone;
-  - **treinar:** desafios, eco (o jogo RepeTCHÊ: o bandoneon toca, você repete; js/eco.js e o gaúcho em imagens/repetche/), ritmo;
+  - **treinar:** desafios, eco (o jogo RepeTCHÊ: o bandoneon toca, você repete; js/eco.js e o gaúcho em imagens/repetche/. Tem música do dia com sequência, "Suas músicas" com as melodias e partituras do aluno e modo microfone), ritmo;
   - **perfil:** perfil, professor, ajustes.
 - Cada aba é `<section id="v-nome">`. O botão dela fica em `#subnav`, com `data-area` e `data-v`.
 - `go(v)` troca de aba. Para agir ao entrar ou sair de uma aba: `ganchosAba.push((nova, anterior)=>…)`.
@@ -241,7 +241,6 @@ E="/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe"; W=$(cygpath -w
     *A Federação*, Hemeroteca Digital).
   - Sugeridas, com partitura em domínio público no IMSLP: Gaúcho (O Corta-jaca), de Chiquinha Gonzaga, e
     Odeon, de Ernesto Nazareth.
-  - Ideia: RepeTCHÊ aceitar as músicas do próprio aluno (Melodias e partituras importadas), para uso pessoal.
 - Do dono:
   - foto nítida do Canto de El Choclo;
   - páginas de um método de digitação (ex.: Pedro Maffia), como referência e não como regra;

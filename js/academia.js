@@ -522,7 +522,8 @@ $('#acStart').onclick = ()=>{
   if(acad.ex.nivel===1 && acad.ex.gerar && acad.sortearDeNovo && !acad.autoInicio){ acad.todos = montarEventos(acad.ex); aplicarTrecho(); acad.rodando = true; novaRodada(); }
   acad.sortearDeNovo = false; acadInstrutor(0);
   if(acad.modo==='desafio' && !acad.ex.semTempo) iniciarNoTempo(); else avancar();
-  if(window.innerWidth<980 && !acad.autoInicio) $('#acInstrutor').scrollIntoView({block:'start', behavior:'smooth'}); // no celular o instrutor fica logo acima do teclado
+  // a tela vai até o teclado: no celular o instrutor (barra fixa) fica logo acima dele; no computador, a faixa do Começar
+  if(!acad.autoInicio && !acadCheia) (window.innerWidth<980 ? $('#acInstrutor') : $('#acBarra')).scrollIntoView({block:'start', behavior: movReduzido()?'auto':'smooth'});
 };
 $('#acOuvirBtn').onclick = ()=>{
   if(acad.demo || acad.rodando){ acadParar(); acadDica(-1); return; }
@@ -712,6 +713,45 @@ function acadMostrar(){
   $('#acMic').checked = mic.on; acadValidacaoTexto();
   if(typeof acListaMelodias==='function') acListaMelodias(); // melodias salvas depois em Melodias
 }
+/* ---------- Tela cheia: o Começar/Parar, o instrutor (Agora e Próximo) e o teclado, com os botões do maior tamanho
+   que cabe. Usa a tela cheia do navegador quando existe (no iPhone a seção cobre a página). ---------- */
+let acadCheia = false, acadCheiaTimer = 0;
+function acadTamanhoCheia(){
+  const tec = $('#acTeclados'), lados = tec.dataset.maos==='duas' ? ['left','right'] : [tec.dataset.maos==='left' ? 'left' : 'right'];
+  const W = $('#acCentro').clientWidth - 30, H = window.innerHeight - tec.getBoundingClientRect().top - 36; // 36: aviso de acerto/erro
+  const cabe = (w,h)=>Math.min(...lados.map(m=>{ const L = state.layout[m];
+    return Math.min((w-14)/(Math.max(...L.map(b=>b.x))+1), (h-14)/(Math.max(...L.map(b=>b.y))+1)); }));
+  const emPe = lados.length>1 ? cabe(W, (H-36)/2) : cabe(W, H), deLado = lados.length>1 ? cabe((W-76)/2, H) : 0;
+  tec.classList.toggle('lado', deLado>emPe);
+  return Math.max(24, Math.min(84, Math.floor(Math.max(emPe, deLado))));
+}
+function acadRedesenhar(){ akL.build(); akR.build(); if(acad.rodando) acadDica(acad.g); else if(!acad.demo) acadPrevia(); }
+function acadAjustarCheia(){ if(!acadCheia) return; acOpts.size = acadTamanhoCheia(); acOpts.diaFator = 0.86; acadRedesenhar(); }
+function acadEntrarCheia(){
+  if(acadCheia) return; acadCheia = true;
+  const sec = $('#v-academia'); sec.classList.add('ac-cheia'); document.documentElement.classList.add('tk-cheia-on');
+  $('#acCheiaSair').hidden = false; $('#acMais').open = false;
+  const fs = sec.requestFullscreen || sec.webkitRequestFullscreen;
+  if(fs){ try{ const p = fs.call(sec); if(p && p.catch) p.catch(()=>{}); }catch(e){} }
+  acadAjustarCheia();
+}
+function acadSairCheia(){
+  if(!acadCheia) return; acadCheia = false;
+  $('#v-academia').classList.remove('ac-cheia'); document.documentElement.classList.remove('tk-cheia-on');
+  $('#acCheiaSair').hidden = true; $('#acTeclados').classList.remove('lado');
+  if(document.fullscreenElement || document.webkitFullscreenElement){
+    const ex = document.exitFullscreen || document.webkitExitFullscreen;
+    try{ const p = ex.call(document); if(p && p.catch) p.catch(()=>{}); }catch(e){}
+  }
+  delete acOpts.size; delete acOpts.diaFator; acadRedesenhar();
+}
+$('#acCheiaBtn').onclick = acadEntrarCheia;
+$('#acCheiaSair').onclick = acadSairCheia;
+['fullscreenchange','webkitfullscreenchange'].forEach(ev=>document.addEventListener(ev, ()=>{
+  if(acadCheia && !(document.fullscreenElement || document.webkitFullscreenElement)) acadSairCheia(); else acadAjustarCheia(); }));
+window.addEventListener('resize', ()=>{ if(acadCheia){ clearTimeout(acadCheiaTimer); acadCheiaTimer = setTimeout(acadAjustarCheia, 150); } });
+document.addEventListener('keydown', e=>{ if(e.key==='Escape' && acadCheia) acadSairCheia(); });
+ganchosAba.push(nova=>{ if(nova!=='academia') acadSairCheia(); });
 function acadAoMudarMapa(){ if(acad.ex) carregarExercicio(acad.ex.id); }
 // Tela Início: "Continue de onde parou" com o exercício atual da Academia (só depois da 1ª tentativa)
 function renderContinuar(){

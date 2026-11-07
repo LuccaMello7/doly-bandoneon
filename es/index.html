@@ -154,7 +154,7 @@
     <div class="instalar-txt"><b>Instala BanDoly en el celular</b><span class="muted" id="instalarTxt">Se abre directo desde la pantalla de inicio, más rápido e incluso sin internet.</span><span class="muted" id="instalarIos" hidden>En el iPhone: toca Compartir y luego “Agregar a inicio”.</span></div>
     <div class="instalar-acoes"><button type="button" class="btn" id="instalarSim"><svg aria-hidden="true"><use href="#i-download"/></svg>Instalar</button><button type="button" class="btn ghost" id="instalarNao">Ahora no</button></div>
   </div>
-  <aside class="aviso aviso-curto" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></svg><p><strong>BanDoly es un sitio para aprender y nunca reemplazará los consejos y la orientación de un profesor.</strong> Usa la app como apoyo para tus estudios y, siempre que puedas, aprende con un profesor de bandoneón: él corrige la postura, el fuelle y la digitación, cosas que una app no puede ver.</p></aside>
+  <aside class="aviso aviso-curto" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></svg><p><strong>BanDoly es un sitio para aprender y nunca reemplazará los consejos y la orientación de un profesor.</strong> Usa la app como apoyo para tus estudios y, siempre que puedas, aprende con un profesor de bandoneón: él corrige la postura, el fuelle y la digitación, cosas que una app no puede ver.</p><p class="aviso-linha"><strong>BanDoly no reemplaza a un profesor de bandoneón.</strong> <button type="button" class="aviso-ler">Leer el aviso</button></p></aside>
   <div class="tiles" data-revela="cascata">
     <a class="tile t-eco tile-larga" href="#" data-go="eco"><span class="tile-ic tile-av"><img class="gaucho-av" src="../imagens/repetche/avatar.jpg" alt="" width="80" height="80"></span><span class="tile-txt"><b><span translate="no">RepeTCHÊ</span> <span class="tile-novo">Nuevo</span></b><small>El bandoneón toca, tú repites. ¿Hasta dónde llega tu memoria?</small></span><span class="tile-pontos" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></a>
     <a class="tile t-academia" href="#" data-go="academia"><span class="tile-ic"><svg aria-hidden="true"><use href="#i-cap"/></svg></span><b>Academia</b><small>6 niveles con instructor</small></a>
@@ -549,10 +549,15 @@
       <label>En cada ronda: <select id="ecoPasso"><option value="2">+2 notas</option><option value="3">+3 notas</option><option value="4">+4 notas</option></select></label>
       <label>Velocidad: <select id="ecoVel"><option value="0.75">Despacio</option><option value="1" selected>Normal</option></select></label>
       <label class="nomes-chk"><input type="checkbox" id="ecoVozOn" checked> Voz del gaucho</label>
+      <label class="nomes-chk" title="El micrófono escucha tu bandoneón: la nota tocada cuenta como el botón"><input type="checkbox" id="ecoMicOn"> <svg aria-hidden="true"><use href="#i-mic"/></svg> Tocar en mi bandoneón</label>
     </div>
+    <div class="eco-dia" id="ecoDia"></div>
     <h2 class="card-tit eco-escolha-tit">Elige la música</h2>
     <p class="muted eco-dica">Toca una música para empezar. Viene en tramos cortos, y el fuelle cambia de dirección solo: presta atención a los botones.</p>
     <div class="eco-musicas" id="ecoMusicas" aria-label="Música"></div>
+    <h3 class="eco-suas-tit">Tus músicas</h3>
+    <p class="muted eco-dica" id="ecoSuasVazio">Las melodías que crees en Melodías (+ Nueva) y las partituras que importes en la Academia (nivel 7) aparecen aquí. Quedan solo en tu dispositivo.</p>
+    <div class="eco-musicas" id="ecoSuas" aria-label="Tus músicas"></div>
   </div>
 
   <div class="card eco-jogo" id="ecoJogo" hidden>
@@ -586,6 +591,7 @@
     <p class="muted" id="ecoFimMusica"></p>
     <div class="eco-estrelas" id="ecoFimEstrelas" role="img"></div>
     <div class="eco-fim-pts"><b id="ecoFimPts">0</b><span>puntos</span></div>
+    <p class="eco-dia-feita" id="ecoDiaFeita" hidden></p>
     <p class="eco-recorde" id="ecoRecorde" hidden><svg aria-hidden="true"><use href="#i-trophy"/></svg>¡Nuevo récord!</p>
     <p class="muted" id="ecoFimInfo"></p>
     <div class="row eco-fim-acoes">
@@ -625,7 +631,7 @@
 <section id="v-academia">
   <div class="pg-topo"><span class="pg-ic t-academia"><svg aria-hidden="true"><use href="#i-cap"/></svg></span><div><h2 class="pg-tit">Academia de Bandoneón</h2><p class="muted">Ejercicios en 6 niveles, del primer botón a canciones con las dos manos, y un nivel para tus propias partituras. El instructor muestra la nota, la mano, el dedo y la dirección del fuelle de cada momento, y al final recibes un informe con lo que acertaste y lo que debes repasar.</p></div></div>
   <div class="card tarefa-aviso" hidden></div>
-  <aside class="aviso aviso-curto" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></svg><p><strong>BanDoly es un sitio para aprender y nunca reemplazará los consejos y la orientación de un profesor.</strong> Usa la app como apoyo para tus estudios y, siempre que puedas, aprende con un profesor de bandoneón: él corrige la postura, el fuelle y la digitación, cosas que una app no puede ver.</p></aside>
+  <aside class="aviso aviso-curto" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></svg><p><strong>BanDoly es un sitio para aprender y nunca reemplazará los consejos y la orientación de un profesor.</strong> Usa la app como apoyo para tus estudios y, siempre que puedas, aprende con un profesor de bandoneón: él corrige la postura, el fuelle y la digitación, cosas que una app no puede ver.</p><p class="aviso-linha"><strong>BanDoly no reemplaza a un profesor de bandoneón.</strong> <button type="button" class="aviso-ler">Leer el aviso</button></p></aside>
   <!-- 1. escolher: níveis em fileira e os exercícios do nível (recolhe enquanto você toca) -->
   <div class="card ac-escolha" id="acEscolha">
     <div class="ac-resumo" id="acResumo">
@@ -702,6 +708,8 @@
     <div class="acao">
       <button class="btn btn-grande" id="acStart">▶ Comenzar</button>
       <button class="btn sec" id="acOuvirBtn">Escuchar</button>
+      <button class="btn sec" id="acCheiaBtn"><svg aria-hidden="true"><use href="#i-expand"/></svg>Pantalla completa</button>
+      <button class="btn sec" id="acCheiaSair" hidden><svg aria-hidden="true"><use href="#i-x"/></svg>Salir de pantalla completa</button>
       <p class="muted ac-modo-info acao-dica" id="acModoInfo"></p>
     </div>
   </div>
@@ -712,7 +720,7 @@
       <div class="row ac-topo">
         <div><b id="acExTitulo"></b><div class="muted" id="acExDesc"></div></div>
       </div>
-      <div class="row">
+      <div class="row ac-fole-linha">
         <span class="muted">Tu fuelle:</span> <span class="dirpill open" id="acDirPill"></span>
         <button class="btn sec" id="acDirBtn" title="Cambia la dirección del fuelle (tecla Espacio)">⇄ Cambiar fuelle <kbd class="so-teclado">Espacio</kbd></button>
         <label title="La app cambia sola la dirección del fuelle. En ese caso el fuelle no se evalúa."><input type="checkbox" id="acAuto"> Fuelle automático</label>

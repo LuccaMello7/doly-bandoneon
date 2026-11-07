@@ -154,7 +154,7 @@
     <div class="instalar-txt"><b>Install BanDoly on your phone</b><span class="muted" id="instalarTxt">Opens straight from your home screen, faster and even offline.</span><span class="muted" id="instalarIos" hidden>On iPhone: tap Share, then “Add to Home Screen”.</span></div>
     <div class="instalar-acoes"><button type="button" class="btn" id="instalarSim"><svg aria-hidden="true"><use href="#i-download"/></svg>Install</button><button type="button" class="btn ghost" id="instalarNao">Not now</button></div>
   </div>
-  <aside class="aviso aviso-curto" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></svg><p><strong>BanDoly is a learning site and will never replace the advice and guidance of a teacher.</strong> Use the app to support your studies and, whenever you can, learn with a bandoneon teacher: they correct your posture, bellows and fingering, things an app cannot see.</p></aside>
+  <aside class="aviso aviso-curto" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></svg><p><strong>BanDoly is a learning site and will never replace the advice and guidance of a teacher.</strong> Use the app to support your studies and, whenever you can, learn with a bandoneon teacher: they correct your posture, bellows and fingering, things an app cannot see.</p><p class="aviso-linha"><strong>BanDoly does not replace a bandoneon teacher.</strong> <button type="button" class="aviso-ler">Read the notice</button></p></aside>
   <div class="tiles" data-revela="cascata">
     <a class="tile t-eco tile-larga" href="#" data-go="eco"><span class="tile-ic tile-av"><img class="gaucho-av" src="../imagens/repetche/avatar.jpg" alt="" width="80" height="80"></span><span class="tile-txt"><b><span translate="no">RepeTCHÊ</span> <span class="tile-novo">New</span></b><small>The bandoneon plays, you repeat. How far can your memory go?</small></span><span class="tile-pontos" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></a>
     <a class="tile t-academia" href="#" data-go="academia"><span class="tile-ic"><svg aria-hidden="true"><use href="#i-cap"/></svg></span><b>Academy</b><small>6 levels with an instructor</small></a>
@@ -549,10 +549,15 @@
       <label>Each round: <select id="ecoPasso"><option value="2">+2 notes</option><option value="3">+3 notes</option><option value="4">+4 notes</option></select></label>
       <label>Speed: <select id="ecoVel"><option value="0.75">Slow</option><option value="1" selected>Normal</option></select></label>
       <label class="nomes-chk"><input type="checkbox" id="ecoVozOn" checked> Gaucho voice</label>
+      <label class="nomes-chk" title="The microphone listens to your bandoneon: the note you play counts as the button"><input type="checkbox" id="ecoMicOn"> <svg aria-hidden="true"><use href="#i-mic"/></svg> Play on my bandoneon</label>
     </div>
+    <div class="eco-dia" id="ecoDia"></div>
     <h2 class="card-tit eco-escolha-tit">Choose the tune</h2>
     <p class="muted eco-dica">Tap a tune to start. It comes in short sections, and the bellows changes direction by itself: focus on the buttons.</p>
     <div class="eco-musicas" id="ecoMusicas" aria-label="Tune"></div>
+    <h3 class="eco-suas-tit">Your tunes</h3>
+    <p class="muted eco-dica" id="ecoSuasVazio">The melodies you create in Melodies (+ New) and the scores you import in the Academy (level 7) show up here. They stay on your device only.</p>
+    <div class="eco-musicas" id="ecoSuas" aria-label="Your tunes"></div>
   </div>
 
   <div class="card eco-jogo" id="ecoJogo" hidden>
@@ -586,6 +591,7 @@
     <p class="muted" id="ecoFimMusica"></p>
     <div class="eco-estrelas" id="ecoFimEstrelas" role="img"></div>
     <div class="eco-fim-pts"><b id="ecoFimPts">0</b><span>points</span></div>
+    <p class="eco-dia-feita" id="ecoDiaFeita" hidden></p>
     <p class="eco-recorde" id="ecoRecorde" hidden><svg aria-hidden="true"><use href="#i-trophy"/></svg>New record!</p>
     <p class="muted" id="ecoFimInfo"></p>
     <div class="row eco-fim-acoes">
@@ -625,7 +631,7 @@
 <section id="v-academia">
   <div class="pg-topo"><span class="pg-ic t-academia"><svg aria-hidden="true"><use href="#i-cap"/></svg></span><div><h2 class="pg-tit">Bandoneon Academy</h2><p class="muted">Exercises in 6 levels, from the first button to pieces with both hands, plus a level for your own sheet music. The instructor shows the note, hand, finger and bellows direction for each moment, and at the end you get a report on what went right and what to review.</p></div></div>
   <div class="card tarefa-aviso" hidden></div>
-  <aside class="aviso aviso-curto" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></svg><p><strong>BanDoly is a learning site and will never replace the advice and guidance of a teacher.</strong> Use the app to support your studies and, whenever you can, learn with a bandoneon teacher: they correct your posture, bellows and fingering, things an app cannot see.</p></aside>
+  <aside class="aviso aviso-curto" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></svg><p><strong>BanDoly is a learning site and will never replace the advice and guidance of a teacher.</strong> Use the app to support your studies and, whenever you can, learn with a bandoneon teacher: they correct your posture, bellows and fingering, things an app cannot see.</p><p class="aviso-linha"><strong>BanDoly does not replace a bandoneon teacher.</strong> <button type="button" class="aviso-ler">Read the notice</button></p></aside>
   <!-- 1. escolher: níveis em fileira e os exercícios do nível (recolhe enquanto você toca) -->
   <div class="card ac-escolha" id="acEscolha">
     <div class="ac-resumo" id="acResumo">
@@ -702,6 +708,8 @@
     <div class="acao">
       <button class="btn btn-grande" id="acStart">▶ Start</button>
       <button class="btn sec" id="acOuvirBtn">Listen</button>
+      <button class="btn sec" id="acCheiaBtn"><svg aria-hidden="true"><use href="#i-expand"/></svg>Full screen</button>
+      <button class="btn sec" id="acCheiaSair" hidden><svg aria-hidden="true"><use href="#i-x"/></svg>Exit full screen</button>
       <p class="muted ac-modo-info acao-dica" id="acModoInfo"></p>
     </div>
   </div>
@@ -712,7 +720,7 @@
       <div class="row ac-topo">
         <div><b id="acExTitulo"></b><div class="muted" id="acExDesc"></div></div>
       </div>
-      <div class="row">
+      <div class="row ac-fole-linha">
         <span class="muted">Your bellows:</span> <span class="dirpill open" id="acDirPill"></span>
         <button class="btn sec" id="acDirBtn" title="Switches the bellows direction (Space key)">⇄ Switch bellows <kbd class="so-teclado">Space</kbd></button>
         <label title="The app switches the bellows direction for you. In that case the bellows is not assessed."><input type="checkbox" id="acAuto"> Auto bellows</label>

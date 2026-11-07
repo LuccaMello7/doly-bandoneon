@@ -19,6 +19,10 @@ function abrirPeloEndereco(){
   else if(/^[a-z]+$/.test(h) && $('#v-'+h)) go(h);
 }
 abrirPeloEndereco();
+// Aviso "não substitui um professor": inteiro na primeira visita; nas outras, uma linha só ("Ler o aviso" abre)
+{ const visto = store.get('avisoProfVisto', false);
+  $$('.aviso-curto').forEach(a=>{ if(visto) a.classList.add('recolhido'); const b = a.querySelector('.aviso-ler'); if(b) b.onclick = ()=>a.classList.remove('recolhido'); });
+  if(!visto) store.set('avisoProfVisto', true); }
 // Desafios: o Começar de cada um muda para "Recomeçar" ao começar e volta ao trocar de desafio (js/desafios.js)
 ['#fStart','#sStart','#eStart','#pStart'].forEach(id=>$(id).addEventListener('click', botoesDesafio));
 $$('[data-ch]').forEach(b=>b.addEventListener('click', ()=>setTimeout(botoesDesafio)));

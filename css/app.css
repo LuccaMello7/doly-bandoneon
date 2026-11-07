@@ -1541,3 +1541,69 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
 .btn.rodando svg{fill:none}
 @keyframes rodandoPulsa{0%{box-shadow:inset 0 0 0 2px var(--gold),0 0 0 0 #e6b45066}70%,100%{box-shadow:inset 0 0 0 2px var(--gold),0 0 0 12px #e6b45000}}
 .sem-mov .btn.rodando{animation:none}
+
+/* Aviso do professor: depois da primeira visita, uma linha só ("Ler o aviso" mostra o texto inteiro) */
+.aviso-curto .aviso-linha{display:none}
+.aviso-curto.recolhido>p:not(.aviso-linha){display:none}
+.aviso-curto.recolhido .aviso-linha{display:block}
+.aviso-curto.recolhido{padding-top:8px;padding-bottom:8px;align-items:center}
+.aviso-ler{background:none;border:0;padding:0;color:var(--gold2);font:inherit;font-weight:700;text-decoration:underline;cursor:pointer}
+
+/* Academia em tela cheia: Começar/Parar, o instrutor (Agora e Próximo) e o teclado */
+#v-academia.ac-cheia{position:fixed;inset:0;z-index:50;margin:0;max-width:none;width:100%;height:100%;overflow:hidden;display:flex!important;
+  flex-direction:column;gap:8px;padding:8px 12px calc(8px + env(safe-area-inset-bottom));background:var(--bg)}
+#v-academia.ac-cheia>:not(.ac-barra):not(.ac-layout){display:none!important}
+#v-academia.ac-cheia .ac-barra{margin:0;padding:8px 12px;flex:none}
+#v-academia.ac-cheia .ac-ajustes,#v-academia.ac-cheia .acao-dica,#v-academia.ac-cheia #acCheiaBtn{display:none!important}
+#v-academia.ac-cheia .acao{margin:0;padding:0;border:0}
+#v-academia.ac-cheia .acao .btn-grande{min-width:150px;flex:0 0 auto}
+#v-academia.ac-cheia .ac-layout{flex:1;min-height:0;display:flex;flex-direction:column;align-items:stretch;gap:8px}
+#v-academia.ac-cheia .ac-instrutor{position:static;order:-1;padding:8px 12px;margin:0;box-shadow:none;flex:none}
+#v-academia.ac-cheia .ac-instrutor h3,#v-academia.ac-cheia .ac-opcoes,#v-academia.ac-cheia .ac-validacao,#v-academia.ac-cheia .ac-dicas-box{display:none!important}
+#v-academia.ac-cheia .ac-prog{margin:0 0 6px}
+#v-academia.ac-cheia .ac-ap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:10px;align-items:stretch}
+#v-academia.ac-cheia .ac-agora-box{padding:0}
+#v-academia.ac-cheia .ac-prox-box{margin:0}
+#v-academia.ac-cheia .ac-nota{font-size:2rem}
+#v-academia.ac-cheia .ac-centro{flex:1;min-height:0;margin:0;padding:8px 12px;display:flex;flex-direction:column;align-items:center}
+#v-academia.ac-cheia .ac-centro>:not(.ac-teclados):not(#acFeed):not(.ac-fole-linha){display:none!important}
+#v-academia.ac-cheia .ac-fole-linha{margin:0;justify-content:center}
+/* com o fole automático o instrutor já mostra a direção: a linha do fole sai e o teclado ganha espaço */
+#v-academia.ac-cheia .ac-fole-linha:has(#acAuto:checked){display:none!important}
+#v-academia.ac-cheia .ac-fole-linha label:last-child{display:none}
+#v-academia.ac-cheia .ac-teclados{flex:1;min-height:0;flex-direction:column;flex-wrap:nowrap;justify-content:space-evenly;margin:0;gap:6px}
+#v-academia.ac-cheia .ac-teclados.lado{flex-direction:row}
+#v-academia.ac-cheia .ac-maolabel{display:none}
+#v-academia.ac-cheia .ac-teclados[data-maos="duas"] .ac-fole-meio{width:auto;height:26px;align-self:center}
+#v-academia.ac-cheia .ac-teclados.lado[data-maos="duas"] .ac-fole-meio{width:56px;height:auto;align-self:stretch}
+#v-academia.ac-cheia #acFeed{margin:0;min-height:1.4em;text-align:center}
+/* celular deitado (pouca altura): o instrutor vira uma coluna à esquerda e o teclado fica ao lado */
+@media (max-height:500px){
+  #v-academia.ac-cheia .ac-layout{flex-direction:row}
+  #v-academia.ac-cheia .ac-instrutor{width:230px;overflow:auto}
+  #v-academia.ac-cheia .ac-ap{grid-template-columns:1fr;gap:6px}
+  #v-academia.ac-cheia .ac-nota{font-size:1.6rem}
+  #v-academia.ac-cheia .ac-prox-nota{font-size:1.15rem}
+  #v-academia.ac-cheia .ac-centro{flex:1;min-width:0}
+  #v-academia.ac-cheia .ac-fole-linha .muted,#v-academia.ac-cheia .ac-fole-linha label{display:none}
+  #v-academia.ac-cheia .ac-barra{padding:6px 10px}
+}
+
+/* RepeTCHÊ: música do dia (com a sequência de dias) e as músicas do aluno */
+.eco-dia{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:0 0 18px;padding:14px 16px;border-radius:18px;
+  background:linear-gradient(120deg,#1a4f63,#16354f);border:1px solid #5fd6e655;box-shadow:0 10px 24px #0006;animation:ecoCarta .5s cubic-bezier(.2,.8,.2,1) backwards}
+.eco-dia.feita{background:linear-gradient(120deg,#173f37,#16354f);border-color:#3ccf8e66}
+.eco-dia-txt{flex:1 1 200px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.eco-dia-kicker{font-size:.72rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:#5fd6e6}
+.eco-dia.feita .eco-dia-kicker{color:var(--green)}
+.eco-dia-txt b{font-size:1.15rem}
+.eco-dia-seq{display:flex;align-items:center;gap:4px;padding:6px 12px;border-radius:999px;background:#ffffff10;color:var(--muted)}
+.eco-dia-seq svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2}
+.eco-dia-seq b{font-size:1.2rem;color:var(--text)}
+.eco-dia-seq.on{background:linear-gradient(160deg,#5a2a14,#3a1f14);color:#ffb15c;box-shadow:0 0 0 1px #f08a4b66}
+.eco-dia-seq.on svg{fill:#f08a4b55;animation:ecoChama .7s ease-in-out infinite alternate}
+.eco-dia-feita{display:inline-block;margin:10px 0 0;padding:6px 14px;border-radius:999px;background:#3ccf8e22;color:var(--green);font-weight:800}
+.eco-dia-feita[hidden]{display:none}
+.eco-suas-tit{margin:4px 0 4px;font-size:1rem}
+.eco-sua{font-size:.68rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#1b1404;background:var(--gold);border-radius:999px;padding:1px 8px}
+#ecoSuas:empty{display:none}

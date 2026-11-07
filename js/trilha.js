@@ -144,6 +144,7 @@ const INSIGNIAS = [
   {id:'leitor',       ic:'note',    t:'Leitor de pauta',     d:'8 de 10 em Leitura na pauta.', feito:()=>state.progress.staff>=8},
   {id:'mao-esquerda', ic:'keys',    t:'Mão esquerda firme',  d:'30 acertos na mão esquerda nos desafios e na Academia.', feito:()=>acertosNaMao('left')>=30},
   {id:'eco',          ic:'eco',     t:'RepeTCHÊ perfeito',   d:'Completou uma música do RepeTCHÊ sem errar nenhuma nota.', feito:()=>Object.values(state.progress.eco||{}).some(x=>x.estrelas>=3)},
+  {id:'eco-semana',   ic:'flame',   t:'Sete dias de RepeTCHÊ', d:'Fez a música do dia do RepeTCHÊ 7 dias seguidos.', feito:()=>typeof ecoSequenciaDias==='function' && ecoSequenciaDias()>=7},
   {id:'pulso',        ic:'metro',   t:'Pulso de tango',      d:'80% de precisão no Toque junto.', feito:()=>state.progress.rhythm>=80},
   {id:'acordista',    ic:'chord',   t:'Acordista',           d:'8 de 10 no treino de acordes.', feito:()=>state.progress.chords>=8},
   {id:'duas-maos',    ic:'music',   t:'Duas mãos, um fole',  d:'Terminou a Ode à Alegria a duas mãos.', feito:()=>melodiasFeitas()['ode-duas']!=null},
