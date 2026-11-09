@@ -130,15 +130,17 @@
 </div>
 <!-- INÍCIO -->
 <section id="v-inicio" class="active">
-  <div class="hero hero-novo">
-    <div class="hero-txt">
-      <div class="hero-ola"><span class="ola">Olá! 👋</span><span id="streak" class="streak"></span></div>
-      <h1 class="hero-title">Aprenda a tocar bandoneon com o BanDoly</h1>
-      <p class="hero-sub">Teclado com som real, lições e um caminho de estudo feito para você.</p>
-      <div class="row hero-cta">
+  <!-- primeira visita: uma frase e um botão -->
+  <div class="in-topo">
+    <div class="in-topo-txt">
+      <span class="in-selo"><i></i>Gratuito e sem cadastro</span>
+      <h1 class="in-tit">Aprenda a tocar <em>bandoneon</em>, um botão de cada vez.</h1>
+      <p class="in-sub">Teclado com som real, lições curtas e um caminho de estudo montado para você.</p>
+      <div class="in-acoes">
         <button type="button" class="btn btn-grande" id="heroCta"><svg aria-hidden="true"><use href="#i-play"/></svg><span id="heroCtaTxt">Começar pela primeira lição</span></button>
-        <button type="button" class="btn ghost" data-go="teclado">Tocar o teclado agora</button>
+        <a class="in-elo" href="#" data-go="teclado">ou tocar o teclado agora <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
+      <ul class="in-fatos"><li><svg aria-hidden="true"><use href="#i-check"/></svg>71 botões com som de um bandoneon de 1930</li><li><svg aria-hidden="true"><use href="#i-check"/></svg>Funciona no celular, até sem internet</li></ul>
     </div>
     <!-- bandoneon desenhado: o fole respira, os botões acendem e as notas sobem -->
     <div class="bando" aria-hidden="true">
@@ -148,28 +150,44 @@
       <div class="voa"><i></i><i></i><i></i><i></i><i></i></div>
     </div>
   </div>
+  <!-- quem já usa: continuar de onde parou (js/trilha.js põe a classe "volta" na seção) -->
+  <div class="in-volta">
+    <p class="ola">Olá de novo! 👋</p>
+    <div class="in-cont">
+      <div class="in-anel" id="inAnel" aria-hidden="true"><b id="inAnelTxt"></b></div>
+      <div class="in-cont-txt">
+        <div class="in-cont-topo"><small>Seu caminho</small><span id="streak" class="streak"></span></div>
+        <h2 id="inContTit"></h2>
+        <p class="muted" id="inContSub"></p>
+      </div>
+      <button type="button" class="btn btn-grande" id="inContBtn"><svg aria-hidden="true"><use href="#i-play"/></svg><span id="inContBtnTxt">Continuar</span></button>
+    </div>
+  </div>
   <div class="card instalar" id="instalarCard" hidden>
     <img src="icones/icone-192.png" alt="" width="52" height="52">
     <div class="instalar-txt"><b>Instale o BanDoly no celular</b><span class="muted" id="instalarTxt">Abre direto da tela inicial, mais rápido e até sem internet.</span><span class="muted" id="instalarIos" hidden>No iPhone: toque em Compartilhar e depois em “Adicionar à Tela de Início”.</span></div>
     <div class="instalar-acoes"><button type="button" class="btn" id="instalarSim"><svg aria-hidden="true"><use href="#i-download"/></svg>Instalar</button><button type="button" class="btn ghost" id="instalarNao">Agora não</button></div>
   </div>
-  <aside class="aviso aviso-curto" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></svg><p><strong>O BanDoly é um site para aprendizado e nunca substituirá os conselhos e as orientações de um professor.</strong> Use o app como apoio aos estudos e, sempre que puder, aprenda com um professor de bandoneon: ele corrige a postura, o fole e o dedilhado, coisas que um app não consegue ver.</p><p class="aviso-linha"><strong>O BanDoly não substitui um professor de bandoneon.</strong> <button type="button" class="aviso-ler">Ler o aviso</button></p></aside>
-  <div class="tiles" data-revela="cascata">
-    <a class="tile t-eco tile-larga" href="#" data-go="eco"><span class="tile-ic tile-av"><img class="gaucho-av" src="imagens/repetche/avatar.jpg" alt="" width="80" height="80"></span><span class="tile-txt"><b><span translate="no">RepeTCHÊ</span> <span class="tile-novo">Novo</span></b><small>O bandoneon toca, você repete. Até onde vai a sua memória?</small></span><span class="tile-pontos" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></a>
-    <a class="tile t-academia" href="#" data-go="academia"><span class="tile-ic"><svg aria-hidden="true"><use href="#i-cap"/></svg></span><b>Academia</b><small>6 níveis com instrutor</small></a>
-    <a class="tile t-teclado" href="#" data-go="teclado"><span class="tile-ic"><svg aria-hidden="true"><use href="#i-keys"/></svg></span><b>Teclado livre</b><small>71 botões com som real</small></a>
-    <a class="tile t-melodias" href="#" data-go="melodias"><span class="tile-ic"><svg aria-hidden="true"><use href="#i-music"/></svg></span><b>Melodias</b><small>Músicas e escalas guiadas</small></a>
-    <a class="tile t-ritmo" href="#" data-go="ritmo"><span class="tile-ic"><svg aria-hidden="true"><use href="#i-metro"/></svg></span><b>Ritmo</b><small>Marcato, síncopa e 3-3-2</small></a>
+  <h2 class="in-h"><span class="in-so-novo">Ou vá direto ao que interessa</span><span class="in-so-volta">Praticar hoje</span></h2>
+  <div class="in-grade" data-revela="cascata">
+    <a class="in-c in-grande" style="--cor:var(--open)" href="#" data-go="academia"><span class="in-ic"><svg aria-hidden="true"><use href="#i-cap"/></svg></span><b>Academia</b><small>Exercícios em 6 níveis, com um instrutor que mostra a nota de agora e a próxima.</small><span class="in-barra in-so-volta"><i id="inAcadBarra"></i></span><span class="in-barra-txt in-so-volta" id="inAcadTxt"></span><span class="in-seta"><svg aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+    <a class="in-c in-grande in-rep" style="--cor:#35c2c9" href="#" data-go="eco"><img class="in-av" src="imagens/repetche/avatar.jpg" alt="" width="84" height="84"><span class="in-tx"><b><span translate="no">RepeTCHÊ</span> <span class="tile-novo">Novo</span></b><small>O bandoneon toca, você repete. Até onde vai a sua memória?</small><span class="in-dia"><svg aria-hidden="true"><use href="#i-music"/></svg><span>Música do dia</span><i aria-hidden="true">·</i><span id="inEcoDia"></span></span></span><span class="in-seta"><svg aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+    <a class="in-c in-linha" style="--cor:var(--close)" href="#" data-go="teclado"><span class="in-ic"><svg aria-hidden="true"><use href="#i-keys"/></svg></span><span class="in-tx"><b>Teclado livre</b><small>Toque à vontade nos 71 botões</small></span><span class="in-seta"><svg aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+    <a class="in-c in-linha" style="--cor:var(--violet)" href="#" data-go="melodias"><span class="in-ic"><svg aria-hidden="true"><use href="#i-music"/></svg></span><span class="in-tx"><b>Melodias</b><small>Músicas e escalas guiadas</small></span><span class="in-seta"><svg aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+    <a class="in-c in-linha" style="--cor:var(--green)" href="#" data-go="ritmo"><span class="in-ic"><svg aria-hidden="true"><use href="#i-metro"/></svg></span><span class="in-tx"><b>Ritmo</b><small>Marcato, síncopa e 3-3-2</small></span><span class="in-seta"><svg aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
   </div>
-  <a class="card doly-link" data-revela href="doly-costa/" data-local>
-      <span class="muted doly-kick">A inspiração do nome</span>
-      <span class="doly-linha"><img src="imagens/doly/disco.jpg" alt="" width="64" height="79"><span><b>Quem é Doly Costa?</b><span class="muted">Bandoneonista gaúcho de 97 anos que ainda toca. Passou pelas orquestras de tango das rádios de Porto Alegre e fundou Os Posteiros.</span></span></span>
-      <span class="btn ghost">Conhecer a história <svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
-    </a>
-  <div class="sobre" data-revela>
+  <a class="in-doly doly-link" data-revela href="doly-costa/" data-local>
+    <img src="imagens/doly/disco.jpg" alt="" width="44" height="54">
+    <span class="in-doly-txt"><small>A inspiração do nome</small><b>Quem é Doly Costa?</b><span class="muted">Bandoneonista gaúcho de 97 anos que ainda toca.</span></span>
+    <svg aria-hidden="true"><use href="#i-arrow"/></svg>
+  </a>
+  <!-- rodapé: o texto de apresentação fica aqui, fechado (o Google continua lendo) -->
+  <div class="in-rodape">
+    <details class="in-sobre"><summary>Sobre o BanDoly</summary>
+    <div class="sobre">
     <div class="card">
       <h2>O que você encontra no BanDoly</h2>
-    <div class="grid feats" data-revela="cascata">
+    <div class="grid feats">
       <div class="feat"><span class="feat-ic"><svg aria-hidden="true"><use href="#i-keys"/></svg></span><h3>Teclado com som real</h3><p>Os 71 botões do bandoneon Rheinische 142 nas posições reais, com o som gravado de um bandoneon de 1930. Cada botão toca uma nota abrindo o fole e outra fechando.</p><a href="#" data-go="teclado">Abrir o teclado →</a></div>
       <div class="feat"><span class="feat-ic"><svg aria-hidden="true"><use href="#i-book"/></svg></span><h3>11 lições com quiz</h3><p>História do instrumento, sistema bisonoro, fole e articulação, leitura nas duas claves, ritmos de tango, acordes e como ler uma partitura de tango.</p><a href="#" data-go="licoes">Ver as lições →</a> <a href="licoes/" data-local>Ler as lições online →</a> <a href="teoria/" data-local>Teoria musical online →</a></div>
       <div class="feat"><span class="feat-ic"><svg aria-hidden="true"><use href="#i-target"/></svg></span><h3>Desafios para decorar os botões</h3><p>O app pede uma nota e você encontra o botão. O sorteio repete mais os botões que você erra, e o mapa de erros mostra onde treinar.</p><a href="#" data-go="desafios">Fazer um desafio →</a></div>
@@ -189,6 +207,11 @@
     <details><summary>O BanDoly é gratuito?</summary><p>Sim. O BanDoly é gratuito e não precisa de cadastro. O seu progresso fica salvo no próprio navegador, e você pode exportar um backup em Ajustes.</p></details>
       <a class="btn ghost faq-todas" href="perguntas-frequentes/" data-local>Ver todas as perguntas <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
     </div>
+    </div>
+    </details>
+    <a href="perguntas-frequentes/" data-local>Perguntas frequentes</a>
+    <button type="button" class="in-lnk" data-sugestao>Sugestões</button>
+  <aside class="aviso aviso-curto" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></svg><p><strong>O BanDoly é um site para aprendizado e nunca substituirá os conselhos e as orientações de um professor.</strong> Use o app como apoio aos estudos e, sempre que puder, aprenda com um professor de bandoneon: ele corrige a postura, o fole e o dedilhado, coisas que um app não consegue ver.</p><p class="aviso-linha"><strong>O BanDoly não substitui um professor de bandoneon.</strong> <button type="button" class="aviso-ler">Ler o aviso</button></p></aside>
   </div>
 </section>
 

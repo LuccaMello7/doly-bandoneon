@@ -81,6 +81,7 @@ function renderTrilha(){
   // o botão principal da tela Início leva à próxima etapa
   $('#heroCtaTxt').textContent = atual<0 ? 'Ver as suas conquistas' : `${n===0?'Começar':'Continuar'}: ${es[atual].t}`;
   $('#trilhaCard').style.setProperty('--feito', es.length ? n/es.length : 0);
+  renderInicio(es, n, atual);
   // fechado: as feitas mais recentes, a atual e as duas seguintes
   const ini = atual<0 ? es.length-3 : Math.max(0, atual-1), fim = atual<0 ? es.length : atual+3;
   lista.innerHTML = es.map((e,i)=>{
@@ -99,6 +100,23 @@ $('#trilha').addEventListener('click', e=>{
   const et = ETAPAS.find(x=>x.id===b.dataset.etapa); if(et) et.ir();
 });
 $('#heroCta').onclick = ()=>{ const es = etapasDoAluno(), i = es.findIndex(e=>!e.feito()); if(i<0) go('perfil'); else es[i].ir(); };
+$('#inContBtn').onclick = ()=>$('#heroCta').click();
+// Tela Início: quem chega vê a apresentação; quem já praticou vê "Continuar" (classe "volta"), com o anel do
+// caminho, a barra da Academia e a música do dia do RepeTCHÊ
+function renderInicio(es, n, atual){
+  const voltou = n>0 || Object.keys(state.progress.days||{}).length>0;
+  $('#v-inicio').classList.toggle('volta', voltou);
+  $('#inAnel').style.setProperty('--p', es.length ? Math.round(100*n/es.length) : 0);
+  $('#inAnelTxt').textContent = `${n}/${es.length}`;
+  $('#inContTit').textContent = atual<0 ? 'Caminho completo! A Medalha Doly Costa é sua.' : `${n===0?'Começar':'Continuar'}: ${es[atual].t}`;
+  const faltam = es.length-n;
+  $('#inContSub').textContent = atual<0 ? '' : faltam===1 ? 'Falta 1 etapa para concluir o seu caminho.' : `Faltam ${faltam} etapas para concluir o seu caminho.`;
+  $('#inContBtnTxt').textContent = atual<0 ? 'Ver as suas conquistas' : n===0 ? 'Começar' : 'Continuar';
+  const exs = ACADEMIA.filter(x=>x.nivel<7).flatMap(acadFuncionais), fe = exs.filter(e=>acadConcluido(e.id)).length;
+  $('#inAcadBarra').style.width = (exs.length ? 100*fe/exs.length : 0)+'%';
+  $('#inAcadTxt').textContent = `${fe} de ${exs.length} exercícios concluídos`;
+  $('#inEcoDia').textContent = ecoMusica(ecoDoDia()).m.title;
+}
 $('#trilhaMais').onclick = ()=>{ trilhaAberta = !trilhaAberta; renderTrilha(); };
 // marcos que o resto do app não registra
 $('.doly-link').addEventListener('click', ()=>marcar('doly'));

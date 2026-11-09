@@ -723,6 +723,18 @@ teste('botão de começar muda de cor enquanto roda (Melodias e Desafios)', () =
   fq.round = 10; nextFind(); ok(!$('#fStart').classList.contains('rodando') && /Começar/.test($('#fStart').textContent), 'no fim volta a Começar');
   go('inicio');
 });
+teste('Início: quem chega vê a apresentação; quem já praticou vê "Continuar"', () => {
+  const dias = state.progress.days, sec = $('#v-inicio');
+  state.progress.days = {}; renderProgress();
+  const n = etapasDoAluno().filter(e=>e.feito()).length;
+  igual(sec.classList.contains('volta'), n>0, 'sem prática: apresentação');
+  if(!n) ok(getComputedStyle($('.in-topo')).display !== 'none' && getComputedStyle($('.in-volta')).display === 'none', 'só o topo de apresentação aparece');
+  state.progress.days = {[dayKey()]: {fole:true}}; renderProgress();
+  ok(sec.classList.contains('volta') && getComputedStyle($('.in-topo')).display === 'none', 'praticou: some a apresentação');
+  ok(/^\d+\/\d+$/.test($('#inAnelTxt').textContent) && $('#inContTit').textContent.length > 5, 'anel e próxima etapa preenchidos');
+  ok($('#inEcoDia').textContent.length > 2 && /\d/.test($('#inAcadTxt').textContent), 'música do dia e barra da Academia');
+  state.progress.days = dias; renderProgress();
+});
 teste('aviso do professor: recolhido mostra só a linha curta, e "Ler o aviso" abre', () => {
   const a = $('#v-inicio .aviso-curto'), antes = a.classList.contains('recolhido');
   a.classList.add('recolhido');

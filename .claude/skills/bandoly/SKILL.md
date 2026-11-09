@@ -63,6 +63,15 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
 - Links internos: `data-go="aba"`. Endereços: `#aba`, `#licao-N`, `#teoria-N` e `#tarefa=…` (link do professor).
 - A **Teoria** é a 2ª trilha da aba Lições: não tem botão no `#subnav`, e `go('teoria')` acende o botão Lições.
 
+### Tela Início
+- Classes `in-*` (fim do `css/app.css`). Dois estados na mesma seção: apresentação (`.in-topo`, uma frase e um botão) para
+  quem chega e "Continuar" (`.in-volta`, anel do caminho e sequência) para quem já praticou. `renderInicio()` em
+  `trilha.js` põe a classe `volta` em `#v-inicio` e preenche o anel, a barra da Academia e a música do dia.
+- Cartões num estilo só: painel escuro, borda fina e só o ícone colorido (`--cor`). Dourado cheio só no botão principal.
+- O texto "O que você encontra", as notas técnicas e as perguntas ficam em `<details class="in-sobre">` no rodapé
+  (fechado, mas no HTML para a busca). O aviso do professor fica no rodapé.
+- As regras antigas `.hero*`, `.tile*` e `.t-*` do CSS não são mais usadas no Início.
+
 ### Peças principais
 - **Teclado** (`kb(el, mão, opções)`, teclado.js):
   - opções: `getDir`, `showLabels`, `onPress(b, midi, dir, api)`, `perRow`, `largura()`, `editable`, `canSound`;
