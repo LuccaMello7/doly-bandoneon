@@ -63,6 +63,14 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
 - Links internos: `data-go="aba"`. Endereços: `#aba`, `#licao-N`, `#teoria-N` e `#tarefa=…` (link do professor).
 - A **Teoria** é a 2ª trilha da aba Lições: não tem botão no `#subnav`, e `go('teoria')` acende o botão Lições.
 
+### RepeTCHÊ em fases (eco.js)
+- Cada música é dividida em fases de 8 notas (`ECO_FASE`, `ecoFases(id)`); um jogo é uma fase. Completar uma libera a
+  seguinte, e todas liberam o desafio final, a música inteira (`ecoComecar('tudo')`). `ecoComecar(n)` joga a fase n;
+  sem argumento, a próxima a fazer (`ecoProximaFase`).
+- Progresso: `progress.eco[id] = {pts, estrelas, fases:{0:{pts,estrelas}}}`; `pts`/`estrelas` são da música inteira.
+- `ecoMapa()` desenha o mapa de fases (`.eco-mapa`) no jogo e na tela do fim. A música do dia vale com uma fase.
+- Partitura das Melodias: `staffCursor(g)` move a bolinha `#staffBola`, que pula em arco de nota em nota.
+
 ### Tela Início
 - Classes `in-*` (fim do `css/app.css`). Dois estados na mesma seção: apresentação (`.in-topo`, uma frase e um botão) para
   quem chega e "Continuar" (`.in-volta`, anel do caminho e sequência) para quem já praticou. `renderInicio()` em

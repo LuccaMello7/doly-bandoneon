@@ -1712,3 +1712,35 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
   #v-inicio .in-doly{padding:12px 14px}.in-doly-txt .muted{display:none}
   .in-dia i{display:none}.in-dia #inEcoDia{flex-basis:100%}
 }
+
+/* Partitura das Melodias: uma bolinha pula de nota em nota e a nota tocada dá um pulinho */
+.staffwrap .sbola{fill:var(--gold);stroke:#7a5410;stroke-width:1.5;filter:drop-shadow(0 2px 2px #0006)}
+.staffwrap .scur{opacity:.22}
+.staffwrap g.cur{animation:notaPula .34s cubic-bezier(.3,.7,.4,1)}
+@keyframes notaPula{35%{transform:translateY(-7px)}}
+.sem-mov .staffwrap g.cur{animation:none}
+
+/* RepeTCHÊ em fases: mapa de fases (jogo e tela do fim) e segmentos no cartão da música */
+.eco-tit{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+.eco-fase-tit{font-size:.8rem;font-weight:900;color:#1b1404;background:var(--gold);border-radius:999px;padding:2px 10px}
+.eco-mapa{display:flex;align-items:flex-start;gap:8px;overflow-x:auto;padding:4px 2px 8px;margin-bottom:10px;scrollbar-width:thin}
+.eco-mapa[hidden]{display:none}
+.eco-fase{flex:none;display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:0;padding:0;color:var(--text);font:inherit;cursor:pointer}
+.eco-fase b{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-weight:900;background:var(--panel2);border:2px solid var(--line);transition:transform .18s,border-color .18s,background .18s}
+.eco-fase b svg[aria-hidden]{width:17px;height:17px}
+.eco-fase.feita b{background:#e6b45026;border-color:var(--gold);color:var(--gold2)}
+.eco-fase.atual b{background:var(--gold);border-color:var(--gold2);color:#1b1404;box-shadow:0 0 0 4px #e6b45033}
+.eco-fase.final b{border-radius:12px}
+.eco-fase:disabled{cursor:default;opacity:.45}
+@media (hover:hover){.eco-fase:not(:disabled):hover b{transform:translateY(-3px) scale(1.06)}}
+.eco-fase-est{display:flex;gap:1px}
+.eco-fase-est svg{width:10px;height:10px;fill:#ffffff1a;stroke:none}
+.eco-fase-est svg.on{fill:var(--gold)}
+.eco-fase.atual b{animation:ecoFaseAtual 1.6s ease-in-out infinite}
+@keyframes ecoFaseAtual{50%{box-shadow:0 0 0 8px #e6b45000}}
+.sem-mov .eco-fase.atual b{animation:none}
+#ecoFimMapa{justify-content:center;margin:14px 0 0;flex-wrap:wrap;overflow:visible}
+.eco-lib{background:#e6b45026;color:var(--gold2)}
+.eco-segs{display:flex;gap:3px;width:100%;margin:2px 0}
+.eco-segs i{flex:1;height:6px;border-radius:4px;background:#ffffff1f;max-width:26px}
+.eco-segs i.e1{background:#f08a4b}.eco-segs i.e2{background:#f0c96e99}.eco-segs i.e3{background:var(--gold)}

@@ -664,8 +664,9 @@ teste('Eco: a música cresce de 2 em 2, o acerto pontua, o erro mostra o botão 
   go('eco'); eco.id = 'estrelinha'; $('#ecoPasso').value = '2'; $('#ecoAjuda').value = 'ver';
   ecoComecar(); ecoLimpar();
   ok(!$('#ecoJogo').hidden && $('#ecoEscolha').hidden, 'a escolha dá lugar ao jogo');
-  igual(eco.seq.length, 42); igual(eco.fimT, 8); igual(eco.rodadas, 21);
-  igual($$('#ecoTrilha i').length, 42);
+  igual(ecoMusica('estrelinha').seq.length, 42); igual(ecoFases('estrelinha').length, 5, 'fases de 8 notas; o resto pequeno entra na última');
+  igual(eco.seq.length, 8); igual(eco.fimT, 8); igual(eco.rodadas, 4);
+  igual($$('#ecoTrilha i').length, 8);
   ecoRodada(); ecoLimpar(); igual(eco.alvo, 2);
   ecoSuaVez(); const k = ecoKb(), n0 = eco.seq[0], n1 = eco.seq[1];
   ecoPress(n0.btn, n0.midi, k); igual(eco.pos, 1); igual(eco.pontos, 10);
@@ -679,10 +680,34 @@ teste('Eco: a música cresce de 2 em 2, o acerto pontua, o erro mostra o botão 
   ecoSuaVez(); eco.seq.slice(0,4).forEach(n=>ecoPress(n.btn, n.midi, k)); ecoLimpar();
   ok(eco.pontos > 20 + 40, 'rodada perfeita ganha bônus');
   eco.erros = 0; ecoFim();
-  ok(!$('#ecoFimCard').hidden, 'tela do fim'); igual(state.progress.eco.estrelinha.estrelas, 3);
+  ok(!$('#ecoFimCard').hidden, 'tela do fim'); igual(state.progress.eco.estrelinha.fases[eco.faseN].estrelas, 3);
   igual($$('#ecoFimEstrelas svg.on').length, 3);
   if(antes) state.progress.eco.estrelinha = antes; else delete state.progress.eco.estrelinha;
   saveProgress(); ecoParar(); go('inicio');
+});
+teste('RepeTCHÊ em fases: completar uma libera a seguinte, e todas liberam a música inteira', () => {
+  const antes = state.progress.eco.ode, id0 = eco.id; delete state.progress.eco.ode;
+  go('eco'); eco.id = 'ode'; const n = ecoFases('ode').length; ok(n > 1, 'a música tem mais de uma fase');
+  igual(ecoProximaFase('ode'), 0); ok(ecoLiberada('ode', 0) && !ecoLiberada('ode', 1) && !ecoTudoLiberado('ode'), 'só a fase 1 começa liberada');
+  ecoComecar(); ecoLimpar(); igual(eco.faseN, 0);
+  ok($$('#ecoMapa .eco-fase').length === n+1 && $('#ecoMapa [data-fase="1"]').disabled && $('#ecoMapa [data-fase="tudo"]').disabled, 'mapa: fases e a música inteira, trancadas');
+  eco.erros = 0; ecoFim();
+  ok(ecoLiberada('ode', 1), 'fase 2 liberada'); ok(/2/.test($('#ecoFimLib').textContent) && !$('#ecoFimLib').hidden, 'a tela do fim avisa');
+  igual(ecoSegue(), 'fase'); $('#ecoProxima').click(); ecoLimpar(); igual(eco.faseN, 1, '"Próxima fase" começa a seguinte');
+  igual(eco.seq[0].midi, ecoMusica('ode').seq[8].midi, 'a fase 2 começa na 9ª nota');
+  for(let i=1; i<n; i++){ ecoComecar(i); ecoLimpar(); eco.erros = 0; ecoFim(); }
+  ok(ecoTodasFeitas('ode') && ecoTudoLiberado('ode'), 'todas feitas: música inteira liberada'); igual(ecoProximaFase('ode'), 'tudo');
+  igual(ecoSegue(), 'tudo'); ecoComecar('tudo'); ecoLimpar(); igual(eco.seq.length, ecoMusica('ode').seq.length);
+  eco.erros = 5; ecoFim(); igual(state.progress.eco.ode.estrelas, 1, 'a música inteira tem a sua própria nota');
+  ecoParar(); if(antes) state.progress.eco.ode = antes; else delete state.progress.eco.ode; eco.id = id0; go('inicio');
+});
+teste('Melodias: a bolinha da partitura pousa em cima da nota atual', () => {
+  go('melodias'); const ligado = $('#melStaffOn').checked; $('#melStaffOn').checked = true; drawMelStaff();
+  const b = $('#staffBola'); ok(b && b.style.display === 'none', 'escondida antes de tocar');
+  staffCursor(0); ok(b.style.display !== 'none' && b._pos.x === 58, 'aparece na primeira nota');
+  const y0 = +$('#melStaff g[data-g="0"]').dataset.y; igual(b._pos.y, y0 - 15, 'logo acima da cabeça da nota');
+  staffCursor(1); ok(b._pos.x > 58, 'pula para a seguinte'); staffCursor(-1); ok(b.style.display === 'none', 'some ao parar');
+  $('#melStaffOn').checked = ligado; drawMelStaff(); go('inicio');
 });
 teste('Eco: todas as músicas têm notas com botão e fole', () => {
   for(const x of ECO_MUSICAS){ const {seq} = ecoMusica(x.id); ok(seq.length>=8 && seq.every(n=>n.btn && n.dir), x.id); }

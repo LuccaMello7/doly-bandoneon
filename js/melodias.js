@@ -338,8 +338,8 @@ function drawMelStaff(){
   if(!$('#melStaffOn').checked){ box.style.display='none'; return; }
   box.style.display='block';
   const PX=44, X0=58, hands = m.hand==='both'?['right','left']:[m.hand];
-  const staffs = hands.map((h,k)=>({hand:h, top:20+k*90, bottomD:h==='right'?30:18, clef:h==='right'?'𝄞':'𝄢'}));
-  const W = X0 + Math.max(4,m.totalBeats)*PX + 30, H = 20 + hands.length*90 + 10;
+  const staffs = hands.map((h,k)=>({hand:h, top:38+k*90, bottomD:h==='right'?30:18, clef:h==='right'?'𝄞':'𝄢'}));
+  const W = X0 + Math.max(4,m.totalBeats)*PX + 30, H = 38 + hands.length*90 + 10;
   const Y = (st,d) => st.top+40 - (d-st.bottomD)*5;
   let s='';
   for(const st of staffs){
@@ -349,11 +349,12 @@ function drawMelStaff(){
   for(let b=4; b<m.totalBeats-EPS; b+=4){ const x=X0+b*PX-PX*0.35; s+=`<line x1="${x}" x2="${x}" y1="${staffs[0].top}" y2="${staffs[staffs.length-1].top+40}" class="sl"/>`; }
   m.groups.forEach((g,k)=>{
     const x = X0 + g.t*PX;
-    let gs = `<g data-g="${k}">`;
+    let gs = '', topo = staffs[0].top; // topo = a cabeça mais alta do grupo: é onde a bolinha pousa
     if(g.rest){ const st=staffs[0]; gs+=`<text x="${x-5}" y="${st.top+26}" font-size="20" class="clef">𝄽</text>`; }
     for(const i of g.idxs){
       const n=m.notes[i]; if(n.rest) continue;
       const st=staffs.find(z=>z.hand===n.hand)||staffs[0], {d,acc}=staffPos(n), y=Y(st,d);
+      topo = Math.min(topo, y);
       for(let k2=st.bottomD-2;k2>=d;k2-=2) gs+=`<line x1="${x-10}" x2="${x+10}" y1="${Y(st,k2)}" y2="${Y(st,k2)}" class="sl"/>`;
       for(let k2=st.bottomD+10;k2<=d;k2+=2) gs+=`<line x1="${x-10}" x2="${x+10}" y1="${Y(st,k2)}" y2="${Y(st,k2)}" class="sl"/>`;
       if(acc) gs+=`<text x="${x-19}" y="${y+5}" font-size="15" class="acc">${acc>0?'♯':'♭'}</text>`;
@@ -361,8 +362,9 @@ function drawMelStaff(){
       gs+=`<ellipse cx="${x}" cy="${y}" rx="6" ry="4.4" transform="rotate(-20 ${x} ${y})" class="nh ${hollow?'hollow':''} ${n.error?'nerr':''}"/>`;
       if(n.beats<4-EPS){ const up=d<st.bottomD+4; gs+= up?`<line x1="${x+5.5}" x2="${x+5.5}" y1="${y}" y2="${y-28}" class="stem"/>`:`<line x1="${x-5.5}" x2="${x-5.5}" y1="${y}" y2="${y+28}" class="stem"/>`; }
     }
-    s += gs + '</g>';
+    s += `<g data-g="${k}" data-y="${topo}">` + gs + '</g>';
   });
+  s += `<circle id="staffBola" class="sbola" r="5.5" cx="0" cy="0" style="display:none"/>`;
   s += `<line id="staffCur" x1="0" x2="0" y1="${staffs[0].top-8}" y2="${staffs[staffs.length-1].top+48}" class="scur" style="display:none"/>`;
   box.innerHTML = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">${s}</svg>`;
 }
@@ -370,10 +372,22 @@ function staffCursor(g){
   const box=$('#melStaff'), svg=box.querySelector('svg'); if(!svg) return;
   svg.querySelectorAll('g.cur').forEach(e=>e.classList.remove('cur'));
   const cur=$('#staffCur');
-  if(g<0 || !mel.cur.groups[g]){ cur.style.display='none'; return; }
+  const bola=$('#staffBola');
+  if(g<0 || !mel.cur.groups[g]){ cur.style.display='none'; bola.style.display='none'; bola._pos=null; return; }
   const x = 58 + mel.cur.groups[g].t*44;
   cur.setAttribute('x1',x); cur.setAttribute('x2',x); cur.style.display='';
   const el=svg.querySelector(`g[data-g="${g}"]`); if(el) el.classList.add('cur');
+  // a bolinha pula em arco da nota anterior para a atual (sem animação: só muda de lugar)
+  const y = (el ? +el.dataset.y : 38) - 15, de = bola._pos;
+  bola.style.display=''; bola.style.transform=`translate(${x}px,${y}px)`;
+  if(de && (de.x!==x || de.y!==y) && bola.animate && !movReduzido()){
+    bola.getAnimations().forEach(a=>a.cancel());
+    const alto = Math.min(de.y, y) - Math.min(30, 10 + Math.abs(x-de.x)*0.25);
+    bola.animate([{transform:`translate(${de.x}px,${de.y}px)`, easing:'cubic-bezier(.2,.7,.4,1)'},
+                  {transform:`translate(${(de.x+x)/2}px,${alto}px)`, easing:'cubic-bezier(.6,0,.8,.3)'},
+                  {transform:`translate(${x}px,${y}px)`}], {duration:260});
+  }
+  bola._pos = {x, y};
   box.scrollLeft = x - box.clientWidth/2;
 }
 $('#melStaffOn').onchange=()=>{ store.set('staffOn', $('#melStaffOn').checked); drawMelStaff(); if(mel.g>=0) staffCursor(mel.g); };

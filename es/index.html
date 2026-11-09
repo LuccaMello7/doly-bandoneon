@@ -576,7 +576,7 @@
     </div>
     <div class="eco-dia" id="ecoDia"></div>
     <h2 class="card-tit eco-escolha-tit">Elige la música</h2>
-    <p class="muted eco-dica">Toca una música para empezar. Viene en tramos cortos, y el fuelle cambia de dirección solo: presta atención a los botones.</p>
+    <p class="muted eco-dica">Toca una música para empezar. Cada música se divide en fases cortas, de 8 notas: completa una para desbloquear la siguiente. El fuelle cambia de dirección solo.</p>
     <div class="eco-musicas" id="ecoMusicas" aria-label="Música"></div>
     <h3 class="eco-suas-tit">Tus músicas</h3>
     <p class="muted eco-dica" id="ecoSuasVazio">Las melodías que crees en Melodías (+ Nueva) y las partituras que importes en la Academia (nivel 7) aparecen aquí. Quedan solo en tu dispositivo.</p>
@@ -585,13 +585,14 @@
 
   <div class="card eco-jogo" id="ecoJogo" hidden>
     <div class="eco-topo">
-      <b class="eco-musica-tit" id="ecoMusicaTit"></b>
+      <div class="eco-tit"><b class="eco-musica-tit" id="ecoMusicaTit"></b><span class="eco-fase-tit" id="ecoFaseTit" hidden></span></div>
       <div class="eco-hud">
         <div class="eco-hud-item"><span>Ronda</span><b><span id="ecoRodada">0</span><small>/<span id="ecoRodadas">0</span></small></b></div>
         <div class="eco-hud-item"><span>Puntos</span><b id="ecoPontos">0</b></div>
         <div class="eco-hud-item eco-combo" id="ecoCombo" data-mult="1"><span>Racha</span><b><svg aria-hidden="true"><use href="#i-flame"/></svg><span id="ecoSeq">0</span><small class="eco-mult" id="ecoComboN">×1</small></b></div>
       </div>
     </div>
+    <div class="eco-mapa" id="ecoMapa" aria-label="Fases" hidden></div>
     <div class="eco-faixa" id="ecoFaixa" aria-live="polite"><span class="eco-ondas" aria-hidden="true"><i></i><i></i><i></i></span><b id="ecoFaixaTxt"></b><small id="ecoFaixaSub"></small></div>
     <div class="eco-trilha" id="ecoTrilha" aria-hidden="true"></div>
     <div class="bar eco-barra"><div id="ecoBarra"></div></div>
@@ -615,11 +616,13 @@
     <div class="eco-estrelas" id="ecoFimEstrelas" role="img"></div>
     <div class="eco-fim-pts"><b id="ecoFimPts">0</b><span>puntos</span></div>
     <p class="eco-dia-feita" id="ecoDiaFeita" hidden></p>
+    <p class="eco-dia-feita eco-lib" id="ecoFimLib" hidden></p>
+    <div class="eco-mapa" id="ecoFimMapa" aria-label="Fases" hidden></div>
     <p class="eco-recorde" id="ecoRecorde" hidden><svg aria-hidden="true"><use href="#i-trophy"/></svg>¡Nuevo récord!</p>
     <p class="muted" id="ecoFimInfo"></p>
     <div class="row eco-fim-acoes">
       <button class="btn btn-grande" id="ecoDeNovo"><svg aria-hidden="true"><use href="#i-play"/></svg>Jugar de nuevo</button>
-      <button class="btn sec" id="ecoProxima">Siguiente música <svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+      <button class="btn sec" id="ecoProxima"><span id="ecoProximaTxt">Siguiente música</span> <svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
       <button class="btn ghost" id="ecoOutra">Elegir otra</button>
     </div>
   </div>
