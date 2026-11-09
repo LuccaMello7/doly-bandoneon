@@ -1714,7 +1714,11 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
 }
 
 /* Partitura das Melodias: uma bolinha pula de nota em nota e a nota tocada dá um pulinho */
-.staffwrap .sbola{fill:var(--gold);stroke:#7a5410;stroke-width:1.5;filter:drop-shadow(0 2px 2px #0006)}
+.staffwrap .sbola{filter:drop-shadow(0 2px 2px #0005)}
+.staffwrap .sbola rect,.staffwrap .sbola path{fill:var(--green);stroke:#1f8f5f;stroke-width:1.2}
+.staffwrap .sbola path{stroke:none}
+.staffwrap .sbola text{fill:#06281a;font:900 11px Nunito,sans-serif}
+.staffwrap g.cur .nh{fill:#1f8f5f} .staffwrap g.cur .nh.hollow{fill:#f6efe2;stroke:#1f8f5f} .staffwrap g.cur .stem{stroke:#1f8f5f}
 .staffwrap .scur{opacity:.22}
 .staffwrap g.cur{animation:notaPula .34s cubic-bezier(.3,.7,.4,1)}
 @keyframes notaPula{35%{transform:translateY(-7px)}}

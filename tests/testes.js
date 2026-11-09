@@ -705,7 +705,8 @@ teste('Melodias: a bolinha da partitura pousa em cima da nota atual', () => {
   go('melodias'); const ligado = $('#melStaffOn').checked; $('#melStaffOn').checked = true; drawMelStaff();
   const b = $('#staffBola'); ok(b && b.style.display === 'none', 'escondida antes de tocar');
   staffCursor(0); ok(b.style.display !== 'none' && b._pos.x === 58, 'aparece na primeira nota');
-  const y0 = +$('#melStaff g[data-g="0"]').dataset.y; igual(b._pos.y, y0 - 15, 'logo acima da cabeça da nota');
+  const y0 = +$('#melStaff g[data-g="0"]').dataset.y; igual(b._pos.y, y0 - 22, 'logo acima da nota');
+  igual(b.querySelector('text').textContent, noteName(mel.cur.notes[mel.cur.groups[0].idxs[0]].midi), 'com o nome da nota que está tocando');
   staffCursor(1); ok(b._pos.x > 58, 'pula para a seguinte'); staffCursor(-1); ok(b.style.display === 'none', 'some ao parar');
   $('#melStaffOn').checked = ligado; drawMelStaff(); go('inicio');
 });

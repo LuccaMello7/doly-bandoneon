@@ -338,8 +338,8 @@ function drawMelStaff(){
   if(!$('#melStaffOn').checked){ box.style.display='none'; return; }
   box.style.display='block';
   const PX=44, X0=58, hands = m.hand==='both'?['right','left']:[m.hand];
-  const staffs = hands.map((h,k)=>({hand:h, top:38+k*90, bottomD:h==='right'?30:18, clef:h==='right'?'𝄞':'𝄢'}));
-  const W = X0 + Math.max(4,m.totalBeats)*PX + 30, H = 38 + hands.length*90 + 10;
+  const staffs = hands.map((h,k)=>({hand:h, top:48+k*90, bottomD:h==='right'?30:18, clef:h==='right'?'𝄞':'𝄢'}));
+  const W = X0 + Math.max(4,m.totalBeats)*PX + 30, H = 48 + hands.length*90 + 10;
   const Y = (st,d) => st.top+40 - (d-st.bottomD)*5;
   let s='';
   for(const st of staffs){
@@ -364,7 +364,7 @@ function drawMelStaff(){
     }
     s += `<g data-g="${k}" data-y="${topo}">` + gs + '</g>';
   });
-  s += `<circle id="staffBola" class="sbola" r="5.5" cx="0" cy="0" style="display:none"/>`;
+  s += `<g id="staffBola" class="sbola" style="display:none"><path d="M-5 8L0 15L5 8z"/><rect x="-12" y="-10" width="24" height="20" rx="10"/><text y="4" text-anchor="middle" translate="no"></text></g>`;
   s += `<line id="staffCur" x1="0" x2="0" y1="${staffs[0].top-8}" y2="${staffs[staffs.length-1].top+48}" class="scur" style="display:none"/>`;
   box.innerHTML = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">${s}</svg>`;
 }
@@ -377,8 +377,12 @@ function staffCursor(g){
   const x = 58 + mel.cur.groups[g].t*44;
   cur.setAttribute('x1',x); cur.setAttribute('x2',x); cur.style.display='';
   const el=svg.querySelector(`g[data-g="${g}"]`); if(el) el.classList.add('cur');
-  // a bolinha pula em arco da nota anterior para a atual (sem animação: só muda de lugar)
-  const y = (el ? +el.dataset.y : 38) - 15, de = bola._pos;
+  // a bolha verde diz a nota que está tocando (a mais aguda do momento) e pula em arco da nota anterior para a
+  // atual (sem animação: só muda de lugar)
+  const tocando = mel.cur.groups[g].idxs.map(i=>mel.cur.notes[i]).filter(n=>!n.rest && !n.error).sort((a,b)=>b.midi-a.midi)[0];
+  const nome = tocando ? noteName(tocando.midi) : '', larg = nome ? Math.max(24, 12 + nome.length*6.6) : 14, caixa = bola.querySelector('rect');
+  bola.querySelector('text').textContent = nome; caixa.setAttribute('x', -larg/2); caixa.setAttribute('width', larg);
+  const y = (el ? +el.dataset.y : 48) - 22, de = bola._pos;
   bola.style.display=''; bola.style.transform=`translate(${x}px,${y}px)`;
   if(de && (de.x!==x || de.y!==y) && bola.animate && !movReduzido()){
     bola.getAnimations().forEach(a=>a.cancel());
