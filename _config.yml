@@ -1,0 +1,5 @@
+# Publicação no GitHub Pages (Jekyll). O site é estático: o Jekyll só copia os arquivos.
+# .well-known/ precisa ser publicado (assetlinks.json: liga o app da Play Store ao site);
+# loja/ e ferramentas/ não precisam (material da loja e scripts).
+include: [".well-known"]
+exclude: ["loja", "ferramentas", "tests", "supabase", "DESIGN.md", "PRODUCT.md", "README.md", "LICENSE"]

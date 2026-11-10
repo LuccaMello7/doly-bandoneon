@@ -2369,3 +2369,14 @@ main.priv-pagina{max-width:760px}
 
 /* setas das lições e da teoria: o ícone de seta, não o caractere */
 .btn .seta-v,.btn .seta-i{width:18px;height:18px}
+
+/* celulares estreitos (360px, comuns no Android): marca, idiomas, conta e o botão verde cabem na mesma linha */
+@media (max-width:400px){
+  .app-shell>header{gap:6px;padding:8px 10px}
+  .app-shell>header .brand{gap:7px}
+  .app-shell>header .brand img{width:32px;height:32px}
+  .app-shell>header .brand-name{font-size:1.1rem}
+  #langs button{padding:6px 4px;font-size:12px}
+  header .topo-cta{padding:7px 10px;font-size:.85rem}
+  .conta-entrar,.conta-av{width:32px;height:32px}
+}
