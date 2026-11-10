@@ -13,6 +13,8 @@ if(location.protocol==='file:') $$('a[data-local][href$="/"]').forEach(a=>a.setA
 function abrirPeloEndereco(){
   const h = decodeURIComponent(location.hash.slice(1)), m = h.match(/^licao-(\d+)$/);
   if(h.startsWith('tarefa=')){ abrirTarefa(h.slice(7)); return; } // link de tarefa mandado pelo professor (js/professor.js)
+  if(h.startsWith('relatorio=')){ abrirRelatorio(h.slice(10)); return; } // relatório mandado pelo aluno (js/relatorio.js)
+  if(h.startsWith('turma=')){ abrirConviteTurma(h.slice(6)); return; } // convite para a turma de um professor (js/turmas.js)
   const tm = h.match(/^teoria-(\d+)$/);
   if(tm && TEORIA[tm[1]-1]){ abrirTeoria(tm[1]-1); return; }
   if(m && LESSONS[m[1]-1]){ curLesson = m[1]-1; renderLesson(); go('licoes'); }

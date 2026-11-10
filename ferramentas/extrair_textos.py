@@ -30,7 +30,7 @@ NAO_E_TEXTO = [re.compile(p) for p in (
     r'^translate', r'^cubic-bezier', r'^\(prefers-', r'^IntersectionObserver$', r'^\(hover:', r'^(Digit\d|Minus|Equal|Bracket(Left|Right)|Semicolon|Quote|Backslash|Comma|Period|Slash|Num|Arrow(Up|Down|Left|Right)|Escape|Delete|Backspace)$', r'^(https?://|mailto:|&body=)', r'^\{\}/issues/', r'^mailto:\{\}', r'^\{\}: \{\}×\{\}$', r'^-?\d+px( -?\d+%?(px)?)*$',                         # valores de CSS usados no código
 )]
 # Iguais em todos os idiomas: nomes próprios, símbolos e exemplos de notas do formato de texto
-IGUAIS = {'Gmail', 'Outlook', 'Yahoo Mail', 'iCloud Mail', 'UOL Mail', 'Google', 'contato@bandoly.app', 'T T S T T T S', 'T S T T S T T', 'S T T T S T T', 'T T T S T T S', 'T+S', 'Ban', 'Doly', '×', '‹', '›', 'WhatsApp', 'E-mail', 'Idioma / Language', 'Português', 'Español', 'English', 'Rheinische 142', 'Bandoneon V2.5', 'm7', 'm6', '442 Hz',
+IGUAIS = {'Ana', 'Gmail', 'Outlook', 'Yahoo Mail', 'iCloud Mail', 'UOL Mail', 'Google', 'contato@bandoly.app', 'T T S T T T S', 'T S T T S T T', 'S T T T S T T', 'T T T S T T S', 'T+S', 'Ban', 'Doly', '×', '‹', '›', 'WhatsApp', 'E-mail', 'Idioma / Language', 'Português', 'Español', 'English', 'Rheinische 142', 'Bandoneon V2.5', 'm7', 'm6', '442 Hz',
           'bpm: 80', 'metronome per-minute',
           # vídeos do Doly (translate="no"): nomes de músicas e de canais do YouTube
           'Cena de Campanha', 'Sarau do Solar', 'Pampa Pietá', 'De Catres e Corredores', 'Edgar Paiva',
@@ -39,7 +39,8 @@ IGUAIS = {'Gmail', 'Outlook', 'Yahoo Mail', 'iCloud Mail', 'UOL Mail', 'Google',
           'bruniinhars', 'Camila García', 'Rodrigo Faller',
           '(display-mode: standalone)', 'MacIntel',  # código do convite para instalar (init.js)
           'RepeTCHÊ', 'BanDoly', 'Doly Costa', 'Muy bueno!', 'La Cumparsita', 'Tico-tico no fubá'}  # nome do jogo e a fala do gaúcho: iguais em todos os idiomas
-NAO_E_TEXTO.append(re.compile(r'^[A-Za-zÀ-ÿ]{1,3}[#♯♭b]?\d'))  # Sol4, Bb5, Dó4:4, Mi4:8t…
+NAO_E_TEXTO.append(re.compile(r'^[A-Za-zÀ-ÿ]{1,3}[#♯♭b]?\d'))
+NAO_E_TEXTO.append(re.compile(r'^[a-z_]+(,[a-z_]+)+$'))  # listas de colunas do banco: turma_id,nome  # Sol4, Bb5, Dó4:4, Mi4:8t…
 # Formas "cruas" de frases que o dicionário cobre com outra chave (montadas em partes no código)
 COBERTOS = {'Opção {}: {}{}{}', 'Prepare-se…', 'Não entendi:', 'Direção: Abrindo (trocar)',
             'Abrindo: {}/3 · Fechando: {}/3 {} {}', 'dia{} seguido{}', 'Notas:', '{}{} · {} BPM'}
@@ -110,7 +111,7 @@ def textos_js(src):
 
 def coletar():
     vistos = {}
-    for pag in ('index.html', 'doly-costa/index.html', 'perguntas-frequentes/index.html', 'privacidade/index.html', 'termos/index.html'):
+    for pag in ('index.html', 'doly-costa/index.html', 'perguntas-frequentes/index.html', 'privacidade/index.html', 'termos/index.html', 'professores/index.html'):
         for t in textos_html((RAIZ / pag).read_text(encoding='utf-8')):
             vistos.setdefault(t, pag)
     for f in sorted((RAIZ / 'js').glob('*.js')):

@@ -35,7 +35,7 @@ ATRIBUTOS = ('title', 'aria-label', 'alt', 'placeholder')
 META_TRADUZIR = ('description', 'og:title', 'og:description', 'og:image:alt')
 NAO_TRADUZIR = ('script', 'style', 'textarea', 'code')
 VAZIAS = {'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'source', 'track', 'wbr'}
-PAGINAS = ('index.html', 'doly-costa/index.html', 'perguntas-frequentes/index.html', 'privacidade/index.html', 'termos/index.html')  # páginas em português, a partir da raiz
+PAGINAS = ('index.html', 'doly-costa/index.html', 'perguntas-frequentes/index.html', 'privacidade/index.html', 'termos/index.html', 'professores/index.html')  # páginas em português, a partir da raiz
 BANDEIRAS = {'pt': ('Português', 'br.svg', 'pt-BR'), 'es': ('Español', 'es.png', 'es'), 'en': ('English', 'gb.svg', 'en')}
 CABECALHO = '<!-- Gerado por ferramentas/gerar_idiomas.py a partir de {}. Não edite à mão: mude a página em português ou o dicionário e rode o script. -->\n'
 

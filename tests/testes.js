@@ -118,7 +118,7 @@ teste('afinação muda a velocidade das amostras e a frequência do sintetizado'
 teste('aba Ajustes existe e o cabeçalho não tem mais seletores', () => {
   go('ajustes'); ok($('#v-ajustes').classList.contains('active')); ok(!document.querySelector('header select'));
   ok($('#subnav [data-v="ajustes"]').hasAttribute('aria-current')); ok($('#contaTopo').classList.contains('on'), 'Ajustes fica na área da conta: o botão da conta no topo acende');
-  go('professor'); ok($('#nav [data-area="professores"]').hasAttribute('aria-current'), 'Professores é uma área do menu'); ok($('#subnav').hidden);
+  go('professor'); ok($('#nav [data-area="professores"]').hasAttribute('aria-current'), 'Professores é uma área do menu'); ok(!$('#subnav [data-v="relatorios"]').hidden, 'com as abas Mandar tarefa e Relatórios');
 });
 teste('botões do teclado têm descrição para leitores de tela', () => {
   ok(/abrindo, .* fechando/.test(document.querySelector('#kbRight .key').getAttribute('aria-label')));
@@ -293,7 +293,16 @@ function textosEmPortugues(){
   return [...achados];
 }
 async function percorrerApp(){
-  for(const v of ['inicio','estudo','teoria','teclado','desafios','melodias','acordes','eco','ritmo','ajustes','academia','microfone','perfil','professor','conta']){ go(v); await esperar(); }
+  for(const v of ['inicio','estudo','teoria','teclado','desafios','melodias','acordes','eco','ritmo','ajustes','academia','microfone','perfil','professor','conta','relatorios','turmas']){ go(v); await esperar(); }
+  // Professores: um plano montado, um relatório de exemplo e uma turma com alunos passam pela tradução
+  { go('professor'); $('#prAdd').click(); await esperar(); prPlano = []; renderPlano();
+    go('relatorios'); $('#relVerExemplo').click(); await esperar(); relExemplo = false;
+    const u = contaUsuario, c = carregarTurmasProf; carregarTurmasProf = ()=>{}; contaUsuario = {id:'prof', email:'p@exemplo.com'};
+    turmasProf = [{id:'t1', nome:'Turma', professor_nome:'Prof', codigo:'ABC', tarefa:{v:1, ex:'n3-escada', modo:'praticar', vel:70}, tarefa_em:'2026-11-08T12:00:00Z'}];
+    turmaAlunosProf = [{turma_id:'t1', aluno_id:'a1', nome:'Ana', atualizado:'2026-11-09T10:00:00Z', resumo:{dias:[dayKey()], tarefa:null}}]; turmaAberta = 't1';
+    go('turmas'); renderTurmas(); await esperar();
+    contaUsuario = u; turmasProf = []; turmaAlunosProf = []; turmaAberta = null; renderTurmas(); renderConta(); carregarTurmasProf = c; }
+
   // Eco: a faixa, o placar e a tela do fim passam pela tradução
   { const antes = state.progress.eco[eco.id]; go('eco'); ecoComecar(); await esperar(); ecoLimpar(); ecoRodada(); await esperar(); ecoLimpar();
     ecoOuvir(); await esperar(); ecoLimpar(); ecoSuaVez(); await esperar(); ecoRodadaFeita(); await esperar(); ecoLimpar(); ecoFim(); await esperar();
@@ -574,6 +583,53 @@ teste('professor: o relatório ganha o botão de enviar ao professor', async () 
   ok($('#acEnviarRel'), 'botão no relatório'); $('#acEnviarRel').click();
   ok(/Relatório da Academia/.test($('#partilhaTexto').value) || /Academy report/.test($('#partilhaTexto').value), 'texto do relatório');
   $('#partilha').close(); go('inicio');
+});
+teste('professor: plano com vários exercícios e prazo vai no link e o aluno faz um de cada vez', async () => {
+  go('professor'); prPlano = [];
+  $('#prNome').value = 'Prof. Teste'; $('#prMsg').value = ''; $('#prPrazo').value = '2026-12-01';
+  $('#prEx').value = 'n2-sequencias'; $('#prEx').onchange(); $('#prModo').value = 'aprender'; $('#prAdd').click();
+  $('#prEx').value = 'n3-escada'; $('#prEx').onchange(); $('#prAdd').click();
+  igual(prPlano.length, 2); ok(!$('#prPlanoBox').hidden, 'a lista do plano aparece'); ok(/2/.test($('#prGerarTxt').textContent), 'o botão conta os exercícios');
+  const d = dadosTarefa(); igual(d.v, 2); igual(d.prazo, '2026-12-01');
+  abrirTarefa(linkTarefa().split('#tarefa=')[1]);
+  let tf = tarefaGuardada(); igual(tf.itens.length, 2); igual(tf.prazo, '2026-12-01'); igual(acad.ex.id, 'n2-sequencias'); igual(acad.modo, 'aprender');
+  igual($$('#v-academia .tarefa-itens li').length, 2, 'o aviso lista os exercícios');
+  $('#acAuto').checked = true; $('#acStart').click(); acadCompletar(); await new Promise(r=>setTimeout(r, 10));
+  tf = tarefaGuardada(); ok(tf.itens[0].feito && tf.itens[0].rel && tf.itens[0].rel.n > 0, 'o primeiro fica feito, com o resultado'); igual(tf.i, 1, 'e a tarefa passa para o segundo');
+  ok(!tf.itens[1].feito); igual(tf.ex, 'n3-escada');
+  // o relatório por link: o professor abre e vê o exercício feito
+  store.set('alunoNome', 'Aluna <b>Teste</b>');
+  const antes = relatoriosGuardados();
+  abrirRelatorio(linkRelatorio(relsDaTarefa(tf), tf).split('#relatorio=')[1]);
+  igual(currentView, 'relatorios'); const rel = relatoriosGuardados()[0];
+  igual(rel.aluno, 'Aluna <b>Teste</b>'); igual(rel.prof, 'Prof. Teste'); igual(rel.itens[0].ex, 'n2-sequencias');
+  ok(!$('#relDetalhe').hidden && $$('#relDetalhe .rel-mapa i').length === rel.itens[0].n, 'o mapa tem uma casa por nota');
+  ok(!$('#relDetalhe .rel-cab h3 b') && !$('#relLista .rel-li-txt b b'), 'o nome do aluno entra como texto, não como HTML');
+  store.set('relatorios', antes); store.set('alunoNome', ''); store.set('tarefa', null); renderTarefa(); prPlano = []; $('#prPrazo').value = ''; renderPlano(); go('inicio');
+});
+teste('relatório: o que vem no link é limpo antes de ser guardado', () => {
+  const r = limparRel({ex:'<img onerror=1>', n:'abc', ok:99999, nota:500, ri:-3, fo:['x', 0], notas:'11<x y="z">0fp9', rec:'x'.repeat(999), modo:'hack', vel:9999});
+  igual(r.n, 1); igual(r.ok, 1); igual(r.nota, 100); igual(r.ri, 0); igual(r.fo, [0, 1]); igual(r.notas, '110fp'); igual(r.rec.length, 300); igual(r.modo, 'praticar'); igual(r.vel, 120);
+  let erro = false; try{ lerRelatorio(b64url.para(JSON.stringify({itens:[]}))); }catch(e){ erro = true; } ok(erro, 'relatório sem exercícios é recusado');
+  igual(lerRelatorio(b64url.para(JSON.stringify({aluno:'A'.repeat(99), data:'ontem', itens:[{n:4, ok:4, nota:100, notas:'1111'}]}))).aluno.length, 40);
+});
+teste('turmas: o resumo do aluno leva só os dias e a tarefa da turma, e a tela do professor mostra os alunos', () => {
+  const dias = state.progress.days; state.progress.days = {'2026-11-01':{}, [dayKey()]:{}};
+  store.set('tarefa', {prof:'P', msg:'', i:0, itens:[{ex:'n3-escada', modo:'praticar', vel:70, feito:true, vz:2, rel:{ex:'n3-escada', nota:80, n:4, ok:3}}], turma:'t1', em:'2026-11-08T12:00:00Z'});
+  const r = resumoParaTurma('t1'); igual(Object.keys(r).sort(), ['dias', 'tarefa', 'totalDias', 'v']); igual(r.totalDias, 2); igual(r.tarefa.itens[0].vz, 2);
+  igual(resumoParaTurma('outra').tarefa, null, 'a tarefa só vai para a turma que a mandou');
+  igual(ultimos7([dayKey()]), [false, false, false, false, false, false, true]);
+  const u = contaUsuario, c = carregarTurmasProf; carregarTurmasProf = ()=>{}; contaUsuario = {id:'prof', email:'p@exemplo.com'};
+  turmasProf = [{id:'t1', nome:'Terça', professor_nome:'P', codigo:'ABC123', tarefa:{v:1, ex:'n3-escada', modo:'praticar', vel:70}, tarefa_em:'2026-11-08T12:00:00Z'}];
+  turmaAlunosProf = [{turma_id:'t1', aluno_id:'a1', nome:'Ana <i>x</i>', atualizado:'2026-11-09T10:00:00Z', resumo:r}, {turma_id:'t1', aluno_id:'a2', nome:'Beto', atualizado:'', resumo:{}}]; turmaAberta = 't1';
+  go('turmas'); renderTurmas();
+  ok($('#tuFora').hidden && !$('#tuDetalhe').hidden); igual($$('#tuDetalhe .tu-alunos li').length, 2);
+  ok($('#tuLink').value.endsWith('#turma=ABC123'), 'link de convite'); ok(!$('#tuDetalhe .tu-aluno i'), 'o nome do aluno entra como texto');
+  igual($$('#tuDetalhe .tu-alunos li')[0].querySelectorAll('.tu-dias .on').length, 1); ok($('#tuDetalhe [data-tu-rel="a1"]') && !$('#tuDetalhe [data-tu-rel="a2"]'), 'relatório só de quem fez');
+  $('#tuDetalhe [data-tu-rel="a1"]').click(); ok($('#tuRel').open && /80/.test($('#tuRelCorpo .rel-nota').textContent)); $('#tuRel').close();
+  contaUsuario = null; renderTurmas(); ok(!$('#tuFora').hidden && $('#tuDentro').hidden, 'sem login: pede a conta');
+  contaUsuario = u; turmasProf = []; turmaAlunosProf = []; turmaAberta = null; carregarTurmasProf = c; renderConta();
+  state.progress.days = dias; store.set('tarefa', null); renderTarefa(); go('inicio');
 });
 teste('sugestão: o texto leva o tipo, a mensagem e as informações técnicas', () => {
   abrirSugestao(); $('#sugTexto').value = 'O botão travou'; $$('#sugForm [name="tipo"]').find(r=>r.value==='erro').checked = true;

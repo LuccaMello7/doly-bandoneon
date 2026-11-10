@@ -73,6 +73,14 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/termos/"/>
   </url>
   <url>
+    <loc>https://bandoly.app/professores/</loc>
+    <lastmod>2026-11-10</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/professores/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/professores/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/professores/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/professores/"/>
+  </url>
+  <url>
     <loc>https://bandoly.app/es/perguntas-frequentes/</loc>
     <lastmod>2026-11-04</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/perguntas-frequentes/"/>

@@ -667,6 +667,12 @@ function acadFim(){
   }
   if(!recs.length) recs.push(acad.modo==='aprender' ? t('Muito bem! Agora toque no modo Praticar, sem o destaque dos botões.')
     : acad.modo==='praticar' ? t('Muito bem! Agora tente o modo Desafio, no tempo.') : t('Muito bem! Siga para o próximo exercício.'));
+  // o mesmo resultado em forma de dados, para o relatório por link e para a turma (js/professor.js, js/relatorio.js)
+  acad.rel = {ex:acad.ex.id, niv:acad.ex.nivel, modo:acad.modo, vel:+$('#acVel').value, de, n:N, ok:certas.length, ri:pctRitmo,
+    fo:comFole.length ? [comFole.length-errosFole.length, comFole.length] : null, seg, nota,
+    notas:evs.map(e=>{ const q = R[e.k].primeira; return !q || q.perdida ? 'p' : q.certo ? '1' : q.fole==='errado' ? 'f' : '0'; }).join(''),
+    rec:String(recs[0]||'').replace(/<[^>]+>/g, '').slice(0, 300)};
+  if(acad.ex.minha) acad.rel.tit = acad.ex.titulo;
   saveProgress(); renderAcadNiveis(); renderAcadLista(); logPractice('academia');
   if(typeof aposRelatorio==='function') setTimeout(aposRelatorio, 0); // botão "Enviar ao professor" (js/professor.js)
   if(pctNotas>=90 && !errados.length && (pctRitmo==null || pctRitmo>=80)) comemorar();

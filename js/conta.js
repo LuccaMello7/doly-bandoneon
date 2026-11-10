@@ -18,7 +18,8 @@ const SUPA_SESSAO = 'sb-venbupxwqgofwjkhixhc-auth-token'; // onde a biblioteca g
 const TERMOS_VERSAO = '2026-11-10';
 // O que é deste aparelho e não viaja para a conta: MIDI, microfone, teclado do computador, avisos já vistos, aba
 const NAO_SINCRONIZA = new Set(['ultimaAba', 'pcLigado', 'pcDica', 'midiBotoes', 'midiCC', 'midiForca', 'micLimiar',
-  'avisoProfVisto', 'instalarNao', 'aberturas', 'lang', 'contaAceite']);
+  'avisoProfVisto', 'instalarNao', 'aberturas', 'lang', 'contaAceite',
+  'relatorios', 'turmaConvite']); // relatórios recebidos de alunos e o convite de turma pendente também ficam só no aparelho
 
 let sb = null, contaUsuario = null, contaSincronizando = false, contaUltima = null, contaErro = '', contaEnvioTimer = 0;
 let contaVoltaPara = 'inicio', contaEnviadoEmail = '', contaReenvioAte = 0, contaReenvioTimer = 0;
@@ -111,6 +112,7 @@ async function sincronizarConta(motivo){
       if(motivo === 'entrar') location.hash = currentView; // volta para a mesma tela depois de recarregar
       location.reload(); return 'recarregando';
     }
+    if(typeof sincronizarTurmas === 'function') try{ await sincronizarTurmas(); }catch(e){} // tarefa da turma e o resumo para o professor (js/turmas.js)
   }catch(e){
     contaErro = t('Não deu para sincronizar agora. O progresso continua salvo neste aparelho e vai para a nuvem na próxima vez.');
   }finally{ contaSincronizando = false; renderConta(); }
@@ -296,4 +298,4 @@ async function iniciarConta(){
   try{ if(sessionStorage.getItem('bandoly-conta-ola')){ sessionStorage.removeItem('bandoly-conta-ola'); avisar(`<span>${t('Pronto, você entrou. O seu progresso está salvo na nuvem.')}</span>`); } }catch(e){}
 }
 renderConta();
-iniciarConta();
+const contaPronta = iniciarConta().catch(()=>{}); // quem depende do login (js/turmas.js) espera por aqui

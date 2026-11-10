@@ -24,7 +24,7 @@ fala **português do Brasil**: responda e escreva tudo em pt-BR.
 7. `git fetch` antes de publicar: o dono também trabalha pelo Claude Code na web (ramos `claude/*`, PRs).
    Se o remoto andou, faça merge (`--ff-only` quando der) e rode os testes de novo.
 8. Commit em português, explicando o que mudou para quem usa, terminando com:
-   `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`
+   `Co-Authored-By: Claude <noreply@anthropic.com>`
 9. Publique direto na main: `GIT_TERMINAL_PROMPT=0 git push`. Não precisa de PR; o GitHub Pages
    publica em 1–2 minutos. Se o dono não vir as mudanças, é cache: Ctrl+Shift+R.
 
@@ -37,7 +37,7 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
   compartilham o escopo global e rodam **nesta ordem**:
   `base, i18n-textos, i18n, licoes-traducao, audio, teclado, movimento, navegacao, fole, desafios, ritmo,
   atalhos, controles, melodias, musicxml, escalas, microfone, acordes, maos, academia, partituras, rotina,
-  licoes, ajustes, ouvido, eco, cascata, trilha, inicio, professor, teoria-textos, teoria, contato, conta, init`.
+  licoes, ajustes, ouvido, eco, cascata, trilha, inicio, professor, relatorio, teoria-textos, teoria, contato, conta, turmas, init`.
   Código que roda no carregamento só pode usar o que veio antes; dentro de funções, tudo já existe.
   `init.js` é sempre o último.
 - PWA: `manifest.webmanifest` + `sw.js` (rede primeiro; o cache guarda tudo de `ARQUIVOS`).
@@ -57,7 +57,7 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
   - **aprender:** estudo, academia, licoes, teoria;
   - **tocar:** teclado, melodias, acordes, microfone;
   - **treinar:** desafios, eco (o jogo RepeTCHÊ: o bandoneon toca, você repete; js/eco.js e o gaúcho em imagens/repetche/. Tem música do dia com sequência, "Suas músicas" com as melodias e partituras do aluno e modo microfone), ritmo;
-  - **professores:** professor (área própria no menu, aba única);
+  - **professores:** professor (Mandar tarefa), relatorios, turmas (aba escondida enquanto `TURMAS_LIGADAS` é false);
   - **perfil** (a área da conta): conta, perfil (Conquistas), ajustes. Não tem botão no menu: abre pelo
     "Entrar" / círculo com a inicial no topo (`#contaTopo`, com menu `#contaMenu`).
 - Cada aba é `<section id="v-nome">`. O botão dela fica em `#subnav`, com `data-area` e `data-v`.
@@ -114,8 +114,16 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
   - três perguntas na primeira visita (`perfilAluno`) definem `ETAPAS`;
   - `ETAPAS` e `INSIGNIAS` têm `feito()` calculado a partir do progresso; só a data da insígnia é salva;
   - cartão de compartilhar em canvas de 1080 px.
-- **Professores** (professor.js): `#tarefa=` + base64url de JSON `{v, ex, modo, vel, prof, msg, titulo?,
-  texto?, dedos?}`; relatório "Enviar ao professor"; editor de digitação, salvo em `digitacoes[exId][eventoId]`.
+- **Professores** (professor.js): `#tarefa=` + base64url de JSON. Um exercício: `{v:1, ex, modo, vel, prof, msg,
+  prazo?, titulo?, texto?, dedos?}`; plano: `{v:2, itens:[{ex, modo, vel, …}], prof, msg, prazo?}` (`dadosTarefa()`).
+  - O aluno guarda em `tarefa` = `{prof, msg, prazo, i, itens:[{ex, modo, vel, feito, vz, rel}]}` (`tarefaGuardada()`,
+    `receberTarefa()`); cada tentativa da Academia gera `acad.rel` (o resultado em dados) e marca o item (`registrarNaTarefa`).
+  - Relatório: "Enviar ao professor" manda o texto + um link `#relatorio=` (`linkRelatorio`). O professor abre em
+    Professores → Relatórios (relatorio.js: `limparRel` limpa o que vem do link; guardados em `relatorios`, só no aparelho).
+  - Editor de digitação, salvo em `digitacoes[exId][eventoId]`.
+  - **Turmas** (turmas.js + `supabase/turmas.sql`): professor e alunos com conta; convite `#turma=CÓDIGO`; o aluno envia
+    um resumo (`resumoParaTurma`: dias de prática e a tarefa da turma) a cada sincronização. Entrar/criar turma só por
+    funções do banco. Mudou o que o professor vê → atualize Privacidade e Termos.
 - **Controles** (controles.js):
   - teclado do computador por `event.code`, ligado por padrão onde há mouse; o mapa padrão segue as
     fileiras de botões e é editável;
@@ -153,6 +161,8 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
 ## 4. Páginas estáticas (SEO)
 
 - `doly-costa/`: a história do Doly, contada pela rolagem.
+- `professores/`: página aberta para professores (pt é a fonte; es/en gerados). `professores/panfleto.pdf` e
+  `icones/qr-professores.svg` saem de `python ferramentas/gerar_panfleto.py`.
 - `perguntas-frequentes/`: busca, categorias e FAQPage montada pelo script.
 - `licoes/` e `teoria/`: geradas por `ferramentas/gerar_licoes.py` e `ferramentas/gerar_teoria.py`, nos três idiomas.
 - Links com `data-local` não ganham `../` no gerador. O bloco `<!--bandeiras-->` é refeito por idioma.

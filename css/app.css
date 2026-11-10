@@ -2380,3 +2380,167 @@ main.priv-pagina{max-width:760px}
   header .topo-cta{padding:7px 10px;font-size:.85rem}
   .conta-entrar,.conta-av{width:32px;height:32px}
 }
+
+.subnav .desligada{display:none!important}
+
+/* ===== Professores: plano de vários exercícios, prazo e o aviso da tarefa em itens ===== */
+.pr-hero-mais{margin:14px 0 0;font-size:.95rem}
+.pr-prazo input{max-width:220px}
+.pr-plano{margin:0 0 14px;padding:14px 16px;border-radius:14px;background:var(--ameixa-3);box-shadow:inset 0 0 0 1px var(--borda)}
+.pr-plano-tit{margin:0 0 6px;font-size:13px;color:var(--cinza);font-weight:500}
+.pr-plano ol{list-style:none;margin:0;padding:0;counter-reset:plano}
+.pr-plano li{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--borda);counter-increment:plano}
+.pr-plano li:first-child{border-top:0}
+.pr-plano li::before{content:counter(plano);width:22px;height:22px;border-radius:50%;background:rgba(185,151,255,.16);color:#cdb6ff;display:grid;place-items:center;font-size:12px;font-weight:600;flex:none}
+.pr-plano li>div{flex:1;min-width:0;display:flex;flex-direction:column}
+.pr-plano li b{font-weight:500;font-size:.92rem}
+.pr-plano li .muted{font-size:12.5px}
+.pr-tirar{width:30px;height:30px;border:0;border-radius:8px;background:none;color:var(--cinza);display:grid;place-items:center;cursor:pointer;flex:none}
+.pr-tirar svg[aria-hidden]{width:16px;height:16px}
+.pr-tirar:hover{background:rgba(255,255,255,.07);color:var(--osso)}
+.pr-add{width:100%;margin-top:8px}
+.pr-add-dica{font-size:12.5px;margin:8px 0 0;text-align:center}
+.tarefa-itens{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:2px}
+.tarefa-itens button{display:flex;align-items:center;gap:10px;width:100%;padding:7px 8px;margin-left:-8px;border:0;border-radius:10px;background:none;color:var(--cinza-2);font:400 .92rem Onest,system-ui,sans-serif;text-align:left;cursor:pointer}
+.tarefa-itens button:not(:disabled):hover{background:rgba(255,255,255,.05);color:var(--osso)}
+.tarefa-itens button:disabled{cursor:default}
+.tarefa-itens small{margin-left:auto;color:var(--cinza);font-size:12.5px;white-space:nowrap}
+.tarefa-marca{width:22px;height:22px;border-radius:50%;background:var(--ameixa-3);box-shadow:inset 0 0 0 1px var(--borda-2);color:var(--cinza);display:grid;place-items:center;font-size:12px;font-weight:600;flex:none}
+.tarefa-marca svg[aria-hidden]{width:13px;height:13px}
+.tarefa-itens .atual button{color:var(--osso)}
+.tarefa-itens .atual .tarefa-marca{background:var(--osso);color:var(--ameixa);box-shadow:none}
+.tarefa-itens .feito .tarefa-marca{background:rgba(185,151,255,.2);color:#cdb6ff;box-shadow:none}
+.pr-previa-aviso .tarefa-itens small{display:none}
+.ac-enviar{align-items:flex-end}
+.ac-rel-nome{display:flex;flex-direction:column;gap:5px;font-size:13px;color:var(--cinza);font-weight:500}
+.ac-rel-nome input{min-width:200px}
+.ac-enviar .ac-rel-nome{background:none;padding:0;border-radius:0}
+
+/* ===== Relatórios dos alunos ===== */
+.rel-vazio{max-width:680px;padding:28px}
+.rel-vazio h3{margin:0 0 8px;font-size:1.25rem;font-weight:550}
+.rel-grade{display:grid;grid-template-columns:320px minmax(0,1fr);gap:16px;align-items:start}
+.rel-grade>.card{margin:0;padding:24px}
+.rel-grade:has(.rel-lista[hidden]){grid-template-columns:minmax(0,760px)}
+.rel-vazio:not([hidden])+.rel-grade{margin-top:16px}
+.rel-lista h3,.tu-lado h3{margin:0 0 10px;font-size:1.1rem;font-weight:550}
+.rel-lista ul,.tu-lado ul{list-style:none;margin:0 -8px;padding:0}
+.rel-lista li{display:flex;align-items:center;gap:2px;border-radius:12px}
+.rel-lista li.on,.tu-lado li.on{background:rgba(255,255,255,.06)}
+.rel-lista li>button:first-child{flex:1;min-width:0;display:flex;align-items:center;gap:10px;padding:9px 8px;border:0;background:none;color:var(--osso);font:inherit;text-align:left;cursor:pointer;border-radius:12px}
+.rel-li-txt{flex:1;min-width:0;display:flex;flex-direction:column}
+.rel-li-txt b{font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rel-li-txt small{color:var(--cinza);font-size:12.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rel-li-nota{font-weight:600;font-variant-numeric:tabular-nums;color:#cdb6ff;font-size:.92rem}
+.rel-lista-nota{font-size:12.5px;margin:12px 0 0}
+.rel-aviso-exemplo{margin:0 0 18px;padding:10px 14px;border-radius:12px;background:rgba(185,151,255,.1);color:var(--cinza-2);font-size:.9rem}
+.rel-cab{display:flex;align-items:center;gap:14px;margin-bottom:6px}
+.rel-cab h3{margin:0;font-size:1.5rem;font-weight:600;letter-spacing:-.02em}
+.rel-cab p{margin:2px 0 0;font-size:.9rem}
+.rel-item{padding:22px 0 4px;margin-top:18px;border-top:1px solid var(--borda)}
+.rel-item-cab{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.rel-item-cab .muted{font-size:13px}
+.rel-item-cab h4{margin:2px 0 0;font-size:1.2rem;font-weight:550;letter-spacing:-.01em}
+.rel-nota{display:flex;align-items:baseline;gap:2px;line-height:1}
+.rel-nota b{font-size:3rem;font-weight:600;letter-spacing:-.04em;font-variant-numeric:tabular-nums;color:var(--osso)}
+.rel-nota span{color:var(--cinza);font-size:1.1rem}
+.rel-medidas{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:18px 0}
+.rel-medida{display:flex;flex-direction:column;gap:3px;min-width:0}
+.rel-medida span{font-size:13px;color:var(--cinza)}
+.rel-medida b{font-weight:500;font-size:.98rem}
+.rel-barra{display:block;height:6px;border-radius:99px;background:var(--ameixa-3);overflow:hidden;margin-top:5px}
+.rel-barra i{display:block;height:100%;border-radius:99px;background:var(--lavanda)}
+.rel-mapa{display:flex;flex-wrap:wrap;gap:3px;margin:4px 0 8px}
+.rel-mapa i,.rel-legenda i{width:18px;height:22px;border-radius:5px;display:grid;place-items:center;font-style:normal;font-size:9px;font-weight:600;color:var(--ameixa);background:var(--lavanda)}
+.rel-mapa .n-0,.rel-legenda .n-0{background:var(--red);color:#fff}
+.rel-mapa .n-f,.rel-legenda .n-f{background:none;box-shadow:inset 0 0 0 2px var(--red);color:var(--red2)}
+.rel-mapa .n-p,.rel-legenda .n-p{background:var(--ameixa-3);box-shadow:inset 0 0 0 1px var(--borda-2);color:var(--cinza)}
+.rel-legenda{display:flex;flex-wrap:wrap;gap:6px 16px;margin:0 0 14px;font-size:12.5px;color:var(--cinza)}
+.rel-legenda span{display:inline-flex;align-items:center;gap:6px}
+.rel-legenda i{width:12px;height:12px;border-radius:4px}
+.rel-fatos{list-style:none;margin:0 0 14px;padding:0;display:flex;flex-wrap:wrap;gap:6px 22px;font-size:.92rem;color:var(--cinza-2)}
+.rel-item .ac-rec{font-size:.92rem;border-radius:12px;padding:10px 14px}
+.rel-item .row{margin-top:12px}
+
+/* ===== Turmas ===== */
+.tu-fora{max-width:680px;padding:28px}
+.tu-fora h3,#tuSemTurma h3{margin:0 0 8px;font-size:1.25rem;font-weight:550}
+#tuBanco{padding:14px 18px;margin-bottom:16px}
+.tu-grade{display:grid;grid-template-columns:300px minmax(0,1fr);gap:16px;align-items:start}
+.tu-grade .card{margin:0;padding:24px}
+.tu-lado li button{display:flex;flex-direction:column;width:100%;padding:9px 10px;border:0;border-radius:12px;background:none;color:var(--osso);font:inherit;text-align:left;cursor:pointer}
+.tu-lado li{border-radius:12px}
+.tu-lado li b{font-weight:500}
+.tu-lado li small{color:var(--cinza);font-size:12.5px}
+#tuNova{display:flex;flex-direction:column;gap:8px;margin-top:14px;padding-top:14px;border-top:1px solid var(--borda)}
+#tuNova input{width:100%}
+.tu-cab{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.tu-cab h3{margin:0;font-size:1.5rem;font-weight:600;letter-spacing:-.02em}
+.tu-cab p{margin:2px 0 0}
+.tu-cab .row{align-items:center;gap:14px}
+.tu-bloco{margin-top:20px;padding-top:18px;border-top:1px solid var(--borda)}
+.tu-bloco h4{margin:0 0 6px;font-size:1.05rem;font-weight:550}
+.tu-bloco p{margin:0 0 12px}
+.tu-convite{display:flex;gap:8px;flex-wrap:wrap}
+.tu-convite input{flex:1 1 240px;min-width:0}
+.tu-montada{color:var(--cinza-2);font-size:.92rem}
+.tu-alunos{list-style:none;margin:0;padding:0}
+.tu-alunos li{display:flex;align-items:center;gap:12px;padding:11px 0;border-top:1px solid var(--borda)}
+.tu-alunos li:first-child{border-top:0}
+.tu-aluno{flex:1;min-width:0;display:flex;flex-direction:column}
+.tu-aluno b{font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tu-aluno small{color:var(--cinza);font-size:12.5px}
+.tu-dias{display:flex;gap:4px;flex:none}
+.tu-dias i{width:10px;height:10px;border-radius:50%;background:var(--ameixa-3);box-shadow:inset 0 0 0 1px var(--borda-2)}
+.tu-dias i.on{background:var(--lavanda);box-shadow:none}
+.tu-aluno-acoes{display:flex;align-items:center;gap:4px;flex:none}
+.tu-aluno-acoes .btn{min-height:34px;padding:5px 12px;font-size:13.5px}
+.tu-legenda{font-size:12.5px;margin:12px 0 0!important}
+.boas.janela.tu-janela{max-width:480px}
+.tu-janela .bv-acoes{margin-top:18px}
+.tu-janela .pr-campo{margin:18px 0 0}
+#contaTurmas{grid-column:1/-1}
+#contaTurmas .conta-linha:first-child{border-top:0}
+#tuRel{max-width:760px}
+@media (max-width:900px){
+  .rel-grade,.tu-grade{grid-template-columns:1fr}
+}
+@media (max-width:599px){
+  .rel-grade>.card,.tu-grade .card,.rel-vazio,.tu-fora{padding:20px}
+  .rel-medidas{grid-template-columns:1fr;gap:12px}
+  .rel-nota b{font-size:2.4rem}
+  .tu-alunos li{flex-wrap:wrap}
+  .tu-aluno{flex-basis:calc(100% - 60px)}
+  .tarefa-itens small{display:none}
+  .ac-rel-nome,.ac-rel-nome input{width:100%}
+}
+
+/* ===== Página aberta "Para professores" (professores/) ===== */
+main.prof-pagina{max-width:880px}
+.prof-topo{padding:56px 0 40px}
+.prof-sobre{margin:0 0 14px;font-size:13px;font-weight:500;color:var(--lavanda)}
+.prof-topo h1{margin:0;font-size:clamp(2.3rem,5.4vw,3.9rem);font-weight:650;line-height:1.04;letter-spacing:-.035em;color:var(--osso);text-wrap:balance}
+.prof-topo h1 span{display:block}
+.prof-topo h1 .lav{color:var(--lavanda)}
+.prof-acoes{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.prof-acoes .btn{min-height:48px;padding:12px 22px}
+.prof-pagina .priv-sec p{max-width:44rem}
+.prof-passos,.prof-fatos{list-style:none;margin:18px 0 0;padding:0}
+.prof-passos li{display:flex;gap:18px;padding:20px 0;border-top:1px solid var(--borda)}
+.prof-passos li:first-child,.prof-fatos li:first-child{border-top:0;padding-top:4px}
+.prof-num{width:38px;height:38px;border-radius:50%;background:rgba(185,151,255,.16);color:#cdb6ff;display:grid;place-items:center;font-weight:600;flex:none}
+.prof-passos h3,.prof-fatos h3{margin:0 0 4px;font-size:1.15rem;font-weight:550;letter-spacing:-.01em;color:var(--osso)}
+.prof-passos p,.prof-fatos p{margin:0}
+.prof-fatos li{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:8px 32px;padding:18px 0;border-top:1px solid var(--borda)}
+.prof-exemplo{margin-top:22px;padding:28px;border-radius:20px;background:var(--ameixa-2);box-shadow:inset 0 0 0 1px var(--borda)}
+.prof-exemplo .rel-item{margin-top:14px;padding-bottom:0}
+.prof-exemplo .rel-fatos{margin-bottom:0}
+.prof-exemplo p{max-width:none}
+.prof-exemplo .rel-cab p{font-size:.9rem;margin:2px 0 0}
+.prof-fecho{padding-bottom:56px}
+@media (max-width:640px){
+  .prof-topo{padding:36px 0 28px}
+  .prof-fatos li{grid-template-columns:1fr}
+  .prof-exemplo{padding:20px}
+  .prof-acoes>*{flex:1 1 100%}
+}
