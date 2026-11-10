@@ -224,6 +224,10 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
 - Fotos do Doly: só com autorização da família. Áudio e vídeo dele também: vídeo do YouTube "não
   listado", com fachada que só carrega no clique e `youtube-nocookie`, ou áudio próprio com o vinil girando.
 - Não publique o e-mail pessoal do dono sem ele pedir.
+- **Política de segurança (CSP)** num `<meta>` do `index.html`: o app só carrega código do próprio site, do
+  GoatCounter e só conversa com o Supabase. Serviço externo novo (script, imagem, conexão, vídeo) precisa entrar
+  nela, senão é bloqueado. O teste registra como erro qualquer bloqueio (`securitypolicyviolation`).
+- O responsável pelos dados (controlador, LGPD) é **Lucca Costa**, citado na Privacidade e nos Termos.
 - O repositório é público, com `LICENSE` de **todos os direitos reservados**.
 - Mantenha "sem cadastro". Login (por exemplo, Supabase) só se opcional, com RLS em todas as tabelas,
   LGPD (menores!), região de São Paulo e nunca a chave secreta no site.

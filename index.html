@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- segurança: o app só carrega código dele mesmo e só fala com o Supabase (conta) e o GoatCounter (visitas) -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://gc.zgo.at; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://bandoly.goatcounter.com; font-src 'self'; media-src 'self' blob: data:; connect-src 'self' https://venbupxwqgofwjkhixhc.supabase.co wss://venbupxwqgofwjkhixhc.supabase.co https://bandoly.goatcounter.com; frame-src https://www.youtube-nocookie.com; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
 <title>BanDoly: aprenda a tocar bandoneon online e grátis</title>
 <meta name="description" content="Aprenda bandoneon grátis no navegador: teclado com som real, lições, escalas, acordes e ritmos de tango. Funciona no celular, sem cadastro.">
 <link rel="canonical" href="https://bandoly.app/">

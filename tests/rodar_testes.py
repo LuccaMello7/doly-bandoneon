@@ -42,7 +42,8 @@ def main():
             print('FALHA  ' + (r.stdout.strip() or r.stderr.strip()))
             faltando.append(gerador)
     captura = ('<base href="../">\n<script>window.__erros=[];'
-               'window.onerror=(m,s,l)=>{window.__erros.push(m+" ("+(s||"").split("/").pop()+":"+l+")");};</script>')
+               'window.onerror=(m,s,l)=>{window.__erros.push(m+" ("+(s||"").split("/").pop()+":"+l+")");};'
+               'document.addEventListener("securitypolicyviolation",e=>window.__erros.push("CSP bloqueou "+e.violatedDirective+": "+e.blockedURI));</script>')
     pagina = pagina.replace('<head>', '<head>\n' + captura, 1)
     # sem a contagem de visitas (GoatCounter): ela busca um script na internet, e uma rede lenta deixava o
     # navegador esperando até o tempo acabar; além disso, os testes não devem contar como visitas

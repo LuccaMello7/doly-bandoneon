@@ -39,11 +39,11 @@ const ETAPAS = [
    feito:()=>Object.keys(melodiasFeitas()).some(k=>k.startsWith('esc:')),
    ir:()=>{ go('melodias'); loadScale('maior', 0, 'right', 1, validStarts('maior',0,'right',1)[0], 'updown'); $('#melMode').value='wait'; }},
   {id:'teoria-pauta', t:'A pauta e as claves', d:'Teoria: onde fica cada nota na clave de sol e na clave de fá.',
-   feito:()=>!!state.progress.teoria.pauta, ir:()=>abrirTeoria(1)},
+   feito:()=>!!(state.progress.teoria||{}).pauta, ir:()=>abrirTeoria(1)},
   {id:'leitura', t:'Leia a partitura', d:'Lição 5 e 5 de 10 em Leitura na pauta.',
    feito:()=>licaoFeita(4) && state.progress.staff>=5, ir:()=>licaoFeita(4) ? abrirDesafio('staff') : abrirLicao(4)},
   {id:'teoria-tempo', t:'Figuras e compasso', d:'Teoria: quanto dura cada nota e como se conta o tempo.',
-   feito:()=>!!(state.progress.teoria.figuras && state.progress.teoria.compasso), ir:()=>abrirTeoria(state.progress.teoria.figuras ? 4 : 3)},
+   feito:()=>{ const te = state.progress.teoria||{}; return !!(te.figuras && te.compasso); }, ir:()=>abrirTeoria(state.progress.teoria.figuras ? 4 : 3)}, // teoria.js (que cria progress.teoria) carrega depois
   {id:'ritmo', t:p=>p.obj==='tango'?'O ritmo do tango':'Ritmo e acompanhamento', d:'Lição 6 e o Toque junto até registrar a sua precisão.',
    feito:()=>licaoFeita(5) && state.progress.rhythm!=null, ir:()=>licaoFeita(5) ? go('ritmo') : abrirLicao(5)},
   {id:'acordes', t:'Seus primeiros acordes', d:'Lição 9 e uma rodada do treino de acordes.',

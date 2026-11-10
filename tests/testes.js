@@ -812,6 +812,11 @@ teste('RepeTCHÊ: suas músicas, música do dia e nota ouvida pelo microfone', (
   state.progress.ecoDias = dias; if(prog) state.progress.eco[ecoDoDia()] = prog; else delete state.progress.eco[ecoDoDia()];
   store.set('melodies', salvas); saveProgress(); ecoParar(); go('inicio');
 });
+teste('Caminho: quem nunca abriu a Teoria (progresso sem "teoria") não quebra as etapas', () => {
+  const antes = state.progress.teoria; delete state.progress.teoria;
+  try{ ETAPAS.forEach(e=>{ try{ e.feito(); }catch(err){ ok(false, 'etapa ' + e.id + ': ' + err.message); } }); }
+  finally{ state.progress.teoria = antes; }
+});
 teste('Conta: juntar dois aparelhos não perde nada, e o que é do aparelho não viaja', () => {
   const a = {lessons:{0:true}, find:6, days:{'2026-11-01':{fole:true}}, btnStats:{x:{ok:3, err:1}}, insignias:{'primeiro-dia':'2026-11-01'}};
   const b = {lessons:{1:true}, find:9, days:{'2026-11-02':{licao:true}}, btnStats:{x:{ok:1, err:4}}, insignias:{'primeiro-dia':'2026-10-30', bisonoro:'2026-11-02'}};

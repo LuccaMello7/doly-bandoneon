@@ -11,7 +11,7 @@ const SUPA_CHAVE = 'sb_publishable_Dn-1zGaZDa6S7ie58bsD1Q_FLfhayDd';
 const SUPA_SESSAO = 'sb-venbupxwqgofwjkhixhc-auth-token'; // onde a biblioteca guarda o login neste navegador
 const TERMOS_VERSAO = '2026-11-10';
 // Enquanto o envio de e-mail e o Google não estão configurados, a aba fica fora do menu (abre por #conta, para testar)
-const CONTA_LIGADA = false;
+const CONTA_LIGADA = true;
 // O que é deste aparelho e não viaja para a conta: MIDI, microfone, teclado do computador, avisos já vistos, aba
 const NAO_SINCRONIZA = new Set(['ultimaAba', 'pcLigado', 'pcDica', 'midiBotoes', 'midiCC', 'midiForca', 'micLimiar',
   'avisoProfVisto', 'instalarNao', 'aberturas', 'lang', 'contaAceite']);
