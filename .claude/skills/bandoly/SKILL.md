@@ -57,7 +57,9 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
   - **aprender:** estudo, academia, licoes, teoria;
   - **tocar:** teclado, melodias, acordes, microfone;
   - **treinar:** desafios, eco (o jogo RepeTCHÊ: o bandoneon toca, você repete; js/eco.js e o gaúcho em imagens/repetche/. Tem música do dia com sequência, "Suas músicas" com as melodias e partituras do aluno e modo microfone), ritmo;
-  - **perfil:** perfil, professor, ajustes.
+  - **professores:** professor (área própria no menu, aba única);
+  - **perfil** (a área da conta): conta, perfil (Conquistas), ajustes. Não tem botão no menu: abre pelo
+    "Entrar" / círculo com a inicial no topo (`#contaTopo`, com menu `#contaMenu`).
 - Cada aba é `<section id="v-nome">`. O botão dela fica em `#subnav`, com `data-area` e `data-v`.
 - `go(v)` troca de aba. Para agir ao entrar ou sair de uma aba: `ganchosAba.push((nova, anterior)=>…)`.
 - Links internos: `data-go="aba"`. Endereços: `#aba`, `#licao-N`, `#teoria-N` e `#tarefa=…` (link do professor).
@@ -124,7 +126,7 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
   - Treino de ouvido (ouvido.js) e notas caindo (cascata.js);
   - Teoria (teoria.js, com `pautaSVG`, posição diatônica d = oitava×7 + letra, e textos em teoria-textos.js);
   - Sugestões (contato.js): abre uma issue preenchida no GitHub. `CONTATO_EMAIL` = contato@bandoly.app (caixa Microsoft 365 da GoDaddy, testada em 2026-11-10).
-  - **Conta opcional** (conta.js, aba `conta` em Perfil; banco em `supabase/banco.sql`):
+  - **Conta opcional** (conta.js, aba `conta`, aberta pelo topo; entrada em dois passos `#contaPasso1`/`#contaPasso2`; banco em `supabase/banco.sql`):
     - Supabase, projeto `venbupxwqgofwjkhixhc` (São Paulo). No site vai só a chave **publicável** (`sb_publishable_…`); a secreta nunca.
     - Só maiores de 18 anos: a caixa de aceite libera "Entrar com Google" e o link por e-mail (PKCE, volta com `?code=`). O aceite vai para a tabela `progresso`.
     - A biblioteca (`js/vendor/supabase.js`, 2.118.0) só carrega para quem entra ou já tem login; não está em `ARQUIVOS`.

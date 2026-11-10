@@ -96,7 +96,7 @@
   <symbol id="i-expand" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></symbol>
   <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
   <symbol id="i-eco" viewBox="0 0 24 24"><circle cx="5" cy="12" r="2"/><path d="M10 8.5a4.5 4.5 0 0 1 0 7M13.5 5.5a8.5 8.5 0 0 1 0 13M17 3a12 12 0 0 1 0 18"/></symbol>
-  <symbol id="i-question" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7v.5M12 17h.01"/></symbol>
+  <symbol id="i-quadro" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20l4-4 4 4M7 9h6M7 12h4"/></symbol><symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol><symbol id="i-nuvem" viewBox="0 0 24 24"><path d="M7 18h10a4 4 0 0 0 .6-7.95A6 6 0 0 0 6.1 9.1 4.5 4.5 0 0 0 7 18z"/><path d="M9.5 13.5l2 2 3.5-4"/></symbol><symbol id="i-celular" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></symbol><symbol id="i-escudo" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 5-3 8.5-7 10-4-1.5-7-5-7-10V6z"/></symbol><symbol id="i-sair" viewBox="0 0 24 24"><path d="M15 4h4v16h-4M10 8l-4 4 4 4M6 12h10"/></symbol><symbol id="i-voltar" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol><symbol id="i-externo" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol><symbol id="i-sinc" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.5-4.5L4 8M4 4v4h4M4 13a8 8 0 0 0 14.5 4.5L20 16M20 20v-4h-4"/></symbol><symbol id="i-question" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7v.5M12 17h.01"/></symbol>
 </svg>
 <header>
   <a class="brand" href="#" data-go="inicio" aria-label="BanDoly - Aprenda Bandoneon (início)">
@@ -108,11 +108,24 @@
     <button type="button" data-area="aprender"><svg aria-hidden="true"><use href="#i-cap"/></svg>Aprender</button>
     <button type="button" data-area="tocar"><svg aria-hidden="true"><use href="#i-keys"/></svg>Tocar</button>
     <button type="button" data-area="treinar"><svg aria-hidden="true"><use href="#i-target"/></svg>Treinar</button>
-    <button type="button" data-area="perfil"><svg aria-hidden="true"><use href="#i-user"/></svg>Perfil</button>
+    <button type="button" data-area="professores"><svg aria-hidden="true"><use href="#i-quadro"/></svg>Professores</button>
     <span class="nav-ind" id="navInd" aria-hidden="true"></span>
   </nav>
   <button type="button" class="sug-btn" data-sugestao aria-label="Enviar sugestão ou reportar erro"><svg aria-hidden="true"><use href="#i-question"/></svg><span>Sugestões</span></button>
   <div id="langs" class="langs" role="group" aria-label="Idioma / Language"></div>
+  <div class="conta-topo" id="contaTopo">
+    <button type="button" class="conta-entrar" id="contaEntrar"><svg aria-hidden="true"><use href="#i-user"/></svg><span>Entrar</span></button>
+    <button type="button" class="conta-av" id="contaAv" hidden aria-haspopup="menu" aria-expanded="false" aria-controls="contaMenu" aria-label="Sua conta"><span class="conta-letra" translate="no"></span><i aria-hidden="true"></i></button>
+    <div class="conta-menu" id="contaMenu" role="menu" hidden>
+      <div class="conta-menu-quem"><span class="conta-av peq" aria-hidden="true"><span class="conta-letra" translate="no"></span></span><div><b>Sua conta</b><small class="conta-email-txt" translate="no"></small></div></div>
+      <p class="conta-menu-estado" id="contaMenuEstado"></p>
+      <button type="button" role="menuitem" data-ir="conta"><svg aria-hidden="true"><use href="#i-user"/></svg>Minha conta</button>
+      <button type="button" role="menuitem" data-ir="perfil"><svg aria-hidden="true"><use href="#i-trophy"/></svg>Conquistas</button>
+      <button type="button" role="menuitem" data-ir="ajustes"><svg aria-hidden="true"><use href="#i-gear"/></svg>Ajustes</button>
+      <hr>
+      <button type="button" role="menuitem" id="contaMenuSair"><svg aria-hidden="true"><use href="#i-sair"/></svg>Sair da conta</button>
+    </div>
+  </div>
   <button type="button" class="btn-vai peq topo-cta" id="topoCta"><span id="topoCtaTxt">Começar</span><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
 </header>
 
@@ -128,10 +141,10 @@
   <button type="button" role="tab" data-area="treinar" data-v="desafios"><svg aria-hidden="true"><use href="#i-target"/></svg>Desafios</button>
   <button type="button" role="tab" data-area="treinar" data-v="eco"><svg aria-hidden="true"><use href="#i-eco"/></svg><span translate="no">RepeTCHÊ</span></button>
   <button type="button" role="tab" data-area="treinar" data-v="ritmo"><svg aria-hidden="true"><use href="#i-metro"/></svg>Ritmo</button>
-  <button type="button" role="tab" data-area="perfil" data-v="perfil"><svg aria-hidden="true"><use href="#i-trophy"/></svg>Conquistas</button>
-  <button type="button" role="tab" data-area="perfil" data-v="professor"><svg aria-hidden="true"><use href="#i-cap"/></svg>Para professores</button>
-  <button type="button" role="tab" data-area="perfil" data-v="ajustes"><svg aria-hidden="true"><use href="#i-gear"/></svg>Ajustes</button>
   <button type="button" role="tab" data-area="perfil" data-v="conta" id="contaAba"><svg aria-hidden="true"><use href="#i-user"/></svg>Conta</button>
+  <button type="button" role="tab" data-area="perfil" data-v="perfil"><svg aria-hidden="true"><use href="#i-trophy"/></svg>Conquistas</button>
+  <button type="button" role="tab" data-area="perfil" data-v="ajustes"><svg aria-hidden="true"><use href="#i-gear"/></svg>Ajustes</button>
+  <button type="button" role="tab" data-area="professores" data-v="professor"><svg aria-hidden="true"><use href="#i-quadro"/></svg>Para professores</button>
 </div>
 <!-- INÍCIO -->
 <section id="v-inicio" class="active">
@@ -1071,29 +1084,63 @@
   </div>
 </section>
 <section id="v-conta">
-  <div class="pg-topo"><span class="pg-ic t-conta"><svg aria-hidden="true"><use href="#i-user"/></svg></span><div><h2 class="pg-tit">Conta</h2><p class="muted">Opcional: guarde o seu progresso na nuvem e continue de onde parou em outro aparelho.</p></div></div>
-  <div class="card conta-card" id="contaFora">
-    <h3 class="card-tit">Entrar ou criar conta</h3>
-    <p class="muted">Sem conta, o BanDoly funciona inteiro neste aparelho, como sempre. Com conta, o progresso, as melodias criadas e os ajustes ficam guardados na nuvem.</p>
-    <label class="conta-aceite"><input type="checkbox" id="contaAceite"><span>Tenho 18 anos ou mais e li os <a href="termos/" data-local>Termos de Uso</a> e a <a href="privacidade/" data-local>Política de Privacidade</a>.</span></label>
-    <p class="muted conta-menor">As contas são só para maiores de 18 anos. Quem tem menos pode usar o app inteiro, sem conta.</p>
-    <div class="conta-opcoes">
-      <button type="button" class="btn" id="contaGoogle" disabled><svg class="conta-g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>Entrar com Google</button>
-      <p class="conta-ou">ou receba um link de acesso por e-mail, sem senha</p>
-      <form class="conta-email" id="contaEmailForm"><input type="email" id="contaEmail" autocomplete="email" required placeholder="seu@email.com" aria-label="Seu e-mail"><button type="submit" class="btn sec" id="contaEnviar" disabled>Enviar link</button></form>
+  <div class="conta-palco" id="contaFora">
+    <div class="conta-cartao" id="contaPasso1">
+      <img class="conta-logo" src="icones/logo-cabecalho.png" alt="" width="48" height="48">
+      <h2 class="conta-tit">Entrar no BanDoly</h2>
+      <p class="conta-sub">Guarde o seu progresso e continue em qualquer aparelho.</p>
+      <button type="button" class="conta-google" id="contaGoogle"><svg class="conta-g" width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>Continuar com Google</button>
+      <p class="conta-ou">ou com o seu e-mail</p>
+      <form id="contaEmailForm" novalidate>
+        <div class="conta-campo"><input type="email" id="contaEmail" autocomplete="email" placeholder=" " spellcheck="false"><label for="contaEmail">E-mail</label></div>
+        <label class="conta-aceite" id="contaAceiteLinha"><input type="checkbox" id="contaAceite"><span>Tenho 18 anos ou mais e aceito os <a href="termos/" data-local>Termos de Uso</a> e a <a href="privacidade/" data-local>Política de Privacidade</a>.</span></label>
+        <p class="conta-msg" id="contaMsg" role="status"></p>
+        <div class="conta-acoes"><button type="submit" class="btn" id="contaEnviar">Próximo<svg aria-hidden="true"><use href="#i-arrow"/></svg></button></div>
+      </form>
+      <p class="conta-pe">Não tem conta? Ela é criada na hora, sem senha.<br>Sem conta, o BanDoly continua inteiro neste aparelho. Quem tem menos de 18 anos usa sem conta.</p>
     </div>
-    <p class="feedback" id="contaMsg" role="status"></p>
+    <div class="conta-cartao" id="contaPasso2" hidden>
+      <button type="button" class="conta-voltar" id="contaVoltar" aria-label="Voltar"><svg aria-hidden="true"><use href="#i-voltar"/></svg></button>
+      <span class="conta-env"><svg aria-hidden="true"><use href="#i-mail"/></svg></span>
+      <h2 class="conta-tit">Confira o seu e-mail</h2>
+      <p class="conta-sub">Enviamos um link de acesso para</p>
+      <span class="conta-chip"><i class="conta-chip-letra" aria-hidden="true" translate="no"></i><span id="contaEnviadoPara" translate="no"></span></span>
+      <ol class="conta-passos"><li><b>1</b><span>Abra o e-mail "Seu link para entrar no BanDoly".</span></li><li><b>2</b><span>Toque em "Entrar no BanDoly". Pronto.</span></li></ol>
+      <div class="conta-lin"><a class="btn" id="contaAbrirMail" target="_blank" rel="noopener" hidden><svg aria-hidden="true"><use href="#i-externo"/></svg><span id="contaAbrirTxt"></span></a><button type="button" class="btn sec" id="contaOutro">Usar outro e-mail</button></div>
+      <p class="conta-reenv"><span>Não chegou? Olhe a caixa de spam.</span> <button type="button" class="conta-link" id="contaReenviar"></button></p>
+    </div>
+    <ul class="conta-porque">
+      <li><svg aria-hidden="true"><use href="#i-celular"/></svg>Continue em outro aparelho</li>
+      <li><svg aria-hidden="true"><use href="#i-escudo"/></svg>Nada se perde</li>
+      <li><svg aria-hidden="true"><use href="#i-lock"/></svg>Sem senha para lembrar</li>
+    </ul>
   </div>
-  <div class="card conta-card" id="contaDentro" hidden>
-    <h3 class="card-tit">Sua conta</h3>
-    <p class="conta-quem">Conectado como <b id="contaQuem" translate="no"></b></p>
-    <p class="muted" id="contaEstado" role="status"></p>
-    <div class="row"><button type="button" class="btn sec" id="contaSincronizar">Sincronizar agora</button><button type="button" class="btn sec" id="contaSair">Sair da conta</button></div>
-  </div>
-  <div class="card conta-card" id="contaDados" hidden>
-    <h3 class="card-tit">Seus dados na nuvem</h3>
-    <p class="muted">Baixe uma cópia de tudo o que está guardado na sua conta, ou exclua a conta e os dados da nuvem. O progresso deste aparelho continua aqui.</p>
-    <div class="row"><button type="button" class="btn sec" id="contaBaixar">Baixar meus dados</button><button type="button" class="btn sec" id="contaExcluir">Excluir conta</button></div>
+  <div id="contaDentro" hidden>
+    <div class="conta-ident">
+      <span class="conta-av grande" aria-hidden="true"><span class="conta-letra" translate="no"></span></span>
+      <div><h2 class="conta-ola">Olá!</h2><p class="conta-quem"><span class="conta-email-txt" id="contaQuem" translate="no"></span><span class="conta-selo" id="contaSelo"></span></p></div>
+    </div>
+    <div class="conta-grade">
+      <div class="card conta-nuvem">
+        <div class="conta-nuvem-topo">
+          <span class="conta-nuvem-ic"><svg aria-hidden="true"><use href="#i-nuvem"/></svg></span>
+          <div><b id="contaEstadoTit">Tudo salvo na nuvem</b><span id="contaEstado" role="status"></span></div>
+          <button type="button" class="conta-link-ir" id="contaSincronizar"><svg aria-hidden="true"><use href="#i-sinc"/></svg>Sincronizar agora</button>
+        </div>
+        <div class="conta-nums">
+          <div><b id="contaNDias">0</b><span>dias de prática</span></div>
+          <div><b id="contaNIns">0</b><span>insígnias</span></div>
+          <div><b id="contaNMel">0</b><span>melodias criadas</span></div>
+        </div>
+      </div>
+      <div class="card conta-dados">
+        <h3>Seus dados</h3>
+        <div class="conta-linha"><div><b>Baixar meus dados</b><span>Uma cópia de tudo o que está na nuvem.</span></div><button type="button" class="btn sec" id="contaBaixar"><svg aria-hidden="true"><use href="#i-download"/></svg>Baixar</button></div>
+        <div class="conta-linha"><div><b>Sair da conta</b><span>O progresso continua neste aparelho e na nuvem.</span></div><button type="button" class="btn sec" id="contaSair"><svg aria-hidden="true"><use href="#i-sair"/></svg>Sair</button></div>
+        <div class="conta-linha"><div><b>Excluir conta</b><span>Apaga o login e a nuvem. Este aparelho mantém o progresso.</span></div><button type="button" class="conta-link" id="contaExcluir">Excluir…</button></div>
+        <p class="conta-msg" id="contaMsgDentro" role="status"></p>
+      </div>
+    </div>
   </div>
 </section>
 <dialog class="boas" id="boasVindas" aria-labelledby="bvTit">

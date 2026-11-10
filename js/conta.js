@@ -5,18 +5,19 @@
    - A chave abaixo é a "publicável": vai no site de propósito e sozinha não abre nada. Quem protege os
      dados são as regras de acesso do banco (supabase/banco.sql): cada pessoa só lê e grava a própria linha.
      A chave secreta NUNCA entra no site nem no repositório.
-   - Contas só para maiores de 18 anos (decisão do dono, LGPD): a caixa de aceite libera os botões. */
+   - Contas só para maiores de 18 anos (decisão do dono, LGPD): sem marcar a caixa de aceite, entrar não segue.
+   - A tela: "Entrar" (ou o círculo com a inicial, que abre um menu) fica no topo; a aba Conta é um cartão em
+     dois passos (escolher como entrar → "Confira o seu e-mail") e, conectado, o painel da nuvem e dos dados. */
 const SUPA_URL = 'https://venbupxwqgofwjkhixhc.supabase.co';
 const SUPA_CHAVE = 'sb_publishable_Dn-1zGaZDa6S7ie58bsD1Q_FLfhayDd';
 const SUPA_SESSAO = 'sb-venbupxwqgofwjkhixhc-auth-token'; // onde a biblioteca guarda o login neste navegador
 const TERMOS_VERSAO = '2026-11-10';
-// Enquanto o envio de e-mail e o Google não estão configurados, a aba fica fora do menu (abre por #conta, para testar)
-const CONTA_LIGADA = true;
 // O que é deste aparelho e não viaja para a conta: MIDI, microfone, teclado do computador, avisos já vistos, aba
 const NAO_SINCRONIZA = new Set(['ultimaAba', 'pcLigado', 'pcDica', 'midiBotoes', 'midiCC', 'midiForca', 'micLimiar',
   'avisoProfVisto', 'instalarNao', 'aberturas', 'lang', 'contaAceite']);
 
 let sb = null, contaUsuario = null, contaSincronizando = false, contaUltima = null, contaErro = '', contaEnvioTimer = 0;
+let contaVoltaPara = 'inicio', contaEnviadoEmail = '', contaReenvioAte = 0, contaReenvioTimer = 0;
 
 function carregarSupabase(){
   if(sb) return Promise.resolve(sb);
@@ -103,8 +104,8 @@ async function sincronizarConta(motivo){
     // o que chegou da nuvem só aparece na tela recarregando (as abas leem os dados ao abrir); uma vez por visita
     if(mudou && (motivo === 'inicio' || motivo === 'entrar') && !sessionStorage.getItem('bandoly-conta-recarregou')){
       sessionStorage.setItem('bandoly-conta-recarregou', '1');
-      if(motivo === 'entrar') location.hash = 'conta';
-      location.reload(); return;
+      if(motivo === 'entrar') location.hash = currentView; // volta para a mesma tela depois de recarregar
+      location.reload(); return 'recarregando';
     }
   }catch(e){
     contaErro = t('Não deu para sincronizar agora. O progresso continua salvo neste aparelho e vai para a nuvem na próxima vez.');
@@ -117,40 +118,93 @@ function agendarEnvio(){ clearTimeout(contaEnvioTimer); contaEnvioTimer = setTim
 document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState === 'hidden' && contaEnvioTimer && contaUsuario){ clearTimeout(contaEnvioTimer); contaEnvioTimer = 0; sincronizarConta('saindo'); } });
 
 /* ---------- Entrar, sair, baixar e excluir ---------- */
-const contaRetorno = () => location.origin + location.pathname; // sem o #: o login volta com ?code= e o app abre a aba Conta
+const contaRetorno = () => location.origin + location.pathname; // sem o #: o login volta com ?code=
 function contaAceitou(){ return $('#contaAceite').checked; }
 function guardarAceite(){ store.set('contaAceite', {versao: TERMOS_VERSAO, maior: true, em: new Date().toISOString()}); }
-function contaMsg(txt, cls){ const m = $('#contaMsg'); m.className = 'feedback' + (cls ? ' ' + cls : ''); m.textContent = txt; }
+function contaMsg(txt, cls){
+  const m = $(contaUsuario ? '#contaMsgDentro' : '#contaMsg');
+  m.className = 'conta-msg' + (cls === 'bad' ? ' erro' : cls === 'ok' ? ' ok' : ''); m.textContent = txt;
+}
 function contaSemSite(){ if(location.protocol.startsWith('http')) return false; contaMsg(t('A conta só funciona no site (bandoly.app), não com o arquivo aberto do computador.'), 'bad'); return true; }
+// sem a caixa dos 18 anos marcada, nada segue: a linha da caixa acende e a mensagem explica
+function contaPedeAceite(){
+  if(contaAceitou()) return true;
+  $('#contaAceiteLinha').classList.add('falta'); $('#contaAceite').focus();
+  contaMsg(t('Para continuar, marque a caixa: 18 anos ou mais e os Termos.'), 'bad');
+  return false;
+}
+$('#contaAceite').onchange = ()=>{ if(contaAceitou()){ $('#contaAceiteLinha').classList.remove('falta'); contaMsg(''); } };
 
-$('#contaAceite').onchange = ()=>{ $('#contaGoogle').disabled = $('#contaEnviar').disabled = !contaAceitou(); };
 $('#contaGoogle').onclick = async ()=>{
-  if(!contaAceitou() || contaSemSite()) return;
+  if(!contaPedeAceite() || contaSemSite()) return;
   guardarAceite();
+  try{ sessionStorage.setItem('bandoly-conta-volta', contaVoltaPara); }catch(e){}
   try{ await carregarSupabase(); const r = await sb.auth.signInWithOAuth({provider:'google', options:{redirectTo: contaRetorno()}}); if(r.error) throw r.error; }
   catch(e){ contaMsg(t('Não deu para abrir o login do Google. Confira a internet e tente de novo.'), 'bad'); }
 };
+
+// Passo 2: "Confira o seu e-mail", com o atalho para o webmail mais comum e o reenvio depois de um minuto
+const WEBMAILS = [
+  [/^(gmail|googlemail)\.com$/, 'Gmail', 'https://mail.google.com/mail/u/0/#inbox'],
+  [/^(outlook|hotmail|live|msn)\.com(\.br)?$/, 'Outlook', 'https://outlook.live.com/mail/0/'],
+  [/^yahoo\.com(\.br)?$/, 'Yahoo Mail', 'https://mail.yahoo.com/'],
+  [/^(icloud|me|mac)\.com$/, 'iCloud Mail', 'https://www.icloud.com/mail'],
+  [/^uol\.com\.br$/, 'UOL Mail', 'https://email.uol.com.br/'],
+];
+function contaPasso2(email){
+  contaEnviadoEmail = email;
+  $('#contaPasso1').hidden = true; $('#contaPasso2').hidden = false;
+  $('#contaEnviadoPara').textContent = email; $('.conta-chip-letra').textContent = email.charAt(0).toUpperCase();
+  const dominio = (email.split('@')[1] || '').toLowerCase(), w = WEBMAILS.find(x=>x[0].test(dominio));
+  $('#contaAbrirMail').hidden = !w;
+  if(w){ $('#contaAbrirMail').href = w[2]; $('#contaAbrirTxt').textContent = t('Abrir o {}', w[1]); }
+  contaReenvioAte = Date.now() + 60000; contaReenvioTick();
+}
+function contaReenvioTick(){
+  clearTimeout(contaReenvioTimer);
+  const b = $('#contaReenviar'), falta = Math.ceil((contaReenvioAte - Date.now()) / 1000);
+  b.disabled = falta > 0;
+  b.textContent = falta > 0 ? t('Reenviar em {}', `0:${String(falta).padStart(2, '0')}`) : t('Reenviar o link');
+  if(falta > 0 && !$('#contaPasso2').hidden) contaReenvioTimer = setTimeout(contaReenvioTick, 1000);
+}
+function contaPasso1(){
+  clearTimeout(contaReenvioTimer);
+  $('#contaPasso2').hidden = true; $('#contaPasso1').hidden = false; contaMsg('');
+  $('#contaEmail').focus();
+}
+async function contaEnviarLink(email){
+  await carregarSupabase();
+  const r = await sb.auth.signInWithOtp({email, options:{emailRedirectTo: contaRetorno(), shouldCreateUser: true, data:{aceite_versao: TERMOS_VERSAO, declarou_maior: true}}});
+  if(r.error) throw r.error;
+}
 $('#contaEmailForm').onsubmit = async e=>{
   e.preventDefault();
-  if(!contaAceitou() || contaSemSite()) return;
-  const email = $('#contaEmail').value.trim(); if(!email) return;
+  const email = $('#contaEmail').value.trim();
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ contaMsg(t('Confira o e-mail digitado.'), 'bad'); $('#contaEmail').focus(); return; }
+  if(!contaPedeAceite() || contaSemSite()) return;
   guardarAceite(); $('#contaEnviar').disabled = true; contaMsg(t('Enviando…'));
-  try{
-    await carregarSupabase();
-    const r = await sb.auth.signInWithOtp({email, options:{emailRedirectTo: contaRetorno(), shouldCreateUser: true, data:{aceite_versao: TERMOS_VERSAO, declarou_maior: true}}});
-    if(r.error) throw r.error;
-    contaMsg(t('Pronto! Enviamos um link para {}. Abra o e-mail neste mesmo navegador para entrar.', email), 'ok');
-  }catch(err){
-    contaMsg(t('Não deu para enviar o link agora. Confira o e-mail digitado e tente de novo em alguns minutos.'), 'bad');
-  }finally{ $('#contaEnviar').disabled = !contaAceitou(); }
+  try{ sessionStorage.setItem('bandoly-conta-volta', contaVoltaPara); }catch(e){}
+  try{ await contaEnviarLink(email); contaMsg(''); contaPasso2(email); }
+  catch(err){ contaMsg(t('Não deu para enviar o link agora. Confira o e-mail digitado e tente de novo em alguns minutos.'), 'bad'); }
+  finally{ $('#contaEnviar').disabled = false; }
 };
+$('#contaOutro').onclick = contaPasso1;
+$('#contaVoltar').onclick = contaPasso1;
+$('#contaReenviar').onclick = async ()=>{
+  if(!contaEnviadoEmail) return;
+  try{ await contaEnviarLink(contaEnviadoEmail); avisar(`<span>${t('Enviamos um novo link.')}</span>`); contaReenvioAte = Date.now() + 60000; contaReenvioTick(); }
+  catch(e){ avisar(`<span>${t('Não deu para reenviar agora. Tente de novo em alguns minutos.')}</span>`); }
+};
+
 $('#contaSincronizar').onclick = ()=>sincronizarConta('botao');
-$('#contaSair').onclick = async ()=>{
+async function sairConta(){
   if(!sb) return;
   await sincronizarConta('saindo');
-  await sb.auth.signOut(); contaUsuario = null; renderConta();
+  await sb.auth.signOut(); contaUsuario = null; contaUltima = null; renderConta();
+  if(areaDe(currentView) === 'perfil') go('inicio');
   avisar(`<span>${t('Você saiu da conta. O progresso continua neste aparelho.')}</span>`);
-};
+}
+$('#contaSair').onclick = sairConta;
 $('#contaBaixar').onclick = async ()=>{
   if(!sb || !contaUsuario) return;
   const {data, error} = await sb.from('progresso').select('*').eq('user_id', contaUsuario.id).maybeSingle();
@@ -166,37 +220,73 @@ $('#contaExcluir').onclick = async ()=>{
   if(!confirm(t('Excluir a sua conta? O login e tudo o que está guardado na nuvem serão apagados agora, sem volta. O progresso deste aparelho continua aqui.'))) return;
   const r = await sb.rpc('excluir_minha_conta');
   if(r.error){ contaMsg(t('Não deu para excluir agora. Tente de novo; se continuar, escreva para contato@bandoly.app.'), 'bad'); return; }
-  await sb.auth.signOut({scope:'local'}); contaUsuario = null; localStorage.removeItem(PREFIX + 'contaAceite');
-  renderConta(); contaMsg(t('Conta excluída. Os dados da nuvem foram apagados.'), 'ok');
+  await sb.auth.signOut({scope:'local'}); contaUsuario = null; contaUltima = null; localStorage.removeItem(PREFIX + 'contaAceite');
+  renderConta(); contaPasso1(); contaMsg(t('Conta excluída. Os dados da nuvem foram apagados.'), 'ok');
 };
 
-/* ---------- Tela ---------- */
-function renderConta(){
-  const dentro = !!contaUsuario;
-  $('#contaFora').hidden = dentro; $('#contaDentro').hidden = !dentro; $('#contaDados').hidden = !dentro;
-  if(!dentro) return;
-  $('#contaQuem').textContent = contaUsuario.email || '';
-  $('#contaEstado').textContent = contaSincronizando ? t('Sincronizando…')
-    : contaErro ? contaErro
-    : contaUltima ? t('Progresso guardado na nuvem às {}.', contaUltima.toLocaleTimeString(IDIOMAS[state.lang].html, {hour:'2-digit', minute:'2-digit'}))
-    : t('O progresso deste aparelho vai para a nuvem automaticamente.');
-  $('#contaSincronizar').disabled = contaSincronizando;
+/* ---------- Topo: "Entrar" ou o círculo com o menu da conta ---------- */
+function contaMenuAberto(abrir){
+  $('#contaMenu').hidden = !abrir; $('#contaAv').setAttribute('aria-expanded', abrir);
+  if(abrir){ const b = $('#contaMenu [role=menuitem]'); if(b) b.focus(); }
 }
-$('#contaAba').classList.toggle('desligada', !CONTA_LIGADA); // o menu mostra todas as abas da área: a classe vence
+$('#contaEntrar').onclick = ()=>go('conta');
+$('#contaAv').onclick = e=>{ e.stopPropagation(); contaMenuAberto($('#contaMenu').hidden); };
+$('#contaMenu').addEventListener('click', e=>{ const b = e.target.closest('[data-ir]'); if(b){ contaMenuAberto(false); go(b.dataset.ir); } });
+$('#contaMenuSair').onclick = ()=>{ contaMenuAberto(false); sairConta(); };
+document.addEventListener('click', e=>{ if(!$('#contaMenu').hidden && !e.target.closest('#contaTopo')) contaMenuAberto(false); });
+document.addEventListener('keydown', e=>{ if(e.key === 'Escape' && !$('#contaMenu').hidden){ contaMenuAberto(false); $('#contaAv').focus(); } });
+// Conta, Conquistas e Ajustes são a área da conta: o botão do topo fica aceso nela; guarda de onde a pessoa veio
+ganchosAba.push((v, anterior)=>{
+  $('#contaTopo').classList.toggle('on', areaDe(v) === 'perfil');
+  if(v === 'conta' && anterior && areaDe(anterior) !== 'perfil') contaVoltaPara = anterior;
+  if(!$('#contaMenu').hidden) contaMenuAberto(false);
+  if(v === 'conta') renderConta();
+});
 
-// Ao abrir: volta do login (?code=… ou ?error=…) ou já havia login neste navegador → carrega a biblioteca e sincroniza
+/* ---------- Tela ---------- */
+const contaHora = d => d.toLocaleTimeString(IDIOMAS[state.lang].html, {hour:'2-digit', minute:'2-digit'});
+function renderConta(){
+  const dentro = !!contaUsuario, u = contaUsuario || {}, email = u.email || '';
+  $('#contaFora').hidden = dentro; $('#contaDentro').hidden = !dentro;
+  $('#contaEntrar').hidden = dentro; $('#contaAv').hidden = !dentro;
+  if(!dentro){ if(!$('#contaMenu').hidden) contaMenuAberto(false); return; }
+  const letra = (email.charAt(0) || '?').toUpperCase();
+  $$('.conta-letra').forEach(x=>x.textContent = letra);
+  $$('.conta-email-txt').forEach(x=>x.textContent = email);
+  const google = (u.app_metadata && u.app_metadata.provider) === 'google';
+  $('#contaSelo').innerHTML = google ? `${$('.conta-google .conta-g').outerHTML}<span translate="no">Google</span>` : `<svg aria-hidden="true"><use href="#i-mail"/></svg>${t('E-mail')}`;
+  const [tit, txt] = contaSincronizando ? [t('Sincronizando…'), '']
+    : contaErro ? [t('Não deu para sincronizar'), contaErro]
+    : contaUltima ? [t('Tudo salvo na nuvem'), t('Última sincronização às {}', contaHora(contaUltima))]
+    : [t('Conectado'), t('O progresso deste aparelho vai para a nuvem automaticamente.')];
+  $('#contaEstadoTit').textContent = tit; $('#contaEstado').textContent = txt;
+  $('#contaMenuEstado').textContent = contaUltima && !contaErro && !contaSincronizando ? t('Tudo salvo na nuvem · às {}', contaHora(contaUltima)) : tit;
+  $('#contaTopo').classList.toggle('erro', !!contaErro); $('#contaTopo').classList.toggle('salvo', !!contaUltima && !contaErro);
+  $('#contaSincronizar').disabled = contaSincronizando;
+  $('#contaNDias').textContent = Object.keys(state.progress.days || {}).length;
+  $('#contaNIns').textContent = Object.keys(state.progress.insignias || {}).length;
+  $('#contaNMel').textContent = customMelodies().length;
+}
+
+// Ao abrir: volta do login (?code=… ou ?error=…) ou já havia login neste navegador → carrega a biblioteca e sincroniza.
+// Depois do login a pessoa volta para a tela onde estava, com um aviso.
 async function iniciarConta(){
   const q = new URLSearchParams(location.search), voltou = q.has('code') || q.has('error_description');
   if(!voltou && !localStorage.getItem(SUPA_SESSAO)) return;
   try{ await carregarSupabase(); }catch(e){ return; } // sem internet: fica tudo no aparelho
   const {data} = await sb.auth.getSession(); // espera a troca do ?code= pelo login
   contaUsuario = data && data.session ? data.session.user : null;
+  renderConta();
   if(voltou){
     history.replaceState(null, '', location.pathname + location.hash);
-    go('conta');
-    if(q.has('error_description')) contaMsg(t('O link de acesso expirou ou já foi usado. Peça um novo.'), 'bad');
+    let volta = ''; try{ volta = sessionStorage.getItem('bandoly-conta-volta') || ''; sessionStorage.removeItem('bandoly-conta-volta'); }catch(e){}
+    if(q.has('error_description') || !contaUsuario){ go('conta'); contaMsg(t('O link de acesso expirou ou já foi usado. Peça um novo.'), 'bad'); }
+    else{ go(volta && $('#v-' + volta) && areaDe(volta) !== 'perfil' ? volta : 'conta'); try{ sessionStorage.setItem('bandoly-conta-ola', '1'); }catch(e){} }
   }
-  renderConta();
-  if(contaUsuario) sincronizarConta(voltou ? 'entrar' : 'inicio');
+  if(!contaUsuario) return;
+  const r = await sincronizarConta(voltou ? 'entrar' : 'inicio');
+  if(r === 'recarregando') return;
+  try{ if(sessionStorage.getItem('bandoly-conta-ola')){ sessionStorage.removeItem('bandoly-conta-ola'); avisar(`<span>${t('Pronto, você entrou. O seu progresso está salvo na nuvem.')}</span>`); } }catch(e){}
 }
+renderConta();
 iniciarConta();

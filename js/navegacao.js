@@ -4,7 +4,8 @@
 // ficam no menu lateral; no celular, na barra de baixo. Tocar numa área volta à última aba usada nela.
 const AREAS = {
   inicio:['inicio'], aprender:['estudo','academia','licoes','teoria'], tocar:['teclado','melodias','acordes','microfone'],
-  treinar:['desafios','eco','ritmo'], perfil:['perfil','professor','ajustes','conta'],
+  treinar:['desafios','eco','ritmo'], professores:['professor'],
+  perfil:['conta','perfil','ajustes'], // "Você": sem botão no menu; abre pelo Entrar / círculo da conta no topo (js/conta.js)
 };
 const areaDe = v => Object.keys(AREAS).find(a=>AREAS[a].includes(v)) || 'inicio';
 const ultimaAba = store.get('ultimaAba', {});
@@ -37,8 +38,8 @@ function go(v){
 }
 // O fundo dourado da área ativa desliza até o botão tocado
 function moverIndicador(){
-  const b=$('#nav [data-area].active'), ind=$('#navInd'); if(!b || !ind) return;
-  if(!b.offsetWidth){ ind.style.opacity=0; return; }
+  const b=$('#nav [data-area].active'), ind=$('#navInd'); if(!ind) return;
+  if(!b || !b.offsetWidth){ ind.style.opacity=0; return; } // na área da conta nenhum botão do menu fica aceso
   ind.style.opacity=1; ind.style.width=b.offsetWidth+'px'; ind.style.height=b.offsetHeight+'px';
   ind.style.transform=`translate(${b.offsetLeft}px,${b.offsetTop}px)`;
 }

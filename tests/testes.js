@@ -117,7 +117,8 @@ teste('afinação muda a velocidade das amostras e a frequência do sintetizado'
 });
 teste('aba Ajustes existe e o cabeçalho não tem mais seletores', () => {
   go('ajustes'); ok($('#v-ajustes').classList.contains('active')); ok(!document.querySelector('header select'));
-  ok($('#subnav [data-v="ajustes"]').hasAttribute('aria-current')); ok($('#nav [data-area="perfil"]').hasAttribute('aria-current'));
+  ok($('#subnav [data-v="ajustes"]').hasAttribute('aria-current')); ok($('#contaTopo').classList.contains('on'), 'Ajustes fica na área da conta: o botão da conta no topo acende');
+  go('professor'); ok($('#nav [data-area="professores"]').hasAttribute('aria-current'), 'Professores é uma área do menu'); ok($('#subnav').hidden);
 });
 teste('botões do teclado têm descrição para leitores de tela', () => {
   ok(/abrindo, .* fechando/.test(document.querySelector('#kbRight .key').getAttribute('aria-label')));
@@ -835,15 +836,26 @@ teste('Conta: juntar dois aparelhos não perde nada, e o que é do aparelho não
   igual(tudo.names, 'en', 'ajuste que só existe na nuvem entra');
   ok(!('pcLigado' in tudo) && !('midiCC' in tudo), 'teclado do computador e MIDI não viajam');
 });
-teste('Conta: a aba mostra entrar (com o aceite dos 18 anos) ou a conta conectada', () => {
-  go('conta');
-  ok(!$('#contaFora').hidden && $('#contaDentro').hidden && $('#contaDados').hidden, 'sem login: só o cartão de entrar');
-  ok($('#contaGoogle').disabled && $('#contaEnviar').disabled, 'botões travados até aceitar');
-  $('#contaAceite').checked = true; $('#contaAceite').onchange();
-  ok(!$('#contaGoogle').disabled && !$('#contaEnviar').disabled, 'aceitou: botões liberados');
-  $('#contaAceite').checked = false; $('#contaAceite').onchange();
-  contaUsuario = {id:'teste', email:'aluno@exemplo.com'}; renderConta();
-  ok($('#contaFora').hidden && !$('#contaDentro').hidden && !$('#contaDados').hidden, 'com login: conta e dados');
+teste('Conta: Entrar no topo, aceite dos 18 anos, passo do e-mail e a conta conectada', () => {
+  go('inicio'); ok(!$('#contaEntrar').hidden && $('#contaAv').hidden, 'sem login: o topo mostra Entrar');
+  $('#contaEntrar').click(); igual(currentView, 'conta', 'Entrar abre a aba Conta');
+  ok(!$('#contaFora').hidden && $('#contaDentro').hidden && !$('#contaPasso1').hidden && $('#contaPasso2').hidden, 'sem login: o cartão de entrar');
+  $('#contaAceite').checked = false; $('#contaEmail').value = 'aluno@exemplo.com';
+  $('#contaEmailForm').dispatchEvent(new Event('submit', {cancelable:true}));
+  ok($('#contaAceiteLinha').classList.contains('falta') && $('#contaMsg').textContent.length > 0, 'sem aceitar: pede a caixa dos 18 anos');
+  contaPasso2('aluno@gmail.com');
+  ok($('#contaPasso1').hidden && !$('#contaPasso2').hidden, 'link enviado: passo 2');
+  igual($('#contaEnviadoPara').textContent, 'aluno@gmail.com'); ok(!$('#contaAbrirMail').hidden && /mail\.google/.test($('#contaAbrirMail').href), 'Gmail: botão para abrir o Gmail');
+  ok($('#contaReenviar').disabled, 'reenviar só depois de um minuto');
+  contaPasso2('aluno@exemplo.com'); ok($('#contaAbrirMail').hidden, 'provedor desconhecido: sem o botão de abrir');
+  $('#contaOutro').click(); ok(!$('#contaPasso1').hidden && $('#contaPasso2').hidden, 'Usar outro e-mail volta ao passo 1');
+  contaUsuario = {id:'teste', email:'aluno@exemplo.com', app_metadata:{provider:'google'}}; renderConta();
+  ok($('#contaFora').hidden && !$('#contaDentro').hidden, 'com login: a conta conectada');
   igual($('#contaQuem').textContent, 'aluno@exemplo.com', 'mostra o e-mail');
+  igual($('#contaAv .conta-letra').textContent, 'A', 'o círculo do topo mostra a inicial');
+  ok($('#contaEntrar').hidden && !$('#contaAv').hidden, 'com login: o topo mostra o círculo');
+  $('#contaAv').click(); ok(!$('#contaMenu').hidden, 'o círculo abre o menu'); $('#contaMenu [data-ir="ajustes"]').click();
+  igual(currentView, 'ajustes'); ok($('#contaMenu').hidden, 'escolher fecha o menu');
+  igual($('#contaNDias').textContent, String(Object.keys(state.progress.days||{}).length), 'dias de prática');
   contaUsuario = null; renderConta(); go('inicio');
 });
