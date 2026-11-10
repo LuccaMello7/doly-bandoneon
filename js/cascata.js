@@ -32,7 +32,7 @@ function rollQuadro(){
   for(let m=lo; m<=hi; m++) if(((m%12)+12)%12===0) c.fillRect((m-lo)*lw, 0, 1, H);
   c.fillStyle = '#e6b45033'; c.fillRect(0, linha-6, W, 12);
   c.fillStyle = '#e6b450'; c.fillRect(0, linha-1, W, 3);
-  c.font = '800 12px Nunito, "Segoe UI", sans-serif'; c.textAlign = 'center'; c.textBaseline = 'middle';
+  c.font = '800 12px Onest, "Segoe UI", sans-serif'; c.textAlign = 'center'; c.textBaseline = 'middle';
   for(const n of ns){
     const fim = linha - (n.t - roll.pos)*ppt, alto = Math.max(14, n.beats*ppt - 4), topo = fim - alto;
     if(topo > H || fim < -4) continue;

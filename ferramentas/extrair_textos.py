@@ -26,7 +26,7 @@ NAO_E_TEXTO = [re.compile(p) for p in (
     r'^(título|title):', r'^mão: \{\}$', r'^(direita|esquerda): ',                     # texto-fonte das melodias
     r'^([A-G]|Do|Re|Mi|Fa|Sol|La|Si|Dó|Ré|Fá|Lá)[#♯♭b]?$', r'^CDEFGAB$',  # nomes de notas
     r'^\{\} cents$', r'^\{\} \{\}\{\} oitava\(s\)$',
-    r'^\d00 \d+px', r'Nunito', r'^Arrow(Left|Right)$', r'^AbortError$',   # fontes do canvas e nomes de teclas/erros
+    r'^\d00 \d+px', r'Nunito', r'Onest', r'^Arrow(Left|Right)$', r'^AbortError$', r'^Enter$',   # fontes do canvas e nomes de teclas/erros
     r'^translate', r'^cubic-bezier', r'^\(prefers-', r'^IntersectionObserver$', r'^\(hover:', r'^(Digit\d|Minus|Equal|Bracket(Left|Right)|Semicolon|Quote|Backslash|Comma|Period|Slash|Num|Arrow(Up|Down|Left|Right)|Escape|Delete|Backspace)$', r'^(https?://|mailto:|&body=)', r'^\{\}/issues/', r'^mailto:\{\}', r'^\{\}: \{\}×\{\}$', r'^-?\d+px( -?\d+%?(px)?)*$',                         # valores de CSS usados no código
 )]
 # Iguais em todos os idiomas: nomes próprios, símbolos e exemplos de notas do formato de texto
@@ -38,7 +38,7 @@ IGUAIS = {'T T S T T T S', 'T S T T S T T', 'S T T T S T T', 'T T T S T T S', 'T
           'Adiós Nonino', 'Quejas de Bandoneón', 'Oblivion', 'Tangos Ontem, Hoje e Sempre', 'Lucca Mello',
           'bruniinhars', 'Camila García', 'Rodrigo Faller',
           '(display-mode: standalone)', 'MacIntel',  # código do convite para instalar (init.js)
-          'RepeTCHÊ', 'Muy bueno!', 'La Cumparsita', 'Tico-tico no fubá'}  # nome do jogo e a fala do gaúcho: iguais em todos os idiomas
+          'RepeTCHÊ', 'BanDoly', 'Doly Costa', 'Muy bueno!', 'La Cumparsita', 'Tico-tico no fubá'}  # nome do jogo e a fala do gaúcho: iguais em todos os idiomas
 NAO_E_TEXTO.append(re.compile(r'^[A-Za-zÀ-ÿ]{1,3}[#♯♭b]?\d'))  # Sol4, Bb5, Dó4:4, Mi4:8t…
 # Formas "cruas" de frases que o dicionário cobre com outra chave (montadas em partes no código)
 COBERTOS = {'Opção {}: {}{}{}', 'Prepare-se…', 'Não entendi:', 'Direção: Abrindo (trocar)',

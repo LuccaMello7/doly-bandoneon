@@ -81,7 +81,7 @@ function renderTrilha(){
   // o botão principal da tela Início leva à próxima etapa
   $('#heroCtaTxt').textContent = atual<0 ? 'Ver as suas conquistas' : `${n===0?'Começar':'Continuar'}: ${es[atual].t}`;
   $('#trilhaCard').style.setProperty('--feito', es.length ? n/es.length : 0);
-  renderInicio(es, n, atual);
+  if(typeof renderInicio==='function') renderInicio(es, n, atual); // Início (js/inicio.js)
   // fechado: as feitas mais recentes, a atual e as duas seguintes
   const ini = atual<0 ? es.length-3 : Math.max(0, atual-1), fim = atual<0 ? es.length : atual+3;
   lista.innerHTML = es.map((e,i)=>{
@@ -100,23 +100,6 @@ $('#trilha').addEventListener('click', e=>{
   const et = ETAPAS.find(x=>x.id===b.dataset.etapa); if(et) et.ir();
 });
 $('#heroCta').onclick = ()=>{ const es = etapasDoAluno(), i = es.findIndex(e=>!e.feito()); if(i<0) go('perfil'); else es[i].ir(); };
-$('#inContBtn').onclick = ()=>$('#heroCta').click();
-// Tela Início: quem chega vê a apresentação; quem já praticou vê "Continuar" (classe "volta"), com o anel do
-// caminho, a barra da Academia e a música do dia do RepeTCHÊ
-function renderInicio(es, n, atual){
-  const voltou = n>0 || Object.keys(state.progress.days||{}).length>0;
-  $('#v-inicio').classList.toggle('volta', voltou);
-  $('#inAnel').style.setProperty('--p', es.length ? Math.round(100*n/es.length) : 0);
-  $('#inAnelTxt').textContent = `${n}/${es.length}`;
-  $('#inContTit').textContent = atual<0 ? 'Caminho completo! A Medalha Doly Costa é sua.' : `${n===0?'Começar':'Continuar'}: ${es[atual].t}`;
-  const faltam = es.length-n;
-  $('#inContSub').textContent = atual<0 ? '' : faltam===1 ? 'Falta 1 etapa para concluir o seu caminho.' : `Faltam ${faltam} etapas para concluir o seu caminho.`;
-  $('#inContBtnTxt').textContent = atual<0 ? 'Ver as suas conquistas' : n===0 ? 'Começar' : 'Continuar';
-  const exs = ACADEMIA.filter(x=>x.nivel<7).flatMap(acadFuncionais), fe = exs.filter(e=>acadConcluido(e.id)).length;
-  $('#inAcadBarra').style.width = (exs.length ? 100*fe/exs.length : 0)+'%';
-  $('#inAcadTxt').textContent = `${fe} de ${exs.length} exercícios concluídos`;
-  $('#inEcoDia').textContent = ecoMusica(ecoDoDia()).m.title;
-}
 $('#trilhaMais').onclick = ()=>{ trilhaAberta = !trilhaAberta; renderTrilha(); };
 // marcos que o resto do app não registra
 $('.doly-link').addEventListener('click', ()=>marcar('doly'));
@@ -211,7 +194,7 @@ $('#insignias').addEventListener('click', e=>{ const b = e.target.closest('[data
 const FILETE = [...document.querySelectorAll('#i-filete path')].map(p=>p.getAttribute('d'));
 function desenharCartao(x){
   const cv = document.createElement('canvas'); cv.width = cv.height = 1080;
-  const c = cv.getContext('2d'), F = 'Nunito, "Segoe UI", sans-serif';
+  const c = cv.getContext('2d'), F = 'Onest, "Segoe UI", sans-serif';
   const g = c.createLinearGradient(0,0,1080,1080); g.addColorStop(0,'#1e4c86'); g.addColorStop(.5,'#13305a'); g.addColorStop(1,'#2a2a64');
   c.fillStyle = g; c.fillRect(0,0,1080,1080);
   c.strokeStyle = '#e6b450'; c.lineWidth = 6; c.strokeRect(40,40,1000,1000); c.lineWidth = 2; c.strokeRect(58,58,964,964);

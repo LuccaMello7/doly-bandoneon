@@ -1,12 +1,12 @@
 // Service worker: guarda o app no aparelho para funcionar offline.
 // Estratégia "rede primeiro": online sempre pega a versão mais nova; offline usa o cache.
 // Ao adicionar um arquivo novo ao index.html, inclua-o em ARQUIVOS (os testes conferem).
-const CACHE = 'bandoly-v42'; // mudar o nome apaga o cache antigo na ativação
+const CACHE = 'bandoly-v43'; // mudar o nome apaga o cache antigo na ativação
 const ARQUIVOS = [
   "./",
   "css/app.css",
-  "fontes/nunito-latin.woff2",
-  "fontes/nunito-latin-ext.woff2",
+  "fontes/onest-latin.woff2",
+  "fontes/onest-latin-ext.woff2",
   "favicon.ico",
   "icones/icone-192.png",
   "icones/icone-512.png",
@@ -42,7 +42,7 @@ const ARQUIVOS = [
   "js/desafios.js",
   "js/escalas.js",
   "js/fole.js",
-  "js/movimento.js", "js/ouvido.js", "js/eco.js", "imagens/repetche/avatar.jpg", "imagens/repetche/gaucho-muy-bueno.jpg", "imagens/repetche/gaucho-fim.jpg", "js/cascata.js", "js/trilha.js", "js/controles.js", "js/professor.js", "js/contato.js", "js/teoria-textos.js", "js/teoria.js", "js/init.js",
+  "js/movimento.js", "js/ouvido.js", "js/eco.js", "imagens/repetche/avatar.jpg", "imagens/repetche/gaucho-muy-bueno.jpg", "imagens/repetche/gaucho-fim.jpg", "js/cascata.js", "js/trilha.js", "js/inicio.js", "imagens/doly/estudio-retrato.jpg", "imagens/doly/videos/pvjzxZ0KdsY.jpg", "imagens/doly/videos/CxJt4BrC0qE.jpg", "imagens/doly/videos/RkhUPdT80Sc.jpg", "js/controles.js", "js/professor.js", "js/contato.js", "js/teoria-textos.js", "js/teoria.js", "js/init.js",
   "icones/bandeiras/gb.svg",
   "icones/bandeiras/es.png",
   "icones/bandeiras/br.svg",

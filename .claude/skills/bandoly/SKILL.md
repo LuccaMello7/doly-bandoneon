@@ -37,7 +37,7 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
   compartilham o escopo global e rodam **nesta ordem**:
   `base, i18n-textos, i18n, licoes-traducao, audio, teclado, movimento, navegacao, fole, desafios, ritmo,
   atalhos, controles, melodias, musicxml, escalas, microfone, acordes, maos, academia, partituras, rotina,
-  licoes, ajustes, ouvido, eco, cascata, trilha, professor, teoria-textos, teoria, contato, init`.
+  licoes, ajustes, ouvido, eco, cascata, trilha, inicio, professor, teoria-textos, teoria, contato, init`.
   Código que roda no carregamento só pode usar o que veio antes; dentro de funções, tudo já existe.
   `init.js` é sempre o último.
 - PWA: `manifest.webmanifest` + `sw.js` (rede primeiro; o cache guarda tudo de `ARQUIVOS`).
@@ -71,14 +71,17 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
 - `ecoMapa()` desenha o mapa de fases (`.eco-mapa`) no jogo e na tela do fim. A música do dia vale com uma fase.
 - Partitura das Melodias: `staffCursor(g)` move a bolinha `#staffBola`, que pula em arco de nota em nota.
 
-### Tela Início
-- Classes `in-*` (fim do `css/app.css`). Dois estados na mesma seção: apresentação (`.in-topo`, uma frase e um botão) para
-  quem chega e "Continuar" (`.in-volta`, anel do caminho e sequência) para quem já praticou. `renderInicio()` em
-  `trilha.js` põe a classe `volta` em `#v-inicio` e preenche o anel, a barra da Academia e a música do dia.
-- Cartões num estilo só: painel escuro, borda fina e só o ícone colorido (`--cor`). Dourado cheio só no botão principal.
-- O texto "O que você encontra", as notas técnicas e as perguntas ficam em `<details class="in-sobre">` no rodapé
+### Tela Início (js/inicio.js)
+- O Início é o próprio instrumento: as duas mãos (o mapa de `state.layout`) e o fole no meio, tocáveis
+  (`startVoice`/`stopVoice`). Espaço ou a chave trocam o fole, e os nomes trocam em cascata. Com o teclado do
+  computador ligado, `tecladoVisivel()` (controles.js) devolve `iniKb` quando o Início está aberto.
+- Dois estados na mesma seção: apresentação (`.ini-so-novo`) e quem volta (`.ini-so-volta`, classe `volta` em
+  `#v-inicio`). `renderInicio(es, n, atual)`, chamada por `renderTrilha`, preenche o caminho em quatro partes
+  (`INI_PARTES`), a próxima etapa, a semana, a Academia, o RepeTCHÊ do dia e a rotina.
+- O botão verde do topo (`#topoCta`) leva à próxima etapa, de qualquer aba.
+- O texto "O que você encontra", as notas técnicas e o crédito do som ficam em `<details class="ini-sobre">` no rodapé
   (fechado, mas no HTML para a busca). O aviso do professor fica no rodapé.
-- As regras antigas `.hero*`, `.tile*` e `.t-*` do CSS não são mais usadas no Início.
+- Desenho e direção: `.impeccable/surfaces/index-html.md`; produto: `PRODUCT.md`.
 
 ### Peças principais
 - **Teclado** (`kb(el, mão, opções)`, teclado.js):
@@ -149,9 +152,14 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
 
 ## 5. Design e movimento
 
-- Visual "B" (app moderno): azul-marinho `--bg #0d1b2e`, painéis `--panel`, dourado `--gold #e6b450`,
-  fonte Nunito local (`fontes/`), ícones em sprite SVG (`<svg aria-hidden="true"><use href="#i-nome"/></svg>`)
-  e ornamento de fileteado (`#i-filete`, `--filete`).
+- Mundo do Doppler (desde 2026-11-10, aprovado pelo dono): fundo ameixa quase preto `--bg #1c1624`, painéis
+  `--panel #2d2734` com bordas finíssimas (`--borda`), lavanda `--lavanda #b997ff` para a voz da marca (o token
+  `--gold` agora É a lavanda), verde `--verde-vai #00f575` só no botão de "ir" (`.btn-vai`), fonte **Onest** local
+  (`fontes/`), barra do topo em vidro fosco no computador (o desfoque fica em `header::before`: no próprio header
+  ele prenderia a barra fixa de baixo do celular). Ícones em sprite SVG (`<svg aria-hidden="true"><use href="#i-nome"/></svg>`;
+  a regra geral de `svg[aria-hidden]` encolhe qualquer desenho que use esse atributo).
+- O Início já está no mundo novo; as outras abas receberam só os tokens e ainda têm cores fixas antigas
+  (azul-marinho em gradientes, moldura dourada do teclado, brilhos). Revisar uma área por vez.
 - A marca é sempre **BanDoly**, junta, nunca "Ban Doly".
 - Teclado com caixa escura e botões de madrepérola. Azul = abrindo, laranja = fechando, e para texto em
   cima use `--open-texto`/`--close-texto` (contraste ≥ 4,5). Vermelho só para erro.

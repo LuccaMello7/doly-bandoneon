@@ -92,7 +92,7 @@ const observador = new MutationObserver(regs=>{
 // ---------- Troca de idioma ----------
 function montarBandeiras(){
   $('#langs').innerHTML = Object.entries(IDIOMAS).map(([k,L])=>
-    `<button type="button" data-lang="${k}" class="${k===state.lang?'on':''}" title="${L.nome}" aria-label="${L.nome}" translate="no"><img src="${L.bandeira}" alt="" width="30" height="20"></button>`).join('');
+    `<button type="button" data-lang="${k}" class="${k===state.lang?'on':''}" title="${L.nome}" aria-label="${L.nome}" translate="no">${k.toUpperCase()}</button>`).join('');
 }
 $('#langs').addEventListener('click', e=>{ const b=e.target.closest('[data-lang]'); if(b) irParaIdioma(b.dataset.lang); });
 

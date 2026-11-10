@@ -52,7 +52,7 @@
 <link rel="icon" href="../favicon.ico" sizes="48x48">
 <link rel="icon" href="../icones/icone-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="../icones/icone-192.png">
-<link rel="preload" href="../fontes/nunito-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../fontes/onest-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="../css/app.css">
 <!-- contagem de visitas: GoatCounter, sem cookies e sem dados pessoais (painel: bandoly.goatcounter.com) -->
 <script data-goatcounter="https://bandoly.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
@@ -88,6 +88,7 @@
   <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 13h6M9 17h6"/></symbol>
   <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M5 20h14"/></symbol>
   <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v12M7 11l5 5 5-5M5 20h14"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
   <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
   <!-- ornamento inspirado no fileteado porteño: volutas e uma folha no centro -->
   <symbol id="i-filete" viewBox="0 0 120 40"><path d="M60 21c-6-13-27-14-31-1-3 9 8 14 14 8 4-4 1-10-4-9"/><path d="M60 21c6-13 27-14 31-1 3 9-8 14-14 8-4-4-1-10 4-9"/><path d="M29 20c-9 1-14 7-25 2M91 20c9 1 14 7 25 2"/><path d="M60 6c4 4 4 10 0 15-4-5-4-11 0-15z"/><circle cx="60" cy="30" r="2.5"/></symbol>
@@ -111,6 +112,7 @@
   </nav>
   <button type="button" class="sug-btn" data-sugestao aria-label="Send a suggestion or report a bug"><svg aria-hidden="true"><use href="#i-question"/></svg><span>Feedback</span></button>
   <div id="langs" class="langs" role="group" aria-label="Idioma / Language"></div>
+  <button type="button" class="btn-vai peq topo-cta" id="topoCta"><span id="topoCtaTxt">Start</span><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
 </header>
 
 <main>
@@ -131,37 +133,51 @@
 </div>
 <!-- INÍCIO -->
 <section id="v-inicio" class="active">
-  <!-- primeira visita: uma frase e um botão -->
-  <div class="in-topo">
-    <div class="in-topo-txt">
-      <span class="in-selo"><i></i>Free, no sign-up</span>
-      <h1 class="in-tit">Learn to play the <em>bandoneon</em>, one button at a time.</h1>
-      <p class="in-sub">A keyboard with real sound, short lessons and a study path built for you.</p>
-      <div class="in-acoes">
-        <button type="button" class="btn btn-grande" id="heroCta"><svg aria-hidden="true"><use href="#i-play"/></svg><span id="heroCtaTxt">Start with the first lesson</span></button>
-        <a class="in-elo" href="#" data-go="teclado">or play the keyboard now <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+  <!-- O Início é o próprio instrumento (js/inicio.js). Quem já praticou vê a próxima etapa (classe "volta"). -->
+  <div class="ini-palco">
+    <div class="ini-aurora" aria-hidden="true"></div>
+    <div class="ini-c">
+      <div class="ini-topo ini-so-novo">
+        <h1 class="ini-tit">Learn the bandoneon. <span>One button at a time.</span></h1>
+        <p class="ini-sub">The keyboard of a real bandoneon, with the recorded sound of a 1930 instrument. Free, no sign-up, in your browser.</p>
+        <div class="ini-acoes">
+          <button type="button" class="btn-vai" id="heroCta"><span id="heroCtaTxt">Start with the first lesson</span><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          <a class="btn-fantasma" href="#iniCaminho" id="iniVerCaminho">See the path</a>
+        </div>
       </div>
-      <ul class="in-fatos"><li><svg aria-hidden="true"><use href="#i-check"/></svg>71 buttons with the sound of a 1930 bandoneon</li><li><svg aria-hidden="true"><use href="#i-check"/></svg>Works on your phone, even offline</li></ul>
-    </div>
-    <!-- bandoneon desenhado: o fole respira, os botões acendem e as notas sobem -->
-    <div class="bando" aria-hidden="true">
-      <div class="caixa"><i></i><i class="a"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-      <div class="fole"></div>
-      <div class="caixa"><i></i><i></i><i></i><i></i><i></i><i class="f"></i><i></i><i></i><i></i></div>
-      <div class="voa"><i></i><i></i><i></i><i></i><i></i></div>
-    </div>
-  </div>
-  <!-- quem já usa: continuar de onde parou (js/trilha.js põe a classe "volta" na seção) -->
-  <div class="in-volta">
-    <p class="ola">Welcome back! 👋</p>
-    <div class="in-cont">
-      <div class="in-anel" id="inAnel" aria-hidden="true"><b id="inAnelTxt"></b></div>
-      <div class="in-cont-txt">
-        <div class="in-cont-topo"><small>Your path</small><span id="streak" class="streak"></span></div>
-        <h2 id="inContTit"></h2>
-        <p class="muted" id="inContSub"></p>
+      <div class="ini-volta ini-so-volta">
+        <h1 class="ini-tit">Hello again! <span>Shall we carry on?</span></h1>
+        <div class="ini-volta-grade">
+          <div class="ini-painel ini-cont">
+            <h2 id="inContTit"></h2>
+            <p id="inContSub"></p>
+            <div class="ini-trilho-linha"><div class="ini-trilho" id="iniTrilho" aria-hidden="true"></div><small id="iniEtapaTxt"></small></div>
+            <button type="button" class="btn-vai" id="inContBtn"><span id="inContBtnTxt">Continue</span><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          </div>
+          <div class="ini-painel ini-seq">
+            <span id="streak" class="streak"></span>
+            <div class="ini-semana" id="iniSemana" aria-hidden="true" translate="no"></div>
+          </div>
+        </div>
       </div>
-      <button type="button" class="btn btn-grande" id="inContBtn"><svg aria-hidden="true"><use href="#i-play"/></svg><span id="inContBtnTxt">Continue</span></button>
+      <div class="ini-inst" id="iniInst" data-fole="open">
+        <div class="ini-inst-grade">
+          <div class="ini-mao esq"><span class="ini-mao-rot">Left hand · bass</span><div class="ini-area" id="iniMaoEsq" role="group" aria-label="Left hand"></div></div>
+          <div class="ini-fole">
+            <div class="ini-pregas" aria-hidden="true"></div>
+            <div class="ini-chave" role="group" aria-label="Bellows direction">
+              <button type="button" class="abre" aria-pressed="true" data-fole="open"><i></i>Opening</button>
+              <button type="button" class="fecha" aria-pressed="false" data-fole="close"><i></i>Closing</button>
+            </div>
+            <span class="ini-tecla"><kbd>Space</kbd> troca</span>
+            <div class="ini-visor" aria-live="polite">
+              <div class="ini-nota vazio" id="iniNota">Press a button</div>
+              <dl><dt>Opening</dt><dd class="abre-t" id="iniAbre">–</dd><dt>Closing</dt><dd class="fecha-t" id="iniFecha">–</dd></dl>
+            </div>
+          </div>
+          <div class="ini-mao dir"><span class="ini-mao-rot">Right hand · treble</span><div class="ini-area" id="iniMaoDir" role="group" aria-label="Right hand"></div></div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="card instalar" id="instalarCard" hidden>
@@ -169,22 +185,131 @@
     <div class="instalar-txt"><b>Install BanDoly on your phone</b><span class="muted" id="instalarTxt">Opens straight from your home screen, faster and even offline.</span><span class="muted" id="instalarIos" hidden>On iPhone: tap Share, then “Add to Home Screen”.</span></div>
     <div class="instalar-acoes"><button type="button" class="btn" id="instalarSim"><svg aria-hidden="true"><use href="#i-download"/></svg>Install</button><button type="button" class="btn ghost" id="instalarNao">Not now</button></div>
   </div>
-  <h2 class="in-h"><span class="in-so-novo">Or jump straight in</span><span class="in-so-volta">Practise today</span></h2>
-  <div class="in-grade" data-revela="cascata">
-    <a class="in-c in-grande" style="--cor:var(--open)" href="#" data-go="academia"><span class="in-ic"><svg aria-hidden="true"><use href="#i-cap"/></svg></span><b>Academy</b><small>Exercises in 6 levels, with an instructor that shows the current note and the next one.</small><span class="in-barra in-so-volta"><i id="inAcadBarra"></i></span><span class="in-barra-txt in-so-volta" id="inAcadTxt"></span><span class="in-seta"><svg aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
-    <a class="in-c in-grande in-rep" style="--cor:#35c2c9" href="#" data-go="eco"><img class="in-av" src="../imagens/repetche/avatar.jpg" alt="" width="84" height="84"><span class="in-tx"><b><span translate="no">RepeTCHÊ</span> <span class="tile-novo">New</span></b><small>The bandoneon plays, you repeat. How far can your memory go?</small><span class="in-dia"><svg aria-hidden="true"><use href="#i-music"/></svg><span>Tune of the day</span><i aria-hidden="true">·</i><span id="inEcoDia"></span></span></span><span class="in-seta"><svg aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
-    <a class="in-c in-linha" style="--cor:var(--close)" href="#" data-go="teclado"><span class="in-ic"><svg aria-hidden="true"><use href="#i-keys"/></svg></span><span class="in-tx"><b>Free keyboard</b><small>Play freely on all 71 buttons</small></span><span class="in-seta"><svg aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
-    <a class="in-c in-linha" style="--cor:var(--violet)" href="#" data-go="melodias"><span class="in-ic"><svg aria-hidden="true"><use href="#i-music"/></svg></span><span class="in-tx"><b>Melodies</b><small>Guided songs and scales</small></span><span class="in-seta"><svg aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
-    <a class="in-c in-linha" style="--cor:var(--green)" href="#" data-go="ritmo"><span class="in-ic"><svg aria-hidden="true"><use href="#i-metro"/></svg></span><span class="in-tx"><b>Rhythm</b><small>Marcato, syncopation and 3-3-2</small></span><span class="in-seta"><svg aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+
+  <!-- quem chega: o caminho, o app em ação, o Doly e as perguntas -->
+  <div class="ini-s ini-so-novo" id="iniCaminho">
+    <div class="ini-s-cab"><h2>From the first button to your first tango.</h2><p id="iniCaminhoSub"></p></div>
+    <div class="ini-painel ini-caminho" id="iniCaminhoLista"></div>
+    <div class="ini-caminho-pe"><span>The path adapts to the three questions from your first visit: whether you already play, whether you have the instrument and what you want to play.</span><button type="button" class="btn-vai" id="iniCaminhoCta">Start step 1 <svg aria-hidden="true"><use href="#i-arrow"/></svg></button></div>
   </div>
-  <a class="in-doly doly-link" data-revela href="doly-costa/" data-local>
-    <img src="../imagens/doly/disco.jpg" alt="" width="44" height="54">
-    <span class="in-doly-txt"><small>The inspiration behind the name</small><b>Who is Doly Costa?</b><span class="muted">A 97-year-old gaúcho bandoneon player who still plays.</span></span>
-    <svg aria-hidden="true"><use href="#i-arrow"/></svg>
-  </a>
-  <!-- rodapé: o texto de apresentação fica aqui, fechado (o Google continua lendo) -->
-  <div class="in-rodape">
-    <details class="in-sobre"><summary>About BanDoly</summary>
+  <div class="ini-s ini-so-novo">
+    <div class="ini-s-cab"><h2>The app shows the next note before you get it wrong.</h2></div>
+    <div class="ini-duas">
+      <a class="ini-painel ini-feito" href="#" data-go="academia">
+        <h3>Academy</h3>
+        <p>Exercises in 6 levels, from the first button to both hands. The right button lights up, and the instructor shows the current note and the next one.</p>
+        <div class="ini-demo" aria-hidden="true">
+          <div class="ini-ap"><div><small>Now</small><b>Sol4</b><span class="ini-pil abre">Opening</span></div><div class="prox"><small>Next</small><b>Lá4</b><span class="ini-pil fecha">Closing</span></div></div>
+          <div class="ini-barra"><i></i></div>
+          <div class="ini-barra-t"><span>C major scale · note 6 of 16</span><span>No mistakes</span></div>
+        </div>
+      </a>
+      <a class="ini-painel ini-feito" href="#" data-go="eco">
+        <h3><span translate="no">RepeTCHÊ</span></h3>
+        <p>The bandoneon plays, you repeat. Each tune comes in short 8-note stages, and the little gaúcho cheers every hit.</p>
+        <div class="ini-demo" aria-hidden="true">
+          <div class="ini-rep"><img src="../imagens/repetche/avatar.jpg" alt="" width="52" height="52" loading="lazy"><div><b translate="no">La Cumparsita</b><small>Stage 3 of 7</small></div></div>
+          <div class="ini-fases"><span class="f">1</span><span class="f">2</span><span class="a">3</span><span><svg aria-hidden="true"><use href="#i-lock"/></svg></span><span><svg aria-hidden="true"><use href="#i-lock"/></svg></span><span><svg aria-hidden="true"><use href="#i-lock"/></svg></span><span><svg aria-hidden="true"><use href="#i-lock"/></svg></span><span class="t"><svg aria-hidden="true"><use href="#i-trophy"/></svg></span></div>
+          <div class="ini-suavez">Your turn! <small>4 notes</small></div>
+        </div>
+      </a>
+    </div>
+    <a class="ini-painel ini-pauta-painel" href="#" data-go="melodias" style="color:inherit;text-decoration:none">
+      <div><h3>Melodies with sheet music</h3><p style="margin:12px 0 0;color:var(--cinza-2);line-height:1.55">Scales in every key and public-domain tunes. As you play, the current note shows in green, with its name, and the bellows direction is suggested.</p></div>
+      <svg class="ini-pauta" viewBox="0 0 640 150" aria-hidden="true">
+        <line class="l" x1="0" x2="640" y1="50" y2="50"/><line class="l" x1="0" x2="640" y1="62" y2="62"/><line class="l" x1="0" x2="640" y1="74" y2="74"/><line class="l" x1="0" x2="640" y1="86" y2="86"/><line class="l" x1="0" x2="640" y1="98" y2="98"/><line class="l" x1="236" x2="236" y1="50" y2="98"/><line class="l" x1="440" x2="440" y1="50" y2="98"/><line class="l" x1="636" x2="636" y1="50" y2="98"/>
+        <text class="clave" x="2" y="104">&#x1D11E;</text>
+        <ellipse class="n" cx="74" cy="104" rx="7" ry="5.2" transform="rotate(-20 74 104)"/><line class="h" x1="80.5" x2="80.5" y1="104" y2="70"/>
+        <ellipse class="n" cx="116" cy="74" rx="7" ry="5.2" transform="rotate(-20 116 74)"/><line class="h" x1="122.5" x2="122.5" y1="74" y2="40"/>
+        <ellipse class="n" cx="158" cy="86" rx="7" ry="5.2" transform="rotate(-20 158 86)"/><line class="h" x1="164.5" x2="164.5" y1="86" y2="52"/>
+        <ellipse class="n" cx="200" cy="92" rx="7" ry="5.2" transform="rotate(-20 200 92)"/><line class="h" x1="206.5" x2="206.5" y1="92" y2="58"/>
+        <ellipse class="cur" cx="270" cy="104" rx="7" ry="5.2" transform="rotate(-20 270 104)"/><line class="curh" x1="276.5" x2="276.5" y1="104" y2="70"/>
+        <rect x="250" y="14" width="40" height="22" rx="11" fill="#00f575"/><text x="270" y="29.5" text-anchor="middle" font-family="Onest,sans-serif" font-size="12" font-weight="700" fill="#000" translate="no">Ré4</text>
+        <ellipse class="n" cx="312" cy="98" rx="7" ry="5.2" transform="rotate(-20 312 98)"/><line class="h" x1="318.5" x2="318.5" y1="98" y2="64"/>
+        <ellipse class="n" cx="354" cy="86" rx="7" ry="5.2" transform="rotate(-20 354 86)"/><line class="h" x1="360.5" x2="360.5" y1="86" y2="52"/>
+        <ellipse class="n" cx="396" cy="74" rx="7" ry="5.2" transform="rotate(-20 396 74)"/><line class="h" x1="402.5" x2="402.5" y1="74" y2="40"/>
+        <ellipse class="n" cx="476" cy="68" rx="7" ry="5.2" transform="rotate(-20 476 68)"/><line class="h" x1="469.5" x2="469.5" y1="68" y2="102"/>
+        <ellipse class="n" cx="518" cy="80" rx="7" ry="5.2" transform="rotate(-20 518 80)"/><line class="h" x1="524.5" x2="524.5" y1="80" y2="46"/>
+        <ellipse cx="580" cy="86" rx="7" ry="5.2" transform="rotate(-20 580 86)" fill="none" stroke="#f1f0ec" stroke-width="1.6"/><line class="h" x1="586.5" x2="586.5" y1="86" y2="52"/>
+      </svg>
+    </a>
+    <div class="ini-mais">
+      <a href="#" data-go="microfone"><span class="ic"><svg aria-hidden="true"><use href="#i-mic"/></svg></span><div><h3>Got a bandoneon?</h3><p>Play your own instrument: the app listens through the microphone and checks every note.</p></div></a>
+      <a href="#" data-go="professor"><span class="ic"><svg aria-hidden="true"><use href="#i-share"/></svg></span><div><h3>For teachers</h3><p>Send an assignment as a link, over WhatsApp, and get the student's report back. No sign-up on either side.</p></div></a>
+    </div>
+  </div>
+  <div class="ini-s ini-so-novo ini-livre">
+    <h2>Opens in your browser. No account, no <span style="white-space:nowrap">email</span>, no payment.</h2>
+    <ul class="ini-fatos">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><div>On your phone and computer <span>· even offline, once installed</span></div></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><div>Your progress stays on this device <span>· with a backup in Settings</span></div></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><div>In Portuguese, Spanish and English</div></li>
+    </ul>
+  </div>
+  <div class="ini-s ini-so-novo">
+    <div class="ini-doly">
+      <img class="ini-doly-foto" src="../imagens/doly/estudio-retrato.jpg" alt="Doly Costa playing the bandoneon, wearing headphones, at a recording session" width="520" height="650" loading="lazy">
+      <div>
+        <h2>Doly Costa is 97. And he still plays.</h2>
+        <p>A bandoneon player from Caçapava do Sul, he played in the tango orchestras of Porto Alegre's radio stations and founded Os Posteiros. BanDoly is named after him.</p>
+        <a class="ini-elo doly-link" href="doly-costa/" data-local>Read the story <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+    <div class="ini-videos">
+      <a class="ini-video" href="doly-costa/#videos" data-local><div class="tela"><img src="../imagens/doly/videos/pvjzxZ0KdsY.jpg" alt="" width="640" height="360" loading="lazy"><span class="play"><svg aria-hidden="true"><use href="#i-play"/></svg></span></div><b translate="no">Adiós Nonino</b><small>At 96, at home, with friends</small></a>
+      <a class="ini-video" href="doly-costa/#videos" data-local><div class="tela"><img src="../imagens/doly/videos/CxJt4BrC0qE.jpg" alt="" width="480" height="360" loading="lazy"><span class="play"><svg aria-hidden="true"><use href="#i-play"/></svg></span></div><b translate="no">Quejas de Bandoneón</b><small>Soloist with the Orquestra Sinfônica de Porto Alegre, 2010</small></a>
+      <a class="ini-video" href="doly-costa/#videos" data-local><div class="tela"><img src="../imagens/doly/videos/RkhUPdT80Sc.jpg" alt="" width="640" height="360" loading="lazy"><span class="play"><svg aria-hidden="true"><use href="#i-play"/></svg></span></div><b translate="no">Tangos Ontem, Hoje e Sempre</b><small>With the Orquestra Unisinos, 2011</small></a>
+    </div>
+  </div>
+  <div class="ini-s ini-so-novo">
+    <div class="ini-s-cab"><h2>Questions</h2></div>
+    <div class="ini-faq">
+      <details open><summary>Do I need a bandoneon? <svg aria-hidden="true"><use href="#i-plus"/></svg></summary><p>No. You can learn the button map, reading and rhythms with just the on-screen keyboard. If you have one, the app listens through the microphone and checks the notes.</p></details>
+      <details><summary>Is BanDoly free? <svg aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Yes. BanDoly is free and needs no sign-up. Your progress is saved in your browser, and you can export a backup in Settings.</p></details>
+      <details><summary>Which bandoneon does the app use? <svg aria-hidden="true"><use href="#i-plus"/></svg></summary><p>The Rheinische 142, the tango standard: 38 buttons on the right hand and 33 on the left, transcribed from the diagrams by Omar Caccia and Matías Gobbo. If yours differs, adjust the buttons in Keyboard → Edit layout.</p></details>
+      <details><summary>Does it work on my phone? <svg aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Yes, in the browser on your phone or computer. Installed on your home screen, it even works offline.</p></details>
+      <details><summary>Does it replace a teacher? <svg aria-hidden="true"><use href="#i-plus"/></svg></summary><p>No. The app helps between lessons, but only a teacher can correct your posture, bellows and fingering.</p></details>
+    </div>
+    <a class="ini-elo ini-faq-mais" href="perguntas-frequentes/" data-local>See all questions <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+  </div>
+  <div class="ini-fecho ini-so-novo">
+    <h2>Your first button is one tap away.</h2>
+    <p>Free, no sign-up.</p>
+    <button type="button" class="btn-vai" id="iniFechoCta">Start the first lesson <svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+  </div>
+  <!-- quem volta: praticar hoje -->
+  <div class="ini-s ini-so-volta" style="padding-top:8px">
+    <div class="ini-s-cab" style="margin-bottom:28px"><h2>Practise today</h2></div>
+    <div class="ini-hoje">
+      <div class="ini-painel">
+        <div class="ini-rep"><img src="../imagens/repetche/avatar.jpg" alt="" width="52" height="52" loading="lazy"><div><b><span translate="no">RepeTCHÊ</span> of the day</b><small><span id="inEcoDia"></span> · <span id="iniEcoFase"></span></small></div></div>
+        <div class="ini-fases" id="iniEcoFases" aria-hidden="true"></div>
+        <button type="button" class="ini-ir" id="iniEcoJogar">Play <svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+      </div>
+      <div class="ini-painel"><h3>Academy</h3><p id="iniAcadNivel"></p><div class="ini-barra"><i id="inAcadBarra"></i></div><div class="ini-barra-t"><span id="inAcadTxt"></span></div><a class="ini-ir" href="#" data-go="academia">Open <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+      <div class="ini-painel"><h3 id="iniRotinaTit"></h3><p id="iniRotinaTxt"></p><a class="ini-ir" href="#" data-go="estudo">Open the routine <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+    </div>
+    <nav class="ini-atalhos" aria-label="Play and practise">
+      <a href="#" data-go="teclado"><b>Free keyboard</b><span>All 71 buttons, with the real sound</span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <a href="#" data-go="melodias"><b>Melodies</b><span>Guided tunes and scales, with sheet music</span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <a href="#" data-go="acordes"><b>Chords</b><span>Where the buttons of each chord are</span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <a href="#" data-go="ritmo"><b>Rhythm</b><span>Marcato, syncopation and 3-3-2</span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <a href="doly-costa/" data-local><b>Who is Doly Costa?</b><span>The bandoneon player who inspired the name</span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </nav>
+  </div>
+  <!-- rodapé: marca, links, o aviso do professor e os idiomas; o texto de apresentação fica em "Sobre o BanDoly" (fechado; o Google continua lendo) -->
+  <footer class="ini-rodape">
+    <div class="ini-pe">
+      <div class="ini-pe-marca"><span class="ini-pe-logo"><img src="../icones/logo-cabecalho.png" alt="" width="30" height="30"><b translate="no">BanDoly</b></span><p>Learn the bandoneon in your browser. In honour of Doly Costa, from Caçapava do Sul.</p></div>
+      <div><p class="ini-pe-tit">Learn</p><ul><li><a href="#" data-go="estudo">My study</a></li><li><a href="#" data-go="academia">Academy</a></li><li><a href="#" data-go="licoes">Lessons</a></li><li><a href="#" data-go="teoria">Theory</a></li></ul></div>
+      <div><p class="ini-pe-tit">Play and practise</p><ul><li><a href="#" data-go="teclado">Keyboard</a></li><li><a href="#" data-go="melodias">Melodies</a></li><li><a href="#" data-go="eco" translate="no">RepeTCHÊ</a></li><li><a href="#" data-go="microfone">Real bandoneon</a></li></ul></div>
+      <div><p class="ini-pe-tit">About</p><ul><li><a href="doly-costa/" data-local>Doly Costa</a></li><li><a href="perguntas-frequentes/" data-local>Frequently asked questions</a></li><li><a href="#" data-go="professor">For teachers</a></li><li><button type="button" class="ini-lnk" data-sugestao>Feedback</button></li></ul></div>
+    </div>
+    <div class="ini-pe-base">
+      <aside class="aviso aviso-curto" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></svg><p><strong>BanDoly is a learning site and will never replace the advice and guidance of a teacher.</strong> Use the app to support your studies and, whenever you can, learn with a bandoneon teacher: they correct your posture, bellows and fingering, things an app cannot see.</p><p class="aviso-linha"><strong>BanDoly does not replace a bandoneon teacher.</strong> <button type="button" class="aviso-ler">Read the notice</button></p></aside>
+      <div class="ini-pe-idiomas" id="iniIdiomas" translate="no"><button type="button" data-lang="pt">Português</button><button type="button" data-lang="es">Español</button><button type="button" data-lang="en">English</button></div>
+    </div>
+    <details class="ini-sobre"><summary>About BanDoly</summary>
     <div class="sobre">
     <div class="card">
       <h2>What you will find in BanDoly</h2>
@@ -201,19 +326,9 @@
       <p class="muted" style="font-size:.85rem;margin-bottom:0">Sound: SoundFont <i>Bandoneon V2.5</i>, by Jörg Bleymehl (recorded on a 1930 ELA bandoneon; GM edit by Mike77154), free to use. You can switch to the synthesized sound in <a href="#" data-go="ajustes">Settings</a>.</p>
       <p class="muted dica">Tip: use headphones. The app works offline and your progress is saved in this browser. In <a href="#" data-go="ajustes">Settings</a> you choose the sound and tuning, and make backups.</p>
     </div>
-    <div class="card faq">
-      <h2>Frequently asked questions</h2>
-    <details><summary>What is the bandoneon?</summary><p>It is the bellows-and-buttons instrument that gives tango its voice. It was created in Germany in the 19th century and became the symbol of the tango of Buenos Aires and Montevideo. It is bisonoric: each button plays one note when opening the bellows and another when closing.</p></details>
-    <details><summary>Do I need a bandoneon to use BanDoly?</summary><p>No. You can learn the button map, reading and rhythms with the virtual keyboard alone, on a computer or a phone. If you have a bandoneon, the app can also listen to you play through the microphone and check the notes.</p></details>
-    <details><summary>Is BanDoly free?</summary><p>Yes. BanDoly is free and needs no sign-up. Your progress is saved in your browser, and you can export a backup in Settings.</p></details>
-      <a class="btn ghost faq-todas" href="perguntas-frequentes/" data-local>See all questions <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
-    </div>
     </div>
     </details>
-    <a href="perguntas-frequentes/" data-local>Frequently asked questions</a>
-    <button type="button" class="in-lnk" data-sugestao>Feedback</button>
-  <aside class="aviso aviso-curto" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></svg><p><strong>BanDoly is a learning site and will never replace the advice and guidance of a teacher.</strong> Use the app to support your studies and, whenever you can, learn with a bandoneon teacher: they correct your posture, bellows and fingering, things an app cannot see.</p><p class="aviso-linha"><strong>BanDoly does not replace a bandoneon teacher.</strong> <button type="button" class="aviso-ler">Read the notice</button></p></aside>
-  </div>
+  </footer>
 </section>
 
 <!-- MEU ESTUDO: o caminho, o "continue de onde parou", os recordes e a rotina (js/trilha.js e js/rotina.js) -->
@@ -1040,6 +1155,7 @@
 <script src="../js/eco.js" defer></script>
 <script src="../js/cascata.js" defer></script>
 <script src="../js/trilha.js" defer></script>
+<script src="../js/inicio.js" defer></script>
 <script src="../js/professor.js" defer></script>
 <script src="../js/teoria-textos.js" defer></script>
 <script src="../js/teoria.js" defer></script>

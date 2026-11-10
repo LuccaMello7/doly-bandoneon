@@ -286,7 +286,7 @@ function textosEmPortugues(){
     const p = n.parentNode;
     if(['SCRIPT','STYLE','TEXTAREA','CODE'].includes(p.nodeName) || p.closest('[translate="no"],#resultado-testes')) continue;
     // nomes próprios (cidades, prêmios, festivais) ficam em português em qualquer idioma
-    const s = n.nodeValue.replace(/\s+/g,' ').trim().replace(/Caçapava do Sul|Simões Lopes Neto|Moenda da Canção|Tafona da Canção Nativa|Santo Antônio da Patrulha|Rádio|RepeTCHÊ/g,'');
+    const s = n.nodeValue.replace(/\s+/g,' ').trim().replace(/Caçapava do Sul|Simões Lopes Neto|Moenda da Canção|Tafona da Canção Nativa|Santo Antônio da Patrulha|Orquestra Sinfônica de Porto Alegre|Rádio|RepeTCHÊ/g,'');
     if(s && PARECE_PT.test(s)) achados.add(s);
   }
   return [...achados];
@@ -750,16 +750,33 @@ teste('botão de começar muda de cor enquanto roda (Melodias e Desafios)', () =
   go('inicio');
 });
 teste('Início: quem chega vê a apresentação; quem já praticou vê "Continuar"', () => {
+  go('inicio');
   const dias = state.progress.days, sec = $('#v-inicio');
   state.progress.days = {}; renderProgress();
   const n = etapasDoAluno().filter(e=>e.feito()).length;
   igual(sec.classList.contains('volta'), n>0, 'sem prática: apresentação');
-  if(!n) ok(getComputedStyle($('.in-topo')).display !== 'none' && getComputedStyle($('.in-volta')).display === 'none', 'só o topo de apresentação aparece');
+  if(!n) ok(getComputedStyle($('.ini-topo')).display !== 'none' && getComputedStyle($('.ini-volta')).display === 'none', 'só o topo de apresentação aparece');
+  ok($$('#iniCaminhoLista .ini-parte').length >= 3 && $$('#iniCaminhoLista li').length === etapasDoAluno().length, 'o caminho mostra todas as etapas do aluno, em partes');
   state.progress.days = {[dayKey()]: {fole:true}}; renderProgress();
-  ok(sec.classList.contains('volta') && getComputedStyle($('.in-topo')).display === 'none', 'praticou: some a apresentação');
-  ok(/^\d+\/\d+$/.test($('#inAnelTxt').textContent) && $('#inContTit').textContent.length > 5, 'anel e próxima etapa preenchidos');
-  ok($('#inEcoDia').textContent.length > 2 && /\d/.test($('#inAcadTxt').textContent), 'música do dia e barra da Academia');
+  ok(sec.classList.contains('volta') && getComputedStyle($('.ini-topo')).display === 'none', 'praticou: some a apresentação');
+  ok(/\d+/.test($('#iniEtapaTxt').textContent) && $('#inContTit').textContent.length > 5, 'próxima etapa preenchida');
+  igual($$('#iniTrilho i').length, etapasDoAluno().length, 'um traço por etapa');
+  igual($$('#iniSemana span').length, 7); ok($('#iniSemana span:last-child').classList.contains('on'), 'hoje praticou');
+  ok($('#inEcoDia').textContent.length > 2 && /\d/.test($('#inAcadTxt').textContent) && /\d/.test($('#iniRotinaTit').textContent), 'música do dia, Academia e rotina');
   state.progress.days = dias; renderProgress();
+});
+teste('Início: o instrumento toca, troca o fole e o teclado do computador toca nele', () => {
+  go('inicio');
+  igual($$('#iniMaoEsq .ini-k').length, state.layout.left.length); igual($$('#iniMaoDir .ini-k').length, state.layout.right.length);
+  const b = state.layout.right.find(x=>x.open!==x.close), it = iniBotoes.find(x=>x.mao==='right' && x.b.id===b.id);
+  igual(it.span.textContent, noteName(b.open), 'abrindo: nome da nota abrindo');
+  iniTocar(it); ok(it.el.classList.contains('on'), 'aceso enquanto toca'); igual($('#iniNota').textContent, noteName(b.open));
+  igual($('#iniFecha').textContent, noteName(b.close), 'o visor mostra as duas notas do botão');
+  iniTrocaFole('close'); igual($('#iniInst').dataset.fole, 'close'); igual($('#iniNota').textContent, noteName(b.close), 'nota segurada passa para o outro lado');
+  iniSoltar(it); ok(!it.el.classList.contains('on'), 'soltou');
+  iniRotular(false); igual(it.span.textContent, noteName(b.close), 'fechando: nome da nota fechando');
+  igual(tecladoVisivel('right'), iniKb.right, 'no Início, o teclado do computador toca o instrumento do topo');
+  iniTrocaFole('open'); iniRotular(false);
 });
 teste('aviso do professor: recolhido mostra só a linha curta, e "Ler o aviso" abre', () => {
   const a = $('#v-inicio .aviso-curto'), antes = a.classList.contains('recolhido');

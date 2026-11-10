@@ -28,7 +28,9 @@ def main():
         sys.exit('Nenhum navegador encontrado. Defina NAVEGADOR com o caminho do Edge ou Chrome.')
     pagina = (RAIZ / 'index.html').read_text(encoding='utf-8')
     sw = (RAIZ / 'sw.js').read_text(encoding='utf-8')
-    faltando = [a for a in re.findall(r'(?:src|href)="((?!https?:|#|data:)[^"]+)"', pagina) if f'"{a}"' not in sw]
+    # o que vem depois do # aponta para um trecho da mesma página (doly-costa/#videos é o arquivo doly-costa/)
+    faltando = sorted({a.split('#')[0] for a in re.findall(r'(?:src|href)="((?!https?:|#|data:)[^"]+)"', pagina)} - {''})
+    faltando = [a for a in faltando if f'"{a}"' not in sw]
     for a in faltando:
         print(f'FALHA  sw.js não guarda "{a}" para uso offline (adicione em ARQUIVOS)')
     # as páginas em espanhol e inglês precisam ser geradas de novo quando o index.html ou o dicionário mudam

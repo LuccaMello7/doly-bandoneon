@@ -44,7 +44,7 @@ function rotuloTecla(cod){
 const teclaDoBotao = (mao, id) => Object.keys(pc.mapa).find(c=>pc.mapa[c].mao===mao && pc.mapa[c].id===id);
 const salvarMapaPc = () => { store.set('mapaPc', pc.mapa); marcarTodas(); renderMapaPc(); };
 // teclado visível de uma mão na aba aberta (Teclado, Melodias, Academia, Desafios, Acordes…)
-const tecladoVisivel = mao => allKeyboards.find(k=>k.hand===mao && k.el && k.el.offsetParent!==null);
+const tecladoVisivel = mao => (currentView==='inicio' && typeof iniKb!=='undefined' ? iniKb[mao] : null) || allKeyboards.find(k=>k.hand===mao && k.el && k.el.offsetParent!==null); // no Início, o instrumento do topo (js/inicio.js)
 
 // a letra da tecla em cada botão (só com o teclado do computador ligado)
 function marcarTeclas(k){
