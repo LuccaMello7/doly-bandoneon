@@ -2,7 +2,7 @@
 // A mensagem pode ir pelo GitHub (abre uma "issue" já preenchida no repositório; pede uma conta gratuita)
 // ou por e-mail (só aparece se CONTATO_EMAIL estiver preenchido). Também dá para copiar o texto.
 // As informações técnicas ajudam a reproduzir um erro; o aluno pode desmarcar.
-const CONTATO_EMAIL = '';
+const CONTATO_EMAIL = 'contato@bandoly.app';
 const REPOSITORIO = 'https://github.com/LuccaMello7/doly-bandoneon';
 const TIPOS_SUGESTAO = {sugestao:'Sugestão', erro:'Erro', elogio:'Elogio'};
 function textoSugestao(){

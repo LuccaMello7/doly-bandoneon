@@ -123,7 +123,7 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
   - Bandoneon real: afinador e calibragem (microfone.js, YIN);
   - Treino de ouvido (ouvido.js) e notas caindo (cascata.js);
   - Teoria (teoria.js, com `pautaSVG`, posição diatônica d = oitava×7 + letra, e textos em teoria-textos.js);
-  - Sugestões (contato.js): abre uma issue preenchida no GitHub. `CONTATO_EMAIL` fica vazio até o dono indicar um endereço.
+  - Sugestões (contato.js): abre uma issue preenchida no GitHub. `CONTATO_EMAIL` = contato@bandoly.app (caixa Microsoft 365 da GoDaddy, testada em 2026-11-10).
   - **Conta opcional** (conta.js, aba `conta` em Perfil; banco em `supabase/banco.sql`):
     - Supabase, projeto `venbupxwqgofwjkhixhc` (São Paulo). No site vai só a chave **publicável** (`sb_publishable_…`); a secreta nunca.
     - Só maiores de 18 anos: a caixa de aceite libera "Entrar com Google" e o link por e-mail (PKCE, volta com `?code=`). O aceite vai para a tabela `progresso`.
@@ -282,7 +282,6 @@ E="/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe"; W=$(cygpath -w
   - foto nítida do Canto de El Choclo;
   - páginas de um método de digitação (ex.: Pedro Maffia), como referência e não como regra;
   - áudio ou vídeo do Doly com autorização;
-  - e-mail para as sugestões;
   - conta no GoatCounter (e então uma nota de privacidade);
   - revisão do es/en por nativos;
   - lista do PageSpeed.
