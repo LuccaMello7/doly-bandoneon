@@ -94,7 +94,6 @@ main{max-width:1150px;margin:0 auto;padding:26px 28px 40px}
 section{display:none} section.active{display:block}
 @keyframes entra{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 h2{color:var(--text);margin-top:0;font-weight:650}
-.hero-title{color:var(--text);margin:0 0 .5em;font-size:1.5em;line-height:1.25;font-weight:650}
 h3{margin-bottom:6px;font-weight:600}
 .card{background:var(--panel);border:0;border-radius:var(--raio);padding:20px 22px;margin-bottom:18px;box-shadow:var(--sombra)}
 .card-tit{font-size:1.15rem;margin:0 0 12px}
@@ -115,53 +114,23 @@ h3{margin-bottom:6px;font-weight:600}
 select,input[type=range],input[type=checkbox]{accent-color:var(--gold)}
 select,input[type=number],input[type=text],textarea{background:var(--panel2);color:var(--text);border:1px solid var(--line);padding:7px 10px;border-radius:10px;font:inherit}
 kbd{font-family:Onest,sans-serif}
-.ola{font-size:1.6rem;font-weight:650}
 .streak{display:inline-flex;align-items:center;gap:6px;background:#f08a4b22;color:#ffb27f;padding:8px 14px;border-radius:999px;font-weight:600;white-space:nowrap}
 .streak.vazio{background:#ffffff0d;white-space:normal;font-size:.9rem;max-width:260px}
-.hero{position:relative;overflow:hidden;border-radius:26px;padding:32px 36px;background:linear-gradient(135deg,#1e4c86 0%,#173a66 45%,#2a2a64 100%);display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:20px;align-items:center;margin-bottom:18px;box-shadow:0 10px 30px #0004}
-.hero::after{content:"";position:absolute;right:-90px;top:-90px;width:340px;height:340px;border-radius:50%;background:radial-gradient(#b997ff40,transparent 70%);pointer-events:none}
-.kicker{font-weight:650;letter-spacing:.12em;color:var(--gold);text-transform:uppercase;font-size:.78rem;margin:0 0 6px}
-.hero .hero-title{font-size:2.1rem;line-height:1.12;margin:0 0 10px}
-.hero p{color:#d5def0;max-width:56ch}
-.hero-cta{margin:16px 0 0}
-.bando{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;height:170px}
-.bando .caixa{width:74px;height:120px;border-radius:14px;background:linear-gradient(160deg,#2b2b2b,#111);border:3px solid var(--gold);display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:14px 10px;align-content:center;flex:none}
-.bando .caixa i{width:12px;height:12px;border-radius:50%;background:#f3ead6;justify-self:center}
-.bando .caixa i.a{background:var(--open);box-shadow:0 0 10px var(--open)}
-.bando .caixa i.f{background:var(--close);box-shadow:0 0 10px var(--close)}
-.bando .fole{height:104px;width:110px;flex:none;background:repeating-linear-gradient(90deg,#6d1f24 0 9px,#f3ead6 9px 11px,#4a1418 11px 20px);border-top:4px solid var(--gold);border-bottom:4px solid var(--gold);animation:fole 3.2s ease-in-out infinite}
 @keyframes fole{0%,100%{width:56px}50%{width:130px}}
 .continuar{display:flex;align-items:center;justify-content:space-between;gap:16px;border:1px solid #b997ff55}
-.continuar .kicker{margin-bottom:2px}
-.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-bottom:18px}
 .anel{width:62px!important;height:62px!important;flex:none;transform:rotate(-90deg)}
 .anel circle{fill:none;stroke-width:4;stroke-linecap:round}
 .anel .fundo{stroke:#ffffff14}
 .anel .valor{stroke:var(--gold);stroke-dasharray:0 100;transition:stroke-dasharray .6s ease}
 .stat-ic{width:62px;height:62px;flex:none;border-radius:50%;display:grid;place-items:center;background:#ef6f9a22;color:var(--pink)}
 .stat-ic svg[aria-hidden]{width:28px;height:28px}
-.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:18px}
-.tile{border-radius:20px;padding:18px;color:#fff;text-decoration:none;display:flex;flex-direction:column;gap:4px;transition:transform .15s,box-shadow .15s}
-.tile:hover{transform:translateY(-3px);box-shadow:0 10px 24px #0005}
-.tile-ic{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:#ffffff26;margin-bottom:4px}
-.tile-ic svg[aria-hidden]{width:24px;height:24px}
-.tile b{font-size:1.05rem}.tile small{opacity:.88}
 .t-academia{background:linear-gradient(140deg,#3b6fd6,#2a4fa8)} .t-teclado{background:linear-gradient(140deg,#d98a2b,#b0611c)}
 .t-melodias{background:linear-gradient(140deg,#7a5be0,#5a3fb8)} .t-ritmo{background:linear-gradient(140deg,#2aa57a,#1c7a5a)}
 .dica{font-size:.9rem;text-align:center;margin:4px 0 22px}
 .feat-ic{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:#b997ff1f;color:var(--gold);margin-bottom:8px}
 .feat-ic svg[aria-hidden]{width:22px;height:22px}
 .passos{padding-left:22px}.passos li{margin:6px 0}.passos li::marker{color:var(--gold);font-weight:650}
-@media (max-width:999px){
-  .hero{grid-template-columns:minmax(0,1fr);padding:24px 22px}
-  .hero .bando{order:-1;height:120px}
-  .bando .caixa{width:56px;height:90px;padding:8px 6px;gap:4px}.bando .caixa i{width:9px;height:9px}
-  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
-}
 @media (max-width:520px){
-  .hero .hero-title{font-size:1.6rem}
-  .stats{gap:10px}
   .anel{width:48px!important;height:48px!important}.stat-ic{width:48px;height:48px}
   .continuar{flex-direction:column;align-items:stretch}
 }
@@ -272,8 +241,6 @@ figcaption{color:var(--muted);font-size:.85rem;margin-top:6px}
 .ac-instrutor{position:sticky;top:20px}
 .ac-instrutor h3{margin-top:0}
 .ac-nota{font-size:2.6rem;font-weight:650;color:var(--gold2);line-height:1.05;letter-spacing:-.01em}
-.ac-linha{margin:4px 0;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.ac-linha .muted{min-width:60px}
 .ac-instrutor hr{border:0;border-top:1px solid var(--line);margin:8px 0}
 .ac-validacao{font-size:.8rem;margin-bottom:0}
 .ac-opcoes{font-size:.85rem}
@@ -297,7 +264,6 @@ figcaption{color:var(--muted);font-size:.85rem;margin-top:6px}
 .ac-modos{display:inline-flex;border:1px solid var(--line);border-radius:22px;overflow:hidden}
 .ac-modos button{background:transparent;border:0;color:var(--text);padding:8px 18px;cursor:pointer;font:inherit}
 .ac-modos button.on{background:var(--gold);color:var(--navy);font-weight:700}
-.ac-controles{margin-top:8px}
 .ac-num-in{width:56px}
 .ac-relatorio:not(:empty){margin-top:14px;border-top:1px solid var(--line);padding-top:6px}
 .ac-relatorio li{margin:4px 0}
@@ -308,7 +274,6 @@ figcaption{color:var(--muted);font-size:.85rem;margin-top:6px}
 }
 @media (max-width:700px){
   .ac-instrutor .ac-nota{font-size:1.5rem}
-  .ac-instrutor:not(.grande) .ac-linha{display:inline-flex;margin-right:12px}
   .ac-instrutor h3{display:none}
 }
 /* Celular */
@@ -392,20 +357,12 @@ kbd{background:var(--panel2);border:1px solid var(--line);border-radius:4px;padd
 .step.now{outline:3px solid var(--gold);transform:scale(1.05)}
 .pad{width:100%;height:110px;font:650 1.3rem Onest,sans-serif;letter-spacing:.08em;border-radius:22px;border:0;background:linear-gradient(135deg,#1e4c86,#2a2a64);color:var(--gold2);cursor:pointer;box-shadow:0 8px 20px #0005;transition:transform .06s}
 .pad:active{background:var(--gold);color:#1b1404;transform:scale(.98)}
-
-/* Apresentação na tela inicial */
-.hero-cta{margin:4px 0 14px}
 .feats{margin:6px 0 14px}
 .feat{background:var(--panel2);border-radius:18px;padding:16px 18px;display:flex;flex-direction:column}
 .feat h3{margin:0 0 6px;color:var(--cream)}
 .feat p{margin:0 0 10px;color:var(--muted);font-size:.93rem;flex:1}
 .feat a{color:var(--gold);font-weight:600;text-decoration:none}
 .feat a:hover{text-decoration:underline}
-.faq details{border-top:1px solid var(--line);padding:10px 2px}
-.faq details:last-child{border-bottom:1px solid var(--line)}
-.faq summary{cursor:pointer;font-weight:600;color:var(--text)}
-.faq summary::marker{color:var(--gold)}
-.faq details p{margin:8px 0 2px;color:var(--muted)}
 /* Sugestão de idioma (página em português aberta num navegador em outro idioma) */
 .lang-hint{display:flex;flex-wrap:wrap;align-items:center;gap:10px;background:var(--soft);border:1px solid var(--gold);border-radius:10px;padding:10px 14px;margin-bottom:16px}
 .lang-hint span{flex:1;min-width:180px}
@@ -499,7 +456,6 @@ svg.filete[aria-hidden]{width:120px;height:40px;color:var(--gold)}
 .trilha-card.destaque{animation:destaque 1.6s ease}
 @keyframes destaque{30%{box-shadow:0 0 0 4px var(--gold),var(--sombra)}}
 .trilha-topo{display:flex;justify-content:space-between;align-items:flex-start;gap:14px}
-.trilha-topo .kicker{display:flex;align-items:center;gap:6px}
 .trilha-topo .card-tit{margin-bottom:2px}
 .trilha-topo p{margin:0}
 .trilha-prog{display:flex;flex-direction:column;align-items:center;justify-content:center;width:78px;height:78px;flex:none;border-radius:50%;position:relative;background:conic-gradient(var(--gold) calc(var(--feito,0)*360deg),#ffffff14 0)}
@@ -802,45 +758,13 @@ html.tk-cheia-on,html.tk-cheia-on body{overflow:hidden}
 @keyframes lupaEntra{from{opacity:0}}
 @keyframes lupaZoom{from{transform:scale(.92);opacity:0}}
 @media (max-width:700px){.doly-capa{max-width:230px;margin:0 auto 14px}.doly-hero{min-height:0;text-align:left}}
-
-/* ================== Etapa 4: tela Início enxuta e com movimento ================== */
-.hero-novo{grid-template-columns:minmax(0,1fr) 340px;padding:34px 38px;min-height:330px;isolation:isolate}
-/* fundo que se move devagar (aurora) */
-.hero-novo::before{content:"";position:absolute;inset:-40%;z-index:-1;pointer-events:none;
-  background:radial-gradient(35% 40% at 30% 40%,#4f9cf055,transparent 70%),radial-gradient(30% 35% at 70% 62%,#8b7cf644,transparent 70%),radial-gradient(25% 30% at 62% 20%,#b997ff33,transparent 70%);
-  animation:aurora 16s ease-in-out infinite alternate}
 @keyframes aurora{50%{transform:translate(6%,-4%) rotate(8deg)}100%{transform:translate(-5%,5%) rotate(-6deg)}}
-.hero-ola{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
-.hero-ola .ola{font-size:1.15rem;font-weight:650;color:#fff}
-.hero-ola .streak{padding:5px 12px;font-size:.85rem}
-.hero-ola .streak.vazio{background:#ffffff14;color:#d5def0;max-width:none}
-.hero-novo .hero-title{font-size:clamp(1.9rem,3.6vw,2.8rem);animation:sobeNitido .9s .1s cubic-bezier(.2,.8,.2,1) both}
 @keyframes sobeNitido{from{opacity:0;transform:translateY(18px);filter:blur(6px)}}
-.hero-sub{font-size:1.1rem;color:#d5def0!important;margin:0 0 4px;animation:sobe .8s .35s cubic-bezier(.2,.8,.2,1) both}
-.hero-novo .hero-cta{margin:16px 0 0;animation:sobe .8s .5s cubic-bezier(.2,.8,.2,1) both}
 @keyframes sobe{from{opacity:0;transform:translateY(14px)}}
 /* botão principal: um brilho passa de tempos em tempos */
 .btn-grande{position:relative;overflow:hidden;padding:13px 22px;font-size:1.02rem;box-shadow:0 8px 22px #b997ff40}
-@keyframes brilhoBtn{0%,70%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
 .btn-grande svg{transition:transform .3s}
 @media (hover:hover){.btn-grande:hover svg{transform:translateX(3px) scale(1.12)}}
-/* o bandoneon desenhado flutua, os botões acendem (js/movimento.js) e as notas sobem do fole */
-.hero-novo .bando{height:210px;animation:flutua 6s ease-in-out infinite}
-@keyframes flutua{50%{transform:translateY(-8px)}}
-.hero-novo .bando .caixa{width:84px;height:136px}
-.hero-novo .bando .fole{height:118px}
-.bando .caixa i{transition:background .25s,box-shadow .25s}
-.bando .caixa i.on{background:var(--gold2);box-shadow:0 0 12px var(--gold)}
-.bando .voa{position:absolute;inset:0;pointer-events:none}
-.bando .voa i{position:absolute;bottom:52%;left:50%;color:var(--gold2);font:normal 650 24px/1 serif;opacity:0;animation:notaSobe 5s ease-out infinite}
-.bando .voa i::before{content:"♪"}
-.bando .voa i:nth-child(2n)::before{content:"♫"}
-.bando .voa i:nth-child(1){--dx:-30px}
-.bando .voa i:nth-child(2){animation-delay:1s;left:44%;--dx:24px}
-.bando .voa i:nth-child(3){animation-delay:2s;left:56%;--dx:-14px}
-.bando .voa i:nth-child(4){animation-delay:3s;left:47%;--dx:34px}
-.bando .voa i:nth-child(5){animation-delay:4s;left:53%;--dx:-26px}
-@keyframes notaSobe{0%{opacity:0;transform:translate(0,0) scale(.6)}15%{opacity:1}100%{opacity:0;transform:translate(var(--dx,20px),-130px) rotate(18deg) scale(1.15)}}
 /* aviso do professor: o mesmo texto, mais compacto */
 .aviso-curto{padding:11px 16px;border-width:1px;margin-bottom:18px;font-size:.9rem}
 .aviso-curto strong{display:inline;font-size:.93rem;margin:0}
@@ -860,10 +784,6 @@ html.tk-cheia-on,html.tk-cheia-on body{overflow:hidden}
 .mini-stat:nth-child(2) .valor{stroke:var(--open)} .mini-stat:nth-child(3) .valor{stroke:var(--violet)}
 .mini-stat:nth-child(4) .valor{stroke:var(--green)} .mini-stat:nth-child(6) .valor{stroke:var(--close)}
 .mini-stat .anel .valor{transition:stroke-dasharray 1.1s cubic-bezier(.2,.8,.2,1)}
-/* atalhos: um brilho atravessa e o ícone pula ao passar o mouse */
-.tile{position:relative;overflow:hidden}
-.tile::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 35%,#ffffff40 50%,transparent 65%);transform:translateX(-120%);transition:transform .7s;pointer-events:none}
-@media (hover:hover){.tile:hover::after{transform:translateX(120%)}.tile:hover .tile-ic{animation:pula .5s}}
 @keyframes pula{40%{transform:translateY(-5px) rotate(-8deg)}}
 .sobre{margin-top:34px}
 /* blocos que aparecem ao rolar (js/movimento.js) */
@@ -874,9 +794,6 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
 .trilha-card.visto .etapa{animation:sobe .5s cubic-bezier(.2,.8,.2,1) both}
 .trilha-card.visto .etapa:nth-child(2){animation-delay:.08s}.trilha-card.visto .etapa:nth-child(3){animation-delay:.16s}.trilha-card.visto .etapa:nth-child(4){animation-delay:.24s}
 @media (max-width:999px){
-  .hero-novo{grid-template-columns:minmax(0,1fr);min-height:0;padding:24px 22px}
-  .hero-novo .bando{height:140px}
-  .hero-novo .bando .caixa{width:60px;height:96px}.hero-novo .bando .fole{height:84px}
   .inicio-grade{grid-template-columns:minmax(0,1fr)}
 }
 /* a página do Doly usa <section> para os blocos: elas não são abas do app */
@@ -936,7 +853,6 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
 .faq-fim .row{justify-content:center}
 .mov .faq-fim{opacity:0;transform:translateY(20px);transition:opacity .7s,transform .7s cubic-bezier(.2,.8,.2,1)}
 .mov .faq-fim.visto{opacity:1;transform:none}
-.faq-todas{margin-top:12px}
 /* Meu estudo */
 .t-estudo{background:linear-gradient(140deg,#b997ff,#c2508a)}
 
@@ -1019,7 +935,6 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
 /* ================== Para professores (etapa 2): passo a passo com prévia ================== */
 .pr-hero{position:relative;overflow:hidden;isolation:isolate;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:24px;align-items:center;padding:30px 34px;border-radius:26px;margin-bottom:18px;background:linear-gradient(135deg,#2a3f8a,#3b2a6e 55%,#5a2a5e);box-shadow:0 10px 30px #0004}
 .pr-hero::before{content:"";position:absolute;inset:-40%;z-index:-1;background:radial-gradient(30% 40% at 25% 40%,#8b7cf655,transparent 70%),radial-gradient(28% 36% at 75% 60%,#b997ff33,transparent 70%);animation:aurora 16s ease-in-out infinite alternate}
-.pr-hero .kicker{display:flex;align-items:center;gap:6px;color:var(--gold2)}
 .pr-hero-tit{font-size:clamp(1.6rem,3vw,2.3rem);line-height:1.12;margin:4px 0 10px;animation:sobeNitido .8s cubic-bezier(.2,.8,.2,1) both}
 .pr-hero p{color:#d5def0;max-width:60ch}
 .pr-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
@@ -1080,7 +995,6 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
 /* lado: prévia, link e histórico (fica parado enquanto você rola os passos) */
 .pr-lado{display:flex;flex-direction:column;gap:18px;position:sticky;top:20px}
 .pr-previa{border:1px solid #b997ff40}
-.pr-previa .kicker{display:flex;align-items:center;gap:6px}
 .pr-previa-aviso{display:flex;flex-direction:column;gap:10px;border:1px solid var(--gold);border-radius:18px;padding:14px;background:linear-gradient(140deg,#3a2a0e,var(--panel2) 70%);margin:8px 0 12px}
 .pr-previa-aviso.muda{animation:pulsoPrevia .45s ease}
 @keyframes pulsoPrevia{40%{box-shadow:0 0 0 4px #b997ff44;transform:scale(1.01)}}
@@ -1227,7 +1141,7 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
 .te-conteudo.troca>*{animation:sobe .45s cubic-bezier(.2,.8,.2,1) backwards}
 .te-conteudo.troca>*:nth-child(2){animation-delay:.05s}.te-conteudo.troca>*:nth-child(3){animation-delay:.1s}.te-conteudo.troca>*:nth-child(4){animation-delay:.15s}
 .te-cab{display:flex;align-items:center;gap:14px;margin-bottom:6px}
-.te-cab h3{margin:0;font-size:1.4rem}.te-cab .kicker{margin:0}
+.te-cab h3{margin:0;font-size:1.4rem}
 .te-texto p{line-height:1.65;color:#d5def0}
 .te-widget{background:#ffffff08;border-radius:18px;padding:14px;margin:14px 0}
 .te-dica{margin:10px 0 0;font-size:.88rem}
@@ -1344,18 +1258,6 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
 .t-eco{background:linear-gradient(140deg,#1fb5c9,#137a9a)}
 .pg-ic.t-eco svg{animation:ecoIcone 2.4s ease-in-out infinite}
 @keyframes ecoIcone{0%,100%{transform:none}50%{transform:scale(1.1)}}
-/* cartão largo na tela Início */
-.tile-larga{grid-column:1/-1;flex-direction:row;align-items:center;gap:16px;position:relative;overflow:hidden}
-.tile-larga .tile-ic{margin:0;flex:none}
-.tile-txt{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0;position:relative;z-index:1}
-.tile-novo{display:inline-block;margin-left:6px;padding:1px 8px;border-radius:999px;background:var(--gold);color:#1b1404;font-size:.7rem;font-weight:650;letter-spacing:.06em;text-transform:uppercase;vertical-align:2px;animation:ecoNovo 2s ease-in-out infinite}
-@keyframes ecoNovo{0%,100%{box-shadow:0 0 0 0 #b997ff88}50%{box-shadow:0 0 0 6px #b997ff00}}
-.tile-pontos{display:flex;align-items:flex-end;gap:6px;height:36px;flex:none}
-.tile-pontos i{width:10px;height:10px;border-radius:50%;background:#ffffffd9;animation:ecoOnda 1.6s ease-in-out infinite;animation-delay:calc(var(--n,0)*.12s)}
-.tile-pontos i:nth-child(1){--n:0}.tile-pontos i:nth-child(2){--n:1}.tile-pontos i:nth-child(3){--n:2}.tile-pontos i:nth-child(4){--n:3}
-.tile-pontos i:nth-child(5){--n:4}.tile-pontos i:nth-child(6){--n:5}.tile-pontos i:nth-child(7){--n:6}.tile-pontos i:nth-child(8){--n:7}
-@keyframes ecoOnda{0%,100%{transform:translateY(0);opacity:.5}40%{transform:translateY(-18px);opacity:1}}
-@media (max-width:700px){.tile-pontos{display:none}}
 
 /* escolher a música */
 .eco-musicas{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr));gap:12px;margin:6px 0 16px}
@@ -1484,9 +1386,8 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
   .eco-musica{padding:10px 12px}
 }
 /* RepeTCHÊ: o gaúcho animado (vídeos em imagens/repetche/: o curto diz "Muy bueno!", o do fim vai do começo até a fala) */
-.pg-av,.tile-av{overflow:hidden;padding:0}
+.pg-av{overflow:hidden;padding:0}
 .gaucho-av{width:100%;height:100%;object-fit:cover;display:block}
-.tile-larga .tile-av{width:56px;height:56px;border-radius:50%;border:3px solid #ffffffb0;box-shadow:0 6px 16px #0005}
 .pg-av{border-radius:50%;border:3px solid var(--gold)}
 .pg-ic.t-eco.pg-av img{animation:none}
 .gaucho{position:absolute;right:14px;bottom:0;z-index:6;display:flex;align-items:flex-start;gap:6px;pointer-events:none;transform:translateY(115%)}
@@ -1520,7 +1421,7 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
 .sem-mov .gaucho.aparece{transform:none}
 .sem-mov .gaucho.aparece .gaucho-balao{opacity:1;transform:none}
 /* sem movimento: tudo parado, a informação continua igual */
-.sem-mov .eco *,.sem-mov .tile-larga *,.sem-mov .eco-faixa{animation:none!important}
+.sem-mov .eco *,.sem-mov .eco-faixa{animation:none!important}
 
 /* Instrutor da Academia: "Agora" grande, "Próximo" num cartão tracejado, dicas discretas */
 .ac-rotulo{display:block;font-size:.7rem;font-weight:650;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
@@ -1611,8 +1512,6 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
   background:linear-gradient(120deg,#1a4f63,#16354f);border:1px solid #5fd6e655;box-shadow:0 10px 24px #0006;animation:ecoCarta .5s cubic-bezier(.2,.8,.2,1) backwards}
 .eco-dia.feita{background:linear-gradient(120deg,#173f37,#16354f);border-color:#3ccf8e66}
 .eco-dia-txt{flex:1 1 200px;display:flex;flex-direction:column;gap:2px;min-width:0}
-.eco-dia-kicker{font-size:.72rem;font-weight:650;letter-spacing:.1em;text-transform:uppercase;color:#5fd6e6}
-.eco-dia.feita .eco-dia-kicker{color:var(--green)}
 .eco-dia-txt b{font-size:1.15rem}
 .eco-dia-seq{display:flex;align-items:center;gap:4px;padding:6px 12px;border-radius:999px;background:#ffffff10;color:var(--muted)}
 .eco-dia-seq svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2}
