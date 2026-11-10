@@ -2160,6 +2160,35 @@ button.dirpill:focus-visible{outline:2px solid var(--lavanda)}
 .pr-previa-aviso .tarefa-ic,.tarefa-aviso .tarefa-ic{background:rgba(185,151,255,.16);color:var(--lavanda)}
 .tarefa-aviso{background:var(--ameixa-2);border:1px solid rgba(185,151,255,.55)}
 
+/* ===== Páginas abertas para o Google (Doly, Perguntas, Privacidade, Lições, Teoria) ===== */
+/* o cabeçalho igual ao do app: marca, idiomas em texto e "Abrir o app" à direita */
+body:not(.app-shell)>header{flex-wrap:nowrap;gap:16px;height:64px;padding:0 max(20px,calc(50% - 575px))}
+body:not(.app-shell)>header .brand img{width:32px;height:32px;border-radius:9px}
+body:not(.app-shell)>header .brand-name{font-size:1.2rem;letter-spacing:-.02em}
+body:not(.app-shell)>header .brand-sub{display:none}
+body:not(.app-shell)>header .langs{order:2;margin-left:auto;gap:2px}
+body:not(.app-shell)>header nav{order:3}
+body:not(.app-shell)>header nav .btn{min-height:38px;padding:8px 16px;font-size:14px}
+body:not(.app-shell)>header nav .btn{white-space:nowrap}
+@media (max-width:480px){body:not(.app-shell)>header{gap:10px}body:not(.app-shell)>header nav .btn{padding:8px 11px;font-size:13px}body:not(.app-shell)>header .langs a{padding:6px 5px}}
+.langs a{border:0;opacity:1;padding:6px 8px;border-radius:8px;color:var(--cinza);font:500 13px Onest,system-ui,sans-serif;text-decoration:none}
+.langs a.on{color:var(--osso);border:0}
+@media (hover:hover){.langs a:hover{color:var(--osso)}}
+/* sem luzes antigas, sem fileteado sob os títulos e sem pontos de interrogação flutuando */
+.doly-hero::before,.faq-topo::before{display:none}
+.doly-hero h1,.faq-topo h1{color:var(--osso);font-weight:650;letter-spacing:-.035em}
+.doly-tit{padding-bottom:0;background:none;font-weight:600;letter-spacing:-.025em}
+.mov .doly-tit,.mov .doly-tit.visto{background:none}
+.faq-bolhas{display:none}
+.faq-fim{background:var(--ameixa-2);box-shadow:inset 0 0 0 1px var(--borda)}
+.faq-item{background:var(--ameixa-2);box-shadow:inset 0 0 0 1px var(--borda)}
+.faq-item[open]{border-left-color:transparent;background:var(--ameixa-2);box-shadow:inset 0 0 0 1px rgba(185,151,255,.45)}
+.faq-item summary::after{border-color:var(--cinza-2)}
+.faq-cats button{background:transparent;box-shadow:inset 0 0 0 1px var(--borda-2);font-weight:500}
+.faq-cats button.on{background:var(--osso);color:var(--ameixa);box-shadow:none}
+.faq-busca{background:var(--ameixa-2);border:0;box-shadow:inset 0 0 0 1px var(--borda-2)}
+.faq-busca:focus-within{box-shadow:inset 0 0 0 1px var(--lavanda);transform:none}
+
 /* ===== Página de Privacidade (privacidade/) ===== */
 main.priv-pagina{max-width:760px}
 .priv-topo{padding:48px 0 28px}

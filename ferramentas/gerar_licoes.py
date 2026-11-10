@@ -169,7 +169,7 @@ def bandeiras(caminhos, cod, raiz):
         destino = raiz + caminhos[c]
         on = ' class="on"' if c == cod else ''
         links.append(f'<a href="{destino}" data-local{on} hreflang="{LANGS[c]}" title="{nome}" aria-label="{nome}">'
-                     f'<img src="{raiz}icones/bandeiras/{img}" alt="" width="30" height="20"></a>')
+                     f'{c.upper()}</a>')
     return f'<div class="langs" role="group" aria-label="Idioma / Language" translate="no">{"".join(links)}</div>'
 
 

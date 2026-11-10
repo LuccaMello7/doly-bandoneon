@@ -112,7 +112,7 @@ def bandeiras(cod, sub):
         href = './' if l == cod else raiz + ('' if l == 'pt' else l + '/') + sub
         on = ' class="on"' if l == cod else ''
         links.append(f'<a href="{href}" data-local{on} hreflang="{hl}" title="{nome}" aria-label="{nome}">'
-                     f'<img src="{raiz}icones/bandeiras/{img}" alt="" width="30" height="20"></a>')
+                     f'{l.upper()}</a>')
     return ('<!--bandeiras--><div class="langs" role="group" aria-label="Idioma / Language" translate="no">'
             + ''.join(links) + '</div><!--/bandeiras-->')
 
