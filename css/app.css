@@ -2162,3 +2162,19 @@ main.priv-pagina{max-width:760px}
   .feat:hover .feat-ic{background:rgba(185,151,255,.14);color:var(--lavanda)}
   .feat:hover h3{color:var(--osso)}
 }
+
+/* ===== Conta (opcional): entrar com Google ou link por e-mail ===== */
+#contaAba.desligada{display:none!important}
+.conta-card{max-width:640px}
+.conta-aceite{display:flex;align-items:flex-start;gap:10px;margin:18px 0 6px;color:var(--osso);cursor:pointer}
+.conta-aceite input{margin-top:4px;width:18px;height:18px;flex:none}
+.conta-menor{font-size:.88rem;margin:0 0 18px 28px}
+.conta-opcoes{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+.conta-g{width:18px!important;height:18px!important}
+.conta-ou{margin:4px 0 0;color:var(--cinza);font-size:.9rem}
+.conta-email{display:flex;gap:8px;width:100%;flex-wrap:wrap}
+.conta-email input{flex:1 1 220px;min-width:0;background:var(--ameixa);color:var(--osso);border:0;box-shadow:inset 0 0 0 1px var(--borda-2);border-radius:12px;padding:10px 14px;font:inherit}
+.conta-email input:focus{outline:2px solid var(--lavanda);outline-offset:1px}
+.conta-quem{margin:4px 0}
+#contaMsg{font-size:.95rem;margin:16px 0 0}
+#contaMsg:empty{display:none}

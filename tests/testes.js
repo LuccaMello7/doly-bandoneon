@@ -292,7 +292,7 @@ function textosEmPortugues(){
   return [...achados];
 }
 async function percorrerApp(){
-  for(const v of ['inicio','estudo','teoria','teclado','desafios','melodias','acordes','eco','ritmo','ajustes','academia','microfone','perfil','professor']){ go(v); await esperar(); }
+  for(const v of ['inicio','estudo','teoria','teclado','desafios','melodias','acordes','eco','ritmo','ajustes','academia','microfone','perfil','professor','conta']){ go(v); await esperar(); }
   // Eco: a faixa, o placar e a tela do fim passam pela tradução
   { const antes = state.progress.eco[eco.id]; go('eco'); ecoComecar(); await esperar(); ecoLimpar(); ecoRodada(); await esperar(); ecoLimpar();
     ecoOuvir(); await esperar(); ecoLimpar(); ecoSuaVez(); await esperar(); ecoRodadaFeita(); await esperar(); ecoLimpar(); ecoFim(); await esperar();
@@ -301,6 +301,7 @@ async function percorrerApp(){
   abrirSugestao(); await esperar(); $('#sugDialog').close(); compartilhar(t('Relatório do BanDoly'), 'x'); await esperar(); $('#partilha').close();
   store.set('tarefa', {ex:'n3-escada', modo:'praticar', vel:70, prof:'', msg:''}); renderTarefa(); await esperar(); store.set('tarefa', null); renderTarefa();
   $('#prGerar').click(); await esperar();
+  contaUsuario = {id:'teste', email:'aluno@exemplo.com'}; contaUltima = new Date(); renderConta(); await esperar(); contaUsuario = null; contaUltima = null; renderConta();
   abrirBoasVindas(); await esperar(); $('#boasVindas').close(); trilhaAberta = true; renderTrilha(); await esperar(); trilhaAberta = false;
   mcMostrar(69, 4, 0.1); await esperar(); mcMostrar(70, -30, 0.1); await esperar();
   avisar('<b>Conquista nova: Bisonoro</b>'); await esperar();
@@ -810,4 +811,34 @@ teste('RepeTCHÊ: suas músicas, música do dia e nota ouvida pelo microfone', (
   ok(state.progress.ecoDias[dayKey()] && ecoSequenciaDias() >= 1 && !$('#ecoDiaFeita').hidden, 'dia marcado e aviso no fim');
   state.progress.ecoDias = dias; if(prog) state.progress.eco[ecoDoDia()] = prog; else delete state.progress.eco[ecoDoDia()];
   store.set('melodies', salvas); saveProgress(); ecoParar(); go('inicio');
+});
+teste('Conta: juntar dois aparelhos não perde nada, e o que é do aparelho não viaja', () => {
+  const a = {lessons:{0:true}, find:6, days:{'2026-11-01':{fole:true}}, btnStats:{x:{ok:3, err:1}}, insignias:{'primeiro-dia':'2026-11-01'}};
+  const b = {lessons:{1:true}, find:9, days:{'2026-11-02':{licao:true}}, btnStats:{x:{ok:1, err:4}}, insignias:{'primeiro-dia':'2026-10-30', bisonoro:'2026-11-02'}};
+  const j = juntarProgresso(a, b);
+  ok(j.lessons[0] && j.lessons[1], 'lições dos dois aparelhos');
+  igual(j.find, 9, 'fica o maior recorde');
+  ok(j.days['2026-11-01'] && j.days['2026-11-02'], 'dias de prática somados');
+  igual(JSON.stringify(j.btnStats.x), JSON.stringify({ok:3, err:4}), 'contagens ficam com o maior');
+  igual(j.insignias['primeiro-dia'], '2026-11-01', 'data da insígnia: a deste aparelho');
+  ok(j.insignias.bisonoro, 'insígnia ganha no outro aparelho entra');
+  const tudo = juntarTudo({progress:a, melodies:[{id:'m1', text:'a'}], volume:0.5, pcLigado:true},
+                          {progress:b, melodies:[{id:'m1', text:'velha'}, {id:'m2', text:'b'}], volume:0.9, names:'en', midiCC:{x:1}});
+  igual(tudo.melodies.map(m=>m.id).join(','), 'm1,m2', 'melodia criada no outro aparelho entra, sem repetir');
+  igual(tudo.melodies[0].text, 'a', 'a mesma melodia: fica a deste aparelho');
+  igual(tudo.volume, 0.5, 'ajuste simples: vale o deste aparelho');
+  igual(tudo.names, 'en', 'ajuste que só existe na nuvem entra');
+  ok(!('pcLigado' in tudo) && !('midiCC' in tudo), 'teclado do computador e MIDI não viajam');
+});
+teste('Conta: a aba mostra entrar (com o aceite dos 18 anos) ou a conta conectada', () => {
+  go('conta');
+  ok(!$('#contaFora').hidden && $('#contaDentro').hidden && $('#contaDados').hidden, 'sem login: só o cartão de entrar');
+  ok($('#contaGoogle').disabled && $('#contaEnviar').disabled, 'botões travados até aceitar');
+  $('#contaAceite').checked = true; $('#contaAceite').onchange();
+  ok(!$('#contaGoogle').disabled && !$('#contaEnviar').disabled, 'aceitou: botões liberados');
+  $('#contaAceite').checked = false; $('#contaAceite').onchange();
+  contaUsuario = {id:'teste', email:'aluno@exemplo.com'}; renderConta();
+  ok($('#contaFora').hidden && !$('#contaDentro').hidden && !$('#contaDados').hidden, 'com login: conta e dados');
+  igual($('#contaQuem').textContent, 'aluno@exemplo.com', 'mostra o e-mail');
+  contaUsuario = null; renderConta(); go('inicio');
 });

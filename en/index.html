@@ -130,6 +130,7 @@
   <button type="button" role="tab" data-area="perfil" data-v="perfil"><svg aria-hidden="true"><use href="#i-trophy"/></svg>Achievements</button>
   <button type="button" role="tab" data-area="perfil" data-v="professor"><svg aria-hidden="true"><use href="#i-cap"/></svg>For teachers</button>
   <button type="button" role="tab" data-area="perfil" data-v="ajustes"><svg aria-hidden="true"><use href="#i-gear"/></svg>Settings</button>
+  <button type="button" role="tab" data-area="perfil" data-v="conta" id="contaAba"><svg aria-hidden="true"><use href="#i-user"/></svg>Account</button>
 </div>
 <!-- INÍCIO -->
 <section id="v-inicio" class="active">
@@ -303,7 +304,7 @@
       <div class="ini-pe-marca"><span class="ini-pe-logo"><img src="../icones/logo-cabecalho.png" alt="" width="30" height="30"><b translate="no">BanDoly</b></span><p>Learn the bandoneon in your browser. In honour of Doly Costa, from Caçapava do Sul.</p></div>
       <div><p class="ini-pe-tit">Learn</p><ul><li><a href="#" data-go="estudo">My study</a></li><li><a href="#" data-go="academia">Academy</a></li><li><a href="#" data-go="licoes">Lessons</a></li><li><a href="#" data-go="teoria">Theory</a></li></ul></div>
       <div><p class="ini-pe-tit">Play and practise</p><ul><li><a href="#" data-go="teclado">Keyboard</a></li><li><a href="#" data-go="melodias">Melodies</a></li><li><a href="#" data-go="eco" translate="no">RepeTCHÊ</a></li><li><a href="#" data-go="microfone">Real bandoneon</a></li></ul></div>
-      <div><p class="ini-pe-tit">About</p><ul><li><a href="doly-costa/" data-local>Doly Costa</a></li><li><a href="perguntas-frequentes/" data-local>Frequently asked questions</a></li><li><a href="#" data-go="professor">For teachers</a></li><li><a href="privacidade/" data-local>Privacy</a></li><li><button type="button" class="ini-lnk" data-sugestao>Feedback</button></li></ul></div>
+      <div><p class="ini-pe-tit">About</p><ul><li><a href="doly-costa/" data-local>Doly Costa</a></li><li><a href="perguntas-frequentes/" data-local>Frequently asked questions</a></li><li><a href="#" data-go="professor">For teachers</a></li><li><a href="privacidade/" data-local>Privacy</a></li><li><a href="termos/" data-local>Terms of Use</a></li><li><button type="button" class="ini-lnk" data-sugestao>Feedback</button></li></ul></div>
     </div>
     <div class="ini-pe-base">
       <aside class="aviso aviso-curto" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></svg><p><strong>BanDoly is a learning site and will never replace the advice and guidance of a teacher.</strong> Use the app to support your studies and, whenever you can, learn with a bandoneon teacher: they correct your posture, bellows and fingering, things an app cannot see.</p><p class="aviso-linha"><strong>BanDoly does not replace a bandoneon teacher.</strong> <button type="button" class="aviso-ler">Read the notice</button></p></aside>
@@ -1068,6 +1069,32 @@
     <p class="muted" style="margin-bottom:0">The app uses the Rheinische 142 map. If any button on your instrument is different, adjust it in <a href="#" data-go="teclado">Keyboard → Edit layout</a>.</p>
   </div>
 </section>
+<section id="v-conta">
+  <div class="pg-topo"><span class="pg-ic t-conta"><svg aria-hidden="true"><use href="#i-user"/></svg></span><div><h2 class="pg-tit">Account</h2><p class="muted">Optional: keep your progress in the cloud and carry on where you left off on another device.</p></div></div>
+  <div class="card conta-card" id="contaFora">
+    <h3 class="card-tit">Sign in or create an account</h3>
+    <p class="muted">Without an account, BanDoly works fully on this device, as always. With an account, your progress, the melodies you create and your settings are kept in the cloud.</p>
+    <label class="conta-aceite"><input type="checkbox" id="contaAceite"><span>I am 18 or over and I have read the <a href="termos/" data-local>Terms of Use</a> and the <a href="privacidade/" data-local>Privacy Policy</a>.</span></label>
+    <p class="muted conta-menor">Accounts are only for people aged 18 or over. Anyone younger can use the whole app without an account.</p>
+    <div class="conta-opcoes">
+      <button type="button" class="btn" id="contaGoogle" disabled><svg class="conta-g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>Sign in with Google</button>
+      <p class="conta-ou">or get a sign-in link by email, no password needed</p>
+      <form class="conta-email" id="contaEmailForm"><input type="email" id="contaEmail" autocomplete="email" required placeholder="you@email.com" aria-label="Your email"><button type="submit" class="btn sec" id="contaEnviar" disabled>Send link</button></form>
+    </div>
+    <p class="feedback" id="contaMsg" role="status"></p>
+  </div>
+  <div class="card conta-card" id="contaDentro" hidden>
+    <h3 class="card-tit">Your account</h3>
+    <p class="conta-quem">Signed in as <b id="contaQuem" translate="no"></b></p>
+    <p class="muted" id="contaEstado" role="status"></p>
+    <div class="row"><button type="button" class="btn sec" id="contaSincronizar">Sync now</button><button type="button" class="btn sec" id="contaSair">Sign out</button></div>
+  </div>
+  <div class="card conta-card" id="contaDados" hidden>
+    <h3 class="card-tit">Your data in the cloud</h3>
+    <p class="muted">Download a copy of everything stored in your account, or delete the account and its cloud data. The progress on this device stays here.</p>
+    <div class="row"><button type="button" class="btn sec" id="contaBaixar">Download my data</button><button type="button" class="btn sec" id="contaExcluir">Delete account</button></div>
+  </div>
+</section>
 <dialog class="boas" id="boasVindas" aria-labelledby="bvTit">
   <form method="dialog" id="bvForm">
     <h2 id="bvTit">Welcome to BanDoly!</h2>
@@ -1161,6 +1188,7 @@
 <script src="../js/teoria-textos.js" defer></script>
 <script src="../js/teoria.js" defer></script>
 <script src="../js/contato.js" defer></script>
+<script src="../js/conta.js" defer></script>
 <script src="../js/init.js" defer></script>
 </body>
 </html>

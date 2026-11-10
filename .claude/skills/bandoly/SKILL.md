@@ -37,7 +37,7 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
   compartilham o escopo global e rodam **nesta ordem**:
   `base, i18n-textos, i18n, licoes-traducao, audio, teclado, movimento, navegacao, fole, desafios, ritmo,
   atalhos, controles, melodias, musicxml, escalas, microfone, acordes, maos, academia, partituras, rotina,
-  licoes, ajustes, ouvido, eco, cascata, trilha, inicio, professor, teoria-textos, teoria, contato, init`.
+  licoes, ajustes, ouvido, eco, cascata, trilha, inicio, professor, teoria-textos, teoria, contato, conta, init`.
   Código que roda no carregamento só pode usar o que veio antes; dentro de funções, tudo já existe.
   `init.js` é sempre o último.
 - PWA: `manifest.webmanifest` + `sw.js` (rede primeiro; o cache guarda tudo de `ARQUIVOS`).
@@ -124,6 +124,14 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
   - Treino de ouvido (ouvido.js) e notas caindo (cascata.js);
   - Teoria (teoria.js, com `pautaSVG`, posição diatônica d = oitava×7 + letra, e textos em teoria-textos.js);
   - Sugestões (contato.js): abre uma issue preenchida no GitHub. `CONTATO_EMAIL` fica vazio até o dono indicar um endereço.
+  - **Conta opcional** (conta.js, aba `conta` em Perfil; banco em `supabase/banco.sql`):
+    - Supabase, projeto `venbupxwqgofwjkhixhc` (São Paulo). No site vai só a chave **publicável** (`sb_publishable_…`); a secreta nunca.
+    - Só maiores de 18 anos: a caixa de aceite libera "Entrar com Google" e o link por e-mail (PKCE, volta com `?code=`). O aceite vai para a tabela `progresso`.
+    - A biblioteca (`js/vendor/supabase.js`, 2.118.0) só carrega para quem entra ou já tem login; não está em `ARQUIVOS`.
+    - Sincronização: uma linha por pessoa com as chaves `bandoneon.*`, menos as do aparelho (`NAO_SINCRONIZA`). Sempre junta antes de gravar: `progress` fica com o maior número, o verdadeiro e a soma de listas e objetos (`juntarProgresso`); listas de melodias se somam por id.
+    - `CONTA_LIGADA = false` esconde a aba do menu até o envio de e-mail e o Google estarem configurados; ela abre por `#conta` para testar.
+    - Excluir conta: função `excluir_minha_conta()` no banco (apaga o login e, em cascata, o progresso).
+    - Páginas: `termos/` (Termos de Uso) e `privacidade/` falam da conta; mudou o que a conta guarda → atualize as duas.
 
 ## 3. Traduções (pt → es, en)
 
