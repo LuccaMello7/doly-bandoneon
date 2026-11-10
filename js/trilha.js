@@ -191,29 +191,27 @@ $('#insignias').addEventListener('click', e=>{ const b = e.target.closest('[data
 
 /* ---------- Cartão para compartilhar (imagem 1080 × 1080) ---------- */
 // O ornamento do cartão usa os mesmos traços do ícone #i-filete
-const FILETE = [...document.querySelectorAll('#i-filete path')].map(p=>p.getAttribute('d'));
 function desenharCartao(x){
   const cv = document.createElement('canvas'); cv.width = cv.height = 1080;
   const c = cv.getContext('2d'), F = 'Onest, "Segoe UI", sans-serif';
-  const g = c.createLinearGradient(0,0,1080,1080); g.addColorStop(0,'#1e4c86'); g.addColorStop(.5,'#13305a'); g.addColorStop(1,'#2a2a64');
-  c.fillStyle = g; c.fillRect(0,0,1080,1080);
-  c.strokeStyle = '#e6b450'; c.lineWidth = 6; c.strokeRect(40,40,1000,1000); c.lineWidth = 2; c.strokeRect(58,58,964,964);
-  // ornamentos de fileteado em cima e embaixo
-  const ornamento = (y, virar) => { c.save(); c.translate(540, y); c.scale(4.2, virar ? -4.2 : 4.2); c.translate(-60,-20);
-    c.strokeStyle = '#e6b450'; c.lineWidth = 1.6/4.2*3; c.lineCap = 'round'; FILETE.forEach(d=>{ try{ c.stroke(new Path2D(d)); }catch(e){} }); c.restore(); };
-  ornamento(190, false); ornamento(890, true);
-  // medalha
-  c.beginPath(); c.arc(540, 450, 120, 0, Math.PI*2); c.fillStyle = '#e6b450'; c.fill();
-  c.beginPath(); c.arc(540, 450, 100, 0, Math.PI*2); c.fillStyle = '#0d1b2e'; c.fill();
-  c.fillStyle = '#f0c96e'; c.font = `900 120px ${F}`; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('★', 540, 458);
-  c.textBaseline = 'alphabetic';
-  c.fillStyle = '#f0c96e'; c.font = `900 34px ${F}`; c.fillText(t('Conquista no BanDoly').toUpperCase(), 540, 650);
-  c.fillStyle = '#ffffff'; c.font = `900 72px ${F}`; c.fillText(t(x.t), 540, 740);
-  c.fillStyle = '#d5def0'; c.font = `600 34px ${F}`;
+  // fundo ameixa com a luz violeta por trás da medalha (o mundo do app)
+  c.fillStyle = '#1c1624'; c.fillRect(0,0,1080,1080);
+  const luz = (x, y, r, cor) => { const g = c.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, cor); g.addColorStop(1, 'rgba(28,22,36,0)'); c.fillStyle = g; c.fillRect(0,0,1080,1080); };
+  luz(470, 470, 520, 'rgba(107,19,245,.42)'); luz(620, 500, 380, 'rgba(255,86,50,.16)'); luz(540, 430, 300, 'rgba(255,158,250,.22)');
+  c.strokeStyle = 'rgba(229,231,235,.14)'; c.lineWidth = 2; c.strokeRect(48,48,984,984);
+  // medalha: disco lavanda com uma estrela ameixa
+  const md = c.createRadialGradient(500, 400, 10, 540, 450, 120); md.addColorStop(0, '#e9dfff'); md.addColorStop(1, '#b997ff');
+  c.beginPath(); c.arc(540, 450, 112, 0, Math.PI*2); c.fillStyle = md; c.fill();
+  c.beginPath();
+  for(let k=0; k<10; k++){ const r = k%2 ? 26 : 60, ang = -Math.PI/2 + k*Math.PI/5; c.lineTo(540 + r*Math.cos(ang), 456 + r*Math.sin(ang)); }
+  c.closePath(); c.fillStyle = '#1c1624'; c.fill();
+  c.textAlign = 'center'; c.textBaseline = 'alphabetic';
+  c.fillStyle = '#b997ff'; c.font = `500 32px ${F}`; c.fillText(t('Conquista no BanDoly'), 540, 650);
+  c.fillStyle = '#f1f0ec'; c.font = `650 72px ${F}`; c.fillText(t(x.t), 540, 740);
+  c.fillStyle = '#d0c9c4'; c.font = `400 34px ${F}`;
   quebrar(c, t(x.d), 800).forEach((l,i)=>c.fillText(l, 540, 800+i*46));
-  c.font = `900 44px ${F}`; c.fillStyle = '#ffffff'; const w1 = c.measureText('Ban').width, w2 = c.measureText('Doly').width, x0 = 540-(w1+w2)/2;
-  c.textAlign = 'left'; c.fillText('Ban', x0, 975); c.fillStyle = '#e6b450'; c.fillText('Doly', x0+w1, 975);
-  c.textAlign = 'center'; c.fillStyle = '#9fb0c8'; c.font = `700 26px ${F}`; c.fillText('bandoly.app', 540, 1012);
+  c.fillStyle = '#f1f0ec'; c.font = `600 44px ${F}`; c.fillText('BanDoly', 540, 975);
+  c.fillStyle = '#a5a2a5'; c.font = `500 26px ${F}`; c.fillText('bandoly.app', 540, 1012);
   return cv;
 }
 function quebrar(c, txt, largura){
