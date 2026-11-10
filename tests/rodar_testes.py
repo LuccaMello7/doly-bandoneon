@@ -44,6 +44,9 @@ def main():
     captura = ('<base href="../">\n<script>window.__erros=[];'
                'window.onerror=(m,s,l)=>{window.__erros.push(m+" ("+(s||"").split("/").pop()+":"+l+")");};</script>')
     pagina = pagina.replace('<head>', '<head>\n' + captura, 1)
+    # sem a contagem de visitas (GoatCounter): ela busca um script na internet, e uma rede lenta deixava o
+    # navegador esperando até o tempo acabar; além disso, os testes não devem contar como visitas
+    pagina = re.sub(r'<script data-goatcounter[^>]*></script>', '', pagina)
     pagina = pagina.replace('</body>', '<script src="tests/testes.js" defer></script>\n</body>', 1)  # defer: roda depois dos scripts do app
     saida = RAIZ / 'tests' / '_execucao.html'
     saida.write_text(pagina, encoding='utf-8')
