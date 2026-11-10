@@ -229,6 +229,9 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
 - **Política de segurança (CSP)** num `<meta>` do `index.html`: o app só carrega código do próprio site, do
   GoatCounter e só conversa com o Supabase. Serviço externo novo (script, imagem, conexão, vídeo) precisa entrar
   nela, senão é bloqueado. O teste registra como erro qualquer bloqueio (`securitypolicyviolation`).
+- **Contagem de usos:** `contarUso('nome')` (base.js) manda um evento agregado ao GoatCounter (hoje: academia-comecou,
+  tarefa-gerada, conta-google, conta-email, conta-entrou). Evento novo é ok; dado pessoal no nome, nunca.
+- **Login com domínio próprio:** `SUPA_DOMINIO` em conta.js (vazio = endereço padrão do Supabase). A CSP já libera auth.bandoly.app.
 - O responsável pelos dados (controlador, LGPD) é **Lucca Costa**, citado na Privacidade e nos Termos.
 - O repositório é público, com `LICENSE` de **todos os direitos reservados**.
 - Mantenha "sem cadastro". Login (por exemplo, Supabase) só se opcional, com RLS em todas as tabelas,

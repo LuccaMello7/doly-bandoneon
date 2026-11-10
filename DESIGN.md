@@ -314,7 +314,4 @@ Três gradientes radiais (rosa `rgba(255,158,250,.34)`, violeta `rgba(107,19,245
 ### Dívida conhecida (não é regra do sistema)
 Todas as abas e as páginas abertas seguem o sistema desde 2026-11-10. O que ainda destoa:
 - **CSS em camadas:** as regras antigas continuam no começo do `css/app.css` e os blocos do mundo novo, no fim, as sobrescrevem. Os aliases `--gold`, `--gold2`, `--navy` e `--cream` existem por causa delas. Ao mexer numa peça, reescreva a regra de origem em vez de empilhar mais uma sobrescrita; superfícies novas usam só os nomes do mundo novo.
-- **Afinador (Bandoneon real):** o medidor vai do vermelho (desafinado) ao verde (afinado). O vermelho conta como erro; o verde é um segundo sentido para o verde de ir. Decisão do dono.
-- **Lições:** "Anterior" e "Próxima" usam setas de texto, não o ícone de seta.
-- **Respostas certas** nas perguntas das lições acendem no verde antigo (`--green`).
-- **Composição:** Ritmo e Ajustes são pilhas de painéis iguais, sem um momento próprio; Bandoneon real e Acordes podem ganhar a aurora atrás do instrumento, como o Teclado.
+- **Resolvido em 2026-11-10:** o afinador não usa mais vermelho nem verde (a zona afinada e a nota ficam em lavanda); "certo" e "feito" em todo o app são lavanda (`--green` virou lavanda); Anterior/Próxima usam o ícone de seta; Ritmo ganhou palco próprio (o compasso grande e o andamento em numeral) e Ajustes virou listas de linhas em duas colunas.

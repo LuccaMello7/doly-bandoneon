@@ -168,7 +168,7 @@ function renderLesson(){
   const L=LESSONS[curLesson], T=lessonTr(curLesson); lessonAnswered={}; const answered=lessonAnswered;
   $('#lessonBody').innerHTML=`<h2>${T.title}</h2>${T.html}${TAREFAS_LICAO[curLesson]?'<div class="tarefa" id="lessonTarefa"></div>':''}<h3>Verifique o que aprendeu</h3>`+
     T.quiz.map((q,qi)=>`<div class="q" data-q="${qi}"><div>${q.q}</div><div class="opts">${q.o.map((o,oi)=>`<button class="btn sec" data-o="${oi}">${o}</button>`).join('')}</div><div class="fb muted"></div></div>`).join('')+
-    `<div class="row" style="margin-top:12px"><button class="btn sec" id="prevL" ${curLesson===0?'disabled':''}>← Anterior</button><button class="btn" id="nextL" ${curLesson===LESSONS.length-1?'disabled':''}>Próxima →</button></div>`;
+    `<div class="row" style="margin-top:12px"><button class="btn sec" id="prevL" ${curLesson===0?'disabled':''}><svg class="seta-v" aria-hidden="true"><use href="#i-voltar"/></svg>Anterior</button><button class="btn" id="nextL" ${curLesson===LESSONS.length-1?'disabled':''}>Próxima<svg class="seta-i" aria-hidden="true"><use href="#i-arrow"/></svg></button></div>`;
   $$('#lessonBody .q').forEach(qe=>qe.addEventListener('click',e=>{
     const o=e.target.dataset.o; if(o==null) return;
     const qi=+qe.dataset.q, q=L.quiz[qi], btn=e.target;

@@ -102,7 +102,7 @@ function textoTarefa(url){
   const ex = exercicioPorId($('#prEx').value), nome = $('#prNome').value.trim(), msg = $('#prMsg').value.trim();
   return t('Tarefa de bandoneon{}: {} (modo {}). Abra no BanDoly: {}', nome ? ' (' + nome + ')' : '', t(ex.titulo), t(MODOS[$('#prModo').value]), url) + (msg ? '\n\n' + msg : '');
 }
-$('#prGerar').onclick = ()=>{
+$('#prGerar').onclick = ()=>{ contarUso('tarefa-gerada');
   store.set('profNome', $('#prNome').value.trim());
   const url = linkTarefa(); if(!url) return;
   $('#prLink').value = url; $('#prSaida').hidden = false; $('#prCopiado').textContent = '';

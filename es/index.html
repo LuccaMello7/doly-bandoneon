@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- segurança: o app só carrega código dele mesmo e só fala com o Supabase (conta) e o GoatCounter (visitas) -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://gc.zgo.at; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://bandoly.goatcounter.com; font-src 'self'; media-src 'self' blob: data:; connect-src 'self' https://venbupxwqgofwjkhixhc.supabase.co wss://venbupxwqgofwjkhixhc.supabase.co https://bandoly.goatcounter.com; frame-src https://www.youtube-nocookie.com; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://gc.zgo.at; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://bandoly.goatcounter.com; font-src 'self'; media-src 'self' blob: data:; connect-src 'self' https://venbupxwqgofwjkhixhc.supabase.co wss://venbupxwqgofwjkhixhc.supabase.co https://auth.bandoly.app wss://auth.bandoly.app https://bandoly.goatcounter.com; frame-src https://www.youtube-nocookie.com; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
 <title>BanDoly: aprende a tocar el bandoneón online y gratis</title>
 <meta name="description" content="Aprende bandoneón gratis en el navegador: teclado con sonido real, lecciones, escalas, acordes y ritmos de tango. Funciona en el celular, sin registro.">
 <link rel="canonical" href="https://bandoly.app/es/">
@@ -764,25 +764,34 @@
 <!-- RITMO -->
 <section id="v-ritmo">
   <div class="pg-topo"><span class="pg-ic t-ritmo"><svg aria-hidden="true"><use href="#i-metro"/></svg></span><div><h2 class="pg-tit">Ritmo</h2><p class="muted">Los acompañamientos del tango, con metrónomo y el modo toca junto.</p></div></div>
-  <div class="card">
-    <h2>Ritmos del tango</h2>
-    <div class="row">
-      <label>Patrón: <select id="rPattern"></select></label>
-      <label>BPM: <input type="range" id="rBpm" min="50" max="140" value="70"> <span id="rBpmVal">70</span></label>
-      <label><input type="checkbox" id="rClick" checked> Metrónomo</label>
+  <div class="rt-palco">
+    <div class="card rt-padrao">
+      <div class="rt-cab"><h3>Ritmos del tango</h3><label class="rt-sel">Patrón <select id="rPattern"></select></label></div>
+      <p id="rDesc" class="muted"></p>
+      <div class="steps rt-steps" id="rSteps"></div>
+      <div class="muted rt-conta">Compás de 4/4 dividido en corcheas: 1 y 2 y 3 y 4 y</div>
+      <div class="rt-legenda"><span><i class="forte"></i>Acento fuerte</span><span><i class="fraco"></i>Acento suave</span></div>
     </div>
-    <div class="acao"><button class="btn btn-grande btn-play" id="rPlay">Tocar</button></div>
-    <p id="rDesc" class="muted"></p>
-    <div class="steps" id="rSteps"></div>
-    <div class="muted" style="text-align:center">Compás de 4/4 dividido en corcheas: 1 y 2 y 3 y 4 y</div>
+    <div class="card rt-andamento">
+      <span class="rt-rot">Tempo</span>
+      <div class="rt-bpm"><b id="rBpmVal">70</b><span>BPM</span></div>
+      <input type="range" id="rBpm" min="50" max="140" value="70" aria-label="Tempo (BPM)">
+      <div class="rt-faixa"><span>50</span><span>140</span></div>
+      <label class="ctl-liga"><input type="checkbox" id="rClick" checked> Metrónomo</label>
+      <div class="acao"><button class="btn btn-grande btn-play" id="rPlay">Tocar</button></div>
+    </div>
   </div>
-  <div class="card">
-    <h3>Toca junto</h3>
-    <p class="muted">Con el patrón sonando, golpea el botón de abajo<span class="so-teclado"> (o presiona <kbd>Espacio</kbd>)</span> junto con cada acento. La app mide si vas adelantado o atrasado.</p>
-    <button class="pad" id="rPad">Toca aquí</button>
-    <div style="text-align:center;margin-top:10px">
-      <div class="feedback" id="rFeed"></div>
-      <div class="muted" id="rStats"></div>
+  <div class="card rt-junto">
+    <div>
+      <h3>Toca junto</h3>
+      <p class="muted">Con el patrón sonando, golpea el botón de abajo<span class="so-teclado"> (o presiona <kbd>Espacio</kbd>)</span> junto con cada acento. La app mide si vas adelantado o atrasado.</p>
+    </div>
+    <div>
+      <button class="pad" id="rPad">Toca aquí</button>
+      <div class="rt-junto-res">
+        <div class="feedback" id="rFeed"></div>
+        <div class="muted" id="rStats"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -1046,14 +1055,19 @@
 <!-- AJUSTES -->
 <section id="v-ajustes">
   <div class="pg-topo"><span class="pg-ic t-ajustes"><svg aria-hidden="true"><use href="#i-gear"/></svg></span><div><h2 class="pg-tit">Ajustes</h2><p class="muted">Sonido, afinación, nombres de las notas y tus datos.</p></div></div>
-  <div class="card">
-    <h3 style="margin-top:0">Sonido y notas</h3>
+  <div class="card aj-principal">
+    <h3>Sonido y notas</h3>
+    <p class="aj-grupo">Audio</p>
     <div class="settings">
       <label>Sonido
         <select id="soundSel"><option value="samples">Bandoneón real (grabación)</option><option value="synth">Sintetizado</option></select></label>
       <label>Afinación (La)
         <select id="tuneSel"><option value="440">440 Hz (estándar internacional)</option><option value="442">442 Hz</option><option value="443">443 Hz (afinación de la grabación)</option></select></label>
       <label>Volumen <input type="range" id="volSel" min="0" max="100"></label>
+    </div>
+    <div class="aj-acoes"><button class="btn sec" id="testSound"><svg aria-hidden="true"><use href="#i-volume"/></svg>Probar sonido</button><button class="btn" id="installBtn" style="display:none"><svg aria-hidden="true"><use href="#i-download"/></svg>Instalar app</button><span class="muted" id="soundStatus" aria-live="polite"></span></div>
+    <p class="aj-grupo">En pantalla</p>
+    <div class="settings">
       <label>Nombres de las notas
         <select id="namesSel"><option value="pt">Do Re Mi</option><option value="en">C D E</option></select></label>
       <label><input type="checkbox" class="nomesToggle" checked> Mostrar los nombres en los botones</label>
@@ -1062,25 +1076,24 @@
       <label>Vibración en el celular
         <select id="vibSel"><option value="1">Activada</option><option value="0">Desactivada</option></select></label>
     </div>
-    <div class="row" style="margin-top:12px"><button class="btn sec" id="testSound"><svg aria-hidden="true"><use href="#i-volume"/></svg>Probar sonido</button><button class="btn" id="installBtn" style="display:none"><svg aria-hidden="true"><use href="#i-download"/></svg>Instalar app</button><span class="muted" id="soundStatus" aria-live="polite"></span></div>
   </div>
   <div class="card">
-    <h3 style="margin-top:0">Habla con nosotros</h3>
+    <h3>Habla con nosotros</h3>
     <p class="muted">¿Encontraste un error o tienes una idea para BanDoly? Tu mensaje ayuda a mejorar la app.</p>
-    <div class="row"><button type="button" class="btn" data-sugestao><svg aria-hidden="true"><use href="#i-question"/></svg>Enviar sugerencia o reportar error</button><button type="button" class="btn sec" data-controles>Controles para tocar</button></div>
+    <div class="aj-acoes"><button type="button" class="btn" data-sugestao><svg aria-hidden="true"><use href="#i-question"/></svg>Enviar sugerencia o reportar error</button><button type="button" class="btn sec" data-controles>Controles para tocar</button></div>
   </div>
   <div class="card">
-    <h3 style="margin-top:0">Tus datos</h3>
+    <h3>Tus datos</h3>
     <p class="muted">El progreso, las melodías creadas y el mapa de botones se guardan solo en este navegador. Haz una copia de seguridad para no perder nada al limpiar el navegador o para llevar todo a otro dispositivo.</p>
     <p class="muted"><a href="privacidade/" data-local>Cómo BanDoly trata tus datos</a></p>
-    <div class="row">
+    <div class="aj-acoes">
       <button class="btn" id="backupExport">Exportar copia</button>
       <button class="btn sec" id="backupImport">Importar copia</button>
       <button class="btn sec" id="backupReset">Borrar todo</button>
     </div>
   </div>
   <div class="card">
-    <h3 style="margin-top:0">Mapa de botones</h3>
+    <h3>Mapa de botones</h3>
     <p class="muted" style="margin-bottom:0">La app usa el mapa Rheinische 142. Si algún botón de tu instrumento es diferente, ajústalo en <a href="#" data-go="teclado">Teclado → Editar mapa</a>.</p>
   </div>
 </section>

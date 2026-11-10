@@ -8,7 +8,11 @@
    - Contas só para maiores de 18 anos (decisão do dono, LGPD): sem marcar a caixa de aceite, entrar não segue.
    - A tela: "Entrar" (ou o círculo com a inicial, que abre um menu) fica no topo; a aba Conta é um cartão em
      dois passos (escolher como entrar → "Confira o seu e-mail") e, conectado, o painel da nuvem e dos dados. */
-const SUPA_URL = 'https://venbupxwqgofwjkhixhc.supabase.co';
+// Domínio próprio do login (complemento pago do Supabase): com ele, a tela do Google diz "bandoly.app".
+// Quando auth.bandoly.app estiver ativo, troque '' por 'https://auth.bandoly.app'. O login das pessoas continua
+// valendo, porque o lugar onde ele fica guardado no navegador (SUPA_SESSAO) não muda.
+const SUPA_DOMINIO = '';
+const SUPA_URL = SUPA_DOMINIO || 'https://venbupxwqgofwjkhixhc.supabase.co';
 const SUPA_CHAVE = 'sb_publishable_Dn-1zGaZDa6S7ie58bsD1Q_FLfhayDd';
 const SUPA_SESSAO = 'sb-venbupxwqgofwjkhixhc-auth-token'; // onde a biblioteca guarda o login neste navegador
 const TERMOS_VERSAO = '2026-11-10';
@@ -24,7 +28,7 @@ function carregarSupabase(){
   return new Promise((ok, falha)=>{
     const s = document.createElement('script'); s.src = RAIZ + 'js/vendor/supabase.js';
     s.onload = ()=>{
-      sb = supabase.createClient(SUPA_URL, SUPA_CHAVE, {auth:{flowType:'pkce', persistSession:true, autoRefreshToken:true, detectSessionInUrl:true}});
+      sb = supabase.createClient(SUPA_URL, SUPA_CHAVE, {auth:{flowType:'pkce', persistSession:true, autoRefreshToken:true, detectSessionInUrl:true, storageKey: SUPA_SESSAO}});
       sb.auth.onAuthStateChange((ev, sessao)=>{ contaUsuario = sessao ? sessao.user : null; renderConta(); });
       ok(sb);
     };
@@ -137,7 +141,7 @@ $('#contaAceite').onchange = ()=>{ if(contaAceitou()){ $('#contaAceiteLinha').cl
 
 $('#contaGoogle').onclick = async ()=>{
   if(!contaPedeAceite() || contaSemSite()) return;
-  guardarAceite();
+  guardarAceite(); contarUso('conta-google');
   try{ sessionStorage.setItem('bandoly-conta-volta', contaVoltaPara); }catch(e){}
   try{ await carregarSupabase(); const r = await sb.auth.signInWithOAuth({provider:'google', options:{redirectTo: contaRetorno()}}); if(r.error) throw r.error; }
   catch(e){ contaMsg(t('Não deu para abrir o login do Google. Confira a internet e tente de novo.'), 'bad'); }
@@ -184,7 +188,7 @@ $('#contaEmailForm').onsubmit = async e=>{
   if(!contaPedeAceite() || contaSemSite()) return;
   guardarAceite(); $('#contaEnviar').disabled = true; contaMsg(t('Enviando…'));
   try{ sessionStorage.setItem('bandoly-conta-volta', contaVoltaPara); }catch(e){}
-  try{ await contaEnviarLink(email); contaMsg(''); contaPasso2(email); }
+  try{ await contaEnviarLink(email); contaMsg(''); contaPasso2(email); contarUso('conta-email'); }
   catch(err){ contaMsg(t('Não deu para enviar o link agora. Confira o e-mail digitado e tente de novo em alguns minutos.'), 'bad'); }
   finally{ $('#contaEnviar').disabled = false; }
 };
@@ -250,9 +254,12 @@ function renderConta(){
   $('#contaFora').hidden = dentro; $('#contaDentro').hidden = !dentro;
   $('#contaEntrar').hidden = dentro; $('#contaAv').hidden = !dentro;
   if(!dentro){ if(!$('#contaMenu').hidden) contaMenuAberto(false); return; }
-  const letra = (email.charAt(0) || '?').toUpperCase();
+  const meta = u.user_metadata || {}, nome = String(meta.full_name || meta.name || '').trim().split(/\s+/)[0] || '';
+  const letra = (nome || email).charAt(0).toUpperCase() || '?';
   $$('.conta-letra').forEach(x=>x.textContent = letra);
   $$('.conta-email-txt').forEach(x=>x.textContent = email);
+  $('.conta-ola').textContent = nome ? t('Olá, {}!', nome) : t('Olá!'); // só o primeiro nome, vindo do Google (Privacidade)
+  $('.conta-menu-quem b').textContent = nome || t('Sua conta');
   const google = (u.app_metadata && u.app_metadata.provider) === 'google';
   $('#contaSelo').innerHTML = google ? `${$('.conta-google .conta-g').outerHTML}<span translate="no">Google</span>` : `<svg aria-hidden="true"><use href="#i-mail"/></svg>${t('E-mail')}`;
   const [tit, txt] = contaSincronizando ? [t('Sincronizando…'), '']
@@ -281,7 +288,7 @@ async function iniciarConta(){
     history.replaceState(null, '', location.pathname + location.hash);
     let volta = ''; try{ volta = sessionStorage.getItem('bandoly-conta-volta') || ''; sessionStorage.removeItem('bandoly-conta-volta'); }catch(e){}
     if(q.has('error_description') || !contaUsuario){ go('conta'); contaMsg(t('O link de acesso expirou ou já foi usado. Peça um novo.'), 'bad'); }
-    else{ go(volta && $('#v-' + volta) && areaDe(volta) !== 'perfil' ? volta : 'conta'); try{ sessionStorage.setItem('bandoly-conta-ola', '1'); }catch(e){} }
+    else{ go(volta && $('#v-' + volta) && areaDe(volta) !== 'perfil' ? volta : 'conta'); try{ sessionStorage.setItem('bandoly-conta-ola', '1'); }catch(e){} contarUso('conta-entrou'); }
   }
   if(!contaUsuario) return;
   const r = await sincronizarConta(voltou ? 'entrar' : 'inicio');

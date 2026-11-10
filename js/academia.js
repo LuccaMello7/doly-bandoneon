@@ -517,7 +517,7 @@ function novaRodada(){
 $('#acStart').onclick = ()=>{
   if(acad.rodando || acad.demo){ acadParar(); acadPrevia(); acadFeed(t('Parado.')); return; }
   if(!acad.eventos.length) return;
-  ac(); acad.rodando = true; novaRodada(); renderFaixa(); acadRecolher(true); $('#acMais').open = false;
+  ac(); acad.rodando = true; novaRodada(); renderFaixa(); acadRecolher(true); $('#acMais').open = false; contarUso('academia-comecou');
   $('#acStart').textContent = t('Parar'); botaoRodando($('#acStart'), true); acadFeed('');
   // nível 1: notas novas a cada rodada, mas só ao apertar Começar depois de uma rodada (tocar o botão da prévia usa as notas mostradas)
   if(acad.ex.nivel===1 && acad.ex.gerar && acad.sortearDeNovo && !acad.autoInicio){ acad.todos = montarEventos(acad.ex); aplicarTrecho(); acad.rodando = true; novaRodada(); }

@@ -857,5 +857,9 @@ teste('Conta: Entrar no topo, aceite dos 18 anos, passo do e-mail e a conta cone
   $('#contaAv').click(); ok(!$('#contaMenu').hidden, 'o círculo abre o menu'); $('#contaMenu [data-ir="ajustes"]').click();
   igual(currentView, 'ajustes'); ok($('#contaMenu').hidden, 'escolher fecha o menu');
   igual($('#contaNDias').textContent, String(Object.keys(state.progress.days||{}).length), 'dias de prática');
+  igual($('.conta-ola').textContent, 'Olá!', 'sem nome: Olá!');
+  contaUsuario = {id:'teste', email:'aluno@exemplo.com', user_metadata:{full_name:'Lucca Costa'}}; renderConta();
+  igual($('.conta-ola').textContent, 'Olá, Lucca!', 'com o nome do Google: só o primeiro nome'); igual($('#contaAv .conta-letra').textContent, 'L');
+  contarUso('teste'); // sem o GoatCounter carregado, não faz nada e não quebra
   contaUsuario = null; renderConta(); go('inicio');
 });

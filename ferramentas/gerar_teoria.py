@@ -30,17 +30,17 @@ TEXTOS = {
 'pt': dict(titulo='Teoria musical para bandoneon', indice_titulo='Teoria musical para bandoneon: notas, pauta, ritmo e acordes | BanDoly',
     indice_desc='Teoria musical do básico, com som, para quem toca bandoneon: notas e oitavas, pauta e claves, sustenido e bemol, figuras, compasso, escalas e acordes.',
     intro='Sete tópicos curtos com o básico para ler partitura e entender os exercícios. No app, cada tópico tem som: a pauta toca a nota em que você clica, as figuras tocam no tempo e as escalas e os acordes soam no bandoneon.',
-    topico='{t} | Teoria musical - BanDoly', n='Tópico {i} de {n}', todos='Todos os tópicos', anterior='← Anterior', proximo='Próximo →',
+    topico='{t} | Teoria musical - BanDoly', n='Tópico {i} de {n}', todos='Todos os tópicos', anterior='Anterior', proximo='Próximo',
     pratique='No app, este tópico tem som e um teste rápido. Grátis e sem cadastro.', abrir='Abrir este tópico no app', tipo='Artigo'),
 'es': dict(titulo='Teoría musical para bandoneón', indice_titulo='Teoría musical para bandoneón: notas, pentagrama, ritmo y acordes | BanDoly',
     indice_desc='Teoría musical básica, con sonido, para quien toca el bandoneón: notas y octavas, pentagrama y claves, sostenido y bemol, figuras, compás, escalas y acordes.',
     intro='Siete temas cortos con lo básico para leer partitura y entender los ejercicios. En la app, cada tema tiene sonido: el pentagrama toca la nota que eliges, las figuras suenan a tiempo y las escalas y los acordes suenan en el bandoneón.',
-    topico='{t} | Teoría musical - BanDoly', n='Tema {i} de {n}', todos='Todos los temas', anterior='← Anterior', proximo='Siguiente →',
+    topico='{t} | Teoría musical - BanDoly', n='Tema {i} de {n}', todos='Todos los temas', anterior='Anterior', proximo='Siguiente',
     pratique='En la app, este tema tiene sonido y una prueba rápida. Gratis y sin registro.', abrir='Abrir este tema en la app', tipo='Artículo'),
 'en': dict(titulo='Music theory for bandoneon', indice_titulo='Music theory for bandoneon: notes, staff, rhythm and chords | BanDoly',
     indice_desc='Beginner music theory, with sound, for bandoneon players: notes and octaves, the staff and clefs, sharps and flats, note values, time signatures, scales and chords.',
     intro='Seven short topics with the basics for reading music and understanding the exercises. In the app, every topic has sound: the staff plays the note you tap, note values play in time and scales and chords sound on the bandoneon.',
-    topico='{t} | Music theory - BanDoly', n='Topic {i} of {n}', todos='All topics', anterior='← Previous', proximo='Next →',
+    topico='{t} | Music theory - BanDoly', n='Topic {i} of {n}', todos='All topics', anterior='Previous', proximo='Next',
     pratique='In the app, this topic has sound and a quick check. Free, no sign-up.', abrir='Open this topic in the app', tipo='Article'),
 }
 for cod, T in TEXTOS.items():  # menus, aviso e rodapé iguais aos das lições
@@ -85,9 +85,9 @@ def gerar_todas():
         paginas[f'{base}{PASTA}/index.html'] = gl.pagina(cod, 1, T['indice_titulo'], T['indice_desc'], {c: gl.url(c, PASTA) for c in LANGS}, corpo, dados, 'website')
         for i, t in enumerate(lista):
             nav = []
-            if i > 0: nav.append(f'<a class="btn sec" href="../{slugs[cod][i-1]}/" data-local>{e(T["anterior"])}</a>')
+            if i > 0: nav.append(f'<a class="btn sec" href="../{slugs[cod][i-1]}/" data-local><svg class="seta-v" aria-hidden="true" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>{e(T["anterior"])}</a>')
             nav.append(f'<a class="btn sec" href="../" data-local>{e(T["todos"])}</a>')
-            if i < n - 1: nav.append(f'<a class="btn" href="../{slugs[cod][i+1]}/" data-local>{e(T["proximo"])}</a>')
+            if i < n - 1: nav.append(f'<a class="btn" href="../{slugs[cod][i+1]}/" data-local>{e(T["proximo"])}<svg class="seta-i" aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>')
             corpo = f'''  <article class="card licao">
     <p class="muted licao-kicker"><a href="../../" data-local>{e(T['inicio'])}</a> › <a href="../" data-local>{e(T['titulo'])}</a> › {e(T['n'].format(i=i+1, n=n))}</p>
     <h1>{e(t['titulos'][cod])}</h1>

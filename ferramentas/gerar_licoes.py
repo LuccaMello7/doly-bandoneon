@@ -35,7 +35,7 @@ TEXTOS = {
     indice_intro='Onze lições curtas para aprender o bandoneon do zero: a história do instrumento, o sistema bisonoro, o fole, a leitura nas duas claves, os ritmos do tango e os acordes. Cada lição termina com um quiz, e você pratica tudo no teclado do app, com som de bandoneon de verdade.',
     licao_titulo='{t} | Curso de bandoneon grátis - BanDoly', licao_n='Lição {i} de {n}',
     verifique='Verifique o que aprendeu', certo='Correto!', errado='Ainda não, tente outra opção.',
-    anterior='← Anterior', proxima='Próxima →', todas='Todas as lições',
+    anterior='Anterior', proxima='Próxima', todas='Todas as lições',
     exercicio='Esta lição tem um exercício no teclado: toque três notas abrindo e três fechando no mesmo botão.',
     fazer_exercicio='Fazer o exercício no app',
     pratique='Pratique no teclado do BanDoly: som real de bandoneon, desafios e melodias guiadas. Grátis e sem cadastro.',
@@ -51,7 +51,7 @@ TEXTOS = {
     indice_intro='Once lecciones cortas para aprender el bandoneón desde cero: la historia del instrumento, el sistema bisonoro, el fuelle, la lectura en las dos claves, los ritmos del tango y los acordes. Cada lección termina con un cuestionario, y practicas todo en el teclado de la app, con sonido de bandoneón real.',
     licao_titulo='{t} | Curso de bandoneón gratis - BanDoly', licao_n='Lección {i} de {n}',
     verifique='Comprueba lo que aprendiste', certo='¡Correcto!', errado='Todavía no, prueba otra opción.',
-    anterior='← Anterior', proxima='Siguiente →', todas='Todas las lecciones',
+    anterior='Anterior', proxima='Siguiente', todas='Todas las lecciones',
     exercicio='Esta lección tiene un ejercicio en el teclado: toca tres notas abriendo y tres cerrando en el mismo botón.',
     fazer_exercicio='Hacer el ejercicio en la app',
     pratique='Practica en el teclado de BanDoly: sonido real de bandoneón, desafíos y melodías guiadas. Gratis y sin registro.',
@@ -67,7 +67,7 @@ TEXTOS = {
     indice_intro='Eleven short lessons to learn the bandoneon from scratch: the history of the instrument, the bisonoric system, the bellows, reading in both clefs, tango rhythms and chords. Each lesson ends with a quiz, and you practice everything on the app keyboard, with real bandoneon sound.',
     licao_titulo='{t} | Free bandoneon course - BanDoly', licao_n='Lesson {i} of {n}',
     verifique='Check what you learned', certo='Correct!', errado='Not yet, try another option.',
-    anterior='← Previous', proxima='Next →', todas='All lessons',
+    anterior='Previous', proxima='Next', todas='All lessons',
     exercicio='This lesson has a keyboard exercise: play three notes opening and three closing on the same button.',
     fazer_exercicio='Do the exercise in the app',
     pratique='Practice on the BanDoly keyboard: real bandoneon sound, challenges and guided melodies. Free, no sign-up.',
@@ -281,9 +281,9 @@ def gerar_todas():
         # ---------- uma página por lição ----------
         for i, l in enumerate(lista):
             nav = []
-            if i > 0: nav.append(f'<a class="btn sec" href="../{slugs[cod][i-1]}/" data-local>{e(T["anterior"])}</a>')
+            if i > 0: nav.append(f'<a class="btn sec" href="../{slugs[cod][i-1]}/" data-local><svg class="seta-v" aria-hidden="true" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>{e(T["anterior"])}</a>')
             nav.append(f'<a class="btn sec" href="../" data-local>{e(T["todas"])}</a>')
-            if i < n - 1: nav.append(f'<a class="btn" href="../{slugs[cod][i+1]}/" data-local>{e(T["proxima"])}</a>')
+            if i < n - 1: nav.append(f'<a class="btn" href="../{slugs[cod][i+1]}/" data-local>{e(T["proxima"])}<svg class="seta-i" aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>')
             perguntas = ''.join(
                 f'      <div class="q" data-certo="{e(T["certo"])}" data-errado="{e(T["errado"])}"><div>{e(q["q"])}</div><div class="opts">'
                 + ''.join(f'<button type="button" class="btn sec"{" data-certa" if k == q["a"] else ""}>{e(o)}</button>' for k, o in enumerate(q['o']))

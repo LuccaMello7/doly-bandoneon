@@ -70,3 +70,9 @@ function parseNote(s){
   let v = map[m[1]]; if(m[2]==='#'||m[2]==='♯') v++; if(m[2]==='b'||m[2]==='♭') v--;
   return (parseInt(m[3])+1)*12+v;
 }
+
+// Contagem de usos (GoatCounter, sem cookies e sem dados pessoais): só o nome do evento, somado com o de todo mundo.
+// Ex.: quantas vezes alguém começa um exercício da Academia. Sem o GoatCounter carregado, não faz nada.
+function contarUso(nome){
+  try{ if(window.goatcounter && goatcounter.count) goatcounter.count({path: 'uso/' + nome, title: nome, event: true}); }catch(e){}
+}
