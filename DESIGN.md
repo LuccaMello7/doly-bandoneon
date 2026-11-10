@@ -250,6 +250,18 @@ Diretos e calmos: uma cor chapada, sem gradiente, sem brilho.
 - **Ghost (fantasma):** transparente, texto osso, contorno interno de 1px em borda-2 que sobe para 45% de branco no hover. Para a ação secundária ao lado do botão verde.
 - **Link de ação (ir):** texto osso 500 com seta; no hover vira lavanda e a seta anda 4px. Para o fim de painéis.
 
+### Peças das ferramentas (todas as abas, desde 2026-11-10)
+- **Botão claro** (`.btn`): osso com texto ameixa, Onest 500, cantos de 12px, 40px de altura (36px nos grupos de ferramentas). A ação principal de uma ferramenta que não é "começar" (Trocar direção, Exportar backup).
+- **Fantasma** (`.btn.sec`): transparente, contorno interno em borda-2. Ligado (`.btn.sec.on`, um interruptor): lavanda a 16% com contorno lavanda.
+- **Começar** (`.btn-grande`): o verde de ir, só no começo de cada ferramenta (Academia, Melodias, Desafios, Ritmo). O botão verde do topo aparece só no Início, para não haver dois verdes na mesma tela.
+- **Segmentado** (`.segmento`): painel ameixa-2 com o item ativo em branco a 10%.
+- **Abas da área** (`.subnav`): texto cinza-2; a ativa em ameixa-2 com contorno e ícone lavanda.
+- **Cabeçalho de tela** (`.pg-topo`): título 600 com tracking -0.03em, apoio em cinza-2, ícone lavanda num quadrado ameixa-2 de 48px. Sem degradê e sem ornamento.
+- **Pílula do fole** (`.dirpill`): a chave do Início em versão única: bolinha e "Abrindo"/"Fechando" em 500, fundo azul ou laranja com texto escuro. Sem setas e sem caixa alta.
+- **Teclado** (`.kbd`, `.key`): a placa e a madrepérola do instrumento do Início em todas as abas. O botão apertado acende na cor do fole (a placa leva `data-fole`); a pista de "toque aqui" é um contorno lavanda que pulsa, não um brilho.
+- **Grupos de ajustes** (`.grupo`): o nome em cima, 13px cinza, sem caixa alta.
+- **Página de texto** (`privacidade/`): coluna de 760px, título display, seções separadas por divisória de 1px.
+
 ### Chips
 - **Pílula de direção:** cápsula de 12px de texto, azul ou laranja translúcido, com o texto num tom claro da mesma cor.
 - **Círculos de fase:** 38px, ameixa-3 com texto cinza quando inativos, lavanda translúcida quando feitos, osso com texto ameixa no atual.
@@ -293,4 +305,4 @@ Três gradientes radiais (rosa `rgba(255,158,250,.34)`, violeta `rgba(107,19,245
 - **Don't** montar o primeiro viewport como título com print ao lado e fileira de cartões iguais.
 
 ### Dívida conhecida (não é regra do sistema)
-Só o Início foi redesenhado. As outras abas receberam os tokens novos e a fonte, mas ainda carregam cores fixas do visual antigo: gradientes azul-marinho no hero e nos blocos coloridos de atalho, a moldura dourada do teclado (agora pintada de lavanda pelo alias `--gold`), brilhos, sobretítulos em caixa alta (`.kicker`), botões `.btn` em lavanda com texto escuro, pesos 800 e 900 e easings elásticos `cubic-bezier(.34,1.4,.5,1)`. Os aliases `--gold`, `--gold2`, `--navy` e `--cream` existem só para essas abas continuarem funcionando; superfícies novas usam os nomes do mundo novo. Dentro do próprio Início, o cartão de instalar e o conteúdo fechado de "Sobre o BanDoly" ainda usam componentes antigos (`.card`, `.btn`, `.feat`, setas em texto). Nada disso deve ser copiado para superfícies novas.
+O Início e o Teclado foram redesenhados, e as peças comuns (botões, abas, cabeçalho de tela, teclado, fole, avisos) já seguem o sistema em todas as abas. Ainda faltam as composições próprias de Aprender, Treinar e Perfil e as páginas de Doly, perguntas, lições e teoria. As outras abas receberam os tokens novos e a fonte, mas ainda carregam cores fixas do visual antigo: gradientes azul-marinho no hero e nos blocos coloridos de atalho, a moldura dourada do teclado (agora pintada de lavanda pelo alias `--gold`), brilhos, sobretítulos em caixa alta (`.kicker`), botões `.btn` em lavanda com texto escuro, pesos 800 e 900 e easings elásticos `cubic-bezier(.34,1.4,.5,1)`. Os aliases `--gold`, `--gold2`, `--navy` e `--cream` existem só para essas abas continuarem funcionando; superfícies novas usam os nomes do mundo novo. Dentro do próprio Início, o cartão de instalar e o conteúdo fechado de "Sobre o BanDoly" ainda usam componentes antigos (`.card`, `.btn`, `.feat`, setas em texto). Nada disso deve ser copiado para superfícies novas.

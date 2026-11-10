@@ -283,7 +283,7 @@ function textoDedo(e){
 }
 // Instrutor: "Agora" (a nota grande, a mão e o fole) e "Próximo" num cartão próprio, tracejado como o próximo
 // botão no teclado. As dicas de posição vêm depois, mais discretas (no celular, embaixo do teclado).
-const pilulaFole = (d, mini) => `<span class="dirpill ${d}${mini?' mini':''}">${mini ? dirLabel(d) : (d==='open'?'⟵ ':'⟶ ') + dirLabel(d) + (d==='open'?' ⟶':' ⟵')}</span>`;
+const pilulaFole = (d, mini) => `<span class="dirpill ${d}${mini?' mini':''}">${dirLabel(d)}</span>`;
 function acadInstrutor(gi){
   const aj = acadAjuda(), g = acad.grupos[gi], prox = acad.grupos[gi+1];
   if(!g){ $('#acAgora').innerHTML = `<div class="muted">${t('Escolha um exercício e um modo, depois aperte Começar.')}</div>`;
@@ -387,7 +387,7 @@ function acadFeed(msg, cls=''){ const f=$('#acFeed'); f.className='feedback '+cl
 function acadSetDir(d){
   acad.dir = d;
   const fm = $('#acFoleMini'); if(fm) fm.className = 'ac-fole-mini ' + d;
-  const p = $('#acDirPill'); p.className = 'dirpill '+d; p.textContent = d==='open' ? t('⟵ ABRINDO ⟶') : t('⟶ FECHANDO ⟵');
+  const p = $('#acDirPill'); p.className = 'dirpill '+d; p.textContent = dirLabel(d);
   akL.refresh(); akR.refresh(); akL.retune(); akR.retune();
 }
 $('#acDirBtn').onclick = ()=>acadSetDir(acad.dir==='open'?'close':'open');

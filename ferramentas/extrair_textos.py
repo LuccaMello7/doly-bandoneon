@@ -110,7 +110,7 @@ def textos_js(src):
 
 def coletar():
     vistos = {}
-    for pag in ('index.html', 'doly-costa/index.html', 'perguntas-frequentes/index.html'):
+    for pag in ('index.html', 'doly-costa/index.html', 'perguntas-frequentes/index.html', 'privacidade/index.html'):
         for t in textos_html((RAIZ / pag).read_text(encoding='utf-8')):
             vistos.setdefault(t, pag)
     for f in sorted((RAIZ / 'js').glob('*.js')):

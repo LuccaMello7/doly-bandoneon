@@ -189,7 +189,7 @@ def pagina(cod, prof, titulo, descricao, urls, corpo, dados, tipo_og='article'):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{e(titulo)}</title>
 <meta name="description" content="{e(descricao)}">
-<meta name="theme-color" content="#0e2847">
+<meta name="theme-color" content="#1c1624">
 <link rel="canonical" href="{urls[cod]}">
 {alternativos}<meta property="og:type" content="{tipo_og}">
 <meta property="og:site_name" content="BanDoly">

@@ -54,6 +54,7 @@ function createKeyboard(el, hand, opts={}){
   }
   function refresh(){
     const dir=opts.getDir?opts.getDir():state.dir, show=opts.showLabels?opts.showLabels():state.showLabels;
+    el.dataset.fole = dir; // o botão apertado acende na cor do fole (azul abrindo, laranja fechando)
     for(const {d,b} of Object.values(nodes)){
       const m=b[dir]; d.textContent = show ? noteName(m) : '';
       d.setAttribute('aria-label', show ? `${noteName(b.open)} abrindo, ${noteName(b.close)} fechando` : 'Botão do bandoneon');

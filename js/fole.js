@@ -17,7 +17,7 @@ const tkOpts={ editable:true, canSound, onPress:(b,m,dir)=>{
 const tkL = kb($('#kbLeft'),'left',tkOpts), tkR = kb($('#kbRight'),'right',tkOpts);
 function setDir(d){
   state.dir=d; bel.blocked=false;
-  const p=$('#dirPill'); p.className='dirpill '+d; p.textContent = d==='open'?'⟵ ABRINDO ⟶':'⟶ FECHANDO ⟵';
+  const p=$('#dirPill'); p.className='dirpill '+d; p.textContent = dirLabel(d);
   tkL.refresh(); tkR.refresh(); tkL.retune(); tkR.retune();
 }
 $('#dirBtn').onclick=()=>setDir(state.dir==='open'?'close':'open');

@@ -241,7 +241,7 @@ function onKeyboardsResized(){ if(mel.running && mel.g>=0) hintGroup(mel.g); }
 
 function setMelDir(d){
   mel.dir = d; const p=$('#melDirPill');
-  p.className='dirpill '+d; p.textContent = d==='open'?'⟵ ABRINDO ⟶':'⟶ FECHANDO ⟵';
+  p.className='dirpill '+d; p.textContent = dirLabel(d);
   mkL.refresh(); mkR.refresh(); mkL.retune(); mkR.retune();
 }
 function melFeed(msg, cls=''){ const f=$('#melFeed'); f.className='feedback '+cls; f.textContent=msg; }

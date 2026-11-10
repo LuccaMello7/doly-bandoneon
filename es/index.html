@@ -12,7 +12,7 @@
 <link rel="alternate" hreflang="es" href="https://bandoly.app/es/">
 <link rel="alternate" hreflang="en" href="https://bandoly.app/en/">
 <link rel="alternate" hreflang="x-default" href="https://bandoly.app/">
-<meta name="theme-color" content="#0e2847">
+<meta name="theme-color" content="#1c1624">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <!-- prévia do link no WhatsApp, Instagram, Facebook e X -->
 <meta property="og:type" content="website">
@@ -303,7 +303,7 @@
       <div class="ini-pe-marca"><span class="ini-pe-logo"><img src="../icones/logo-cabecalho.png" alt="" width="30" height="30"><b translate="no">BanDoly</b></span><p>Aprende bandoneón en el navegador. En homenaje a Doly Costa, de Caçapava do Sul.</p></div>
       <div><p class="ini-pe-tit">Aprender</p><ul><li><a href="#" data-go="estudo">Mi estudio</a></li><li><a href="#" data-go="academia">Academia</a></li><li><a href="#" data-go="licoes">Lecciones</a></li><li><a href="#" data-go="teoria">Teoría</a></li></ul></div>
       <div><p class="ini-pe-tit">Tocar y entrenar</p><ul><li><a href="#" data-go="teclado">Teclado</a></li><li><a href="#" data-go="melodias">Melodías</a></li><li><a href="#" data-go="eco" translate="no">RepeTCHÊ</a></li><li><a href="#" data-go="microfone">Bandoneón real</a></li></ul></div>
-      <div><p class="ini-pe-tit">Acerca de</p><ul><li><a href="doly-costa/" data-local>Doly Costa</a></li><li><a href="perguntas-frequentes/" data-local>Preguntas frecuentes</a></li><li><a href="#" data-go="professor">Para profesores</a></li><li><button type="button" class="ini-lnk" data-sugestao>Sugerencias</button></li></ul></div>
+      <div><p class="ini-pe-tit">Acerca de</p><ul><li><a href="doly-costa/" data-local>Doly Costa</a></li><li><a href="perguntas-frequentes/" data-local>Preguntas frecuentes</a></li><li><a href="#" data-go="professor">Para profesores</a></li><li><a href="privacidade/" data-local>Privacidad</a></li><li><button type="button" class="ini-lnk" data-sugestao>Sugerencias</button></li></ul></div>
     </div>
     <div class="ini-pe-base">
       <aside class="aviso aviso-curto" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></svg><p><strong>BanDoly es un sitio para aprender y nunca reemplazará los consejos y la orientación de un profesor.</strong> Usa la app como apoyo para tus estudios y, siempre que puedas, aprende con un profesor de bandoneón: él corrige la postura, el fuelle y la digitación, cosas que una app no puede ver.</p><p class="aviso-linha"><strong>BanDoly no reemplaza a un profesor de bandoneón.</strong> <button type="button" class="aviso-ler">Leer el aviso</button></p></aside>
@@ -386,7 +386,7 @@
     <!-- tela cheia (js/fole.js): esta barra só aparece nela; o seletor de mãos e o fole vêm para cá -->
     <div class="tk-cheia-barra" id="tkCheiaBarra" hidden><button type="button" class="btn sec" id="tkCheiaSair"><svg aria-hidden="true"><use href="#i-x"/></svg>Salir</button></div>
     <!-- no celular: o instrumento vem antes dos ajustes e este atalho fica no topo -->
-    <div class="tk-rapido"><button type="button" class="btn btn-grande" data-tk-cheia><svg aria-hidden="true"><use href="#i-expand"/></svg>Tocar en pantalla completa</button><span class="muted">Solo el instrumento y el fuelle, con los botones más grandes.</span></div>
+    <div class="tk-rapido"><button type="button" class="btn" data-tk-cheia><svg aria-hidden="true"><use href="#i-expand"/></svg>Tocar en pantalla completa</button><span class="muted">Solo el instrumento y el fuelle, con los botones más grandes.</span></div>
     <div class="toolbar">
       <div class="grupo"><span class="grupo-tit">Fuelle</span>
         <button class="btn" id="dirBtn">Cambiar dirección<span class="so-teclado"> (Espacio)</span></button>
@@ -423,7 +423,7 @@
     <div class="instrument" id="tkInstrumento">
       <div class="side"><div class="label">Mano izquierda (graves)</div><div id="kbLeft"></div></div>
       <div class="bellows-wrap" id="foleBox">
-        <button type="button" id="dirPill" class="dirpill open" title="Toca para cambiar la dirección del fuelle">⟵ ABRIENDO ⟶</button>
+        <button type="button" id="dirPill" class="dirpill open" title="Toca para cambiar la dirección del fuelle">Abriendo</button>
         <div class="bellows" id="bellows"></div>
         <div class="warn" id="bellowsWarn"></div>
       </div>
@@ -582,7 +582,7 @@
         <div class="mroll" id="melRoll" hidden><canvas id="melRollCv" aria-hidden="true"></canvas></div>
         <div class="mstrip" id="melStrip"></div>
         <div style="text-align:center">
-          <div id="melDirPill" class="dirpill open" style="display:inline-block">⟵ ABRIENDO ⟶</div>
+          <div id="melDirPill" class="dirpill open">Abriendo</div>
           <div id="micStatus" aria-live="polite"></div>
           <div class="feedback" id="melFeed"></div>
           <div class="muted" id="melStat"></div>
@@ -1055,6 +1055,7 @@
   <div class="card">
     <h3 style="margin-top:0">Tus datos</h3>
     <p class="muted">El progreso, las melodías creadas y el mapa de botones se guardan solo en este navegador. Haz una copia de seguridad para no perder nada al limpiar el navegador o para llevar todo a otro dispositivo.</p>
+    <p class="muted"><a href="privacidade/" data-local>Cómo BanDoly trata tus datos</a></p>
     <div class="row">
       <button class="btn" id="backupExport">Exportar copia</button>
       <button class="btn sec" id="backupImport">Importar copia</button>
