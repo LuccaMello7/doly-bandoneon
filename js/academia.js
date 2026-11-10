@@ -758,7 +758,7 @@ function renderContinuar(){
   const el = $('#continuar'); if(!el || typeof acad==='undefined' || !acad.ex) return;
   const usou = Object.keys(state.progress.academia||{}).length > 0;
   el.hidden = !usou; if(!usou) return;
-  el.innerHTML = `<div><p class="kicker">${t('Continue de onde parou')}</p><b>${t('Academia · Nível {}: {}', acad.ex.nivel, t(acad.ex.titulo))}</b>`
+  el.innerHTML = `<div><h2 class="card-tit">${t('Continue de onde parou')}</h2><b>${t('Academia · Nível {}: {}', acad.ex.nivel, t(acad.ex.titulo))}</b>`
     + `<div class="muted">${acad.ex.desc}</div></div>`
     + `<button type="button" class="btn" data-go="academia"><svg aria-hidden="true"><use href="#i-play"/></svg>${t('Continuar')}</button>`;
 }

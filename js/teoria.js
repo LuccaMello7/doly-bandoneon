@@ -150,7 +150,7 @@ function renderTeoria(){
   renderTeoriaLista();
   const x = TEORIA[teoriaAtual], q = x.teste();
   const box = $('#teConteudo');
-  box.innerHTML = `<div class="te-cab"><span class="pg-ic t-teoria"><svg aria-hidden="true"><use href="#i-${x.ic}"/></svg></span><div><p class="kicker">${t('Tópico {} de {}', teoriaAtual+1, TEORIA.length)}</p><h3>${t(x.titulo)}</h3></div></div>
+  box.innerHTML = `<div class="te-cab"><span class="pg-ic t-teoria"><svg aria-hidden="true"><use href="#i-${x.ic}"/></svg></span><div><h3>${t(x.titulo)}</h3><p class="te-topico">${t('Tópico {} de {}', teoriaAtual+1, TEORIA.length)}</p></div></div>
     <div class="te-texto" translate="no">${(TEORIA_TEXTOS[x.id]||{})[state.lang] || TEORIA_TEXTOS[x.id].pt}</div>
     <div class="te-widget"></div>
     <div class="q te-q" data-a="${q.a}"><div><b>${t('Teste rápido')}:</b> ${q.q}</div><div class="opts">${q.o.map((o,i)=>`<button type="button" class="btn sec" data-o="${i}">${o}</button>`).join('')}</div><div class="fb muted"></div></div>

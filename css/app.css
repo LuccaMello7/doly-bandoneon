@@ -2036,6 +2036,62 @@ button.dirpill:focus-visible{outline:2px solid var(--lavanda)}
 #keyInfo b{color:var(--osso);font-weight:600}
 @media (max-width:999px){#tkInstrumento{padding-top:40px}.tk-card>.toolbar{margin-top:16px}}
 
+/* ===== Aprender no mundo do Doppler ===== */
+.card-tit{font-weight:600;letter-spacing:-.015em}
+/* Meu estudo: o caminho e a rotina na coluna da esquerda; continuar e recordes na da direita */
+.inicio-esq{display:flex;flex-direction:column;gap:18px;min-width:0}
+.inicio-esq>.card{margin:0}
+.trilha-card{border:0}
+.trilha-card::after{display:none}
+.trilha-prog{width:auto;height:auto;border-radius:0;background:none;align-items:flex-end}
+.trilha-prog::before{display:none}
+.trilha-prog b{font-size:28px;font-weight:600;letter-spacing:-.03em;line-height:1;color:var(--osso);font-variant-numeric:tabular-nums}
+.trilha-prog span{font-size:13px}
+.etapa-num{border-width:1.5px}
+.etapa.feita .etapa-num{background:rgba(185,151,255,.16);color:var(--lavanda);border-color:transparent}
+.etapa.feita:not(:last-child)::after{background:rgba(185,151,255,.45)}
+.etapa.atual .etapa-num{background:var(--osso);color:var(--ameixa);border-color:var(--osso);box-shadow:none;animation:none}
+.continuar{border:0}
+.recordes .anel,.recordes .stat-ic{display:none}
+.recordes .mini-stats{gap:0 20px}
+.recordes .mini-stat{align-items:flex-start;text-align:left;gap:2px;padding:14px 0;box-shadow:inset 0 1px 0 var(--borda)}
+.recordes .mini-stat .stat{font-size:26px;font-weight:600;letter-spacing:-.03em;line-height:1.1;color:var(--osso);font-variant-numeric:tabular-nums}
+.recordes .mini-stat .muted{font-size:13px}
+.ritem{background:transparent;border-radius:0;padding:12px 0;box-shadow:inset 0 1px 0 var(--borda)}
+.ic-fole,.ic-escala,.ic-desafio,.ic-repertorio,.ic-ritmo{background:var(--ameixa-3);color:var(--lavanda)}
+/* Academia: o aviso discreto e o instrutor como o visor do Início (Agora em osso, Próximo em lavanda) */
+.aviso{background:var(--ameixa-2);border:0;box-shadow:inset 0 0 0 1px var(--borda);border-radius:16px}
+.aviso svg{stroke:var(--cinza-2)}
+.aviso strong{color:var(--osso);font-weight:600}
+.aviso-ler{color:var(--osso);font-weight:500;text-decoration-color:var(--borda-2);text-underline-offset:3px}
+.ac-rotulo{font-size:13px;font-weight:500;letter-spacing:0;text-transform:none;color:var(--cinza)}
+.ac-nota{color:var(--osso);font-weight:600;letter-spacing:-.03em}
+.ac-prox-box{margin:10px 0 12px;padding:12px 0 0;border:0;border-top:1px solid var(--borda);border-radius:0;background:none}
+.ac-prox-box .ac-rotulo{color:var(--cinza)}
+.ac-prox-nota{color:var(--lavanda);font-size:1.6rem;letter-spacing:-.02em}
+.ac-prox-box.fim{border:0;border-top:1px solid var(--borda)}
+.ac-dicas li{padding-left:26px;background:rgba(255,255,255,.04)}
+.ac-dicas li[class]::before,.ac-dicas li::before{width:8px;height:8px;top:14px;left:10px;background:var(--lavanda)}
+.ac-dicas .dica-fim::before{background:var(--ferro)}
+.ac-dicas-box .ac-dicas li,.ac-dicas-cel .ac-dicas li{color:var(--cinza-2)}
+/* Lições e Teoria */
+.lesson-list button{background:transparent;color:var(--cinza-2);font-weight:500;border-radius:10px}
+.lesson-list button:hover{background:rgba(255,255,255,.05);color:var(--osso)}
+.lesson-list button.active{background:var(--ameixa-3);box-shadow:none;color:var(--osso)}
+.tarefa{background:var(--ameixa-3);border:1px solid var(--borda)}
+.tarefa-ic{background:rgba(185,151,255,.16);color:var(--lavanda)}
+.te-topico{margin:2px 0 0;font-size:13px;color:var(--cinza)}
+.te-item.on .te-num{background:var(--lavanda);color:var(--ameixa)}
+.ac-modos{border:0;border-radius:14px;padding:4px;gap:4px;background:var(--ameixa-2);box-shadow:inset 0 0 0 1px var(--borda)}
+.ac-modos button{border-radius:10px;color:var(--cinza-2);font-weight:500}
+.ac-modos button.on{background:rgba(255,255,255,.1);color:var(--osso);font-weight:500;box-shadow:inset 0 0 0 1px var(--borda-2)}
+/* celular: "Continue de onde parou" primeiro, depois o caminho, a rotina e os recordes */
+@media (max-width:999px){
+  .inicio-esq,.inicio-lado{display:contents}
+  #continuar{order:-1}
+  .recordes{order:2}
+}
+
 /* ===== Página de Privacidade (privacidade/) ===== */
 main.priv-pagina{max-width:760px}
 .priv-topo{padding:48px 0 28px}
