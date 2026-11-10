@@ -505,7 +505,7 @@ function acadParar(){
   if(acad.raf) cancelAnimationFrame(acad.raf); acad.raf = null;
   if(acad.bus){ acad.bus.disconnect(); acad.bus = null; }
   acad.rodando = false; acad.demo = false;
-  $('#acStart').textContent = t('▶ Começar'); $('#acOuvirBtn').textContent = t('Ouvir'); botaoRodando($('#acStart'), false); botaoRodando($('#acOuvirBtn'), false);
+  $('#acStart').textContent = t('Começar'); $('#acOuvirBtn').textContent = t('Ouvir'); botaoRodando($('#acStart'), false); botaoRodando($('#acOuvirBtn'), false);
 }
 function novaRodada(){
   acad.res = acad.eventos.map(()=>({tentativas:0, primeira:null, ok:false}));
@@ -517,7 +517,7 @@ $('#acStart').onclick = ()=>{
   if(acad.rodando || acad.demo){ acadParar(); acadPrevia(); acadFeed(t('Parado.')); return; }
   if(!acad.eventos.length) return;
   ac(); acad.rodando = true; novaRodada(); renderFaixa(); acadRecolher(true); $('#acMais').open = false;
-  $('#acStart').textContent = t('■ Parar'); botaoRodando($('#acStart'), true); acadFeed('');
+  $('#acStart').textContent = t('Parar'); botaoRodando($('#acStart'), true); acadFeed('');
   // nível 1: notas novas a cada rodada, mas só ao apertar Começar depois de uma rodada (tocar o botão da prévia usa as notas mostradas)
   if(acad.ex.nivel===1 && acad.ex.gerar && acad.sortearDeNovo && !acad.autoInicio){ acad.todos = montarEventos(acad.ex); aplicarTrecho(); acad.rodando = true; novaRodada(); }
   acad.sortearDeNovo = false; acadInstrutor(0);
@@ -528,7 +528,7 @@ $('#acStart').onclick = ()=>{
 $('#acOuvirBtn').onclick = ()=>{
   if(acad.demo || acad.rodando){ acadParar(); acadDica(-1); return; }
   if(!acad.eventos.length) return;
-  ac(); acad.demo = true; renderFaixa(); $('#acOuvirBtn').textContent = t('■ Parar'); botaoRodando($('#acOuvirBtn'), true);
+  ac(); acad.demo = true; renderFaixa(); $('#acOuvirBtn').textContent = t('Parar'); botaoRodando($('#acOuvirBtn'), true);
   const c = ac(), spb = 60/(acad.bpm*acadVel()), t0 = c.currentTime + 0.3;
   if($('#acMetro').checked) for(let bt=0; bt < totalTempos(); bt++) clickSound(t0 + bt*spb, bt%4===0);
   acad.grupos.forEach((g,i)=>{

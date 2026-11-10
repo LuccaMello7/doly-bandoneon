@@ -30,9 +30,9 @@ function rollQuadro(){
   // guias verticais em cada Dó e a linha de tocar
   c.fillStyle = '#ffffff0d';
   for(let m=lo; m<=hi; m++) if(((m%12)+12)%12===0) c.fillRect((m-lo)*lw, 0, 1, H);
-  c.fillStyle = '#e6b45033'; c.fillRect(0, linha-6, W, 12);
-  c.fillStyle = '#e6b450'; c.fillRect(0, linha-1, W, 3);
-  c.font = '800 12px Onest, "Segoe UI", sans-serif'; c.textAlign = 'center'; c.textBaseline = 'middle';
+  c.fillStyle = '#b997ff2e'; c.fillRect(0, linha-6, W, 12);
+  c.fillStyle = '#b997ff'; c.fillRect(0, linha-1, W, 2);
+  c.font = '600 12px Onest, "Segoe UI", sans-serif'; c.textAlign = 'center'; c.textBaseline = 'middle';
   for(const n of ns){
     const fim = linha - (n.t - roll.pos)*ppt, alto = Math.max(14, n.beats*ppt - 4), topo = fim - alto;
     if(topo > H || fim < -4) continue;
@@ -43,7 +43,7 @@ function rollQuadro(){
     c.fillStyle = cor; c.beginPath();
     if(c.roundRect) c.roundRect(x, topo, w, alto, 6); else c.rect(x, topo, w, alto);
     c.fill();
-    if(agora){ c.strokeStyle = '#f0c96e'; c.lineWidth = 3; c.stroke(); }
+    if(agora){ c.strokeStyle = '#f1f0ec'; c.lineWidth = 3; c.stroke(); }
     if(alto >= 18 && w >= 22){ c.fillStyle = '#fff'; c.fillText(noteLabel(n).replace(/\d+$/,''), x + w/2, fim - 10); }
   }
   c.globalAlpha = 1;

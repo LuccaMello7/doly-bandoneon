@@ -105,7 +105,7 @@ function renderGuide(){
   ns.forEach((n,i)=>{ if(i && n.dir!==ns[i-1].dir) changes.push(`${lbl(ns[i-1])} → ${lbl(n)} (${dirLabel(n.dir).toLowerCase()})`); });
   $('#guideIntro').innerHTML = `<b>${T.info}</b><br>Notas: ${names.join(' · ')}<br>`+
     `Fole: começa <b>${dirLabel(ns[0].dir).toLowerCase()}</b>` + (changes.length ? ` e troca ${changes.length}×: ${changes.join('; ')}.` : ', sem trocas.')+
-    `<br><span class="muted">No modo Espera, siga o contorno dourado. Aqui embaixo aparece a explicação de cada passo.</span>`;
+    `<br><span class="muted">No modo Espera, siga o contorno lilás. Aqui embaixo aparece a explicação de cada passo.</span>`;
   $('#guideStep').innerHTML = '';
 }
 const lbl = n => n.spell ? spellName(n,true) : noteName(n.midi);

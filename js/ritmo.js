@@ -53,14 +53,14 @@ function scheduler(){
   rh.hitTimes=rh.hitTimes.filter(t=>t>c.currentTime-2);
 }
 function toggleRhythm(){
-  if(rh.playing){ clearInterval(rh.timer); rh.playing=false; $('#rPlay').textContent='▶ Tocar'; botaoRodando($('#rPlay'), false); $$('.step').forEach(x=>x.classList.remove('now')); return; }
+  if(rh.playing){ clearInterval(rh.timer); rh.playing=false; $('#rPlay').textContent='Tocar'; botaoRodando($('#rPlay'), false); $$('.step').forEach(x=>x.classList.remove('now')); return; }
   const c=ac(); rh.playing=true; rh.step=0; rh.next=c.currentTime+0.6; rh.hitTimes=[]; rh.errors=[];
-  rh.timer=setInterval(scheduler,25); $('#rPlay').textContent='■ Parar'; botaoRodando($('#rPlay'), true); $('#rFeed').textContent=''; $('#rStats').textContent='';
+  rh.timer=setInterval(scheduler,25); $('#rPlay').textContent='Parar'; botaoRodando($('#rPlay'), true); $('#rFeed').textContent=''; $('#rStats').textContent='';
 }
 $('#rPlay').onclick=toggleRhythm;
 // Compara o toque com a batida mais próxima, descontando a latência de saída do áudio
 function tap(){
-  if(!rh.playing){ $('#rFeed').className='feedback'; $('#rFeed').textContent='Aperte ▶ Tocar primeiro.'; return; }
+  if(!rh.playing){ $('#rFeed').className='feedback'; $('#rFeed').textContent='Aperte Tocar primeiro.'; return; }
   const now=ac().currentTime - (AC.outputLatency||0);
   const allHits=[...rh.hitTimes]; if(!allHits.length) return;
   const nearest=allHits.reduce((a,b)=>Math.abs(b-now)<Math.abs(a-now)?b:a);

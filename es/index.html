@@ -575,7 +575,7 @@
           <label class="nomes-chk"><input type="checkbox" class="nomesToggle" checked> Nombres de las notas</label>
         </div>
         <div class="acao">
-          <button class="btn btn-grande" id="melStart">▶ Comenzar</button>
+          <button class="btn btn-grande btn-play" id="melStart">Comenzar</button>
           <button class="btn sec" id="melEdit">Editar</button>
         </div>
         <div class="notice" id="melWarn" style="display:none;margin-top:10px"></div>
@@ -593,7 +593,7 @@
           <div class="side" id="mkLeftWrap"><div class="label">Mano izquierda</div><div id="mkLeft"></div></div>
           <div class="side" id="mkRightWrap"><div class="label">Mano derecha</div><div id="mkRight"></div></div>
         </div>
-        <p class="muted">El botón con borde dorado es el próximo a tocar. El color de cada nota muestra la dirección sugerida del fuelle: <span class="dirpill open" style="padding:1px 8px">abriendo</span> <span class="dirpill close" style="padding:1px 8px">cerrando</span>. Cambia la dirección con <kbd>Espacio</kbd> o marca "Fuelle automático".</p>
+        <p class="muted">El botón con borde lila es el próximo a tocar. El color de cada nota muestra la dirección sugerida del fuelle: <span class="dirpill open" style="padding:1px 8px">abriendo</span> <span class="dirpill close" style="padding:1px 8px">cerrando</span>. Cambia la dirección con <kbd>Espacio</kbd> o marca "Fuelle automático".</p>
       </div>
       <div class="card" id="melImport" style="display:none">
         <h3 style="margin-top:0">Importar MusicXML</h3>
@@ -650,7 +650,7 @@
       <p class="muted" id="chNotes" style="margin-top:0"></p>
       <div class="row" id="chVoicings"></div>
       <div class="row" style="margin-top:10px">
-        <button class="btn" id="chPlay">▶ Escuchar acorde</button>
+        <button class="btn btn-play" id="chPlay">Escuchar acorde</button>
         <button class="btn sec" id="chArp">Arpegio</button>
       </div>
       <p class="muted">En el bandoneón cada acorde se aprende dos veces, abriendo y cerrando, con botones diferentes. Las opciones son las posiciones más compactas del mapa, con el bajo en la tónica primero. "Inversión" significa otra nota del acorde en el bajo.</p>
@@ -755,7 +755,7 @@
       <label>BPM: <input type="range" id="rBpm" min="50" max="140" value="70"> <span id="rBpmVal">70</span></label>
       <label><input type="checkbox" id="rClick" checked> Metrónomo</label>
     </div>
-    <div class="acao"><button class="btn btn-grande" id="rPlay">▶ Tocar</button></div>
+    <div class="acao"><button class="btn btn-grande btn-play" id="rPlay">Tocar</button></div>
     <p id="rDesc" class="muted"></p>
     <div class="steps" id="rSteps"></div>
     <div class="muted" style="text-align:center">Compás de 4/4 dividido en corcheas: 1 y 2 y 3 y 4 y</div>
@@ -849,8 +849,8 @@
     </details>
     </div>
     <div class="acao">
-      <button class="btn btn-grande" id="acStart">▶ Comenzar</button>
-      <button class="btn sec" id="acOuvirBtn">Escuchar</button>
+      <button class="btn btn-grande btn-play" id="acStart">Comenzar</button>
+      <button class="btn sec btn-play" id="acOuvirBtn">Escuchar</button>
       <button class="btn sec" id="acCheiaBtn"><svg aria-hidden="true"><use href="#i-expand"/></svg>Pantalla completa</button>
       <button class="btn sec" id="acCheiaSair" hidden><svg aria-hidden="true"><use href="#i-x"/></svg>Salir de pantalla completa</button>
       <p class="muted ac-modo-info acao-dica" id="acModoInfo"></p>
@@ -1070,7 +1070,6 @@
 </section>
 <dialog class="boas" id="boasVindas" aria-labelledby="bvTit">
   <form method="dialog" id="bvForm">
-    <svg class="filete" aria-hidden="true"><use href="#i-filete"/></svg>
     <h2 id="bvTit">¡Bienvenido a BanDoly!</h2>
     <p class="muted">BanDoly es una app gratuita para aprender bandoneón. Tres preguntas rápidas arman tu camino de estudio.</p>
     <div class="bv-pontos" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
@@ -1087,7 +1086,7 @@
     <label class="ctl-liga"><input type="checkbox" id="pcLigado"> Tocar los botones con las teclas de la computadora</label>
     <div class="pc-mapa" id="pcMapa" translate="no"></div>
     <div class="row"><span class="muted" id="pcMapaDir"></span><button type="button" class="btn ghost" id="pcMapaTroca">Ver la otra dirección</button></div>
-    <p class="muted">Azul: mano izquierda. Dorado: mano derecha. Con el teclado activado, Espacio cambia el fuelle, ← y → sostienen la válvula de aire y ↑ y ↓ cambian la presión del fuelle.</p>
+    <p class="muted">Teclas lilas: mano izquierda. Teclas claras: mano derecha. Con el teclado activado, Espacio cambia el fuelle, ← y → sostienen la válvula de aire y ↑ y ↓ cambian la presión del fuelle.</p>
     <div class="row"><button type="button" class="btn" id="pcEditar">Editar el mapa</button><button type="button" class="btn sec" id="pcPadrao">Restaurar el predeterminado</button></div>
   </div>
   <div class="ctl-sec">

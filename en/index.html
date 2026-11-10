@@ -575,7 +575,7 @@
           <label class="nomes-chk"><input type="checkbox" class="nomesToggle" checked> Note names</label>
         </div>
         <div class="acao">
-          <button class="btn btn-grande" id="melStart">▶ Start</button>
+          <button class="btn btn-grande btn-play" id="melStart">Start</button>
           <button class="btn sec" id="melEdit">Edit</button>
         </div>
         <div class="notice" id="melWarn" style="display:none;margin-top:10px"></div>
@@ -593,7 +593,7 @@
           <div class="side" id="mkLeftWrap"><div class="label">Left hand</div><div id="mkLeft"></div></div>
           <div class="side" id="mkRightWrap"><div class="label">Right hand</div><div id="mkRight"></div></div>
         </div>
-        <p class="muted">The button with the gold outline is the next one to play. The color of each note shows the suggested bellows direction: <span class="dirpill open" style="padding:1px 8px">opening</span> <span class="dirpill close" style="padding:1px 8px">closing</span>. Switch direction with <kbd>Space</kbd> or check "Auto bellows".</p>
+        <p class="muted">The button with the lilac outline is the next one to play. The color of each note shows the suggested bellows direction: <span class="dirpill open" style="padding:1px 8px">opening</span> <span class="dirpill close" style="padding:1px 8px">closing</span>. Switch direction with <kbd>Space</kbd> or check "Auto bellows".</p>
       </div>
       <div class="card" id="melImport" style="display:none">
         <h3 style="margin-top:0">Import MusicXML</h3>
@@ -650,7 +650,7 @@
       <p class="muted" id="chNotes" style="margin-top:0"></p>
       <div class="row" id="chVoicings"></div>
       <div class="row" style="margin-top:10px">
-        <button class="btn" id="chPlay">▶ Hear chord</button>
+        <button class="btn btn-play" id="chPlay">Hear chord</button>
         <button class="btn sec" id="chArp">Arpeggio</button>
       </div>
       <p class="muted">On the bandoneon every chord must be learned twice, opening and closing, with different buttons. The options are the most compact shapes on the map, root in the bass first. "Inversion" means another chord note in the bass.</p>
@@ -755,7 +755,7 @@
       <label>BPM: <input type="range" id="rBpm" min="50" max="140" value="70"> <span id="rBpmVal">70</span></label>
       <label><input type="checkbox" id="rClick" checked> Metronome</label>
     </div>
-    <div class="acao"><button class="btn btn-grande" id="rPlay">▶ Play</button></div>
+    <div class="acao"><button class="btn btn-grande btn-play" id="rPlay">Play</button></div>
     <p id="rDesc" class="muted"></p>
     <div class="steps" id="rSteps"></div>
     <div class="muted" style="text-align:center">4/4 bar divided into eighth notes: 1 &amp; 2 &amp; 3 &amp; 4 &amp;</div>
@@ -849,8 +849,8 @@
     </details>
     </div>
     <div class="acao">
-      <button class="btn btn-grande" id="acStart">▶ Start</button>
-      <button class="btn sec" id="acOuvirBtn">Listen</button>
+      <button class="btn btn-grande btn-play" id="acStart">Start</button>
+      <button class="btn sec btn-play" id="acOuvirBtn">Listen</button>
       <button class="btn sec" id="acCheiaBtn"><svg aria-hidden="true"><use href="#i-expand"/></svg>Full screen</button>
       <button class="btn sec" id="acCheiaSair" hidden><svg aria-hidden="true"><use href="#i-x"/></svg>Exit full screen</button>
       <p class="muted ac-modo-info acao-dica" id="acModoInfo"></p>
@@ -1070,7 +1070,6 @@
 </section>
 <dialog class="boas" id="boasVindas" aria-labelledby="bvTit">
   <form method="dialog" id="bvForm">
-    <svg class="filete" aria-hidden="true"><use href="#i-filete"/></svg>
     <h2 id="bvTit">Welcome to BanDoly!</h2>
     <p class="muted">BanDoly is a free app for learning the bandoneon. Three quick questions set up your study path.</p>
     <div class="bv-pontos" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
@@ -1087,7 +1086,7 @@
     <label class="ctl-liga"><input type="checkbox" id="pcLigado"> Play the buttons with the computer keys</label>
     <div class="pc-mapa" id="pcMapa" translate="no"></div>
     <div class="row"><span class="muted" id="pcMapaDir"></span><button type="button" class="btn ghost" id="pcMapaTroca">See the other direction</button></div>
-    <p class="muted">Blue: left hand. Gold: right hand. With the keyboard on, Space switches the bellows, ← and → hold the air valve and ↑ and ↓ change the bellows pressure.</p>
+    <p class="muted">Lilac keys: left hand. Light keys: right hand. With the keyboard on, Space switches the bellows, ← and → hold the air valve and ↑ and ↓ change the bellows pressure.</p>
     <div class="row"><button type="button" class="btn" id="pcEditar">Edit the map</button><button type="button" class="btn sec" id="pcPadrao">Restore the default</button></div>
   </div>
   <div class="ctl-sec">

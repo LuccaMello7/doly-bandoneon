@@ -51,7 +51,7 @@ function confete(){
   if(movReduzido()) return;
   const cv = $('#confete'); if(!cv || !cv.getContext) return;
   const cx = cv.getContext('2d'), W = cv.width = innerWidth, H = cv.height = innerHeight;
-  const cores = ['#e6b450','#f0c96e','#f3e9d2','#3ccf8e','#ef6f9a','#4f9cf0'];
+  const cores = ['#b997ff','#d9c7ff','#f1f0ec','#ef6f9a','#8b7cf6','#cdb6ff'];
   const ps = Array.from({length:110}, ()=>({x:W/2+(Math.random()-.5)*W*.3, y:H*.42, vx:(Math.random()-.5)*13, vy:-Math.random()*13-5,
     r:Math.random()*7+4, a:Math.random()*6, va:(Math.random()-.5)*.35, c:cores[Math.random()*cores.length|0]}));
   const t0 = performance.now(); cv.hidden = false;
