@@ -288,6 +288,9 @@ Diretos e calmos: uma cor chapada, sem gradiente, sem brilho.
 ### O instrumento (componente de assinatura)
 O teclado Rheinische 142 inteiro, tocável. Cada mão é uma placa quase preta (placa) com os botões em madrepérola, com degradê radial de luz no canto superior esquerdo e o nome da nota em 600 a .205em. Aceso, o botão ganha a cor do fole (azul abrindo, laranja fechando) e afunda. No centro, o fole: pregas em listras ameixa e vinho que estreitam ao fechar (.5s, curva de saída), a chave Abrindo/Fechando (painel de 14px com dois botões; o pressionado toma a cor do fole) e o visor, que mostra a nota tocada em 30px e as duas notas do botão em azul e laranja. Ao trocar o fole, os nomes dos 71 botões trocam em cascata da esquerda para a direita (34ms por coluna, 140ms por troca). O foco de teclado é um anel lavanda de 2px.
 
+### Logo
+O bandoneonista desenhado do logo original, repintado na paleta do app (escolha do dono, 2026-11-10): o traço em madrepérola (`#cdbf9c`), os claros em osso e o fundo ameixa com uma luz violeta no alto. O ícone do app e o do topo levam só o desenho; o nome BanDoly vem ao lado (no topo) ou embaixo (no celular), em Onest, com "Doly" em lavanda nas peças de divulgação. Os arquivos saem de `ferramentas/gerar_logo.py`; a versão azul e dourada fica em `icones/originais/`. Dívida: falta a versão em vetor, feita por um designer.
+
 ### Aurora
 Três gradientes radiais (rosa `rgba(255,158,250,.34)`, violeta `rgba(107,19,245,.5)`, brasa `rgba(255,86,50,.3)`) desfocados em 28px, atrás do instrumento e só dele.
 

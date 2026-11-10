@@ -57,7 +57,7 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
   - **aprender:** estudo, academia, licoes, teoria;
   - **tocar:** teclado, melodias, acordes, microfone;
   - **treinar:** desafios, eco (o jogo RepeTCHÊ: o bandoneon toca, você repete; js/eco.js e o gaúcho em imagens/repetche/. Tem música do dia com sequência, "Suas músicas" com as melodias e partituras do aluno e modo microfone), ritmo;
-  - **professores:** professor (Mandar tarefa), relatorios, turmas (aba escondida enquanto `TURMAS_LIGADAS` é false);
+  - **professores:** professor (Mandar tarefa), relatorios, turmas (`TURMAS_LIGADAS`; ligada desde 2026-11-10);
   - **perfil** (a área da conta): conta, perfil (Conquistas), ajustes. Não tem botão no menu: abre pelo
     "Entrar" / círculo com a inicial no topo (`#contaTopo`, com menu `#contaMenu`).
 - Cada aba é `<section id="v-nome">`. O botão dela fica em `#subnav`, com `data-area` e `data-v`.
@@ -153,7 +153,7 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
   `teoria-textos.js`. O container leva `translate="no"`. Senão o observer picota a frase.
 - Nomes próprios e coisas que não se traduzem: `translate="no"` ou a lista `IGUAIS`/`NAO_E_TEXTO` em
   `ferramentas/extrair_textos.py`.
-- As páginas `es/` e `en/` são **geradas**: nunca edite à mão. O espanhol é neutro e rio-platense; o inglês é britânico
+- As páginas `es/` e `en/` são **geradas**: nunca edite à mão. O espanhol é **rio-platense, com voseo** (tocá, podés, acá; subjuntivo como no Rio da Prata: "que puedas"); o inglês é britânico
   (crotchet, quaver, practise).
 - Ao criar uma tela, acrescente-a em `percorrerApp()` (tests/testes.js). O teste de tradução percorre o
   app em es e en procurando texto em português (`PARECE_PT`).
@@ -161,6 +161,8 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
 ## 4. Páginas estáticas (SEO)
 
 - `doly-costa/`: a história do Doly, contada pela rolagem.
+- **Logo:** opção B (madrepérola sobre ameixa). Os ícones, o favicon e as imagens de compartilhar saem de
+  `python ferramentas/gerar_logo.py`, a partir de `icones/originais/` (os arquivos azul e dourado de antes).
 - `professores/`: página aberta para professores (pt é a fonte; es/en gerados). `professores/panfleto.pdf` e
   `icones/qr-professores.svg` saem de `python ferramentas/gerar_panfleto.py`.
 - `perguntas-frequentes/`: busca, categorias e FAQPage montada pelo script.

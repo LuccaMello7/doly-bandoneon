@@ -75,24 +75,24 @@ Criado em homenagem a Doly Costa, bandoneonista de Caçapava do Sul (RS).
 BanDoly es una app para aprender bandoneón, el instrumento del tango, un botón a la vez.
 
 UN TECLADO DE VERDAD
-Los 71 botones del bandoneón Rheinische 142, con el sonido grabado de un instrumento de 1930. Cambia el fuelle y mira cómo cada botón cambia de nota abriendo y cerrando.
+Los 71 botones del bandoneón Rheinische 142, con el sonido grabado de un instrumento de 1930. Cambiá el fuelle y mirá cómo cada botón cambia de nota abriendo y cerrando.
 
-APRENDE A TU RITMO
+APRENDÉ A TU RITMO
 • Lecciones cortas sobre el instrumento, el fuelle, la lectura y los ritmos del tango, con preguntas al final.
 • Teoría musical: pentagrama, claves, figuras, compás, escalas y acordes.
 • Academia: ejercicios por niveles, del primer botón hasta músicas con las dos manos. El instructor muestra la nota, el botón y la dirección del fuelle, y al final te dice qué acertaste y qué repasar.
 
-PRACTICA
+PRACTICÁ
 • Melodías y escalas guiadas, con la partitura acompañando.
 • Ritmos del tango con metrónomo y el modo Toca junto.
-• Desafíos, entrenamiento del oído y RepeTCHÊ: el bandoneón toca y tú repites.
-• Bandoneón real: activa el micrófono y la app muestra la nota que tocaste en tu instrumento, con afinador.
+• Desafíos, entrenamiento del oído y RepeTCHÊ: el bandoneón toca y vos repetís.
+• Bandoneón real: activá el micrófono y la app muestra la nota que tocaste en tu instrumento, con afinador.
 
 PARA PROFESORES
-Envía una tarea a tu alumno con un enlace (WhatsApp, correo). Abre el ejercicio listo, con tu mensaje, y te devuelve el informe.
+Enviá una tarea a tu alumno con un enlace (WhatsApp, correo). Abrí el ejercicio listo, con tu mensaje, y te devuelve el informe.
 
 TU PROGRESO
-Funciona sin registro: el progreso queda en tu dispositivo. Si quieres, crea una cuenta (para mayores de 18 años) con Google o con un enlace en tu correo y sigue en cualquier dispositivo.
+Funciona sin registro: el progreso queda en tu dispositivo. Si querés, creá una cuenta (para mayores de 18 años) con Google o con un enlace en tu correo y sigue en cualquier dispositivo.
 
 También funciona con teclado MIDI y con el teclado de la computadora. En portugués, español e inglés.
 

@@ -5,8 +5,8 @@
    - o aluno a recebe ao sincronizar e, enquanto estiver na turma, o professor vê o nome escolhido, os dias de
      prática e o resultado dos exercícios da tarefa (o "resumo"). Nada mais: nem e-mail, nem o resto do progresso.
    Banco: supabase/turmas.sql (tabelas turmas e turma_alunos, com regras de acesso por linha).
-   Enquanto o banco das turmas não estiver criado e testado, a aba fica fora do menu (abre por #turmas). */
-const TURMAS_LIGADAS = false;
+   O banco foi criado e testado pelo dono com duas contas em 2026-11-10: a aba está no menu. */
+const TURMAS_LIGADAS = true;
 let turmasProf = [], turmaAlunosProf = [], turmaAberta = null, turmasAluno = [], turmasErro = '';
 const turmaLink = codigo => baseDoApp() + '#turma=' + codigo;
 const usaTurmas = () => TURMAS_LIGADAS || store.get('turmasUso', false);

@@ -21,27 +21,27 @@ es: [
   quiz:[{q:'¿Para qué sirve la válvula de aire?',o:['Afinar el instrumento','Mover el fuelle sin producir sonido','Hacer el sonido más fuerte','Cambiar de octava']},
         {q:'¿Por qué un bandoneón de 71 botones se llama "de 142 voces"?',o:['Cada botón da una nota abriendo y otra cerrando','Tiene 142 lengüetas por botón','Son 142 botones en total','Por las dos octavas']}]},
 { title:'3. Bisonoro: abriendo y cerrando', html:`
-  <p>Esta es la característica que más asusta al principio: el bandoneón tradicional es <b>bisonoro</b>. El <b>mismo botón</b> da una nota cuando <b>abres</b> el fuelle y <b>otra</b> cuando lo <b>cierras</b>.</p>
-  <p>Es decir, tienes que aprender <b>cuatro mapas</b>: mano derecha abriendo, mano derecha cerrando, mano izquierda abriendo y mano izquierda cerrando.</p>
-  <p><b>Ejercicio:</b> toca 3 botones abriendo, cambia la dirección y toca 3 cerrando. Observa cómo cambia la nota.</p>
+  <p>Esta es la característica que más asusta al principio: el bandoneón tradicional es <b>bisonoro</b>. El <b>mismo botón</b> da una nota cuando <b>abrís</b> el fuelle y <b>otra</b> cuando lo <b>cerrás</b>.</p>
+  <p>Es decir, tenés que aprender <b>cuatro mapas</b>: mano derecha abriendo, mano derecha cerrando, mano izquierda abriendo y mano izquierda cerrando.</p>
+  <p><b>Ejercicio:</b> tocá 3 botones abriendo, cambiá la dirección y tocá 3 cerrando. Observá cómo cambia la nota.</p>
   <div id="lessonKbd"></div>`,
-  quiz:[{q:'En un bandoneón bisonoro, ¿qué pasa si presionas el mismo botón abriendo y después cerrando?',o:['Suena la misma nota','Suenan notas diferentes','Solo funciona abriendo','La nota sube una octava']}]},
+  quiz:[{q:'En un bandoneón bisonoro, ¿qué pasa si presionás el mismo botón abriendo y después cerrando?',o:['Suena la misma nota','Suenan notas diferentes','Solo funciona abriendo','La nota sube una octava']}]},
 { title:'4. Fuelle y expresión', html:`
   <p>El fuelle es tu "arco de violín": controla el <b>volumen, el ataque y la expresión</b>. Los dedos solo eligen las notas.</p>
   <ul>
     <li>Más presión en el fuelle: sonido más fuerte. Presión suave: <i>piano</i>.</li>
-    <li>Planifica <b>dónde cambiar la dirección</b>, preferentemente entre frases o en silencios, como un cantante planifica la respiración.</li>
-    <li>Si el fuelle llega al final, usa la <b>válvula de aire</b> para reubicarlo en silencio.</li>
+    <li>Planificá <b>dónde cambiar la dirección</b>, preferentemente entre frases o en silencios, como un cantante planifica la respiración.</li>
+    <li>Si el fuelle llega al final, usá la <b>válvula de aire</b> para reubicarlo en silencio.</li>
     <li>Nunca fuerces el fuelle sin presionar botones ni la válvula: eso daña el instrumento.</li>
   </ul>
-  <p>En la pestaña <a href="#" data-go="teclado">Teclado</a> el fuelle está simulado: si tocas mucho tiempo en la misma dirección, llega al final. Usa <kbd>Espacio</kbd> para cambiar la dirección. Para reubicar el fuelle en silencio, mantén <kbd>←</kbd> o <kbd>A</kbd> (válvula abriendo) y <kbd>→</kbd> o <kbd>F</kbd> (válvula cerrando). Con el teclado de la computadora tocando notas, usa las flechas.</p>`,
+  <p>En la pestaña <a href="#" data-go="teclado">Teclado</a> el fuelle está simulado: si tocás mucho tiempo en la misma dirección, llega al final. Usá <kbd>Espacio</kbd> para cambiar la dirección. Para reubicar el fuelle en silencio, mantené <kbd>←</kbd> o <kbd>A</kbd> (válvula abriendo) y <kbd>→</kbd> o <kbd>F</kbd> (válvula cerrando). Con el teclado de la computadora tocando notas, usá las flechas.</p>`,
   quiz:[{q:'¿Qué controla principalmente el volumen y la expresión en el bandoneón?',o:['La fuerza de los dedos en los botones','El fuelle','La válvula de aire','Las correas']},
         {q:'El fuelle está casi totalmente abierto y la frase no terminó. Lo mejor habría sido…',o:['Forzar más','Haber planificado el cambio antes, o usar la válvula en un silencio','Soltar las correas','Tocar más rápido']}]},
 { title:'5. Lectura: dos claves', html:`
   <p>Las partituras de bandoneón usan un <b>sistema de dos pentagramas</b>, como el piano:</p>
   <ul><li><b>Clave de sol</b>: mano derecha (agudos).</li><li><b>Clave de fa</b>: mano izquierda (graves).</li></ul>
   <p>En clave de sol, las líneas de abajo hacia arriba son <b>Mi, Sol, Si, Re, Fa</b>. En clave de fa, <b>Sol, Si, Re, Fa, La</b>.</p>
-  <p>Practica en <a href="#" data-go="desafios">Desafíos → Lectura en el pentagrama</a>.</p>`,
+  <p>Practicá en <a href="#" data-go="desafios">Desafíos → Lectura en el pentagrama</a>.</p>`,
   quiz:[{q:'¿Qué clave suele leer la mano izquierda?',o:['Clave de sol','Clave de fa','Clave de do','Ninguna']},
         {q:'¿Qué nota está en la 2.ª línea (de abajo hacia arriba) de la clave de sol?',o:['Mi','Sol','Si','Fa']}]},
 { title:'6. Ritmos del tango', html:`
@@ -52,14 +52,14 @@ es: [
     <li><b>3-3-2</b>: las ocho corcheas agrupadas en 3+3+2.</li>
     <li><b>Arrastre</b>: un "arrastre" que crece hasta el tiempo fuerte.</li>
   </ul>
-  <p>Escucha y toca junto en la pestaña <a href="#" data-go="ritmo">Ritmo</a>. Empieza despacio (60–70 BPM).</p>`,
+  <p>Escuchá y tocá junto en la pestaña <a href="#" data-go="ritmo">Ritmo</a>. Empezá despacio (60–70 BPM).</p>`,
   quiz:[{q:'¿Cómo se agrupan las 8 corcheas en el ritmo 3-3-2?',o:['4+4','2+2+2+2','3+3+2','3+2+3']},
         {q:'¿Qué caracteriza a la síncopa?',o:['Acento en el contratiempo','Notas largas','Solo tiempos fuertes','Ausencia de acentos']}]},
 { title:'7. Rutina de estudio', html:`
   <p>Una rutina corta y diaria rinde más que horas una vez por semana. La pestaña <a href="#" data-go="estudo">Mi estudio</a>, en Aprender, muestra tu <b>rutina de hoy</b> y cuántos días seguidos practicaste. Sugerencia de 20–30 minutos:</p>
   <ol>
     <li><b>5 min</b>: fuelle. Notas largas abriendo y cerrando, con volumen estable.</li>
-    <li><b>10 min</b>: mapa de botones. Escalas lentas de Do y Sol mayor, una mano por vez. Usa las <a href="#" data-go="melodias">Escalas guiadas</a> en el modo Espera y el desafío <i>Encuentra la nota</i>.</li>
+    <li><b>10 min</b>: mapa de botones. Escalas lentas de Do y Sol mayor, una mano por vez. Usá las <a href="#" data-go="melodias">Escalas guiadas</a> en el modo Espera y el desafío <i>Encontrá la nota</i>.</li>
     <li><b>5 min</b>: ritmo. Marcato y síncopa con metrónomo.</li>
     <li><b>5–10 min</b>: repertorio. Una melodía o un fragmento de tango importado (MusicXML), bien despacio, y los acordes del acompañamiento.</li>
   </ol>
@@ -73,14 +73,14 @@ es: [
     <li><b>Acento</b>: un impulso rápido del fuelle al comienzo de la nota (o del acorde) la hace sonar más fuerte. Es lo que da peso al <i>marcato</i>.</li>
     <li><b>Arrastre</b>: el sonido empieza un poco antes del tiempo y crece hasta el acento. Sale de un movimiento de fuelle que acelera hasta el tiempo fuerte.</li>
   </ul>
-  <p>Pruébalo en la pestaña <a href="#" data-go="teclado">Teclado</a>: toca una escala ligada y después picada. En la pestaña <a href="#" data-go="ritmo">Ritmo</a>, escucha el patrón "Marcato con arrastre".</p>`,
+  <p>Probalo en la pestaña <a href="#" data-go="teclado">Teclado</a>: tocá una escala ligada y después picada. En la pestaña <a href="#" data-go="ritmo">Ritmo</a>, escuchá el patrón "Marcato con arrastre".</p>`,
   quiz:[{q:'¿Qué produce el acento de un acorde en el bandoneón?',o:['Presionar el botón con más fuerza','Un impulso rápido del fuelle','La válvula de aire','Cambiar de mano']},
         {q:'¿Por qué el legato es más fácil con las notas en la misma dirección del fuelle?',o:['Porque el fuelle no necesita parar para invertir','Porque las notas suenan más agudas','Porque usa menos botones','No hace diferencia']}]},
 { title:'9. Acordes en el bandoneón', html:`
   <p>Un acorde se forma con notas apiladas en terceras. El <b>mayor</b> tiene fundamental, tercera mayor y quinta (Do-Mi-Sol). El <b>menor</b> tiene la tercera menor (La-Do-Mi). El de <b>séptima</b> (dominante) agrega la séptima menor (Sol-Si-Re-Fa) y "pide" resolver en el acorde siguiente.</p>
   <p>En el bandoneón bisonoro, <b>cada acorde tiene una forma abriendo y otra cerrando</b>, con botones diferentes. Por eso conviene aprender los acordes más usados en las dos direcciones.</p>
   <p>En el acompañamiento de tango, la mano izquierda suele tocar el <b>bajo</b> (fundamental) en el tiempo fuerte y el <b>acorde</b> en los otros tiempos, o el acorde entero en marcato.</p>
-  <p>En la pestaña <a href="#" data-go="acordes">Acordes</a> ves las formas de cada acorde en el teclado, las escuchas y practicas. Empieza por Lam, Rem, Mi7 y Do, muy comunes en tangos en La menor.</p>`,
+  <p>En la pestaña <a href="#" data-go="acordes">Acordes</a> ves las formas de cada acorde en el teclado, las escuchás y practicás. Empezá por Lam, Rem, Mi7 y Do, muy comunes en tangos en La menor.</p>`,
   quiz:[{q:'¿Qué notas forman el acorde de La menor?',o:['La, Do♯, Mi','La, Do, Mi','La, Re, Fa','La, Si, Do']},
         {q:'En el bandoneón bisonoro, un mismo acorde…',o:['Usa siempre los mismos botones','Tiene una forma abriendo y otra cerrando','Solo se puede tocar abriendo','Solo existe en la mano derecha']}]},
 { title:'10. Dos manos, un solo fuelle', html:`
@@ -89,19 +89,19 @@ es: [
     <li>En un momento dado, <b>las dos manos tocan en la misma dirección</b>. Una nota de la melodía y un bajo tocados juntos tienen que existir en la misma dirección.</li>
     <li>Mientras una nota está <b>sonando</b>, el fuelle no puede invertirse, o la nota cambia de altura en el medio. Por eso el cambio de dirección ocurre cuando las dos manos atacan juntas o en un silencio.</li>
   </ol>
-  <p>Cómo estudiar: primero cada mano sola, después las dos juntas bien despacio. En la pestaña <a href="#" data-go="melodias">Melodías</a>, abre el <i>Himno de la alegría a dos manos</i> en el modo Espera. La app planifica el fuelle para las dos manos y muestra la partitura en doble pentagrama.</p>`,
+  <p>Cómo estudiar: primero cada mano sola, después las dos juntas bien despacio. En la pestaña <a href="#" data-go="melodias">Melodías</a>, abrí el <i>Himno de la alegría a dos manos</i> en el modo Espera. La app planifica el fuelle para las dos manos y muestra la partitura en doble pentagrama.</p>`,
   quiz:[{q:'Melodía y bajo tocados al mismo tiempo tienen que estar…',o:['En direcciones opuestas del fuelle','En la misma dirección del fuelle','En la misma mano','En octavas iguales']},
         {q:'¿Qué pasa si el fuelle se invierte mientras una nota está sonando?',o:['Nada','La nota cambia de altura','El sonido se vuelve más fuerte','El fuelle se traba']}]},
 { title:'11. Cómo leer una partitura de tango', html:`
   <p>Las partituras para bandoneón solo suelen usar <b>dos pentagramas</b> (sol para la derecha, fa para la izquierda), como el piano. En las partes de orquesta típica, el bandoneón muchas veces tiene <b>un solo pentagrama</b>, en clave de sol, con la melodía o un contracanto. Los bajos quedan para el contrabajo y el piano.</p>
   <p>Qué buscar al abrir un tango:</p>
   <ul>
-    <li><b>Forma</b>: los tangos tradicionales suelen tener dos partes (A y B), y los más antiguos a veces una tercera (trío). Ubica dónde empieza cada parte.</li>
+    <li><b>Forma</b>: los tangos tradicionales suelen tener dos partes (A y B), y los más antiguos a veces una tercera (trío). Ubicá dónde empieza cada parte.</li>
     <li><b>Repeticiones</b>: barras de repetición, <i>D.C.</i> (volver al principio), <i>D.S.</i> (volver al signo 𝄋), <i>Coda</i> (𝄌) y <i>Fine</i> (fin).</li>
     <li><b>Tonalidad y compás</b>: muchos tangos están en tono menor y en 2/4 o 4/4.</li>
     <li><b>Indicaciones de carácter</b>: <i>marcato</i>, <i>legato</i>, <i>rall.</i> (desacelerando), <i>a tempo</i>, y dinámicas como <i>p</i>, <i>f</i> y <i>sfz</i>.</li>
   </ul>
-  <p>Consejo: con una partitura digital (MuseScore), exporta en MusicXML y usa <a href="#" data-go="melodias">Melodías → Importar MusicXML</a> para practicar fragmento por fragmento. Prefiere obras de dominio público o partituras que tengas derecho a usar.</p>`,
+  <p>Consejo: con una partitura digital (MuseScore), exportá en MusicXML y usá <a href="#" data-go="melodias">Melodías → Importar MusicXML</a> para practicar fragmento por fragmento. Prefiere obras de dominio público o partituras que tengas derecho a usar.</p>`,
   quiz:[{q:'¿Qué significa "D.C." en una partitura?',o:['Disminuir el volumen','Volver al principio','Duplicar el compás','Tocar con la mano derecha']},
         {q:'En una parte de orquesta típica, el bandoneón muchas veces…',o:['Tiene un solo pentagrama, en clave de sol','No tiene partitura','Lee solo cifrados','Usa clave de do']}]},
 ],

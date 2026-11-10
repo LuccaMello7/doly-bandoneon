@@ -34,7 +34,7 @@ TEXTOS = {
     pratique='No app, este tópico tem som e um teste rápido. Grátis e sem cadastro.', abrir='Abrir este tópico no app', tipo='Artigo'),
 'es': dict(titulo='Teoría musical para bandoneón', indice_titulo='Teoría musical para bandoneón: notas, pentagrama, ritmo y acordes | BanDoly',
     indice_desc='Teoría musical básica, con sonido, para quien toca el bandoneón: notas y octavas, pentagrama y claves, sostenido y bemol, figuras, compás, escalas y acordes.',
-    intro='Siete temas cortos con lo básico para leer partitura y entender los ejercicios. En la app, cada tema tiene sonido: el pentagrama toca la nota que eliges, las figuras suenan a tiempo y las escalas y los acordes suenan en el bandoneón.',
+    intro='Siete temas cortos con lo básico para leer partitura y entender los ejercicios. En la app, cada tema tiene sonido: el pentagrama toca la nota que elegís, las figuras suenan a tiempo y las escalas y los acordes suenan en el bandoneón.',
     topico='{t} | Teoría musical - BanDoly', n='Tema {i} de {n}', todos='Todos los temas', anterior='Anterior', proximo='Siguiente',
     pratique='En la app, este tema tiene sonido y una prueba rápida. Gratis y sin registro.', abrir='Abrir este tema en la app', tipo='Artículo'),
 'en': dict(titulo='Music theory for bandoneon', indice_titulo='Music theory for bandoneon: notes, staff, rhythm and chords | BanDoly',
