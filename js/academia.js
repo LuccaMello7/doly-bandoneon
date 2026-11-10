@@ -77,7 +77,7 @@ const ACADEMIA = [
   {id:'n2-sequencias', titulo:'Sequências simples', desc:'Pequenas sequências de botões vizinhos, devagar.', texto:'direita: Dó4 Ré4 Mi4 Ré4 | Dó4:2 p:2 | Mi4 Fá4 Sol4 Fá4 | Mi4:2 p:2', bpm:60},
   {id:'n2-indicador-medio', titulo:'Alternar indicador e médio', desc:'Alternância entre os dedos 2 e 3.', pendente:true},
   {id:'n2-anelar-minimo', titulo:'Anelar e mínimo', desc:'Movimentos com os dedos 4 e 5, os mais fracos.', pendente:true},
-  {id:'n2-memorizar', titulo:'Memorize a sequência', desc:'Ouça e veja a sequência (🔊 Ouvir). Ao começar, ela some: toque de memória.', texto:'direita: Mi4 Ré4 Dó4 Ré4 | Mi4 Mi4 Mi4:2', bpm:60, memorizar:true},
+  {id:'n2-memorizar', titulo:'Memorize a sequência', desc:'Ouça e veja a sequência (botão Ouvir). Ao começar, ela some: toque de memória.', texto:'direita: Mi4 Ré4 Dó4 Ré4 | Mi4 Mi4 Mi4:2', bpm:60, memorizar:true},
 ]},
 {nivel:3, titulo:'Independência dos dedos', objetivo:'Desenvolver coordenação e precisão. No modo Desafio a velocidade sobe conforme a sua precisão.', exercicios:[
   {id:'n3-escada', titulo:'Sobe e desce', desc:'Sequência ascendente e descendente.', texto:'direita: Dó4:8 Ré4:8 Mi4:8 Fá4:8 Sol4:8 Fá4:8 Mi4:8 Ré4:8 | Dó4:2', bpm:70},
@@ -228,6 +228,7 @@ function carregarExercicio(id){
   $('#acTrecho').style.display = ex.semTempo ? 'none' : '';
   $('#acExTitulo').textContent = ex.titulo; $('#acExDesc').textContent = ex.desc;
   $('#acRelatorio').innerHTML = ''; acadFeed('');
+  $('#acDigitar').hidden = !!ex.gerar; // sorteado a cada rodada: não há digitação para fixar
   if(typeof acadTranscricao==='function') acadTranscricao(); // js/partituras.js (carregado depois)
   aplicarTrecho(); renderAcadNiveis(); renderAcadLista(); refreshAll(); acadValidacaoTexto();
 }

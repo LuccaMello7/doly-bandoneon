@@ -185,7 +185,7 @@ function aposRelatorio(){
 let editandoDedos = false;
 function alternarEdicaoDedos(){
   if(!acad.ex) return;
-  if(acad.ex.gerar){ acadFeed(t('Este exercício é sorteado a cada rodada: não dá para fixar a digitação.'), 'bad'); return; }
+  if(acad.ex.gerar){ acadFeed(t('Este exercício é sorteado a cada rodada: não dá para fixar a digitação.')); return; }
   editandoDedos = !editandoDedos; acadParar(); acadPrevia();
   $('#acDigitar').classList.toggle('on', editandoDedos);
   $('#acStrip').classList.toggle('editando', editandoDedos);
@@ -204,8 +204,9 @@ $('#acStrip').addEventListener('click', e=>{
       ${[2,3,4,5].map(n=>`<button type="button" class="${ev.dedo===n?'on':''}" data-ev="${ev.id}" data-dedo="${n}">${n}</button>`).join('')}
       <button type="button" class="${ev.dedo==null?'on':''}" data-ev="${ev.id}" data-dedo="" aria-label="${t('Sem dedo')}">–</button></div>`; }).join('');
   const r = c.getBoundingClientRect(), base = $('#acCentro').getBoundingClientRect();
-  pop.style.left = Math.max(0, Math.min(base.width-230, r.left-base.left-60)) + 'px'; pop.style.top = (r.bottom-base.top+6) + 'px';
   pop.hidden = false;
+  const acima = r.top - base.top - pop.offsetHeight - 6;
+  pop.style.left = Math.max(0, Math.min(base.width-230, r.left-base.left-60)) + 'px'; pop.style.top = (acima >= 0 ? acima : r.bottom-base.top+6) + 'px';
 }, true);
 $('#acDedoPop').addEventListener('click', e=>{
   const b = e.target.closest('[data-ev]'); if(!b) return;

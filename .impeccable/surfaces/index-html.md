@@ -61,4 +61,4 @@ O palco abre com Fá#4 aceso e o visor mostrando as duas notas do botão; trocar
 ## Unresolved
 
 - Som na maquete: sintetizado; no site, o som gravado (sons/bandoneon.js), carregado no primeiro toque.
-- As outras abas ainda não foram desenhadas neste mundo.
+- 2026-11-10: as outras abas e as páginas abertas passaram para este mundo (commits 39739cd a 772719c e a correção seguinte), com revisão de acabamento do app inteiro: primeira rodada pediu capturas novas, a segunda deu "fix" com seis correções pequenas, aplicadas.

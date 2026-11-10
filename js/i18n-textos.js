@@ -763,7 +763,7 @@ const TEXTOS = {
 'Anelar e mínimo': ['Anular y meñique', 'Ring and little finger'],
 'Movimentos com os dedos 4 e 5, os mais fracos.': ['Movimientos con los dedos 4 y 5, los más débiles.', 'Movements with fingers 4 and 5, the weakest ones.'],
 'Memorize a sequência': ['Memoriza la secuencia', 'Memorise the sequence'],
-'Ouça e veja a sequência (🔊 Ouvir). Ao começar, ela some: toque de memória.': ['Escucha y mira la secuencia (🔊 Escuchar). Al empezar, desaparece: toca de memoria.', 'Listen to and watch the sequence (🔊 Listen). When you start, it disappears: play from memory.'],
+'Ouça e veja a sequência (botão Ouvir). Ao começar, ela some: toque de memória.': ['Escucha y mira la secuencia (botón Escuchar). Al empezar, desaparece: toca de memoria.', 'Listen to and watch the sequence (the Listen button). When you start, it disappears: play from memory.'],
 'Independência dos dedos': ['Independencia de los dedos', 'Finger independence'],
 'Desenvolver coordenação e precisão. No modo Desafio a velocidade sobe conforme a sua precisão.': ['Desarrollar coordinación y precisión. En el modo Desafío la velocidad sube según tu precisión.', 'Build coordination and precision. In Challenge mode the speed rises with your accuracy.'],
 'Sequência ascendente e descendente.': ['Secuencia ascendente y descendente.', 'Ascending and descending sequence.'],

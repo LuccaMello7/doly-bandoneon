@@ -139,7 +139,7 @@ components:
 
 # Design System: BanDoly
 
-<!-- Registrado em 2026-11-10 a partir do que foi publicado. Só a tela Início (#v-inicio) foi redesenhada neste mundo; as outras abas ainda carregam o visual antigo (ver "Dívida conhecida" em Do's and Don'ts). -->
+<!-- Registrado em 2026-11-10 a partir do que foi publicado. O Início foi o primeiro; no mesmo dia todas as abas do app e as páginas abertas (Doly, perguntas, lições, teoria, privacidade) passaram para este mundo, com revisão de acabamento do app inteiro. O que ainda destoa está em "Dívida conhecida". -->
 
 ## Overview
 
@@ -261,6 +261,11 @@ Diretos e calmos: uma cor chapada, sem gradiente, sem brilho.
 - **Teclado** (`.kbd`, `.key`): a placa e a madrepérola do instrumento do Início em todas as abas. O botão apertado acende na cor do fole (a placa leva `data-fole`); a pista de "toque aqui" é um contorno lavanda que pulsa, não um brilho.
 - **Grupos de ajustes** (`.grupo`): o nome em cima, 13px cinza, sem caixa alta.
 - **Página de texto** (`privacidade/`): coluna de 760px, título display, seções separadas por divisória de 1px.
+- **Botão de tocar** (`.btn-play`): o triângulo é desenhado no próprio botão (`::before`) e vira um quadrado enquanto toca (`.rodando`). Nada de caracteres ▶ e ■ nem de emoji no texto.
+- **Janelas** (`.boas`, `.boas.janela`): primeira visita, Sugestões, Controles de tocar e Compartilhar. Painel ameixa-2 com contorno borda-2, fundo de trás ameixa com desfoque; as opções são linhas com contorno fino, lavanda quando marcadas.
+- **Avisos flutuantes** (`.toast`, `.som-carregando`): a mesma pílula ameixa-2 com contorno, texto em 500.
+- **Mapa do teclado do computador** (`.pc-tecla`): mão esquerda em lilás, direita em osso. Azul e laranja nunca marcam mão, só a direção do fole.
+- **Perguntas das lições** (`.q`) e **Perguntas frequentes** (`.faq-item`): linhas separadas por divisória de 1px, sem caixa dentro do painel; a pergunta aberta fica em lavanda.
 
 ### Chips
 - **Pílula de direção:** cápsula de 12px de texto, azul ou laranja translúcido, com o texto num tom claro da mesma cor.
@@ -305,4 +310,9 @@ Três gradientes radiais (rosa `rgba(255,158,250,.34)`, violeta `rgba(107,19,245
 - **Don't** montar o primeiro viewport como título com print ao lado e fileira de cartões iguais.
 
 ### Dívida conhecida (não é regra do sistema)
-O Início e o Teclado foram redesenhados, e as peças comuns (botões, abas, cabeçalho de tela, teclado, fole, avisos) já seguem o sistema em todas as abas. Ainda faltam as composições próprias de Aprender, Treinar e Perfil e as páginas de Doly, perguntas, lições e teoria. As outras abas receberam os tokens novos e a fonte, mas ainda carregam cores fixas do visual antigo: gradientes azul-marinho no hero e nos blocos coloridos de atalho, a moldura dourada do teclado (agora pintada de lavanda pelo alias `--gold`), brilhos, sobretítulos em caixa alta (`.kicker`), botões `.btn` em lavanda com texto escuro, pesos 800 e 900 e easings elásticos `cubic-bezier(.34,1.4,.5,1)`. Os aliases `--gold`, `--gold2`, `--navy` e `--cream` existem só para essas abas continuarem funcionando; superfícies novas usam os nomes do mundo novo. Dentro do próprio Início, o cartão de instalar e o conteúdo fechado de "Sobre o BanDoly" ainda usam componentes antigos (`.card`, `.btn`, `.feat`, setas em texto). Nada disso deve ser copiado para superfícies novas.
+Todas as abas e as páginas abertas seguem o sistema desde 2026-11-10. O que ainda destoa:
+- **CSS em camadas:** as regras antigas continuam no começo do `css/app.css` e os blocos do mundo novo, no fim, as sobrescrevem. Os aliases `--gold`, `--gold2`, `--navy` e `--cream` existem por causa delas. Ao mexer numa peça, reescreva a regra de origem em vez de empilhar mais uma sobrescrita; superfícies novas usam só os nomes do mundo novo.
+- **Afinador (Bandoneon real):** o medidor vai do vermelho (desafinado) ao verde (afinado). O vermelho conta como erro; o verde é um segundo sentido para o verde de ir. Decisão do dono.
+- **Lições:** "Anterior" e "Próxima" usam setas de texto, não o ícone de seta.
+- **Respostas certas** nas perguntas das lições acendem no verde antigo (`--green`).
+- **Composição:** Ritmo e Ajustes são pilhas de painéis iguais, sem um momento próprio; Bandoneon real e Acordes podem ganhar a aurora atrás do instrumento, como o Teclado.

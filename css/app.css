@@ -2142,3 +2142,23 @@ main.priv-pagina{max-width:760px}
 /* botões de tocar: o triângulo vira quadrado enquanto toca (no lugar dos caracteres ▶ e ■) */
 .btn-play::before{content:"";flex:none;width:11px;height:12px;background:currentColor;clip-path:polygon(8% 0,100% 50%,8% 100%);transition:clip-path .2s var(--ease-saida)}
 .btn-play.rodando::before{width:11px;height:11px;clip-path:inset(0 round 2px)}
+
+/* ===== Segunda revisão de acabamento ===== */
+/* Desafios no celular: as quatro modalidades numa grade 2x2, nenhuma cortada pela borda */
+@media (max-width:600px){
+  #v-desafios>.segmento{display:grid;grid-template-columns:1fr 1fr;width:100%}
+  #v-desafios>.segmento .btn{white-space:nowrap;padding:8px 6px;font-size:.88rem;min-width:0}
+}
+/* perguntas das lições (no app e nas páginas): linhas com divisória dentro do painel, sem caixa dentro de caixa */
+.q{background:none;border-radius:0;padding:16px 0;margin:0;box-shadow:inset 0 -1px 0 var(--borda)}
+.q:first-of-type{box-shadow:inset 0 1px 0 var(--borda),inset 0 -1px 0 var(--borda)}
+.q>div:first-child{font-weight:500;color:var(--osso);margin-bottom:6px}
+/* "Sobre o BanDoly" (rodapé do Início): os cartões antigos sem marinho, sem borda girando e sem brilho */
+.feat{background:var(--ameixa-3);box-shadow:inset 0 0 0 1px var(--borda)}
+.feat::after,.feat::before{display:none}
+.feat-ic{background:rgba(185,151,255,.14);color:var(--lavanda)}
+@media (hover:hover){
+  .feat:hover{transform:none;background:var(--ameixa-3);box-shadow:inset 0 0 0 1px rgba(185,151,255,.5)}
+  .feat:hover .feat-ic{background:rgba(185,151,255,.14);color:var(--lavanda)}
+  .feat:hover h3{color:var(--osso)}
+}
