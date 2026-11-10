@@ -515,6 +515,7 @@ const TEXTOS = {
 'Com o padrão tocando, bata no botão abaixo (ou aperte': ['Con el patrón sonando, golpea el botón de abajo (o presiona', 'With the pattern playing, tap the button below (or press'],
 ') junto com cada acento. O app mede se você está adiantado ou atrasado.': [') junto con cada acento. La app mide si vas adelantado o atrasado.', ') along with each accent. The app measures whether you are early or late.'],
 'TOQUE AQUI': ['TOCA AQUÍ', 'TAP HERE'],
+'Toque aqui': ['Toca aquí', 'Tap here'],
 'Marcato em 4': ['Marcato en 4', 'Marcato in 4'],
 'A base do tango: acordes curtos e firmes nos 4 tempos, com o 1 e o 3 mais fortes. No bandoneon, a mão esquerda costuma marcar com acordes graves e o fole dá o "peso".': ['La base del tango: acordes cortos y firmes en los 4 tiempos, con el 1 y el 3 más fuertes. En el bandoneón, la mano izquierda suele marcar con acordes graves y el fuelle da el "peso".', 'The foundation of tango: short, firm chords on all 4 beats, with 1 and 3 stronger. On the bandoneon, the left hand usually marks with low chords and the bellows gives the "weight".'],
 'Marcato em 2': ['Marcato en 2', 'Marcato in 2'],

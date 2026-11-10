@@ -1386,18 +1386,18 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
 .eco-hud-item>span{font-size:.7rem;font-weight:650;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .eco-hud-item>b{font-size:1.35rem;line-height:1.2;font-variant-numeric:tabular-nums;display:flex;align-items:center;gap:4px}
 .eco-hud-item small{font-size:.8rem;color:var(--muted)}
-#ecoPontos.sobe{animation:ecoSobePts .35s cubic-bezier(.34,1.6,.5,1)}
+#ecoPontos.sobe{animation:ecoSobePts .35s cubic-bezier(.16,1,.3,1)}
 @keyframes ecoSobePts{40%{transform:scale(1.25);color:var(--gold2)}}
 .eco-combo svg{width:20px;height:20px;fill:none;stroke:var(--muted);transition:stroke .3s}
 .eco-hud-item small.eco-mult{display:none;margin-left:2px;padding:0 6px;border-radius:999px;background:#f08a4b;color:#1b1404;font-size:.78rem;font-weight:650}
-.eco-combo.quente small.eco-mult{display:inline-block;animation:ecoFaixaEntra .4s cubic-bezier(.34,1.6,.5,1) backwards}
+.eco-combo.quente small.eco-mult{display:inline-block;animation:ecoFaixaEntra .4s cubic-bezier(.16,1,.3,1) backwards}
 .eco-combo[data-mult="3"] small.eco-mult,.eco-combo[data-mult="4"] small.eco-mult{background:#ffd36e}
 .eco-combo.quente{background:linear-gradient(160deg,#5a2a14,#3a1f14);box-shadow:0 0 0 1px #f08a4b66,0 0 18px #f08a4b44}
 .eco-combo.quente svg{stroke:#ffb15c;fill:#f08a4b55;animation:ecoChama .7s ease-in-out infinite alternate}
 .eco-combo[data-mult="3"] svg,.eco-combo[data-mult="4"] svg{stroke:#ffd36e;fill:#f0a04b88}
 .eco-combo[data-mult="4"]{box-shadow:0 0 0 1px #ffd36e88,0 0 26px #f0a04b77}
 @keyframes ecoChama{to{transform:scale(1.15) rotate(-6deg)}}
-.eco-combo.estoura{animation:ecoEstoura .6s cubic-bezier(.34,1.6,.5,1)}
+.eco-combo.estoura{animation:ecoEstoura .6s cubic-bezier(.16,1,.3,1)}
 @keyframes ecoEstoura{30%{transform:scale(1.25) rotate(-3deg)}}
 
 /* faixa da fase: Rodada / Ouça… / Sua vez! / Perfeito! */
@@ -1408,8 +1408,8 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
 .eco-faixa small:empty{display:none}
 .eco-faixa.conta b{font-size:2.4rem;color:var(--gold2);animation:ecoConta .5s cubic-bezier(.2,.8,.2,1) backwards}
 @keyframes ecoConta{from{opacity:0;transform:scale(2.2)}}
-.eco-faixa.rodada b,.eco-faixa.bem b{animation:ecoFaixaEntra .5s cubic-bezier(.34,1.5,.5,1) backwards}
-.eco-faixa.rodada small{color:#5fd6e6;animation:ecoFaixaEntra .5s .15s cubic-bezier(.34,1.5,.5,1) backwards}
+.eco-faixa.rodada b,.eco-faixa.bem b{animation:ecoFaixaEntra .5s cubic-bezier(.16,1,.3,1) backwards}
+.eco-faixa.rodada small{color:#5fd6e6;animation:ecoFaixaEntra .5s .15s cubic-bezier(.16,1,.3,1) backwards}
 @keyframes ecoFaixaEntra{from{opacity:0;transform:translateY(10px) scale(.8)}}
 .eco-faixa.ouvir{background:linear-gradient(90deg,#123c56,#14506a,#123c56);background-size:200% 100%;animation:ecoBrilho 1.6s linear infinite}
 @keyframes ecoBrilho{to{background-position:-200% 0}}
@@ -1420,11 +1420,11 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
 @keyframes ecoBarras{from{transform:scaleY(.3)}to{transform:scaleY(1)}}
 .eco-faixa.vez{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#1b1404}
 .eco-faixa.vez small{color:#3b2a08}
-.eco-faixa.vez b{animation:ecoVez .55s cubic-bezier(.34,1.7,.5,1) backwards}
+.eco-faixa.vez b{animation:ecoVez .55s cubic-bezier(.16,1,.3,1) backwards}
 @keyframes ecoVez{from{transform:scale(.4);opacity:0}}
 .eco-faixa.perfeito{background:linear-gradient(135deg,#1f9e6e,#3ccf8e);color:#04150d}
 .eco-faixa.perfeito small{color:#063a24}
-.eco-faixa.perfeito b{animation:ecoPerfeito .7s cubic-bezier(.34,1.7,.5,1) backwards}
+.eco-faixa.perfeito b{animation:ecoPerfeito .7s cubic-bezier(.16,1,.3,1) backwards}
 @keyframes ecoPerfeito{from{transform:scale(.3) rotate(-8deg);opacity:0}60%{transform:scale(1.15) rotate(2deg)}}
 .eco-faisca{position:absolute;left:50%;top:50%;width:8px;height:8px;margin:-4px;border-radius:50%;background:#fff6c8;box-shadow:0 0 8px var(--gold2);pointer-events:none;
   animation:ecoFaisca .85s cubic-bezier(.2,.8,.2,1) forwards}
@@ -1436,13 +1436,13 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
 .eco-trilha i.trecho{background:#ffffff2e}
 .eco-trilha i.rodada{background:#5fd6e6;box-shadow:0 0 8px #5fd6e666}
 .eco-trilha i.feito{background:var(--green)}
-.eco-trilha i.novo{animation:ecoPop .5s cubic-bezier(.34,1.8,.5,1) backwards;animation-delay:var(--d,0ms)}
+.eco-trilha i.novo{animation:ecoPop .5s cubic-bezier(.16,1,.3,1) backwards;animation-delay:var(--d,0ms)}
 @keyframes ecoPop{from{transform:scale(0)}60%{transform:scale(1.6)}}
 .eco-trilha i.soa{animation:ecoSoa .4s ease-out}
 @keyframes ecoSoa{40%{transform:scale(1.7);background:#fff;box-shadow:0 0 14px #5fd6e6}}
 .eco-trilha i.atual{background:var(--gold);box-shadow:0 0 0 3px #b997ff55;animation:ecoAtual 1s ease-in-out infinite}
 @keyframes ecoAtual{50%{box-shadow:0 0 0 7px #b997ff00;transform:scale(1.2)}}
-.eco-trilha i.ok{background:var(--green);animation:ecoOk .45s cubic-bezier(.34,1.8,.5,1)}
+.eco-trilha i.ok{background:var(--green);animation:ecoOk .45s cubic-bezier(.16,1,.3,1)}
 @keyframes ecoOk{40%{transform:scale(1.7);box-shadow:0 0 14px var(--green)}}
 .eco-trilha i.erro{background:var(--red2)}
 .eco-trilha.treme{animation:errado .36s ease}
@@ -1465,7 +1465,7 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
 .eco-fim .filete{width:120px;height:40px;stroke:var(--gold);fill:none;stroke-width:2}
 .eco-fim h2{margin:4px 0 2px;color:var(--gold2)}
 .eco-estrelas{display:flex;justify-content:center;gap:10px;margin:14px 0 6px}
-.eco-estrelas svg{width:58px;height:58px;animation:ecoEstrela .6s cubic-bezier(.34,1.7,.5,1) backwards}
+.eco-estrelas svg{width:58px;height:58px;animation:ecoEstrela .6s cubic-bezier(.16,1,.3,1) backwards}
 .eco-estrelas svg:nth-child(1){animation-delay:.25s}.eco-estrelas svg:nth-child(2){animation-delay:.5s;width:72px;height:72px}.eco-estrelas svg:nth-child(3){animation-delay:.75s}
 .eco-estrelas svg.on{filter:drop-shadow(0 0 12px #b997ff88)}
 @keyframes ecoEstrela{from{opacity:0;transform:scale(0) rotate(-90deg)}}
@@ -1496,7 +1496,7 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
   box-shadow:0 8px 20px #0007;white-space:nowrap;opacity:0;transform:scale(.4);transform-origin:100% 100%}
 .gaucho-balao::after{content:"";position:absolute;right:-7px;bottom:6px;border:8px solid transparent;border-left-color:#fff;border-right:0}
 .gaucho.aparece{animation:gauchoSobe 1.8s cubic-bezier(.16,1,.3,1) both}
-.gaucho.aparece .gaucho-balao{animation:gauchoBalao 1.8s cubic-bezier(.34,1.6,.5,1) both}
+.gaucho.aparece .gaucho-balao{animation:gauchoBalao 1.8s cubic-bezier(.16,1,.3,1) both}
 @keyframes gauchoSobe{0%{transform:translateY(115%)}20%,82%{transform:translateY(0)}100%{transform:translateY(115%)}}
 @keyframes gauchoBalao{0%,16%{opacity:0;transform:scale(.4) rotate(-8deg)}28%,76%{opacity:1;transform:none}90%,100%{opacity:0;transform:scale(.85)}}
 /* tela do fim: o vídeo do começo até ele dizer "Muy bueno!" */
@@ -1504,14 +1504,14 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
 .gaucho-fim .gaucho-img{width:220px;border-radius:20px;border-bottom:3px solid var(--gold);box-shadow:0 10px 26px #0008}
 .gaucho-fim.danca .gaucho-img{animation:ecoEntra .5s cubic-bezier(.2,.8,.2,1) backwards}
 .gaucho-fim .gaucho-balao{opacity:1;transform:none;margin-top:0}
-.gaucho-fim.danca .gaucho-balao{animation:gauchoBalaoFim .55s 2.4s cubic-bezier(.34,1.7,.5,1) backwards} /* o balão aparece quando ele fala */
+.gaucho-fim.danca .gaucho-balao{animation:gauchoBalaoFim .55s 2.4s cubic-bezier(.16,1,.3,1) backwards} /* o balão aparece quando ele fala */
 @keyframes gauchoBalaoFim{from{opacity:0;transform:scale(.3) rotate(-10deg)}}
 @media (max-width:700px){.gaucho-img{width:112px}.gaucho-balao{font-size:1rem}.gaucho-fim .gaucho-img{width:170px}}
 /* cartões de música: são o botão de começar (o ▶ aparece ao passar o mouse e fica no cartão escolhido) */
 .eco-opcoes{margin-bottom:16px}
 .eco-escolha-tit{margin-bottom:2px}.eco-dica{margin:0 0 4px}
 .eco-jogar{position:absolute;right:12px;bottom:12px;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--gold);color:#1b1404;
-  box-shadow:0 6px 14px #0007;opacity:0;transform:scale(.6);transition:opacity .2s,transform .25s cubic-bezier(.34,1.6,.5,1)}
+  box-shadow:0 6px 14px #0007;opacity:0;transform:scale(.6);transition:opacity .2s,transform .25s cubic-bezier(.16,1,.3,1)}
 .eco-jogar svg{width:18px;height:18px;fill:currentColor;stroke:none;margin-left:2px}
 .eco-musica:hover .eco-jogar,.eco-musica:focus-visible .eco-jogar{opacity:1;transform:none}
 .eco-musica.on::after{display:none}
@@ -2091,6 +2091,43 @@ button.dirpill:focus-visible{outline:2px solid var(--lavanda)}
   #continuar{order:-1}
   .recordes{order:2}
 }
+
+/* ===== Treinar no mundo do Doppler ===== */
+/* RepeTCHÊ: lista de músicas, música do dia, placar, faixa e trilha */
+.eco-dia{background:var(--ameixa-2);border:0;box-shadow:inset 0 0 0 1px var(--borda)}
+.eco-dia.feita{background:var(--ameixa-2);box-shadow:inset 0 0 0 1px rgba(60,207,142,.45)}
+.eco-dia-txt b{font-size:1.15rem;font-weight:600}
+.eco-dia-seq{background:rgba(255,255,255,.06)}
+.eco-dia-seq.on{background:rgba(240,138,75,.14);color:#ffb487;box-shadow:none}
+.eco-musica{background:var(--ameixa-2);border:0;box-shadow:inset 0 0 0 1px var(--borda)}
+.eco-musica:hover{transform:translateY(-2px);box-shadow:inset 0 0 0 1px rgba(185,151,255,.5)}
+.eco-musica.on{background:var(--ameixa-2);box-shadow:inset 0 0 0 1.5px var(--lavanda)}
+.eco-musica b{font-weight:600}
+.eco-dif[data-dif="1"] i:nth-child(-n+1),.eco-dif[data-dif="2"] i:nth-child(-n+2),.eco-dif[data-dif="3"] i{background:var(--lavanda)}
+.eco-rec{color:var(--cinza-2)} .eco-rec.novo{color:var(--lavanda)}
+.eco-segs i.e1{background:rgba(185,151,255,.35)}.eco-segs i.e2{background:rgba(185,151,255,.65)}.eco-segs i.e3{background:var(--lavanda)}
+.eco-musica-tit{color:var(--osso);font-weight:600}
+.eco-hud-item{background:var(--ameixa-3)}
+.eco-hud-item>span{font-size:12px;font-weight:500;letter-spacing:0;text-transform:none;color:var(--cinza)}
+.eco-combo.quente{background:rgba(240,138,75,.14);box-shadow:none}
+.eco-combo[data-mult="4"]{box-shadow:none}
+.eco-faixa{background:var(--ameixa-3)}
+.eco-faixa small{font-weight:500}
+.eco-faixa.conta b{color:var(--lavanda)}
+.eco-faixa.ouvir{background:var(--ameixa-3);animation:none}
+.eco-faixa.rodada small{color:var(--lavanda)}
+.eco-faixa.vez{background:var(--lavanda);color:var(--ameixa)}
+.eco-faixa.vez small{color:#3a2f52}
+.eco-faixa.perfeito{background:#3ccf8e;color:#04150d}
+.eco-trilha i.rodada{background:rgba(185,151,255,.55);box-shadow:none}
+.eco-trilha i.atual{background:var(--osso);box-shadow:none;outline:2px solid var(--lavanda);outline-offset:2px}
+.eco-barra>div{background:var(--lavanda)}
+/* Ritmo: o tempo forte em lavanda cheia, o fraco em lavanda clara (azul é só do fole) e o botão de bater */
+.step.hit1{background:rgba(185,151,255,.22);color:var(--osso)}
+.step.hit2{background:var(--lavanda);color:var(--ameixa)}
+.step.now{outline:2px solid var(--osso)}
+.pad{background:var(--ameixa-3);color:var(--osso);font:500 1.25rem Onest,system-ui,sans-serif;letter-spacing:0;border-radius:20px;box-shadow:inset 0 0 0 1px rgba(185,151,255,.45)}
+.pad:active{background:var(--lavanda);color:var(--ameixa)}
 
 /* ===== Página de Privacidade (privacidade/) ===== */
 main.priv-pagina{max-width:760px}

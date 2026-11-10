@@ -104,8 +104,8 @@ function renderEcoMusicas(){
 function renderEcoDia(){
   const id = ecoDoDia(), mm = ecoMusica(id), feita = !!state.progress.ecoDias[dayKey()], seq = ecoSequenciaDias();
   const el = $('#ecoDia'); el.classList.toggle('feita', feita);
-  el.innerHTML = `<div class="eco-dia-txt"><span class="eco-dia-kicker">Música do dia</span><b>${mm.m.title}</b>`
-    + `<small class="muted">${feita ? t('Feita hoje! Amanhã tem outra.') : t('Uma fase por dia. Complete para manter a sequência.')}</small></div>`
+  el.innerHTML = `<div class="eco-dia-txt"><b>${mm.m.title}</b>`
+    + `<small class="muted">${t('Música do dia')} · ${feita ? t('Feita hoje! Amanhã tem outra.') : t('Uma fase por dia. Complete para manter a sequência.')}</small></div>`
     + `<div class="eco-dia-seq ${seq ? 'on' : ''}" aria-label="${t('Sequência de {} dia(s)', seq)}"><svg aria-hidden="true"><use href="#i-flame"/></svg><b>${seq}</b><small>${seq===1 ? t('dia') : t('dias')}</small></div>`
     + `<button type="button" class="btn ${feita ? 'sec' : ''}" data-id="${id}"><svg aria-hidden="true"><use href="#i-play"/></svg>${feita ? t('Jogar de novo') : t('Jogar')}</button>`;
 }
