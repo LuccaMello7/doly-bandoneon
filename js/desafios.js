@@ -8,12 +8,15 @@
 const fq={round:0,score:0,target:null,dir:'open',hand:'right',errors:0,dicas:0,active:false,resolvido:false,answer:null,heat:false,hist:[],timer:0,zona:null,dirAntes:null,zoomAn:null};
 // Durante a rodada o botão Começar de cada desafio vira "Recomeçar" e muda de cor; volta no fim ou ao trocar
 function botoesDesafio(){
-  [['#fStart',()=>fq.active], ['#sStart',()=>sq.active], ['#eStart',()=>typeof eq!=='undefined' && eq.active], ['#pStart',()=>typeof pq!=='undefined' && pq.active]]
+  [['#sStart',()=>sq.active], ['#eStart',()=>typeof eq!=='undefined' && eq.active], ['#pStart',()=>typeof pq!=='undefined' && pq.active]]
     .forEach(([id, ativo])=>{ const b = $(id); if(!b) return; const sim = !!ativo(); botaoRodando(b, sim);
       const txt = [...b.childNodes].reverse().find(n=>n.nodeType===3 && n.nodeValue.trim()); if(txt) txt.nodeValue = sim ? 'Recomeçar' : 'Começar'; });
 }
 // durante a rodada, sem nomes nos botões: senão o desafio é só achar a palavra escrita
 const fOpts=hand=>({ getDir:()=>fq.dir, showLabels:()=>fq.heat || (!fq.active && state.showLabels), sound:true, onPress:(b,m,dir,k)=>findPress(b,m,k) });
+// As escolhas do Encontre a nota são botões de rádio (controle segmentado): lê e muda pelo nome do grupo
+const fOpcao = nome => { const r = document.querySelector(`#chFind input[name="${nome}"]:checked`); return r ? r.value : ''; };
+function fEscolher(nome, valor){ const r = document.querySelector(`#chFind input[name="${nome}"][value="${valor}"]`); if(r) r.checked = true; }
 // Estatística por botão e direção: {ok, err}
 state.progress.btnStats = state.progress.btnStats || {};
 const statKey = (hand,id,dir) => `${hand}|${id}|${dir}`;
@@ -24,7 +27,7 @@ function findWeight(hand, b, dir){
 }
 function pickFindTarget(hand, dir){
   const L = state.layout[hand];
-  if($('#fMode').value!=='smart') return pick(L);
+  if(fOpcao('fMode')!=='smart') return pick(L);
   const w = L.map(b=>findWeight(hand,b,dir) * (b===fq.answer?0.1:1));
   let r = Math.random()*w.reduce((a,b)=>a+b,0);
   for(let i=0;i<L.length;i++){ r-=w[i]; if(r<=0) return L[i]; }
@@ -97,7 +100,7 @@ function nextFind(){
   clearTimeout(fq.timer);
   fkL.clearMarks(); fkR.clearMarks(); fq.zona = null; fTirarCirculo();
   if(fq.round>=10) return fimFind();
-  const hs=$('#fHand').value, ds=$('#fDir').value;
+  const hs=fOpcao('fHand'), ds=fOpcao('fDir');
   fq.hand = hs==='both'?pick(['left','right']):hs;
   fq.dir = ds==='rand'?pick(['open','close']):ds;
   fq.answer = pickFindTarget(fq.hand, fq.dir); fq.target=fq.answer[fq.dir];
@@ -114,7 +117,7 @@ function nextFind(){
   espera.then(()=>{ fq.timer = setTimeout(()=>{ if(fq.active && fq.round===rodada && fq.target===alvo) fOuvir(); }, 250); });
 }
 function fimFind(){
-  fq.active=false; fq.zona = null; fTirarCirculo(); refreshAll(); botoesDesafio(); fLados(false);
+  fq.active=false; fq.zona = null; fTirarCirculo(); refreshAll(); botoesDesafio(); fLados(false); fMenuJogo(false);
   $('#fAlvoRot').textContent = t('Fim da rodada'); $('#fTarget').textContent = `${fq.score}/10`; $('#fDirPill').style.visibility = 'hidden';
   fFeed(t(fq.score>=8?'Excelente!':fq.score>=5?'Bom trabalho, continue treinando.':'Treine mais no Teclado com os nomes visíveis.'), fq.score>=8 ? 'ok' : '');
   if(state.progress.find==null || fq.score>state.progress.find){ state.progress.find=fq.score; saveProgress(); }
@@ -128,9 +131,9 @@ function fimFind(){
 // Para o desafio e volta a tela ao começo (ao trocar de desafio, sair da aba ou abrir o mapa de erros)
 function pararFind(){
   clearTimeout(fq.timer); Object.assign(fq, {active:false, target:null, resolvido:false, zona:null, dirAntes:null}); fTirarCirculo();
-  fkL.clearMarks(); fkR.clearMarks(); fkL.setDim(false); fkR.setDim(false); refreshAll(); botoesDesafio(); fLados(false);
+  fkL.clearMarks(); fkR.clearMarks(); fkL.setDim(false); fkR.setDim(false); refreshAll(); botoesDesafio(); fLados(false); fMenuJogo(false);
   $('#fHud').hidden = true; $('#fTreinarBox').hidden = true;
-  $('#fAlvoRot').textContent = t('Toque em Começar'); $('#fTarget').textContent = '–'; $('#fDirPill').style.visibility = 'hidden';
+  $('#fAlvoRot').textContent = t('Toque em Começar desafio'); $('#fTarget').textContent = '–'; $('#fDirPill').style.visibility = 'hidden';
   fFeed(''); fBotoes();
 }
 function showFindTarget(){
@@ -169,13 +172,13 @@ function findPress(b,m,k){
 }
 $('#fStart').onclick=()=>{
   ac(); if(fq.heat) toggleHeat();
-  Object.assign(fq,{round:0,score:0,active:true,hist:[]}); nextFind();
+  Object.assign(fq,{round:0,score:0,active:true,hist:[]}); fMenuJogo(true); nextFind();
   // no celular, a nota e o teclado ficam à vista
   if(window.innerWidth < 900) $('#fPalco').scrollIntoView({block:'start', behavior: movReduzido() ? 'auto' : 'smooth'});
 };
 // Mapa de erros: pinta cada botão de verde (acerta) a vermelho (erra)
 function paintHeat(){
-  const dir = $('#fDir').value==='close' ? 'close' : 'open'; fq.dir = dir;
+  const dir = fOpcao('fDir')==='close' ? 'close' : 'open'; fq.dir = dir;
   for(const [k,hand] of [[fkL,'left'],[fkR,'right']]){
     k.setDim(false); k.refresh();
     for(const b of state.layout[hand]){
@@ -188,10 +191,25 @@ function toggleHeat(){
   fq.heat = !fq.heat; $('#fHeat').classList.toggle('on', fq.heat);
   $('#fHeatInfo').style.display = fq.heat ? 'block' : 'none';
   if(fq.heat){ pararFind(); $('#fAlvoRot').textContent = t('Mapa de erros'); paintHeat(); }
-  else { [fkL,fkR].forEach(k=>{ state.layout[k.hand].forEach(b=>k.tint(b.id,'')); k.refresh(); }); $('#fAlvoRot').textContent = t('Toque em Começar'); }
+  else { [fkL,fkR].forEach(k=>{ state.layout[k.hand].forEach(b=>k.tint(b.id,'')); k.refresh(); }); $('#fAlvoRot').textContent = t('Toque em Começar desafio'); }
 }
 $('#fHeat').onclick=toggleHeat;
-$('#fDir').addEventListener('change', ()=>{ if(fq.heat) paintHeat(); });
+// Antes de começar, o menu inteiro; durante o desafio, só uma barra com o resumo das escolhas e "Parar"
+function fMenuJogo(jogando){
+  $('#fConfig').hidden = jogando; $('#fResumo').hidden = !jogando;
+  if(!jogando) return;
+  const chip = (rotulo, valor) => `<span class="fd-chip"><small>${rotulo}</small>${escHtml(valor)}</span>`;
+  const escolhido = nome => { const r = document.querySelector(`#chFind input[name="${nome}"]:checked`); return r ? r.nextElementSibling.textContent.trim() : ''; };
+  $('#fResumoChips').innerHTML = chip(t('Mão'), escolhido('fHand')) + chip(t('Fole'), escolhido('fDir')) + chip(t('Sorteio'), escolhido('fMode'))
+    + chip(t('Círculo'), t($('#fCirculo').checked ? 'ligado' : 'desligado'));
+}
+$('#fParar').onclick = ()=>{ pararFind(); $('#fStart').focus({preventScroll:true}); };
+// as escolhas ficam guardadas para a próxima vez
+$$('#chFind .fd-seg input').forEach(r=>r.addEventListener('change', ()=>{
+  store.set('encontreAjustes', {fHand:fOpcao('fHand'), fDir:fOpcao('fDir'), fMode:fOpcao('fMode')});
+  if(r.name==='fDir' && fq.heat) paintHeat();
+}));
+{ const aj = store.get('encontreAjustes', null); if(aj) for(const [nome, valor] of Object.entries(aj)) fEscolher(nome, valor); }
 $('#fListen').onclick=fOuvir;
 $('#fAlvo').onclick=fOuvir;
 $('#fDica').onclick=fDica;

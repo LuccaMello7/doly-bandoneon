@@ -239,7 +239,7 @@ teste('sorteio inteligente favorece os botões mais errados', () => {
   const L = state.layout.right, alvo = L[5];
   L.forEach(b=>state.progress.btnStats[statKey('right',b.id,'open')] = {ok:10, err:0});
   state.progress.btnStats[statKey('right',alvo.id,'open')] = {ok:0, err:10};
-  $('#fMode').value='smart'; fq.answer=null;
+  fEscolher('fMode', 'smart'); fq.answer=null;
   let n=0; for(let i=0;i<2000;i++) if(pickFindTarget('right','open')===alvo) n++;
   state.progress.btnStats = JSON.parse(salvo);
   ok(n/2000 > 0.15, 'frequência '+(n/2000).toFixed(3)+' (sorteio puro seria 0,026)');
@@ -247,7 +247,7 @@ teste('sorteio inteligente favorece os botões mais errados', () => {
 teste('mapa de erros pinta os botões e some ao desligar', () => {
   go('desafios'); const b=state.layout.right[0];
   state.progress.btnStats[statKey('right',b.id,'open')] = {ok:0, err:3};
-  $('#fDir').value='open'; toggleHeat();
+  fEscolher('fDir', 'open'); toggleHeat();
   ok(document.querySelector('#fkRight .key').style.background.includes('rgb'), 'sem cor');
   toggleHeat(); igual(document.querySelector('#fkRight .key').style.background, '');
   delete state.progress.btnStats[statKey('right',b.id,'open')];
@@ -851,13 +851,14 @@ teste('botão de começar muda de cor enquanto roda (Melodias e Desafios)', () =
   ok($('#melStart').classList.contains('rodando'), 'Melodias: Parar com a cor de rodando');
   $('#melStart').click(); ok(!$('#melStart').classList.contains('rodando'), 'parou: volta ao normal');
   go('desafios'); $('[data-ch="find"]').click(); $('#fStart').click();
-  ok($('#fStart').classList.contains('rodando') && /Recomeçar/.test($('#fStart').textContent), 'Desafio: vira Recomeçar');
-  fq.round = 10; nextFind(); ok(!$('#fStart').classList.contains('rodando') && /Começar/.test($('#fStart').textContent), 'no fim volta a Começar');
+  ok($('#fConfig').hidden && !$('#fResumo').hidden && $$('#fResumoChips .fd-chip').length===4, 'Desafio: o menu vira uma barra de resumo com as escolhas');
+  fq.round = 10; nextFind(); ok(!$('#fConfig').hidden && $('#fResumo').hidden, 'no fim o menu volta');
+  igual($('#fStart').textContent.trim(), 'Começar desafio', 'o botão diz Começar desafio, nunca Recomeçar');
   go('inicio');
 });
 teste('Encontre a nota: toca a nota ao começar, dica em dois passos, placar e para ao sair da aba', async () => {
   const salvo = JSON.stringify(state.progress.btnStats), achado = state.progress.find, pausa = ms => new Promise(r=>setTimeout(r, ms));
-  go('desafios'); $('[data-ch="find"]').click(); $('#fHand').value = 'right'; $('#fDir').value = 'open';
+  go('desafios'); $('[data-ch="find"]').click(); fEscolher('fHand', 'right'); fEscolher('fDir', 'open');
   let tocou = 0; const pn = playNote; playNote = (...a)=>{ tocou++; return pn(...a); };
   try{
     pararFind(); ok($('#fHud').hidden && $('#fListen').disabled, 'antes de começar, sem placar e sem Ouvir');
@@ -881,6 +882,9 @@ teste('Encontre a nota: toca a nota ao começar, dica em dois passos, placar e p
     ok(/mais (aguda|grave)/.test($('#fFeed').textContent), 'o erro diz se é mais aguda ou mais grave');
     // de primeira e sem dica: conta ponto
     findPress(errado, errado.open, fkR); ok($$('#fkRight .key.hint').length===1, 'depois de dois erros, o botão aparece');
+    // "Parar" encerra e devolve o menu
+    { const r = fq.round; $('#fParar').click(); ok(!fq.active && !$('#fConfig').hidden && $('#fResumo').hidden, '"Parar" devolve o menu');
+      $('#fStart').click(); fq.round = r; }
     // sem o círculo ligado, ele não aparece sozinho: a 1ª dica é o círculo
     $('#fCirculo').checked = false; fq.round = 5; nextFind();
     ok(!fq.zona && !$('#chFind .fd-circulo'), 'sem a opção, nada de círculo'); igual($('#fDicaTxt').textContent, 'Ver uma dica');
@@ -888,7 +892,7 @@ teste('Encontre a nota: toca a nota ao começar, dica em dois passos, placar e p
     $('#fCirculo').checked = true;
     // sair da aba: o desafio para e volta a "Começar"
     go('teclado'); go('desafios'); ok(!$('#chFind .fd-circulo'), 'o círculo sai junto');
-    ok(!fq.active && $('#fHud').hidden, 'sair da aba para o desafio'); ok(!$('#chFind .side.fora'), 'e os dois teclados voltam'); igual($('#fStart').textContent.trim(), 'Começar');
+    ok(!fq.active && $('#fHud').hidden, 'sair da aba para o desafio'); ok(!$('#chFind .side.fora'), 'e os dois teclados voltam'); igual($('#fStart').textContent.trim(), 'Começar desafio');
     // o fim mostra as notas que precisaram de ajuda
     $('#fStart').click(); fq.hist = [{midi:64, limpo:false}, {midi:67, limpo:true}]; fq.round = 10; nextFind();
     ok(!$('#fTreinarBox').hidden && $$('#fTreinar [data-ouvir]').length===1, 'no fim, as notas com ajuda para ouvir');

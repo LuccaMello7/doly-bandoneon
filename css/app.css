@@ -2786,3 +2786,43 @@ main.prof-pagina{max-width:880px}
 @media (prefers-reduced-motion:reduce){.fd-circulo{animation:none}}
 #chFind .kbd{overflow:hidden} /* o círculo de um botão da borda não passa por cima do rótulo nem sai da caixa */
 .fd-alvo .fd-dir::before{display:none} /* o ícone do fole já faz o papel do pontinho */
+/* Encontre a nota: o menu (controles segmentados, interruptor do círculo) e a barra de resumo durante o desafio */
+.fd-config{display:grid;gap:14px;margin-top:4px}
+.fd-grupos{display:grid;grid-template-columns:1.1fr 1.25fr 1fr;gap:14px}
+.fd-grupo{border:0;margin:0;padding:0;min-width:0}
+.fd-grupo legend{padding:0;margin:0 0 8px;font:600 12px Onest,system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--cinza)}
+.fd-seg{display:flex;gap:4px;padding:4px;border-radius:14px;background:var(--ameixa);box-shadow:inset 0 0 0 1px var(--borda)}
+.fd-seg label{position:relative;flex:1 1 0;min-width:0;display:flex}
+.fd-seg input{position:absolute;inset:0;margin:0;opacity:0;cursor:pointer}
+.fd-seg span{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;min-height:42px;padding:6px 8px;border-radius:10px;
+  font:500 14px Onest,system-ui,sans-serif;color:var(--cinza-2);text-align:center;line-height:1.2;transition:background .2s,color .2s,box-shadow .2s}
+.fd-seg input:checked+span{background:var(--ameixa-3);color:var(--osso);box-shadow:inset 0 0 0 1px rgba(185,151,255,.55)}
+.fd-seg input:focus-visible+span{outline:2px solid var(--lavanda);outline-offset:1px}
+@media (hover:hover){.fd-seg label:hover input:not(:checked)+span{color:var(--osso);background:rgba(255,255,255,.04)}}
+.fd-ponto{width:9px;height:9px;border-radius:50%;flex:none}
+.fd-ponto.open{background:var(--open)} .fd-ponto.close{background:var(--close)}
+.fd-ponto+.fd-ponto{margin-left:-9px}
+.fd-switch{position:relative;display:flex;align-items:center;gap:14px;padding:12px 16px;border-radius:14px;cursor:pointer;background:var(--ameixa);box-shadow:inset 0 0 0 1px var(--borda)}
+.fd-switch input{position:absolute;width:1px;height:1px;opacity:0}
+.fd-switch-trilho{position:relative;flex:none;width:46px;height:26px;border-radius:999px;background:var(--ferro);transition:background .2s}
+.fd-switch-trilho::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:var(--osso);box-shadow:0 1px 3px rgba(0,0,0,.35);transition:transform .25s var(--ease-saida)}
+.fd-switch input:checked+.fd-switch-trilho{background:var(--lavanda)}
+.fd-switch input:checked+.fd-switch-trilho::after{transform:translateX(20px)}
+.fd-switch input:focus-visible+.fd-switch-trilho{outline:2px solid var(--lavanda);outline-offset:2px}
+.fd-switch-txt{display:grid;gap:2px;min-width:0}
+.fd-switch-txt b{font-weight:600;font-size:14.5px}
+.fd-switch-txt small{font-size:12.5px;color:var(--cinza)}
+.fd-config-acoes{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-top:2px}
+.fd-config-nota{margin:0;font-size:13px}
+.fd-resumo{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 10px 10px 12px;border-radius:14px;background:var(--ameixa);box-shadow:inset 0 0 0 1px var(--borda)}
+.fd-chips{display:flex;flex-wrap:wrap;gap:6px}
+.fd-chip{display:inline-flex;align-items:baseline;gap:6px;padding:5px 11px;border-radius:999px;background:var(--ameixa-3);font:500 13px Onest,system-ui,sans-serif;color:var(--osso)}
+.fd-chip small{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--cinza)}
+.fd-resumo .btn{flex:none}
+@media (max-width:899px){.fd-grupos{grid-template-columns:1fr 1fr}.fd-grupos .fd-grupo:last-child{grid-column:1/-1}}
+@media (max-width:599px){
+  .fd-grupos{grid-template-columns:1fr}
+  .fd-config-acoes .btn{flex:1 1 100%}
+  .fd-resumo{flex-direction:column;align-items:stretch}
+  .fd-resumo .btn{width:100%}
+}

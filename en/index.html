@@ -480,18 +480,35 @@
   <div class="card" id="chFind">
     <h2>Find the note</h2>
     <p class="muted">The app shows and plays a note, with the bellows direction. Find the right button on the keyboard. Ten rounds.</p>
-    <div class="row">
-      <label>Hand: <select id="fHand"><option value="right">Right</option><option value="left">Left</option><option value="both">Both</option></select></label>
-      <label>Direction: <select id="fDir"><option value="open">Opening</option><option value="close">Closing</option><option value="rand">Random</option></select></label>
-      <label>Selection: <select id="fMode"><option value="smart">Smart (focuses on your mistakes)</option><option value="rand">Random</option></select></label>
-      <label class="nomes-chk"><input type="checkbox" id="fCirculo" checked> Circle around the note’s area</label>
+    <div class="fd-config" id="fConfig">
+      <div class="fd-grupos">
+        <fieldset class="fd-grupo"><legend>Hand</legend><div class="fd-seg">
+          <label><input type="radio" name="fHand" value="right" checked><span>Right</span></label>
+          <label><input type="radio" name="fHand" value="left"><span>Left</span></label>
+          <label><input type="radio" name="fHand" value="both"><span>Both</span></label>
+        </div></fieldset>
+        <fieldset class="fd-grupo"><legend>Bellows</legend><div class="fd-seg">
+          <label><input type="radio" name="fDir" value="open" checked><span><i class="fd-ponto open" aria-hidden="true"></i>Opening</span></label>
+          <label><input type="radio" name="fDir" value="close"><span><i class="fd-ponto close" aria-hidden="true"></i>Closing</span></label>
+          <label><input type="radio" name="fDir" value="rand"><span><i class="fd-ponto open" aria-hidden="true"></i><i class="fd-ponto close" aria-hidden="true"></i>Both</span></label>
+        </div></fieldset>
+        <fieldset class="fd-grupo"><legend>Draw</legend><div class="fd-seg">
+          <label><input type="radio" name="fMode" value="smart" checked><span>Focus on mistakes</span></label>
+          <label><input type="radio" name="fMode" value="rand"><span>Random</span></label>
+        </div></fieldset>
+      </div>
+      <label class="fd-switch"><input type="checkbox" id="fCirculo" role="switch" checked><span class="fd-switch-trilho" aria-hidden="true"></span><span class="fd-switch-txt"><b>Circle around the note’s area</b><small>Shows roughly where the button is. It costs no points.</small></span></label>
+      <div class="fd-config-acoes">
+        <button class="btn btn-grande" id="fStart"><svg aria-hidden="true"><use href="#i-play"/></svg>Start challenge</button>
+        <button class="btn sec" id="fHeat"><svg aria-hidden="true"><use href="#i-flame"/></svg>Mistake map</button>
+        <p class="muted fd-config-nota">During the challenge the button names are hidden.</p>
+      </div>
     </div>
-    <div class="acao">
-      <button class="btn btn-grande" id="fStart"><svg aria-hidden="true"><use href="#i-play"/></svg>Start</button>
-      <button class="btn sec" id="fHeat"><svg aria-hidden="true"><use href="#i-flame"/></svg>Mistake map</button>
-      <p class="muted acao-dica">During the challenge the button names are hidden.</p>
+    <div class="fd-resumo" id="fResumo" hidden>
+      <div class="fd-chips" id="fResumoChips"></div>
+      <button type="button" class="btn ghost" id="fParar"><svg aria-hidden="true"><use href="#i-x"/></svg>Stop</button>
     </div>
-    <p class="muted" id="fHeatInfo" style="display:none">Colors show your mistake rate in the direction chosen under "Direction": green = you get it right, red = you get it wrong. Buttons without color have not come up yet.</p>
+    <p class="muted" id="fHeatInfo" style="display:none">Colours show your mistake rate in the direction chosen under "Bellows": green = you get it right, red = you get it wrong. Buttons without colour have not come up yet.</p>
     <div class="fd-palco" id="fPalco">
       <div class="qn-hud" id="fHud" hidden>
         <span class="qn-hud-item">Round <b><span id="fRodada">1</span><small>/10</small></b></span>
@@ -500,7 +517,7 @@
       </div>
       <div class="fd-topo">
         <button type="button" class="fd-alvo" id="fAlvo" aria-label="Hear the note again" disabled>
-          <span class="fd-alvo-rot" id="fAlvoRot">Press Start</span>
+          <span class="fd-alvo-rot" id="fAlvoRot">Press Start challenge</span>
           <span class="target" id="fTarget">–</span>
           <span id="fDirPill" class="dirpill open" style="visibility:hidden"></span>
         </button>

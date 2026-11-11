@@ -73,6 +73,9 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
   e fica um círculo `.fd-circulo` (centro sorteado perto do botão, `fq.zona`). A direção do fole aparece no cartão, num
   selo em cima do teclado (`fLados`) e na frase da rodada. A dica mostra o botão (`hint`; sem círculo, a 1ª dica é ele).
   Ponto só de primeira e sem dica. Sair da aba ou trocar de desafio chama `pararFind()`.
+- O menu é de controles segmentados (rádios `fHand`, `fDir`, `fMode`: leia com `fOpcao(nome)`, mude com `fEscolher`),
+  guardados em `encontreAjustes`, e o interruptor `#fCirculo`. Durante o desafio, `fMenuJogo(true)` troca o menu por uma
+  barra de resumo com "Parar": o botão é sempre "Começar desafio" (o `#fStart` saiu de `botoesDesafio`).
 
 ### Qual é a nota? (qualnota.js, aba "Qual nota?" em Treinar)
 - Quiz de ouvido: toca a nota de um botão e mostra quatro nomes. O Dó central de referência nunca toca colado na
