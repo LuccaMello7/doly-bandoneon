@@ -890,6 +890,22 @@ teste('Menus de Melodias, Acordes e Teclado: botões lado a lado, resumo enquant
   const nomes = state.showLabels; $('#labelsBtn').click(); igual($('#labelsBtn').getAttribute('aria-pressed'), String(!nomes)); $('#labelsBtn').click();
   tkAjustes(aberto); go('inicio');
 });
+teste('Acordes: no treino da mão esquerda, só o teclado esquerdo aparece e botões da direita não contam', () => {
+  go('acordes'); $('#chMenu [data-v="left"]').click(); $('#chTrain').click();
+  igual(ch.hand, 'left');
+  ok(getComputedStyle($('#ckLeftWrap')).display!=='none' && getComputedStyle($('#ckRightWrap')).display==='none', 'só o teclado da mão esquerda');
+  // um botão da mão direita é recusado, com aviso
+  const direita = state.layout.right[0]; chordPress(direita, direita[ch.dir], 'right');
+  ok(!ch.picked.has(direita.id) && /esquerda/.test($('#chFeed').textContent), 'a outra mão não entra e o app avisa');
+  // mesmo que um botão da direita entre por outro caminho, ele não conta: a resposta certa só vale com a mão esquerda
+  const {pc, type} = ch.target, alvo = new Set(CHORD_TYPES[type].iv.map(i=>(pc + i) % 12));
+  state.layout.right.filter(b=>alvo.has(((b[ch.dir] % 12) + 12) % 12)).forEach(b=>ch.picked.add(b.id));
+  const antes = ch.score; $('#chCheck').click(); igual(ch.score, antes, 'botões da mão direita não acertam um acorde da esquerda');
+  // a rodada seguinte continua só com a mão esquerda
+  nextChordRound(); ok(getComputedStyle($('#ckRightWrap')).display==='none', 'e assim continua nas outras rodadas');
+  ok($('#chRelTit').textContent.includes(maoNome('left')), 'o Relembre diz a mão');
+  $('#chStop').click(); go('inicio');
+});
 teste('Acordes: no treino, dá para ouvir os botões marcados juntos ou em arpejo antes de conferir', () => {
   go('acordes'); $('#chHand').value = 'left'; $('#chTrain').click();
   ok($('#chOuvirSel').disabled && $('#chArpSel').disabled, 'sem botões marcados, não há o que ouvir');

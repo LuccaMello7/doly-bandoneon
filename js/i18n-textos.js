@@ -1568,6 +1568,8 @@ const TEXTOS = {
 'Teoria: quanto dura cada nota e como se conta o tempo.': ['Teoría: cuánto dura cada nota y cómo se cuenta el tiempo.', 'Theory: how long each note lasts and how to count the beat.'],
 // Conta opcional, Termos de Uso e Privacidade com conta (2026-11-10)
 'Conta': ['Cuenta', 'Account'],
+'Este acorde é na mão esquerda.': ['Este acorde va en la mano izquierda.', 'This chord is on the left hand.'],
+'Este acorde é na mão direita.': ['Este acorde va en la mano derecha.', 'This chord is on the right hand.'],
 'Ouvir juntas': ['Escuchar juntas', 'Hear them together'],
 'Ouvir em arpejo': ['Escuchar en arpegio', 'Hear as an arpeggio'],
 'Relembre': ['Recordá', 'Remember'],

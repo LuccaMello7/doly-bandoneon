@@ -47,7 +47,7 @@ function chordVoicings(hand, dir, pc, type){
 }
 
 const ch = {dir:'open', hand:'left', voicings:[], sel:0, training:false, round:0, score:0, target:null, picked:new Set()};
-const chOpts = hand => ({perRow:1, getDir:()=>ch.dir, onPress:(b,m)=>chordPress(b,m)});
+const chOpts = hand => ({perRow:1, getDir:()=>ch.dir, onPress:(b,m)=>chordPress(b,m,hand)});
 const ckL = kb($('#ckLeft'),'left',chOpts('left')), ckR = kb($('#ckRight'),'right',chOpts('right'));
 const chKb = () => ch.hand==='left' ? ckL : ckR;
 
@@ -90,8 +90,14 @@ $('#chPlay').onclick=()=>playChord(false);
 $('#chArp').onclick=()=>playChord(true);
 
 // ---------- Treino ----------
-function chordPress(b){
+// Só valem botões da mão pedida: um botão da outra mão é recusado com um aviso (não entra na resposta)
+function chordPress(b, m, mao){
   if(!ch.training) return;
+  if(mao && mao!==ch.hand){
+    $('#chFeed').className='feedback bad';
+    $('#chFeed').textContent = t(ch.hand==='left' ? 'Este acorde é na mão esquerda.' : 'Este acorde é na mão direita.');
+    return;
+  }
   const k=chKb();
   if(ch.picked.has(b.id)){ ch.picked.delete(b.id); k.unmark(b.id,'chord'); }
   else { ch.picked.add(b.id); k.mark(b.id,'chord',0); }
@@ -110,7 +116,7 @@ function nextChordRound(){
   const types=$$('#chTrainTypes input:checked').map(i=>i.value); if(!types.length) types.push('maior','menor');
   let pc, type, dir, vs;
   do{ pc=rand(12); type=pick(types); dir=pick(['open','close']); vs=chordVoicings(ch.hand,dir,pc,type); }while(!vs.length);
-  Object.assign(ch, {target:{pc,type,vs}, dir, relSel:0, relVer:false}); ckL.refresh(); ckR.refresh(); chRelembre();
+  Object.assign(ch, {target:{pc,type,vs}, dir, relSel:0, relVer:false}); chMostrarMao(); ckL.refresh(); ckR.refresh(); chRelembre();
   $('#chTarget').textContent = chordName(pc,type);
   const p=$('#chTrainDir'); p.className='dirpill '+dir; p.textContent=`${dirLabel(dir)} · mão ${ch.hand==='left'?'esquerda':'direita'}`;
   $('#chScore').textContent=`Rodada ${ch.round+1}/10 · Acertos: ${ch.score}`;
@@ -118,7 +124,7 @@ function nextChordRound(){
 $('#chCheck').onclick=()=>{
   if(!ch.training) return;
   const {pc,type,vs}=ch.target, L=state.layout[ch.hand], T=CHORD_TYPES[type];
-  const picked=[...ch.picked].map(id=>L.find(b=>b.id===id));
+  const picked=[...ch.picked].map(id=>L.find(b=>b.id===id)).filter(Boolean); // só botões da mão pedida contam
   const pcs=new Set(picked.map(b=>((b[ch.dir]%12)+12)%12));
   // Certo = tem fundamental, 3ª e última nota do acorde (a 5ª é opcional nas tétrades) e nenhuma
   // nota estranha. Dobrar notas vale.
@@ -140,9 +146,7 @@ $('#chTrain').onclick=()=>{
   ac(); ch.hand=$('#chHand').value;
   Object.assign(ch,{training:true, round:0, score:0});
   $('#chExplore').style.display='none'; $('#chTrainBox').style.display='block'; $('#chFeed').textContent='';
-  $('#ckLeftWrap').style.display = ch.hand==='left'?'flex':'none';
-  $('#ckRightWrap').style.display = ch.hand==='right'?'flex':'none';
-  nextChordRound();
+  chMostrarMao(); nextChordRound();
 };
 $('#chStop').onclick=()=>{ ch.training=false; $('#chTrainBox').style.display='none'; $('#chExplore').style.display='block'; $('#chFeed').textContent=''; showChord(); };
 fillChordSelects(); showChord();
@@ -162,7 +166,7 @@ const chMapaLigado = () => store.get('acordesMapa', true) !== false;
 function chRelembre(){
   if(!ch.target) return;
   const {pc, type, vs} = ch.target, dir = ch.dir, mostrar = chMapaLigado() || ch.relVer;
-  $('#chRelTit').textContent = `${chordName(pc, type)} · ${dirLabel(dir).toLowerCase()}`;
+  $('#chRelTit').textContent = `${chordName(pc, type)} · ${dirLabel(dir).toLowerCase()} · ${maoNome(ch.hand)}`;
   $('#chRelCorpo').hidden = !mostrar; $('#chRelVer').hidden = mostrar;
   if(!mostrar) return;
   const v = vs[ch.relSel % vs.length], L = state.layout[ch.hand], noAcorde = new Set(v.btns.map(b=>b.id));
@@ -198,3 +202,9 @@ function chTocarSelecionadas(arpejo){
 }
 $('#chOuvirSel').onclick = ()=>chTocarSelecionadas(false);
 $('#chArpSel').onclick = ()=>chTocarSelecionadas(true);
+// Durante o treino aparece só o teclado da mão pedida (reforçado a cada rodada)
+function chMostrarMao(){
+  $('#ckLeftWrap').style.display = ch.hand==='left' ? 'flex' : 'none';
+  $('#ckRightWrap').style.display = ch.hand==='right' ? 'flex' : 'none';
+  construirPendentes();
+}
