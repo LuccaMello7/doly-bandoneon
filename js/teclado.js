@@ -80,7 +80,7 @@ function createKeyboard(el, hand, opts={}){
       if(ms) setTimeout(()=>n.d.classList.remove(cls),ms); },
     unmark(id,cls){ const n=nodes[id]; if(n) n.d.classList.remove(cls); },
     tint(id,color){ const n=nodes[id]; if(!n) return; n.d.style.background=color; n.d.style.color=color?'#fff':''; },
-    clearMarks(){ Object.values(nodes).forEach(({d})=>d.classList.remove('ok','bad','hint','chord','guia','prox')); },
+    clearMarks(){ Object.values(nodes).forEach(({d})=>d.classList.remove('ok','bad','hint','chord','guia','prox','zona')); },
     // número do dedo recomendado sobre o botão (null tira)
     dedo(id,n){ const x=nodes[id]; if(!x) return; if(n==null) delete x.d.dataset.dedo; else x.d.dataset.dedo=n; },
     clearDedos(){ Object.values(nodes).forEach(({d})=>{ delete d.dataset.dedo; }); },

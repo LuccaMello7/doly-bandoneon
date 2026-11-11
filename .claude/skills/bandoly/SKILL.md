@@ -66,6 +66,12 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
 - Links internos: `data-go="aba"`. Endereços: `#aba`, `#licao-N`, `#teoria-N` e `#tarefa=…` (link do professor).
 - A **Teoria** é a 2ª trilha da aba Lições: não tem botão no `#subnav`, e `go('teoria')` acende o botão Lições.
 
+### Desafios → Encontre a nota (desafios.js)
+- Cada rodada toca a nota sozinha (`fOuvir`; o cartão `#fAlvo` e "Ouvir a nota" repetem). Placar com bolinhas como no
+  Qual é a nota (classes `qn-hud`/`qn-bolinhas` reaproveitadas). Dica em dois passos (`fDica`): a região acende no
+  teclado (marca `zona`, centro sorteado perto do botão) e depois o botão (`hint`, também depois de dois erros).
+  Ponto só de primeira e sem dica. Sair da aba ou trocar de desafio chama `pararFind()`.
+
 ### Qual é a nota? (qualnota.js, aba "Qual nota?" em Treinar)
 - Quiz de ouvido: toca a nota de um botão e mostra quatro nomes. O Dó central de referência nunca toca colado na
   pergunta (parecia que eram duas notas): com "Ouvir o Dó central antes de cada pergunta" ligado (padrão; guardado em

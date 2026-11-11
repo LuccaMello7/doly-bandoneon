@@ -479,7 +479,7 @@
 
   <div class="card" id="chFind">
     <h2>Find the note</h2>
-    <p class="muted">The app shows a note and the bellows direction. Find the right button. Ten rounds; after two mistakes a hint appears.</p>
+    <p class="muted">The app shows and plays a note, with the bellows direction. Find the right button on the keyboard. Ten rounds.</p>
     <div class="row">
       <label>Hand: <select id="fHand"><option value="right">Right</option><option value="left">Left</option><option value="both">Both</option></select></label>
       <label>Direction: <select id="fDir"><option value="open">Opening</option><option value="close">Closing</option><option value="rand">Random</option></select></label>
@@ -487,16 +487,30 @@
     </div>
     <div class="acao">
       <button class="btn btn-grande" id="fStart"><svg aria-hidden="true"><use href="#i-play"/></svg>Start</button>
-      <button class="btn sec" id="fListen"><svg aria-hidden="true"><use href="#i-volume"/></svg>Hear the note</button>
       <button class="btn sec" id="fHeat"><svg aria-hidden="true"><use href="#i-flame"/></svg>Mistake map</button>
       <p class="muted acao-dica">During the challenge the button names are hidden.</p>
     </div>
     <p class="muted" id="fHeatInfo" style="display:none">Colors show your mistake rate in the direction chosen under "Direction": green = you get it right, red = you get it wrong. Buttons without color have not come up yet.</p>
-    <div style="text-align:center;margin-top:14px">
-      <div class="target" id="fTarget">–</div>
-      <div id="fDirPill" class="dirpill open" style="display:inline-block;visibility:hidden"></div>
-      <div class="feedback" id="fFeed"></div>
-      <div class="muted" id="fScore"></div>
+    <div class="fd-palco" id="fPalco">
+      <div class="qn-hud" id="fHud" hidden>
+        <span class="qn-hud-item">Round <b><span id="fRodada">1</span><small>/10</small></b></span>
+        <span class="qn-bolinhas" id="fBolinhas" aria-hidden="true"></span>
+        <span class="qn-hud-item">Correct <b id="fAcertos">0</b></span>
+      </div>
+      <div class="fd-topo">
+        <button type="button" class="fd-alvo" id="fAlvo" aria-label="Hear the note again" disabled>
+          <span class="fd-alvo-rot" id="fAlvoRot">Press Start</span>
+          <span class="target" id="fTarget">–</span>
+          <span id="fDirPill" class="dirpill open" style="visibility:hidden"></span>
+        </button>
+        <div class="fd-acoes">
+          <button class="btn sec" id="fListen" disabled><svg aria-hidden="true"><use href="#i-volume"/></svg>Hear the note</button>
+          <button class="btn sec" id="fDica" disabled><svg aria-hidden="true"><use href="#i-question"/></svg><span id="fDicaTxt">Show a hint</span></button>
+          <p class="muted fd-dica-info">The first hint lights up the area around the button; the second shows the button. With a hint or a mistake, the round does not score.</p>
+        </div>
+      </div>
+      <div class="feedback" id="fFeed" aria-live="polite"></div>
+      <div class="fd-treinar" id="fTreinarBox" hidden><p class="muted">To practise more (tap to listen):</p><div class="qn-chips" id="fTreinar"></div></div>
     </div>
     <div class="instrument">
       <div class="side"><div class="label">Left</div><div id="fkLeft"></div></div>

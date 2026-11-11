@@ -855,6 +855,39 @@ teste('botão de começar muda de cor enquanto roda (Melodias e Desafios)', () =
   fq.round = 10; nextFind(); ok(!$('#fStart').classList.contains('rodando') && /Começar/.test($('#fStart').textContent), 'no fim volta a Começar');
   go('inicio');
 });
+teste('Encontre a nota: toca a nota ao começar, dica em dois passos, placar e para ao sair da aba', async () => {
+  const salvo = JSON.stringify(state.progress.btnStats), achado = state.progress.find, pausa = ms => new Promise(r=>setTimeout(r, ms));
+  go('desafios'); $('[data-ch="find"]').click(); $('#fHand').value = 'right'; $('#fDir').value = 'open';
+  let tocou = 0; const pn = playNote; playNote = (...a)=>{ tocou++; return pn(...a); };
+  try{
+    pararFind(); ok($('#fHud').hidden && $('#fListen').disabled, 'antes de começar, sem placar e sem Ouvir');
+    $('#fStart').click(); ok(fq.active && !$('#fHud').hidden && !$('#fListen').disabled, 'Começar mostra o placar e libera Ouvir e Dica');
+    igual($$('#fBolinhas i').length, 10); ok($('#fTarget').textContent===noteName(fq.target));
+    ok($('#fkLeft').closest('.side').classList.contains('fora') && !$('#fkRight').closest('.side').classList.contains('fora'), 'a mão fora de jogo fica marcada (some no celular)');
+    await pausa(2600); ok(tocou >= 1, 'a nota da rodada toca sozinha');
+    const n = tocou; $('#fAlvo').click(); ok(tocou===n + 1, 'tocar no cartão da nota repete o som');
+    // dica 1: a região; dica 2: o botão
+    fDica(); ok($$('#fkRight .key.zona').length >= 1, 'a 1ª dica acende a região do botão');
+    fDica(); igual($$('#fkRight .key.hint').length, 1, 'a 2ª dica mostra o botão'); ok($('#fDica').disabled, 'só duas dicas');
+    const certo = fq.answer;
+    findPress(certo, certo[fq.dir], fkR); igual(fq.score, 0, 'com dica, não conta ponto'); ok($('#fBolinhas i.certa-dica'), 'a bolinha fica pela metade');
+    findPress(certo, certo[fq.dir], fkR); igual(fq.hist.length, 1, 'tocar de novo no botão certo não conta duas vezes');
+    await pausa(1300); igual(fq.round, 1); ok(!fq.resolvido && !$$('#fkRight .key.zona').length, 'a próxima rodada começa limpa');
+    // erro: diz se a nota procurada é mais aguda ou mais grave
+    const errado = state.layout.right.find(b=>b.open!==fq.target); findPress(errado, errado.open, fkR);
+    ok(/mais (aguda|grave)/.test($('#fFeed').textContent), 'o erro diz se é mais aguda ou mais grave');
+    // de primeira e sem dica: conta ponto
+    findPress(errado, errado.open, fkR); ok($$('#fkRight .key.hint').length===1, 'depois de dois erros, o botão aparece');
+    // sair da aba: o desafio para e volta a "Começar"
+    go('teclado'); go('desafios');
+    ok(!fq.active && $('#fHud').hidden, 'sair da aba para o desafio'); ok(!$('#chFind .side.fora'), 'e os dois teclados voltam'); igual($('#fStart').textContent.trim(), 'Começar');
+    // o fim mostra as notas que precisaram de ajuda
+    $('#fStart').click(); fq.hist = [{midi:64, limpo:false}, {midi:67, limpo:true}]; fq.round = 10; nextFind();
+    ok(!$('#fTreinarBox').hidden && $$('#fTreinar [data-ouvir]').length===1, 'no fim, as notas com ajuda para ouvir');
+  } finally {
+    playNote = pn; pararFind(); state.progress.btnStats = JSON.parse(salvo); state.progress.find = achado; saveProgress(); go('inicio');
+  }
+});
 teste('Qual é a nota: quatro alternativas, dica em três passos, resposta, onda e fim da rodada', async () => {
   const antes = JSON.stringify(state.progress.qualnota || null);
   go('qualnota'); $('#qnNivel').value = '1'; $('#qnMao').value = 'right';

@@ -2739,3 +2739,28 @@ main.prof-pagina{max-width:880px}
 .qn-ref-acoes .btn{width:100%}
 .qn-ref-sem{margin-top:12px;padding:8px;background:none;border:0;cursor:pointer;color:var(--cinza);font:500 13.5px Onest,system-ui,sans-serif;text-decoration:underline;text-underline-offset:3px}
 @media (hover:hover){.qn-ref-sem:hover{color:var(--osso)}}
+/* Desafios → Encontre a nota: placar, cartão da nota (toque para ouvir), Ouvir e Dica (js/desafios.js) */
+.fd-palco{margin-top:18px;scroll-margin-top:84px}
+.fd-palco .qn-hud{margin-bottom:12px}
+.fd-topo{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:16px;align-items:stretch}
+.fd-alvo{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:150px;padding:18px;border:0;border-radius:18px;cursor:pointer;color:inherit;font:inherit;
+  background:radial-gradient(ellipse 70% 90% at 50% 40%,rgba(185,151,255,.1),transparent 70%),var(--ameixa);box-shadow:inset 0 0 0 1px var(--borda)}
+.fd-alvo:disabled{cursor:default}
+.fd-alvo:focus-visible{outline:2px solid var(--lavanda);outline-offset:2px}
+@media (hover:hover){.fd-alvo:not(:disabled):hover{box-shadow:inset 0 0 0 1px rgba(185,151,255,.55)}}
+.fd-alvo-rot{font-size:13px;font-weight:600;color:var(--cinza-2)}
+.fd-alvo .target{font-size:3rem;line-height:1.05;color:var(--osso);font-weight:650;letter-spacing:-.02em}
+.fd-acoes{display:grid;gap:10px;align-content:center}
+.fd-acoes .btn{width:100%}
+.fd-dica-info{font-size:12.5px;margin:2px 0 0}
+#chFind .feedback{text-align:center;margin-top:12px}
+.fd-treinar{text-align:center}
+.key.zona{box-shadow:0 0 0 3px rgba(185,151,255,.5),0 0 16px rgba(185,151,255,.55)}
+@media (max-width:699px){
+  .fd-topo{grid-template-columns:1fr}
+  .fd-acoes{grid-template-columns:1fr 1fr}
+  .fd-dica-info{grid-column:1/-1}
+  .fd-alvo{min-height:118px}
+  .fd-alvo .target{font-size:2.5rem}
+  #chFind .side.fora{display:none}
+}

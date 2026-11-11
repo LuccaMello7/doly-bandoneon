@@ -478,7 +478,7 @@
 
   <div class="card" id="chFind">
     <h2>Encontre a nota</h2>
-    <p class="muted">O app mostra uma nota e a direção do fole. Encontre o botão certo. Dez rodadas; depois de dois erros aparece uma dica.</p>
+    <p class="muted">O app mostra e toca uma nota, com a direção do fole. Encontre o botão certo no teclado. Dez rodadas.</p>
     <div class="row">
       <label>Mão: <select id="fHand"><option value="right">Direita</option><option value="left">Esquerda</option><option value="both">Ambas</option></select></label>
       <label>Direção: <select id="fDir"><option value="open">Abrindo</option><option value="close">Fechando</option><option value="rand">Aleatória</option></select></label>
@@ -486,16 +486,30 @@
     </div>
     <div class="acao">
       <button class="btn btn-grande" id="fStart"><svg aria-hidden="true"><use href="#i-play"/></svg>Começar</button>
-      <button class="btn sec" id="fListen"><svg aria-hidden="true"><use href="#i-volume"/></svg>Ouvir a nota</button>
       <button class="btn sec" id="fHeat"><svg aria-hidden="true"><use href="#i-flame"/></svg>Mapa de erros</button>
       <p class="muted acao-dica">Durante o desafio os nomes dos botões ficam escondidos.</p>
     </div>
     <p class="muted" id="fHeatInfo" style="display:none">Cores pela sua taxa de erro na direção escolhida em "Direção": verde = você acerta, vermelho = você erra. Botões sem cor ainda não apareceram no desafio.</p>
-    <div style="text-align:center;margin-top:14px">
-      <div class="target" id="fTarget">–</div>
-      <div id="fDirPill" class="dirpill open" style="display:inline-block;visibility:hidden"></div>
-      <div class="feedback" id="fFeed"></div>
-      <div class="muted" id="fScore"></div>
+    <div class="fd-palco" id="fPalco">
+      <div class="qn-hud" id="fHud" hidden>
+        <span class="qn-hud-item">Rodada <b><span id="fRodada">1</span><small>/10</small></b></span>
+        <span class="qn-bolinhas" id="fBolinhas" aria-hidden="true"></span>
+        <span class="qn-hud-item">Acertos <b id="fAcertos">0</b></span>
+      </div>
+      <div class="fd-topo">
+        <button type="button" class="fd-alvo" id="fAlvo" aria-label="Ouvir a nota de novo" disabled>
+          <span class="fd-alvo-rot" id="fAlvoRot">Toque em Começar</span>
+          <span class="target" id="fTarget">–</span>
+          <span id="fDirPill" class="dirpill open" style="visibility:hidden"></span>
+        </button>
+        <div class="fd-acoes">
+          <button class="btn sec" id="fListen" disabled><svg aria-hidden="true"><use href="#i-volume"/></svg>Ouvir a nota</button>
+          <button class="btn sec" id="fDica" disabled><svg aria-hidden="true"><use href="#i-question"/></svg><span id="fDicaTxt">Ver uma dica</span></button>
+          <p class="muted fd-dica-info">A primeira dica acende a região do botão; a segunda mostra o botão. Com dica ou erro, a rodada não conta ponto.</p>
+        </div>
+      </div>
+      <div class="feedback" id="fFeed" aria-live="polite"></div>
+      <div class="fd-treinar" id="fTreinarBox" hidden><p class="muted">Para treinar mais (toque para ouvir):</p><div class="qn-chips" id="fTreinar"></div></div>
     </div>
     <div class="instrument">
       <div class="side"><div class="label">Esquerda</div><div id="fkLeft"></div></div>
