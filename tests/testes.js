@@ -890,6 +890,47 @@ teste('Menus de Melodias, Acordes e Teclado: botões lado a lado, resumo enquant
   const nomes = state.showLabels; $('#labelsBtn').click(); igual($('#labelsBtn').getAttribute('aria-pressed'), String(!nomes)); $('#labelsBtn').click();
   tkAjustes(aberto); go('inicio');
 });
+teste('Acordes: o mapa do Relembre e o teclado mudam com a mão e o fole de cada acorde (as 4 combinações)', () => {
+  const antesMapa = store.get('acordesMapa', true); store.set('acordesMapa', true); $('#chRelOn').checked = true;
+  const vistos = new Set(), desenhos = new Set(), pc12 = n => ((n % 12) + 12) % 12;
+  for(const mao of ['left', 'right']){
+    go('acordes'); $(`#chMenu [data-v="${mao}"]`).click(); $('#chTrain').click(); igual(ch.hand, mao);
+    const L = state.layout[mao];
+    for(let r = 0; r < 40; r++){
+      ch.round = 0; nextChordRound();
+      const {pc, type} = ch.target, dir = ch.dir, T = CHORD_TYPES[type], rot = `${chordName(pc, type)} ${dir} ${mao}`;
+      vistos.add(mao + '|' + dir);
+      // o desenho é o da mão pedida: um círculo por botão, nas posições dessa mão
+      const circ = $$('#chRelMapa circle');
+      igual(circ.length, L.length, 'mapa da mão certa: ' + rot);
+      ok(circ.every((c, i)=>Math.abs(+c.getAttribute('cx') - (L[i].x + .5)) < .01 && Math.abs(+c.getAttribute('cy') - (L[i].y + .5)) < .01), 'posições da mão certa: ' + rot);
+      // os acesos dão notas do acorde NA DIREÇÃO PEDIDA, na cor dela, com o nome certo escrito
+      const doAcorde = new Set(T.iv.map(i=>(pc + i) % 12));
+      const acesos = circ.map((c, i)=>c.classList.contains('on') ? L[i] : null).filter(Boolean);
+      ok(acesos.length >= 3, 'pelo menos 3 botões acesos: ' + rot);
+      ok(acesos.every(b=>doAcorde.has(pc12(b[dir]))), 'os acesos são notas do acorde nessa direção: ' + rot);
+      ok($$('#chRelMapa circle.on').every(c=>c.classList.contains(dir)), 'na cor da direção: ' + rot);
+      const nomes = $$('#chRelMapa text').map(x=>x.textContent);
+      ok(acesos.every((b, i)=>nomes[i]===rootName(pc12(b[dir]))), 'o nome escrito é a nota dessa direção: ' + rot);
+      const obrig = [0, 1, T.iv.length - 1].map(k=>(pc + T.iv[k]) % 12), tem = new Set(acesos.map(b=>pc12(b[dir])));
+      ok(obrig.every(p=>tem.has(p)), 'tem a fundamental, a 3ª e a última nota: ' + rot);
+      // a forma desenhada é aceita pela conferência (quem copiar o mapa acerta)
+      ok(ch.target.vs[0].btns.every(b=>acesos.includes(b)), 'o mapa é a forma que o treino aceita: ' + rot);
+      // o teclado do treino é o da mão pedida e escreve as notas da direção pedida
+      const wrap = mao==='left' ? '#ckLeftWrap' : '#ckRightWrap', outro = mao==='left' ? '#ckRightWrap' : '#ckLeftWrap';
+      ok(getComputedStyle($(wrap)).display!=='none' && getComputedStyle($(outro)).display==='none', 'só o teclado da mão pedida: ' + rot);
+      if(state.showLabels){
+        const teclas = $$((mao==='left' ? '#ckLeft' : '#ckRight') + ' .key');
+        ok(teclas.length===L.length && teclas.every((k, i)=>k.textContent===noteName(L[i][dir])), 'o teclado mostra as notas da direção pedida: ' + rot);
+      }
+      desenhos.add(mao + ':' + acesos.map(b=>b.id).sort().join(','));
+    }
+    $('#chStop').click();
+  }
+  igual(vistos.size, 4, 'as quatro combinações apareceram: ' + [...vistos].join(' '));
+  ok(desenhos.size > 20, `o desenho muda de acorde para acorde (${desenhos.size} desenhos diferentes em 80 rodadas)`);
+  store.set('acordesMapa', antesMapa); $('#chRelOn').checked = antesMapa !== false; go('inicio');
+});
 teste('Acordes: no treino da mão esquerda, só o teclado esquerdo aparece e botões da direita não contam', () => {
   go('acordes'); $('#chMenu [data-v="left"]').click(); $('#chTrain').click();
   igual(ch.hand, 'left');
