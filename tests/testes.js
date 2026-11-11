@@ -890,6 +890,21 @@ teste('Menus de Melodias, Acordes e Teclado: botões lado a lado, resumo enquant
   const nomes = state.showLabels; $('#labelsBtn').click(); igual($('#labelsBtn').getAttribute('aria-pressed'), String(!nomes)); $('#labelsBtn').click();
   tkAjustes(aberto); go('inicio');
 });
+teste('Acordes: no treino, dá para ouvir os botões marcados juntos ou em arpejo antes de conferir', () => {
+  go('acordes'); $('#chHand').value = 'left'; $('#chTrain').click();
+  ok($('#chOuvirSel').disabled && $('#chArpSel').disabled, 'sem botões marcados, não há o que ouvir');
+  const forma = ch.target.vs[0].btns; forma.forEach(b=>chordPress(b));
+  ok(!$('#chOuvirSel').disabled && !$('#chArpSel').disabled, 'com botões marcados, os dois botões ligam');
+  const pn = playNote, tocadas = []; playNote = (m, d, h, t0)=>{ tocadas.push({m, t0}); };
+  try{
+    $('#chOuvirSel').click(); igual(tocadas.length, forma.length, 'toca cada botão marcado');
+    ok(tocadas.every(x=>Math.abs(x.t0 - tocadas[0].t0) < 1e-6), 'juntas: ao mesmo tempo');
+    tocadas.length = 0; $('#chArpSel').click();
+    ok(tocadas.every((x, i)=>i===0 || (x.t0 > tocadas[i-1].t0 && x.m >= tocadas[i-1].m)), 'arpejo: uma depois da outra, da grave para a aguda');
+  } finally { playNote = pn; }
+  nextChordRound(); ok($('#chOuvirSel').disabled, 'a próxima rodada começa sem nada marcado');
+  $('#chStop').click(); go('inicio');
+});
 teste('Acordes: no treino, o painel Relembre mostra o mapa do acorde pedido', () => {
   const antes = store.get('acordesMapa', true);
   store.set('acordesMapa', true); $('#chRelOn').checked = true;

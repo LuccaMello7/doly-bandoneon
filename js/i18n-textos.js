@@ -1568,6 +1568,8 @@ const TEXTOS = {
 'Teoria: quanto dura cada nota e como se conta o tempo.': ['Teoría: cuánto dura cada nota y cómo se cuenta el tiempo.', 'Theory: how long each note lasts and how to count the beat.'],
 // Conta opcional, Termos de Uso e Privacidade com conta (2026-11-10)
 'Conta': ['Cuenta', 'Account'],
+'Ouvir juntas': ['Escuchar juntas', 'Hear them together'],
+'Ouvir em arpejo': ['Escuchar en arpegio', 'Hear as an arpeggio'],
 'Relembre': ['Recordá', 'Remember'],
 'Mostrar sempre': ['Mostrar siempre', 'Always show'],
 'Outra posição': ['Otra posición', 'Another position'],

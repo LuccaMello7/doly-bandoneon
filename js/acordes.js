@@ -95,9 +95,10 @@ function chordPress(b){
   const k=chKb();
   if(ch.picked.has(b.id)){ ch.picked.delete(b.id); k.unmark(b.id,'chord'); }
   else { ch.picked.add(b.id); k.mark(b.id,'chord',0); }
+  chBotoesOuvir();
 }
 function nextChordRound(){
-  ckL.clearMarks(); ckR.clearMarks(); ch.picked.clear();
+  ckL.clearMarks(); ckR.clearMarks(); ch.picked.clear(); chBotoesOuvir();
   if(ch.round>=10){
     ch.training=false; $('#chTrainBox').style.display='none'; $('#chExplore').style.display='block';
     $('#chFeed').className='feedback'; $('#chFeed').textContent=`Fim do treino: ${ch.score}/10`;
@@ -181,3 +182,19 @@ $('#chRelOutra').onclick = ()=>{ ch.relSel++; chRelembre(); };
 $('#chRelVer').onclick = ()=>{ ch.relVer = true; chRelembre(); };
 $('#chRelOn').checked = chMapaLigado();
 $('#chRelOn').onchange = ()=>{ store.set('acordesMapa', $('#chRelOn').checked); ch.relVer = false; chRelembre(); };
+
+// ---------- Ouvir os botões marcados, antes de conferir ----------
+// Juntas (o acorde) ou em arpejo, da nota mais grave para a mais aguda: se soar estranho, algo está errado
+function chBotoesOuvir(){ const vazio = !ch.picked.size; $('#chOuvirSel').disabled = vazio; $('#chArpSel').disabled = vazio; }
+function chTocarSelecionadas(arpejo){
+  const L = state.layout[ch.hand], k = chKb();
+  const sel = [...ch.picked].map(id=>L.find(b=>b.id===id)).filter(Boolean).sort((a, b)=>a[ch.dir] - b[ch.dir]);
+  if(!sel.length) return;
+  ac(); const t0 = AC.currentTime + 0.03, passo = 0.34;
+  sel.forEach((b, i)=>{
+    playNote(b[ch.dir], arpejo ? 0.8 : 1.4, ch.hand, t0 + (arpejo ? i * passo : 0), 0.1);
+    setTimeout(()=>k.mark(b.id, 'guia', arpejo ? 320 : 600), arpejo ? i * passo * 1000 : 0); // cada botão brilha quando soa
+  });
+}
+$('#chOuvirSel').onclick = ()=>chTocarSelecionadas(false);
+$('#chArpSel').onclick = ()=>chTocarSelecionadas(true);
