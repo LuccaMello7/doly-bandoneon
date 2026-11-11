@@ -74,9 +74,9 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
 - Nomes: "Mapa de botões" é só a disposição dos botões; "Teclado do computador e MIDI" é a janela de controles;
   "Mapa de acertos" é o mapa de acertos e erros (Encontre a nota e Conquistas). O microfone oferece "Calibrar agora"
   (`calibrarSilencio`) na primeira vez que é ligado fora do Afinador.
-- **Afinador:** o som não diz a direção do fole (55 das 59 notas existem abrindo e fechando). Por padrão (`#mcDir` =
-  'ambas') ele acende os dois: azul (`mc-abre`) onde a nota sai abrindo, laranja (`mc-fecha`) fechando, com o nome só nos
-  botões acesos (`opts.rotulo` do teclado). Oitava exata primeiro; a vizinha só se a exata não existir naquela direção.
+- **Afinador:** o som não diz a direção do fole (55 das 59 notas existem abrindo e fechando), então não há escolha de fole:
+  ele sempre acende os dois, azul (`mc-abre`) onde a nota sai abrindo e laranja (`mc-fecha`) fechando, com o nome só nos
+  botões acesos (`opts.rotulo` do teclado) e uma legenda das cores. Oitava exata primeiro; a vizinha só se a exata não existir naquela direção.
 
 ### Menus (menus.js): o jeito de escolher em todo o app
 - `segmentar(select, {rotulo, classe})` troca um `<select>` curto por botões lado a lado. O `<select>` continua no DOM

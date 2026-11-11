@@ -2964,3 +2964,5 @@ main.prof-pagina{max-width:880px}
 .key.mc-ambas{background:linear-gradient(90deg,var(--open) 50%,var(--close) 50%)!important;color:#fff!important}
 .mc-onde{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 16px;min-height:24px;margin:8px 0 0;font-size:14px;color:var(--cinza-2)}
 .mc-onde span{display:inline-flex;align-items:center;gap:8px}
+.mc-legenda{display:flex;flex-wrap:wrap;gap:8px 16px;margin:0;font-size:14px;color:var(--cinza-2)}
+.mc-legenda span{display:inline-flex;align-items:center;gap:8px}

@@ -1568,6 +1568,10 @@ const TEXTOS = {
 'Teoria: quanto dura cada nota e como se conta o tempo.': ['Teoría: cuánto dura cada nota y cómo se cuenta el tiempo.', 'Theory: how long each note lasts and how to count the beat.'],
 // Conta opcional, Termos de Uso e Privacidade com conta (2026-11-10)
 'Conta': ['Cuenta', 'Account'],
+'As cores': ['Los colores', 'The colours'],
+'azul: a nota sai abrindo': ['azul: la nota sale abriendo', 'blue: the note sounds when opening'],
+'laranja: sai fechando': ['naranja: sale cerrando', 'orange: it sounds when closing'],
+'Essa nota não está no teclado do bandoneon.': ['Esa nota no está en el teclado del bandoneón.', 'That note is not on the bandoneon keyboard.'],
 'Acender os botões': ['Encender los botones', 'Light up the buttons'],
 'O som não diz a direção do fole: a mesma nota sai de botões diferentes abrindo e fechando. Por isso o app acende os dois, azul abrindo e laranja fechando.': ['El sonido no dice la dirección del fuelle: la misma nota sale de botones distintos abriendo y cerrando. Por eso la app enciende los dos, azul abriendo y naranja cerrando.', 'The sound does not reveal the bellows direction: the same note comes from different buttons when opening and closing. So the app lights both, blue for opening and orange for closing.'],
 '{} botão': ['{} botón', '{} button'],

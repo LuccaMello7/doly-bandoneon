@@ -92,8 +92,7 @@ function micStop(){
 /* ---------- Tela Afinador: a nota ouvida, a afinação e os botões que dão essa nota ---------- */
 // Com "Abrindo e fechando", cada botão tem duas notas: os nomes ficam só nos botões acesos (a nota ouvida)
 let mcAcesos = {};
-const mcOpts = {getDir:()=>$('#mcDir').value==='close' ? 'close' : 'open',
-  rotulo:b=>$('#mcDir').value!=='ambas' ? undefined : (state.showLabels && mcAcesos[b.id]!=null ? noteName(mcAcesos[b.id]) : '')};
+const mcOpts = {getDir:()=>'open', rotulo:b=>state.showLabels && mcAcesos[b.id]!=null ? noteName(mcAcesos[b.id]) : ''};
 const mcL = kb($('#mcLeft'),'left',mcOpts), mcR = kb($('#mcRight'),'right',mcOpts);
 let mcDono = false, mcUltima = null; // mcDono: o microfone foi ligado nesta tela (e desliga ao sair dela)
 function mcEstado(){
@@ -110,7 +109,7 @@ function mcMostrar(m, cents, rms){
   $('#mcCents').textContent = Math.abs(cents)<=10 ? 'Afinado' : cents>0 ? `${cents} cents acima` : `${-cents} cents abaixo`;
   $('#mcAfinador').classList.toggle('afinado', Math.abs(cents)<=10);
   if(m===mcUltima) return;
-  mcUltima = m; const modo = $('#mcDir').value, ab = modo!=='close', fe = modo!=='open', n = {open:0, close:0};
+  mcUltima = m; const ab = true, fe = true, n = {open:0, close:0}; // sempre as duas direções: o som não diz qual é
   mcAcesos = {};
   // o som não diz a direção do fole: acende onde a nota sai abrindo (azul) e onde sai fechando (laranja).
   // Vale a oitava exata; só se ela não existir naquela direção entra a oitava vizinha (o microfone às vezes erra a oitava).
@@ -128,14 +127,13 @@ function mcMostrar(m, cents, rms){
   const conta = (q, um, varios) => t(q===1 ? um : varios, q);
   const partes = [ab && n.open && `<span><i class="menu-ponto open" aria-hidden="true"></i>${t('abrindo')}: ${conta(n.open, '{} botão', '{} botões')}</span>`,
                   fe && n.close && `<span><i class="menu-ponto close" aria-hidden="true"></i>${t('fechando')}: ${conta(n.close, '{} botão', '{} botões')}</span>`].filter(Boolean);
-  $('#mcOnde').innerHTML = partes.length ? partes.join('') : `<span>${t('Essa nota não sai nesta direção do fole.')}</span>`;
+  $('#mcOnde').innerHTML = partes.length ? partes.join('') : `<span>${t('Essa nota não está no teclado do bandoneon.')}</span>`;
 }
 $('#mcOn').onclick = async ()=>{
   if(mic.on){ micStop(); mcDono=false; $('#micToggle').checked=false; $('#acMic').checked=false; $('#ecoMicOn').checked=false; }
   else if(await micStart()){ mcDono=true; $('#mcInfo').textContent=''; }
   mcEstado();
 };
-$('#mcDir').onchange = ()=>{ mcUltima=null; mcAcesos={}; mcL.clearMarks(); mcR.clearMarks(); mcL.refresh(); mcR.refresh(); $('#mcOnde').textContent=''; store.set('afinadorFole', $('#mcDir').value); };
 // Mede o barulho do ambiente por 2 segundos: sons mais baixos que isso passam a ser ignorados
 function calibrarSilencio(info, fim){
   if(!mic.on) return;
@@ -173,5 +171,3 @@ $('#micToggle').onchange = async e=>{
   else micStop();
 };
 // A direção do fole vira dois botões, com as bolinhas de cor (js/menus.js)
-{ const v = store.get('afinadorFole', 'ambas'); if(['ambas','open','close'].includes(v)) $('#mcDir').value = v; }
-segmentar($('#mcDir'), {rotulo:rotuloFole});
