@@ -554,9 +554,15 @@ teste('notas caindo desenham a melodia no quadro', () => {
   $('#melRollOn').checked = false; $('#melRollOn').dispatchEvent(new Event('change')); go('inicio');
 });
 teste('Bandoneon real: a nota ouvida acende os botões que dão essa nota', () => {
-  go('microfone'); $('#mcDir').value = 'open'; mcUltima = null; mcMostrar(69, 3, 0.1);
+  go('microfone'); $('#mcDir').value = 'open'; $('#mcDir').onchange(); mcMostrar(69, 3, 0.1);
   igual($('#mcNota').textContent, noteName(69));
-  ok($$('#mcRight .key.chord').length >= 1, 'botão aceso na mão direita');
+  ok($$('#mcRight .key.mc-abre').length >= 1 && !$('#mcRight .key.mc-fecha'), 'só abrindo: botão azul na mão direita');
+  // sem escolher o fole: a nota acende onde sai abrindo (azul) e onde sai fechando (laranja), com o nome nos botões acesos
+  $('#mcDir').value = 'ambas'; $('#mcDir').onchange(); mcMostrar(69, 3, 0.1);
+  ok($('#mcRight .key.mc-abre') && $('#mcRight .key.mc-fecha'), 'as duas direções acesas');
+  ok($$('#mcRight .key.mc-abre, #mcRight .key.mc-fecha').every(k=>!state.showLabels || k.textContent.replace(/-?\d/g,'')===noteName(69).replace(/-?\d/g,'')), 'os botões acesos mostram o nome da nota ouvida');
+  ok(/abrindo/.test($('#mcOnde').textContent) && /fechando/.test($('#mcOnde').textContent), 'diz quantos botões em cada direção');
+  store.set('afinadorFole', 'ambas');
   ok($('#mcAfinador').classList.contains('afinado'));
   go('inicio');
 });
@@ -942,7 +948,8 @@ teste('Menus nos outros desafios, no quiz, no RepeTCHÊ, no Bandoneon real, no R
   $('#qnParar').click(); ok(!qn.ativo && !$('#qnMenu').hidden && $('#qnResumo').hidden, '"Parar" encerra o quiz');
   // RepeTCHÊ, Bandoneon real, Ritmo e Ajustes: escolhas curtas em botões; ligar/desligar em interruptores
   go('eco'); igual($$('.eco-opcoes .menu-seg button').length, 3 + 3 + 2); ok($('.eco-opcoes .menu-switch #ecoVozOn'));
-  go('microfone'); igual($$('.mc-menu .menu-seg button').length, 2);
+  ok(/mais 2 notas/.test($('#ecoPassoAjuda').textContent) || /mais \d notas/.test($('#ecoPassoAjuda').textContent), 'Notas novas por rodada: explicado embaixo');
+  go('microfone'); igual($$('.mc-menu .menu-seg button').length, 3);
   go('ritmo'); igual($$('.rt-padroes .menu-seg button').length, Object.keys(PATTERNS).length); ok($('.rt-andamento .menu-switch #rClick'));
   { const p = $('.rt-padroes .menu-seg button:last-child'); p.click(); igual($('#rPattern').value, p.dataset.v, 'escolher o padrão pelo botão'); $('.rt-padroes .menu-seg button').click(); }
   go('ajustes'); igual($$('#v-ajustes .menu-seg').length, 3, 'nomes, animações e vibração em botões');

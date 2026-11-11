@@ -401,4 +401,7 @@ ganchosAba.push(nova=>{
   if(nova==='eco'){ $('#ecoMicOn').checked = mic.on; if(!eco.fase){ Object.keys(ecoCache).forEach(k=>delete ecoCache[k]); renderEcoMusicas(); } }
 });
 // Ajuda, notas por rodada e velocidade viram botões lado a lado (js/menus.js)
-segmentar($('#ecoAjuda'), {rotulo:rotuloExplicado, classe:'menu-seg-2l'}); segmentar($('#ecoPasso')); segmentar($('#ecoVel'));
+segmentar($('#ecoAjuda'), {rotulo:rotuloExplicado, classe:'menu-seg-2l'}); segmentar($('#ecoPasso'), {rotulo:rotuloExplicado, classe:'menu-seg-2l'}); segmentar($('#ecoVel'));
+// "Notas novas por rodada": a explicação embaixo diz o que acontece com o número escolhido
+function ecoPassoAjuda(){ $('#ecoPassoAjuda').textContent = t('A música cresce aos poucos: a cada rodada, o bandoneon toca o trecho de novo com mais {} notas, e você repete tudo.', $('#ecoPasso').value); }
+$('#ecoPasso').addEventListener('change', ecoPassoAjuda); ecoPassoAjuda();

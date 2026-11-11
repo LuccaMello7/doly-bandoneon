@@ -77,6 +77,9 @@ function ajustarCheia(){
 }
 function entrarCheia(){
   if(tkCheia) return; tkCheia=true;
+  // a aba pode estar no meio da animação de entrada (deslize e cascata): com ela, a tela cheia "fixa" se mede pela seção,
+  // não pela tela, e os botões saem pequenos. Termina as animações antes de medir.
+  try{ $('#v-teclado').getAnimations({subtree:true}).forEach(a=>a.finish()); }catch(e){}
   tkMover($('#tkVer')); tkMover($('#foleBox'));
   tkBarra.hidden=false; tkCard.classList.add('cheia'); document.documentElement.classList.add('tk-cheia-on');
   const fs=tkCard.requestFullscreen||tkCard.webkitRequestFullscreen;

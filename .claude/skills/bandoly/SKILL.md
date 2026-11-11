@@ -74,6 +74,9 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
 - Nomes: "Mapa de botões" é só a disposição dos botões; "Teclado do computador e MIDI" é a janela de controles;
   "Mapa de acertos" é o mapa de acertos e erros (Encontre a nota e Conquistas). O microfone oferece "Calibrar agora"
   (`calibrarSilencio`) na primeira vez que é ligado fora do Afinador.
+- **Afinador:** o som não diz a direção do fole (55 das 59 notas existem abrindo e fechando). Por padrão (`#mcDir` =
+  'ambas') ele acende os dois: azul (`mc-abre`) onde a nota sai abrindo, laranja (`mc-fecha`) fechando, com o nome só nos
+  botões acesos (`opts.rotulo` do teclado). Oitava exata primeiro; a vizinha só se a exata não existir naquela direção.
 
 ### Menus (menus.js): o jeito de escolher em todo o app
 - `segmentar(select, {rotulo, classe})` troca um `<select>` curto por botões lado a lado. O `<select>` continua no DOM
@@ -226,6 +229,9 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
 - O CSS global esconde `section` que não é aba ativa. Em páginas estáticas, use `.pagina>section{display:block}`.
 
 ## 5. Design e movimento
+
+- **Grid de 8 pontos:** margin, padding, gap e min-height em múltiplos de 8 a partir de 16px; abaixo, múltiplos de 4 (4, 8,
+  12); 1-2px ficam de fora. `ferramentas/grade8.py` confere (`--corrigir` ajusta) e `tests/rodar_testes.py` falha se algo sair do grid.
 
 - Mundo do Doppler (desde 2026-11-10, aprovado pelo dono): fundo ameixa quase preto `--bg #1c1624`, painéis
   `--panel #2d2734` com bordas finíssimas (`--borda`), lavanda `--lavanda #b997ff` para a voz da marca (o token

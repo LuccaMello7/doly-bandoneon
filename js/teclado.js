@@ -57,7 +57,8 @@ function createKeyboard(el, hand, opts={}){
     const dir=opts.getDir?opts.getDir():state.dir, show=opts.showLabels?opts.showLabels():state.showLabels;
     el.dataset.fole = dir; // o botão apertado acende na cor do fole (azul abrindo, laranja fechando)
     for(const {d,b} of Object.values(nodes)){
-      const m=b[dir]; d.textContent = show ? noteName(m) : '';
+      const m=b[dir], r=opts.rotulo ? opts.rotulo(b) : undefined; // opts.rotulo(b): um nome próprio para o botão (undefined = o normal)
+      d.textContent = r!==undefined ? r : show ? noteName(m) : '';
       d.setAttribute('aria-label', show ? `${noteName(b.open)} abrindo, ${noteName(b.close)} fechando` : 'Botão do bandoneon');
       d.classList.toggle('sharp', [1,3,6,8,10].includes(m%12));
       d.classList.toggle('edit', state.editing && !!opts.editable);
@@ -80,7 +81,7 @@ function createKeyboard(el, hand, opts={}){
       if(ms) setTimeout(()=>n.d.classList.remove(cls),ms); },
     unmark(id,cls){ const n=nodes[id]; if(n) n.d.classList.remove(cls); },
     tint(id,color){ const n=nodes[id]; if(!n) return; n.d.style.background=color; n.d.style.color=color?'#fff':''; },
-    clearMarks(){ Object.values(nodes).forEach(({d})=>d.classList.remove('ok','bad','hint','chord','guia','prox','zona')); },
+    clearMarks(){ Object.values(nodes).forEach(({d})=>d.classList.remove('ok','bad','hint','chord','guia','prox','zona','mc-abre','mc-fecha','mc-ambas')); },
     // número do dedo recomendado sobre o botão (null tira)
     dedo(id,n){ const x=nodes[id]; if(!x) return; if(n==null) delete x.d.dataset.dedo; else x.d.dataset.dedo=n; },
     clearDedos(){ Object.values(nodes).forEach(({d})=>{ delete d.dataset.dedo; }); },

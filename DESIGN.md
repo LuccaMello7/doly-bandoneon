@@ -76,7 +76,7 @@ spacing:
   painel: "32px"
   cabeca: "48px"
   largo: "64px"
-  secao: "110px"
+  secao: "112px"
 components:
   button-primary:
     backgroundColor: "{colors.verde-vai}"
@@ -215,9 +215,11 @@ Uma paleta escura e quente, de um único acento de marca, onde cada cor viva tem
 
 ## Layout
 
-Coluna central de até 1150px, com margem lateral de 28px no computador; o palco do instrumento sangra até as bordas (a aurora ultrapassa a coluna). O primeiro viewport é centralizado: título, apoio, ações e, abaixo, a grade de três colunas do instrumento (mão esquerda, fole, mão direita), dimensionada por container query para caber na largura.
+**Grid de 8 pontos (desde 2026-11-11).** Todo espaçamento (margin, padding, gap, min-height) é múltiplo de 8 a partir de 16px (16, 24, 32, 40, 48…); abaixo disso, múltiplos de 4 (4, 8, 12) para ajustes pequenos; linhas de 1-2px ficam de fora. `python ferramentas/grade8.py` mostra o que está fora, `--corrigir` ajusta, e os testes falham se algo sair do grid.
 
-O ritmo vertical é largo: 110px entre seções (80px abaixo de 1000px), 48px entre a cabeça da seção e o conteúdo, 16px entre painéis irmãos, 32px de respiro dentro de painéis (24px no celular), 64px entre colunas de texto e imagem. Listas e grupos de números se separam por divisórias de 1px em vez de caixas.
+Coluna central de até 1150px, com margem lateral de 32px no computador; o palco do instrumento sangra até as bordas (a aurora ultrapassa a coluna). O primeiro viewport é centralizado: título, apoio, ações e, abaixo, a grade de três colunas do instrumento (mão esquerda, fole, mão direita), dimensionada por container query para caber na largura.
+
+O ritmo vertical é largo: 112px entre seções (80px abaixo de 1000px), 48px entre a cabeça da seção e o conteúdo, 16px entre painéis irmãos, 32px de respiro dentro de painéis (24px no celular), 64px entre colunas de texto e imagem. Listas e grupos de números se separam por divisórias de 1px em vez de caixas.
 
 Pontos de quebra observados: 1000px (barra no topo e grade de três colunas do instrumento acima; abaixo, o instrumento empilha com a mão direita em cima e o fole vira uma faixa com chave e visor lado a lado), 600px (celular: o botão verde ocupa a largura inteira, a barra do topo mostra só marca, idiomas e o botão verde) e telas baixas de computador (altura até 880px), em que o palco encolhe para o instrumento caber no primeiro viewport.
 

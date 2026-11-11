@@ -34,7 +34,7 @@ function segmentar(sel, {rotulo=o=>menuEsc(o.textContent.trim()), classe=''}={})
   return grupo;
 }
 // Bolinhas da direção do fole dentro dos botões (azul = abrindo, laranja = fechando)
-const rotuloFole = o => (o.value==='rand' ? '<i class="menu-ponto open" aria-hidden="true"></i><i class="menu-ponto close dupla" aria-hidden="true"></i>'
+const rotuloFole = o => (o.value==='rand' || o.value==='ambas' ? '<i class="menu-ponto open" aria-hidden="true"></i><i class="menu-ponto close dupla" aria-hidden="true"></i>'
   : `<i class="menu-ponto ${menuEsc(o.value)}" aria-hidden="true"></i>`) + menuEsc(o.textContent.trim());
 // "Menor (m)" vira o símbolo grande e o nome pequeno embaixo
 const rotuloSimbolo = o => {

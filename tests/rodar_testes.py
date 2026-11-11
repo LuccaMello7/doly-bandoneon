@@ -41,6 +41,12 @@ def main():
         if r.returncode:
             print('FALHA  ' + (r.stdout.strip() or r.stderr.strip()))
             faltando.append(gerador)
+    # grid de 8 pontos: todo espaçamento novo precisa cair no grid (ferramentas/grade8.py)
+    r = subprocess.run([sys.executable, str(RAIZ / 'ferramentas' / 'grade8.py'), '--verificar'],
+                       capture_output=True, text=True, encoding='utf-8')
+    if r.returncode:
+        print('FALHA  espaçamentos fora do grid de 8 pontos:\n       ' + r.stdout.strip().replace('\n', '\n       '))
+        faltando.append('grade8.py')
     captura = ('<base href="../">\n<script>window.__erros=[];'
                'window.onerror=(m,s,l)=>{window.__erros.push(m+" ("+(s||"").split("/").pop()+":"+l+")");};'
                'document.addEventListener("securitypolicyviolation",e=>window.__erros.push("CSP bloqueou "+e.violatedDirective+": "+e.blockedURI));</script>')

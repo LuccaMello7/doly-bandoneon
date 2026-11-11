@@ -310,7 +310,7 @@
   </div>
   <!-- quem volta: praticar hoje -->
   <div class="ini-s ini-so-volta" style="padding-top:8px">
-    <div class="ini-s-cab" style="margin-bottom:28px"><h2>Practise today</h2></div>
+    <div class="ini-s-cab" style="margin-bottom:32px"><h2>Practise today</h2></div>
     <div class="ini-hoje">
       <div class="ini-painel">
         <div class="ini-rep"><img src="../imagens/repetche/avatar.jpg" alt="" width="52" height="52" loading="lazy"><div><b><span translate="no">RepeTCHÊ</span> of the day</b><small><span id="inEcoDia"></span> · <span id="iniEcoFase"></span></small></div></div>
@@ -594,7 +594,7 @@
     </div>
     <div class="menu-resumo" id="sResumo" hidden><div class="menu-chips" id="sResumoChips"></div><button type="button" class="btn ghost" id="sParar"><svg aria-hidden="true"><use href="#i-x"/></svg>Stop</button></div>
     <div class="qn-hud desafio-hud" id="sHud" hidden><span class="qn-hud-item">Round <b><span id="sRodada">1</span><small>/10</small></b></span><span class="qn-bolinhas" id="sBolinhas" aria-hidden="true"></span><span class="qn-hud-item">Correct <b id="sAcertos">0</b></span></div>
-    <div class="staff" style="text-align:center;margin-top:14px"><svg id="staffSvg" width="320" height="150" viewBox="0 0 320 150"></svg></div>
+    <div class="staff" style="text-align:center;margin-top:16px"><svg id="staffSvg" width="320" height="150" viewBox="0 0 320 150"></svg></div>
     <div class="answers" id="sAnswers" style="text-align:center"></div>
     <div style="text-align:center"><div class="feedback" id="sFeed"></div></div>
   </div>
@@ -754,7 +754,7 @@
           </div>
         </div>
         <div class="menu-resumo" id="melResumo" hidden><div class="menu-chips" id="melResumoChips"></div><button type="button" class="btn ghost" id="melParar"><svg aria-hidden="true"><use href="#i-x"/></svg>Stop</button></div>
-        <div class="notice" id="melWarn" style="display:none;margin-top:10px"></div>
+        <div class="notice" id="melWarn" style="display:none;margin-top:12px"></div>
         <div class="guide" id="melGuide" style="display:none"><details id="guideIntroBox" open><summary>About this scale</summary><div id="guideIntro"></div></details><div class="gstep" id="guideStep"></div></div>
         <div class="staffwrap" id="melStaff" aria-hidden="true"></div>
         <div class="mroll" id="melRoll" hidden><canvas id="melRollCv" aria-hidden="true"></canvas></div>
@@ -781,7 +781,7 @@
           <label>Line: <select id="impPick"><option value="high">Highest note (melody)</option><option value="low">Lowest note (bass)</option></select></label>
           <label title="Shifts the melody by octaves to fit the range of the chosen hand"><input type="checkbox" id="impOct" checked> Fit octave to hand</label>
         </div>
-        <div class="row" style="margin-top:10px"><button class="btn" id="impGo">Generate melody</button><button class="btn sec" id="impCancel">Cancel</button></div>
+        <div class="row" style="margin-top:12px"><button class="btn" id="impGo">Generate melody</button><button class="btn sec" id="impCancel">Cancel</button></div>
         <div class="feedback bad" id="impErr"></div>
         <p class="muted" style="margin-bottom:0">In MuseScore: <i>File → Export → MusicXML</i> (.mxl or .musicxml). With chords or several voices, the app keeps the highest (or lowest) note at each moment. Grace notes are ignored.</p>
       </div>
@@ -824,10 +824,10 @@
           <div class="menu-grupo"><span class="menu-rot">Buttons</span><label class="menu-switch"><input type="checkbox" class="nomesToggle" checked><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Note names</b><small>Written on the keyboard buttons.</small></span></label></div>
         </div>
       </div>
-      <h3 id="chTitle" style="color:var(--gold);font-size:1.4rem;margin:14px 0 2px"></h3>
+      <h3 id="chTitle" style="color:var(--gold);font-size:1.4rem;margin:16px 0 2px"></h3>
       <p class="muted" id="chNotes" style="margin-top:0"></p>
       <div class="row" id="chVoicings"></div>
-      <div class="row" style="margin-top:10px">
+      <div class="row" style="margin-top:12px">
         <button class="btn btn-play" id="chPlay">Hear chord</button>
         <button class="btn sec" id="chArp">Arpeggio</button>
       </div>
@@ -869,7 +869,7 @@
     <div class="menu eco-opcoes">
       <div class="menu-grupo"><span class="menu-rot">Help</span><select id="ecoAjuda"><option value="ver">See and hear (the buttons light up)</option><option value="fole">Bellows only (the buttons do not light up)</option><option value="ouvido">By ear only</option></select></div>
       <div class="menu-grupos">
-        <div class="menu-grupo"><span class="menu-rot">Each round</span><select id="ecoPasso"><option value="2">+2 notes</option><option value="3">+3 notes</option><option value="4">+4 notes</option></select></div>
+        <div class="menu-grupo"><span class="menu-rot">New notes per round</span><select id="ecoPasso"><option value="2">2 notes (gentler)</option><option value="3">3 notes</option><option value="4">4 notes (faster)</option></select><p class="menu-ajuda" id="ecoPassoAjuda"></p></div>
         <div class="menu-grupo"><span class="menu-rot">Speed</span><select id="ecoVel"><option value="0.75">Slow</option><option value="1" selected>Normal</option></select></div>
       </div>
       <div class="menu-switches">
@@ -998,7 +998,7 @@
           <label>Line: <select id="acImpLinha"><option value="high">Highest note (melody)</option><option value="low">Lowest note (bass)</option></select></label>
           <label title="Shifts the music by octaves to fit the range of the chosen hand"><input type="checkbox" id="acImpOitava" checked> Fit octave to hand</label>
         </div>
-        <div class="row" style="margin-top:10px"><button type="button" class="btn" id="acImpGo">Transcribe for the bandoneon</button><button type="button" class="btn sec" id="acImpCancelar">Cancel</button></div>
+        <div class="row" style="margin-top:12px"><button type="button" class="btn" id="acImpGo">Transcribe for the bandoneon</button><button type="button" class="btn sec" id="acImpCancelar">Cancel</button></div>
       </div>
       <div class="feedback" id="acImpMsg" aria-live="polite"></div>
       <details class="ac-pdf">
@@ -1114,10 +1114,11 @@
       <div class="af-marcas muted" aria-hidden="true"><span>-50</span><span>0</span><span>+50</span></div>
       <div class="af-cents" id="mcCents">Turn on the microphone and play a note.</div>
       <div class="af-nivel" aria-hidden="true"><span id="mcNivel"></span></div>
+      <p class="mc-onde" id="mcOnde" aria-live="polite"></p>
     </div>
     <div class="menu mc-menu">
       <div class="menu-grupos">
-        <div class="menu-grupo"><span class="menu-rot">Bellows</span><select id="mcDir"><option value="open">Opening</option><option value="close">Closing</option></select><p class="menu-ajuda">The buttons that give the heard note in this direction light up on the keyboards.</p></div>
+        <div class="menu-grupo"><span class="menu-rot">Light up the buttons</span><select id="mcDir"><option value="ambas" selected>Opening and closing</option><option value="open">Opening only</option><option value="close">Closing only</option></select><p class="menu-ajuda">The sound does not reveal the bellows direction: the same note comes from different buttons when opening and closing. So the app lights both, blue for opening and orange for closing.</p></div>
         <div class="menu-grupo"><span class="menu-rot">Buttons</span><label class="menu-switch"><input type="checkbox" class="nomesToggle" checked><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Note names</b><small>Written on the keyboard buttons.</small></span></label></div>
       </div>
     </div>
