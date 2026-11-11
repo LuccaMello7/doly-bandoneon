@@ -2,4 +2,4 @@
 # .well-known/ precisa ser publicado (assetlinks.json: liga o app da Play Store ao site);
 # loja/ e ferramentas/ não precisam (material da loja e scripts).
 include: [".well-known"]
-exclude: ["icones/originais", "loja", "ferramentas", "tests", "supabase", "DESIGN.md", "PRODUCT.md", "README.md", "LICENSE"]
+exclude: ["icones/originais", "divulgacao", "loja", "ferramentas", "tests", "supabase", "DESIGN.md", "PRODUCT.md", "README.md", "LICENSE"]

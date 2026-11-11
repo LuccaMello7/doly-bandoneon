@@ -178,7 +178,7 @@ a{color:var(--gold)}
 .mcard.open .d{background:var(--open)} .mcard.close .d{background:var(--close)}
 .mcard.rest{opacity:.45;cursor:default}
 .mcard.cur{border-color:var(--gold);transform:scale(1.1)}
-.mcard.ok{background:#1f4a33} .mcard.bad{background:#5a1a1e}
+.mcard.ok{background:rgba(185,151,255,.22)} .mcard.bad{background:#5a1a1e} /* certo em lavanda (o verde é só do botão de ir) */
 .mcard.err{outline:2px dashed var(--red2)}
 textarea{background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:10px;font-family:Consolas,monospace;font-size:.9rem;width:100%}
 .lesson-list .best{float:right;color:var(--gold);font-size:.85em}
