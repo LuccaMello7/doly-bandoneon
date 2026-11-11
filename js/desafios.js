@@ -174,7 +174,7 @@ $('#fStart').onclick=()=>{
   // no celular, a nota e o teclado ficam à vista
   if(window.innerWidth < 900) $('#fPalco').scrollIntoView({block:'start', behavior: movReduzido() ? 'auto' : 'smooth'});
 };
-// Mapa de erros: pinta cada botão de verde (acerta) a vermelho (erra)
+// Mapa de acertos: pinta cada botão de verde (acerta) a vermelho (erra)
 function paintHeat(){
   const dir = fOpcao('fDir')==='close' ? 'close' : 'open'; fq.dir = dir;
   for(const [k,hand] of [[fkL,'left'],[fkR,'right']]){
@@ -188,7 +188,7 @@ function paintHeat(){
 function toggleHeat(){
   fq.heat = !fq.heat; $('#fHeat').classList.toggle('on', fq.heat);
   $('#fHeatInfo').style.display = fq.heat ? 'block' : 'none';
-  if(fq.heat){ pararFind(); $('#fAlvoRot').textContent = t('Mapa de erros'); paintHeat(); }
+  if(fq.heat){ pararFind(); $('#fAlvoRot').textContent = t('Mapa de acertos'); paintHeat(); }
   else { [fkL,fkR].forEach(k=>{ state.layout[k.hand].forEach(b=>k.tint(b.id,'')); k.refresh(); }); $('#fAlvoRot').textContent = t('Toque em Começar desafio'); }
 }
 $('#fHeat').onclick=toggleHeat;
@@ -223,7 +223,6 @@ $('#fTreinar').addEventListener('click', e=>{ const b = e.target.closest('[data-
 function pararOutrosDesafios(fica){
   if(fica!=='find' && fq.active) pararFind();
   if(fica!=='staff' && sq.active) pararStaff();
-  if(fica!=='ear' && typeof eq!=='undefined' && eq.active) pararEar();
   if(fica!=='pautabot' && typeof pq!=='undefined' && pq.active) pararPauta();
 }
 ganchosAba.push((v, anterior)=>{ if(anterior==='desafios' && v!=='desafios') pararOutrosDesafios(null); });
@@ -286,9 +285,11 @@ $$('[data-ch]').forEach(b=>b.onclick=()=>{
   $$('[data-ch]').forEach(x=>x.classList.toggle('on',x===b));
   $('#chFind').style.display=b.dataset.ch==='find'?'block':'none';
   $('#chStaff').style.display=b.dataset.ch==='staff'?'block':'none';
-  $('#chEar').style.display=b.dataset.ch==='ear'?'block':'none';
+  $('#chAcordes').style.display=b.dataset.ch==='acordes'?'block':'none';
   $('#chPauta').style.display=b.dataset.ch==='pautabot'?'block':'none';
   pararOutrosDesafios(b.dataset.ch);
   construirPendentes();
 });
 renderStaffAnswers(); drawStaff('treble',null);
+// Treinar → Desafios → Acordes: o treino de acordes mora em Tocar → Acordes; este botão leva até lá e já começa
+$('#chIrTreino').onclick = ()=>{ go('acordes'); $('#chTrain').click(); };

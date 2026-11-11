@@ -54,17 +54,26 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
   Omar Caccia e Matías Gobbo.
 
 ### Navegação
-- Início + 4 áreas, em `AREAS` (navegacao.js):
-  - **aprender:** estudo, academia, licoes, teoria;
-  - **tocar:** teclado, melodias, acordes, microfone;
-  - **treinar:** desafios, eco (o jogo RepeTCHÊ: o bandoneon toca, você repete; js/eco.js e o gaúcho em imagens/repetche/. Tem música do dia com sequência, "Suas músicas" com as melodias e partituras do aluno e modo microfone), qualnota, ritmo;
+- Início + 4 áreas, em `AREAS` (navegacao.js). Organização de 2026-11-11: cada coisa num lugar só.
+  - **aprender:** estudo (Meu estudo: caminho, rotina, recordes e, no fim, as **Conquistas** com o mapa de acertos,
+    `#conquistas`), academia (o nível 7 é **Minhas músicas**; tem atalho para as Escalas guiadas), licoes, teoria (aba própria);
+  - **tocar:** teclado, melodias (com as Escalas guiadas), acordes (exploração e treino), microfone (aba **Afinador**);
+  - **treinar:** desafios (Encontre a nota, Leitura na pauta, Pauta no bandoneon e um atalho "Acordes" que começa o treino em
+    Tocar → Acordes), qualnota (aba **Ouvido**: modos "Qual é a nota?" e "Ache pelo som", `ouvidoModo('nome'|'som')`; o Ache
+    pelo som é o js/ouvido.js), eco (RepeTCHÊ: o bandoneon toca, você repete; js/eco.js e o gaúcho em imagens/repetche/), ritmo;
   - **professores:** professor (Mandar tarefa), relatorios, turmas (`TURMAS_LIGADAS`; ligada desde 2026-11-10);
-  - **perfil** (a área da conta): conta, perfil (Conquistas), ajustes. Não tem botão no menu: abre pelo
-    "Entrar" / círculo com a inicial no topo (`#contaTopo`, com menu `#contaMenu`).
+  - **perfil** (a área da conta): conta, ajustes. Não tem botão no menu: abre pelo "Entrar" / círculo com a inicial no
+    topo (`#contaTopo`, com menu `#contaMenu`). `go('perfil')` ainda funciona: leva às Conquistas no Meu estudo.
 - Cada aba é `<section id="v-nome">`. O botão dela fica em `#subnav`, com `data-area` e `data-v`.
 - `go(v)` troca de aba. Para agir ao entrar ou sair de uma aba: `ganchosAba.push((nova, anterior)=>…)`.
 - Links internos: `data-go="aba"`. Endereços: `#aba`, `#licao-N`, `#teoria-N` e `#tarefa=…` (link do professor).
-- A **Teoria** é a 2ª trilha da aba Lições: não tem botão no `#subnav`, e `go('teoria')` acende o botão Lições.
+  Pontes: `data-abrir-nivel="N"` (Academia) e `data-abrir-desafio="find|ear|…"` (trilha.js); `abrirDesafio('ear')` vai à aba Ouvido.
+- **Minhas músicas** (`minhasMusicas()`, academia.js): as partituras da Academia (`acadPartituras`) e as melodias de
+  Melodias (`melodies`) aparecem juntas na Academia (nível 7), em Melodias e no RepeTCHÊ. Os dados ficam onde estão
+  (nada é migrado); editar ou apagar mexe na lista de origem (`origem: 'partitura' | 'melodia'`).
+- Nomes: "Mapa de botões" é só a disposição dos botões; "Teclado do computador e MIDI" é a janela de controles;
+  "Mapa de acertos" é o mapa de acertos e erros (Encontre a nota e Conquistas). O microfone oferece "Calibrar agora"
+  (`calibrarSilencio`) na primeira vez que é ligado fora do Afinador.
 
 ### Menus (menus.js): o jeito de escolher em todo o app
 - `segmentar(select, {rotulo, classe})` troca um `<select>` curto por botões lado a lado. O `<select>` continua no DOM

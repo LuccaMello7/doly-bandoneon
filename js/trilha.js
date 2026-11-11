@@ -12,7 +12,10 @@ const licaoFeita = i => !!state.progress.lessons[i];
 const algumaAcad = n => { const nv = ACADEMIA.find(x=>x.nivel===n); return !!nv && nv.exercicios.some(e=>acadConcluido(e.id)); };
 const melodiasFeitas = () => state.progress.melodies || {};
 function abrirLicao(i){ curLesson = i; renderLesson(); go('licoes'); }
-function abrirDesafio(ch){ go('desafios'); const b = $(`[data-ch="${ch}"]`); if(b) b.click(); }
+function abrirDesafio(ch){
+  if(ch==='ear'){ go('qualnota'); ouvidoModo('som'); return; } // o Ache pelo som mora na aba Ouvido
+  go('desafios'); const b = $(`[data-ch="${ch}"]`); if(b) b.click();
+}
 function abrirNivel(n){ go('academia'); const b = $(`#acNiveis [data-nivel="${n}"]`); if(b) b.click(); }
 
 // Etapas do caminho. para(perfil) decide se a etapa entra; t e d podem depender do objetivo.
@@ -23,7 +26,7 @@ const ETAPAS = [
    para:p=>p.exp!=='bandoneon', feito:()=>!!state.progress.marcos.teclado, ir:()=>go('teclado')},
   {id:'bisonoro', t:'Abrindo e fechando', d:'Lição 3: o mesmo botão dá duas notas. Faça o exercício da lição.',
    feito:()=>licaoFeita(2), ir:()=>abrirLicao(2)},
-  {id:'microfone', t:'Conecte o seu bandoneon', d:'Em Bandoneon real, ligue o microfone e veja o app reconhecer as suas notas.',
+  {id:'microfone', t:'Conecte o seu bandoneon', d:'No Afinador, ligue o microfone e veja o app reconhecer as suas notas.',
    para:p=>p.inst==='sim', feito:()=>!!state.progress.marcos.mic, ir:()=>go('microfone')},
   {id:'academia', t:'Academia · Nível 1', d:'Os primeiros exercícios com o instrutor: um botão de cada vez.',
    feito:()=>algumaAcad(1), ir:()=>abrirNivel(1)},
@@ -31,7 +34,7 @@ const ETAPAS = [
    feito:()=>licaoFeita(3), ir:()=>abrirLicao(3)},
   {id:'encontre', t:'Decore os botões', d:'Faça 5 de 10 no desafio Encontre a nota.',
    feito:()=>state.progress.find>=5, ir:()=>abrirDesafio('find')},
-  {id:'ouvido', t:'Treine o ouvido', d:'Encontre 5 de 10 notas só pelo som, no desafio Ache pelo som.',
+  {id:'ouvido', t:'Treine o ouvido', d:'Encontre 5 de 10 notas só pelo som, em Ouvido → Ache pelo som.',
    feito:()=>state.progress.ouvido>=5, ir:()=>abrirDesafio('ear')},
   {id:'eco', t:'Toque de ouvido', d:'Complete uma música no RepeTCHÊ: o bandoneon toca e você repete.',
    feito:()=>Object.keys(state.progress.eco||{}).length>0, ir:()=>go('eco')},
@@ -56,10 +59,10 @@ const ETAPAS = [
    para:p=>p.obj!=='conhecer', feito:()=>licaoFeita(9) && melodiasFeitas()['ode-duas']!=null,
    ir:()=>{ if(!licaoFeita(9)) abrirLicao(9); else { go('melodias'); loadMelody('ode-duas'); } }},
   {id:'final', t:p=>({tango:'Um tango de verdade', gaucha:'O seu repertório gaúcho', conhecer:'Quem inspirou o nome'})[p.obj],
-   d:p=>({tango:'Lição 11 e uma partitura sua na Academia (Minhas partituras).',
+   d:p=>({tango:'Lição 11 e uma música sua na Academia (Minhas músicas).',
           gaucha:'Importe uma música gaúcha de que você gosta (MusicXML ou MIDI) e pratique na Academia.',
           conhecer:'Leia a história de Doly Costa, o bandoneonista que inspirou o BanDoly.'})[p.obj],
-   feito:()=>{ const p=perfilAluno()||{}; return p.obj==='conhecer' ? !!state.progress.marcos.doly : (p.obj!=='tango' || licaoFeita(10)) && minhasPartituras().length>0; },
+   feito:()=>{ const p=perfilAluno()||{}; return p.obj==='conhecer' ? !!state.progress.marcos.doly : (p.obj!=='tango' || licaoFeita(10)) && minhasMusicas().length>0; },
    ir:()=>{ const p=perfilAluno()||{}; if(p.obj==='conhecer') location.href=$('.doly-link').href; else if(p.obj==='tango' && !licaoFeita(10)) abrirLicao(10); else abrirNivel(7); }},
 ];
 const PERFIL_PADRAO = {exp:'nunca', inst:'nao', obj:'tango'};
@@ -141,7 +144,7 @@ const INSIGNIAS = [
   {id:'primeiro-dia', ic:'keys',    t:'Primeiro dia',        d:'Praticou pela primeira vez.', feito:()=>Object.keys(state.progress.days||{}).length>0},
   {id:'bisonoro',     ic:'bellows', t:'Bisonoro',            d:'Concluiu a lição Abrindo e fechando.', feito:()=>licaoFeita(2)},
   {id:'memoria',      ic:'target',  t:'Mapa na cabeça',      d:'8 de 10 no desafio Encontre a nota.', feito:()=>state.progress.find>=8},
-  {id:'ouvido',       ic:'ear',     t:'Ouvido afinado',      d:'8 de 10 no desafio Ache pelo som.', feito:()=>state.progress.ouvido>=8},
+  {id:'ouvido',       ic:'ear',     t:'Ouvido afinado',      d:'8 de 10 em Ouvido → Ache pelo som.', feito:()=>state.progress.ouvido>=8},
   {id:'leitor',       ic:'note',    t:'Leitor de pauta',     d:'8 de 10 em Leitura na pauta.', feito:()=>state.progress.staff>=8},
   {id:'mao-esquerda', ic:'keys',    t:'Mão esquerda firme',  d:'30 acertos na mão esquerda nos desafios e na Academia.', feito:()=>acertosNaMao('left')>=30},
   {id:'eco',          ic:'eco',     t:'RepeTCHÊ perfeito',   d:'Completou uma música do RepeTCHÊ sem errar nenhuma nota.', feito:()=>Object.values(state.progress.eco||{}).some(x=>x.estrelas>=3)},
@@ -257,9 +260,14 @@ function compartilharInsignia(id){
 /* ---------- Ao abrir as abas ---------- */
 ganchosAba.push(v=>{
   if(v==='estudo'){ const s=$('#v-estudo'); encherAneis(s); contarNumeros(s); }
-  if(v==='perfil') renderPerfil();
+  if(v==='estudo') renderPerfil(); // as Conquistas ficam no fim do Meu estudo
 });
 renderPerfil();
 // primeira visita: as perguntas aparecem na tela Início (quem chega por um link para uma aba não é interrompido)
 if(!perfilAluno() && !location.hash) setTimeout(()=>{ if(currentView==='inicio' && !perfilAluno()) abrirBoasVindas(); }, 1200);
-ganchosAba.push(v=>{ if(v === 'perfil') contarNumeros($('#v-perfil'), '.pf-conta'); });
+ganchosAba.push(v=>{ if(v === 'estudo') contarNumeros($('#conquistas'), '.pf-conta'); });
+// Pontes: Encontre a nota ↔ Academia nível 1 (treinam a mesma coisa de jeitos diferentes)
+document.addEventListener('click', e=>{
+  const n = e.target.closest('[data-abrir-nivel]'); if(n){ abrirNivel(+n.dataset.abrirNivel); return; }
+  const d = e.target.closest('[data-abrir-desafio]'); if(d) abrirDesafio(d.dataset.abrirDesafio);
+});

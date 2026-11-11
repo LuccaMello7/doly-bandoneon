@@ -275,7 +275,7 @@ function renderConta(){
   $('#contaSincronizar').disabled = contaSincronizando;
   $('#contaNDias').textContent = Object.keys(state.progress.days || {}).length;
   $('#contaNIns').textContent = Object.keys(state.progress.insignias || {}).length;
-  $('#contaNMel').textContent = customMelodies().length;
+  $('#contaNMel').textContent = customMelodies().length + store.get('acadPartituras', []).length; // Minhas músicas
 }
 
 // Ao abrir: volta do login (?code=… ou ?error=…) ou já havia login neste navegador → carrega a biblioteca e sincroniza.

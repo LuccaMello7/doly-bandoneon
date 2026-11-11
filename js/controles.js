@@ -206,14 +206,14 @@ $('#midiEnsinar').onclick = ()=>{ midiCtl.ensinando = true; $('#ctlDialog').clos
 $('#midiApagar').onclick = ()=>{ midiCtl.mapa = {}; store.set('midiBotoes', {}); renderMidi(); };
 $('#midiForca').onchange = e=>{ midiCtl.forca = e.target.checked; store.set('midiForca', midiCtl.forca); };
 
-/* ---------- Janela "Controles de tocar" ---------- */
+/* ---------- Janela "Teclado do computador e MIDI" ---------- */
 function abrirControles(){ pc.verDir = null; renderMapaPc(); renderMidi(); mostrarPressao(); $('#ctlDialog').showModal(); }
 document.addEventListener('click', e=>{ if(e.target.closest('[data-controles]')){ e.preventDefault(); abrirControles(); } });
 // na primeira visita à aba Teclado, um aviso mostra que as teclas já tocam os botões
 ganchosAba.push(v=>{
   if(v!=='teclado' || store.get('pcDica', false) || !pc.ligado) return;
   store.set('pcDica', true);
-  setTimeout(()=>avisar(`<span class="toast-ic"><svg aria-hidden="true"><use href="#i-keys"/></svg></span><span><b>${t('As teclas do computador tocam os botões')}</b><br><span class="muted">${t('A letra de cada tecla aparece no botão. Você pode mudar o mapa.')}</span></span><button type="button" class="btn sec" data-controles>${t('Ver o mapa')}</button>`, 8000), 500);
+  setTimeout(()=>avisar(`<span class="toast-ic"><svg aria-hidden="true"><use href="#i-keys"/></svg></span><span><b>${t('As teclas do computador tocam os botões')}</b><br><span class="muted">${t('A letra de cada tecla aparece no botão. Você pode mudar o mapa.')}</span></span><button type="button" class="btn sec" data-controles>${t('Ver as teclas')}</button>`, 8000), 500);
 });
 $('#ctlFechar').onclick = ()=>$('#ctlDialog').close();
 

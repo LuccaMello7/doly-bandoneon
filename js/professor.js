@@ -59,7 +59,7 @@ function renderCartoesProfessor(){
   const cards = ACADEMIA.filter(n=>prNivel==='todos' || prNivel==n.nivel).flatMap(n=>n.exercicios.filter(e=>!e.pendente).map(e=>({e, n})))
     .filter(({e, n})=>!busca || semAcentoPr(`${t(e.titulo)} ${t(e.desc||'')} ${t(n.titulo)}`).includes(busca));
   $('#prExs').innerHTML = cards.length ? cards.map(({e, n}, i)=>`<button type="button" role="option" class="pr-ex nivel-${n.nivel} ${e.id===escolhido?'on':''}" data-ex="${e.id}" aria-selected="${e.id===escolhido}" style="--i:${i}">
-      <span class="pr-ex-nivel">${n.nivel===7 ? t('Minhas partituras') : t('Nível {}', n.nivel)}</span><b>${escHtml(t(e.titulo))}</b><small>${escHtml(t(e.desc||''))}</small></button>`).join('')
+      <span class="pr-ex-nivel">${n.nivel===7 ? t('Minhas músicas') : t('Nível {}', n.nivel)}</span><b>${escHtml(t(e.titulo))}</b><small>${escHtml(t(e.desc||''))}</small></button>`).join('')
     : `<p class="muted pr-vazio">${t('Nenhum exercício encontrado.')}</p>`;
 }
 $('#prNiveis').addEventListener('click', e=>{ const b = e.target.closest('[data-nivel]'); if(!b) return; prNivel = b.dataset.nivel; preencherExerciciosProfessor(); });
@@ -189,8 +189,8 @@ function receberTarefa(d, extra){
   const itens = [];
   for(const b of (Array.isArray(d.itens) ? d.itens.slice(0, 8) : [d])){
     let exId = b.ex;
-    if(b.texto){ // partitura do professor: entra em Minhas partituras (uma vez só)
-      const igual = minhasPartituras().find(p=>p.texto===b.texto);
+    if(b.texto){ // partitura do professor: entra em Minhas músicas (uma vez só)
+      const igual = minhasMusicas().find(p=>p.texto===b.texto);
       if(igual) exId = igual.id; else { try{ salvarPartitura(b.titulo || t('Tarefa do professor'), b.texto, t('tarefa do professor')); exId = acad.ex.id; }catch(e){ continue; } }
     }
     if(!exercicioPorId(exId)) continue;

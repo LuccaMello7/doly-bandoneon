@@ -135,16 +135,16 @@
   <button type="button" role="tab" data-area="aprender" data-v="estudo"><svg aria-hidden="true"><use href="#i-route"/></svg>Mi estudio</button>
   <button type="button" role="tab" data-area="aprender" data-v="academia"><svg aria-hidden="true"><use href="#i-cap"/></svg>Academia</button>
   <button type="button" role="tab" data-area="aprender" data-v="licoes"><svg aria-hidden="true"><use href="#i-book"/></svg>Lecciones</button>
+  <button type="button" role="tab" data-area="aprender" data-v="teoria"><svg aria-hidden="true"><use href="#i-note"/></svg>Teoría</button>
   <button type="button" role="tab" data-area="tocar" data-v="teclado"><svg aria-hidden="true"><use href="#i-keys"/></svg>Teclado</button>
   <button type="button" role="tab" data-area="tocar" data-v="melodias"><svg aria-hidden="true"><use href="#i-music"/></svg>Melodías</button>
   <button type="button" role="tab" data-area="tocar" data-v="acordes"><svg aria-hidden="true"><use href="#i-chord"/></svg>Acordes</button>
-  <button type="button" role="tab" data-area="tocar" data-v="microfone"><svg aria-hidden="true"><use href="#i-mic"/></svg>Bandoneón real</button>
+  <button type="button" role="tab" data-area="tocar" data-v="microfone"><svg aria-hidden="true"><use href="#i-mic"/></svg>Afinador</button>
   <button type="button" role="tab" data-area="treinar" data-v="desafios"><svg aria-hidden="true"><use href="#i-target"/></svg>Desafíos</button>
-  <button type="button" role="tab" data-area="treinar" data-v="qualnota"><svg aria-hidden="true"><use href="#i-ear"/></svg>¿Qué nota?</button>
+  <button type="button" role="tab" data-area="treinar" data-v="qualnota"><svg aria-hidden="true"><use href="#i-ear"/></svg>Oído</button>
   <button type="button" role="tab" data-area="treinar" data-v="eco"><svg aria-hidden="true"><use href="#i-eco"/></svg><span translate="no">RepeTCHÊ</span></button>
   <button type="button" role="tab" data-area="treinar" data-v="ritmo"><svg aria-hidden="true"><use href="#i-metro"/></svg>Ritmo</button>
   <button type="button" role="tab" data-area="perfil" data-v="conta" id="contaAba"><svg aria-hidden="true"><use href="#i-user"/></svg>Cuenta</button>
-  <button type="button" role="tab" data-area="perfil" data-v="perfil"><svg aria-hidden="true"><use href="#i-trophy"/></svg>Logros</button>
   <button type="button" role="tab" data-area="perfil" data-v="ajustes"><svg aria-hidden="true"><use href="#i-gear"/></svg>Ajustes</button>
   <button type="button" role="tab" data-area="professores" data-v="professor"><svg aria-hidden="true"><use href="#i-quadro"/></svg>Enviar tarea</button>
   <button type="button" role="tab" data-area="professores" data-v="relatorios"><svg aria-hidden="true"><use href="#i-file"/></svg>Informes</button>
@@ -333,7 +333,7 @@
     <div class="ini-pe">
       <div class="ini-pe-marca"><span class="ini-pe-logo"><img src="../icones/logo-cabecalho.png" alt="" width="30" height="30"><b translate="no">BanDoly</b></span><p>Aprendé bandoneón en el navegador. En homenaje a Doly Costa, de Caçapava do Sul.</p></div>
       <div><p class="ini-pe-tit">Aprender</p><ul><li><a href="#" data-go="estudo">Mi estudio</a></li><li><a href="#" data-go="academia">Academia</a></li><li><a href="#" data-go="licoes">Lecciones</a></li><li><a href="#" data-go="teoria">Teoría</a></li></ul></div>
-      <div><p class="ini-pe-tit">Tocar y entrenar</p><ul><li><a href="#" data-go="teclado">Teclado</a></li><li><a href="#" data-go="melodias">Melodías</a></li><li><a href="#" data-go="eco" translate="no">RepeTCHÊ</a></li><li><a href="#" data-go="microfone">Bandoneón real</a></li></ul></div>
+      <div><p class="ini-pe-tit">Tocar y entrenar</p><ul><li><a href="#" data-go="teclado">Teclado</a></li><li><a href="#" data-go="melodias">Melodías</a></li><li><a href="#" data-go="eco" translate="no">RepeTCHÊ</a></li><li><a href="#" data-go="microfone">Afinador</a></li></ul></div>
       <div><p class="ini-pe-tit">Acerca de</p><ul><li><a href="doly-costa/" data-local>Doly Costa</a></li><li><a href="perguntas-frequentes/" data-local>Preguntas frecuentes</a></li><li><a href="professores/" data-local>Para profesores</a></li><li><a href="privacidade/" data-local>Privacidad</a></li><li><a href="termos/" data-local>Términos de uso</a></li><li><button type="button" class="ini-lnk" data-sugestao>Sugerencias</button></li></ul></div>
     </div>
     <div class="ini-pe-base">
@@ -364,7 +364,7 @@
 
 <!-- MEU ESTUDO: o caminho, o "continue de onde parou", os recordes e a rotina (js/trilha.js e js/rotina.js) -->
 <section id="v-estudo">
-  <div class="pg-topo"><span class="pg-ic t-estudo"><svg aria-hidden="true"><use href="#i-route"/></svg></span><div><h2 class="pg-tit">Mi estudio</h2><p class="muted">Tu camino, la rutina de hoy y tus récords, en un solo lugar.</p></div></div>
+  <div class="pg-topo"><span class="pg-ic t-estudo"><svg aria-hidden="true"><use href="#i-route"/></svg></span><div><h2 class="pg-tit">Mi estudio</h2><p class="muted">Tu camino, la rutina de hoy, los récords y los logros, en un solo lugar.</p></div></div>
   <div class="card tarefa-aviso" hidden></div>
   <div class="inicio-grade">
     <div class="inicio-esq">
@@ -390,12 +390,25 @@
       </div>
     </div>
   </div>
+  <div class="estudo-conquistas" id="conquistas">
+    <div class="estudo-conq-topo"><h2 class="pg-tit-2"><svg aria-hidden="true"><use href="#i-trophy"/></svg>Logros</h2><p class="muted">Insignias que ganas practicando. Compartilas con tus amigos.</p></div>
+  <div class="card perfil-topo">
+    <div><b id="pfResumo"></b><div class="muted" id="pfPerfil"></div></div>
+    <button type="button" class="btn sec" id="pfRefazer">Responder de nuevo las preguntas iniciales</button>
+  </div>
+  <div class="card pf-mapa">
+    <div class="pf-mapa-topo"><div><h3>Tu mapa de aciertos</h3><p class="muted">Los botones que más acertás en los Desafíos y en la Academia se encienden. Los apagados todavía no los practicaste.</p></div>
+      <div class="pf-mapa-num"><b class="pf-conta" id="pfMapaN">0</b><span id="pfMapaDe">de 71 botones practicados</span></div></div>
+    <div class="pf-maos"><figure><svg id="pfMapaEsq" aria-hidden="true"></svg><figcaption>Mano izquierda</figcaption></figure><figure><svg id="pfMapaDir" aria-hidden="true"></svg><figcaption>Mano derecha</figcaption></figure></div>
+    <p class="pf-mapa-leg"><span><i class="nunca"></i>todavía sin practicar</span><span><i style="--acc:.35"></i>acierta poco</span><span><i style="--acc:1"></i>acierta siempre</span></p>
+  </div>
+  <div class="insignias" id="insignias"></div>
+  </div>
 </section>
 
 <!-- LIÇÕES -->
 <section id="v-licoes">
   <div class="pg-topo"><span class="pg-ic t-licoes"><svg aria-hidden="true"><use href="#i-book"/></svg></span><div><h2 class="pg-tit">Lecciones</h2><p class="muted">11 lecciones cortas con quiz, del primer contacto con el instrumento hasta la partitura de tango.</p></div></div>
-  <div class="segmento trilhas" role="group" aria-label="Camino de estudio"><button type="button" class="btn sec on" data-go="licoes"><svg aria-hidden="true"><use href="#i-bellows"/></svg>El bandoneón · 11 lecciones</button><button type="button" class="btn sec" data-go="teoria"><svg aria-hidden="true"><use href="#i-note"/></svg>Teoría musical · 7 temas</button></div>
   <div class="lesson-layout">
     <div class="card lesson-list" id="lessonList"></div>
     <div class="card" id="lessonBody"></div>
@@ -405,7 +418,6 @@
 <!-- TEORIA MUSICAL (js/teoria.js) -->
 <section id="v-teoria">
   <div class="pg-topo"><span class="pg-ic t-teoria"><svg aria-hidden="true"><use href="#i-note"/></svg></span><div><h2 class="pg-tit">Teoría musical</h2><p class="muted">Lo básico para leer partitura y entender los ejercicios: notas, pentagrama, figuras, compás, escalas y acordes. Todo con sonido.</p></div></div>
-  <div class="segmento trilhas" role="group" aria-label="Camino de estudio"><button type="button" class="btn sec" data-go="licoes"><svg aria-hidden="true"><use href="#i-bellows"/></svg>El bandoneón · 11 lecciones</button><button type="button" class="btn sec on" data-go="teoria"><svg aria-hidden="true"><use href="#i-note"/></svg>Teoría musical · 7 temas</button></div>
   <div class="te-layout">
     <nav class="card te-lista" id="teLista" aria-label="Temas de teoría"></nav>
     <div class="card te-conteudo" id="teConteudo" aria-live="polite"></div>
@@ -443,7 +455,7 @@
         <button type="button" class="menu-toggle" id="foleLivreBtn" aria-pressed="false"><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Fuelle sin límite</b><small>Al final, el fuelle vuelve solo. En el bandoneón de verdad no es así.</small></span></button>
       </div>
       <div class="menu-botoes">
-        <button class="btn sec" data-controles>Mapa y controles</button>
+        <button class="btn sec" data-controles>Teclado de la computadora y MIDI</button>
       <details class="mapmenu">
         <summary class="btn sec">Mapa de botones ▾</summary>
         <div class="row">
@@ -478,13 +490,14 @@
   <div class="segmento" role="group" aria-label="Desafío">
     <button class="btn sec on" data-ch="find">Encontrá la nota</button>
     <button class="btn sec" data-ch="staff">Lectura en el pentagrama</button>
-    <button class="btn sec" data-ch="ear">Encontrala por el sonido</button>
     <button class="btn sec" data-ch="pautabot">Pentagrama en el bandoneón</button>
+    <button class="btn sec" data-ch="acordes">Acordes</button>
   </div>
 
   <div class="card" id="chFind">
     <h2>Encontrá la nota</h2>
     <p class="muted">La app muestra y toca una nota, con la dirección del fuelle. Encontrá el botón correcto en el teclado. Diez rondas.</p>
+    <p class="muted ponte">¿Preferís aprender con instructor e informe? <button type="button" class="link-btn" data-abrir-nivel="1">Ir a la Academia, nivel 1</button></p>
     <div class="fd-config" id="fConfig">
       <div class="fd-grupos">
         <fieldset class="fd-grupo"><legend>Mano</legend><div class="fd-seg">
@@ -505,7 +518,7 @@
       <label class="fd-switch"><input type="checkbox" id="fCirculo" role="switch" checked><span class="fd-switch-trilho" aria-hidden="true"></span><span class="fd-switch-txt"><b>Círculo en la zona de la nota</b><small>Muestra más o menos dónde está el botón. No resta puntos.</small></span></label>
       <div class="fd-config-acoes">
         <button class="btn btn-grande" id="fStart"><svg aria-hidden="true"><use href="#i-play"/></svg>Comenzar desafío</button>
-        <button class="btn sec" id="fHeat"><svg aria-hidden="true"><use href="#i-flame"/></svg>Mapa de errores</button>
+        <button class="btn sec" id="fHeat"><svg aria-hidden="true"><use href="#i-flame"/></svg>Mapa de aciertos</button>
         <p class="muted fd-config-nota">Durante el desafío los nombres de los botones se ocultan.</p>
       </div>
     </div>
@@ -541,32 +554,6 @@
     </div>
   </div>
 
-  <div class="card" id="chEar" style="display:none">
-    <h2>Encontrala por el sonido</h2>
-    <p class="muted">La app toca una nota y encontrás el botón solo por el sonido. La dirección del fuelle aparece en pantalla. Diez rondas; después de dos errores aparece una pista.</p>
-    <div class="menu" id="eMenu">
-      <div class="menu-grupos">
-        <div class="menu-grupo"><span class="menu-rot">Mano</span><select id="eHand"><option value="right">Derecha</option><option value="left">Izquierda</option></select></div>
-        <div class="menu-grupo"><span class="menu-rot">Fuelle</span><select id="eDir"><option value="open">Abriendo</option><option value="close">Cerrando</option><option value="rand">Los dos</option></select></div>
-        <div class="menu-grupo"><span class="menu-rot">Notas</span><select id="eNotas"><option value="naturais">Solo las naturales (Do, Re, Mi…)</option><option value="todas">Todas</option></select></div>
-      </div>
-      <label class="menu-switch"><input type="checkbox" class="nomesToggle" checked><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Nombres de las notas</b><small>Escritos en los botones del teclado.</small></span></label>
-      <div class="menu-acoes"><button class="btn btn-grande" id="eStart"><svg aria-hidden="true"><use href="#i-play"/></svg>Comenzar desafío</button></div>
-    </div>
-    <div class="menu-resumo" id="eResumo" hidden><div class="menu-chips" id="eResumoChips"></div><button type="button" class="btn ghost" id="eParar"><svg aria-hidden="true"><use href="#i-x"/></svg>Detener</button></div>
-    <div class="qn-hud desafio-hud" id="eHud" hidden><span class="qn-hud-item">Ronda <b><span id="eRodada">1</span><small>/10</small></b></span><span class="qn-bolinhas" id="eBolinhas" aria-hidden="true"></span><span class="qn-hud-item">Aciertos <b id="eAcertos">0</b></span></div>
-    <div class="ouvido">
-      <div class="onda" id="eOnda" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-      <div id="eDirPill" class="dirpill open" style="display:inline-block;visibility:hidden"></div>
-      <div class="feedback" id="eFeed" aria-live="polite"></div>
-      <button class="btn sec" id="eReplay" disabled><svg aria-hidden="true"><use href="#i-volume"/></svg>Escuchar de nuevo</button>
-    </div>
-    <div class="instrument">
-      <div class="side"><div class="label">Izquierda</div><div id="ekLeft"></div></div>
-      <div class="side"><div class="label">Derecha</div><div id="ekRight"></div></div>
-    </div>
-  </div>
-
   <div class="card" id="chPauta" style="display:none">
     <h2>Pentagrama en el bandoneón</h2>
     <p class="muted">La nota aparece en el pentagrama y tocás el botón que da esa nota, en la dirección del fuelle indicada. Es el puente entre leer la partitura y tocar. Diez rondas; después de dos errores el botón correcto brilla.</p>
@@ -592,6 +579,12 @@
     </div>
   </div>
 
+  <div class="card" id="chAcordes" style="display:none">
+    <h2>Acordes</h2>
+    <p class="muted">La app pide un acorde y la dirección del fuelle; vos marcás los botones y lo revisás. La práctica está en Tocar → Acordes, donde también podés explorar cada acorde antes.</p>
+    <div class="menu-acoes"><button class="btn btn-grande" id="chIrTreino"><svg aria-hidden="true"><use href="#i-target"/></svg>Comenzar práctica de acordes</button></div>
+  </div>
+
   <div class="card" id="chStaff" style="display:none">
     <h2>Lectura en el pentagrama</h2>
     <p class="muted">En el bandoneón, la mano derecha suele leer en <b>clave de sol</b> y la izquierda en <b>clave de fa</b>. Decí el nombre de la nota.</p>
@@ -609,7 +602,12 @@
 
 <!-- QUAL É A NOTA? (quiz de ouvido, js/qualnota.js) -->
 <section id="v-qualnota" class="qn">
-  <div class="pg-topo"><span class="pg-ic t-qualnota"><svg aria-hidden="true"><use href="#i-ear"/></svg></span><div><h2 class="pg-tit">¿Qué nota es?</h2><p class="muted">El bandoneón toca una nota. Escuchá, mirá la onda del sonido y elegí entre cuatro respuestas.</p></div></div>
+  <div class="pg-topo"><span class="pg-ic t-qualnota"><svg aria-hidden="true"><use href="#i-ear"/></svg></span><div><h2 class="pg-tit">Oído</h2><p class="muted">Dos maneras de entrenar el oído: decí el nombre de la nota que tocó el bandoneón, o encontrá el botón que da esa nota.</p></div></div>
+  <div class="segmento ouv-modos" role="group" aria-label="Entrenamiento auditivo">
+    <button type="button" class="btn sec on" data-ouv="nome"><svg aria-hidden="true"><use href="#i-question"/></svg>¿Qué nota es?</button>
+    <button type="button" class="btn sec" data-ouv="som"><svg aria-hidden="true"><use href="#i-keys"/></svg>Encontrala por el sonido</button>
+  </div>
+  <div id="ouvNome">
   <div class="card qn-escolha">
     <div class="menu" id="qnMenu">
       <div class="menu-grupos">
@@ -672,6 +670,34 @@
       <button class="btn" id="qnDeNovo"><svg aria-hidden="true"><use href="#i-play"/></svg>Jugar de nuevo</button>
       <button class="btn ghost" id="qnMudar">Cambiar el nivel</button>
     </div>
+  </div>
+  </div>
+  <div id="ouvSom" hidden>
+  <div class="card" id="chEar">
+    <h2>Encontrala por el sonido</h2>
+    <p class="muted">La app toca una nota y encontrás el botón solo por el sonido. La dirección del fuelle aparece en pantalla. Diez rondas; después de dos errores aparece una pista.</p>
+    <div class="menu" id="eMenu">
+      <div class="menu-grupos">
+        <div class="menu-grupo"><span class="menu-rot">Mano</span><select id="eHand"><option value="right">Derecha</option><option value="left">Izquierda</option></select></div>
+        <div class="menu-grupo"><span class="menu-rot">Fuelle</span><select id="eDir"><option value="open">Abriendo</option><option value="close">Cerrando</option><option value="rand">Los dos</option></select></div>
+        <div class="menu-grupo"><span class="menu-rot">Notas</span><select id="eNotas"><option value="naturais">Solo las naturales (Do, Re, Mi…)</option><option value="todas">Todas</option></select></div>
+      </div>
+      <label class="menu-switch"><input type="checkbox" class="nomesToggle" checked><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Nombres de las notas</b><small>Escritos en los botones del teclado.</small></span></label>
+      <div class="menu-acoes"><button class="btn btn-grande" id="eStart"><svg aria-hidden="true"><use href="#i-play"/></svg>Comenzar desafío</button></div>
+    </div>
+    <div class="menu-resumo" id="eResumo" hidden><div class="menu-chips" id="eResumoChips"></div><button type="button" class="btn ghost" id="eParar"><svg aria-hidden="true"><use href="#i-x"/></svg>Detener</button></div>
+    <div class="qn-hud desafio-hud" id="eHud" hidden><span class="qn-hud-item">Ronda <b><span id="eRodada">1</span><small>/10</small></b></span><span class="qn-bolinhas" id="eBolinhas" aria-hidden="true"></span><span class="qn-hud-item">Aciertos <b id="eAcertos">0</b></span></div>
+    <div class="ouvido">
+      <div class="onda" id="eOnda" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div id="eDirPill" class="dirpill open" style="display:inline-block;visibility:hidden"></div>
+      <div class="feedback" id="eFeed" aria-live="polite"></div>
+      <button class="btn sec" id="eReplay" disabled><svg aria-hidden="true"><use href="#i-volume"/></svg>Escuchar de nuevo</button>
+    </div>
+    <div class="instrument">
+      <div class="side"><div class="label">Izquierda</div><div id="ekLeft"></div></div>
+      <div class="side"><div class="label">Derecha</div><div id="ekRight"></div></div>
+    </div>
+  </div>
   </div>
 </section>
 
@@ -855,9 +881,9 @@
     <h2 class="card-tit eco-escolha-tit">Elegí la música</h2>
     <p class="muted eco-dica">Tocá una música para empezar. Cada música se divide en fases cortas, de 8 notas: completá una para desbloquear la siguiente. El fuelle cambia de dirección solo.</p>
     <div class="eco-musicas" id="ecoMusicas" aria-label="Música"></div>
-    <h3 class="eco-suas-tit">Tus músicas</h3>
-    <p class="muted eco-dica" id="ecoSuasVazio">Las melodías que creés en Melodías (+ Nueva) y las partituras que importes en la Academia (nivel 7) aparecen acá. Quedan solo en tu dispositivo.</p>
-    <div class="eco-musicas" id="ecoSuas" aria-label="Tus músicas"></div>
+    <h3 class="eco-suas-tit">Mis músicas</h3>
+    <p class="muted eco-dica" id="ecoSuasVazio">Las músicas que creás o importás, en Melodías o en la Academia, aparecen acá también. Quedan solo en tu dispositivo.</p>
+    <div class="eco-musicas" id="ecoSuas" aria-label="Mis músicas"></div>
   </div>
 
   <div class="card eco-jogo" id="ecoJogo" hidden>
@@ -956,6 +982,7 @@
       <div class="ac-niveis" id="acNiveis" role="group" aria-label="Niveles"></div>
       <h3 id="acNivelTitulo"></h3>
       <p class="muted" id="acNivelObjetivo"></p>
+      <p class="muted ponte" id="acPonte" hidden>¿Querés una ronda rápida, sin instructor? <button type="button" class="link-btn" data-abrir-desafio="find">Ir al desafío Encontrá la nota</button></p>
     <!-- nível 7: importar uma partitura (js/partituras.js) -->
     <div class="ac-partituras" id="acPartituras" hidden>
       <div class="row">
@@ -973,10 +1000,6 @@
         </div>
         <div class="row" style="margin-top:10px"><button type="button" class="btn" id="acImpGo">Transcribir para el bandoneón</button><button type="button" class="btn sec" id="acImpCancelar">Cancelar</button></div>
       </div>
-      <div class="row" id="acDeMelodiasLinha" hidden>
-        <label>O usa una melodía guardada en Melodías: <select id="acDeMelodias"></select></label>
-        <button type="button" class="btn sec" id="acDeMelodiasBtn">Agregar</button>
-      </div>
       <div class="feedback" id="acImpMsg" aria-live="polite"></div>
       <details class="ac-pdf">
         <summary>Tengo la partitura en PDF o en foto</summary>
@@ -991,6 +1014,7 @@
       </details>
     </div>
       <div class="ac-lista" id="acLista"></div>
+      <div class="ac-escalas"><div><b>Escalas en todas las tonalidades</b><span class="muted">Mayor, menor y otras, en cualquier tono, con tu progreso en cada una.</span></div><button type="button" class="btn sec" id="acAbrirEscalas"><svg aria-hidden="true"><use href="#i-music"/></svg>Abrir las escalas guiadas</button></div>
     </div>
   </div>
 
@@ -1077,7 +1101,7 @@
 </section>
 <!-- BANDONEON REAL: o microfone escuta o instrumento (js/microfone.js) -->
 <section id="v-microfone">
-  <div class="pg-topo"><span class="pg-ic t-microfone"><svg aria-hidden="true"><use href="#i-mic"/></svg></span><div><h2 class="pg-tit">Bandoneón real</h2><p class="muted">Tocá tu instrumento: la app escucha por el micrófono, muestra la nota y enciende el botón que da esa nota.</p></div></div>
+  <div class="pg-topo"><span class="pg-ic t-microfone"><svg aria-hidden="true"><use href="#i-mic"/></svg></span><div><h2 class="pg-tit">Afinador</h2><p class="muted">Tocá tu instrumento: la app escucha por el micrófono, muestra la nota y enciende el botón que da esa nota.</p></div></div>
   <div class="card">
     <div class="row">
       <button type="button" class="btn" id="mcOn"><svg aria-hidden="true"><use href="#i-mic"/></svg>Encender el micrófono</button>
@@ -1115,20 +1139,6 @@
 </section>
 
 <!-- CONQUISTAS (js/trilha.js) -->
-<section id="v-perfil">
-  <div class="pg-topo"><span class="pg-ic t-perfil"><svg aria-hidden="true"><use href="#i-trophy"/></svg></span><div><h2 class="pg-tit">Logros</h2><p class="muted">Insignias que ganas practicando. Compartilas con tus amigos.</p></div></div>
-  <div class="card perfil-topo">
-    <div><b id="pfResumo"></b><div class="muted" id="pfPerfil"></div></div>
-    <button type="button" class="btn sec" id="pfRefazer">Responder de nuevo las preguntas iniciales</button>
-  </div>
-  <div class="card pf-mapa">
-    <div class="pf-mapa-topo"><div><h3>Tu mapa de botones</h3><p class="muted">Los botones que más acertás en los Desafíos y en la Academia se encienden. Los apagados todavía no los practicaste.</p></div>
-      <div class="pf-mapa-num"><b class="pf-conta" id="pfMapaN">0</b><span id="pfMapaDe">de 71 botones practicados</span></div></div>
-    <div class="pf-maos"><figure><svg id="pfMapaEsq" aria-hidden="true"></svg><figcaption>Mano izquierda</figcaption></figure><figure><svg id="pfMapaDir" aria-hidden="true"></svg><figcaption>Mano derecha</figcaption></figure></div>
-    <p class="pf-mapa-leg"><span><i class="nunca"></i>todavía sin practicar</span><span><i style="--acc:.35"></i>acierta poco</span><span><i style="--acc:1"></i>acierta siempre</span></p>
-  </div>
-  <div class="insignias" id="insignias"></div>
-</section>
 
 <!-- PARA PROFESSORES: tarefa por link, relatório do aluno e digitação (js/professor.js) -->
 <section id="v-professor">
@@ -1280,7 +1290,7 @@
   <div class="card">
     <h3>Hablá con nosotros</h3>
     <p class="muted">¿Encontraste un error o tenés una idea para BanDoly? Tu mensaje ayuda a mejorar la app.</p>
-    <div class="aj-acoes"><button type="button" class="btn" data-sugestao><svg aria-hidden="true"><use href="#i-question"/></svg>Enviar sugerencia o reportar error</button><button type="button" class="btn sec" data-controles>Controles para tocar</button></div>
+    <div class="aj-acoes"><button type="button" class="btn" data-sugestao><svg aria-hidden="true"><use href="#i-question"/></svg>Enviar sugerencia o reportar error</button><button type="button" class="btn sec" data-controles>Teclado de la computadora y MIDI</button></div>
   </div>
   <div class="card">
     <h3>Tus datos</h3>
@@ -1344,7 +1354,7 @@
         <div class="conta-nums">
           <div><b id="contaNDias">0</b><span>días de práctica</span></div>
           <div><b id="contaNIns">0</b><span>insignias</span></div>
-          <div><b id="contaNMel">0</b><span>melodías creadas</span></div>
+          <div><b id="contaNMel">0</b><span>músicas tuyas</span></div>
         </div>
       </div>
       <div class="card conta-dados">
@@ -1386,7 +1396,7 @@
   </form>
 </dialog>
 <dialog class="boas janela" id="ctlDialog" aria-labelledby="ctlTit">
-  <h2 id="ctlTit">Controles para tocar</h2>
+  <h2 id="ctlTit">Teclado de la computadora y MIDI</h2>
   <div class="ctl-sec">
     <h3>Teclado de la computadora</h3>
     <label class="ctl-liga"><input type="checkbox" id="pcLigado"> Tocar los botones con las teclas de la computadora</label>

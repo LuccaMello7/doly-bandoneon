@@ -5,7 +5,7 @@
 const AREAS = {
   inicio:['inicio'], aprender:['estudo','academia','licoes','teoria'], tocar:['teclado','melodias','acordes','microfone'],
   treinar:['desafios','qualnota','eco','ritmo'], professores:['professor','relatorios','turmas'],
-  perfil:['conta','perfil','ajustes'], // "Você": sem botão no menu; abre pelo Entrar / círculo da conta no topo (js/conta.js)
+  perfil:['conta','ajustes'], // as Conquistas ficam no Meu estudo (go('perfil') leva até elas) // "Você": sem botão no menu; abre pelo Entrar / círculo da conta no topo (js/conta.js)
 };
 const areaDe = v => Object.keys(AREAS).find(a=>AREAS[a].includes(v)) || 'inicio';
 const ultimaAba = store.get('ultimaAba', {});
@@ -14,13 +14,15 @@ const ganchosAba = [];
 let currentView='inicio';
 // Mostra a aba v e para o que estiver tocando nas outras
 function go(v){
+  // as Conquistas moraram numa aba própria; hoje ficam no fim do Meu estudo
+  const conquistas = v==='perfil'; if(conquistas) v = 'estudo';
   if(!$('#v-'+v)) v='inicio';
   const anterior=currentView, area=areaDe(v);
   currentView=v;
   if(area!=='inicio'){ ultimaAba[area]=v; store.set('ultimaAba', ultimaAba); }
   $$('#nav [data-area]').forEach(b=>{ const on=b.dataset.area===area; b.classList.toggle('active',on); b.toggleAttribute('aria-current',on); });
   const sub=$('#subnav'); sub.hidden = AREAS[area].length<2;
-  const vSub = v==='teoria' ? 'licoes' : v; // Teoria é a segunda trilha da aba Lições
+  const vSub = v;
   $$('#subnav [data-v]').forEach(b=>{
     const on=b.dataset.v===vSub; b.hidden = b.dataset.area!==area;
     b.classList.toggle('active',on); b.setAttribute('aria-selected',on); b.toggleAttribute('aria-current',on);
@@ -35,6 +37,7 @@ function go(v){
   ganchosAba.forEach(f=>f(v, anterior));
   if(v!==anterior){ cascata($('#v-'+v)); deslizarAba($('#v-'+v), anterior, v); }
   window.scrollTo(0,0);
+  if(conquistas) requestAnimationFrame(()=>$('#conquistas').scrollIntoView({block:'start', behavior: movReduzido() ? 'auto' : 'smooth'}));
 }
 // O fundo dourado da área ativa desliza até o botão tocado
 function moverIndicador(){

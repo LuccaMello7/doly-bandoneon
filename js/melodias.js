@@ -100,7 +100,9 @@ const mel = {cur:null, idx:-1, g:-1, pending:new Set(), dir:'open', running:fals
              errors:0, hits:0, events:[], upcoming:null, editingId:null};
 
 function customMelodies(){ return store.get('melodies', []); }
-function allMelodies(){ return BUILTIN_MELODIES.map(m=>({...m, builtin:true})).concat(customMelodies()); }
+// As partituras importadas na Academia também tocam aqui (Minhas músicas: uma lista só, veja js/academia.js)
+const partiturasComoMelodias = () => store.get('acadPartituras', []).map(p=>({id:p.id, text:p.texto, titulo:p.titulo, partitura:true}));
+function allMelodies(){ return BUILTIN_MELODIES.map(m=>({...m, builtin:true})).concat(customMelodies(), partiturasComoMelodias()); }
 
 // Formato de texto. Linhas "direita:" e "esquerda:" escolhem a mão (cada mão tem seu próprio tempo);
 // linhas sem prefixo continuam na mão atual (padrão: a do cabeçalho "mão:").
@@ -267,10 +269,10 @@ const handLabel = h => t(h==='left'?'Mão esquerda':h==='right'?'Mão direita':'
 function renderMelList(){
   const cur = mel.cur && mel.cur.id, esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
   const opt = x => { const t=parseMelody(x.text), best=state.progress.melodies[x.id];
-    return `<option value="${x.id}" ${x.id===cur?'selected':''}>${esc(t.title)}${best!=null?` — ${best}%`:''}</option>`; };
-  const prontas = BUILTIN_MELODIES, suas = customMelodies();
+    return `<option value="${x.id}" ${x.id===cur?'selected':''}>${esc(x.titulo || t.title)}${best!=null?` — ${best}%`:''}</option>`; };
+  const prontas = BUILTIN_MELODIES, suas = customMelodies().concat(partiturasComoMelodias());
   let h = `<optgroup label="Prontas">${prontas.map(opt).join('')}</optgroup>`;
-  if(suas.length) h += `<optgroup label="Suas melodias">${suas.map(opt).join('')}</optgroup>`;
+  if(suas.length) h += `<optgroup label="${t('Minhas músicas')}">${suas.map(opt).join('')}</optgroup>`;
   if(mel.cur && mel.cur.guide){ const best=state.progress.melodies[mel.cur.id];
     h = `<optgroup label="Escala guiada"><option value="${mel.cur.id}" selected>${esc(mel.cur.title)}${best!=null?` — ${best}%`:''}</option></optgroup>` + h; }
   $('#melSelect').innerHTML = h;
@@ -562,14 +564,16 @@ $('#melSave').onclick=()=>{
   const text=$('#melText').value, m=parseMelody(text);
   if(!m.notes.some(n=>!n.rest)){ $('#melErr').textContent='Nenhuma nota reconhecida.'; return; }
   if(m.bad.length){ $('#melErr').textContent='Não entendi: '+m.bad.join(' '); return; }
-  const list=customMelodies(); let id=mel.editingId;
-  if(id){ list.find(x=>x.id===id).text=text; }
-  else { id='u'+Date.now(); list.push({id, text}); }
-  store.set('melodies', list); loadMelody(id);
+  const list=customMelodies(), parts=store.get('acadPartituras', []); let id=mel.editingId;
+  const part = id && parts.find(x=>x.id===id); // uma partitura da Academia volta para a lista dela
+  if(part){ part.texto=text; part.titulo=m.title || part.titulo; store.set('acadPartituras', parts); }
+  else { if(id) list.find(x=>x.id===id).text=text; else { id='u'+Date.now(); list.push({id, text}); } store.set('melodies', list); }
+  loadMelody(id);
 };
 $('#melDelete').onclick=()=>{
   if(!mel.editingId || !confirm(t('Excluir esta melodia?'))) return;
   store.set('melodies', customMelodies().filter(x=>x.id!==mel.editingId));
-  delete state.progress.melodies[mel.editingId]; saveProgress();
+  store.set('acadPartituras', store.get('acadPartituras', []).filter(x=>x.id!==mel.editingId));
+  delete state.progress.melodies[mel.editingId]; if(state.progress.academia) delete state.progress.academia[mel.editingId]; saveProgress();
   loadMelody(BUILTIN_MELODIES[0].id);
 };

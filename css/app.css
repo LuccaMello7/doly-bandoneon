@@ -2941,3 +2941,20 @@ main.prof-pagina{max-width:880px}
 #v-ajustes .settings input[type=checkbox]:checked::after{transform:translateX(18px)}
 #v-ajustes .settings input[type=checkbox]:focus-visible{outline:2px solid var(--lavanda);outline-offset:2px}
 @media (max-width:599px){.mc-menu .menu-grupos{grid-template-columns:1fr}#v-ajustes .settings .menu-seg{min-width:0;width:100%}}
+/* ================== Organização (2026-11-11): Ouvido, Conquistas no Meu estudo, pontes e atalhos ================== */
+.ouv-modos{margin-bottom:16px}
+.ouv-modos .btn svg[aria-hidden]{width:18px;height:18px}
+#ouvSom>.card{margin-bottom:0}
+.estudo-conquistas{margin-top:26px}
+.estudo-conq-topo{margin:0 0 14px}
+.pg-tit-2{display:flex;align-items:center;gap:10px;margin:0 0 4px;font-size:1.45rem;font-weight:600;letter-spacing:-.02em}
+.pg-tit-2 svg[aria-hidden]{color:var(--lavanda)}
+.estudo-conq-topo .muted{margin:0}
+.ponte{margin:-4px 0 12px;font-size:13.5px}
+.link-btn{padding:0;border:0;background:none;cursor:pointer;color:var(--gold2);font:inherit;font-weight:600;text-decoration:underline;text-underline-offset:3px}
+@media (hover:hover){.link-btn:hover{color:var(--osso)}}
+.ac-escalas{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-top:16px;padding:14px 16px;border-radius:16px;background:var(--ameixa);box-shadow:inset 0 0 0 1px var(--borda)}
+.ac-escalas>div{display:grid;gap:2px;min-width:0}
+.ac-escalas b{font-weight:600}
+.ac-escalas .muted{font-size:13px}
+#chAcordes .menu-acoes{margin-top:6px}

@@ -1,4 +1,4 @@
-/* ================== Academia · Minhas partituras ================== */
+/* ================== Academia · Minhas músicas (as partituras importadas) ================== */
 // O usuário importa uma partitura (MusicXML ou MIDI) e ela vira um exercício do nível 7 da
 // Academia. A transcrição usa o mesmo caminho das melodias: a partitura vira o formato de texto
 // (melodyFromScore, em musicxml.js), e fingerMelody escolhe o botão e a direção do fole de cada
@@ -86,15 +86,16 @@ function salvarPartitura(titulo, texto, origem){
   return est;
 }
 function removerPartitura(id){
-  const p = minhasPartituras().find(x=>x.id===id); if(!p) return;
-  if(!confirm(t('Remover a partitura "{}"?', p.titulo))) return;
-  store.set('acadPartituras', minhasPartituras().filter(x=>x.id!==id));
+  const p = minhasMusicas().find(x=>x.id===id); if(!p) return;
+  if(!confirm(t('Remover "{}" das suas músicas?', p.titulo))) return;
+  if(p.origem==='melodia'){ store.set('melodies', customMelodies().filter(x=>x.id!==id)); delete state.progress.melodies[id]; }
+  else store.set('acadPartituras', minhasPartituras().filter(x=>x.id!==id));
   delete state.progress.academia[id]; saveProgress();
   if(acad.ex && acad.ex.id===id){
-    const resto = minhasPartituras();
+    const resto = minhasMusicas();
     carregarExercicio(resto.length ? resto[0].id : 'n1-direita');
   }
-  acad.nivel = 7; store.set('acadNivel', 7); renderAcadNiveis(); renderAcadLista();
+  acad.nivel = 7; store.set('acadNivel', 7); renderAcadNiveis(); renderAcadLista(); renderMelList();
 }
 
 /* ---------- Importar ---------- */
@@ -171,18 +172,7 @@ $('#acImpGo').onclick = () => {
     abrirTranscricao(true);
   } catch(e){ acMsg(e.message, 'bad'); }
 };
-// Melodias salvas em Melodias (editor de texto ou importadas lá) também podem virar exercício
-function acListaMelodias(){
-  const ms = customMelodies();
-  $('#acDeMelodiasLinha').hidden = !ms.length;
-  $('#acDeMelodias').innerHTML = ms.map(m=>`<option value="${escHtml(m.id)}">${escHtml(parseMelody(m.text).title || m.id)}</option>`).join('');
-}
-$('#acDeMelodiasBtn').onclick = () => {
-  const m = customMelodies().find(x=>x.id===$('#acDeMelodias').value); if(!m) return;
-  try { const est = salvarPartitura(parseMelody(m.text).title || m.id, m.text, t('Melodias'));
-        acMsg(t('{} notas transcritas para os botões.', est.notas) + ' ' + t('Veja a transcrição ou comece no modo Aprender.'), 'ok'); }
-  catch(e){ acMsg(e.message, 'bad'); }
-};
+// (As melodias de Melodias já aparecem aqui sozinhas: veja minhasMusicas em js/academia.js)
 
 /* ---------- Transcrição: cada nota com o seu botão ---------- */
 // Tabela com todas as notas e pausas do exercício: início, nota, mão, fole e duração.
@@ -221,5 +211,5 @@ function abrirTranscricao(abrir){
 }
 $('#acTranscricaoBtn').onclick = () => abrirTranscricao($('#acTranscricao').hidden);
 
-acListaMelodias();
+
 renderAcadLista();

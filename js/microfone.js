@@ -77,6 +77,9 @@ async function micStart(){
   Object.assign(mic, {on:true, cand:null, candCount:0, current:null, peak:0, silent:0});
   mic.timer = setInterval(micTick, 30);
   showMic(null);
+  // nunca calibrou e ligou o microfone fora do Afinador (Melodias, Academia, RepeTCHÊ): oferece a calibragem ali mesmo
+  if(store.get('micLimiar', null)==null && currentView!=='microfone')
+    setTimeout(()=>avisar(`<span class="toast-ic"><svg aria-hidden="true"><use href="#i-mic"/></svg></span><span><b>${t('Para o app ouvir melhor')}</b><br><span class="muted">${t('Meça o silêncio do ambiente: são só dois segundos.')}</span></span><button type="button" class="btn sec" data-calibrar>${t('Calibrar agora')}</button>`, 9000), 400);
   return true;
 }
 function micStop(){
@@ -86,7 +89,7 @@ function micStop(){
   mic.stream = mic.src = null;
   const el = $('#micStatus'); if(el) el.textContent = '';
 }
-/* ---------- Tela Bandoneon real: afinador e botões que dão a nota ouvida ---------- */
+/* ---------- Tela Afinador: a nota ouvida, a afinação e os botões que dão essa nota ---------- */
 const mcOpts = {getDir:()=>$('#mcDir').value};
 const mcL = kb($('#mcLeft'),'left',mcOpts), mcR = kb($('#mcRight'),'right',mcOpts);
 let mcDono = false, mcUltima = null; // mcDono: o microfone foi ligado nesta tela (e desliga ao sair dela)
@@ -117,22 +120,32 @@ $('#mcOn').onclick = async ()=>{
 };
 $('#mcDir').onchange = ()=>{ mcUltima=null; mcL.refresh(); mcR.refresh(); mcL.clearMarks(); mcR.clearMarks(); };
 // Mede o barulho do ambiente por 2 segundos: sons mais baixos que isso passam a ser ignorados
-$('#mcCal').onclick = ()=>{
+function calibrarSilencio(info, fim){
   if(!mic.on) return;
-  $('#mcCal').disabled = true; $('#mcInfo').textContent = 'Silêncio, por favor… medindo o barulho do ambiente.';
+  info(t('Silêncio, por favor… medindo o barulho do ambiente.'));
   const medidas = [], t0 = performance.now();
   const iv = setInterval(()=>{
-    if(!mic.on){ clearInterval(iv); return; }
+    if(!mic.on){ clearInterval(iv); if(fim) fim(); return; }
     mic.analyser.getFloatTimeDomainData(mic.buf);
     let r = 0; for(let i=0;i<mic.buf.length;i++) r += mic.buf[i]*mic.buf[i];
     medidas.push(Math.sqrt(r/mic.buf.length));
     if(performance.now()-t0 < 2000) return;
     clearInterval(iv); medidas.sort((a,b)=>a-b);
     mic.limiar = Math.min(0.06, Math.max(0.008, 2.5*medidas[Math.floor(medidas.length*0.9)]));
-    store.set('micLimiar', mic.limiar); $('#mcCal').disabled = false;
-    $('#mcInfo').textContent = 'Pronto! O app vai ignorar os sons mais baixos que o barulho medido.';
+    store.set('micLimiar', mic.limiar);
+    info(t('Pronto! O app vai ignorar os sons mais baixos que o barulho medido.')); if(fim) fim();
   }, 50);
+}
+$('#mcCal').onclick = ()=>{
+  if(!mic.on) return;
+  $('#mcCal').disabled = true;
+  calibrarSilencio(msg=>{ $('#mcInfo').textContent = msg; }, ()=>{ $('#mcCal').disabled = false; });
 };
+// "Calibrar agora" no aviso que aparece ao ligar o microfone em outra tela
+document.addEventListener('click', e=>{
+  if(!e.target.closest('[data-calibrar]')) return;
+  calibrarSilencio(msg=>avisar(`<span class="toast-ic"><svg aria-hidden="true"><use href="#i-mic"/></svg></span><span>${menuEsc(msg)}</span>`, 4000));
+});
 ganchosAba.push((v, antes)=>{
   if(antes==='microfone' && v!=='microfone' && mcDono){ micStop(); mcDono=false; mcEstado(); }
   if(v==='microfone'){ mcL.build(); mcR.build(); mcUltima=null; mcEstado(); }

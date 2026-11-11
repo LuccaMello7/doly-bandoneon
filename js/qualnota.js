@@ -1,4 +1,4 @@
-/* ================== Qual é a nota? (Treinar → Qual nota?) ==================
+/* ================== Qual é a nota? (Treinar → Ouvido, junto com o Ache pelo som de js/ouvido.js) ==================
    Um quiz de ouvido: o bandoneon toca a nota de um botão, a onda do som aparece na tela e o aluno escolhe
    entre quatro nomes. A referência (o Dó central) não toca colada na pergunta: um pop-up grande avisa e toca o Dó
    sozinho, e a nota da pergunta só vem quando o aluno aperta "Ouvir a pergunta" (assim nunca parecem duas notas). Ao lado ficam "Ouça outra vez" (repetir não custa nada) e "Dica", em três passos:
@@ -332,7 +332,18 @@ document.addEventListener('keydown', e=>{
 });
 window.addEventListener('resize', ()=>{ if(currentView==='qualnota' && !qnRaf) qnDesenhar(qnUlt, qnUltPico, true); });
 ganchosAba.push((v, anterior)=>{
-  if(anterior==='qualnota' && v!=='qualnota') qnSair();
+  if(anterior==='qualnota' && v!=='qualnota'){ qnSair(); if(eq.active) pararEar(); }
   if(v==='qualnota'){ qnRecorde(); requestAnimationFrame(()=>qnDesenhar(qnUlt, qnUltPico, true)); }
 });
 qnRenderOpcoes(); qnBolinhas(); qnRecorde();
+// Aba Ouvido: dois modos. "Qual é a nota?" (este quiz) e "Ache pelo som" (js/ouvido.js). Trocar de modo encerra o que rodava.
+function ouvidoModo(m){
+  $$('[data-ouv]').forEach(b=>{ const on = b.dataset.ouv===m; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); });
+  $('#ouvNome').hidden = m!=='nome'; $('#ouvSom').hidden = m!=='som';
+  if(m!=='nome' && qn.ativo) qnParar();
+  if(m!=='som' && eq.active) pararEar();
+  if(m==='nome') requestAnimationFrame(()=>qnDesenhar(qnUlt, qnUltPico, true));
+  construirPendentes(); store.set('ouvidoModo', m);
+}
+$$('[data-ouv]').forEach(b=>b.onclick = ()=>ouvidoModo(b.dataset.ouv));
+ouvidoModo(store.get('ouvidoModo', 'nome')==='som' ? 'som' : 'nome');

@@ -135,16 +135,16 @@
   <button type="button" role="tab" data-area="aprender" data-v="estudo"><svg aria-hidden="true"><use href="#i-route"/></svg>My study</button>
   <button type="button" role="tab" data-area="aprender" data-v="academia"><svg aria-hidden="true"><use href="#i-cap"/></svg>Academy</button>
   <button type="button" role="tab" data-area="aprender" data-v="licoes"><svg aria-hidden="true"><use href="#i-book"/></svg>Lessons</button>
+  <button type="button" role="tab" data-area="aprender" data-v="teoria"><svg aria-hidden="true"><use href="#i-note"/></svg>Theory</button>
   <button type="button" role="tab" data-area="tocar" data-v="teclado"><svg aria-hidden="true"><use href="#i-keys"/></svg>Keyboard</button>
   <button type="button" role="tab" data-area="tocar" data-v="melodias"><svg aria-hidden="true"><use href="#i-music"/></svg>Melodies</button>
   <button type="button" role="tab" data-area="tocar" data-v="acordes"><svg aria-hidden="true"><use href="#i-chord"/></svg>Chords</button>
-  <button type="button" role="tab" data-area="tocar" data-v="microfone"><svg aria-hidden="true"><use href="#i-mic"/></svg>Real bandoneon</button>
+  <button type="button" role="tab" data-area="tocar" data-v="microfone"><svg aria-hidden="true"><use href="#i-mic"/></svg>Tuner</button>
   <button type="button" role="tab" data-area="treinar" data-v="desafios"><svg aria-hidden="true"><use href="#i-target"/></svg>Challenges</button>
-  <button type="button" role="tab" data-area="treinar" data-v="qualnota"><svg aria-hidden="true"><use href="#i-ear"/></svg>Which note?</button>
+  <button type="button" role="tab" data-area="treinar" data-v="qualnota"><svg aria-hidden="true"><use href="#i-ear"/></svg>Ear</button>
   <button type="button" role="tab" data-area="treinar" data-v="eco"><svg aria-hidden="true"><use href="#i-eco"/></svg><span translate="no">RepeTCHÊ</span></button>
   <button type="button" role="tab" data-area="treinar" data-v="ritmo"><svg aria-hidden="true"><use href="#i-metro"/></svg>Rhythm</button>
   <button type="button" role="tab" data-area="perfil" data-v="conta" id="contaAba"><svg aria-hidden="true"><use href="#i-user"/></svg>Account</button>
-  <button type="button" role="tab" data-area="perfil" data-v="perfil"><svg aria-hidden="true"><use href="#i-trophy"/></svg>Achievements</button>
   <button type="button" role="tab" data-area="perfil" data-v="ajustes"><svg aria-hidden="true"><use href="#i-gear"/></svg>Settings</button>
   <button type="button" role="tab" data-area="professores" data-v="professor"><svg aria-hidden="true"><use href="#i-quadro"/></svg>Send an assignment</button>
   <button type="button" role="tab" data-area="professores" data-v="relatorios"><svg aria-hidden="true"><use href="#i-file"/></svg>Reports</button>
@@ -333,7 +333,7 @@
     <div class="ini-pe">
       <div class="ini-pe-marca"><span class="ini-pe-logo"><img src="../icones/logo-cabecalho.png" alt="" width="30" height="30"><b translate="no">BanDoly</b></span><p>Learn the bandoneon in your browser. In honour of Doly Costa, from Caçapava do Sul.</p></div>
       <div><p class="ini-pe-tit">Learn</p><ul><li><a href="#" data-go="estudo">My study</a></li><li><a href="#" data-go="academia">Academy</a></li><li><a href="#" data-go="licoes">Lessons</a></li><li><a href="#" data-go="teoria">Theory</a></li></ul></div>
-      <div><p class="ini-pe-tit">Play and practise</p><ul><li><a href="#" data-go="teclado">Keyboard</a></li><li><a href="#" data-go="melodias">Melodies</a></li><li><a href="#" data-go="eco" translate="no">RepeTCHÊ</a></li><li><a href="#" data-go="microfone">Real bandoneon</a></li></ul></div>
+      <div><p class="ini-pe-tit">Play and practise</p><ul><li><a href="#" data-go="teclado">Keyboard</a></li><li><a href="#" data-go="melodias">Melodies</a></li><li><a href="#" data-go="eco" translate="no">RepeTCHÊ</a></li><li><a href="#" data-go="microfone">Tuner</a></li></ul></div>
       <div><p class="ini-pe-tit">About</p><ul><li><a href="doly-costa/" data-local>Doly Costa</a></li><li><a href="perguntas-frequentes/" data-local>Frequently asked questions</a></li><li><a href="professores/" data-local>For teachers</a></li><li><a href="privacidade/" data-local>Privacy</a></li><li><a href="termos/" data-local>Terms of Use</a></li><li><button type="button" class="ini-lnk" data-sugestao>Feedback</button></li></ul></div>
     </div>
     <div class="ini-pe-base">
@@ -364,7 +364,7 @@
 
 <!-- MEU ESTUDO: o caminho, o "continue de onde parou", os recordes e a rotina (js/trilha.js e js/rotina.js) -->
 <section id="v-estudo">
-  <div class="pg-topo"><span class="pg-ic t-estudo"><svg aria-hidden="true"><use href="#i-route"/></svg></span><div><h2 class="pg-tit">My study</h2><p class="muted">Your path, today's routine and your records, all in one place.</p></div></div>
+  <div class="pg-topo"><span class="pg-ic t-estudo"><svg aria-hidden="true"><use href="#i-route"/></svg></span><div><h2 class="pg-tit">My study</h2><p class="muted">Your path, today's routine, your records and achievements, all in one place.</p></div></div>
   <div class="card tarefa-aviso" hidden></div>
   <div class="inicio-grade">
     <div class="inicio-esq">
@@ -390,12 +390,25 @@
       </div>
     </div>
   </div>
+  <div class="estudo-conquistas" id="conquistas">
+    <div class="estudo-conq-topo"><h2 class="pg-tit-2"><svg aria-hidden="true"><use href="#i-trophy"/></svg>Achievements</h2><p class="muted">Badges you earn by practising. Share yours with your friends.</p></div>
+  <div class="card perfil-topo">
+    <div><b id="pfResumo"></b><div class="muted" id="pfPerfil"></div></div>
+    <button type="button" class="btn sec" id="pfRefazer">Answer the first questions again</button>
+  </div>
+  <div class="card pf-mapa">
+    <div class="pf-mapa-topo"><div><h3>Your accuracy map</h3><p class="muted">The buttons you get right most often in Challenges and the Academy light up. The dark ones you have not practised yet.</p></div>
+      <div class="pf-mapa-num"><b class="pf-conta" id="pfMapaN">0</b><span id="pfMapaDe">of 71 buttons practised</span></div></div>
+    <div class="pf-maos"><figure><svg id="pfMapaEsq" aria-hidden="true"></svg><figcaption>Left hand</figcaption></figure><figure><svg id="pfMapaDir" aria-hidden="true"></svg><figcaption>Right hand</figcaption></figure></div>
+    <p class="pf-mapa-leg"><span><i class="nunca"></i>not practised yet</span><span><i style="--acc:.35"></i>rarely right</span><span><i style="--acc:1"></i>always right</span></p>
+  </div>
+  <div class="insignias" id="insignias"></div>
+  </div>
 </section>
 
 <!-- LIÇÕES -->
 <section id="v-licoes">
   <div class="pg-topo"><span class="pg-ic t-licoes"><svg aria-hidden="true"><use href="#i-book"/></svg></span><div><h2 class="pg-tit">Lessons</h2><p class="muted">11 short lessons with quizzes, from your first contact with the instrument to reading a tango score.</p></div></div>
-  <div class="segmento trilhas" role="group" aria-label="Study track"><button type="button" class="btn sec on" data-go="licoes"><svg aria-hidden="true"><use href="#i-bellows"/></svg>The bandoneon · 11 lessons</button><button type="button" class="btn sec" data-go="teoria"><svg aria-hidden="true"><use href="#i-note"/></svg>Music theory · 7 topics</button></div>
   <div class="lesson-layout">
     <div class="card lesson-list" id="lessonList"></div>
     <div class="card" id="lessonBody"></div>
@@ -405,7 +418,6 @@
 <!-- TEORIA MUSICAL (js/teoria.js) -->
 <section id="v-teoria">
   <div class="pg-topo"><span class="pg-ic t-teoria"><svg aria-hidden="true"><use href="#i-note"/></svg></span><div><h2 class="pg-tit">Music theory</h2><p class="muted">The basics for reading music and understanding the exercises: notes, staff, note values, time signatures, scales and chords. All with sound.</p></div></div>
-  <div class="segmento trilhas" role="group" aria-label="Study track"><button type="button" class="btn sec" data-go="licoes"><svg aria-hidden="true"><use href="#i-bellows"/></svg>The bandoneon · 11 lessons</button><button type="button" class="btn sec on" data-go="teoria"><svg aria-hidden="true"><use href="#i-note"/></svg>Music theory · 7 topics</button></div>
   <div class="te-layout">
     <nav class="card te-lista" id="teLista" aria-label="Theory topics"></nav>
     <div class="card te-conteudo" id="teConteudo" aria-live="polite"></div>
@@ -443,7 +455,7 @@
         <button type="button" class="menu-toggle" id="foleLivreBtn" aria-pressed="false"><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Endless bellows</b><small>At the end, the bellows come back on their own. A real bandoneon does not work like that.</small></span></button>
       </div>
       <div class="menu-botoes">
-        <button class="btn sec" data-controles>Map and controls</button>
+        <button class="btn sec" data-controles>Computer keyboard and MIDI</button>
       <details class="mapmenu">
         <summary class="btn sec">Button map ▾</summary>
         <div class="row">
@@ -478,13 +490,14 @@
   <div class="segmento" role="group" aria-label="Challenge">
     <button class="btn sec on" data-ch="find">Find the note</button>
     <button class="btn sec" data-ch="staff">Staff reading</button>
-    <button class="btn sec" data-ch="ear">Find it by ear</button>
     <button class="btn sec" data-ch="pautabot">Staff to bandoneon</button>
+    <button class="btn sec" data-ch="acordes">Chords</button>
   </div>
 
   <div class="card" id="chFind">
     <h2>Find the note</h2>
     <p class="muted">The app shows and plays a note, with the bellows direction. Find the right button on the keyboard. Ten rounds.</p>
+    <p class="muted ponte">Prefer to learn with the instructor and a report? <button type="button" class="link-btn" data-abrir-nivel="1">Go to the Academy, level 1</button></p>
     <div class="fd-config" id="fConfig">
       <div class="fd-grupos">
         <fieldset class="fd-grupo"><legend>Hand</legend><div class="fd-seg">
@@ -505,7 +518,7 @@
       <label class="fd-switch"><input type="checkbox" id="fCirculo" role="switch" checked><span class="fd-switch-trilho" aria-hidden="true"></span><span class="fd-switch-txt"><b>Circle around the note’s area</b><small>Shows roughly where the button is. It costs no points.</small></span></label>
       <div class="fd-config-acoes">
         <button class="btn btn-grande" id="fStart"><svg aria-hidden="true"><use href="#i-play"/></svg>Start challenge</button>
-        <button class="btn sec" id="fHeat"><svg aria-hidden="true"><use href="#i-flame"/></svg>Mistake map</button>
+        <button class="btn sec" id="fHeat"><svg aria-hidden="true"><use href="#i-flame"/></svg>Accuracy map</button>
         <p class="muted fd-config-nota">During the challenge the button names are hidden.</p>
       </div>
     </div>
@@ -541,32 +554,6 @@
     </div>
   </div>
 
-  <div class="card" id="chEar" style="display:none">
-    <h2>Find it by ear</h2>
-    <p class="muted">The app plays a note and you find the button by ear alone. The bellows direction is shown on screen. Ten rounds; after two mistakes a hint appears.</p>
-    <div class="menu" id="eMenu">
-      <div class="menu-grupos">
-        <div class="menu-grupo"><span class="menu-rot">Hand</span><select id="eHand"><option value="right">Right</option><option value="left">Left</option></select></div>
-        <div class="menu-grupo"><span class="menu-rot">Bellows</span><select id="eDir"><option value="open">Opening</option><option value="close">Closing</option><option value="rand">Both</option></select></div>
-        <div class="menu-grupo"><span class="menu-rot">Notes</span><select id="eNotas"><option value="naturais">Natural notes only (C, D, E…)</option><option value="todas">All</option></select></div>
-      </div>
-      <label class="menu-switch"><input type="checkbox" class="nomesToggle" checked><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Note names</b><small>Written on the keyboard buttons.</small></span></label>
-      <div class="menu-acoes"><button class="btn btn-grande" id="eStart"><svg aria-hidden="true"><use href="#i-play"/></svg>Start challenge</button></div>
-    </div>
-    <div class="menu-resumo" id="eResumo" hidden><div class="menu-chips" id="eResumoChips"></div><button type="button" class="btn ghost" id="eParar"><svg aria-hidden="true"><use href="#i-x"/></svg>Stop</button></div>
-    <div class="qn-hud desafio-hud" id="eHud" hidden><span class="qn-hud-item">Round <b><span id="eRodada">1</span><small>/10</small></b></span><span class="qn-bolinhas" id="eBolinhas" aria-hidden="true"></span><span class="qn-hud-item">Correct <b id="eAcertos">0</b></span></div>
-    <div class="ouvido">
-      <div class="onda" id="eOnda" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-      <div id="eDirPill" class="dirpill open" style="display:inline-block;visibility:hidden"></div>
-      <div class="feedback" id="eFeed" aria-live="polite"></div>
-      <button class="btn sec" id="eReplay" disabled><svg aria-hidden="true"><use href="#i-volume"/></svg>Hear it again</button>
-    </div>
-    <div class="instrument">
-      <div class="side"><div class="label">Left</div><div id="ekLeft"></div></div>
-      <div class="side"><div class="label">Right</div><div id="ekRight"></div></div>
-    </div>
-  </div>
-
   <div class="card" id="chPauta" style="display:none">
     <h2>Staff to bandoneon</h2>
     <p class="muted">The note appears on the staff and you play the button that gives that note, in the bellows direction shown. It is the bridge between reading music and playing. Ten rounds; after two mistakes the right button glows.</p>
@@ -592,6 +579,12 @@
     </div>
   </div>
 
+  <div class="card" id="chAcordes" style="display:none">
+    <h2>Chords</h2>
+    <p class="muted">The app asks for a chord and the bellows direction; you mark the buttons and check. The practice lives in Play → Chords, where you can also explore each chord first.</p>
+    <div class="menu-acoes"><button class="btn btn-grande" id="chIrTreino"><svg aria-hidden="true"><use href="#i-target"/></svg>Start chord practice</button></div>
+  </div>
+
   <div class="card" id="chStaff" style="display:none">
     <h2>Staff reading</h2>
     <p class="muted">On the bandoneon, the right hand usually reads in <b>treble clef</b> and the left hand in <b>bass clef</b>. Name the note.</p>
@@ -609,7 +602,12 @@
 
 <!-- QUAL É A NOTA? (quiz de ouvido, js/qualnota.js) -->
 <section id="v-qualnota" class="qn">
-  <div class="pg-topo"><span class="pg-ic t-qualnota"><svg aria-hidden="true"><use href="#i-ear"/></svg></span><div><h2 class="pg-tit">Name that note</h2><p class="muted">The bandoneon plays a note. Listen, watch the sound wave and choose from four answers.</p></div></div>
+  <div class="pg-topo"><span class="pg-ic t-qualnota"><svg aria-hidden="true"><use href="#i-ear"/></svg></span><div><h2 class="pg-tit">Ear</h2><p class="muted">Two ways to train your ear: name the note the bandoneon played, or find the button that plays it.</p></div></div>
+  <div class="segmento ouv-modos" role="group" aria-label="Ear training">
+    <button type="button" class="btn sec on" data-ouv="nome"><svg aria-hidden="true"><use href="#i-question"/></svg>Name that note</button>
+    <button type="button" class="btn sec" data-ouv="som"><svg aria-hidden="true"><use href="#i-keys"/></svg>Find it by ear</button>
+  </div>
+  <div id="ouvNome">
   <div class="card qn-escolha">
     <div class="menu" id="qnMenu">
       <div class="menu-grupos">
@@ -672,6 +670,34 @@
       <button class="btn" id="qnDeNovo"><svg aria-hidden="true"><use href="#i-play"/></svg>Play again</button>
       <button class="btn ghost" id="qnMudar">Change level</button>
     </div>
+  </div>
+  </div>
+  <div id="ouvSom" hidden>
+  <div class="card" id="chEar">
+    <h2>Find it by ear</h2>
+    <p class="muted">The app plays a note and you find the button by ear alone. The bellows direction is shown on screen. Ten rounds; after two mistakes a hint appears.</p>
+    <div class="menu" id="eMenu">
+      <div class="menu-grupos">
+        <div class="menu-grupo"><span class="menu-rot">Hand</span><select id="eHand"><option value="right">Right</option><option value="left">Left</option></select></div>
+        <div class="menu-grupo"><span class="menu-rot">Bellows</span><select id="eDir"><option value="open">Opening</option><option value="close">Closing</option><option value="rand">Both</option></select></div>
+        <div class="menu-grupo"><span class="menu-rot">Notes</span><select id="eNotas"><option value="naturais">Natural notes only (C, D, E…)</option><option value="todas">All</option></select></div>
+      </div>
+      <label class="menu-switch"><input type="checkbox" class="nomesToggle" checked><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Note names</b><small>Written on the keyboard buttons.</small></span></label>
+      <div class="menu-acoes"><button class="btn btn-grande" id="eStart"><svg aria-hidden="true"><use href="#i-play"/></svg>Start challenge</button></div>
+    </div>
+    <div class="menu-resumo" id="eResumo" hidden><div class="menu-chips" id="eResumoChips"></div><button type="button" class="btn ghost" id="eParar"><svg aria-hidden="true"><use href="#i-x"/></svg>Stop</button></div>
+    <div class="qn-hud desafio-hud" id="eHud" hidden><span class="qn-hud-item">Round <b><span id="eRodada">1</span><small>/10</small></b></span><span class="qn-bolinhas" id="eBolinhas" aria-hidden="true"></span><span class="qn-hud-item">Correct <b id="eAcertos">0</b></span></div>
+    <div class="ouvido">
+      <div class="onda" id="eOnda" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div id="eDirPill" class="dirpill open" style="display:inline-block;visibility:hidden"></div>
+      <div class="feedback" id="eFeed" aria-live="polite"></div>
+      <button class="btn sec" id="eReplay" disabled><svg aria-hidden="true"><use href="#i-volume"/></svg>Hear it again</button>
+    </div>
+    <div class="instrument">
+      <div class="side"><div class="label">Left</div><div id="ekLeft"></div></div>
+      <div class="side"><div class="label">Right</div><div id="ekRight"></div></div>
+    </div>
+  </div>
   </div>
 </section>
 
@@ -855,9 +881,9 @@
     <h2 class="card-tit eco-escolha-tit">Choose the tune</h2>
     <p class="muted eco-dica">Tap a tune to start. Each tune is split into short 8-note stages: finish one to unlock the next. The bellows change direction on their own.</p>
     <div class="eco-musicas" id="ecoMusicas" aria-label="Tune"></div>
-    <h3 class="eco-suas-tit">Your tunes</h3>
-    <p class="muted eco-dica" id="ecoSuasVazio">The melodies you create in Melodies (+ New) and the scores you import in the Academy (level 7) show up here. They stay on your device only.</p>
-    <div class="eco-musicas" id="ecoSuas" aria-label="Your tunes"></div>
+    <h3 class="eco-suas-tit">My music</h3>
+    <p class="muted eco-dica" id="ecoSuasVazio">The music you create or import, in Melodies or in the Academy, shows up here too. It stays only on your device.</p>
+    <div class="eco-musicas" id="ecoSuas" aria-label="My music"></div>
   </div>
 
   <div class="card eco-jogo" id="ecoJogo" hidden>
@@ -956,6 +982,7 @@
       <div class="ac-niveis" id="acNiveis" role="group" aria-label="Levels"></div>
       <h3 id="acNivelTitulo"></h3>
       <p class="muted" id="acNivelObjetivo"></p>
+      <p class="muted ponte" id="acPonte" hidden>Fancy a quick round, without the instructor? <button type="button" class="link-btn" data-abrir-desafio="find">Go to the Find the note challenge</button></p>
     <!-- nível 7: importar uma partitura (js/partituras.js) -->
     <div class="ac-partituras" id="acPartituras" hidden>
       <div class="row">
@@ -973,10 +1000,6 @@
         </div>
         <div class="row" style="margin-top:10px"><button type="button" class="btn" id="acImpGo">Transcribe for the bandoneon</button><button type="button" class="btn sec" id="acImpCancelar">Cancel</button></div>
       </div>
-      <div class="row" id="acDeMelodiasLinha" hidden>
-        <label>Or use a melody saved in Melodies: <select id="acDeMelodias"></select></label>
-        <button type="button" class="btn sec" id="acDeMelodiasBtn">Add</button>
-      </div>
       <div class="feedback" id="acImpMsg" aria-live="polite"></div>
       <details class="ac-pdf">
         <summary>I have the score as a PDF or photo</summary>
@@ -991,6 +1014,7 @@
       </details>
     </div>
       <div class="ac-lista" id="acLista"></div>
+      <div class="ac-escalas"><div><b>Scales in every key</b><span class="muted">Major, minor and more, in any key, with your progress in each one.</span></div><button type="button" class="btn sec" id="acAbrirEscalas"><svg aria-hidden="true"><use href="#i-music"/></svg>Open the guided scales</button></div>
     </div>
   </div>
 
@@ -1077,7 +1101,7 @@
 </section>
 <!-- BANDONEON REAL: o microfone escuta o instrumento (js/microfone.js) -->
 <section id="v-microfone">
-  <div class="pg-topo"><span class="pg-ic t-microfone"><svg aria-hidden="true"><use href="#i-mic"/></svg></span><div><h2 class="pg-tit">Real bandoneon</h2><p class="muted">Play your instrument: the app listens through the microphone, shows the note and lights up the button that gives that note.</p></div></div>
+  <div class="pg-topo"><span class="pg-ic t-microfone"><svg aria-hidden="true"><use href="#i-mic"/></svg></span><div><h2 class="pg-tit">Tuner</h2><p class="muted">Play your instrument: the app listens through the microphone, shows the note and lights up the button that gives that note.</p></div></div>
   <div class="card">
     <div class="row">
       <button type="button" class="btn" id="mcOn"><svg aria-hidden="true"><use href="#i-mic"/></svg>Turn on the microphone</button>
@@ -1115,20 +1139,6 @@
 </section>
 
 <!-- CONQUISTAS (js/trilha.js) -->
-<section id="v-perfil">
-  <div class="pg-topo"><span class="pg-ic t-perfil"><svg aria-hidden="true"><use href="#i-trophy"/></svg></span><div><h2 class="pg-tit">Achievements</h2><p class="muted">Badges you earn by practising. Share yours with your friends.</p></div></div>
-  <div class="card perfil-topo">
-    <div><b id="pfResumo"></b><div class="muted" id="pfPerfil"></div></div>
-    <button type="button" class="btn sec" id="pfRefazer">Answer the first questions again</button>
-  </div>
-  <div class="card pf-mapa">
-    <div class="pf-mapa-topo"><div><h3>Your button map</h3><p class="muted">The buttons you get right most often in Challenges and the Academy light up. The dark ones you have not practised yet.</p></div>
-      <div class="pf-mapa-num"><b class="pf-conta" id="pfMapaN">0</b><span id="pfMapaDe">of 71 buttons practised</span></div></div>
-    <div class="pf-maos"><figure><svg id="pfMapaEsq" aria-hidden="true"></svg><figcaption>Left hand</figcaption></figure><figure><svg id="pfMapaDir" aria-hidden="true"></svg><figcaption>Right hand</figcaption></figure></div>
-    <p class="pf-mapa-leg"><span><i class="nunca"></i>not practised yet</span><span><i style="--acc:.35"></i>rarely right</span><span><i style="--acc:1"></i>always right</span></p>
-  </div>
-  <div class="insignias" id="insignias"></div>
-</section>
 
 <!-- PARA PROFESSORES: tarefa por link, relatório do aluno e digitação (js/professor.js) -->
 <section id="v-professor">
@@ -1280,7 +1290,7 @@
   <div class="card">
     <h3>Get in touch</h3>
     <p class="muted">Found a bug or have an idea for BanDoly? Your message helps improve the app.</p>
-    <div class="aj-acoes"><button type="button" class="btn" data-sugestao><svg aria-hidden="true"><use href="#i-question"/></svg>Send a suggestion or report a bug</button><button type="button" class="btn sec" data-controles>Playing controls</button></div>
+    <div class="aj-acoes"><button type="button" class="btn" data-sugestao><svg aria-hidden="true"><use href="#i-question"/></svg>Send a suggestion or report a bug</button><button type="button" class="btn sec" data-controles>Computer keyboard and MIDI</button></div>
   </div>
   <div class="card">
     <h3>Your data</h3>
@@ -1344,7 +1354,7 @@
         <div class="conta-nums">
           <div><b id="contaNDias">0</b><span>days of practice</span></div>
           <div><b id="contaNIns">0</b><span>badges</span></div>
-          <div><b id="contaNMel">0</b><span>melodies created</span></div>
+          <div><b id="contaNMel">0</b><span>pieces of yours</span></div>
         </div>
       </div>
       <div class="card conta-dados">
@@ -1386,7 +1396,7 @@
   </form>
 </dialog>
 <dialog class="boas janela" id="ctlDialog" aria-labelledby="ctlTit">
-  <h2 id="ctlTit">Playing controls</h2>
+  <h2 id="ctlTit">Computer keyboard and MIDI</h2>
   <div class="ctl-sec">
     <h3>Computer keyboard</h3>
     <label class="ctl-liga"><input type="checkbox" id="pcLigado"> Play the buttons with the computer keys</label>

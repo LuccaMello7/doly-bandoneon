@@ -77,6 +77,17 @@ function acadParesDeDirecao(n){
 const melodiaPronta = id => BUILTIN_MELODIES.find(m=>m.id===id).text;
 // Nível 7: partituras importadas pelo usuário (js/partituras.js), guardadas neste navegador
 const minhasPartituras = () => store.get('acadPartituras', []);
+// Minhas músicas: as partituras importadas na Academia ('acadPartituras') e as melodias criadas ou importadas em Melodias
+// ('melodies') formam uma biblioteca só. Os dados continuam onde estavam (nada é migrado); só a lista é uma.
+const tituloMelodia = new Map();
+function minhasMusicas(){
+  const melodias = customMelodies().map(m=>{
+    if(!tituloMelodia.has(m.text)){ const p = parseMelody(m.text); tituloMelodia.set(m.text, {titulo:p.title || t('Melodia sem título'), n:p.notes.filter(n=>!n.rest).length}); }
+    const i = tituloMelodia.get(m.text);
+    return {id:m.id, titulo:i.titulo, desc:t('{} notas · {}', i.n, t('Melodias')), texto:m.text, origem:'melodia'};
+  });
+  return [...minhasPartituras().map(p=>({...p, origem:'partitura'})), ...melodias];
+}
 const escHtml = s => { const d = document.createElement('div'); d.textContent = s; return d.innerHTML.replace(/\x22/g, '&quot;'); };
 
 const ACADEMIA = [
@@ -126,8 +137,8 @@ const ACADEMIA = [
   {id:'n6-choclo', titulo:'El Choclo: introdução', desc:'O primeiro tango: oito compassos em colcheias, com o cromatismo do Lá#.', texto:melodiaPronta('choclo-intro'), foleManual:true},
   {id:'n6-ode-duas', titulo:'Ode à Alegria a duas mãos', desc:'Melodia e baixos juntos: o desafio final.', texto:melodiaPronta('ode-duas'), foleManual:true},
 ]},
-{nivel:7, titulo:'Minhas partituras', objetivo:'Importe uma partitura (MusicXML ou MIDI): o app transcreve cada nota para um botão, com a mão, a direção do fole, a duração e as pausas. Depois é só treinar nos modos Aprender, Praticar e Desafio.',
-  get exercicios(){ return minhasPartituras().map(p=>({id:p.id, titulo:p.titulo, desc:p.desc, texto:p.texto, minha:true})); }},
+{nivel:7, titulo:'Minhas músicas', objetivo:'As suas músicas num lugar só: as que você importa aqui (MusicXML ou MIDI) e as que cria ou importa em Melodias. O app transcreve cada nota para um botão, com a mão, a direção do fole, a duração e as pausas. Depois é só treinar nos modos Aprender, Praticar e Desafio.',
+  get exercicios(){ return minhasMusicas().map(p=>({id:p.id, titulo:p.titulo, desc:p.desc, texto:p.texto, minha:true, origem:p.origem})); }},
 ];
 const todosExercicios = () => ACADEMIA.flatMap(n=>n.exercicios.map(e=>({...e, nivel:n.nivel})));
 const exercicioPorId = id => todosExercicios().find(e=>e.id===id);
@@ -183,7 +194,7 @@ function renderAcadNiveis(){
 function renderAcadLista(){
   const n = ACADEMIA.find(x=>x.nivel===acad.nivel);
   $('#acNivelTitulo').textContent = t('Nível {}: {}', n.nivel, t(n.titulo));
-  $('#acNivelObjetivo').textContent = n.objetivo;
+  $('#acNivelObjetivo').textContent = n.objetivo; $('#acPonte').hidden = n.nivel!==1;
   $('#acPartituras').hidden = n.nivel!==7;
   if(n.nivel===7 && !n.exercicios.length){ $('#acLista').innerHTML = `<p class="muted">${t('Nenhuma partitura ainda. Importe a primeira acima.')}</p>`; return; }
   $('#acLista').innerHTML = n.exercicios.map(e=>{
@@ -770,7 +781,6 @@ function acadMostrar(){
     if(autoKeySize(maxX, 1, acadLarguraTeclado()) !== k.size) k.build(); });
   if(acad.ex){ if(acad.rodando) acadDica(acad.g); else if(!acad.demo) acadPrevia(); }
   $('#acMic').checked = mic.on; acadValidacaoTexto();
-  if(typeof acListaMelodias==='function') acListaMelodias(); // melodias salvas depois em Melodias
 }
 /* ---------- Tela cheia: o Começar/Parar, o instrutor (Agora e Próximo) e o teclado, com os botões do maior tamanho
    que cabe. Usa a tela cheia do navegador quando existe (no iPhone a seção cobre a página). ---------- */
@@ -830,3 +840,5 @@ renderAcadNiveis();
 carregarExercicio(exercicioPorId(store.get('acadEx', '')) ? store.get('acadEx') : 'n1-direita');
 acad.nivel = acad.ex.nivel; renderAcadNiveis(); renderAcadLista(); renderContinuar();
 $(`#acModo [data-modo="${store.get('acadModo','aprender')}"]`).click();
+// Escalas guiadas (o motor fica em Melodias): a Academia ganhou uma entrada para elas
+$('#acAbrirEscalas').onclick = ()=>{ go('melodias'); const c = $('#scaleCard'); if(c.style.display==='none') $('#scaleOpen').click(); else c.scrollIntoView({block:'start'}); };

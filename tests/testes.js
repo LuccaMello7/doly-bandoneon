@@ -328,9 +328,9 @@ async function percorrerApp(){
   { const b = state.layout[pq.hand].find(x=>x[pq.dir]!==pq.target); pautaPress(b, b[pq.dir], pq.hand==='left'?pkL:pkR); } await esperar(); pq.round = 10; nextPauta(); await esperar();
   go('teoria'); for(let i=0;i<TEORIA.length;i++){ teoriaAtual = i; renderTeoria(); await esperar(); $('#teConteudo [data-o="0"]').click(); await esperar(); }
   teoriaAtual = 1; renderTeoria(); $('#teConteudo [data-d]').dispatchEvent(new MouseEvent('click', {bubbles:true})); await esperar(); go('desafios');
-  $('[data-ch="ear"]').click(); $('#eStart').click(); await esperar();
+  go('qualnota'); ouvidoModo('som'); $('#eStart').click(); await esperar();
   { const b = state.layout[eq.hand].find(x=>x[eq.dir]!==eq.target); earPress(b, b[eq.dir], eq.hand==='left'?ekL:ekR); } await esperar();
-  eq.round = 10; nextEar(); await esperar(); $('[data-ch="find"]').click();
+  eq.round = 10; nextEar(); await esperar(); ouvidoModo('nome'); go('desafios'); $('[data-ch="find"]').click();
   go('melodias'); $('#scaleOpen').click(); $('#scGo').click(); $('#melMode').value='wait'; $('#melStart').click(); await esperar();
   { const c=pendingNotes()[0]; melPress(c.btn,c.midi,c.dir); } await esperar(); stopMelody();
   loadMelody('ode-duas'); $('#melStart').click(); await esperar(); stopMelody();
@@ -507,8 +507,8 @@ teste('navegação por áreas: cada área mostra só as suas abas e volta à úl
   igual($('#nav [data-area].active').dataset.area, 'tocar');
   igual($$('#subnav [data-v]').filter(b=>!b.hidden).map(b=>b.dataset.v), ['teclado','melodias','acordes','microfone']);
   go('licoes'); $('#nav [data-area="tocar"]').click(); igual(currentView, 'acordes');
-  igual($$('#subnav [data-area="aprender"]').map(b=>b.dataset.v), ['estudo','academia','licoes']);
-  go('teoria'); ok($('#subnav [data-v="licoes"]').classList.contains('active'), 'Teoria acende o botão Lições'); go('licoes'); go('acordes');
+  igual($$('#subnav [data-area="aprender"]').map(b=>b.dataset.v), ['estudo','academia','licoes','teoria']);
+  go('teoria'); ok($('#subnav [data-v="teoria"]').classList.contains('active'), 'Teoria acende a própria aba'); go('licoes'); go('acordes');
   $('#nav [data-area="aprender"]').click(); igual(currentView, 'licoes');
   go('inicio'); ok($('#subnav').hidden, 'o Início não tem abas');
 });
@@ -525,12 +525,12 @@ teste('caminho de estudo segue as respostas das perguntas iniciais', () => {
   store.set('perfilAluno', antes);
 });
 teste('treino de ouvido: acerto conta ponto e o erro diz se é mais aguda ou mais grave', () => {
-  go('desafios'); $('[data-ch="ear"]').click(); $('#eStart').click();
+  go('qualnota'); ouvidoModo('som'); $('#eStart').click();
   const k = eq.hand==='left' ? ekL : ekR, errado = state.layout[eq.hand].find(b=>b[eq.dir]!==eq.target);
   earPress(errado, errado[eq.dir], k); ok(/mais (aguda|grave)/.test($('#eFeed').textContent), $('#eFeed').textContent);
   igual(eq.errors, 1);
   eq.errors = 0; earPress(eq.answer, eq.target, k); igual(eq.score, 1); igual(eq.round, 1);
-  pararEar(); $('[data-ch="find"]').click();
+  pararEar(); ouvidoModo('nome');
 });
 teste('conquistas: recorde novo ganha a insígnia e o cartão de compartilhar tem 1080 px', () => {
   const antes = state.progress.find, tinha = state.progress.insignias.memoria;
@@ -886,15 +886,47 @@ teste('Menus de Melodias, Acordes e Teclado: botões lado a lado, resumo enquant
   const nomes = state.showLabels; $('#labelsBtn').click(); igual($('#labelsBtn').getAttribute('aria-pressed'), String(!nomes)); $('#labelsBtn').click();
   tkAjustes(aberto); go('inicio');
 });
+teste('Organização: Teoria com aba, Ouvido com dois modos, Conquistas no Meu estudo, Minhas músicas, atalhos e Afinador', async () => {
+  // Teoria tem botão próprio em Aprender e acende ele (não mais o de Lições)
+  go('teoria'); ok($('#subnav [data-v="teoria"]').classList.contains('active') && !$('#subnav [data-v="licoes"]').classList.contains('active'), 'Teoria acende a própria aba');
+  // Ouvido: os dois modos na mesma aba; o Ache pelo som não está mais em Desafios
+  ok(!$('[data-ch="ear"]'), 'o Ache pelo som saiu de Desafios'); igual($('#subnav [data-v="qualnota"]').textContent.trim(), 'Ouvido');
+  go('qualnota'); ouvidoModo('som'); ok($('#ouvNome').hidden && !$('#ouvSom').hidden);
+  $('#eStart').click(); ouvidoModo('nome'); ok(!eq.active && !$('#ouvNome').hidden, 'trocar de modo encerra a rodada');
+  abrirDesafio('ear'); ok(currentView==='qualnota' && !$('#ouvSom').hidden, 'o caminho leva ao Ache pelo som na aba Ouvido'); ouvidoModo('nome');
+  // Conquistas: moram no fim do Meu estudo; go('perfil') leva até lá
+  go('perfil'); igual(currentView, 'estudo'); ok($('#v-estudo #insignias') && $('#v-estudo #pfMapaEsq'), 'insígnias e mapa no Meu estudo');
+  ok(!$('#subnav [data-v="perfil"]'), 'sem aba própria');
+  // Minhas músicas: uma melodia criada em Melodias aparece na Academia (nível 7), e uma partitura da Academia em Melodias
+  const melAntes = store.get('melodies', []), parAntes = store.get('acadPartituras', []);
+  store.set('melodies', [...melAntes, {id:'uteste', text:'título: Teste da lista\nDó4 Ré4 Mi4'}]);
+  store.set('acadPartituras', [...parAntes, {id:'p-teste', titulo:'Partitura teste', desc:'3 notas', texto:'título: Partitura teste\nSol4 Lá4 Si4'}]);
+  ok(minhasMusicas().some(m=>m.id==='uteste' && m.origem==='melodia') && minhasMusicas().some(m=>m.id==='p-teste'), 'uma lista só');
+  ok(ACADEMIA.find(n=>n.nivel===7).exercicios.some(e=>e.id==='uteste'), 'a melodia vira exercício na Academia');
+  renderMelList(); ok($('#melSelect option[value="p-teste"]') && $('#melSelect option[value="uteste"]'), 'e a partitura toca em Melodias');
+  loadMelody('p-teste'); igual(mel.cur.id, 'p-teste');
+  igual(ACADEMIA.find(n=>n.nivel===7).titulo, 'Minhas músicas');
+  store.set('melodies', melAntes); store.set('acadPartituras', parAntes); renderMelList(); loadMelody(BUILTIN_MELODIES[0].id);
+  // Atalhos: Treinar → Desafios → Acordes começa o treino em Tocar → Acordes; a Academia abre as Escalas guiadas
+  go('desafios'); $('[data-ch="acordes"]').click(); ok($('#chAcordes').style.display==='block');
+  $('#chIrTreino').click(); ok(currentView==='acordes' && ch.training, 'o atalho já começa o treino de acordes'); $('#chStop').click();
+  go('academia'); $('#acAbrirEscalas').click(); ok(currentView==='melodias' && $('#scaleCard').style.display==='block', 'a Academia abre as escalas'); $('#scClose').click();
+  // Pontes: Encontre a nota ↔ Academia nível 1
+  go('desafios'); $('[data-ch="find"]').click(); $('[data-abrir-nivel="1"]').click(); ok(currentView==='academia' && acad.nivel===1 && !$('#acPonte').hidden);
+  $('#acPonte [data-abrir-desafio]').click(); ok(currentView==='desafios' && $('#chFind').style.display!=='none', 'e volta');
+  // Afinador e nomes novos
+  igual($('#subnav [data-v="microfone"]').textContent.trim(), 'Afinador');
+  igual($('#ctlTit').textContent, 'Teclado do computador e MIDI'); ok(/Mapa de acertos/.test($('#fHeat').textContent));
+  go('inicio');
+});
 teste('Menus nos outros desafios, no quiz, no RepeTCHÊ, no Bandoneon real, no Ritmo, nos Ajustes e na Academia', async () => {
-  go('desafios');
-  // Ache pelo som: menu em botões, barra de resumo com "Parar" e placar de bolinhas
-  $('[data-ch="ear"]').click(); igual($('[data-ch="ear"]').textContent, 'Ache pelo som');
+  // Ache pelo som (aba Ouvido): menu em botões, barra de resumo com "Parar" e placar de bolinhas
+  go('qualnota'); ouvidoModo('som'); igual($('[data-ouv="som"]').textContent.trim(), 'Ache pelo som');
   igual($$('#eMenu .menu-seg button').length, 2 + 3 + 2, 'mão, fole e notas em botões');
   $('#eStart').click(); ok($('#eMenu').hidden && !$('#eResumo').hidden && $$('#eResumoChips .menu-chip').length===3, 'rodando: só o resumo');
   igual($$('#eBolinhas i').length, 10);
   { const k = eq.hand==='left' ? ekL : ekR; earPress(eq.answer, eq.target, k); ok($('#eBolinhas i.certa'), 'acerto de primeira: bolinha cheia'); }
-  $('#eParar').click(); ok(!eq.active && !$('#eMenu').hidden && $('#eHud').hidden, '"Parar" devolve o menu');
+  $('#eParar').click(); ok(!eq.active && !$('#eMenu').hidden && $('#eHud').hidden, '"Parar" devolve o menu'); ouvidoModo('nome'); go('desafios');
   // Pauta no bandoneon: trocar de desafio encerra a rodada
   $('[data-ch="pautabot"]').click(); $('#pStart').click(); ok(pq.active && $('#pMenu').hidden);
   $('[data-ch="staff"]').click(); ok(!pq.active && !$('#pMenu').hidden, 'trocar de desafio para a rodada e devolve o menu');
