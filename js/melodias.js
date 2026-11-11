@@ -401,7 +401,7 @@ function stopMelody(){
   mel.timers.forEach(clearTimeout); mel.timers=[];
   if(mel.raf) cancelAnimationFrame(mel.raf); mel.raf=null;
   if(mel.bus){ mel.bus.disconnect(); mel.bus=null; }
-  mel.running=false; mel.rollTipo=null; $('#melStart').textContent='Começar'; botaoRodando($('#melStart'), false);
+  mel.running=false; mel.rollTipo=null; melRotuloStart(); botaoRodando($('#melStart'), false); melMenuJogo(false);
 }
 function finishMel(msg, score){
   stopMelody(); melFeed(msg, score==null?'':score>=80?'ok':'bad'); markCur(-1); mel.g=-1;
@@ -416,12 +416,28 @@ $('#melStart').onclick = ()=>{
   if(mel.running){ stopMelody(); melFeed('Parado.'); return; }
   if(!playableNotes().length) return;
   ac(); $$('#melStrip .mcard').forEach(c=>c.classList.remove('ok','bad'));
-  mel.running=true; mel.errors=0; mel.hits=0; $('#melStart').textContent='Parar'; botaoRodando($('#melStart'), true); melFeed('');
+  mel.running=true; mel.errors=0; mel.hits=0; botaoRodando($('#melStart'), true); melMenuJogo(true); melFeed('');
   ({listen:startListen, wait:startWait, timed:startTimed})[$('#melMode').value]();
   if(window.innerWidth<700) $('#guideIntroBox').open=false; // no celular, mais espaço para praticar
   $('#melStrip').scrollIntoView({block:'start', behavior:'smooth'});
 };
 $('#melMode').onchange = ()=>{ stopMelody(); renderMelPlayer(); };
+// O botão verde diz o que vai acontecer no modo escolhido, e a linha embaixo do Modo explica cada um
+function melRotuloStart(){
+  const m = $('#melMode').value;
+  $('#melStart').textContent = t(m==='listen' ? 'Ouvir a melodia' : 'Começar a tocar');
+  $('#melModoAjuda').textContent = t(m==='listen' ? 'O app toca a melodia e mostra cada botão.' : m==='wait' ? 'O app espera você tocar cada nota, sem pressa.' : 'Toque junto com a música, no tempo certo.');
+}
+// Durante a música, o menu vira uma barra com o resumo das escolhas e "Parar"
+function melMenuJogo(tocando){
+  $('#melMenu').hidden = tocando; $('#melResumo').hidden = !tocando; $('#melEscolha').hidden = tocando;
+  if(!tocando) return;
+  const sel = $('#melMode'), modo = sel.options[sel.selectedIndex];
+  $('#melResumoChips').innerHTML = menuChips([[t('Modo'), modo ? modo.textContent.trim() : ''], [t('Velocidade'), $('#melSpeed').value + '%'],
+    $('#melAuto').checked && [t('Fole'), t('automático')], $('#micToggle').checked && [t('Microfone'), t('ligado')]]);
+}
+$('#melParar').onclick = ()=>{ stopMelody(); melFeed(t('Parado.')); $('#melStart').focus({preventScroll:true}); };
+segmentar($('#melMode')); melRotuloStart();
 $('#melSpeed').oninput = e=>{ $('#melSpeedVal').textContent=e.target.value+'%'; };
 
 // Modo Ouvir: o app toca e mostra botões + direção

@@ -145,3 +145,11 @@ $('#chTrain').onclick=()=>{
 };
 $('#chStop').onclick=()=>{ ch.training=false; $('#chTrainBox').style.display='none'; $('#chExplore').style.display='block'; $('#chFeed').textContent=''; showChord(); };
 fillChordSelects(); showChord();
+// O menu: tônica, tipo, mão e fole viram botões lado a lado (js/menus.js). Durante o treino, uma barra de resumo com "Parar treino"
+segmentar($('#chRoot'), {classe:'menu-seg-notas'}); segmentar($('#chType'), {rotulo:rotuloSimbolo, classe:'menu-seg-tipos'});
+segmentar($('#chHand')); segmentar($('#chDir'), {rotulo:rotuloFole});
+$('#chTrain').addEventListener('click', ()=>{
+  const mao = $('#chHand').options[$('#chHand').selectedIndex];
+  const tipos = $$('#chTrainTypes input:checked').map(i=>i.nextElementSibling.textContent.trim()).join(', ') || t('Maior') + ', ' + t('Menor');
+  $('#chResumoChips').innerHTML = menuChips([[t('Mão'), mao ? mao.textContent.trim() : ''], [t('Tipos'), tipos]]);
+});

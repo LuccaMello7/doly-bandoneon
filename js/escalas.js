@@ -149,3 +149,5 @@ $('#scGrid').addEventListener('click', e=>{
   $('#scType').value = td.dataset.t; fillScaleTonics(); $('#scTonic').value = td.dataset.pc; fillScaleStarts();
   if(!$('#scGo').disabled) $('#scGo').click();
 });
+// Tônica, mão, oitavas e sentido viram botões lado a lado (js/menus.js)
+segmentar($('#scTonic'), {classe:'menu-seg-notas'}); segmentar($('#scHand')); segmentar($('#scOct')); segmentar($('#scDir'));

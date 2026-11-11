@@ -109,7 +109,7 @@ $('#pcAtribuirFim').onclick = pararAtribuir;
 
 function ligarPc(sim){
   pc.ligado = sim; store.set('pcLigado', sim); soltarTudo(); marcarTodas();
-  $('#pcBtn').classList.toggle('on', sim); $('#pcLigado').checked = sim;
+  $('#pcBtn').classList.toggle('on', sim); $('#pcBtn').setAttribute('aria-pressed', sim); $('#pcLigado').checked = sim;
   // com o teclado ligado, a válvula sai do A e do F e vai para as setas
   $('#valveOpenBtn').innerHTML = `Válvula: abrir<span class="so-teclado"> ${sim ? '(segure ←)' : '(segure A ou ←)'}</span>`;
   $('#valveCloseBtn').innerHTML = `Válvula: fechar<span class="so-teclado"> ${sim ? '(segure →)' : '(segure F ou →)'}</span>`;

@@ -162,3 +162,18 @@ $('#importBtn').onclick=()=>{
   i.click();
 };
 $('#resetBtn').onclick=()=>{ if(confirm(t('Voltar ao mapa padrão Rheinische 142? Suas edições serão perdidas.'))){ state.layout=makeDefaultLayout(); store.set('layout',state.layout); rebuildAll(); } };
+// Ajustes do teclado: dá para recolher (a escolha fica guardada). Recolhido, o cabeçalho mostra um resumo
+function tkResumo(){
+  const ver = $('#tkVer .on');
+  $('#tkResumo').innerHTML = menuChips([[t('Nomes'), t(state.showLabels ? 'ligados' : 'desligados')], [t('Pressão'), Math.round(pressaoFole * 100) + '%'],
+    [t('Ver'), ver ? ver.textContent.trim() : ''], typeof pc!=='undefined' && pc.ligado && [t('Teclado do computador'), t('ligado')], bel.livre && [t('Fole'), t('sem limite')]]);
+}
+function tkAjustes(aberto){
+  $('#tkMenu').classList.toggle('recolhido', !aberto); $('#tkMenuCorpo').hidden = !aberto;
+  $('#tkMenuCab').setAttribute('aria-expanded', aberto); store.set('tecladoAjustes', aberto);
+  if(!aberto) tkResumo();
+}
+$('#tkMenuCab').onclick = ()=>tkAjustes($('#tkMenuCorpo').hidden);
+['click', 'input'].forEach(ev=>$('#tkMenu').addEventListener(ev, ()=>requestAnimationFrame(tkResumo)));
+document.addEventListener('pressao-fole', ()=>requestAnimationFrame(tkResumo));
+tkAjustes(store.get('tecladoAjustes', true) !== false);

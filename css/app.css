@@ -2826,3 +2826,94 @@ main.prof-pagina{max-width:880px}
   .fd-resumo{flex-direction:column;align-items:stretch}
   .fd-resumo .btn{width:100%}
 }
+/* ================== Menus (js/menus.js): grupos, botões lado a lado, interruptores e resumo ==================
+   Melodias, Acordes e Teclado usam o mesmo jeito de escolher do Encontre a nota */
+.menu{display:grid;gap:14px}
+.menu-grupos{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.menu-grupo{display:grid;gap:8px;align-content:start;min-width:0}
+.menu-rot{font:600 12px Onest,system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--cinza)}
+.menu-ajuda{margin:0;font-size:12.5px;color:var(--cinza)}
+.menu-fonte{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;white-space:nowrap!important;border:0!important}
+.menu-select{width:100%;min-height:48px}
+.menu-seg{display:flex;gap:4px;padding:4px;border-radius:14px;background:var(--ameixa);box-shadow:inset 0 0 0 1px var(--borda)}
+.menu-seg>button{flex:1 1 0;min-width:0;display:flex;align-items:center;justify-content:center;gap:6px;min-height:42px;padding:6px 10px;border:0;border-radius:10px;cursor:pointer;
+  background:transparent;color:var(--cinza-2);font:500 14px Onest,system-ui,sans-serif;line-height:1.2;text-align:center;transition:background .2s,color .2s,box-shadow .2s}
+.menu-seg>button.on{background:var(--ameixa-3);color:var(--osso);box-shadow:inset 0 0 0 1px rgba(185,151,255,.55)}
+.menu-seg>button:focus-visible{outline:2px solid var(--lavanda);outline-offset:1px}
+@media (hover:hover){.menu-seg>button:not(.on):hover{color:var(--osso);background:rgba(255,255,255,.04)}}
+.menu-seg b{font-weight:600}
+.menu-seg small{font-size:11px;font-weight:450;color:var(--cinza);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
+.menu-seg-notas{display:grid;grid-template-columns:repeat(12,minmax(0,1fr))}
+.menu-seg-notas>button{padding:6px 2px}
+.menu-seg-tipos{display:grid;grid-template-columns:repeat(6,minmax(0,1fr))}
+.menu-seg-tipos>button{flex-direction:column;gap:1px;min-height:54px}
+.menu-seg-tipos b{font-size:16px}
+.menu-ponto{width:9px;height:9px;border-radius:50%;flex:none}
+.menu-ponto.open{background:var(--open)} .menu-ponto.close{background:var(--close)}
+.menu-switches{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.menu-switch,.menu-toggle{position:relative;display:flex;align-items:center;gap:12px;min-width:0;padding:11px 14px;border:0;border-radius:14px;cursor:pointer;
+  background:var(--ameixa);box-shadow:inset 0 0 0 1px var(--borda);color:var(--osso);font:inherit;text-align:left}
+.menu-switch input{position:absolute;width:1px;height:1px;opacity:0}
+.menu-trilho{position:relative;flex:none;width:42px;height:24px;border-radius:999px;background:var(--ferro);transition:background .2s}
+.menu-trilho::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--osso);box-shadow:0 1px 3px rgba(0,0,0,.35);transition:transform .25s var(--ease-saida)}
+.menu-switch input:checked+.menu-trilho,.menu-toggle.on .menu-trilho{background:var(--lavanda)}
+.menu-switch input:checked+.menu-trilho::after,.menu-toggle.on .menu-trilho::after{transform:translateX(18px)}
+.menu-switch input:focus-visible+.menu-trilho,.menu-toggle:focus-visible{outline:2px solid var(--lavanda);outline-offset:2px}
+.menu-switch-txt{display:grid;gap:1px;min-width:0}
+.menu-switch-txt b{font-weight:600;font-size:14px}
+.menu-switch-txt small{font-size:12px;color:var(--cinza);line-height:1.35}
+@media (hover:hover){.menu-switch:hover,.menu-toggle:hover{box-shadow:inset 0 0 0 1px var(--borda-2)}}
+.menu-botoes{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.menu-faixa{display:flex;align-items:center;gap:12px;min-height:50px;padding:0 14px;border-radius:14px;background:var(--ameixa);box-shadow:inset 0 0 0 1px var(--borda)}
+.menu-faixa input[type=range]{flex:1;min-width:0}
+.menu-faixa span{font-weight:600;font-variant-numeric:tabular-nums;min-width:3.2em;text-align:right}
+.menu-acoes{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px}
+.menu-nota{margin:0;font-size:13px}
+.menu-marcas{display:flex;flex-wrap:wrap;gap:6px}
+.menu-marcas label{position:relative;display:flex}
+.menu-marcas input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.menu-marcas span{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:6px 14px;border-radius:999px;background:var(--ameixa);box-shadow:inset 0 0 0 1px var(--borda-2);
+  font:500 14px Onest,system-ui,sans-serif;color:var(--cinza-2);transition:background .2s,color .2s,box-shadow .2s}
+.menu-marcas span::before{content:"";display:grid;place-items:center;width:16px;height:16px;border-radius:5px;box-shadow:inset 0 0 0 1.5px var(--ferro);font-size:11px;font-weight:800;color:var(--ameixa)}
+.menu-marcas input:checked+span{background:rgba(185,151,255,.16);color:var(--osso);box-shadow:inset 0 0 0 1px rgba(185,151,255,.6)}
+.menu-marcas input:checked+span::before{content:"✓";background:var(--lavanda);box-shadow:none}
+.menu-marcas input:focus-visible+span{outline:2px solid var(--lavanda);outline-offset:2px}
+.menu-resumo{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 10px 10px 12px;border-radius:14px;background:var(--ameixa);box-shadow:inset 0 0 0 1px var(--borda);text-align:left}
+.menu-chips{display:flex;flex-wrap:wrap;gap:6px}
+.menu-chip{display:inline-flex;align-items:baseline;gap:6px;padding:5px 11px;border-radius:999px;background:var(--ameixa-3);font:500 13px Onest,system-ui,sans-serif;color:var(--osso)}
+.menu-chip small{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--cinza)}
+.menu-resumo .btn{flex:none}
+/* Melodias */
+.melbar.menu{grid-template-columns:minmax(0,1fr) auto;align-items:end}
+#melPlayer>.menu,#melResumo{margin:16px 0 8px}
+/* Acordes */
+#chMenu .menu-grupos{grid-template-columns:1fr 1fr 1.3fr}
+.ch-treino{margin-top:18px;padding-top:18px;border-top:1px solid var(--borda)}
+#chTrainBox .menu-resumo{margin-bottom:14px}
+/* Teclado: ajustes que dá para recolher */
+.tk-card>.toolbar.menu-tk{display:block}
+.menu-cab{display:flex;align-items:center;gap:12px;width:100%;padding:0;border:0;background:none;color:var(--osso);cursor:pointer;font:600 15px Onest,system-ui,sans-serif;text-align:left}
+.menu-cab-tit{display:inline-flex;align-items:center;gap:8px;flex:none}
+.menu-cab-tit svg[aria-hidden]{color:var(--lavanda)}
+.menu-cab .menu-chips{flex:1;min-width:0}
+.menu-seta{margin-left:auto;transform:rotate(-90deg);transition:transform .25s var(--ease-saida);color:var(--cinza)}
+.menu-tk.recolhido .menu-seta{transform:rotate(90deg)}
+.menu-tk:not(.recolhido) #tkResumo{display:none}
+.menu-cab:focus-visible{outline:2px solid var(--lavanda);outline-offset:4px;border-radius:8px}
+.menu-corpo{display:grid;gap:14px;margin-top:16px}
+.menu-corpo .mapmenu{margin:0}
+@media (max-width:899px){.melbar.menu{grid-template-columns:1fr}#chMenu .menu-grupos{grid-template-columns:1fr 1fr}#chMenu .menu-grupos>:last-child{grid-column:1/-1}}
+@media (max-width:599px){
+  .menu-seg-notas{grid-template-columns:repeat(6,minmax(0,1fr))}
+  .menu-seg-tipos{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .menu-resumo{flex-direction:column;align-items:stretch}
+  .menu-resumo .btn{width:100%}
+  .menu-acoes>.btn{flex:1 1 100%}
+  .menu-cab .menu-chips{display:none}
+}
+/* Teclado: o Fole com os três botões numa linha, a Pressão ao lado e o Ver na linha de baixo; Melodias: os cinco interruptores numa linha */
+#tkMenu .menu-grupos{grid-template-columns:minmax(0,1.7fr) minmax(0,1fr)}
+#tkMenu .menu-grupos>:last-child{grid-column:1/-1}
+#melMenu .menu-switches{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+@media (max-width:899px){#tkMenu .menu-grupos{grid-template-columns:1fr}}
+@media (max-width:599px){#chMenu .menu-grupos{grid-template-columns:1fr}.menu-seg-tipos small{white-space:normal;line-height:1.15;font-size:10.5px}}

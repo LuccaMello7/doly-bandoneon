@@ -120,9 +120,9 @@ function refreshAll(){ allKeyboards.forEach(k=>k.refresh()); }
 function setMostrarNomes(v){
   state.showLabels = !!v; store.set('mostrarNomes', state.showLabels);
   $$('.nomesToggle').forEach(c=>c.checked = state.showLabels);
-  const b = $('#labelsBtn'); if(b) b.classList.toggle('on', state.showLabels);
+  const b = $('#labelsBtn'); if(b){ b.classList.toggle('on', state.showLabels); b.setAttribute('aria-pressed', state.showLabels); }
   refreshAll();
 }
 $$('.nomesToggle').forEach(c=>{ c.checked = state.showLabels; c.addEventListener('change', ()=>setMostrarNomes(c.checked)); });
-if($('#labelsBtn')) $('#labelsBtn').classList.toggle('on', state.showLabels);
+if($('#labelsBtn')){ $('#labelsBtn').classList.toggle('on', state.showLabels); $('#labelsBtn').setAttribute('aria-pressed', state.showLabels); }
 function rebuildAll(){ allKeyboards.forEach(k=>k.build()); onLayoutChange(); }

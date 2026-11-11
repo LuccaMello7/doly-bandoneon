@@ -35,7 +35,7 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
 
 - `index.html` (todas as abas) + `css/app.css` + `js/*.js` em **scripts clássicos com `defer`**, que
   compartilham o escopo global e rodam **nesta ordem**:
-  `base, i18n-textos, i18n, licoes-traducao, audio, teclado, movimento, navegacao, fole, desafios, ritmo,
+  `base, i18n-textos, i18n, licoes-traducao, audio, teclado, movimento, navegacao, menus, fole, desafios, ritmo,
   atalhos, controles, melodias, musicxml, escalas, microfone, acordes, maos, academia, partituras, rotina,
   licoes, ajustes, ouvido, eco, qualnota, cascata, trilha, inicio, professor, relatorio, teoria-textos, teoria, contato, conta, turmas, init`.
   Código que roda no carregamento só pode usar o que veio antes; dentro de funções, tudo já existe.
@@ -65,6 +65,18 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
 - `go(v)` troca de aba. Para agir ao entrar ou sair de uma aba: `ganchosAba.push((nova, anterior)=>…)`.
 - Links internos: `data-go="aba"`. Endereços: `#aba`, `#licao-N`, `#teoria-N` e `#tarefa=…` (link do professor).
 - A **Teoria** é a 2ª trilha da aba Lições: não tem botão no `#subnav`, e `go('teoria')` acende o botão Lições.
+
+### Menus (menus.js): o jeito de escolher em Melodias, Acordes e Teclado
+- `segmentar(select, {rotulo, classe})` troca um `<select>` curto por botões lado a lado. O `<select>` continua no DOM
+  (escondido, classe `menu-fonte`) e é a fonte da verdade: o resto do código lê `.value` e escuta `change` como antes.
+  Mudar `.value` pelo código acende o botão certo; se as opções mudarem (idioma, nomes das notas), os botões se refazem.
+  `rotuloFole` põe as bolinhas do fole; `rotuloSimbolo` mostra "Menor (m)" como símbolo grande e nome pequeno.
+- Marcação: `.menu` > `.menu-grupos` > `.menu-grupo` com `.menu-rot` (rótulo em maiúsculas); interruptores
+  `.menu-switch` (checkbox) ou `.menu-toggle` (botão com classe `on`), sempre com `.menu-trilho` e uma linha `<small>`.
+- Durante a prática o menu vira uma barra `.menu-resumo` com `menuChips([[rótulo, valor], …])` e "Parar":
+  Melodias (`melMenuJogo`), treino de Acordes (`#chResumo`), Encontre a nota. O Teclado não tem "rodando": os ajustes
+  recolhem (`tkAjustes`, guardado em `tecladoAjustes`) e o cabeçalho mostra o resumo.
+- O botão verde diz o que vai acontecer: "Começar desafio", "Ouvir a melodia" / "Começar a tocar", "Começar treino".
 
 ### Desafios → Encontre a nota (desafios.js)
 - Cada rodada toca a nota sozinha (`fOuvir`; o cartão `#fAlvo` e "Ouvir a nota" repetem). Placar com bolinhas como no

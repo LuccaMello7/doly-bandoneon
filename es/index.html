@@ -420,27 +420,30 @@
     <div class="tk-cheia-barra" id="tkCheiaBarra" hidden><button type="button" class="btn sec" id="tkCheiaSair"><svg aria-hidden="true"><use href="#i-x"/></svg>Salir</button></div>
     <!-- no celular: o instrumento vem antes dos ajustes e este atalho fica no topo -->
     <div class="tk-rapido"><button type="button" class="btn" data-tk-cheia><svg aria-hidden="true"><use href="#i-expand"/></svg>Tocar en pantalla completa</button><span class="muted">Solo el instrumento y el fuelle, con los botones más grandes.</span></div>
-    <div class="toolbar">
-      <div class="grupo"><span class="grupo-tit">Fuelle</span>
-        <button class="btn" id="dirBtn">Cambiar dirección<span class="so-teclado"> (Espacio)</span></button>
-        <button class="btn sec" id="valveOpenBtn" title="Mantené para abrir el fuelle sin sonido">Válvula: abrir<span class="so-teclado"> (mantené A o ←)</span></button>
-        <button class="btn sec" id="valveCloseBtn" title="Mantené para cerrar el fuelle sin sonido">Válvula: cerrar<span class="so-teclado"> (mantené F o →)</span></button>
-        <button class="btn sec" id="foleLivreBtn" aria-pressed="false" title="Modo libre: al llegar al final, el fuelle vuelve solo. En un bandoneón de verdad no es así.">Fuelle sin límite</button>
+    <div class="toolbar menu menu-tk" id="tkMenu">
+      <button type="button" class="menu-cab" id="tkMenuCab" aria-expanded="true" aria-controls="tkMenuCorpo"><span class="menu-cab-tit"><svg aria-hidden="true"><use href="#i-gear"/></svg>Ajustes del teclado</span><span class="menu-chips" id="tkResumo"></span><svg class="menu-seta" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+      <div class="menu-corpo" id="tkMenuCorpo">
+      <div class="menu-grupos">
+        <div class="menu-grupo"><span class="menu-rot">Fuelle</span><div class="menu-botoes">
+          <button class="btn" id="dirBtn">Cambiar dirección<span class="so-teclado"> (Espacio)</span></button>
+          <button class="btn sec" id="valveOpenBtn" title="Mantené para abrir el fuelle sin sonido">Válvula: abrir<span class="so-teclado"> (mantené A o ←)</span></button>
+          <button class="btn sec" id="valveCloseBtn" title="Mantené para cerrar el fuelle sin sonido">Válvula: cerrar<span class="so-teclado"> (mantené F o →)</span></button>
+        </div></div>
+        <div class="menu-grupo"><span class="menu-rot">Presión del fuelle</span><div class="menu-faixa grupo-pressao">
+          <input type="range" class="pressao-in" min="0" max="100" aria-label="Presión del fuelle"><span class="pressao-val">70%</span>
+        </div></div>
+        <div class="menu-grupo"><span class="menu-rot">Ver</span><div class="menu-botoes">
+          <span class="segmento mini" id="tkVer" role="group" aria-label="Manos visibles"><button class="btn sec on" data-ver="duas">Dos manos</button><button class="btn sec" data-ver="left">Izquierda</button><button class="btn sec" data-ver="right">Derecha</button></span>
+          <button class="btn sec" data-tk-cheia><svg aria-hidden="true"><use href="#i-expand"/></svg>Pantalla completa</button>
+        </div></div>
       </div>
-      <div class="grupo"><span class="grupo-tit">Botones</span>
-        <button class="btn sec on" id="labelsBtn">Mostrar nombres</button>
+      <div class="menu-switches">
+        <button type="button" class="menu-toggle on" id="labelsBtn" aria-pressed="true"><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Mostrar nombres</b><small>El nombre de la nota en cada botón.</small></span></button>
+        <button type="button" class="menu-toggle" id="pcBtn" aria-pressed="false"><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Teclado de la computadora</b><small>Las teclas de la computadora tocan los botones.</small></span></button>
+        <button type="button" class="menu-toggle" id="foleLivreBtn" aria-pressed="false"><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Fuelle sin límite</b><small>Al final, el fuelle vuelve solo. En el bandoneón de verdad no es así.</small></span></button>
       </div>
-      <div class="grupo"><span class="grupo-tit">Ver</span>
-        <span class="segmento mini" id="tkVer" role="group" aria-label="Manos visibles"><button class="btn sec on" data-ver="duas">Dos manos</button><button class="btn sec" data-ver="left">Izquierda</button><button class="btn sec" data-ver="right">Derecha</button></span>
-        <button class="btn sec" data-tk-cheia><svg aria-hidden="true"><use href="#i-expand"/></svg>Pantalla completa</button>
-      </div>
-      <div class="grupo"><span class="grupo-tit">Tocar con</span>
-        <button class="btn sec" id="pcBtn" title="Tocá los botones con las teclas de la computadora">Teclado de la computadora</button>
+      <div class="menu-botoes">
         <button class="btn sec" data-controles>Mapa y controles</button>
-      </div>
-      <div class="grupo grupo-pressao"><span class="grupo-tit">Presión del fuelle</span>
-        <input type="range" class="pressao-in" min="0" max="100" aria-label="Presión del fuelle"><span class="pressao-val">70%</span>
-      </div>
       <details class="mapmenu">
         <summary class="btn sec">Mapa de botones ▾</summary>
         <div class="row">
@@ -450,6 +453,8 @@
           <button class="btn sec" id="resetBtn">Restaurar original</button>
         </div>
       </details>
+      </div>
+      </div>
     </div>
     <div class="pc-atribuir" id="pcAtribuir" hidden><span id="pcAtribuirMsg" aria-live="polite"></span><button type="button" class="btn" id="pcAtribuirFim">Terminar</button></div>
     <p class="girar"><svg aria-hidden="true"><use href="#i-rotate"/></svg> Consejo: girá el celular para tocar con más espacio, o mirá una mano por vez.</p>
@@ -664,10 +669,10 @@
 <!-- MELODIAS -->
 <section id="v-melodias">
   <div class="pg-topo"><span class="pg-ic t-melodias"><svg aria-hidden="true"><use href="#i-music"/></svg></span><div><h2 class="pg-tit">Melodías</h2><p class="muted">Escuchá, tocá en el modo Espera y después a tiempo. También hay escalas guiadas e importación de partituras.</p></div></div>
-  <div class="card melbar">
-    <div class="row">
-      <label class="grow">Melodía <select id="melSelect" aria-label="Elegir melodía"></select></label>
-      <button class="btn" id="scaleOpen"><svg aria-hidden="true"><use href="#i-music"/></svg>Escalas guiadas</button>
+  <div class="card melbar menu" id="melEscolha">
+    <div class="menu-grupo"><span class="menu-rot">Melodía</span><select id="melSelect" class="menu-select" aria-label="Elegir melodía"></select></div>
+    <div class="menu-botoes">
+      <button class="btn sec" id="scaleOpen"><svg aria-hidden="true"><use href="#i-music"/></svg>Escalas guiadas</button>
       <button class="btn sec destaque-tango" id="melTango"><svg aria-hidden="true"><use href="#i-music"/></svg>Tango: El Choclo</button>
       <button class="btn sec" id="melNew">+ Nueva</button>
       <button class="btn sec" id="melImportBtn"><svg aria-hidden="true"><use href="#i-upload"/></svg>Importar MusicXML</button>
@@ -677,15 +682,18 @@
     <div>
       <div class="card" id="scaleCard" style="display:none">
         <h2 style="margin-top:0">Escalas guiadas</h2>
-        <div class="row">
-          <label>Tipo: <select id="scType"></select></label>
-          <label>Tónica: <select id="scTonic"></select></label>
-          <label>Mano: <select id="scHand"><option value="right">Derecha</option><option value="left">Izquierda</option></select></label>
-          <label>Octavas: <select id="scOct"><option value="1">1</option><option value="2">2</option></select></label>
-          <label>Empezar en: <select id="scStart"></select></label>
-          <label>Sentido: <select id="scDir"><option value="updown">Sube y baja</option><option value="up">Solo sube</option></select></label>
-          <button class="btn" id="scGo">Generar escala</button>
-          <button class="btn sec" id="scClose">Cerrar</button>
+        <div class="menu">
+          <div class="menu-grupos">
+            <div class="menu-grupo"><span class="menu-rot">Tipo</span><select id="scType" class="menu-select"></select></div>
+            <div class="menu-grupo"><span class="menu-rot">Empezar en</span><select id="scStart" class="menu-select"></select></div>
+          </div>
+          <div class="menu-grupo"><span class="menu-rot">Tónica</span><select id="scTonic"></select></div>
+          <div class="menu-grupos">
+            <div class="menu-grupo"><span class="menu-rot">Mano</span><select id="scHand"><option value="right">Derecha</option><option value="left">Izquierda</option></select></div>
+            <div class="menu-grupo"><span class="menu-rot">Octavas</span><select id="scOct"><option value="1">1</option><option value="2">2</option></select></div>
+            <div class="menu-grupo"><span class="menu-rot">Sentido</span><select id="scDir"><option value="updown">Sube y baja</option><option value="up">Solo sube</option></select></div>
+          </div>
+          <div class="menu-acoes"><button class="btn" id="scGo">Generar escala</button><button class="btn sec" id="scClose">Cerrar</button></div>
         </div>
         <div class="feedback bad" id="scErr"></div>
         <details><summary class="muted">Tu progreso en las escalas (hacé clic en una celda para abrirla)</summary><div id="scGrid"></div></details>
@@ -693,19 +701,24 @@
       <div class="card" id="melPlayer">
         <h2 id="melTitle" style="margin-bottom:4px"></h2>
         <p class="muted" id="melDesc" style="margin-top:0"></p>
-        <div class="row">
-          <label>Modo: <select id="melMode"><option value="listen">Escuchar</option><option value="wait">Espera</option><option value="timed">A tempo</option></select></label>
-          <label>Velocidad: <input type="range" id="melSpeed" min="40" max="120" step="10" value="70"> <span id="melSpeedVal">70%</span></label>
-          <label title="La app cambia sola la dirección del fuelle. Ideal para empezar."><input type="checkbox" id="melAuto"> Fuelle automático</label>
-          <label title="Tocá tu bandoneón: la app escucha por el micrófono y revisa las notas (modos Espera y A tempo)"><input type="checkbox" id="micToggle"> <svg aria-hidden="true"><use href="#i-mic"/></svg> Usar micrófono</label>
-          <label><input type="checkbox" id="melStaffOn"> 𝄞 Partitura</label>
-          <label title="Las notas bajan hasta la línea dorada al ritmo de la música"><input type="checkbox" id="melRollOn"> Notas que caen</label>
-          <label class="nomes-chk"><input type="checkbox" class="nomesToggle" checked> Nombres de las notas</label>
+        <div class="menu" id="melMenu">
+          <div class="menu-grupos">
+            <div class="menu-grupo"><span class="menu-rot">Modo</span><select id="melMode"><option value="listen">Escuchar</option><option value="wait">Espera</option><option value="timed">A tempo</option></select><p class="menu-ajuda" id="melModoAjuda"></p></div>
+            <div class="menu-grupo"><span class="menu-rot">Velocidad</span><div class="menu-faixa"><input type="range" id="melSpeed" min="40" max="120" step="10" value="70" aria-label="Velocidad"><span id="melSpeedVal">70%</span></div></div>
+          </div>
+          <div class="menu-switches">
+            <label class="menu-switch"><input type="checkbox" id="melAuto"><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Fuelle automático</b><small>La app cambia la dirección del fuelle sola.</small></span></label>
+            <label class="menu-switch"><input type="checkbox" id="micToggle"><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Usar micrófono</b><small>Tocá en tu bandoneón: la app revisa las notas.</small></span></label>
+            <label class="menu-switch"><input type="checkbox" id="melStaffOn"><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Partitura</b><small>Las notas en el pentagrama, con el cursor.</small></span></label>
+            <label class="menu-switch"><input type="checkbox" id="melRollOn"><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Notas que caen</b><small>Bajan hasta la línea al tiempo de la música.</small></span></label>
+            <label class="menu-switch"><input type="checkbox" class="nomesToggle" checked><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Nombres de las notas</b><small>Escritos en los botones del teclado.</small></span></label>
+          </div>
+          <div class="menu-acoes">
+            <button class="btn btn-grande btn-play" id="melStart">Comenzar</button>
+            <button class="btn sec" id="melEdit">Editar</button>
+          </div>
         </div>
-        <div class="acao">
-          <button class="btn btn-grande btn-play" id="melStart">Comenzar</button>
-          <button class="btn sec" id="melEdit">Editar</button>
-        </div>
+        <div class="menu-resumo" id="melResumo" hidden><div class="menu-chips" id="melResumoChips"></div><button type="button" class="btn ghost" id="melParar"><svg aria-hidden="true"><use href="#i-x"/></svg>Detener</button></div>
         <div class="notice" id="melWarn" style="display:none;margin-top:10px"></div>
         <div class="guide" id="melGuide" style="display:none"><details id="guideIntroBox" open><summary>Sobre esta escala</summary><div id="guideIntro"></div></details><div class="gstep" id="guideStep"></div></div>
         <div class="staffwrap" id="melStaff" aria-hidden="true"></div>
@@ -767,12 +780,14 @@
   <div class="pg-topo"><span class="pg-ic t-acordes"><svg aria-hidden="true"><use href="#i-chord"/></svg></span><div><h2 class="pg-tit">Acordes</h2><p class="muted">Dónde están los botones de cada acorde, abriendo y cerrando, en las dos manos.</p></div></div>
   <div class="card">
     <div id="chExplore">
-      <div class="row">
-        <label>Tónica: <select id="chRoot"></select></label>
-        <label>Tipo: <select id="chType"></select></label>
-        <label>Mano: <select id="chHand"><option value="left">Izquierda (acompañamiento)</option><option value="right">Derecha</option></select></label>
-        <label>Fuelle: <select id="chDir"><option value="open">Abriendo</option><option value="close">Cerrando</option></select></label>
-        <label class="nomes-chk"><input type="checkbox" class="nomesToggle" checked> Nombres de las notas</label>
+      <div class="menu" id="chMenu">
+        <div class="menu-grupo"><span class="menu-rot">Tónica</span><select id="chRoot"></select></div>
+        <div class="menu-grupo"><span class="menu-rot">Tipo</span><select id="chType"></select></div>
+        <div class="menu-grupos">
+          <div class="menu-grupo"><span class="menu-rot">Mano</span><select id="chHand"><option value="left">Izquierda</option><option value="right">Derecha</option></select></div>
+          <div class="menu-grupo"><span class="menu-rot">Fuelle</span><select id="chDir"><option value="open">Abriendo</option><option value="close">Cerrando</option></select></div>
+          <div class="menu-grupo"><span class="menu-rot">Botones</span><label class="menu-switch"><input type="checkbox" class="nomesToggle" checked><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Nombres de las notas</b><small>Escritos en los botones del teclado.</small></span></label></div>
+        </div>
       </div>
       <h3 id="chTitle" style="color:var(--gold);font-size:1.4rem;margin:14px 0 2px"></h3>
       <p class="muted" id="chNotes" style="margin-top:0"></p>
@@ -782,22 +797,26 @@
         <button class="btn sec" id="chArp">Arpegio</button>
       </div>
       <p class="muted">En el bandoneón cada acorde se aprende dos veces, abriendo y cerrando, con botones diferentes. Las opciones son las posiciones más compactas del mapa, con el bajo en la tónica primero. "Inversión" significa otra nota del acorde en el bajo.</p>
-      <div class="row" id="chTrainTypes">
-        <span class="muted">Entrenar:</span>
-        <label><input type="checkbox" value="maior" checked> Mayor</label>
-        <label><input type="checkbox" value="menor" checked> Menor</label>
-        <label><input type="checkbox" value="dom7" checked> 7</label>
-        <label><input type="checkbox" value="m7"> m7</label>
-        <label><input type="checkbox" value="m6"> m6</label>
-        <label><input type="checkbox" value="dim7"> °7</label>
-        <button class="btn" id="chTrain"><svg aria-hidden="true"><use href="#i-target"/></svg>Practicar acordes</button>
+      <div class="menu ch-treino">
+        <div class="menu-grupo"><span class="menu-rot">Practicar acordes: elegí los tipos</span>
+          <div class="menu-marcas" id="chTrainTypes">
+            <label><input type="checkbox" value="maior" checked><span>Mayor</span></label>
+            <label><input type="checkbox" value="menor" checked><span>Menor</span></label>
+            <label><input type="checkbox" value="dom7" checked><span>7</span></label>
+            <label><input type="checkbox" value="m7"><span>m7</span></label>
+            <label><input type="checkbox" value="m6"><span>m6</span></label>
+            <label><input type="checkbox" value="dim7"><span>°7</span></label>
+          </div>
+        </div>
+        <div class="menu-acoes"><button class="btn btn-grande" id="chTrain"><svg aria-hidden="true"><use href="#i-target"/></svg>Comenzar práctica</button><p class="muted menu-nota">La app pide un acorde; vos marcás los botones y lo revisás.</p></div>
       </div>
     </div>
     <div id="chTrainBox" style="display:none;text-align:center">
+      <div class="menu-resumo" id="chResumo"><div class="menu-chips" id="chResumoChips"></div><button type="button" class="btn ghost" id="chStop"><svg aria-hidden="true"><use href="#i-x"/></svg>Detener entrenamiento</button></div>
       <div class="target" id="chTarget"></div>
       <div id="chTrainDir" class="dirpill open" style="display:inline-block"></div>
       <p class="muted">Tocá los botones del acorde (volvé a tocar para desmarcar) y hacé clic en Verificar. Podés duplicar notas; la 5.ª es opcional en los acordes con séptima.</p>
-      <div class="row" style="justify-content:center"><button class="btn" id="chCheck">Verificar</button><button class="btn sec" id="chStop">Detener entrenamiento</button></div>
+      <div class="row" style="justify-content:center"><button class="btn" id="chCheck">Verificar</button></div>
       <div class="muted" id="chScore"></div>
     </div>
     <div class="feedback" id="chFeed" style="text-align:center" aria-live="polite"></div>
@@ -1422,6 +1441,7 @@
 <script src="../js/teclado.js" defer></script>
 <script src="../js/movimento.js" defer></script>
 <script src="../js/navegacao.js" defer></script>
+<script src="../js/menus.js" defer></script>
 <script src="../js/fole.js" defer></script>
 <script src="../js/desafios.js" defer></script>
 <script src="../js/ritmo.js" defer></script>

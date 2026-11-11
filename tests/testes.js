@@ -856,6 +856,36 @@ teste('botão de começar muda de cor enquanto roda (Melodias e Desafios)', () =
   igual($('#fStart').textContent.trim(), 'Começar desafio', 'o botão diz Começar desafio, nunca Recomeçar');
   go('inicio');
 });
+teste('Menus de Melodias, Acordes e Teclado: botões lado a lado, resumo enquanto toca e ajustes que recolhem', async () => {
+  // Acordes: a tônica vira 12 botões; tocar num muda o <select> por trás e o acorde mostrado
+  go('acordes'); await esperar();
+  const notas = $$('#chMenu .menu-seg-notas button'); igual(notas.length, 12, 'doze tônicas');
+  notas[7].click(); igual($('#chRoot').value, '7', 'o botão muda o valor'); ok(notas[7].classList.contains('on') && notas[7].getAttribute('aria-checked')==='true');
+  ok($('#chTitle').textContent.startsWith(rootName(7)), 'e o acorde na tela acompanha');
+  igual($$('#chMenu .menu-seg-tipos button').length, Object.keys(CHORD_TYPES).length, 'um botão por tipo de acorde');
+  $('#chDir').value = 'close'; await esperar(); ok($('#chMenu [data-v="close"]').classList.contains('on'), 'mudar o valor pelo código acende o botão certo');
+  $('#chDir').value = 'open'; $('#chDir').onchange();
+  // Acordes: o treino troca o menu por um resumo com "Parar treino"
+  $('#chTrain').click(); ok($('#chExplore').style.display==='none' && $$('#chResumoChips .menu-chip').length===2, 'o treino mostra o resumo');
+  $('#chStop').click(); ok($('#chExplore').style.display!=='none', '"Parar treino" volta ao menu');
+  // Melodias: o botão verde diz o que vai acontecer; enquanto toca, o menu vira um resumo com "Parar"
+  go('melodias'); loadMelody(BUILTIN_MELODIES[0].id);
+  $('#melMode').value = 'listen'; $('#melMode').onchange(); igual($('#melStart').textContent, 'Ouvir a melodia');
+  ok($('#melMenu [data-v="listen"]').classList.contains('on'), 'o modo aceso acompanha o valor');
+  $('#melMenu [data-v="wait"]').click(); igual($('#melMode').value, 'wait'); igual($('#melStart').textContent, 'Começar a tocar');
+  $('#melStart').click(); ok(mel.running && $('#melMenu').hidden && !$('#melResumo').hidden && $('#melEscolha').hidden, 'tocando: só o resumo');
+  ok($$('#melResumoChips .menu-chip').length >= 2, 'o resumo mostra o modo e a velocidade');
+  $('#melParar').click(); ok(!mel.running && !$('#melMenu').hidden && $('#melResumo').hidden && !$('#melEscolha').hidden, '"Parar" devolve o menu');
+  // Teclado: os ajustes recolhem, mostram um resumo e a escolha fica guardada
+  const aberto = store.get('tecladoAjustes', true);
+  go('teclado'); tkAjustes(true); ok(!$('#tkMenuCorpo').hidden);
+  $('#tkMenuCab').click(); ok($('#tkMenuCorpo').hidden && $('#tkMenu').classList.contains('recolhido') && store.get('tecladoAjustes', true)===false, 'recolheu e guardou');
+  ok($$('#tkResumo .menu-chip').length >= 3, 'recolhido, mostra o resumo');
+  $('#tkMenuCab').click(); ok(!$('#tkMenuCorpo').hidden, 'abriu de novo');
+  // os interruptores do Teclado dizem se estão ligados
+  const nomes = state.showLabels; $('#labelsBtn').click(); igual($('#labelsBtn').getAttribute('aria-pressed'), String(!nomes)); $('#labelsBtn').click();
+  tkAjustes(aberto); go('inicio');
+});
 teste('Encontre a nota: toca a nota ao começar, dica em dois passos, placar e para ao sair da aba', async () => {
   const salvo = JSON.stringify(state.progress.btnStats), achado = state.progress.find, pausa = ms => new Promise(r=>setTimeout(r, ms));
   go('desafios'); $('[data-ch="find"]').click(); fEscolher('fHand', 'right'); fEscolher('fDir', 'open');
