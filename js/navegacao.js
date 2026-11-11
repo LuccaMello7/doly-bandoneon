@@ -33,7 +33,7 @@ function go(v){
   if(v!=='academia' && (acad.rodando || acad.demo)) acadParar();
   if(v==='academia') acadMostrar(); // os teclados só têm largura quando a aba está visível
   ganchosAba.forEach(f=>f(v, anterior));
-  if(v!==anterior) cascata($('#v-'+v));
+  if(v!==anterior){ cascata($('#v-'+v)); deslizarAba($('#v-'+v), anterior, v); }
   window.scrollTo(0,0);
 }
 // O fundo dourado da área ativa desliza até o botão tocado

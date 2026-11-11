@@ -173,6 +173,7 @@ document.addEventListener('click', e=>{ if(e.target.closest('[data-ver-conquista
 const iconeInsignia = x => `<svg aria-hidden="true"><use href="#i-${x.ic}"/></svg>`;
 function renderPerfil(){
   const box = $('#insignias'); if(!box) return;
+  renderMapaBotoes();
   const ganhas = state.progress.insignias, n = INSIGNIAS.filter(x=>ganhas[x.id]).length;
   $('#pfResumo').textContent = `${n} de ${INSIGNIAS.length} conquistas`;
   const p = perfilAluno();
@@ -188,6 +189,24 @@ function renderPerfil(){
   }).join('');
 }
 $('#insignias').addEventListener('click', e=>{ const b = e.target.closest('[data-partilhar]'); if(b) compartilharInsignia(b.dataset.partilhar); });
+
+// Mapa de botões: cada botão aceso conforme os acertos (abrindo e fechando juntos) nos Desafios e na Academia
+function renderMapaBotoes(){
+  const st = state.progress.btnStats || {}; let treinados = 0, total = 0;
+  for(const [mao, id] of [['left', 'pfMapaEsq'], ['right', 'pfMapaDir']]){
+    const L = state.layout[mao], W = Math.max(...L.map(b=>b.x)) + 1, H = Math.max(...L.map(b=>b.y)) + 1;
+    total += L.length;
+    $('#' + id).setAttribute('viewBox', `-0.1 -0.1 ${W + .2} ${H + .2}`);
+    $('#' + id).innerHTML = L.map((b, i)=>{
+      const a = st[statKey(mao, b.id, 'open')] || {ok:0, err:0}, f = st[statKey(mao, b.id, 'close')] || {ok:0, err:0};
+      const ok = a.ok + f.ok, n = ok + a.err + f.err; if(n) treinados++;
+      const dica = `${noteName(b.open)} / ${noteName(b.close)}` + (n ? ' · ' + t('{} acertos, {} erros', ok, n - ok) : ' · ' + t('ainda não treinado'));
+      return `<circle cx="${b.x + .5}" cy="${b.y + .5}" r=".42" class="${n ? '' : 'nunca'}" style="--acc:${n ? (ok / n).toFixed(2) : 0};--i:${i}"><title>${dica}</title></circle>`;
+    }).join('');
+  }
+  $('#pfMapaN').textContent = treinados; $('#pfMapaDe').textContent = t('de {} botões treinados', total);
+}
+
 
 /* ---------- Cartão para compartilhar (imagem 1080 × 1080) ---------- */
 // O ornamento do cartão usa os mesmos traços do ícone #i-filete
@@ -243,3 +262,4 @@ ganchosAba.push(v=>{
 renderPerfil();
 // primeira visita: as perguntas aparecem na tela Início (quem chega por um link para uma aba não é interrompido)
 if(!perfilAluno() && !location.hash) setTimeout(()=>{ if(currentView==='inicio' && !perfilAluno()) abrirBoasVindas(); }, 1200);
+ganchosAba.push(v=>{ if(v === 'perfil') contarNumeros($('#v-perfil'), '.pf-conta'); });

@@ -8,7 +8,7 @@ function aplicarMovimento(){ document.documentElement.classList.toggle('sem-mov'
 aplicarMovimento();
 
 // Vibração curta no celular: um toque no acerto, dois no erro, três na comemoração
-const VIBRACOES = {ok:[16], erro:[28,50,28], vitoria:[30,40,30,40,90]};
+const VIBRACOES = {toque:[8], ok:[16], erro:[28,50,28], vitoria:[30,40,30,40,90]};
 function vibrar(tipo){
   if(!mov.vib || !navigator.vibrate) return;
   try{ navigator.vibrate(VIBRACOES[tipo] || VIBRACOES.ok); }catch(e){}
@@ -23,9 +23,9 @@ function cascata(sec){
 }
 
 // Os números da tela Início contam do zero até o valor (só o número do começo do texto: "7/11", "92%")
-function contarNumeros(raiz){
-  if(movReduzido()) return;
-  raiz.querySelectorAll('.stat').forEach(el=>{
+function contarNumeros(raiz, seletor='.stat'){
+  if(movReduzido() || !raiz) return;
+  raiz.querySelectorAll(seletor).forEach(el=>{
     const m = el.textContent.match(/^(\d+)(.*)$/); if(!m || +m[1]===0) return;
     const fim = +m[1], resto = m[2], t0 = performance.now(), dur = 900;
     const passo = agora=>{
@@ -99,3 +99,36 @@ document.addEventListener('pointermove', e=>{
   const f = e.target.closest && e.target.closest('.feat'); if(!f || movReduzido()) return;
   const r = f.getBoundingClientRect(); f.style.setProperty('--mx', (e.clientX-r.left)+'px'); f.style.setProperty('--my', (e.clientY-r.top)+'px');
 }, {passive:true});
+
+// Anel que se espalha do botão tocado, na cor do fole (azul abrindo, laranja fechando: vem do data-fole do teclado)
+function anelToque(el){
+  if(!el || movReduzido()) return;
+  const a = document.createElement('span'); a.className = 'anel-toque'; a.setAttribute('aria-hidden', 'true');
+  el.appendChild(a); a.addEventListener('animationend', ()=>a.remove()); setTimeout(()=>a.remove(), 900);
+}
+// Troca de aba: o conteúdo entra deslizando no sentido do menu (aba à direita entra pela direita)
+function deslizarAba(sec, anterior, nova){
+  if(!sec || !sec.animate || !anterior || anterior===nova || movReduzido()) return;
+  const ordem = Object.values(AREAS).flat(), i = ordem.indexOf(nova), j = ordem.indexOf(anterior);
+  if(i<0 || j<0) return;
+  sec.animate([{transform:`translateX(${i>j ? 28 : -28}px)`}, {transform:'none'}], {duration:380, easing:'cubic-bezier(.16,1,.3,1)'});
+}
+// Luz que reage ao som: lê o volume do que está tocando e põe em --som (0 a 1) no elemento; para sozinha no silêncio
+let somAnalisador = null, somRaf = 0, somNivel = 0, somAlvo = null, somQuieto = 0;
+function auroraViva(alvo){
+  if(movReduzido() || !AC || !master) return;
+  somAlvo = alvo || somAlvo; if(!somAlvo || somRaf) return;
+  if(!somAnalisador){ somAnalisador = AC.createAnalyser(); somAnalisador.fftSize = 512; master.connect(somAnalisador); }
+  const buf = new Uint8Array(somAnalisador.fftSize); somQuieto = 0;
+  const passo = ()=>{
+    somAnalisador.getByteTimeDomainData(buf);
+    let soma = 0; for(const v of buf){ const x = (v - 128) / 128; soma += x*x; }
+    const rms = Math.sqrt(soma / buf.length), alvoN = Math.min(1, rms * 6);
+    somNivel += (alvoN - somNivel) * (alvoN > somNivel ? .35 : .08); // sobe rápido, desce devagar
+    somAlvo.style.setProperty('--som', somNivel.toFixed(3));
+    somQuieto = somNivel < .01 ? somQuieto + 1 : 0;
+    if(somQuieto > 30){ somAlvo.style.setProperty('--som', '0'); somRaf = 0; return; }
+    somRaf = requestAnimationFrame(passo);
+  };
+  somRaf = requestAnimationFrame(passo);
+}

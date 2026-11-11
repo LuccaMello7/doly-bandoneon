@@ -40,6 +40,7 @@ function createKeyboard(el, hand, opts={}){
         if(typeof interceptarToque==='function' && interceptarToque(b, hand, api)) return; // mapa do teclado / MIDI aprendendo
         if(state.editing && opts.editable){ editButton(b); return; }
         const dir=getDir(), midi=b[dir]; held.add(b.id); d.classList.add('down');
+        anelToque(d); if(e && e.pointerType==='touch') vibrar('toque'); // o toque responde: anel na cor do fole e vibração curta
         if(opts.sound!==false && (!opts.canSound || opts.canSound())) startVoice(uid+b.id, midi, hand, vel);
         opts.onPress && opts.onPress(b, midi, dir, api);
       };

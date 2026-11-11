@@ -848,6 +848,31 @@ teste('botão de começar muda de cor enquanto roda (Melodias e Desafios)', () =
   fq.round = 10; nextFind(); ok(!$('#fStart').classList.contains('rodando') && /Começar/.test($('#fStart').textContent), 'no fim volta a Começar');
   go('inicio');
 });
+teste('Movimento: anel no toque, partitura viva, trecho de tango, mapa de botões e fole que respira', async () => {
+  go('inicio'); const it = iniBotoes.find(x=>x.mao==='right' && x.b.open>=60);
+  const reduzido = movReduzido();
+  iniTocar(it);
+  if(!reduzido) ok(it.el.querySelector('.anel-toque'), 'o botão tocado solta um anel');
+  ok($('#iniPauta svg.pauta') && $$('#iniPauta .nota.ultima').length === 1, 'a nota aparece na partitura');
+  ok($('#iniPautaDica').hidden, 'a dica some depois da primeira nota');
+  iniSoltar(it);
+  for(let i = 0; i < 12; i++){ iniTocar(it); iniSoltar(it); }
+  igual($$('#iniPauta .nota').length, INI_PAUTA_MAX, 'guarda só as últimas notas');
+  // o trecho de tango toca e para
+  $('#iniTrechoBtn').click(); ok(iniTrecho.tocando && iniTrecho.timers.length > 5, 'o trecho começa'); await esperar();
+  $('#iniTrechoBtn').click(); ok(!iniTrecho.tocando, 'e para no segundo clique');
+  // o fole do Início: o nível de ar fica entre 0 e 1
+  ok(ini.ar >= 0 && ini.ar <= 1);
+  // Conquistas: o mapa tem um círculo por botão e conta os treinados
+  const antes = JSON.stringify(state.progress.btnStats || {});
+  state.progress.btnStats[statKey('right', state.layout.right[0].id, 'open')] = {ok:3, err:1};
+  go('perfil'); renderPerfil();
+  igual($$('#pfMapaEsq circle').length + $$('#pfMapaDir circle').length, state.layout.left.length + state.layout.right.length);
+  ok(+$('#pfMapaN').textContent >= 1, 'conta o botão treinado');
+  state.progress.btnStats = JSON.parse(antes); renderPerfil();
+  // trocar de aba não quebra com o deslize
+  go('teclado'); go('inicio');
+});
 teste('Início: o minuto guiado ensina o bisonoro em três passos', () => {
   go('inicio'); const antes = store.get('guiaInicio', false); store.set('guiaInicio', false);
   iniDemo = true; iniMostrarDemo(); iniGuiaMostrar();

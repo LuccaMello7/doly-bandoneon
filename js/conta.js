@@ -246,7 +246,7 @@ ganchosAba.push((v, anterior)=>{
   $('#contaTopo').classList.toggle('on', areaDe(v) === 'perfil');
   if(v === 'conta' && anterior && areaDe(anterior) !== 'perfil') contaVoltaPara = anterior;
   if(!$('#contaMenu').hidden) contaMenuAberto(false);
-  if(v === 'conta') renderConta();
+  if(v === 'conta'){ renderConta(); contarNumeros($('#contaDentro'), '.conta-nums b'); }
 });
 
 /* ---------- Tela ---------- */

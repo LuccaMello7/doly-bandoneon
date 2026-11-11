@@ -195,6 +195,12 @@
           </div>
           <div class="ini-mao dir"><span class="ini-mao-rot">Mano derecha · agudos</span><div class="ini-area" id="iniMaoDir" role="group" aria-label="Mano derecha"></div></div>
         </div>
+        <div class="ini-pauta" id="iniPautaBox">
+          <div class="ini-pauta-topo"><span class="ini-pauta-rot">Partitura</span>
+            <button type="button" class="btn sec btn-play ini-trecho-btn" id="iniTrechoBtn">Escuchar un fragmento de tango</button></div>
+          <div class="ini-pautas" id="iniPauta" role="img" aria-label="Las notas que tocaste, en la partitura"></div>
+          <p class="ini-pauta-dica" id="iniPautaDica">Las notas que toques aparecen acá, en clave de sol (agudos) o en clave de fa (graves).</p>
+        </div>
         <div class="ini-guia ini-so-novo" id="iniGuia" role="status" aria-live="polite" hidden>
           <ol class="ini-guia-pontos" aria-hidden="true"><li></li><li></li><li></li></ol>
           <p class="ini-guia-txt" id="iniGuiaTxt"></p>
@@ -980,6 +986,12 @@
   <div class="card perfil-topo">
     <div><b id="pfResumo"></b><div class="muted" id="pfPerfil"></div></div>
     <button type="button" class="btn sec" id="pfRefazer">Responder de nuevo las preguntas iniciales</button>
+  </div>
+  <div class="card pf-mapa">
+    <div class="pf-mapa-topo"><div><h3>Tu mapa de botones</h3><p class="muted">Los botones que más acertás en los Desafíos y en la Academia se encienden. Los apagados todavía no los practicaste.</p></div>
+      <div class="pf-mapa-num"><b class="pf-conta" id="pfMapaN">0</b><span id="pfMapaDe">de 71 botones practicados</span></div></div>
+    <div class="pf-maos"><figure><svg id="pfMapaEsq" aria-hidden="true"></svg><figcaption>Mano izquierda</figcaption></figure><figure><svg id="pfMapaDir" aria-hidden="true"></svg><figcaption>Mano derecha</figcaption></figure></div>
+    <p class="pf-mapa-leg"><span><i class="nunca"></i>todavía sin practicar</span><span><i style="--acc:.35"></i>acierta poco</span><span><i style="--acc:1"></i>acierta siempre</span></p>
   </div>
   <div class="insignias" id="insignias"></div>
 </section>

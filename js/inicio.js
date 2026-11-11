@@ -5,7 +5,7 @@
 // (classe "volta", posta por renderInicio) vê a próxima etapa, a sequência de dias e o "Praticar hoje".
 // Desenho: .impeccable/surfaces/index-html.md (mundo do Doppler, aprovado pelo dono em 2026-11-10).
 
-const ini = {fole:'open', ativos:{}, demo:null};
+const ini = {fole:'open', ativos:{}, demo:null, ar:.5};
 let iniDemo = true; // primeira impressão: um botão já aparece tocado (some no primeiro toque)
 const iniEl = {left:$('#iniMaoEsq'), right:$('#iniMaoDir')};
 const iniBotoes = []; // {b, mao, el, span, x}
@@ -64,7 +64,8 @@ function iniMostrarDemo(){
 }
 function iniFimDemo(){ iniDemo = false; if(ini.demo) ini.demo.el.classList.remove('demo'); ini.demo = null; }
 function iniVisor(it){
-  const n = $('#iniNota'); n.classList.remove('vazio'); n.textContent = noteName(it.b[ini.fole]);
+  const n = $('#iniNota'), nome = noteName(it.b[ini.fole]); n.classList.remove('vazio');
+  if(n.textContent !== nome){ n.textContent = nome; n.classList.remove('muda'); void n.offsetWidth; n.classList.add('muda'); } // a nota nova sobe
   $('#iniAbre').textContent = noteName(it.b.open); $('#iniFecha').textContent = noteName(it.b.close);
 }
 function iniTocar(it){
@@ -73,6 +74,7 @@ function iniTocar(it){
   ini.ativos[k] = true; it.el.classList.add('on');
   startVoice('ini'+k, it.b[ini.fole], it.mao);
   iniVisor(it);
+  anelToque(it.el); vibrar('toque'); iniRespirar(); iniPautaNota(it.b[ini.fole]); auroraViva($('#v-inicio .ini-palco'));
 }
 function iniSoltar(it){
   const k = it.mao + it.b.id; if(!ini.ativos[k]) return;
@@ -88,6 +90,66 @@ for(const mao of ['left','right']) iniKb[mao] = {
 $$('#iniInst .ini-chave button').forEach(b=>b.addEventListener('click', ()=>iniTrocaFole(b.dataset.fole)));
 window.addEventListener('blur', ()=>iniBotoes.forEach(iniSoltar));
 iniMontar();
+
+/* ---------- O fole respira: enquanto há nota soando, as pregas abrem (fole abrindo) ou fecham (fechando) ---------- */
+let iniArRaf = 0, iniArT = 0;
+function iniRespirar(){
+  if(iniArRaf || movReduzido()) return;
+  iniArT = performance.now();
+  const passo = agora=>{
+    const n = Object.keys(ini.ativos).length + (iniTrecho.tocando ? 1 : 0), dt = Math.min(.05, (agora - iniArT) / 1000); iniArT = agora;
+    if(!n){ iniArRaf = 0; return; }
+    ini.ar = Math.max(0, Math.min(1, ini.ar + (ini.fole==='open' ? 1 : -1) * dt * .16 * Math.min(3, n)));
+    $('#iniInst').style.setProperty('--ar', ini.ar.toFixed(3));
+    iniArRaf = requestAnimationFrame(passo);
+  };
+  iniArRaf = requestAnimationFrame(passo);
+}
+
+/* ---------- Partitura viva: as últimas notas tocadas, na clave de sol (Dó4 para cima) ou na de fá ---------- */
+const iniNotas = [], INI_PAUTA_MAX = 8;
+function iniPautaNota(midi){
+  iniNotas.push(midi); if(iniNotas.length > INI_PAUTA_MAX) iniNotas.shift();
+  $('#iniPautaDica').hidden = true; iniPautaRender(true);
+}
+function iniPautaRender(nova){
+  if(typeof pautaSVG !== 'function') return; // teoria.js carrega depois; o primeiro desenho vem no DOMContentLoaded
+  const n = iniNotas.length, W = 540, x = i => 104 + i * 54;
+  const nota = (m, i) => ({...dDoMidi(m), x:x(i), semHaste:true, cls:(i === n-1 ? 'ultima' : '') + (nova && i === n-1 ? ' entra' : '')});
+  const sol = iniNotas.map((m, i)=>m >= 60 ? nota(m, i) : null).filter(Boolean), fa = iniNotas.map((m, i)=>m < 60 ? nota(m, i) : null).filter(Boolean);
+  $('#iniPauta').innerHTML = pautaSVG('sol', sol, W) + pautaSVG('fa', fa, W);
+  $('#iniPauta').setAttribute('aria-label', n ? t('Notas tocadas: {}', iniNotas.map(noteName).join(', ')) : t('As notas que você tocou, na partitura'));
+}
+document.addEventListener('DOMContentLoaded', ()=>iniPautaRender(false));
+
+/* ---------- Ouvir um trecho de tango: a introdução de El Choclo (Villoldo, 1903, domínio público) no instrumento ---------- */
+const iniTrecho = {tocando:false, timers:[]};
+function iniPararTrecho(){
+  iniTrecho.timers.forEach(clearTimeout); iniTrecho.timers = []; iniTrecho.tocando = false;
+  iniBotoes.forEach(x=>{ if(!ini.ativos[x.mao + x.b.id]) x.el.classList.remove('on'); });
+  const b = $('#iniTrechoBtn'); b.textContent = t('Ouvir um trecho de tango'); botaoRodando(b, false);
+}
+$('#iniTrechoBtn').onclick = ()=>{
+  if(iniTrecho.tocando){ iniPararTrecho(); return; }
+  ac(); carregarSons(); iniFimDemo();
+  const m = parseMelody(melodiaPronta('choclo-intro')); buildTimeline(m); fingerMelody(m);
+  const notas = m.notes.filter(n=>!n.rest && n.btn), fimFrase = notas.findIndex(n=>n.beats >= 1); // a primeira frase, até a nota longa
+  const frase = notas.slice(0, fimFrase >= 0 ? fimFrase + 1 : 13), spb = 60 / (m.bpm || 72), t0 = AC.currentTime + .15, inicio = frase[0].t;
+  iniTrecho.tocando = true; const b = $('#iniTrechoBtn'); b.textContent = t('Parar'); botaoRodando(b, true);
+  frase.forEach(n=>{
+    const quando = (n.t - inicio) * spb;
+    playNote(n.midi, n.beats * spb * .9, n.hand, t0 + quando);
+    iniTrecho.timers.push(setTimeout(()=>{
+      if(n.dir && n.dir !== ini.fole) iniTrocaFole(n.dir);
+      const it = iniBotoes.find(x=>x.mao === n.hand && x.b.id === n.btn.id); if(!it) return;
+      it.el.classList.add('on'); anelToque(it.el); iniVisor(it); iniPautaNota(n.midi); iniRespirar(); auroraViva($('#v-inicio .ini-palco'));
+      iniTrecho.timers.push(setTimeout(()=>{ if(!ini.ativos[it.mao + it.b.id]) it.el.classList.remove('on'); }, n.beats * spb * 850));
+    }, 150 + quando * 1000));
+  });
+  const fim = Math.max(...frase.map(n=>n.t - inicio + n.beats));
+  iniTrecho.timers.push(setTimeout(()=>{ iniPararTrecho(); avisar(`<span>${t('Esse foi o começo de El Choclo, de 1903. Quer tocar? Experimente o RepeTCHÊ: o bandoneon toca e você repete.')}</span>`); }, 400 + fim * spb * 1000));
+};
+ganchosAba.push(v=>{ if(v !== 'inicio' && iniTrecho.tocando) iniPararTrecho(); });
 
 /* ---------- Minuto guiado: o bisonoro em três passos (primeira visita) ----------
    1. toque o botão aceso → 2. troque o fole e toque o mesmo botão → 3. "nota diferente!" e o convite para a lição 1.

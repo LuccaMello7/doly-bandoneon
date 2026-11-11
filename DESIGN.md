@@ -288,6 +288,17 @@ Diretos e calmos: uma cor chapada, sem gradiente, sem brilho.
 ### O instrumento (componente de assinatura)
 O teclado Rheinische 142 inteiro, tocável. Cada mão é uma placa quase preta (placa) com os botões em madrepérola, com degradê radial de luz no canto superior esquerdo e o nome da nota em 600 a .205em. Aceso, o botão ganha a cor do fole (azul abrindo, laranja fechando) e afunda. No centro, o fole: pregas em listras ameixa e vinho que estreitam ao fechar (.5s, curva de saída), a chave Abrindo/Fechando (painel de 14px com dois botões; o pressionado toma a cor do fole) e o visor, que mostra a nota tocada em 30px e as duas notas do botão em azul e laranja. Ao trocar o fole, os nomes dos 71 botões trocam em cascata da esquerda para a direita (34ms por coluna, 140ms por troca). O foco de teclado é um anel lavanda de 2px.
 
+### Movimento que responde (desde 2026-11-11)
+- **Anel no toque:** todo botão tocado (Início e teclados do app) solta um anel na cor do fole que cresce e some em .6s; no celular, vibração de 8 ms.
+- **Fole que respira (Início):** as pregas abrem enquanto há nota soando com o fole abrindo e fecham com o fole fechando (`--ar`, 0 a 1). No Teclado, a simulação do ar já fazia isso.
+- **Visor:** a nota nova sobe 7px ao entrar.
+- **Partitura viva (Início):** as 8 últimas notas tocadas, em clave de sol (Dó4 para cima) ou de fá; a última em lavanda. "Ouvir um trecho de tango" toca a primeira frase de El Choclo no instrumento, acendendo os botões.
+- **Aurora que ouve:** a luz atrás do instrumento cresce e clareia com o volume (`--som`), e para sozinha no silêncio.
+- **Troca de aba:** o conteúdo entra deslizando 28px no sentido do menu.
+- **Números que contam:** Conta, Conquistas (mapa de botões) e Relatórios contam do zero ao abrir.
+- **Mapa de botões (Conquistas):** cada botão em lavanda, mais forte quanto maior o acerto; não treinado na cor da placa.
+Tudo some com Animações reduzidas (`sem-mov`) ou com o "reduzir movimento" do sistema.
+
 ### Logo
 O bandoneonista desenhado do logo original, repintado na paleta do app (escolha do dono, 2026-11-10): o traço em madrepérola (`#cdbf9c`), os claros em osso e o fundo ameixa com uma luz violeta no alto. O ícone do app e o do topo levam só o desenho; o nome BanDoly vem ao lado (no topo) ou embaixo (no celular), em Onest, com "Doly" em lavanda nas peças de divulgação. Os arquivos saem de `ferramentas/gerar_logo.py`; a versão azul e dourada fica em `icones/originais/`. Dívida: falta a versão em vetor, feita por um designer.
 

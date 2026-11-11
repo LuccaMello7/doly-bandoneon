@@ -195,6 +195,12 @@
           </div>
           <div class="ini-mao dir"><span class="ini-mao-rot">Right hand · treble</span><div class="ini-area" id="iniMaoDir" role="group" aria-label="Right hand"></div></div>
         </div>
+        <div class="ini-pauta" id="iniPautaBox">
+          <div class="ini-pauta-topo"><span class="ini-pauta-rot">Score</span>
+            <button type="button" class="btn sec btn-play ini-trecho-btn" id="iniTrechoBtn">Hear a tango excerpt</button></div>
+          <div class="ini-pautas" id="iniPauta" role="img" aria-label="The notes you played, on the stave"></div>
+          <p class="ini-pauta-dica" id="iniPautaDica">The notes you play appear here, on the treble clef (high) or the bass clef (low).</p>
+        </div>
         <div class="ini-guia ini-so-novo" id="iniGuia" role="status" aria-live="polite" hidden>
           <ol class="ini-guia-pontos" aria-hidden="true"><li></li><li></li><li></li></ol>
           <p class="ini-guia-txt" id="iniGuiaTxt"></p>
@@ -980,6 +986,12 @@
   <div class="card perfil-topo">
     <div><b id="pfResumo"></b><div class="muted" id="pfPerfil"></div></div>
     <button type="button" class="btn sec" id="pfRefazer">Answer the first questions again</button>
+  </div>
+  <div class="card pf-mapa">
+    <div class="pf-mapa-topo"><div><h3>Your button map</h3><p class="muted">The buttons you get right most often in Challenges and the Academy light up. The dark ones you have not practised yet.</p></div>
+      <div class="pf-mapa-num"><b class="pf-conta" id="pfMapaN">0</b><span id="pfMapaDe">of 71 buttons practised</span></div></div>
+    <div class="pf-maos"><figure><svg id="pfMapaEsq" aria-hidden="true"></svg><figcaption>Left hand</figcaption></figure><figure><svg id="pfMapaDir" aria-hidden="true"></svg><figcaption>Right hand</figcaption></figure></div>
+    <p class="pf-mapa-leg"><span><i class="nunca"></i>not practised yet</span><span><i style="--acc:.35"></i>rarely right</span><span><i style="--acc:1"></i>always right</span></p>
   </div>
   <div class="insignias" id="insignias"></div>
 </section>

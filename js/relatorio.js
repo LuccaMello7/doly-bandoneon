@@ -75,6 +75,7 @@ function renderRelatorios(){
   $('#relVazio').hidden = lista.length > 0; $('#relListaBox').hidden = !lista.length;
   const rel = relExemplo ? REL_EXEMPLO : lista[relAberto];
   $('#relDetalhe').hidden = !rel;
+  setTimeout(()=>contarNumeros($('#relDetalhe'), '.rel-nota b, .rel-li-nota'));
   $('#relDetalhe').innerHTML = rel ? (relExemplo ? `<p class="rel-aviso-exemplo">${t('Exemplo: os números abaixo são inventados, só para mostrar como é um relatório.')}</p>` : '') + relatorioHTML(rel) : '';
 }
 $('#relLista').addEventListener('click', e=>{

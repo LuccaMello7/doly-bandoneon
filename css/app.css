@@ -1567,9 +1567,8 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
 .ini-k.on span,.ini-k.demo span{color:#0b1a2e}.ini-inst[data-fole="close"] .ini-k.on span,.ini-inst[data-fole="close"] .ini-k.demo span{color:#3b1500}
 .ini-k:focus-visible{outline:2px solid var(--lavanda);outline-offset:2px}
 .ini-fole{display:flex;flex-direction:column;align-items:center;gap:12px;width:156px}
-.ini-pregas{width:clamp(56px,6cqi,84px);height:clamp(96px,10cqi,124px);border-radius:6px;transition:width .5s var(--ease-saida);
+.ini-pregas{--pmin:clamp(30px,3.4cqi,46px);--pmax:clamp(64px,7cqi,96px);width:calc(var(--pmin) + (var(--pmax) - var(--pmin)) * var(--ar,.5));height:clamp(96px,10cqi,124px);border-radius:6px;transition:width .12s linear;
   background:repeating-linear-gradient(90deg,#3a2236 0 8px,#22141f 8px 11px,#4b2c45 11px 13px);box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
-.ini-inst[data-fole="close"] .ini-pregas{width:clamp(36px,4cqi,54px)}
 .ini-chave{display:flex;flex-direction:column;gap:4px;align-self:stretch;padding:4px;border-radius:14px;background:var(--ameixa-2);box-shadow:inset 0 0 0 1px var(--borda)}
 .ini-chave button{display:flex;align-items:center;gap:6px;min-height:36px;padding:6px 12px;border:0;border-radius:10px;background:transparent;color:var(--cinza-2);font:500 13px Onest,system-ui,sans-serif;cursor:pointer;white-space:nowrap}
 .ini-chave button i{width:8px;height:8px;border-radius:50%;background:currentColor}
@@ -2572,3 +2571,59 @@ main.prof-pagina{max-width:880px}
 .priv-links a{color:var(--cinza-2);text-underline-offset:3px}
 .priv-links a:hover{color:var(--osso)}
 .ini-tit .ini-ola{font-weight:inherit;color:inherit}
+
+/* ===== Movimento que responde ao toque ===== */
+/* anel que sai do botão tocado, na cor do fole */
+.anel-toque{position:absolute;inset:-3px;border-radius:50%;border:2px solid var(--lavanda);pointer-events:none;animation:anelToque .6s cubic-bezier(.16,1,.3,1) forwards}
+.kbd[data-fole="open"] .anel-toque,.ini-inst[data-fole="open"] .anel-toque{border-color:var(--open)}
+.kbd[data-fole="close"] .anel-toque,.ini-inst[data-fole="close"] .anel-toque{border-color:var(--close)}
+@keyframes anelToque{from{opacity:.8;transform:scale(1)}to{opacity:0;transform:scale(1.9)}}
+/* a nota nova sobe no visor do Início */
+.ini-nota.muda{animation:notaSobe .34s cubic-bezier(.16,1,.3,1)}
+@keyframes notaSobe{from{opacity:.25;transform:translateY(7px)}}
+/* a aurora acende com o volume do que está tocando (--som, 0 a 1, posto por auroraViva) */
+.ini-palco .ini-aurora{scale:calc(1 + var(--som,0) * .07);filter:blur(28px) brightness(calc(1 + var(--som,0) * .55));transition:scale .12s linear}
+.sem-mov .anel-toque{display:none}.sem-mov .ini-nota.muda{animation:none}
+@media (prefers-reduced-motion:reduce){.anel-toque{display:none}.ini-nota.muda{animation:none}}
+
+/* ===== Início: partitura viva e o trecho de tango ===== */
+.ini-pauta{max-width:620px;margin:22px auto 0;padding:14px 18px 12px;border-radius:16px;background:rgba(45,39,52,.72);box-shadow:inset 0 0 0 1px var(--borda)}
+.ini-pauta-topo{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.ini-pauta-rot{font-size:13px;font-weight:500;color:var(--cinza)}
+.ini-trecho-btn{min-height:36px;padding:6px 14px;font-size:14px}
+.ini-pautas{display:flex;flex-direction:column;margin-top:4px}
+.ini-pautas svg.pauta{display:block;width:100%;height:auto;max-height:128px;background:none;margin:-10px 0}
+.ini-pautas .pl{stroke:rgba(241,240,236,.32)}
+.ini-pautas .pc{fill:rgba(241,240,236,.72)}
+.ini-pautas .cab{fill:var(--osso)}
+.ini-pautas .nota{opacity:.55}
+.ini-pautas .nota.ultima{opacity:1}
+.ini-pautas .nota.ultima .cab{fill:var(--lavanda)}
+.ini-pautas .nota.ultima .pc{fill:var(--lavanda)}
+.ini-pauta-dica{margin:4px 0 0;font-size:13px;color:var(--cinza);text-align:center}
+@media (max-width:599px){.ini-pauta{margin:16px 12px 0;padding:12px 12px 10px}.ini-pautas svg.pauta{max-height:none}}
+
+/* ===== Conquistas: mapa de botões ===== */
+.pf-mapa{padding:28px}
+.pf-mapa-topo{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;flex-wrap:wrap}
+.pf-mapa h3{margin:0 0 6px;font-size:1.25rem;font-weight:550}
+.pf-mapa-topo .muted{margin:0;max-width:34rem}
+.pf-mapa-num{text-align:right}
+.pf-mapa-num b{display:block;font-size:2.5rem;font-weight:600;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.pf-mapa-num span{font-size:13px;color:var(--cinza)}
+.pf-maos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin:22px 0 10px}
+.pf-maos figure{margin:0;padding:16px;border-radius:16px;background:var(--placa,#1a1512);box-shadow:inset 0 0 0 1px rgba(255,255,255,.07)}
+.pf-maos svg{display:block;width:100%;height:auto;stroke:none;fill:none;vertical-align:top} /* sem o contorno geral dos ícones */
+.pf-maos figcaption{margin-top:8px;text-align:center;font-size:12.5px;color:var(--cinza)}
+.pf-maos circle{fill:var(--lavanda);fill-opacity:calc(.22 + .78 * var(--acc));transition:fill-opacity .3s}
+.pf-maos circle.nunca{fill:#3a332c;fill-opacity:1}
+.pf-mapa.visto .pf-maos circle,.pf-mapa .pf-maos circle{animation:mapaAcende .5s cubic-bezier(.16,1,.3,1) backwards;animation-delay:calc(var(--i) * 12ms)}
+@keyframes mapaAcende{from{opacity:0;scale:.4}}
+.pf-maos circle{transform-box:fill-box;transform-origin:center}
+.pf-mapa-leg{display:flex;flex-wrap:wrap;gap:6px 18px;margin:0;font-size:12.5px;color:var(--cinza)}
+.pf-mapa-leg span{display:inline-flex;align-items:center;gap:6px}
+.pf-mapa-leg i{width:12px;height:12px;border-radius:50%;background:var(--lavanda);opacity:calc(.22 + .78 * var(--acc))}
+.pf-mapa-leg i.nunca{background:#3a332c;opacity:1}
+.sem-mov .pf-maos circle{animation:none}
+@media (prefers-reduced-motion:reduce){.pf-maos circle{animation:none}}
+@media (max-width:599px){.pf-mapa{padding:20px}.pf-maos{grid-template-columns:1fr;gap:12px}.pf-mapa-num{text-align:left}}
