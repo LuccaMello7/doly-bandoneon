@@ -2565,3 +2565,9 @@ main.prof-pagina{max-width:880px}
 .sem-mov .ini-k.guia{animation:none}
 @media (prefers-reduced-motion:reduce){.ini-k.guia{animation:none}}
 @media (max-width:599px){.ini-guia{margin:16px 12px 0;padding:14px 16px}.ini-guia-acoes{width:100%}.ini-guia-acoes>*{flex:1}}
+
+/* Termos e Privacidade: fecho discreto (contato, a outra página e a volta ao app; sem botão de chamada) */
+.priv-fim p a{color:#cdb6ff}
+.priv-links{list-style:none;display:flex;flex-wrap:wrap;gap:8px 24px;margin:14px 0 0;padding:0}
+.priv-links a{color:var(--cinza-2);text-underline-offset:3px}
+.priv-links a:hover{color:var(--osso)}

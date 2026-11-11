@@ -1569,6 +1569,9 @@ const TEXTOS = {
 'Teoria: quanto dura cada nota e como se conta o tempo.': ['Teoría: cuánto dura cada nota y cómo se cuenta el tiempo.', 'Theory: how long each note lasts and how to count the beat.'],
 // Conta opcional, Termos de Uso e Privacidade com conta (2026-11-10)
 'Conta': ['Cuenta', 'Account'],
+'Dúvidas?': ['¿Dudas?', 'Questions?'],
+'Escreva para': ['Escribí a', 'Write to'],
+'Voltar ao app': ['Volver a la app', 'Back to the app'],
 'Toque o botão aceso.': ['Tocá el botón encendido.', 'Tap the lit button.'],
 'Ele fica na mão direita. Ouça a nota.': ['Está en la mano derecha. Escuchá la nota.', 'It is on the right hand. Listen to the note.'],
 'Agora troque o fole e toque o mesmo botão.': ['Ahora cambiá el fuelle y tocá el mismo botón.', 'Now switch the bellows and tap the same button.'],
