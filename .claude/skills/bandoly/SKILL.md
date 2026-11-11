@@ -68,8 +68,10 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
 
 ### Desafios → Encontre a nota (desafios.js)
 - Cada rodada toca a nota sozinha (`fOuvir`; o cartão `#fAlvo` e "Ouvir a nota" repetem). Placar com bolinhas como no
-  Qual é a nota (classes `qn-hud`/`qn-bolinhas` reaproveitadas). Dica em dois passos (`fDica`): a região acende no
-  teclado (marca `zona`, centro sorteado perto do botão) e depois o botão (`hint`, também depois de dois erros).
+  Qual é a nota (classes `qn-hud`/`qn-bolinhas` reaproveitadas). A cada nota, com "Círculo na região da nota" ligado
+  (padrão; `encontreCirculo`), o teclado da mão em jogo dá um zoom de câmera na região (`fZoom`, dentro de `.fd-janela`)
+  e fica um círculo `.fd-circulo` (centro sorteado perto do botão, `fq.zona`). A direção do fole aparece no cartão, num
+  selo em cima do teclado (`fLados`) e na frase da rodada. A dica mostra o botão (`hint`; sem círculo, a 1ª dica é ele).
   Ponto só de primeira e sem dica. Sair da aba ou trocar de desafio chama `pararFind()`.
 
 ### Qual é a nota? (qualnota.js, aba "Qual nota?" em Treinar)

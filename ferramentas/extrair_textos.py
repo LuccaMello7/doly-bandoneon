@@ -41,6 +41,7 @@ IGUAIS = {'Ana', 'Gmail', 'Outlook', 'Yahoo Mail', 'iCloud Mail', 'UOL Mail', 'G
           'RepeTCHÊ', 'BanDoly', 'Doly Costa', 'Muy bueno!', 'La Cumparsita', 'Tico-tico no fubá'}  # nome do jogo e a fala do gaúcho: iguais em todos os idiomas
 NAO_E_TEXTO.append(re.compile(r'^[A-Za-zÀ-ÿ]{1,3}[#♯♭b]?\d'))
 NAO_E_TEXTO.append(re.compile(r'^[a-z_]+(,[a-z_]+)+$'))  # listas de colunas do banco: turma_id,nome  # Sol4, Bb5, Dó4:4, Mi4:8t…
+NAO_E_TEXTO.append(re.compile(r'^(scale|rotate)\(|^\{\}px \{\}px$|^dirpill '))  # transformações e classes do Encontre a nota (zoom, selo do fole)
 # Formas "cruas" de frases que o dicionário cobre com outra chave (montadas em partes no código)
 COBERTOS = {'Opção {}: {}{}{}', 'Prepare-se…', 'Não entendi:', 'Direção: Abrindo (trocar)',
             'Abrindo: {}/3 · Fechando: {}/3 {} {}', 'dia{} seguido{}', 'Notas:', '{}{} · {} BPM'}

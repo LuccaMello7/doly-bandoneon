@@ -2763,4 +2763,26 @@ main.prof-pagina{max-width:880px}
   .fd-alvo{min-height:118px}
   .fd-alvo .target{font-size:2.5rem}
   #chFind .side.fora{display:none}
+  .fd-alvo .fd-dir{font-size:14px}
 }
+/* Encontre a nota: direção do fole em destaque, círculo na região do botão e zoom de câmera no teclado */
+.fd-alvo .fd-dir{gap:8px;padding:8px 16px;border-radius:12px;font-size:15px}
+.fd-alvo .fd-dir svg[aria-hidden]{width:18px;height:18px}
+.fd-alvo .fd-dir b{font-weight:650}
+.fd-alvo .fd-dir span{opacity:.8}
+#chFind .side{transition:transform .5s var(--ease-saida),opacity .5s}
+#chFind .side.em-jogo .label{color:var(--osso);font-weight:600}
+@media (min-width:700px){#chFind .side.fora{transform:scale(.9);opacity:.55}}
+.fd-lado-dir{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;font:600 13px Onest,system-ui,sans-serif}
+.fd-lado-dir svg[aria-hidden]{width:16px;height:16px}
+.fd-lado-dir.open{background:var(--open);color:#06213f}
+.fd-lado-dir.close{background:var(--close);color:#3b1500}
+.fd-janela{position:relative;border-radius:22px}
+.fd-janela.zoom{overflow:hidden}
+.fd-circulo{position:absolute;z-index:3;border-radius:50%;pointer-events:none;border:3px solid var(--lavanda);
+  background:radial-gradient(circle,rgba(185,151,255,.12),rgba(185,151,255,.04) 70%);
+  box-shadow:0 0 0 4px rgba(185,151,255,.16),0 0 26px rgba(185,151,255,.45);animation:fdCirculo .6s var(--ease-saida) backwards}
+@keyframes fdCirculo{from{opacity:0;transform:scale(1.5)}}
+@media (prefers-reduced-motion:reduce){.fd-circulo{animation:none}}
+#chFind .kbd{overflow:hidden} /* o círculo de um botão da borda não passa por cima do rótulo nem sai da caixa */
+.fd-alvo .fd-dir::before{display:none} /* o ícone do fole já faz o papel do pontinho */

@@ -484,6 +484,7 @@
       <label>Hand: <select id="fHand"><option value="right">Right</option><option value="left">Left</option><option value="both">Both</option></select></label>
       <label>Direction: <select id="fDir"><option value="open">Opening</option><option value="close">Closing</option><option value="rand">Random</option></select></label>
       <label>Selection: <select id="fMode"><option value="smart">Smart (focuses on your mistakes)</option><option value="rand">Random</option></select></label>
+      <label class="nomes-chk"><input type="checkbox" id="fCirculo" checked> Circle around the note’s area</label>
     </div>
     <div class="acao">
       <button class="btn btn-grande" id="fStart"><svg aria-hidden="true"><use href="#i-play"/></svg>Start</button>
@@ -506,15 +507,15 @@
         <div class="fd-acoes">
           <button class="btn sec" id="fListen" disabled><svg aria-hidden="true"><use href="#i-volume"/></svg>Hear the note</button>
           <button class="btn sec" id="fDica" disabled><svg aria-hidden="true"><use href="#i-question"/></svg><span id="fDicaTxt">Show a hint</span></button>
-          <p class="muted fd-dica-info">The first hint lights up the area around the button; the second shows the button. With a hint or a mistake, the round does not score.</p>
+          <p class="muted fd-dica-info">The circle shows roughly where the button is; the hint shows the exact button. With a hint or a mistake, the round does not score.</p>
         </div>
       </div>
       <div class="feedback" id="fFeed" aria-live="polite"></div>
       <div class="fd-treinar" id="fTreinarBox" hidden><p class="muted">To practise more (tap to listen):</p><div class="qn-chips" id="fTreinar"></div></div>
     </div>
     <div class="instrument">
-      <div class="side"><div class="label">Left</div><div id="fkLeft"></div></div>
-      <div class="side"><div class="label">Right</div><div id="fkRight"></div></div>
+      <div class="side"><div class="label">Left</div><div class="fd-janela"><div id="fkLeft"></div></div></div>
+      <div class="side"><div class="label">Right</div><div class="fd-janela"><div id="fkRight"></div></div></div>
     </div>
   </div>
 

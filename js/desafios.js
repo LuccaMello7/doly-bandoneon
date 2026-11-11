@@ -1,9 +1,11 @@
 /* ================== Desafio: Encontre a nota ================== */
 // O app sorteia um botão e uma direção, mostra e toca a nota, e o aluno procura o botão no teclado.
 // fq = estado da rodada (hand/dir sorteados, answer = botão certo, target = nota MIDI). Cada rodada toca a nota
-// sozinha; "Ouvir a nota" (ou tocar no cartão da nota) repete. Dica em dois passos: a região do botão acende no
-// teclado, depois o próprio botão (também aparece sozinho depois de dois erros). Com erro ou dica, não conta ponto.
-const fq={round:0,score:0,target:null,dir:'open',hand:'right',errors:0,dicas:0,active:false,resolvido:false,answer:null,heat:false,hist:[],timer:0};
+// sozinha; "Ouvir a nota" (ou tocar no cartão da nota) repete. A cada nota nova o teclado da mão em jogo dá um zoom
+// na região do botão e fica um círculo mostrando mais ou menos onde ele está (opção "Círculo na região da nota").
+// A direção do fole aparece no cartão, em cima do teclado e na frase da rodada. A dica mostra o botão exato (sem o
+// círculo ligado, a 1ª dica é o círculo). Depois de dois erros o botão aparece sozinho. Com erro ou dica, não conta ponto.
+const fq={round:0,score:0,target:null,dir:'open',hand:'right',errors:0,dicas:0,active:false,resolvido:false,answer:null,heat:false,hist:[],timer:0,zona:null,dirAntes:null,zoomAn:null};
 // Durante a rodada o botão Começar de cada desafio vira "Recomeçar" e muda de cor; volta no fim ou ao trocar
 function botoesDesafio(){
   [['#fStart',()=>fq.active], ['#sStart',()=>sq.active], ['#eStart',()=>typeof eq!=='undefined' && eq.active], ['#pStart',()=>typeof pq!=='undefined' && pq.active]]
@@ -35,10 +37,41 @@ function recordFind(ok){
 const fkL=kb($('#fkLeft'),'left',fOpts('left')), fkR=kb($('#fkRight'),'right',fOpts('right'));
 const fTeclado = () => fq.hand==='left' ? fkL : fkR;
 // No celular, durante a rodada, só aparece o teclado da mão em jogo (o outro empurrava o certo para fora da tela)
+// No computador, a outra mão fica menor e apagada. A mão em jogo ganha, em cima do teclado, o selo da direção do fole.
 function fLados(emJogo){
-  $('#fkLeft').closest('.side').classList.toggle('fora', emJogo && fq.hand!=='left');
-  $('#fkRight').closest('.side').classList.toggle('fora', emJogo && fq.hand!=='right');
+  for(const [id, mao] of [['#fkLeft', 'left'], ['#fkRight', 'right']]){
+    const lado = $(id).closest('.side'), ativo = emJogo && fq.hand===mao;
+    lado.classList.toggle('fora', emJogo && !ativo); lado.classList.toggle('em-jogo', ativo);
+    let selo = lado.querySelector('.fd-lado-dir');
+    if(ativo){
+      if(!selo){ selo = document.createElement('span'); lado.querySelector('.label').after(selo); }
+      selo.className = 'fd-lado-dir ' + fq.dir;
+      selo.innerHTML = `<svg aria-hidden="true"><use href="#i-bellows"/></svg>${t(fq.dir==='open' ? 'abrindo o fole' : 'fechando o fole')}`;
+    } else if(selo) selo.remove();
+  }
   construirPendentes();
+}
+// O círculo: mais ou menos onde fica o botão (o centro é sorteado perto dele, para não entregar qual é)
+function fSortearZona(){ const a = fq.answer; fq.zona = {x:a.x + (Math.random() - .5) * 1.1, y:a.y + (Math.random() - .5) * 0.9}; }
+function fTirarCirculo(){ $$('#chFind .fd-circulo').forEach(c=>c.remove()); if(fq.zoomAn){ fq.zoomAn.cancel(); fq.zoomAn = null; } }
+function fDesenharCirculo(){
+  $$('#chFind .fd-circulo').forEach(c=>c.remove()); if(!fq.zona) return null;
+  const el = $(fq.hand==='left' ? '#fkLeft' : '#fkRight'), s = fTeclado().size || 40, dia = Math.round(s * 0.8);
+  const cx = 8 + fq.zona.x * s + dia / 2, cy = 8 + fq.zona.y * s + dia / 2, r = 1.55 * s;
+  const c = document.createElement('div'); c.className = 'fd-circulo'; c.setAttribute('aria-hidden', 'true');
+  Object.assign(c.style, {left:`${cx - r}px`, top:`${cy - r}px`, width:`${2 * r}px`, height:`${2 * r}px`});
+  el.appendChild(c);
+  return {el, cx, cy};
+}
+// Zoom de câmera: aproxima a região do círculo e volta ao teclado inteiro (com movimento reduzido, só o círculo)
+function fZoom(p){
+  if(!p || movReduzido() || !p.el.animate) return;
+  const janela = p.el.parentNode; janela.classList.add('zoom');
+  p.el.style.transformOrigin = `${p.cx}px ${p.cy}px`;
+  const an = p.el.animate([{transform:'scale(1)'}, {transform:'scale(1.6)', offset:.25}, {transform:'scale(1.6)', offset:.62}, {transform:'scale(1)'}],
+    {duration:1800, easing:'cubic-bezier(.3,.7,.2,1)'});
+  an.onfinish = an.oncancel = ()=>janela.classList.remove('zoom');
+  fq.zoomAn = an;
 }
 function fFeed(msg, cls=''){ const f = $('#fFeed'); f.className = 'feedback ' + cls; f.textContent = msg; }
 // Toca a nota da rodada, sozinha
@@ -58,27 +91,30 @@ function fBotoes(){
   const jogo = fq.active && fq.target!=null;
   $('#fListen').disabled = !jogo; $('#fAlvo').disabled = !jogo;
   $('#fDica').disabled = !jogo || fq.resolvido || fq.dicas >= 2;
-  $('#fDicaTxt').textContent = fq.dicas===0 ? t('Ver uma dica') : fq.dicas===1 ? t('Mostrar o botão') : t('Sem mais dicas');
+  $('#fDicaTxt').textContent = fq.dicas >= 2 ? t('Sem mais dicas') : fq.zona ? t('Mostrar o botão') : t('Ver uma dica');
 }
 function nextFind(){
   clearTimeout(fq.timer);
-  fkL.clearMarks(); fkR.clearMarks();
+  fkL.clearMarks(); fkR.clearMarks(); fq.zona = null; fTirarCirculo();
   if(fq.round>=10) return fimFind();
   const hs=$('#fHand').value, ds=$('#fDir').value;
   fq.hand = hs==='both'?pick(['left','right']):hs;
   fq.dir = ds==='rand'?pick(['open','close']):ds;
   fq.answer = pickFindTarget(fq.hand, fq.dir); fq.target=fq.answer[fq.dir];
   Object.assign(fq, {errors:0, dicas:0, resolvido:false});
+  if($('#fCirculo').checked) fSortearZona();
   fkL.setDim(fq.hand!=='left'); fkR.setDim(fq.hand!=='right'); refreshAll();
   showFindTarget(); fBolinhas(); fBotoes();
-  fFeed(t('Escute e toque o botão que dá essa nota.'));
+  fFeed(t(fq.dir==='open' ? 'Toque o {} abrindo o fole.' : 'Toque o {} fechando o fole.', noteName(fq.target)));
+  // o zoom e o círculo vêm depois do teclado da mão certa aparecer
+  if(fq.zona) requestAnimationFrame(()=>{ if(fq.active && fq.zona && !fq.resolvido) fZoom(fDesenharCirculo()); });
   // na primeira rodada, espera o som do bandoneon chegar (até 2 s); nas outras, toca logo
   const espera = fq.round===0 ? Promise.race([carregarSons(), new Promise(r=>setTimeout(r, 2000))]) : Promise.resolve();
   const rodada = fq.round, alvo = fq.target;
   espera.then(()=>{ fq.timer = setTimeout(()=>{ if(fq.active && fq.round===rodada && fq.target===alvo) fOuvir(); }, 250); });
 }
 function fimFind(){
-  fq.active=false; refreshAll(); botoesDesafio(); fLados(false);
+  fq.active=false; fq.zona = null; fTirarCirculo(); refreshAll(); botoesDesafio(); fLados(false);
   $('#fAlvoRot').textContent = t('Fim da rodada'); $('#fTarget').textContent = `${fq.score}/10`; $('#fDirPill').style.visibility = 'hidden';
   fFeed(t(fq.score>=8?'Excelente!':fq.score>=5?'Bom trabalho, continue treinando.':'Treine mais no Teclado com os nomes visíveis.'), fq.score>=8 ? 'ok' : '');
   if(state.progress.find==null || fq.score>state.progress.find){ state.progress.find=fq.score; saveProgress(); }
@@ -91,7 +127,7 @@ function fimFind(){
 }
 // Para o desafio e volta a tela ao começo (ao trocar de desafio, sair da aba ou abrir o mapa de erros)
 function pararFind(){
-  clearTimeout(fq.timer); Object.assign(fq, {active:false, target:null, resolvido:false});
+  clearTimeout(fq.timer); Object.assign(fq, {active:false, target:null, resolvido:false, zona:null, dirAntes:null}); fTirarCirculo();
   fkL.clearMarks(); fkR.clearMarks(); fkL.setDim(false); fkR.setDim(false); refreshAll(); botoesDesafio(); fLados(false);
   $('#fHud').hidden = true; $('#fTreinarBox').hidden = true;
   $('#fAlvoRot').textContent = t('Toque em Começar'); $('#fTarget').textContent = '–'; $('#fDirPill').style.visibility = 'hidden';
@@ -101,20 +137,18 @@ function showFindTarget(){
   $('#fHud').hidden = false; $('#fTreinarBox').hidden = true;
   $('#fAlvoRot').textContent = t('Encontre o botão de');
   $('#fTarget').textContent=noteName(fq.target); fLados(true);
-  const p=$('#fDirPill'); p.style.visibility='visible'; p.className='dirpill '+fq.dir;
-  p.textContent=`${dirLabel(fq.dir)} · ${maoNome(fq.hand)}`;
+  // a direção do fole, grande e na cor dela; quando muda de uma rodada para outra, o selo dá um pulo
+  const p=$('#fDirPill'), mudou = fq.dirAntes!==fq.dir; p.style.visibility='visible'; p.className='dirpill fd-dir '+fq.dir;
+  p.innerHTML=`<svg aria-hidden="true"><use href="#i-bellows"/></svg><b>${t(fq.dir==='open' ? 'Abrindo o fole' : 'Fechando o fole')}</b><span>· ${maoNome(fq.hand)}</span>`;
+  if(mudou && !movReduzido() && p.animate) p.animate([{transform:'scale(.85)', opacity:.4}, {transform:'scale(1.08)', offset:.6}, {transform:'scale(1)', opacity:1}], {duration:450, easing:'ease-out'});
+  fq.dirAntes = fq.dir;
 }
-// Dica 1: acende a região do botão (o centro é sorteado perto dele, para não entregar qual é); dica 2: o próprio botão
-function fMostrarZona(){
-  const a = fq.answer, cx = a.x + (Math.random() - .5) * 1.2, cy = a.y + (Math.random() - .5) * 1.0;
-  state.layout[fq.hand].filter(b=>Math.hypot(b.x - cx, b.y - cy) < 1.5).forEach(b=>fTeclado().mark(b.id, 'zona', 0));
-  fFeed(t('O botão está na região acesa do teclado.'));
-}
+// Dica: com o círculo na tela, mostra o botão exato; sem ele, a 1ª dica é o círculo e a 2ª, o botão
 function fMostrarBotao(){ fq.dicas = 2; fTeclado().mark(fq.answer.id, 'hint', 0); fBotoes(); }
 function fDica(){
   if(!fq.active || fq.resolvido || fq.dicas >= 2) return;
-  fq.dicas++;
-  if(fq.dicas===1) fMostrarZona(); else { fMostrarBotao(); fFeed(t('É o botão que está brilhando.')); }
+  if(!fq.zona){ fq.dicas = 1; fSortearZona(); fZoom(fDesenharCirculo()); fFeed(t('O botão está dentro do círculo.')); }
+  else { fMostrarBotao(); fFeed(t('É o botão que está brilhando.')); }
   fBotoes();
 }
 // Só pontua o acerto de primeira e sem dica; depois de 2 erros mostra o botão certo
@@ -161,6 +195,12 @@ $('#fDir').addEventListener('change', ()=>{ if(fq.heat) paintHeat(); });
 $('#fListen').onclick=fOuvir;
 $('#fAlvo').onclick=fOuvir;
 $('#fDica').onclick=fDica;
+// "Círculo na região da nota": ligado por padrão, a escolha fica guardada
+$('#fCirculo').checked = store.get('encontreCirculo', true) !== false;
+$('#fCirculo').onchange = ()=>store.set('encontreCirculo', $('#fCirculo').checked);
+// se a tela muda de tamanho, o teclado é redesenhado: o círculo volta no lugar certo
+let fRedim = 0;
+window.addEventListener('resize', ()=>{ clearTimeout(fRedim); fRedim = setTimeout(()=>{ if(fq.active && fq.zona && !fq.resolvido) fDesenharCirculo(); }, 400); });
 $('#fTreinar').addEventListener('click', e=>{ const b = e.target.closest('[data-ouvir]'); if(b) playNote(+b.dataset.ouvir, 1.1); });
 // Sair da aba Desafios para o Encontre a nota: ao voltar, começa do zero (não fica um "Recomeçar" perdido)
 ganchosAba.push((v, anterior)=>{ if(anterior==='desafios' && v!=='desafios' && fq.active) pararFind(); });

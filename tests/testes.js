@@ -866,26 +866,34 @@ teste('Encontre a nota: toca a nota ao começar, dica em dois passos, placar e p
     ok($('#fkLeft').closest('.side').classList.contains('fora') && !$('#fkRight').closest('.side').classList.contains('fora'), 'a mão fora de jogo fica marcada (some no celular)');
     await pausa(2600); ok(tocou >= 1, 'a nota da rodada toca sozinha');
     const n = tocou; $('#fAlvo').click(); ok(tocou===n + 1, 'tocar no cartão da nota repete o som');
-    // dica 1: a região; dica 2: o botão
-    fDica(); ok($$('#fkRight .key.zona').length >= 1, 'a 1ª dica acende a região do botão');
-    fDica(); igual($$('#fkRight .key.hint').length, 1, 'a 2ª dica mostra o botão'); ok($('#fDica').disabled, 'só duas dicas');
+    // o círculo marca a região, perto do botão certo; a direção do fole aparece no cartão, no teclado e na frase
+    ok($('#fkRight .fd-circulo') && Math.hypot(fq.zona.x - fq.answer.x, fq.zona.y - fq.answer.y) < 0.8, 'o círculo aparece perto do botão certo');
+    ok($('#chFind .side.em-jogo .fd-lado-dir.' + fq.dir) && $('#fDirPill').classList.contains(fq.dir), 'a direção do fole aparece no cartão e em cima do teclado');
+    ok(/(abrindo|fechando) o fole/.test($('#fFeed').textContent), 'a frase da rodada diz a direção do fole');
+    // com o círculo na tela, a dica mostra o botão exato
+    fDica(); igual($$('#fkRight .key.hint').length, 1, 'a dica mostra o botão'); ok($('#fDica').disabled, 'depois do botão, não há mais dica');
     const certo = fq.answer;
     findPress(certo, certo[fq.dir], fkR); igual(fq.score, 0, 'com dica, não conta ponto'); ok($('#fBolinhas i.certa-dica'), 'a bolinha fica pela metade');
     findPress(certo, certo[fq.dir], fkR); igual(fq.hist.length, 1, 'tocar de novo no botão certo não conta duas vezes');
-    await pausa(1300); igual(fq.round, 1); ok(!fq.resolvido && !$$('#fkRight .key.zona').length, 'a próxima rodada começa limpa');
+    await pausa(1300); igual(fq.round, 1); ok(!fq.resolvido && fq.dicas===0 && $$('#chFind .fd-circulo').length <= 1, 'a próxima rodada começa limpa');
     // erro: diz se a nota procurada é mais aguda ou mais grave
     const errado = state.layout.right.find(b=>b.open!==fq.target); findPress(errado, errado.open, fkR);
     ok(/mais (aguda|grave)/.test($('#fFeed').textContent), 'o erro diz se é mais aguda ou mais grave');
     // de primeira e sem dica: conta ponto
     findPress(errado, errado.open, fkR); ok($$('#fkRight .key.hint').length===1, 'depois de dois erros, o botão aparece');
+    // sem o círculo ligado, ele não aparece sozinho: a 1ª dica é o círculo
+    $('#fCirculo').checked = false; fq.round = 5; nextFind();
+    ok(!fq.zona && !$('#chFind .fd-circulo'), 'sem a opção, nada de círculo'); igual($('#fDicaTxt').textContent, 'Ver uma dica');
+    fDica(); ok(fq.zona && $('#chFind .fd-circulo') && fq.dicas===1, 'a 1ª dica mostra o círculo'); igual($('#fDicaTxt').textContent, 'Mostrar o botão');
+    $('#fCirculo').checked = true;
     // sair da aba: o desafio para e volta a "Começar"
-    go('teclado'); go('desafios');
+    go('teclado'); go('desafios'); ok(!$('#chFind .fd-circulo'), 'o círculo sai junto');
     ok(!fq.active && $('#fHud').hidden, 'sair da aba para o desafio'); ok(!$('#chFind .side.fora'), 'e os dois teclados voltam'); igual($('#fStart').textContent.trim(), 'Começar');
     // o fim mostra as notas que precisaram de ajuda
     $('#fStart').click(); fq.hist = [{midi:64, limpo:false}, {midi:67, limpo:true}]; fq.round = 10; nextFind();
     ok(!$('#fTreinarBox').hidden && $$('#fTreinar [data-ouvir]').length===1, 'no fim, as notas com ajuda para ouvir');
   } finally {
-    playNote = pn; pararFind(); state.progress.btnStats = JSON.parse(salvo); state.progress.find = achado; saveProgress(); go('inicio');
+    playNote = pn; pararFind(); $('#fCirculo').checked = true; store.set('encontreCirculo', true); state.progress.btnStats = JSON.parse(salvo); state.progress.find = achado; saveProgress(); go('inicio');
   }
 });
 teste('Qual é a nota: quatro alternativas, dica em três passos, resposta, onda e fim da rodada', async () => {
