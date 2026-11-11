@@ -33,6 +33,20 @@ function acadEscalaNaDirecao(hand, dir, de, ate){
   for(const m of todas){ if(tem.has(m)){ atual.push(m); if(atual.length>melhor.length) melhor=atual.slice(); } else atual = []; }
   return melhor;
 }
+// Memorize a sequência: notas vizinhas (no máximo dois graus de distância) das cinco primeiras notas da escala de Dó
+// que existem com o fole abrindo na mão direita. O tamanho vem do progresso (3 a 8 notas); a última nota é longa.
+const MEMO_MIN = 3, MEMO_MAX = 8, MEMO_INICIO = 4;
+const tamanhoMemoria = () => Math.max(MEMO_MIN, Math.min(MEMO_MAX, (state.progress.academia['n2-memorizar'] || {}).seq || MEMO_INICIO));
+function acadSequenciaMemoria(n = tamanhoMemoria()){
+  const graus = acadEscalaNaDirecao('right', 'open', 60, 72).slice(0, 5), seq = [];
+  let i = Math.floor(Math.random() * graus.length);
+  for(let k = 0; k < n; k++){
+    seq.push(graus[i]);
+    const opc = [-2, -1, 1, 2].map(d=>i + d).filter(j=>j >= 0 && j < graus.length);
+    i = opc[Math.floor(Math.random() * opc.length)];
+  }
+  return acadDeNotas(seq.map((m, k)=>({midi:m, hand:'right', force:'open', beats:k === n-1 ? 2 : 1})), 60);
+}
 // Monta uma melodia a partir de notas {midi, beats, hand, force}
 function acadDeNotas(lista, bpm){
   let t = 0; const notes = lista.map(n=>{ const x = {beats:1, ...n, t}; t += x.beats; return x; });
@@ -77,7 +91,7 @@ const ACADEMIA = [
   {id:'n2-sequencias', titulo:'Sequências simples', desc:'Pequenas sequências de botões vizinhos, devagar.', texto:'direita: Dó4 Ré4 Mi4 Ré4 | Dó4:2 p:2 | Mi4 Fá4 Sol4 Fá4 | Mi4:2 p:2', bpm:60},
   {id:'n2-indicador-medio', titulo:'Alternar indicador e médio', desc:'Alternância entre os dedos 2 e 3.', pendente:true},
   {id:'n2-anelar-minimo', titulo:'Anelar e mínimo', desc:'Movimentos com os dedos 4 e 5, os mais fracos.', pendente:true},
-  {id:'n2-memorizar', titulo:'Memorize a sequência', desc:'Ouça e veja a sequência (botão Ouvir). Ao começar, ela some: toque de memória.', texto:'direita: Mi4 Ré4 Dó4 Ré4 | Mi4 Mi4 Mi4:2', bpm:60, memorizar:true},
+  {id:'n2-memorizar', titulo:'Memorize a sequência', desc:'Aperte Começar: o app toca e mostra uma sequência curta. Depois ela some e você toca de memória. A cada acerto, a sequência ganha uma nota.', gerar:()=>acadSequenciaMemoria(), memorizar:true},
 ]},
 {nivel:3, titulo:'Independência dos dedos', objetivo:'Desenvolver coordenação e precisão. No modo Desafio a velocidade sobe conforme a sua precisão.', exercicios:[
   {id:'n3-escada', titulo:'Sobe e desce', desc:'Sequência ascendente e descendente.', texto:'direita: Dó4:8 Ré4:8 Mi4:8 Fá4:8 Sol4:8 Fá4:8 Mi4:8 Ré4:8 | Dó4:2', bpm:70},
@@ -144,7 +158,7 @@ const nomeEvento = e => `${noteName(e.midi)} ${dirLabel(e.fole).toLowerCase()}`;
 function acadAjuda(){
   const g = acadGuia(), ex = acad.ex || {};
   if(ex.semAjuda) return {brilho:false, dedo:false, maos:false, fole:false, faixa:'oculta'};
-  if(ex.memorizar && acad.rodando) return {brilho:false, dedo:g, maos:g, fole:false, faixa:'oculta'};
+  if(ex.memorizar && !acad.demo) return {brilho:false, dedo:g, maos:g, fole:false, faixa:'oculta'}; // só aparece enquanto o app toca
   if(acad.demo || acad.modo==='aprender') return {brilho:g, dedo:g, maos:g, fole:true, faixa:'completa'};
   if(acad.modo==='praticar') return {brilho:false, dedo:g, maos:g, fole:true, faixa:'completa'};
   const nivel = progEx(ex.id).ajuda;
@@ -229,8 +243,19 @@ function carregarExercicio(id){
   $('#acExTitulo').textContent = ex.titulo; $('#acExDesc').textContent = ex.desc;
   $('#acRelatorio').innerHTML = ''; acadFeed('');
   $('#acDigitar').hidden = !!ex.gerar; // sorteado a cada rodada: não há digitação para fixar
+  $('#acOuvirBtn').hidden = !!ex.memorizar; // na memória, o Começar já toca a sequência antes
+  if($('#acModoInfo').textContent) infoModo();
   if(typeof acadTranscricao==='function') acadTranscricao(); // js/partituras.js (carregado depois)
   aplicarTrecho(); renderAcadNiveis(); renderAcadLista(); refreshAll(); acadValidacaoTexto();
+}
+// O texto ao lado do Começar: o que o modo escolhido faz (na memória, primeiro o app toca a sequência)
+function infoModo(){
+  const memo = acad.ex && acad.ex.memorizar;
+  $('#acModoInfo').textContent = memo ? (acad.modo==='desafio' ? 'Primeiro o app toca a sequência. Depois você toca de memória, no tempo, com contagem.'
+      : 'Primeiro o app toca a sequência. Depois você toca de memória, no seu ritmo: só avança com a nota certa.')
+    : {aprender:'O app mostra o próximo botão, o dedo e o fole. Só avança quando você toca a nota certa.',
+    praticar:'A sequência inteira aparece na faixa. Toque no seu ritmo; o botão certo só aparece depois de 2 erros.',
+    desafio:'No tempo, com contagem e metrônomo. Os auxílios diminuem conforme a sua precisão.'}[acad.modo];
 }
 // Usa só as notas do trecho escolhido (da nota "de" até "até"), com o tempo recomeçando do zero
 function aplicarTrecho(){
@@ -365,11 +390,13 @@ function acadPrevia(){
   acadDica(-1);
   const g = acad.grupos[0], aj = acadAjuda(); if(!g || acad.rodando || acad.demo) return;
   if(aj.brilho) g.ks.map(k=>acad.eventos[k]).forEach(e=>akOf(e.mao).mark(e.botao.id,'guia',0));
-  acadFeed(acad.modo==='desafio' && !acad.ex.semTempo ? t('Aperte Começar: há uma contagem de 4 tempos antes das notas.')
+  acadFeed(acad.ex.memorizar ? t('Aperte Começar: o app toca e mostra a sequência ({} notas). Depois ela some e é a sua vez.', acad.eventos.length)
+    : acad.modo==='desafio' && !acad.ex.semTempo ? t('Aperte Começar: há uma contagem de 4 tempos antes das notas.')
     : aj.brilho ? t('Toque o botão que brilha para começar.') : t('Toque a primeira nota para começar, ou aperte Começar.'));
 }
 function acadComecarPorToque(){
   if(acad.modo==='desafio' && !acad.ex.semTempo) return false; // no tempo, a contagem precisa vir antes
+  if(acad.ex.memorizar) return false; // primeiro a pessoa precisa ouvir a sequência
   acad.autoInicio = true; $('#acStart').click(); acad.autoInicio = false;
   return acad.rodando;
 }
@@ -505,7 +532,7 @@ function acadParar(){
   acad.timers.forEach(clearTimeout); acad.timers = [];
   if(acad.raf) cancelAnimationFrame(acad.raf); acad.raf = null;
   if(acad.bus){ acad.bus.disconnect(); acad.bus = null; }
-  acad.rodando = false; acad.demo = false;
+  acad.rodando = false; acad.demo = false; acad.ouviu = false;
   $('#acStart').textContent = t('Começar'); $('#acOuvirBtn').textContent = t('Ouvir'); botaoRodando($('#acStart'), false); botaoRodando($('#acOuvirBtn'), false);
 }
 function novaRodada(){
@@ -517,10 +544,12 @@ function novaRodada(){
 $('#acStart').onclick = ()=>{
   if(acad.rodando || acad.demo){ acadParar(); acadPrevia(); acadFeed(t('Parado.')); return; }
   if(!acad.eventos.length) return;
+  if(acad.ex.memorizar && !acad.ouviu){ acadComecarMemoria(); return; }
+  acad.ouviu = false;
   ac(); acad.rodando = true; novaRodada(); renderFaixa(); acadRecolher(true); $('#acMais').open = false; contarUso('academia-comecou');
   $('#acStart').textContent = t('Parar'); botaoRodando($('#acStart'), true); acadFeed('');
   // nível 1: notas novas a cada rodada, mas só ao apertar Começar depois de uma rodada (tocar o botão da prévia usa as notas mostradas)
-  if(acad.ex.nivel===1 && acad.ex.gerar && acad.sortearDeNovo && !acad.autoInicio){ acad.todos = montarEventos(acad.ex); aplicarTrecho(); acad.rodando = true; novaRodada(); }
+  if(acad.ex.nivel===1 && acad.ex.gerar && acad.sortearDeNovo && !acad.autoInicio && !acad.ex.memorizar){ acad.todos = montarEventos(acad.ex); aplicarTrecho(); acad.rodando = true; novaRodada(); }
   acad.sortearDeNovo = false; acadInstrutor(0);
   if(acad.modo==='desafio' && !acad.ex.semTempo) iniciarNoTempo(); else avancar();
   // a tela vai até o teclado: no celular o instrutor (barra fixa) fica logo acima dele; no computador, a faixa do Começar
@@ -529,7 +558,12 @@ $('#acStart').onclick = ()=>{
 $('#acOuvirBtn').onclick = ()=>{
   if(acad.demo || acad.rodando){ acadParar(); acadDica(-1); return; }
   if(!acad.eventos.length) return;
-  ac(); acad.demo = true; renderFaixa(); $('#acOuvirBtn').textContent = t('Parar'); botaoRodando($('#acOuvirBtn'), true);
+  $('#acOuvirBtn').textContent = t('Parar'); botaoRodando($('#acOuvirBtn'), true);
+  acadTocarDemo(()=>{ acadParar(); renderFaixa(); acadInstrutor(0); acadPrevia(); });
+};
+// Toca a sequência com a faixa e os botões acesos; no fim chama depois()
+function acadTocarDemo(depois){
+  ac(); acad.demo = true; renderFaixa();
   const c = ac(), spb = 60/(acad.bpm*acadVel()), t0 = c.currentTime + 0.3;
   if($('#acMetro').checked) for(let bt=0; bt < totalTempos(); bt++) clickSound(t0 + bt*spb, bt%4===0);
   acad.grupos.forEach((g,i)=>{
@@ -541,8 +575,22 @@ $('#acOuvirBtn').onclick = ()=>{
       evs.forEach(e=>akOf(e.mao).mark(e.botao.id,'down', e.duracao*spb*900));
     }, 300 + g.inicio*spb*1000));
   });
-  acad.timers.push(setTimeout(()=>{ acadParar(); renderFaixa(); acadInstrutor(0); acadPrevia(); }, 600 + totalTempos()*spb*1000));
-};
+  acad.timers.push(setTimeout(depois, 600 + totalTempos()*spb*1000));
+}
+// Memorize a sequência: uma sequência nova a cada Começar; o app toca e mostra, ela some e a vez é da pessoa
+function acadComecarMemoria(){
+  ac(); acad.todos = montarEventos(acad.ex); $('#acDe').value = 1; $('#acAte').value = acad.todos.length; aplicarTrecho();
+  acadRecolher(true); $('#acMais').open = false; novaRodada();
+  $('#acStart').textContent = t('Parar'); botaoRodando($('#acStart'), true);
+  acadFeed(t('Ouça e memorize: {} notas.', acad.eventos.length));
+  if(!acadCheia) (window.innerWidth<980 ? $('#acInstrutor') : $('#acBarra')).scrollIntoView({block:'start', behavior: movReduzido()?'auto':'smooth'});
+  acadTocarDemo(()=>{
+    acad.demo = false; acad.timers.forEach(clearTimeout); acad.timers = []; acadDica(-1); renderFaixa(); acadInstrutor(0);
+    if(acad.dir !== acad.grupos[0].fole) acadSetDir(acad.grupos[0].fole); // o fole volta para o começo da sequência
+    acadFeed(t('Sua vez: toque de memória.'), 'ok');
+    acad.timers.push(setTimeout(()=>{ acad.ouviu = true; $('#acStart').click(); }, 700));
+  });
+}
 const totalTempos = () => Math.max(0, ...acad.eventos.map(e=>e.inicio+e.duracao));
 function iniciarNoTempo(){
   const c = ac(), spb = 60/(acad.bpm*acadVel()), t0 = c.currentTime + 0.4, start = t0 + 4*spb;
@@ -673,13 +721,19 @@ function acadFim(){
     notas:evs.map(e=>{ const q = R[e.k].primeira; return !q || q.perdida ? 'p' : q.certo ? '1' : q.fole==='errado' ? 'f' : '0'; }).join(''),
     rec:String(recs[0]||'').replace(/<[^>]+>/g, '').slice(0, 300)};
   if(acad.ex.minha) acad.rel.tit = acad.ex.titulo;
+  if(acad.ex.memorizar){
+    const antes = p.seq || MEMO_INICIO;
+    p.seq = pctNotas === 100 ? Math.min(MEMO_MAX, antes + 1) : pctNotas < 60 ? Math.max(MEMO_MIN, antes - 1) : antes;
+    recs.unshift(p.seq > antes ? t('Você lembrou a sequência inteira! A próxima terá {} notas.', p.seq)
+      : p.seq < antes ? t('A próxima sequência será mais curta: {} notas.', p.seq) : t('A próxima sequência terá {} notas.', p.seq));
+  }
   saveProgress(); renderAcadNiveis(); renderAcadLista(); logPractice('academia');
   if(typeof aposRelatorio==='function') setTimeout(aposRelatorio, 0); // botão "Enviar ao professor" (js/professor.js)
   if(pctNotas>=90 && !errados.length && (pctRitmo==null || pctRitmo>=80)) comemorar();
   const prox = proximoExercicio();
   $('#acRelatorio').innerHTML = `<h3>${t('Resultado')}</h3><ul>${linhas.map(l=>`<li>${l}</li>`).join('')}</ul>`
     + `<p class="ac-rec"><b>${t('Recomendação:')}</b> ${recs[0]}</p>` + recs.slice(1).map(r=>`<p class="ac-rec">${r}</p>`).join('')
-    + `<div class="row">${errados.length && !acad.ex.semTempo ? `<button class="btn" id="acRevisar">${t('Repetir o trecho com erros')}</button>` : ''}`
+    + `<div class="row">${errados.length && !acad.ex.semTempo && !acad.ex.memorizar ? `<button class="btn" id="acRevisar">${t('Repetir o trecho com erros')}</button>` : ''}`
     + `<button class="btn sec" id="acDeNovo">${t('Repetir')}</button>${prox ? `<button class="btn sec" id="acProx">${t('Próximo exercício')}</button>` : ''}</div>`;
   acadFeed(pctNotas>=80 ? t('Concluído! {}%', nota) : t('Concluído. {}%', nota), pctNotas>=80 ? 'ok' : 'bad');
   if($('#acRevisar')) $('#acRevisar').onclick = ()=>{
@@ -700,10 +754,7 @@ $('#acModo').addEventListener('click', ev=>{
   const b = ev.target.closest('[data-modo]'); if(!b) return;
   acadParar(); acad.modo = b.dataset.modo; store.set('acadModo', acad.modo);
   $$('#acModo [data-modo]').forEach(x=>x.classList.toggle('on', x===b));
-  $('#acModoInfo').textContent = {aprender:'O app mostra o próximo botão, o dedo e o fole. Só avança quando você toca a nota certa.',
-    praticar:'A sequência inteira aparece na faixa. Toque no seu ritmo; o botão certo só aparece depois de 2 erros.',
-    desafio:'No tempo, com contagem e metrônomo. Os auxílios diminuem conforme a sua precisão.'}[acad.modo];
-  renderFaixa(); acadInstrutor(0); acadPrevia();
+  infoModo(); renderFaixa(); acadInstrutor(0); acadPrevia();
 });
 ['#acGuia','#acNomes'].forEach(s=>$(s).addEventListener('change', ()=>{ if(s!=='#acNomes') store.set(s.slice(1), $(s).checked); renderFaixa(); acadInstrutor(Math.max(0,acad.g)); if(acad.rodando) acadDica(acad.g); refreshAll(); }));
 $('#acAmpliar').addEventListener('change', e=>{ $('#acInstrutor').classList.toggle('grande', e.target.checked); store.set('acAmpliar', e.target.checked); });

@@ -363,6 +363,28 @@ teste('t() traduz modelos com valores', () => {
 // Academia: toca o momento atual com o botão e o fole pedidos
 function acadTocarCerto(){ const e = acad.eventos[[...acad.pend][0]]; acadToque(e.botao, e.botao[e.fole], e.fole, akOf(e.mao)); }
 function acadCompletar(){ let n = 0; while(acad.rodando && n++ < 500) acadTocarCerto(); }
+teste('Academia: Memorize a sequência toca antes de esconder, sorteia e cresce a cada acerto', async () => {
+  go('academia'); const p0 = JSON.stringify(state.progress.academia['n2-memorizar'] || null);
+  carregarExercicio('n2-memorizar'); $('#acModo [data-modo="aprender"]').click();
+  ok($('#acOuvirBtn').hidden, 'sem o botão Ouvir: o Começar já toca');
+  ok($$('#acStrip .mcard').every(c=>c.textContent.startsWith('?')), 'antes de ouvir, a sequência fica escondida');
+  igual(acadComecarPorToque(), false, 'tocar um botão não pula a escuta');
+  // a sequência: notas vizinhas, mão direita, fole abrindo, tamanho do progresso
+  for(let i = 0; i < 20; i++){ const m = acadSequenciaMemoria(5);
+    igual(m.notes.length, 5); ok(m.notes.every(n=>n.hand==='right' && n.force==='open'));
+    ok(m.notes.every((n, k)=>!k || Math.abs(n.midi - m.notes[k-1].midi) <= 4), 'no máximo dois graus de distância'); }
+  // Começar: primeiro o app toca, com a faixa à mostra
+  $('#acStart').click();
+  ok(acad.demo && !acad.rodando, 'Começar toca a sequência primeiro'); ok(!$$('#acStrip .mcard')[0].textContent.startsWith('?'), 'enquanto toca, a faixa aparece');
+  // depois da escuta, a faixa some e a vez é da pessoa
+  acadParar(); acad.ouviu = true; $('#acStart').click();
+  ok(acad.rodando && $$('#acStrip .mcard').every(c=>c.textContent.startsWith('?')), 'tocando de memória, a faixa fica escondida');
+  const antes = tamanhoMemoria(); acadCompletar(); await new Promise(r=>setTimeout(r, 10));
+  igual(tamanhoMemoria(), Math.min(8, antes + 1), 'acertou tudo: a próxima tem uma nota a mais');
+  ok(!$('#acRevisar'), 'sem "repetir o trecho com erros": a próxima é outra sequência');
+  state.progress.academia['n2-memorizar'] = JSON.parse(p0); if(!state.progress.academia['n2-memorizar']) delete state.progress.academia['n2-memorizar'];
+  saveProgress(); acadParar(); carregarExercicio('n1-direita'); go('inicio');
+});
 teste('Academia: exercícios funcionais nos 6 níveis, todos dentro do mapa', () => {
   // nível 7 = partituras importadas pelo usuário (começa vazio; testado em "Minhas partituras")
   igual(ACADEMIA.map(n=>n.nivel), [1,2,3,4,5,6,7]);
