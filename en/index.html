@@ -850,6 +850,17 @@
       <div class="menu-resumo" id="chResumo"><div class="menu-chips" id="chResumoChips"></div><button type="button" class="btn ghost" id="chStop"><svg aria-hidden="true"><use href="#i-x"/></svg>Stop training</button></div>
       <div class="target" id="chTarget"></div>
       <div id="chTrainDir" class="dirpill open" style="display:inline-block"></div>
+      <div class="ch-relembre" id="chRelembre">
+        <div class="ch-rel-cab">
+          <div class="ch-rel-tit"><span class="menu-rot">Remember</span><b id="chRelTit"></b></div>
+          <label class="menu-switch ch-rel-sw"><input type="checkbox" id="chRelOn" checked><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Always show</b></span></label>
+        </div>
+        <div id="chRelCorpo">
+          <svg id="chRelMapa" class="ch-rel-mapa" role="img"></svg>
+          <p class="ch-rel-pe"><span id="chRelNotas"></span><span id="chRelPos"></span><button type="button" class="link-btn" id="chRelOutra">Another position</button></p>
+        </div>
+        <button type="button" class="btn sec" id="chRelVer" hidden><svg aria-hidden="true"><use href="#i-question"/></svg>Show the map for this chord</button>
+      </div>
       <p class="muted">Tap the chord buttons (tap again to unselect) and click Check. Doubled notes are fine; the 5th is optional in seventh chords.</p>
       <div class="row" style="justify-content:center"><button class="btn" id="chCheck">Check</button></div>
       <div class="muted" id="chScore"></div>

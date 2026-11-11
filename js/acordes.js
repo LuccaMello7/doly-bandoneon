@@ -109,7 +109,7 @@ function nextChordRound(){
   const types=$$('#chTrainTypes input:checked').map(i=>i.value); if(!types.length) types.push('maior','menor');
   let pc, type, dir, vs;
   do{ pc=rand(12); type=pick(types); dir=pick(['open','close']); vs=chordVoicings(ch.hand,dir,pc,type); }while(!vs.length);
-  Object.assign(ch, {target:{pc,type,vs}, dir}); ckL.refresh(); ckR.refresh();
+  Object.assign(ch, {target:{pc,type,vs}, dir, relSel:0, relVer:false}); ckL.refresh(); ckR.refresh(); chRelembre();
   $('#chTarget').textContent = chordName(pc,type);
   const p=$('#chTrainDir'); p.className='dirpill '+dir; p.textContent=`${dirLabel(dir)} · mão ${ch.hand==='left'?'esquerda':'direita'}`;
   $('#chScore').textContent=`Rodada ${ch.round+1}/10 · Acertos: ${ch.score}`;
@@ -153,3 +153,31 @@ $('#chTrain').addEventListener('click', ()=>{
   const tipos = $$('#chTrainTypes input:checked').map(i=>i.nextElementSibling.textContent.trim()).join(', ') || t('Maior') + ', ' + t('Menor');
   $('#chResumoChips').innerHTML = menuChips([[t('Mão'), mao ? mao.textContent.trim() : ''], [t('Tipos'), tipos]]);
 });
+
+// ---------- Relembre: o mapa do acorde pedido, durante o treino ----------
+// Os botões da forma mais compacta (a mesma que o app mostra ao explorar), na cor do fole e com o nome da nota.
+// "Mostrar sempre" ligado (padrão): o mapa aparece em toda rodada; desligado, aparece só se o aluno pedir.
+const chMapaLigado = () => store.get('acordesMapa', true) !== false;
+function chRelembre(){
+  if(!ch.target) return;
+  const {pc, type, vs} = ch.target, dir = ch.dir, mostrar = chMapaLigado() || ch.relVer;
+  $('#chRelTit').textContent = `${chordName(pc, type)} · ${dirLabel(dir).toLowerCase()}`;
+  $('#chRelCorpo').hidden = !mostrar; $('#chRelVer').hidden = mostrar;
+  if(!mostrar) return;
+  const v = vs[ch.relSel % vs.length], L = state.layout[ch.hand], noAcorde = new Set(v.btns.map(b=>b.id));
+  const W = Math.max(...L.map(b=>b.x)), H = Math.max(...L.map(b=>b.y)), svg = $('#chRelMapa');
+  svg.setAttribute('viewBox', `-0.15 -0.15 ${W + 1.3} ${H + 1.3}`);
+  svg.setAttribute('aria-label', t('Mapa da {} com os botões do acorde', maoNome(ch.hand)));
+  svg.innerHTML = L.map(b=>{
+    const on = noAcorde.has(b.id), x = (b.x + .5).toFixed(2), y = (b.y + .5).toFixed(2);
+    return `<circle cx="${x}" cy="${y}" r=".42" class="${on ? 'on ' + dir : ''}"/>`
+      + (on ? `<text x="${x}" y="${y}">${rootName(((b[dir] % 12) + 12) % 12)}</text>` : '');
+  }).join('');
+  $('#chRelNotas').textContent = t('Notas: {}', CHORD_TYPES[type].iv.map(i=>rootName((pc + i) % 12)).join(' · '));
+  $('#chRelPos').textContent = vs.length > 1 ? t('Posição {} de {}', ch.relSel % vs.length + 1, vs.length) : '';
+  $('#chRelOutra').hidden = vs.length < 2;
+}
+$('#chRelOutra').onclick = ()=>{ ch.relSel++; chRelembre(); };
+$('#chRelVer').onclick = ()=>{ ch.relVer = true; chRelembre(); };
+$('#chRelOn').checked = chMapaLigado();
+$('#chRelOn').onchange = ()=>{ store.set('acordesMapa', $('#chRelOn').checked); ch.relVer = false; chRelembre(); };

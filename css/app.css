@@ -2966,3 +2966,18 @@ main.prof-pagina{max-width:880px}
 .mc-onde span{display:inline-flex;align-items:center;gap:8px}
 .mc-legenda{display:flex;flex-wrap:wrap;gap:8px 16px;margin:0;font-size:14px;color:var(--cinza-2)}
 .mc-legenda span{display:inline-flex;align-items:center;gap:8px}
+/* Acordes → treino: o painel "Relembre" com o mapa do acorde pedido */
+.ch-relembre{max-width:480px;margin:16px auto;padding:16px;border-radius:16px;background:var(--ameixa);box-shadow:inset 0 0 0 1px var(--borda);text-align:left}
+.ch-rel-cab{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;margin-bottom:12px}
+.ch-rel-tit{display:grid;gap:4px}
+.ch-rel-tit b{font-size:1.1rem;font-weight:600}
+.ch-rel-sw{padding:8px 12px;background:var(--ameixa-2)}
+.ch-rel-sw .menu-switch-txt b{font-size:13px}
+.ch-rel-mapa{display:block;width:100%;height:auto;stroke:none;fill:none}
+.ch-rel-mapa circle{fill:rgba(241,240,236,.1);stroke:rgba(241,240,236,.22);stroke-width:.04}
+.ch-rel-mapa circle.on.open{fill:var(--open);stroke:#fff;stroke-width:.05}
+.ch-rel-mapa circle.on.close{fill:var(--close);stroke:#fff;stroke-width:.05}
+.ch-rel-mapa text{font:700 .3px Onest,system-ui,sans-serif;fill:#0d1b2e;text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.ch-rel-pe{display:flex;flex-wrap:wrap;align-items:center;gap:4px 16px;margin:12px 0 0;font-size:13.5px;color:var(--cinza-2)}
+.ch-rel-pe .link-btn{margin-left:auto}
+#chRelVer{width:100%}

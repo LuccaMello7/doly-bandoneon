@@ -72,7 +72,8 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
   Melodias (`melodies`) aparecem juntas na Academia (nível 7), em Melodias e no RepeTCHÊ. Os dados ficam onde estão
   (nada é migrado); editar ou apagar mexe na lista de origem (`origem: 'partitura' | 'melodia'`).
 - Nomes: "Mapa de botões" é só a disposição dos botões; "Teclado do computador e MIDI" é a janela de controles;
-  "Mapa de acertos" é o mapa de acertos e erros (Encontre a nota e Conquistas). O microfone oferece "Calibrar agora"
+  "Mapa de acertos" é o mapa de acertos e erros (Encontre a nota e Conquistas). No treino de Acordes, o painel "Relembre"
+  (`chRelembre`) desenha o mapa da mão com os botões do acorde pedido; "Mostrar sempre" (`acordesMapa`) vem ligado. O microfone oferece "Calibrar agora"
   (`calibrarSilencio`) na primeira vez que é ligado fora do Afinador.
 - **Afinador:** o som não diz a direção do fole (55 das 59 notas existem abrindo e fechando), então não há escolha de fole:
   ele sempre acende os dois, azul (`mc-abre`) onde a nota sai abrindo e laranja (`mc-fecha`) fechando, com o nome só nos

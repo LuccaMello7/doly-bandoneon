@@ -890,6 +890,24 @@ teste('Menus de Melodias, Acordes e Teclado: botões lado a lado, resumo enquant
   const nomes = state.showLabels; $('#labelsBtn').click(); igual($('#labelsBtn').getAttribute('aria-pressed'), String(!nomes)); $('#labelsBtn').click();
   tkAjustes(aberto); go('inicio');
 });
+teste('Acordes: no treino, o painel Relembre mostra o mapa do acorde pedido', () => {
+  const antes = store.get('acordesMapa', true);
+  store.set('acordesMapa', true); $('#chRelOn').checked = true;
+  go('acordes'); $('#chHand').value = 'left'; $('#chTrain').click();
+  const {vs} = ch.target, L = state.layout[ch.hand];
+  ok(!$('#chRelCorpo').hidden && $('#chRelVer').hidden, 'o mapa aparece sozinho');
+  igual($$('#chRelMapa circle').length, L.length, 'um círculo por botão da mão');
+  igual($$('#chRelMapa circle.on').length, vs[0].btns.length, 'os botões do acorde acesos');
+  ok($$('#chRelMapa circle.on').every(c=>c.classList.contains(ch.dir)), 'na cor da direção do fole');
+  ok($('#chRelTit').textContent.startsWith(chordName(ch.target.pc, ch.target.type)), 'diz qual acorde');
+  if(vs.length > 1){ $('#chRelOutra').click(); ok(/2/.test($('#chRelPos').textContent), 'outra posição'); }
+  // desligado: o mapa só aparece se o aluno pedir
+  $('#chRelOn').checked = false; $('#chRelOn').onchange();
+  ok($('#chRelCorpo').hidden && !$('#chRelVer').hidden, 'desligado, o mapa some');
+  $('#chRelVer').click(); ok(!$('#chRelCorpo').hidden, 'e aparece ao pedir');
+  nextChordRound(); ok($('#chRelCorpo').hidden, 'na próxima rodada, some de novo');
+  store.set('acordesMapa', antes); $('#chRelOn').checked = antes !== false; $('#chStop').click(); go('inicio');
+});
 teste('Organização: Teoria com aba, Ouvido com dois modos, Conquistas no Meu estudo, Minhas músicas, atalhos e Afinador', async () => {
   // Teoria tem botão próprio em Aprender e acende ele (não mais o de Lições)
   go('teoria'); ok($('#subnav [data-v="teoria"]').classList.contains('active') && !$('#subnav [data-v="licoes"]').classList.contains('active'), 'Teoria acende a própria aba');

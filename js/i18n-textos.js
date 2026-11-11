@@ -1568,6 +1568,12 @@ const TEXTOS = {
 'Teoria: quanto dura cada nota e como se conta o tempo.': ['Teoría: cuánto dura cada nota y cómo se cuenta el tiempo.', 'Theory: how long each note lasts and how to count the beat.'],
 // Conta opcional, Termos de Uso e Privacidade com conta (2026-11-10)
 'Conta': ['Cuenta', 'Account'],
+'Relembre': ['Recordá', 'Remember'],
+'Mostrar sempre': ['Mostrar siempre', 'Always show'],
+'Outra posição': ['Otra posición', 'Another position'],
+'Mostrar o mapa deste acorde': ['Mostrar el mapa de este acorde', 'Show the map for this chord'],
+'Mapa da {} com os botões do acorde': ['Mapa de la {} con los botones del acorde', 'Map of the {} with the chord buttons'],
+'Posição {} de {}': ['Posición {} de {}', 'Position {} of {}'],
 'As cores': ['Los colores', 'The colours'],
 'azul: a nota sai abrindo': ['azul: la nota sale abriendo', 'blue: the note sounds when opening'],
 'laranja: sai fechando': ['naranja: sale cerrando', 'orange: it sounds when closing'],
