@@ -151,7 +151,7 @@ $('#prGerar').onclick = ()=>{ contarUso('tarefa-gerada');
   $('#prSaida').dataset.texto = textoTarefa(url);
   // histórico das últimas tarefas, para mandar de novo
   const primeiro = d.itens ? d.itens[0] : d, h = store.get('profHist', []).filter(x=>x.link!==url);
-  h.unshift({data:dayKey(), titulo:exercicioPorId(primeiro.ex).titulo, n:d.itens ? d.itens.length : 1, modo:primeiro.modo, link:url, texto:$('#prSaida').dataset.texto}); store.set('profHist', h.slice(0, 8));
+  h.unshift({data:dayKey(), ex:primeiro.ex, titulo:exercicioPorId(primeiro.ex).titulo, n:d.itens ? d.itens.length : 1, modo:primeiro.modo, link:url, texto:$('#prSaida').dataset.texto}); store.set('profHist', h.slice(0, 8));
   renderHistorico();
 };
 $('#prCopiar').onclick = async ()=>{
@@ -163,7 +163,7 @@ $('#prWhats').onclick = ()=>window.open('https://wa.me/?text=' + encodeURICompon
 $('#prEnviar').onclick = ()=>compartilhar(t('Tarefa do BanDoly'), $('#prSaida').dataset.texto);
 function renderHistorico(){
   const h = store.get('profHist', []);
-  $('#prHist').innerHTML = h.length ? h.map((x, i)=>`<li><div><b>${x.n>1 ? t('Plano: {} exercícios', x.n) : escHtml(t(x.titulo))}</b><span class="muted">${new Date(x.data+'T12:00').toLocaleDateString(IDIOMAS[state.lang].html)}${x.n>1 ? '' : ' · ' + t(MODOS[x.modo]||'Praticar')}</span></div>
+  $('#prHist').innerHTML = h.length ? h.map((x, i)=>`<li><div><b>${x.n>1 ? t('Plano: {} exercícios', x.n) : escHtml(t(x.ex && exercicioPorId(x.ex) ? exercicioPorId(x.ex).titulo : x.titulo))}</b><span class="muted">${new Date(x.data+'T12:00').toLocaleDateString(IDIOMAS[state.lang].html)}${x.n>1 ? '' : ' · ' + t(MODOS[x.modo]||'Praticar')}</span></div>
       <button type="button" class="btn ghost" data-hist="${i}">${t('Mandar de novo')}</button></li>`).join('')
     : `<li class="muted">${t('As tarefas que você gerar aparecem aqui para mandar de novo.')}</li>`;
 }

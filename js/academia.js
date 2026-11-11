@@ -1,6 +1,6 @@
 /* ================== Academia de Bandoneón ================== */
 // Exercícios em 6 níveis, com instrutor digital, Guia de Dedilhado e três modos:
-//   Aprender  mostra o próximo botão, o dedo e o fole; só avança com a nota certa
+//   Aprender  mostra o próximo botão e o fole (e o dedo, se um professor definiu a digitação); só avança com a nota certa
 //   Praticar  mostra a sequência e deixa tocar no próprio ritmo, apontando os erros
 //   Desafio   no tempo, com metrônomo, tirando os auxílios aos poucos conforme a precisão
 //
@@ -66,7 +66,7 @@ function acadSorteio(hands, dirs, n){
 }
 // Mesmo botão abrindo e fechando: duas notas por botão
 function acadParesDeDirecao(n){
-  const notes = [], L = state.layout.right, usados = new Set();
+  const notes = [], L = state.layout.right.filter(b=>b.open!==b.close), usados = new Set(); // botão com a mesma nota nas duas direções não ensina nada aqui
   while(notes.length < 2*n && usados.size < L.length){
     const b = pick(L); if(usados.has(b)) continue; usados.add(b);
     notes.push({midi:b.open, beats:1, hand:'right', t:notes.length, dir:'open', btn:b});
@@ -86,8 +86,8 @@ const ACADEMIA = [
   {id:'n1-direcao', titulo:'Abrindo e fechando', desc:'Cada botão dá duas notas. Toque o mesmo botão abrindo e depois fechando: troque o fole entre as duas.', gerar:()=>acadParesDeDirecao(5), semTempo:true, foleManual:true},
   {id:'n1-sem-ajuda', titulo:'Sem auxílio visual', desc:'Etapa avançada: encontre as notas sem destaque e sem nomes nos botões.', gerar:()=>acadSorteio(['left','right'],['open','close'],10), semTempo:true, semAjuda:true},
 ]},
-{nivel:2, titulo:'Reconhecimento dos dedos', objetivo:'Associar cada botão ao dedo recomendado. Os botões são tocados pelos dedos 2 a 5; os polegares cuidam da válvula de ar (direito) e do apoio (esquerdo).', exercicios:[
-  {id:'n2-indicado', titulo:'Botão e dedo indicados', desc:'Toque cada botão destacado, olhando o dedo indicado no instrutor.', texto:'direita: Dó4:2 Mi4:2 | Sol4:2 Mi4:2 | Ré4:2 Fá4:2 | Mi4:1', bpm:60},
+{nivel:2, titulo:'Primeiras sequências', objetivo:'Tocar sequências curtas de botões vizinhos na mão direita, devagar e com atenção. Os botões são tocados pelos dedos 2 a 5; os polegares cuidam da válvula de ar (direito) e do apoio (esquerdo).', exercicios:[
+  {id:'n2-indicado', titulo:'Botões destacados', desc:'Toque cada botão destacado, um de cada vez, com calma. Se o seu professor definiu a digitação, o dedo aparece no instrutor.', texto:'direita: Dó4:2 Mi4:2 | Sol4:2 Mi4:2 | Ré4:2 Fá4:2 | Mi4:1', bpm:60},
   {id:'n2-sequencias', titulo:'Sequências simples', desc:'Pequenas sequências de botões vizinhos, devagar.', texto:'direita: Dó4 Ré4 Mi4 Ré4 | Dó4:2 p:2 | Mi4 Fá4 Sol4 Fá4 | Mi4:2 p:2', bpm:60},
   {id:'n2-indicador-medio', titulo:'Alternar indicador e médio', desc:'Alternância entre os dedos 2 e 3.', pendente:true},
   {id:'n2-anelar-minimo', titulo:'Anelar e mínimo', desc:'Movimentos com os dedos 4 e 5, os mais fracos.', pendente:true},
@@ -106,8 +106,8 @@ const ACADEMIA = [
   {id:'n4-abrindo', titulo:'Só abrindo', desc:'Uma escada de notas que existem com o fole abrindo.', gerar:()=>{ const s=acadEscalaNaDirecao('right','open',60,72).slice(0,5); return acadDeNotas([...s, ...s.slice(0,-1).reverse()].map(m=>({midi:m, hand:'right', force:'open'})), 66); }, foleManual:true},
   {id:'n4-fechando', titulo:'Só fechando', desc:'Uma escada de notas que existem com o fole fechando.', gerar:()=>{ const s=acadEscalaNaDirecao('right','close',60,72).slice(0,5); return acadDeNotas([...s, ...s.slice(0,-1).reverse()].map(m=>({midi:m, hand:'right', force:'close'})), 66); }, foleManual:true},
   {id:'n4-alternar', titulo:'Alternar a direção', desc:'A mesma nota abrindo e depois fechando (em botões diferentes). Troque o fole a cada nota.', gerar:()=>{
-    const tem = d => new Set(state.layout.right.map(b=>b[d])), a=tem('open'), f=tem('close');
-    const ns = []; for(let m=60; m<=72 && ns.length<8; m++) if(DO_MAIOR.includes(m%12) && a.has(m) && f.has(m)) ns.push({midi:m, hand:'right', force:'open'}, {midi:m, hand:'right', force:'close'});
+    const L = state.layout.right, botao = (m, d) => L.find(b=>b[d]===m);
+    const ns = []; for(let m=60; m<=79 && ns.length<8; m++) if(DO_MAIOR.includes(m%12) && botao(m,'open') && botao(m,'close') && botao(m,'open')!==botao(m,'close')) ns.push({midi:m, hand:'right', force:'open'}, {midi:m, hand:'right', force:'close'});
     return acadDeNotas(ns, 60); }, foleManual:true},
   {id:'n4-frases', titulo:'Pequenas frases', desc:'Uma frase curta com trocas de fole nos lugares sugeridos.', texto:'direita: Dó4 Dó4 Sol4 Sol4 | Lá4 Lá4 Sol4:2 | Fá4 Fá4 Mi4 Mi4 | Ré4 Ré4 Dó4:2', bpm:80, foleManual:true},
   {id:'n4-sem-interromper', titulo:'Trocar sem interromper', desc:'Escala ligada: troque o fole sem deixar um buraco de silêncio na frase (avaliado no modo Desafio).', texto:melodiaPronta('esc-do'), bpm:72, foleManual:true, verificaTroca:true, articulacao:'legato'},
@@ -120,7 +120,7 @@ const ACADEMIA = [
   {id:'n5-sincronia', titulo:'Sincronia', desc:'As duas mãos juntas. No modo Desafio o app mede a diferença de entrada entre elas.', texto:'direita: Dó4:2 Mi4:2 | Sol4:2 Mi4:2 | Dó4:1\nesquerda: Dó3:2 Dó3:2 | Sol2:2 Sol2:2 | Dó3:1', bpm:66, foleManual:true, verificaSincronia:true},
 ]},
 {nivel:6, titulo:'Aplicação musical', objetivo:'Aplicar a técnica em músicas: devagar, com metrônomo, repetindo trechos e por fim sem auxílio visual.', exercicios:[
-  {id:'n6-estrelinha', titulo:'Brilha, brilha estrelinha', desc:'Melodia simples com digitação guiada.', texto:melodiaPronta('estrelinha'), foleManual:true},
+  {id:'n6-estrelinha', titulo:'Brilha, brilha estrelinha', desc:'Melodia simples, com as trocas de fole sugeridas.', texto:melodiaPronta('estrelinha'), foleManual:true},
   {id:'n6-ode', titulo:'Ode à Alegria', desc:'Um pouco mais longa, com ritmo pontuado.', texto:melodiaPronta('ode'), foleManual:true},
   {id:'n6-lam', titulo:'Lá menor harmônica', desc:'A escala com a cor do tango, com trocas de fole.', texto:melodiaPronta('esc-lam'), foleManual:true},
   {id:'n6-choclo', titulo:'El Choclo: introdução', desc:'O primeiro tango: oito compassos em colcheias, com o cromatismo do Lá#.', texto:melodiaPronta('choclo-intro'), foleManual:true},
@@ -253,7 +253,7 @@ function infoModo(){
   const memo = acad.ex && acad.ex.memorizar;
   $('#acModoInfo').textContent = memo ? (acad.modo==='desafio' ? 'Primeiro o app toca a sequência. Depois você toca de memória, no tempo, com contagem.'
       : 'Primeiro o app toca a sequência. Depois você toca de memória, no seu ritmo: só avança com a nota certa.')
-    : {aprender:'O app mostra o próximo botão, o dedo e o fole. Só avança quando você toca a nota certa.',
+    : {aprender:'O app mostra o próximo botão e o fole. Só avança quando você toca a nota certa.',
     praticar:'A sequência inteira aparece na faixa. Toque no seu ritmo; o botão certo só aparece depois de 2 erros.',
     desafio:'No tempo, com contagem e metrônomo. Os auxílios diminuem conforme a sua precisão.'}[acad.modo];
 }
@@ -497,7 +497,8 @@ function toqueEspera(toque){
     registrar(c.e, c.a, toque, agora); acad.erros++;
     if(toque.botao) akOf(toque.mao).mark(toque.botao.id,'bad',400);
     pulsoInstrutor('erro');
-    acadFeed(t('Pedido: {} ({}); {}.', nomeEvento(c.e), maoNome(c.e.mao), diferenca(c.e, c.a, toque)), 'bad');
+    acadFeed(acad.ex.memorizar ? t('Não é essa. Tente lembrar a nota.') // de memória: a mensagem não entrega a resposta
+      : t('Pedido: {} ({}); {}.', nomeEvento(c.e), maoNome(c.e.mao), diferenca(c.e, c.a, toque)), 'bad');
     // no Praticar o botão certo só aparece depois de 2 erros na mesma nota
     if(acad.modo!=='aprender' && !acad.ex.semAjuda && acad.res[c.e.k].tentativas>=2) akOf(c.e.mao).mark(c.e.botao.id,'guia',0);
   }

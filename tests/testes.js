@@ -363,6 +363,25 @@ teste('t() traduz modelos com valores', () => {
 // Academia: toca o momento atual com o botão e o fole pedidos
 function acadTocarCerto(){ const e = acad.eventos[[...acad.pend][0]]; acadToque(e.botao, e.botao[e.fole], e.fole, akOf(e.mao)); }
 function acadCompletar(){ let n = 0; while(acad.rodando && n++ < 500) acadTocarCerto(); }
+teste('Academia: os exercícios fazem o que a descrição promete', () => {
+  // Abrindo e fechando: cada par é o mesmo botão, com notas diferentes nas duas direções
+  for(let r = 0; r < 5; r++){ const evs = montarEventos(exercicioPorId('n1-direcao'));
+    for(let i = 0; i < evs.length; i += 2){ ok(evs[i].botao === evs[i+1].botao, 'mesmo botão'); ok(evs[i].midi !== evs[i+1].midi, 'duas notas diferentes'); } }
+  // Alternar a direção: a mesma nota abrindo e fechando, em botões diferentes
+  const alt = montarEventos(exercicioPorId('n4-alternar'));
+  for(let i = 0; i < alt.length; i += 2){ igual(alt[i].midi, alt[i+1].midi); ok(alt[i].botao !== alt[i+1].botao, 'botões diferentes'); ok(alt[i].fole !== alt[i+1].fole); }
+  // nenhum exercício pede notas que soam juntas em direções diferentes do fole
+  for(const ex of todosExercicios().filter(e=>!e.pendente)){ const evs = montarEventos(ex);
+    for(const a of evs) for(const c of evs) if(a.k < c.k && c.inicio < a.inicio + a.duracao - 1e-6 && a.inicio < c.inicio + c.duracao - 1e-6) igual(a.fole, c.fole, ex.id); }
+  // sem digitação definida, nenhum texto promete um dedo
+  ok(!/dedo indicado|digitação guiada/.test(todosExercicios().map(e=>e.desc).join(' ')));
+  // de memória, errar não entrega a nota pedida
+  go('academia'); carregarExercicio('n2-memorizar'); $('#acModo [data-modo="aprender"]').click(); acad.ouviu = true; $('#acStart').click();
+  const e = acad.eventos[0], outro = state.layout.right.find(b=>b.open !== e.midi);
+  acadToque(outro, outro.open, 'open', {hand:'right'});
+  ok(!$('#acFeed').textContent.includes(noteName(e.midi)), 'a mensagem de erro não diz a nota');
+  acadParar(); carregarExercicio('n1-direita'); go('inicio');
+});
 teste('Academia: Memorize a sequência toca antes de esconder, sorteia e cresce a cada acerto', async () => {
   go('academia'); const p0 = JSON.stringify(state.progress.academia['n2-memorizar'] || null);
   carregarExercicio('n2-memorizar'); $('#acModo [data-modo="aprender"]').click();
