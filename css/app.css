@@ -2571,3 +2571,4 @@ main.prof-pagina{max-width:880px}
 .priv-links{list-style:none;display:flex;flex-wrap:wrap;gap:8px 24px;margin:14px 0 0;padding:0}
 .priv-links a{color:var(--cinza-2);text-underline-offset:3px}
 .priv-links a:hover{color:var(--osso)}
+.ini-tit .ini-ola{font-weight:inherit;color:inherit}

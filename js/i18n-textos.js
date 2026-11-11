@@ -908,8 +908,7 @@ const TEXTOS = {
 'Um botão de cada vez.': ['Un botón a la vez.', 'One button at a time.'],
 'O teclado de um bandoneon de verdade, com o som gravado de um instrumento de 1930. Gratuito, sem cadastro, no navegador.': ['El teclado de un bandoneón de verdad, con el sonido grabado de un instrumento de 1930. Gratis, sin registro, en el navegador.', 'The keyboard of a real bandoneon, with the recorded sound of a 1930 instrument. Free, no sign-up, in your browser.'],
 'Ver o caminho': ['Ver el camino', 'See the path'],
-'Buenas!': ['¡Buenas!', 'Hello again!'],
-'Bora continuar?': ['¿Seguimos?', 'Shall we carry on?'],
+'Buenas!': ['¡Buenas!', 'Welcome back!'],
 'Mão esquerda · graves': ['Mano izquierda · graves', 'Left hand · bass'],
 'Mão direita · agudos': ['Mano derecha · agudos', 'Right hand · treble'],
 'Toque um botão': ['Tocá un botón', 'Press a button'],
@@ -1569,6 +1568,8 @@ const TEXTOS = {
 'Teoria: quanto dura cada nota e como se conta o tempo.': ['Teoría: cuánto dura cada nota y cómo se cuenta el tiempo.', 'Theory: how long each note lasts and how to count the beat.'],
 // Conta opcional, Termos de Uso e Privacidade com conta (2026-11-10)
 'Conta': ['Cuenta', 'Account'],
+'O bandoneon te espera.': ['El bandoneón te espera.', 'Your bandoneon is waiting.'],
+'Buenas, {}!': ['¡Buenas, {}!', 'Welcome back, {}!'],
 'Dúvidas?': ['¿Dudas?', 'Questions?'],
 'Escreva para': ['Escribí a', 'Write to'],
 'Voltar ao app': ['Volver a la app', 'Back to the app'],

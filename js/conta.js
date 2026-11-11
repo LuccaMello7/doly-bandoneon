@@ -255,12 +255,13 @@ function renderConta(){
   const dentro = !!contaUsuario, u = contaUsuario || {}, email = u.email || '';
   $('#contaFora').hidden = dentro; $('#contaDentro').hidden = !dentro;
   $('#contaEntrar').hidden = dentro; $('#contaAv').hidden = !dentro;
-  if(!dentro){ if(!$('#contaMenu').hidden) contaMenuAberto(false); return; }
+  if(!dentro){ if(!$('#contaMenu').hidden) contaMenuAberto(false); $('#iniOla').textContent = t('Buenas!'); return; }
   const meta = u.user_metadata || {}, nome = String(meta.full_name || meta.name || '').trim().split(/\s+/)[0] || '';
   const letra = (nome || email).charAt(0).toUpperCase() || '?';
   $$('.conta-letra').forEach(x=>x.textContent = letra);
   $$('.conta-email-txt').forEach(x=>x.textContent = email);
-  $('.conta-ola').textContent = nome ? t('Olá, {}!', nome) : t('Olá!'); // só o primeiro nome, vindo do Google (Privacidade)
+  $('.conta-ola').textContent = nome ? t('Olá, {}!', nome) : t('Olá!');
+  $('#iniOla').textContent = nome ? t('Buenas, {}!', nome) : t('Buenas!'); // saudação de quem volta, no Início // só o primeiro nome, vindo do Google (Privacidade)
   $('.conta-menu-quem b').textContent = nome || t('Sua conta');
   const google = (u.app_metadata && u.app_metadata.provider) === 'google';
   $('#contaSelo').innerHTML = google ? `${$('.conta-google .conta-g').outerHTML}<span translate="no">Google</span>` : `<svg aria-hidden="true"><use href="#i-mail"/></svg>${t('E-mail')}`;
