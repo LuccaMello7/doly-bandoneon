@@ -37,14 +37,15 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
   compartilham o escopo global e rodam **nesta ordem**:
   `base, i18n-textos, i18n, licoes-traducao, audio, teclado, movimento, navegacao, fole, desafios, ritmo,
   atalhos, controles, melodias, musicxml, escalas, microfone, acordes, maos, academia, partituras, rotina,
-  licoes, ajustes, ouvido, eco, cascata, trilha, inicio, professor, relatorio, teoria-textos, teoria, contato, conta, turmas, init`.
+  licoes, ajustes, ouvido, eco, qualnota, cascata, trilha, inicio, professor, relatorio, teoria-textos, teoria, contato, conta, turmas, init`.
   Código que roda no carregamento só pode usar o que veio antes; dentro de funções, tudo já existe.
   `init.js` é sempre o último.
 - PWA: `manifest.webmanifest` + `sw.js` (rede primeiro; o cache guarda tudo de `ARQUIVOS`).
 - Estado: `state` (base.js). Tudo é salvo no `localStorage` com prefixo `bandoneon.` via
   `store.get/set`. O backup em Ajustes exporta essas chaves. Chaves principais:
   - `progress`, que inclui `lessons`, `find`, `staff`, `rhythm`, `chords`, `ouvido`, `pautabot`,
-    `melodies`, `btnStats`, `days`, `academia`, `marcos`, `insignias`, `tarefas` e `teoria`;
+    `melodies`, `btnStats`, `days`, `academia`, `marcos`, `insignias`, `tarefas`, `teoria` e `qualnota`
+    (`{melhor, notas:{midi:{ok, err}}}`; use `qnProg()`, porque a sincronização da conta pode trocar o `progress`);
   - de preferências e do app: `perfilAluno`, `ultimaAba`, `layout`, `mapaPc`, `pcLigado`, `midiBotoes`,
     `midiCC`, `pressaoFole`, `digitacoes`, `tarefa`, `profHist`, `movimento`, `vibracao`, `names`, `sound`,
     `tuning`, `volume`.
@@ -56,7 +57,7 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
 - Início + 4 áreas, em `AREAS` (navegacao.js):
   - **aprender:** estudo, academia, licoes, teoria;
   - **tocar:** teclado, melodias, acordes, microfone;
-  - **treinar:** desafios, eco (o jogo RepeTCHÊ: o bandoneon toca, você repete; js/eco.js e o gaúcho em imagens/repetche/. Tem música do dia com sequência, "Suas músicas" com as melodias e partituras do aluno e modo microfone), ritmo;
+  - **treinar:** desafios, eco (o jogo RepeTCHÊ: o bandoneon toca, você repete; js/eco.js e o gaúcho em imagens/repetche/. Tem música do dia com sequência, "Suas músicas" com as melodias e partituras do aluno e modo microfone), qualnota, ritmo;
   - **professores:** professor (Mandar tarefa), relatorios, turmas (`TURMAS_LIGADAS`; ligada desde 2026-11-10);
   - **perfil** (a área da conta): conta, perfil (Conquistas), ajustes. Não tem botão no menu: abre pelo
     "Entrar" / círculo com a inicial no topo (`#contaTopo`, com menu `#contaMenu`).
@@ -64,6 +65,18 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
 - `go(v)` troca de aba. Para agir ao entrar ou sair de uma aba: `ganchosAba.push((nova, anterior)=>…)`.
 - Links internos: `data-go="aba"`. Endereços: `#aba`, `#licao-N`, `#teoria-N` e `#tarefa=…` (link do professor).
 - A **Teoria** é a 2ª trilha da aba Lições: não tem botão no `#subnav`, e `go('teoria')` acende o botão Lições.
+
+### Qual é a nota? (qualnota.js, aba "Qual nota?" em Treinar)
+- Quiz de ouvido: toca a nota de um botão (com o Dó central antes, se "Ouvir um Dó antes" estiver ligado) e mostra
+  quatro nomes. Níveis: fácil (naturais, erradas a 5+ semitons), médio (naturais, até 9), difícil (com sustenidos, até 5).
+  As erradas nunca repetem o nome da certa em outra oitava. O sorteio pesa as notas erradas (`qnPeso`).
+- A onda é o som de verdade: um `AnalyserNode` ligado ao `master` (`qnAnalisador`), janela fixa de 1024 amostras e
+  gatilho na subida pelo zero mais íngreme; com movimento reduzido, uma foto só. No Edge invisível o relógio de áudio
+  não anda: para capturas, desenhe uma onda sintética com `qnDesenhar` e guarde-a em `qnUlt`.
+- Dica em três passos (`qnDica`): zona no mapa da mão (centro sorteado perto do botão, nunca em cima dele), registro em
+  relação ao Dó central, e duas erradas riscadas. Depois de responder, o mapa acende o botão exato e lista onde mais a
+  nota sai. Acerto com dica conta em Acertos, mas o recorde (`melhor`) é de acertos sem dica.
+- Atalhos: 1–4 respondem, Espaço/R repete, D dica, Enter próxima.
 
 ### RepeTCHÊ em fases (eco.js)
 - Cada música é dividida em fases de 8 notas (`ECO_FASE`, `ecoFases(id)`); um jogo é uma fase. Completar uma libera a

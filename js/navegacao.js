@@ -4,7 +4,7 @@
 // ficam no menu lateral; no celular, na barra de baixo. Tocar numa área volta à última aba usada nela.
 const AREAS = {
   inicio:['inicio'], aprender:['estudo','academia','licoes','teoria'], tocar:['teclado','melodias','acordes','microfone'],
-  treinar:['desafios','eco','ritmo'], professores:['professor','relatorios','turmas'],
+  treinar:['desafios','qualnota','eco','ritmo'], professores:['professor','relatorios','turmas'],
   perfil:['conta','perfil','ajustes'], // "Você": sem botão no menu; abre pelo Entrar / círculo da conta no topo (js/conta.js)
 };
 const areaDe = v => Object.keys(AREAS).find(a=>AREAS[a].includes(v)) || 'inicio';

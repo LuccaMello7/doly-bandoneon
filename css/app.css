@@ -2627,3 +2627,97 @@ main.prof-pagina{max-width:880px}
 .sem-mov .pf-maos circle{animation:none}
 @media (prefers-reduced-motion:reduce){.pf-maos circle{animation:none}}
 @media (max-width:599px){.pf-mapa{padding:20px}.pf-maos{grid-template-columns:1fr;gap:12px}.pf-mapa-num{text-align:left}}
+
+/* ================== Qual é a nota? (js/qualnota.js) ================== */
+.t-qualnota{background:linear-gradient(140deg,#d9a03a,#a8701c)}
+.subnav [data-v="qualnota"]{white-space:nowrap}
+.qn-palco{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:18px;align-items:start}
+.qn-palco>.card,.qn-lado>.card{margin-bottom:0}
+.qn-lado{display:grid;gap:18px}
+.qn-hud{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:14px;font-size:13px;color:var(--cinza)}
+.qn-hud-item{display:inline-flex;align-items:baseline;gap:8px}
+.qn-hud-item b{font-size:1.25rem;color:var(--osso);font-weight:650;font-variant-numeric:tabular-nums}
+.qn-hud-item small{font-size:.8rem;color:var(--cinza);font-weight:500}
+.qn-bolinhas{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.qn-bolinhas i{width:10px;height:10px;border-radius:50%;box-shadow:inset 0 0 0 1.5px var(--borda-2);transition:background .3s,box-shadow .3s}
+.qn-bolinhas i.agora{box-shadow:inset 0 0 0 1.5px var(--osso),0 0 0 3px rgba(185,151,255,.3)}
+.qn-bolinhas i.certa{background:var(--lavanda);box-shadow:none}
+.qn-bolinhas i.certa-dica{background:linear-gradient(90deg,var(--lavanda) 50%,transparent 50%);box-shadow:inset 0 0 0 1.5px var(--lavanda)}
+.qn-bolinhas i.errada{background:var(--red);box-shadow:none}
+/* a onda: um osciloscópio do som que está tocando */
+.qn-onda{position:relative;display:block;width:100%;height:170px;padding:0;border:0;border-radius:16px;cursor:pointer;color:inherit;font:inherit;overflow:hidden;
+  background:radial-gradient(ellipse 70% 90% at 50% 50%,rgba(185,151,255,.09),transparent 70%),var(--ameixa);box-shadow:inset 0 0 0 1px var(--borda)}
+.qn-onda:disabled{cursor:default}
+.qn-onda:focus-visible{outline:2px solid var(--lavanda);outline-offset:2px}
+.qn-onda canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.qn-onda-rot{position:absolute;left:16px;top:12px;font-size:13px;font-weight:600;color:var(--cinza-2);letter-spacing:.01em;font-variant-numeric:tabular-nums}
+.qn-onda:not(:disabled):hover .qn-onda-rot{color:var(--osso)}
+.qn-onda-leg{font-size:12.5px;margin:8px 2px 0}
+/* as quatro alternativas */
+.qn-opcoes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:18px}
+.qn-op{position:relative;display:grid;place-items:center;min-height:88px;padding:10px;border:0;border-radius:16px;cursor:pointer;
+  background:var(--ameixa-3);color:var(--osso);box-shadow:inset 0 0 0 1px var(--borda-2);font:650 1.55rem Onest,system-ui,sans-serif;letter-spacing:-.01em;
+  transition:transform .2s var(--ease-saida),box-shadow .2s,background .2s,opacity .2s}
+.qn-op b{font-weight:inherit}
+.qn-op kbd{position:absolute;left:10px;top:8px;font:500 11px Onest,sans-serif;color:var(--cinza);background:none;border:0;padding:2px 6px;border-radius:6px;box-shadow:inset 0 0 0 1px var(--borda-2)}
+@media (hover:hover){.qn-op:not(:disabled):hover{transform:translateY(-2px);box-shadow:inset 0 0 0 1.5px var(--lavanda);background:#3d3547}}
+@media (hover:none){.qn-op kbd,.qn-teclas{display:none}}
+.qn-op:focus-visible{outline:2px solid var(--lavanda);outline-offset:2px}
+.qn-op:disabled{cursor:default}
+.qn-op.certa{background:rgba(185,151,255,.2);color:#fff;box-shadow:inset 0 0 0 2px var(--lavanda);animation:qnCerta .45s var(--ease-saida)}
+.qn-op.errada{background:rgba(208,82,76,.16);color:var(--red2);box-shadow:inset 0 0 0 2px var(--red);animation:qnErrada .4s}
+.qn-op.riscada{opacity:.3;text-decoration:line-through;text-decoration-thickness:2px}
+@keyframes qnCerta{40%{transform:scale(1.05)}}
+@keyframes qnErrada{20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
+.qn-oitava{font-size:12.5px;margin:10px 2px 0}
+.qn-centro .feedback{margin-top:12px;text-align:center}
+.qn-seguir{display:flex;justify-content:center;margin-top:4px}
+/* lado: ouvir de novo e dica */
+.qn-bloco h3{display:flex;align-items:center;gap:8px;margin:0 0 6px;font-size:1.05rem;font-weight:650}
+.qn-bloco h3 svg{color:var(--lavanda)}
+.qn-bloco>p{font-size:13.5px;margin:0 0 12px}
+.qn-bloco-acoes{display:grid;gap:8px}
+.qn-bloco-acoes .btn,.qn-dica>.btn{width:100%}
+.qn-teclas{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;margin:12px 0 0!important}
+.qn-teclas span{white-space:nowrap}
+.qn-dicas{margin:0 0 12px;padding-left:20px;font-size:14px;line-height:1.5}
+.qn-dicas:empty{display:none}
+.qn-dicas li{margin:0 0 8px;padding-left:2px}
+.qn-dicas li::marker{color:var(--lavanda);font-weight:700}
+.qn-mapa{margin:0 0 12px;padding:12px;border-radius:14px;overflow:hidden;background:var(--ameixa);box-shadow:inset 0 0 0 1px var(--borda)}
+.qn-mapa svg{display:block;width:100%;height:auto;stroke:none;fill:none;overflow:visible} /* a zona da dica pode passar da borda do teclado */
+.qn-mapa circle{fill:rgba(241,240,236,.1);stroke:rgba(241,240,236,.22);stroke-width:.04}
+.qn-mapa circle.qn-zona{fill:rgba(185,151,255,.16);stroke:rgba(185,151,255,.55);stroke-width:.05;stroke-dasharray:.16 .12}
+.qn-mapa circle.na-zona{fill:rgba(185,151,255,.42);stroke:var(--lavanda)}
+.qn-mapa circle.alvo.open{fill:var(--open);stroke:#fff;stroke-width:.06}
+.qn-mapa circle.alvo.close{fill:var(--close);stroke:#fff;stroke-width:.06}
+.qn-mapa circle.qn-anel{fill:none;stroke-width:.07;transform-box:fill-box;transform-origin:center;animation:qnAnel 1.6s ease-out infinite}
+.qn-mapa circle.qn-anel.open{stroke:var(--open)} .qn-mapa circle.qn-anel.close{stroke:var(--close)}
+@keyframes qnAnel{0%{opacity:.9;transform:scale(.7)}100%{opacity:0;transform:scale(1.5)}}
+@media (prefers-reduced-motion:reduce){.qn-mapa circle.qn-anel{animation:none;opacity:.8}.qn-op.certa,.qn-op.errada{animation:none}}
+.sem-mov .qn-mapa circle.qn-anel{opacity:.8}
+.qn-mapa figcaption{margin-top:8px;text-align:center;font-size:12.5px;color:var(--cinza)}
+/* fim da rodada */
+.qn-fim{text-align:center;padding:32px 22px}
+.qn-fim h2{margin:0 0 6px}
+.qn-fim-n{display:flex;align-items:baseline;justify-content:center;gap:10px;margin:6px 0 2px}
+.qn-fim-n b{font-size:4rem;line-height:1;font-weight:650;color:var(--lavanda);font-variant-numeric:tabular-nums}
+.qn-fim-n span{color:var(--cinza);font-size:1.1rem}
+.qn-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:4px 0 6px}
+.qn-chip{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border:0;border-radius:999px;cursor:pointer;background:var(--ameixa-3);color:var(--osso);
+  box-shadow:inset 0 0 0 1px var(--borda-2);font:600 14px Onest,system-ui,sans-serif}
+.qn-chip svg{color:var(--lavanda)}
+@media (hover:hover){.qn-chip:hover{box-shadow:inset 0 0 0 1px var(--lavanda)}}
+.qn-fim-acoes{justify-content:center;margin-top:18px}
+@media (max-width:899px){
+  .qn-palco{grid-template-columns:1fr}
+  .qn-lado{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}
+}
+@media (max-width:599px){
+  .qn-lado{grid-template-columns:1fr}
+  .qn-opcoes{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .qn-op{min-height:74px;font-size:1.4rem}
+  .qn-onda{height:140px}
+  .qn-hud{flex-wrap:wrap}
+  .qn-bolinhas{order:3;width:100%;justify-content:flex-start}
+}

@@ -293,7 +293,7 @@ function textosEmPortugues(){
   return [...achados];
 }
 async function percorrerApp(){
-  for(const v of ['inicio','estudo','teoria','teclado','desafios','melodias','acordes','eco','ritmo','ajustes','academia','microfone','perfil','professor','conta','relatorios','turmas']){ go(v); await esperar(); }
+  for(const v of ['inicio','estudo','teoria','teclado','desafios','melodias','acordes','qualnota','eco','ritmo','ajustes','academia','microfone','perfil','professor','conta','relatorios','turmas']){ go(v); await esperar(); }
   // Professores: um plano montado, um relatório de exemplo e uma turma com alunos passam pela tradução
   { go('professor'); $('#prAdd').click(); await esperar(); prPlano = []; renderPlano();
     go('relatorios'); $('#relVerExemplo').click(); await esperar(); relExemplo = false;
@@ -303,6 +303,12 @@ async function percorrerApp(){
     go('turmas'); renderTurmas(); await esperar();
     contaUsuario = u; turmasProf = []; turmaAlunosProf = []; turmaAberta = null; renderTurmas(); renderConta(); carregarTurmasProf = c; }
 
+  // Qual é a nota: pergunta, dicas, resposta errada e a tela do fim passam pela tradução
+  { const antes = JSON.stringify(state.progress.qualnota || null); go('qualnota');
+    Object.assign(qn, {ativo:true, rodada:0, acertos:0, semDica:0, hist:[], alvo:null}); qnPergunta(); qnDica(); qnDica(); qnDica(); await esperar();
+    qnResponder(qn.opcoes.find(m=>m!==qn.alvo.midi && !qn.riscadas.includes(m)) ?? qn.alvo.midi); await esperar();
+    qn.rodada = QN_RODADAS; qnPergunta(); await esperar(); $('#qnMudar').click(); qnSair(); Object.assign(qn, {ativo:false, alvo:null}); qnRenderOpcoes(); qnRenderDicas();
+    if(antes==='null') delete state.progress.qualnota; else state.progress.qualnota = JSON.parse(antes); }
   // Eco: a faixa, o placar e a tela do fim passam pela tradução
   { const antes = state.progress.eco[eco.id]; go('eco'); ecoComecar(); await esperar(); ecoLimpar(); ecoRodada(); await esperar(); ecoLimpar();
     ecoOuvir(); await esperar(); ecoLimpar(); ecoSuaVez(); await esperar(); ecoRodadaFeita(); await esperar(); ecoLimpar(); ecoFim(); await esperar();
@@ -847,6 +853,50 @@ teste('botão de começar muda de cor enquanto roda (Melodias e Desafios)', () =
   ok($('#fStart').classList.contains('rodando') && /Recomeçar/.test($('#fStart').textContent), 'Desafio: vira Recomeçar');
   fq.round = 10; nextFind(); ok(!$('#fStart').classList.contains('rodando') && /Começar/.test($('#fStart').textContent), 'no fim volta a Começar');
   go('inicio');
+});
+teste('Qual é a nota: quatro alternativas, dica em três passos, resposta, onda e fim da rodada', async () => {
+  const antes = JSON.stringify(state.progress.qualnota || null);
+  go('qualnota'); $('#qnNivel').value = '1'; $('#qnMao').value = 'right';
+  const novaRodada = () => Object.assign(qn, {ativo:true, rodada:0, acertos:0, semDica:0, hist:[], alvo:null});
+  novaRodada(); qnPergunta();
+  igual($$('#qnOpcoes .qn-op').length, 4);
+  ok(qn.opcoes.includes(qn.alvo.midi), 'a certa está entre as alternativas');
+  igual(new Set(qn.opcoes.map(qnClasse)).size, 4, 'quatro nomes diferentes');
+  ok(qn.opcoes.every(qnNatural), 'no fácil, só notas naturais');
+  ok(qn.opcoes.filter(m=>m!==qn.alvo.midi).every(m=>Math.abs(m - qn.alvo.midi) >= 5), 'no fácil, as erradas ficam longe da certa');
+  ok(state.layout.right.some(b=>b.open===qn.alvo.midi || b.close===qn.alvo.midi), 'a nota sai de um botão da mão escolhida');
+  // as dicas: zona no mapa, registro, e duas erradas riscadas (nunca a certa)
+  ok($('#qnMapaBox').hidden, 'sem dica, o mapa fica escondido');
+  qnDica(); ok(!$('#qnMapaBox').hidden && $$('#qnMapa circle.na-zona').length >= 1, 'a 1ª dica acende a zona no mapa'); igual($$('#qnDicas li').length, 1);
+  qnDica(); igual($$('#qnDicas li').length, 2);
+  qnDica(); igual($$('#qnOpcoes .qn-op.riscada').length, 2, 'a 3ª dica risca duas erradas');
+  ok(!$$('#qnOpcoes .qn-op.riscada').some(b=>+b.dataset.m===qn.alvo.midi), 'nunca risca a certa');
+  ok($('#qnDicaBtn').disabled, 'depois de três dicas, não há mais');
+  qnResponder(qn.riscadas[0]); igual(qn.hist.length, 0, 'alternativa riscada não vale como resposta');
+  qnResponder(qn.alvo.midi);
+  ok($('#qnOpcoes .qn-op.certa') && qn.acertos===1 && qn.semDica===0, 'acerto com dica conta, mas não entra no recorde');
+  igual($$('#qnMapa circle.alvo').length, 1, 'depois de responder, o botão exato acende no mapa');
+  ok(!$('#qnProxima').hidden && $('#qnRodada').textContent==='1');
+  // um erro: a marcada fica vermelha e a certa aparece
+  qnPergunta(); const errada = qn.opcoes.find(m=>m!==qn.alvo.midi); qnResponder(errada);
+  ok($('#qnOpcoes .qn-op.errada') && $('#qnOpcoes .qn-op.certa'), 'a errada e a certa aparecem');
+  igual(qnProg().notas[qn.alvo.midi].err >= 1, true, 'o erro fica guardado para a nota voltar mais vezes');
+  // a onda desenha uma senoide de teste sem quebrar
+  const d = new Float32Array(2048).map((_, i)=>Math.sin(i / 12) * .1); qnDesenhar(d, .1); ok($('#qnCanvas').width > 0);
+  // o fim da rodada
+  qn.rodada = QN_RODADAS; qnPergunta();
+  ok(!$('#qnFim').hidden && $('#qnPalco').hidden, 'depois de dez perguntas, a tela do fim');
+  ok($$('#qnTreinar [data-ouvir]').length >= 1, 'as notas erradas aparecem para treinar');
+  $('#qnMudar').click(); ok($('#qnFim').hidden && !$('#qnPalco').hidden);
+  // difícil: alternativas vizinhas, com sustenidos possíveis
+  $('#qnNivel').value = '3'; novaRodada(); qnPergunta();
+  ok(qn.opcoes.filter(m=>m!==qn.alvo.midi).every(m=>Math.abs(m - qn.alvo.midi) <= 7), 'no difícil, as erradas ficam perto');
+  // as duas mãos: a nota pode vir da esquerda
+  $('#qnMao').value = 'both'; ok(qnBanco().some(x=>x.mao==='left') && qnBanco().some(x=>x.mao==='right'));
+  qnSair(); Object.assign(qn, {ativo:false, alvo:null}); qnRenderOpcoes(); qnRenderDicas(); qnBolinhas();
+  $('#qnNivel').value = '1'; $('#qnMao').value = 'right';
+  if(antes==='null') delete state.progress.qualnota; else state.progress.qualnota = JSON.parse(antes);
+  saveProgress(); await esperar(); go('inicio');
 });
 teste('Movimento: anel no toque, partitura viva, trecho de tango, mapa de botões e fole que respira', async () => {
   go('inicio'); const it = iniBotoes.find(x=>x.mao==='right' && x.b.open>=60);

@@ -140,6 +140,7 @@
   <button type="button" role="tab" data-area="tocar" data-v="acordes"><svg aria-hidden="true"><use href="#i-chord"/></svg>Acordes</button>
   <button type="button" role="tab" data-area="tocar" data-v="microfone"><svg aria-hidden="true"><use href="#i-mic"/></svg>Bandoneón real</button>
   <button type="button" role="tab" data-area="treinar" data-v="desafios"><svg aria-hidden="true"><use href="#i-target"/></svg>Desafíos</button>
+  <button type="button" role="tab" data-area="treinar" data-v="qualnota"><svg aria-hidden="true"><use href="#i-ear"/></svg>¿Qué nota?</button>
   <button type="button" role="tab" data-area="treinar" data-v="eco"><svg aria-hidden="true"><use href="#i-eco"/></svg><span translate="no">RepeTCHÊ</span></button>
   <button type="button" role="tab" data-area="treinar" data-v="ritmo"><svg aria-hidden="true"><use href="#i-metro"/></svg>Ritmo</button>
   <button type="button" role="tab" data-area="perfil" data-v="conta" id="contaAba"><svg aria-hidden="true"><use href="#i-user"/></svg>Cuenta</button>
@@ -560,6 +561,71 @@
     <div class="staff" style="text-align:center;margin-top:14px"><svg id="staffSvg" width="320" height="150" viewBox="0 0 320 150"></svg></div>
     <div class="answers" id="sAnswers" style="text-align:center"></div>
     <div style="text-align:center"><div class="feedback" id="sFeed"></div><div class="muted" id="sScore"></div></div>
+  </div>
+</section>
+
+<!-- QUAL É A NOTA? (quiz de ouvido, js/qualnota.js) -->
+<section id="v-qualnota" class="qn">
+  <div class="pg-topo"><span class="pg-ic t-qualnota"><svg aria-hidden="true"><use href="#i-ear"/></svg></span><div><h2 class="pg-tit">¿Qué nota es?</h2><p class="muted">El bandoneón toca una nota. Escuchá, mirá la onda del sonido y elegí entre cuatro respuestas.</p></div></div>
+  <div class="card qn-escolha">
+    <div class="row">
+      <label>Mano: <select id="qnMao"><option value="right">Derecha</option><option value="left">Izquierda</option><option value="both">Las dos</option></select></label>
+      <label>Nivel: <select id="qnNivel"><option value="1">Fácil: notas bien distintas</option><option value="2">Medio: notas cercanas</option><option value="3">Difícil: vecinas y sostenidos</option></select></label>
+      <label class="nomes-chk"><input type="checkbox" id="qnRef" checked> Escuchar un Do antes, para comparar</label>
+    </div>
+    <div class="acao">
+      <button class="btn btn-grande" id="qnComecar"><svg aria-hidden="true"><use href="#i-play"/></svg><span id="qnComecarTxt">Comenzar</span></button>
+      <p class="muted acao-dica" id="qnRecorde"></p>
+    </div>
+  </div>
+
+  <div class="qn-palco" id="qnPalco">
+    <div class="card qn-centro">
+      <div class="qn-hud">
+        <span class="qn-hud-item">Pregunta <b><span id="qnRodada">0</span><small>/10</small></b></span>
+        <span class="qn-bolinhas" id="qnBolinhas" aria-hidden="true"></span>
+        <span class="qn-hud-item">Aciertos <b id="qnAcertos">0</b></span>
+      </div>
+      <button type="button" class="qn-onda" id="qnOnda" aria-label="Escuchar la nota de nuevo" disabled>
+        <canvas id="qnCanvas" aria-hidden="true"></canvas>
+        <span class="qn-onda-rot" id="qnOndaRot">Tocá en Comenzar</span>
+      </button>
+      <p class="muted qn-onda-leg">Cuanto más aguda la nota, más ondas entran en la pantalla. Tocá la onda para escucharla de nuevo.</p>
+      <div class="qn-opcoes" id="qnOpcoes" role="group" aria-label="Opciones"></div>
+      <p class="muted qn-oitava">El número es la octava: el Do4 es el Do central.</p>
+      <div class="feedback" id="qnFeed" aria-live="polite"></div>
+      <div class="qn-seguir"><button class="btn btn-grande" id="qnProxima" hidden><span id="qnProximaTxt">Siguiente nota</span><svg aria-hidden="true"><use href="#i-arrow"/></svg></button></div>
+    </div>
+    <aside class="qn-lado">
+      <div class="card qn-bloco">
+        <h3><svg aria-hidden="true"><use href="#i-volume"/></svg>Escuchá otra vez</h3>
+        <p class="muted">Todas las veces que quieras: repetir no resta puntos.</p>
+        <div class="qn-bloco-acoes">
+          <button class="btn sec" id="qnRepetir" disabled><svg aria-hidden="true"><use href="#i-rotate"/></svg>Repetir la nota</button>
+          <button class="btn ghost" id="qnOuvirDo"><svg aria-hidden="true"><use href="#i-note"/></svg>Escuchar el Do central</button>
+        </div>
+        <p class="muted qn-teclas"><kbd>Espacio</kbd> repite · <kbd>1</kbd>–<kbd>4</kbd> responden · <kbd>D</kbd> pista</p>
+      </div>
+      <div class="card qn-bloco qn-dica">
+        <h3><svg aria-hidden="true"><use href="#i-question"/></svg><span id="qnDicaTit">Pista</span></h3>
+        <p class="muted" id="qnDicaInfo">¿Te trabaste? Hay hasta tres pistas por pregunta: dónde está la nota en el bandoneón, si es aguda o grave, y dos opciones tachadas. Un acierto con pista no cuenta para el récord.</p>
+        <ol class="qn-dicas" id="qnDicas"></ol>
+        <figure class="qn-mapa" id="qnMapaBox" hidden><svg id="qnMapa" role="img"></svg><figcaption id="qnMapaLeg"></figcaption></figure>
+        <button class="btn sec" id="qnDicaBtn" disabled><svg aria-hidden="true"><use href="#i-question"/></svg><span id="qnDicaBtnTxt">Ver una pista</span></button>
+      </div>
+    </aside>
+  </div>
+
+  <div class="card qn-fim" id="qnFim" hidden>
+    <h2 id="qnFimTit">¡Muy bien!</h2>
+    <div class="qn-fim-n"><b id="qnFimN">0</b><span>de 10</span></div>
+    <p class="muted" id="qnFimSem"></p>
+    <p class="eco-recorde" id="qnRecordeNovo" hidden><svg aria-hidden="true"><use href="#i-trophy"/></svg>¡Nuevo récord!</p>
+    <div id="qnTreinarBox" hidden><p class="muted">Para practicar más (tocá para escuchar):</p><div class="qn-chips" id="qnTreinar"></div></div>
+    <div class="row qn-fim-acoes">
+      <button class="btn" id="qnDeNovo"><svg aria-hidden="true"><use href="#i-play"/></svg>Jugar de nuevo</button>
+      <button class="btn ghost" id="qnMudar">Cambiar el nivel</button>
+    </div>
   </div>
 </section>
 
@@ -1329,6 +1395,7 @@
 <script src="../js/ajustes.js" defer></script>
 <script src="../js/ouvido.js" defer></script>
 <script src="../js/eco.js" defer></script>
+<script src="../js/qualnota.js" defer></script>
 <script src="../js/cascata.js" defer></script>
 <script src="../js/trilha.js" defer></script>
 <script src="../js/inicio.js" defer></script>
