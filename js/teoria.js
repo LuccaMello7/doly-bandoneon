@@ -75,7 +75,7 @@ const TEORIA = [
      el.querySelector('.te-cromatica').addEventListener('click', e=>{ const b = e.target.closest('[data-m]'); if(!b) return; ac(); playNote(+b.dataset.m, 0.6); b.classList.remove('soa'); void b.offsetWidth; b.classList.add('soa'); });
    },
    teste:()=>({q:t('O que faz o sustenido (♯)?'), o:[t('Sobe a nota um semitom'), t('Desce a nota um semitom'), t('Cancela a alteração'), t('Dobra a duração')], a:0}),
-   pratica:[['Treino de ouvido', ()=>abrirDesafio('ear')]]},
+   pratica:[['Ache pelo som', ()=>abrirDesafio('ear')]]},
   {id:'figuras', titulo:'Figuras e pausas', ic:'note',
    widget:el=>{
      el.innerHTML = `<div class="te-figuras">${FIGURAS.map((f,i)=>`<div class="te-fig" data-i="${i}" style="--i:${i}">${figuraSVG(f.tipo)}<div><b>${f.nome}</b><span class="muted">${t('{} tempo(s)', f.tempos)} · <code>Dó4:${f.cod}</code></span></div>
@@ -177,7 +177,7 @@ function abrirTeoria(i){ teoriaAtual = i; go('teoria'); }
 /* ---------- Desafio: Pauta no bandoneon ---------- */
 // A nota aparece na pauta (clave de sol para a mão direita, de fá para a esquerda) e o aluno toca o
 // botão que dá essa nota na direção indicada. Dez rodadas; depois de dois erros o botão certo brilha.
-const pq = {round:0, score:0, dir:'open', hand:'right', answer:null, target:null, errors:0, active:false};
+const pq = {round:0, score:0, dir:'open', hand:'right', answer:null, target:null, errors:0, active:false, hist:[]};
 state.progress.pautabot = state.progress.pautabot ?? null;
 const pOpts = {getDir:()=>pq.dir, onPress:(b,m,dir,k)=>pautaPress(b,m,k)};
 const pkL = kb($('#pkLeft'),'left',pOpts), pkR = kb($('#pkRight'),'right',pOpts);
@@ -190,8 +190,8 @@ function desenhaPautaDesafio(cls){
 function nextPauta(){
   pkL.clearMarks(); pkR.clearMarks();
   if(pq.round>=10){
-    pq.active = false; botoesDesafio(); $('#pDirPill').style.visibility = 'hidden';
-    pautaFeed(`Fim! ${pq.score}/10`, pq.score>=8?'ok':''); $('#pScore').textContent = '';
+    pq.active = false; $('#pDirPill').style.visibility = 'hidden'; menuPratica('p', false);
+    pautaFeed(`Fim! ${pq.score}/10`, pq.score>=8?'ok':''); placarBolinhas('p', pq.hist, pq.round, pq.score, false);
     if(state.progress.pautabot==null || pq.score>state.progress.pautabot){ state.progress.pautabot = pq.score; saveProgress(); }
     logPractice('desafio'); if(pq.score>=8) comemorar(); return;
   }
@@ -202,14 +202,14 @@ function nextPauta(){
   Object.assign(pq, {answer:b, target:b[pq.dir], errors:0});
   pkL.setDim(pq.hand!=='left'); pkR.setDim(pq.hand!=='right'); pkL.refresh(); pkR.refresh();
   const p = $('#pDirPill'); p.style.visibility = 'visible'; p.className = 'dirpill ' + pq.dir; p.textContent = `${dirLabel(pq.dir)} · ${maoNome(pq.hand)}`;
-  $('#pScore').textContent = `Rodada ${pq.round+1}/10 · Acertos: ${pq.score}`;
+  placarBolinhas('p', pq.hist, pq.round, pq.score, true);
   pautaFeed('Leia a nota e toque o botão.'); desenhaPautaDesafio('entra');
 }
 function pautaPress(b, m, k){
   if(!pq.active) return;
   if(k.hand!==pq.hand){ pautaFeed('Essa nota está na outra mão.', 'bad'); return; }
   if(m===pq.target){
-    k.mark(b.id,'ok'); pq.score += pq.errors===0 ? 1 : 0; pq.round++;
+    k.mark(b.id,'ok'); pq.score += pq.errors===0 ? 1 : 0; pq.hist.push(pq.errors===0 ? 'certa' : 'meia'); pq.round++; placarBolinhas('p', pq.hist, pq.round, pq.score, true);
     pautaFeed(pq.errors ? 'Achou! (não conta ponto por ter errado antes)' : `Certo! ${noteName(m)}`, 'ok'); desenhaPautaDesafio('certa');
     setTimeout(nextPauta, 900);
   } else {
@@ -218,5 +218,11 @@ function pautaPress(b, m, k){
     if(pq.errors>=2) k.mark(pq.answer.id,'hint',0);
   }
 }
-$('#pStart').onclick = ()=>{ ac(); Object.assign(pq, {round:0, score:0, active:true, answer:null}); nextPauta(); };
+$('#pStart').onclick = ()=>{ ac(); Object.assign(pq, {round:0, score:0, active:true, answer:null, hist:[]}); menuPratica('p', true); nextPauta(); };
+function pararPauta(){
+  pq.active = false; pkL.clearMarks(); pkR.clearMarks(); pkL.setDim(false); pkR.setDim(false); pkL.refresh(); pkR.refresh();
+  $('#pDirPill').style.visibility = 'hidden'; pautaFeed(''); pq.target = null; desenhaPautaDesafio(); $('#pHud').hidden = true; menuPratica('p', false);
+}
+$('#pParar').onclick = pararPauta;
+segmentar($('#pHand'), {rotulo:rotuloExplicado, classe:'menu-seg-2l'}); segmentar($('#pDir'), {rotulo:rotuloFole}); segmentar($('#pNotas'), {rotulo:rotuloExplicado, classe:'menu-seg-2l'});
 desenhaPautaDesafio();

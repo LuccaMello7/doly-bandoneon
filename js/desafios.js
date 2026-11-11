@@ -7,11 +7,9 @@
 // círculo ligado, a 1ª dica é o círculo). Depois de dois erros o botão aparece sozinho. Com erro ou dica, não conta ponto.
 const fq={round:0,score:0,target:null,dir:'open',hand:'right',errors:0,dicas:0,active:false,resolvido:false,answer:null,heat:false,hist:[],timer:0,zona:null,dirAntes:null,zoomAn:null};
 // Durante a rodada o botão Começar de cada desafio vira "Recomeçar" e muda de cor; volta no fim ou ao trocar
-function botoesDesafio(){
-  [['#sStart',()=>sq.active], ['#eStart',()=>typeof eq!=='undefined' && eq.active], ['#pStart',()=>typeof pq!=='undefined' && pq.active]]
-    .forEach(([id, ativo])=>{ const b = $(id); if(!b) return; const sim = !!ativo(); botaoRodando(b, sim);
-      const txt = [...b.childNodes].reverse().find(n=>n.nodeType===3 && n.nodeValue.trim()); if(txt) txt.nodeValue = sim ? 'Recomeçar' : 'Começar'; });
-}
+// Desde que os desafios ganharam a barra de resumo, o botão de começar some durante a rodada e diz sempre "Começar desafio":
+// nada mais para trocar aqui (fica a função, chamada em vários lugares)
+function botoesDesafio(){}
 // durante a rodada, sem nomes nos botões: senão o desafio é só achar a palavra escrita
 const fOpts=hand=>({ getDir:()=>fq.dir, showLabels:()=>fq.heat || (!fq.active && state.showLabels), sound:true, onPress:(b,m,dir,k)=>findPress(b,m,k) });
 // As escolhas do Encontre a nota são botões de rádio (controle segmentado): lê e muda pelo nome do grupo
@@ -221,12 +219,19 @@ let fRedim = 0;
 window.addEventListener('resize', ()=>{ clearTimeout(fRedim); fRedim = setTimeout(()=>{ if(fq.active && fq.zona && !fq.resolvido) fDesenharCirculo(); }, 400); });
 $('#fTreinar').addEventListener('click', e=>{ const b = e.target.closest('[data-ouvir]'); if(b) playNote(+b.dataset.ouvir, 1.1); });
 // Sair da aba Desafios para o Encontre a nota: ao voltar, começa do zero (não fica um "Recomeçar" perdido)
-ganchosAba.push((v, anterior)=>{ if(anterior==='desafios' && v!=='desafios' && fq.active) pararFind(); });
+// Trocar de desafio ou sair da aba encerra a rodada que estava rodando: ao voltar, começa do menu
+function pararOutrosDesafios(fica){
+  if(fica!=='find' && fq.active) pararFind();
+  if(fica!=='staff' && sq.active) pararStaff();
+  if(fica!=='ear' && typeof eq!=='undefined' && eq.active) pararEar();
+  if(fica!=='pautabot' && typeof pq!=='undefined' && pq.active) pararPauta();
+}
+ganchosAba.push((v, anterior)=>{ if(anterior==='desafios' && v!=='desafios') pararOutrosDesafios(null); });
 
 /* ================== Desafio: Pauta ================== */
 // Posição na pauta = índice diatônico d (oitava*7 + letra, Dó=0 … Si=6). A linha de baixo é
 // Mi4 (d=30) na clave de sol e Sol2 (d=18) na clave de fá; cada passo de d sobe meia linha.
-const sq={round:0,score:0,d:null,clef:'treble',active:false,locked:false};
+const sq={round:0,score:0,d:null,clef:'treble',active:false,locked:false,hist:[]};
 const RANGES={treble:[27,41], bass:[15,29]}; // índices diatônicos (oitava*7+letra)
 const dToMidi=d=>(Math.floor(d/7)+1)*12+DIA_SEMI[d%7];
 function drawStaff(clef,d){
@@ -253,7 +258,7 @@ function renderStaffAnswers(){
 }
 function nextStaff(){
   if(sq.round>=10){
-    sq.active=false; botoesDesafio(); drawStaff(sq.clef,null);
+    sq.active=false; drawStaff(sq.clef,null); menuPratica('s', false); placarBolinhas('s', sq.hist, sq.round, sq.score, false);
     $('#sFeed').className='feedback'; $('#sFeed').textContent=`Fim! ${sq.score}/10`;
     if(state.progress.staff==null || sq.score>state.progress.staff){ state.progress.staff=sq.score; saveProgress(); }
     logPractice('desafio'); if(sq.score>=8) comemorar();
@@ -262,7 +267,7 @@ function nextStaff(){
   const c=$('#sClef').value; sq.clef = c==='mix'?pick(['treble','bass']):c;
   const [a,b]=RANGES[sq.clef]; let d; do{ d=a+rand(b-a+1); }while(d===sq.d);
   sq.d=d; sq.locked=false; drawStaff(sq.clef,d);
-  $('#sScore').textContent=`Rodada ${sq.round+1}/10 · Acertos: ${sq.score}`;
+  placarBolinhas('s', sq.hist, sq.round, sq.score, true);
 }
 $('#sAnswers').addEventListener('click',e=>{
   const l=e.target.dataset.l; if(l==null||!sq.active||sq.locked) return;
@@ -271,18 +276,19 @@ $('#sAnswers').addEventListener('click',e=>{
   vibrar(+l===right?'ok':'erro');
   if(+l===right){ sq.score++; $('#sFeed').className='feedback ok'; $('#sFeed').textContent=`Certo! ${noteName(midi)}`; }
   else { $('#sFeed').className='feedback bad'; $('#sFeed').textContent=`Era ${noteName(midi)}.`; }
-  sq.round++; setTimeout(nextStaff,900);
+  sq.hist.push(+l===right ? 'certa' : 'errada'); sq.round++; placarBolinhas('s', sq.hist, sq.round, sq.score, true); setTimeout(nextStaff,900);
 });
-$('#sStart').onclick=()=>{ ac(); Object.assign(sq,{round:0,score:0,active:true}); $('#sFeed').textContent=''; nextStaff(); };
+$('#sStart').onclick=()=>{ ac(); Object.assign(sq,{round:0,score:0,active:true,hist:[]}); $('#sFeed').textContent=''; menuPratica('s', true); nextStaff(); };
+function pararStaff(){ sq.active=false; drawStaff(sq.clef,null); $('#sFeed').textContent=''; $('#sHud').hidden = true; menuPratica('s', false); }
+$('#sParar').onclick = pararStaff;
+segmentar($('#sClef'), {rotulo:rotuloExplicado, classe:'menu-seg-2l'});
 $$('[data-ch]').forEach(b=>b.onclick=()=>{
   $$('[data-ch]').forEach(x=>x.classList.toggle('on',x===b));
   $('#chFind').style.display=b.dataset.ch==='find'?'block':'none';
   $('#chStaff').style.display=b.dataset.ch==='staff'?'block':'none';
   $('#chEar').style.display=b.dataset.ch==='ear'?'block':'none';
   $('#chPauta').style.display=b.dataset.ch==='pautabot'?'block':'none';
-  if(b.dataset.ch!=='pautabot' && typeof pq!=='undefined') pq.active=false;
-  if(b.dataset.ch!=='find' && fq.active) pararFind();
+  pararOutrosDesafios(b.dataset.ch);
   construirPendentes();
-  if(b.dataset.ch!=='ear') eq.active=false;
 });
 renderStaffAnswers(); drawStaff('treble',null);

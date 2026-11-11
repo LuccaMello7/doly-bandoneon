@@ -159,8 +159,7 @@ function qnBotoes(){
   $('#qnRepetir').disabled = !jogo; $('#qnOnda').disabled = !jogo;
   $('#qnDicaBtn').disabled = !jogo || qn.respondeu || qn.dicas >= 3;
   $('#qnDicaBtnTxt').textContent = qn.dicas===0 ? t('Ver uma dica') : qn.dicas < 3 ? t('Mais uma dica ({} de 3)', qn.dicas + 1) : t('Sem mais dicas');
-  const b = $('#qnComecar'); botaoRodando(b, qn.ativo);
-  $('#qnComecarTxt').textContent = qn.ativo ? t('Recomeçar') : t('Começar');
+  menuPratica('qn', qn.ativo); // durante o quiz, o menu vira uma barra com o resumo e "Parar"
 }
 
 /* ---------- Dica e o mapa da mão ---------- */
@@ -310,7 +309,15 @@ $('#qnRef').onchange = ()=>store.set('qualnotaRef', $('#qnRef').checked);
 $('#qnProxima').onclick = ()=>{ if(qn.ativo && qn.respondeu) qnPergunta(); };
 $('#qnDeNovo').onclick = qnComecar;
 $('#qnMudar').onclick = ()=>{ $('#qnFim').hidden = true; $('#qnPalco').hidden = false; qn.alvo = null; qnRenderOpcoes(); qnRenderDicas(); qnBolinhas();
-  qnRotulo(t('Toque em Começar')); qnFeed(''); $('#qnNivel').focus(); };
+  qnRotulo(t('Toque em Começar quiz')); qnFeed(''); const b = $('#qnMenu .menu-seg button.on'); if(b) b.focus(); };
+// "Parar": encerra o quiz e volta ao menu
+function qnParar(){
+  qn.sessao++; qnSair(); Object.assign(qn, {ativo:false, alvo:null, respondeu:false, dicas:0, riscadas:[], hist:[], rodada:0, acertos:0, semDica:0});
+  $('#qnFim').hidden = true; $('#qnPalco').hidden = false; $('#qnProxima').hidden = true;
+  qnRenderOpcoes(); qnRenderDicas(); qnBolinhas(); qnRotulo(t('Toque em Começar quiz')); qnFeed('');
+}
+$('#qnParar').onclick = qnParar;
+segmentar($('#qnMao')); segmentar($('#qnNivel'), {rotulo:rotuloExplicado, classe:'menu-seg-2l'});
 $('#qnOpcoes').addEventListener('click', e=>{ const b = e.target.closest('.qn-op'); if(b && b.dataset.m!=='') qnResponder(+b.dataset.m); });
 $('#qnTreinar').addEventListener('click', e=>{ const b = e.target.closest('[data-ouvir]'); if(b){ playNote(+b.dataset.ouvir, 1.1); } });
 // Teclado do computador: 1 a 4 respondem, Espaço ou R repete, D pede dica, Enter vai para a próxima

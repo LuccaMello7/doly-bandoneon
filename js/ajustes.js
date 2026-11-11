@@ -79,3 +79,5 @@ $('#backupReset').onclick=()=>{
 
 // Acessibilidade: mensagens de retorno são anunciadas por leitores de tela
 $$('.feedback, #keyInfo, #melStat, #fScore, #sScore, #rStats').forEach(e=>e.setAttribute('aria-live','polite'));
+// Nomes das notas, animações e vibração: escolhas curtas viram botões lado a lado (js/menus.js)
+segmentar($('#namesSel')); segmentar($('#movSel')); segmentar($('#vibSel'));

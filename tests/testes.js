@@ -530,7 +530,7 @@ teste('treino de ouvido: acerto conta ponto e o erro diz se é mais aguda ou mai
   earPress(errado, errado[eq.dir], k); ok(/mais (aguda|grave)/.test($('#eFeed').textContent), $('#eFeed').textContent);
   igual(eq.errors, 1);
   eq.errors = 0; earPress(eq.answer, eq.target, k); igual(eq.score, 1); igual(eq.round, 1);
-  eq.active = false; $('[data-ch="find"]').click();
+  pararEar(); $('[data-ch="find"]').click();
 });
 teste('conquistas: recorde novo ganha a insígnia e o cartão de compartilhar tem 1080 px', () => {
   const antes = state.progress.find, tinha = state.progress.insignias.memoria;
@@ -700,7 +700,7 @@ teste('pauta no bandoneon: a nota da pauta é a do botão pedido e o acerto cont
   go('desafios'); $('[data-ch="pautabot"]').click(); $('#pHand').value = 'right'; $('#pStart').click();
   const n = $('#pPauta .nota'); ok(n, 'nota desenhada'); ok(pq.target>=55 && pq.target<=84, 'na faixa da clave de sol');
   pautaPress(pq.answer, pq.target, pkR); igual(pq.score, 1);
-  pq.active = false; $('[data-ch="find"]').click(); go('inicio');
+  pararPauta(); $('[data-ch="find"]').click(); go('inicio');
 });
 teste('Academia: exercício de uma mão mostra só aquela mão; o de duas mostra as duas com o fole', () => {
   go('academia'); carregarExercicio('n3-escada');
@@ -885,6 +885,39 @@ teste('Menus de Melodias, Acordes e Teclado: botões lado a lado, resumo enquant
   // os interruptores do Teclado dizem se estão ligados
   const nomes = state.showLabels; $('#labelsBtn').click(); igual($('#labelsBtn').getAttribute('aria-pressed'), String(!nomes)); $('#labelsBtn').click();
   tkAjustes(aberto); go('inicio');
+});
+teste('Menus nos outros desafios, no quiz, no RepeTCHÊ, no Bandoneon real, no Ritmo, nos Ajustes e na Academia', async () => {
+  go('desafios');
+  // Ache pelo som: menu em botões, barra de resumo com "Parar" e placar de bolinhas
+  $('[data-ch="ear"]').click(); igual($('[data-ch="ear"]').textContent, 'Ache pelo som');
+  igual($$('#eMenu .menu-seg button').length, 2 + 3 + 2, 'mão, fole e notas em botões');
+  $('#eStart').click(); ok($('#eMenu').hidden && !$('#eResumo').hidden && $$('#eResumoChips .menu-chip').length===3, 'rodando: só o resumo');
+  igual($$('#eBolinhas i').length, 10);
+  { const k = eq.hand==='left' ? ekL : ekR; earPress(eq.answer, eq.target, k); ok($('#eBolinhas i.certa'), 'acerto de primeira: bolinha cheia'); }
+  $('#eParar').click(); ok(!eq.active && !$('#eMenu').hidden && $('#eHud').hidden, '"Parar" devolve o menu');
+  // Pauta no bandoneon: trocar de desafio encerra a rodada
+  $('[data-ch="pautabot"]').click(); $('#pStart').click(); ok(pq.active && $('#pMenu').hidden);
+  $('[data-ch="staff"]').click(); ok(!pq.active && !$('#pMenu').hidden, 'trocar de desafio para a rodada e devolve o menu');
+  // Leitura na pauta: errar pinta a bolinha de vermelho
+  $('#sStart').click(); ok($('#sMenu').hidden && !$('#sResumo').hidden);
+  { const errada = (sq.d % 7 + 1) % 7; $(`#sAnswers [data-l="${errada}"]`).click(); ok($('#sBolinhas i.errada'), 'erro: bolinha vermelha'); }
+  go('inicio'); ok(!sq.active && !$('#sMenu').hidden, 'sair da aba para o desafio');
+  // Qual é a nota: "Começar quiz" (nunca "Recomeçar") e, durante o quiz, a barra com "Parar"
+  go('qualnota'); igual($('#qnComecarTxt').textContent, 'Começar quiz');
+  igual($$('#qnMenu .menu-seg button').length, 3 + 3);
+  Object.assign(qn, {ativo:true, rodada:0, acertos:0, semDica:0, hist:[], alvo:null}); qnBotoes();
+  ok($('#qnMenu').hidden && !$('#qnResumo').hidden && $$('#qnResumoChips .menu-chip').length===2, 'quiz: o menu vira o resumo');
+  $('#qnParar').click(); ok(!qn.ativo && !$('#qnMenu').hidden && $('#qnResumo').hidden, '"Parar" encerra o quiz');
+  // RepeTCHÊ, Bandoneon real, Ritmo e Ajustes: escolhas curtas em botões; ligar/desligar em interruptores
+  go('eco'); igual($$('.eco-opcoes .menu-seg button').length, 3 + 3 + 2); ok($('.eco-opcoes .menu-switch #ecoVozOn'));
+  go('microfone'); igual($$('.mc-menu .menu-seg button').length, 2);
+  go('ritmo'); igual($$('.rt-padroes .menu-seg button').length, Object.keys(PATTERNS).length); ok($('.rt-andamento .menu-switch #rClick'));
+  { const p = $('.rt-padroes .menu-seg button:last-child'); p.click(); igual($('#rPattern').value, p.dataset.v, 'escolher o padrão pelo botão'); $('.rt-padroes .menu-seg button').click(); }
+  go('ajustes'); igual($$('#v-ajustes .menu-seg').length, 3, 'nomes, animações e vibração em botões');
+  { const antes = $('#vibSel').value; $(`#v-ajustes [data-v="${antes==='1' ? '0' : '1'}"]`).click(); igual($('#vibSel').value, antes==='1' ? '0' : '1');
+    $(`#v-ajustes [data-v="${antes}"]`).click(); igual($('#vibSel').value, antes); }
+  go('academia'); igual($$('#acMais .menu-switch').length, 4, 'as opções da Academia são interruptores');
+  go('inicio');
 });
 teste('Encontre a nota: toca a nota ao começar, dica em dois passos, placar e para ao sair da aba', async () => {
   const salvo = JSON.stringify(state.progress.btnStats), achado = state.progress.find, pausa = ms => new Promise(r=>setTimeout(r, ms));

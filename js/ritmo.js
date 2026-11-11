@@ -78,3 +78,5 @@ function tap(){
   if(last.length>=12) logPractice('ritmo');
 }
 $('#rPad').addEventListener('pointerdown',e=>{ e.preventDefault(); tap(); });
+// Os padrões de acompanhamento viram botões lado a lado (js/menus.js)
+segmentar($('#rPattern'), {classe:'menu-seg-quebra'});

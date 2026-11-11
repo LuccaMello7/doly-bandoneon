@@ -142,3 +142,5 @@ $('#micToggle').onchange = async e=>{
   if(e.target.checked){ if(!await micStart()) e.target.checked=false; }
   else micStop();
 };
+// A direção do fole vira dois botões, com as bolinhas de cor (js/menus.js)
+segmentar($('#mcDir'), {rotulo:rotuloFole});

@@ -478,7 +478,7 @@
   <div class="segmento" role="group" aria-label="Challenge">
     <button class="btn sec on" data-ch="find">Find the note</button>
     <button class="btn sec" data-ch="staff">Staff reading</button>
-    <button class="btn sec" data-ch="ear">Ear</button>
+    <button class="btn sec" data-ch="ear">Find it by ear</button>
     <button class="btn sec" data-ch="pautabot">Staff to bandoneon</button>
   </div>
 
@@ -542,23 +542,24 @@
   </div>
 
   <div class="card" id="chEar" style="display:none">
-    <h2>Ear training</h2>
+    <h2>Find it by ear</h2>
     <p class="muted">The app plays a note and you find the button by ear alone. The bellows direction is shown on screen. Ten rounds; after two mistakes a hint appears.</p>
-    <div class="row">
-      <label>Hand: <select id="eHand"><option value="right">Right</option><option value="left">Left</option></select></label>
-      <label>Direction: <select id="eDir"><option value="open">Opening</option><option value="close">Closing</option><option value="rand">Random</option></select></label>
-      <label>Notes: <select id="eNotas"><option value="naturais">Natural notes only (C, D, E…)</option><option value="todas">All</option></select></label>
-      <label class="nomes-chk"><input type="checkbox" class="nomesToggle" checked> Note names</label>
+    <div class="menu" id="eMenu">
+      <div class="menu-grupos">
+        <div class="menu-grupo"><span class="menu-rot">Hand</span><select id="eHand"><option value="right">Right</option><option value="left">Left</option></select></div>
+        <div class="menu-grupo"><span class="menu-rot">Bellows</span><select id="eDir"><option value="open">Opening</option><option value="close">Closing</option><option value="rand">Both</option></select></div>
+        <div class="menu-grupo"><span class="menu-rot">Notes</span><select id="eNotas"><option value="naturais">Natural notes only (C, D, E…)</option><option value="todas">All</option></select></div>
+      </div>
+      <label class="menu-switch"><input type="checkbox" class="nomesToggle" checked><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Note names</b><small>Written on the keyboard buttons.</small></span></label>
+      <div class="menu-acoes"><button class="btn btn-grande" id="eStart"><svg aria-hidden="true"><use href="#i-play"/></svg>Start challenge</button></div>
     </div>
-    <div class="acao">
-      <button class="btn btn-grande" id="eStart"><svg aria-hidden="true"><use href="#i-play"/></svg>Start</button>
-      <button class="btn sec" id="eReplay" disabled><svg aria-hidden="true"><use href="#i-volume"/></svg>Hear it again</button>
-    </div>
+    <div class="menu-resumo" id="eResumo" hidden><div class="menu-chips" id="eResumoChips"></div><button type="button" class="btn ghost" id="eParar"><svg aria-hidden="true"><use href="#i-x"/></svg>Stop</button></div>
+    <div class="qn-hud desafio-hud" id="eHud" hidden><span class="qn-hud-item">Round <b><span id="eRodada">1</span><small>/10</small></b></span><span class="qn-bolinhas" id="eBolinhas" aria-hidden="true"></span><span class="qn-hud-item">Correct <b id="eAcertos">0</b></span></div>
     <div class="ouvido">
       <div class="onda" id="eOnda" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
       <div id="eDirPill" class="dirpill open" style="display:inline-block;visibility:hidden"></div>
       <div class="feedback" id="eFeed" aria-live="polite"></div>
-      <div class="muted" id="eScore"></div>
+      <button class="btn sec" id="eReplay" disabled><svg aria-hidden="true"><use href="#i-volume"/></svg>Hear it again</button>
     </div>
     <div class="instrument">
       <div class="side"><div class="label">Left</div><div id="ekLeft"></div></div>
@@ -569,18 +570,21 @@
   <div class="card" id="chPauta" style="display:none">
     <h2>Staff to bandoneon</h2>
     <p class="muted">The note appears on the staff and you play the button that gives that note, in the bellows direction shown. It is the bridge between reading music and playing. Ten rounds; after two mistakes the right button glows.</p>
-    <div class="row">
-      <label>Hand: <select id="pHand"><option value="right">Right (treble clef)</option><option value="left">Left (bass clef)</option></select></label>
-      <label>Direction: <select id="pDir"><option value="open">Opening</option><option value="close">Closing</option><option value="rand">Random</option></select></label>
-      <label>Notes: <select id="pNotas"><option value="naturais">Natural notes only (C, D, E…)</option><option value="todas">All</option></select></label>
-      <label class="nomes-chk"><input type="checkbox" class="nomesToggle" checked> Note names</label>
+    <div class="menu" id="pMenu">
+      <div class="menu-grupos">
+        <div class="menu-grupo"><span class="menu-rot">Hand</span><select id="pHand"><option value="right">Right (treble clef)</option><option value="left">Left (bass clef)</option></select></div>
+        <div class="menu-grupo"><span class="menu-rot">Bellows</span><select id="pDir"><option value="open">Opening</option><option value="close">Closing</option><option value="rand">Both</option></select></div>
+        <div class="menu-grupo"><span class="menu-rot">Notes</span><select id="pNotas"><option value="naturais">Natural notes only (C, D, E…)</option><option value="todas">All</option></select></div>
+      </div>
+      <label class="menu-switch"><input type="checkbox" class="nomesToggle" checked><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Note names</b><small>Written on the keyboard buttons.</small></span></label>
+      <div class="menu-acoes"><button class="btn btn-grande" id="pStart"><svg aria-hidden="true"><use href="#i-play"/></svg>Start challenge</button></div>
     </div>
-    <div class="acao"><button class="btn btn-grande" id="pStart"><svg aria-hidden="true"><use href="#i-play"/></svg>Start</button></div>
+    <div class="menu-resumo" id="pResumo" hidden><div class="menu-chips" id="pResumoChips"></div><button type="button" class="btn ghost" id="pParar"><svg aria-hidden="true"><use href="#i-x"/></svg>Stop</button></div>
+    <div class="qn-hud desafio-hud" id="pHud" hidden><span class="qn-hud-item">Round <b><span id="pRodada">1</span><small>/10</small></b></span><span class="qn-bolinhas" id="pBolinhas" aria-hidden="true"></span><span class="qn-hud-item">Correct <b id="pAcertos">0</b></span></div>
     <div class="pauta-desafio">
       <div class="staff" id="pPauta"></div>
       <div id="pDirPill" class="dirpill open" style="display:inline-block;visibility:hidden"></div>
       <div class="feedback" id="pFeed" aria-live="polite"></div>
-      <div class="muted" id="pScore"></div>
     </div>
     <div class="instrument">
       <div class="side"><div class="label">Left</div><div id="pkLeft"></div></div>
@@ -591,13 +595,15 @@
   <div class="card" id="chStaff" style="display:none">
     <h2>Staff reading</h2>
     <p class="muted">On the bandoneon, the right hand usually reads in <b>treble clef</b> and the left hand in <b>bass clef</b>. Name the note.</p>
-    <div class="row">
-      <label>Clef: <select id="sClef"><option value="treble">Treble (right hand)</option><option value="bass">Bass (left hand)</option><option value="mix">Mixed</option></select></label>
+    <div class="menu" id="sMenu">
+      <div class="menu-grupo"><span class="menu-rot">Clef</span><select id="sClef"><option value="treble">Treble (right hand)</option><option value="bass">Bass (left hand)</option><option value="mix">Mixed</option></select></div>
+      <div class="menu-acoes"><button class="btn btn-grande" id="sStart"><svg aria-hidden="true"><use href="#i-play"/></svg>Start challenge</button></div>
     </div>
-    <div class="acao"><button class="btn btn-grande" id="sStart"><svg aria-hidden="true"><use href="#i-play"/></svg>Start</button></div>
+    <div class="menu-resumo" id="sResumo" hidden><div class="menu-chips" id="sResumoChips"></div><button type="button" class="btn ghost" id="sParar"><svg aria-hidden="true"><use href="#i-x"/></svg>Stop</button></div>
+    <div class="qn-hud desafio-hud" id="sHud" hidden><span class="qn-hud-item">Round <b><span id="sRodada">1</span><small>/10</small></b></span><span class="qn-bolinhas" id="sBolinhas" aria-hidden="true"></span><span class="qn-hud-item">Correct <b id="sAcertos">0</b></span></div>
     <div class="staff" style="text-align:center;margin-top:14px"><svg id="staffSvg" width="320" height="150" viewBox="0 0 320 150"></svg></div>
     <div class="answers" id="sAnswers" style="text-align:center"></div>
-    <div style="text-align:center"><div class="feedback" id="sFeed"></div><div class="muted" id="sScore"></div></div>
+    <div style="text-align:center"><div class="feedback" id="sFeed"></div></div>
   </div>
 </section>
 
@@ -605,15 +611,18 @@
 <section id="v-qualnota" class="qn">
   <div class="pg-topo"><span class="pg-ic t-qualnota"><svg aria-hidden="true"><use href="#i-ear"/></svg></span><div><h2 class="pg-tit">Name that note</h2><p class="muted">The bandoneon plays a note. Listen, watch the sound wave and choose from four answers.</p></div></div>
   <div class="card qn-escolha">
-    <div class="row">
-      <label>Hand: <select id="qnMao"><option value="right">Right</option><option value="left">Left</option><option value="both">Both</option></select></label>
-      <label>Level: <select id="qnNivel"><option value="1">Easy: very different notes</option><option value="2">Medium: nearby notes</option><option value="3">Hard: neighbours and sharps</option></select></label>
-      <label class="nomes-chk"><input type="checkbox" id="qnRef" checked> Hear middle C before each question</label>
+    <div class="menu" id="qnMenu">
+      <div class="menu-grupos">
+        <div class="menu-grupo"><span class="menu-rot">Hand</span><select id="qnMao"><option value="right">Right</option><option value="left">Left</option><option value="both">Both</option></select></div>
+        <div class="menu-grupo"><span class="menu-rot">Level</span><select id="qnNivel"><option value="1">Easy: very different notes</option><option value="2">Medium: nearby notes</option><option value="3">Hard: neighbours and sharps</option></select></div>
+      </div>
+      <label class="menu-switch"><input type="checkbox" id="qnRef" checked><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Middle C before each question</b><small>A pop-up plays the C on its own, to compare.</small></span></label>
+      <div class="menu-acoes">
+        <button class="btn btn-grande" id="qnComecar"><svg aria-hidden="true"><use href="#i-play"/></svg><span id="qnComecarTxt">Start quiz</span></button>
+        <p class="muted menu-nota" id="qnRecorde"></p>
+      </div>
     </div>
-    <div class="acao">
-      <button class="btn btn-grande" id="qnComecar"><svg aria-hidden="true"><use href="#i-play"/></svg><span id="qnComecarTxt">Start</span></button>
-      <p class="muted acao-dica" id="qnRecorde"></p>
-    </div>
+    <div class="menu-resumo" id="qnResumo" hidden><div class="menu-chips" id="qnResumoChips"></div><button type="button" class="btn ghost" id="qnParar"><svg aria-hidden="true"><use href="#i-x"/></svg>Stop</button></div>
   </div>
 
   <div class="qn-palco" id="qnPalco">
@@ -625,7 +634,7 @@
       </div>
       <button type="button" class="qn-onda" id="qnOnda" aria-label="Hear the note again" disabled>
         <canvas id="qnCanvas" aria-hidden="true"></canvas>
-        <span class="qn-onda-rot" id="qnOndaRot">Press Start</span>
+        <span class="qn-onda-rot" id="qnOndaRot">Press Start quiz</span>
       </button>
       <p class="muted qn-onda-leg">The higher the note, the more waves fit on the screen. Tap the wave to hear it again.</p>
       <div class="qn-opcoes" id="qnOpcoes" role="group" aria-label="Options"></div>
@@ -831,12 +840,16 @@
 <section id="v-eco" class="eco">
   <div class="pg-topo"><span class="pg-ic t-eco pg-av"><img class="gaucho-av" src="../imagens/repetche/avatar.jpg" alt="" width="80" height="80"></span><div><h2 class="pg-tit"><span translate="no">RepeTCHÊ</span></h2><p class="muted">The bandoneon plays, you repeat. Each round the tune grows, until you play it all by ear.</p></div></div>
   <div class="card eco-escolha" id="ecoEscolha">
-    <div class="row eco-opcoes">
-      <label>Help: <select id="ecoAjuda"><option value="ver">See and hear (the buttons light up)</option><option value="fole">Bellows only (the buttons do not light up)</option><option value="ouvido">By ear only</option></select></label>
-      <label>Each round: <select id="ecoPasso"><option value="2">+2 notes</option><option value="3">+3 notes</option><option value="4">+4 notes</option></select></label>
-      <label>Speed: <select id="ecoVel"><option value="0.75">Slow</option><option value="1" selected>Normal</option></select></label>
-      <label class="nomes-chk"><input type="checkbox" id="ecoVozOn" checked> Gaucho voice</label>
-      <label class="nomes-chk" title="The microphone listens to your bandoneon: the note you play counts as the button"><input type="checkbox" id="ecoMicOn"> <svg aria-hidden="true"><use href="#i-mic"/></svg> Play on my bandoneon</label>
+    <div class="menu eco-opcoes">
+      <div class="menu-grupo"><span class="menu-rot">Help</span><select id="ecoAjuda"><option value="ver">See and hear (the buttons light up)</option><option value="fole">Bellows only (the buttons do not light up)</option><option value="ouvido">By ear only</option></select></div>
+      <div class="menu-grupos">
+        <div class="menu-grupo"><span class="menu-rot">Each round</span><select id="ecoPasso"><option value="2">+2 notes</option><option value="3">+3 notes</option><option value="4">+4 notes</option></select></div>
+        <div class="menu-grupo"><span class="menu-rot">Speed</span><select id="ecoVel"><option value="0.75">Slow</option><option value="1" selected>Normal</option></select></div>
+      </div>
+      <div class="menu-switches">
+        <label class="menu-switch"><input type="checkbox" id="ecoVozOn" checked><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Gaucho voice</b><small>He celebrates when you get it right.</small></span></label>
+        <label class="menu-switch"><input type="checkbox" id="ecoMicOn"><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Play on my bandoneon</b><small>The microphone listens to the instrument: the note you play counts as the button.</small></span></label>
+      </div>
     </div>
     <div class="eco-dia" id="ecoDia"></div>
     <h2 class="card-tit eco-escolha-tit">Choose the tune</h2>
@@ -897,7 +910,8 @@
   <div class="pg-topo"><span class="pg-ic t-ritmo"><svg aria-hidden="true"><use href="#i-metro"/></svg></span><div><h2 class="pg-tit">Rhythm</h2><p class="muted">Tango accompaniments, with a metronome and the play-along mode.</p></div></div>
   <div class="rt-palco">
     <div class="card rt-padrao">
-      <div class="rt-cab"><h3>Tango rhythms</h3><label class="rt-sel">Pattern <select id="rPattern"></select></label></div>
+      <div class="rt-cab"><h3>Tango rhythms</h3></div>
+      <div class="menu-grupo rt-padroes"><span class="menu-rot">Pattern</span><select id="rPattern"></select></div>
       <p id="rDesc" class="muted"></p>
       <div class="steps rt-steps" id="rSteps"></div>
       <div class="muted rt-conta">4/4 bar divided into eighth notes: 1 &amp; 2 &amp; 3 &amp; 4 &amp;</div>
@@ -908,7 +922,7 @@
       <div class="rt-bpm"><b id="rBpmVal">70</b><span>BPM</span></div>
       <input type="range" id="rBpm" min="50" max="140" value="70" aria-label="Tempo (BPM)">
       <div class="rt-faixa"><span>50</span><span>140</span></div>
-      <label class="ctl-liga"><input type="checkbox" id="rClick" checked> Metronome</label>
+      <label class="menu-switch"><input type="checkbox" id="rClick" checked><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Metronome</b><small>A click on every beat.</small></span></label>
       <div class="acao"><button class="btn btn-grande btn-play" id="rPlay">Play</button></div>
     </div>
   </div>
@@ -992,10 +1006,12 @@
     <details class="ac-mais" id="acMais">
       <summary class="btn sec"><svg aria-hidden="true"><use href="#i-gear"/></svg>More options</summary>
       <div class="ac-mais-painel">
-        <label title="A click on every beat in Challenge mode and when listening"><input type="checkbox" id="acMetro" checked> Metronome</label>
-        <label title="Starts again by itself while there are mistakes"><input type="checkbox" id="acRepetir"> Repeat</label>
-        <label title="Highlight of the next button and hand position (and the finger, if the teacher set the fingering)"><input type="checkbox" id="acGuia" checked> On-screen guide</label>
-        <label title="Play your own bandoneon: the app checks the note and rhythm through the microphone"><input type="checkbox" id="acMic"> <svg aria-hidden="true"><use href="#i-mic"/></svg> Microphone</label>
+        <div class="menu-switches">
+          <label class="menu-switch"><input type="checkbox" id="acMetro" checked><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Metronome</b><small>A click on every beat, in Challenge mode and when listening.</small></span></label>
+          <label class="menu-switch"><input type="checkbox" id="acRepetir"><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Repeat</b><small>Starts again on its own while there are mistakes.</small></span></label>
+          <label class="menu-switch"><input type="checkbox" id="acGuia" checked><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>On-screen guide</b><small>Highlights the next button and the hand position.</small></span></label>
+          <label class="menu-switch"><input type="checkbox" id="acMic"><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Microphone</b><small>Play your own bandoneon: the app checks note and rhythm.</small></span></label>
+        </div>
         <span id="acTrecho">Passage: from note <input type="number" id="acDe" min="1" value="1" class="ac-num-in" aria-label="First note of the passage"> to <input type="number" id="acAte" min="1" value="1" class="ac-num-in" aria-label="Last note of the passage"></span>
         <div class="row">
           <button type="button" class="btn sec" id="acTranscricaoBtn" aria-expanded="false"><svg aria-hidden="true"><use href="#i-file"/></svg>Transcription</button>
@@ -1075,10 +1091,11 @@
       <div class="af-cents" id="mcCents">Turn on the microphone and play a note.</div>
       <div class="af-nivel" aria-hidden="true"><span id="mcNivel"></span></div>
     </div>
-    <div class="row">
-      <label>Bellows: <select id="mcDir"><option value="open">Opening</option><option value="close">Closing</option></select></label>
-      <label class="nomes-chk"><input type="checkbox" class="nomesToggle" checked> Note names</label>
-      <span class="muted">The buttons that give the heard note in this direction light up on the keyboards.</span>
+    <div class="menu mc-menu">
+      <div class="menu-grupos">
+        <div class="menu-grupo"><span class="menu-rot">Bellows</span><select id="mcDir"><option value="open">Opening</option><option value="close">Closing</option></select><p class="menu-ajuda">The buttons that give the heard note in this direction light up on the keyboards.</p></div>
+        <div class="menu-grupo"><span class="menu-rot">Buttons</span><label class="menu-switch"><input type="checkbox" class="nomesToggle" checked><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Note names</b><small>Written on the keyboard buttons.</small></span></label></div>
+      </div>
     </div>
     <div class="instrument">
       <div class="side"><div class="label">Left hand</div><div id="mcLeft"></div></div>

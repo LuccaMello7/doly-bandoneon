@@ -400,3 +400,5 @@ ganchosAba.push(nova=>{
   if(nova!=='eco' && ecoMicDono){ micStop(); ecoMicDono = false; $('#ecoMicOn').checked = false; }
   if(nova==='eco'){ $('#ecoMicOn').checked = mic.on; if(!eco.fase){ Object.keys(ecoCache).forEach(k=>delete ecoCache[k]); renderEcoMusicas(); } }
 });
+// Ajuda, notas por rodada e velocidade viram botões lado a lado (js/menus.js)
+segmentar($('#ecoAjuda'), {rotulo:rotuloExplicado, classe:'menu-seg-2l'}); segmentar($('#ecoPasso')); segmentar($('#ecoVel'));

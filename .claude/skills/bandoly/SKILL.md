@@ -66,17 +66,24 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
 - Links internos: `data-go="aba"`. Endereços: `#aba`, `#licao-N`, `#teoria-N` e `#tarefa=…` (link do professor).
 - A **Teoria** é a 2ª trilha da aba Lições: não tem botão no `#subnav`, e `go('teoria')` acende o botão Lições.
 
-### Menus (menus.js): o jeito de escolher em Melodias, Acordes e Teclado
+### Menus (menus.js): o jeito de escolher em todo o app
 - `segmentar(select, {rotulo, classe})` troca um `<select>` curto por botões lado a lado. O `<select>` continua no DOM
   (escondido, classe `menu-fonte`) e é a fonte da verdade: o resto do código lê `.value` e escuta `change` como antes.
   Mudar `.value` pelo código acende o botão certo; se as opções mudarem (idioma, nomes das notas), os botões se refazem.
-  `rotuloFole` põe as bolinhas do fole; `rotuloSimbolo` mostra "Menor (m)" como símbolo grande e nome pequeno.
+  `rotuloFole` põe as bolinhas do fole (e as duas em "Os dois"); `rotuloSimbolo` mostra "Menor (m)" como símbolo grande
+  e nome pequeno; `rotuloExplicado` mostra "Nome (explicação)" ou "Nome: explicação" em duas linhas (classe `menu-seg-2l`).
 - Marcação: `.menu` > `.menu-grupos` > `.menu-grupo` com `.menu-rot` (rótulo em maiúsculas); interruptores
   `.menu-switch` (checkbox) ou `.menu-toggle` (botão com classe `on`), sempre com `.menu-trilho` e uma linha `<small>`.
 - Durante a prática o menu vira uma barra `.menu-resumo` com `menuChips([[rótulo, valor], …])` e "Parar":
-  Melodias (`melMenuJogo`), treino de Acordes (`#chResumo`), Encontre a nota. O Teclado não tem "rodando": os ajustes
+  Melodias (`melMenuJogo`), treino de Acordes (`#chResumo`), Encontre a nota. Nos outros desafios e no quiz,
+  `menuPratica(p, rodando)` faz isso sozinho com os ids `#{p}Menu`, `#{p}Resumo`, `#{p}ResumoChips` (o resumo sai
+  dos botões acesos) e `placarBolinhas(p, hist, rodada, acertos, ativo)` desenha o placar (`'certa'`, `'meia'`, `'errada'`).
+  Prefixos: `e` (Ache pelo som, ouvido.js), `p` (Pauta no bandoneon, teoria.js), `s` (Leitura na pauta), `qn` (quiz).
+  Trocar de desafio ou sair da aba chama `pararOutrosDesafios`. O desafio "Ouvido" agora se chama "Ache pelo som". O Teclado não tem "rodando": os ajustes
   recolhem (`tkAjustes`, guardado em `tecladoAjustes`) e o cabeçalho mostra o resumo.
-- O botão verde diz o que vai acontecer: "Começar desafio", "Ouvir a melodia" / "Começar a tocar", "Começar treino".
+- O botão verde diz o que vai acontecer: "Começar desafio", "Começar quiz", "Ouvir a melodia" / "Começar a tocar",
+  "Começar treino". Nunca "Recomeçar". Interruptores também no RepeTCHÊ, Ritmo, Bandoneon real, Academia (Mais opções) e
+  Ajustes (lá, o checkbox vira interruptor só por CSS).
 
 ### Desafios → Encontre a nota (desafios.js)
 - Cada rodada toca a nota sozinha (`fOuvir`; o cartão `#fAlvo` e "Ouvir a nota" repetem). Placar com bolinhas como no

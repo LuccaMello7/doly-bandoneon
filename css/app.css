@@ -2917,3 +2917,27 @@ main.prof-pagina{max-width:880px}
 #melMenu .menu-switches{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
 @media (max-width:899px){#tkMenu .menu-grupos{grid-template-columns:1fr}}
 @media (max-width:599px){#chMenu .menu-grupos{grid-template-columns:1fr}.menu-seg-tipos small{white-space:normal;line-height:1.15;font-size:10.5px}}
+/* ================== Menus nos outros desafios, quiz, RepeTCHÊ, Bandoneon real, Ritmo, Ajustes e Academia ================== */
+.menu-seg-2l>button{flex-direction:column;gap:1px;min-height:52px}
+.menu-seg-quebra{flex-wrap:wrap}
+.menu-seg-quebra>button{flex:1 1 auto}
+.menu-ponto.dupla{margin-left:-9px}
+#chEar>.menu,#chPauta>.menu,#chStaff>.menu,#eResumo,#pResumo,#sResumo{margin:14px 0 4px}
+.desafio-hud{margin:16px 0 4px}
+#chEar .ouvido #eReplay{margin-top:6px}
+#chStaff>.menu{max-width:620px}
+.qn-escolha .menu-resumo{margin:0}
+.eco-opcoes{display:grid;gap:14px;margin-bottom:18px}
+.mc-menu{margin:16px 0 6px}
+.mc-menu .menu-grupos{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.rt-padroes{margin:14px 0 4px}
+.rt-andamento .menu-switch{margin-top:16px;width:100%}
+.ac-mais-painel .menu-switches{grid-template-columns:1fr;gap:8px}
+.ac-mais-painel .menu-switch{padding:9px 12px;font-weight:400}
+#v-ajustes .settings .menu-seg{min-width:220px}
+#v-ajustes .settings input[type=checkbox]{appearance:none;-webkit-appearance:none;position:relative;flex:none;width:42px;height:24px;margin:0;border-radius:999px;background:var(--ferro);cursor:pointer;transition:background .2s}
+#v-ajustes .settings input[type=checkbox]::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--osso);box-shadow:0 1px 3px rgba(0,0,0,.35);transition:transform .25s var(--ease-saida)}
+#v-ajustes .settings input[type=checkbox]:checked{background:var(--lavanda)}
+#v-ajustes .settings input[type=checkbox]:checked::after{transform:translateX(18px)}
+#v-ajustes .settings input[type=checkbox]:focus-visible{outline:2px solid var(--lavanda);outline-offset:2px}
+@media (max-width:599px){.mc-menu .menu-grupos{grid-template-columns:1fr}#v-ajustes .settings .menu-seg{min-width:0;width:100%}}

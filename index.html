@@ -477,7 +477,7 @@
   <div class="segmento" role="group" aria-label="Desafio">
     <button class="btn sec on" data-ch="find">Encontre a nota</button>
     <button class="btn sec" data-ch="staff">Leitura na pauta</button>
-    <button class="btn sec" data-ch="ear">Ouvido</button>
+    <button class="btn sec" data-ch="ear">Ache pelo som</button>
     <button class="btn sec" data-ch="pautabot">Pauta no bandoneon</button>
   </div>
 
@@ -541,23 +541,24 @@
   </div>
 
   <div class="card" id="chEar" style="display:none">
-    <h2>Treino de ouvido</h2>
+    <h2>Ache pelo som</h2>
     <p class="muted">O app toca uma nota e você encontra o botão só pelo som. A direção do fole aparece na tela. Dez rodadas; depois de dois erros aparece uma dica.</p>
-    <div class="row">
-      <label>Mão: <select id="eHand"><option value="right">Direita</option><option value="left">Esquerda</option></select></label>
-      <label>Direção: <select id="eDir"><option value="open">Abrindo</option><option value="close">Fechando</option><option value="rand">Aleatória</option></select></label>
-      <label>Notas: <select id="eNotas"><option value="naturais">Só as naturais (Dó, Ré, Mi…)</option><option value="todas">Todas</option></select></label>
-      <label class="nomes-chk"><input type="checkbox" class="nomesToggle" checked> Nomes das notas</label>
+    <div class="menu" id="eMenu">
+      <div class="menu-grupos">
+        <div class="menu-grupo"><span class="menu-rot">Mão</span><select id="eHand"><option value="right">Direita</option><option value="left">Esquerda</option></select></div>
+        <div class="menu-grupo"><span class="menu-rot">Fole</span><select id="eDir"><option value="open">Abrindo</option><option value="close">Fechando</option><option value="rand">Os dois</option></select></div>
+        <div class="menu-grupo"><span class="menu-rot">Notas</span><select id="eNotas"><option value="naturais">Só as naturais (Dó, Ré, Mi…)</option><option value="todas">Todas</option></select></div>
+      </div>
+      <label class="menu-switch"><input type="checkbox" class="nomesToggle" checked><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Nomes das notas</b><small>Escritos nos botões do teclado.</small></span></label>
+      <div class="menu-acoes"><button class="btn btn-grande" id="eStart"><svg aria-hidden="true"><use href="#i-play"/></svg>Começar desafio</button></div>
     </div>
-    <div class="acao">
-      <button class="btn btn-grande" id="eStart"><svg aria-hidden="true"><use href="#i-play"/></svg>Começar</button>
-      <button class="btn sec" id="eReplay" disabled><svg aria-hidden="true"><use href="#i-volume"/></svg>Ouvir de novo</button>
-    </div>
+    <div class="menu-resumo" id="eResumo" hidden><div class="menu-chips" id="eResumoChips"></div><button type="button" class="btn ghost" id="eParar"><svg aria-hidden="true"><use href="#i-x"/></svg>Parar</button></div>
+    <div class="qn-hud desafio-hud" id="eHud" hidden><span class="qn-hud-item">Rodada <b><span id="eRodada">1</span><small>/10</small></b></span><span class="qn-bolinhas" id="eBolinhas" aria-hidden="true"></span><span class="qn-hud-item">Acertos <b id="eAcertos">0</b></span></div>
     <div class="ouvido">
       <div class="onda" id="eOnda" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
       <div id="eDirPill" class="dirpill open" style="display:inline-block;visibility:hidden"></div>
       <div class="feedback" id="eFeed" aria-live="polite"></div>
-      <div class="muted" id="eScore"></div>
+      <button class="btn sec" id="eReplay" disabled><svg aria-hidden="true"><use href="#i-volume"/></svg>Ouvir de novo</button>
     </div>
     <div class="instrument">
       <div class="side"><div class="label">Esquerda</div><div id="ekLeft"></div></div>
@@ -568,18 +569,21 @@
   <div class="card" id="chPauta" style="display:none">
     <h2>Pauta no bandoneon</h2>
     <p class="muted">A nota aparece na pauta e você toca o botão que dá essa nota, na direção do fole indicada. É a ponte entre ler a partitura e tocar. Dez rodadas; depois de dois erros o botão certo brilha.</p>
-    <div class="row">
-      <label>Mão: <select id="pHand"><option value="right">Direita (clave de sol)</option><option value="left">Esquerda (clave de fá)</option></select></label>
-      <label>Direção: <select id="pDir"><option value="open">Abrindo</option><option value="close">Fechando</option><option value="rand">Aleatória</option></select></label>
-      <label>Notas: <select id="pNotas"><option value="naturais">Só as naturais (Dó, Ré, Mi…)</option><option value="todas">Todas</option></select></label>
-      <label class="nomes-chk"><input type="checkbox" class="nomesToggle" checked> Nomes das notas</label>
+    <div class="menu" id="pMenu">
+      <div class="menu-grupos">
+        <div class="menu-grupo"><span class="menu-rot">Mão</span><select id="pHand"><option value="right">Direita (clave de sol)</option><option value="left">Esquerda (clave de fá)</option></select></div>
+        <div class="menu-grupo"><span class="menu-rot">Fole</span><select id="pDir"><option value="open">Abrindo</option><option value="close">Fechando</option><option value="rand">Os dois</option></select></div>
+        <div class="menu-grupo"><span class="menu-rot">Notas</span><select id="pNotas"><option value="naturais">Só as naturais (Dó, Ré, Mi…)</option><option value="todas">Todas</option></select></div>
+      </div>
+      <label class="menu-switch"><input type="checkbox" class="nomesToggle" checked><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Nomes das notas</b><small>Escritos nos botões do teclado.</small></span></label>
+      <div class="menu-acoes"><button class="btn btn-grande" id="pStart"><svg aria-hidden="true"><use href="#i-play"/></svg>Começar desafio</button></div>
     </div>
-    <div class="acao"><button class="btn btn-grande" id="pStart"><svg aria-hidden="true"><use href="#i-play"/></svg>Começar</button></div>
+    <div class="menu-resumo" id="pResumo" hidden><div class="menu-chips" id="pResumoChips"></div><button type="button" class="btn ghost" id="pParar"><svg aria-hidden="true"><use href="#i-x"/></svg>Parar</button></div>
+    <div class="qn-hud desafio-hud" id="pHud" hidden><span class="qn-hud-item">Rodada <b><span id="pRodada">1</span><small>/10</small></b></span><span class="qn-bolinhas" id="pBolinhas" aria-hidden="true"></span><span class="qn-hud-item">Acertos <b id="pAcertos">0</b></span></div>
     <div class="pauta-desafio">
       <div class="staff" id="pPauta"></div>
       <div id="pDirPill" class="dirpill open" style="display:inline-block;visibility:hidden"></div>
       <div class="feedback" id="pFeed" aria-live="polite"></div>
-      <div class="muted" id="pScore"></div>
     </div>
     <div class="instrument">
       <div class="side"><div class="label">Esquerda</div><div id="pkLeft"></div></div>
@@ -590,13 +594,15 @@
   <div class="card" id="chStaff" style="display:none">
     <h2>Leitura na pauta</h2>
     <p class="muted">No bandoneon, a mão direita costuma ler na <b>clave de sol</b> e a esquerda na <b>clave de fá</b>. Diga o nome da nota.</p>
-    <div class="row">
-      <label>Clave: <select id="sClef"><option value="treble">Sol (mão direita)</option><option value="bass">Fá (mão esquerda)</option><option value="mix">Misturadas</option></select></label>
+    <div class="menu" id="sMenu">
+      <div class="menu-grupo"><span class="menu-rot">Clave</span><select id="sClef"><option value="treble">Sol (mão direita)</option><option value="bass">Fá (mão esquerda)</option><option value="mix">Misturadas</option></select></div>
+      <div class="menu-acoes"><button class="btn btn-grande" id="sStart"><svg aria-hidden="true"><use href="#i-play"/></svg>Começar desafio</button></div>
     </div>
-    <div class="acao"><button class="btn btn-grande" id="sStart"><svg aria-hidden="true"><use href="#i-play"/></svg>Começar</button></div>
+    <div class="menu-resumo" id="sResumo" hidden><div class="menu-chips" id="sResumoChips"></div><button type="button" class="btn ghost" id="sParar"><svg aria-hidden="true"><use href="#i-x"/></svg>Parar</button></div>
+    <div class="qn-hud desafio-hud" id="sHud" hidden><span class="qn-hud-item">Rodada <b><span id="sRodada">1</span><small>/10</small></b></span><span class="qn-bolinhas" id="sBolinhas" aria-hidden="true"></span><span class="qn-hud-item">Acertos <b id="sAcertos">0</b></span></div>
     <div class="staff" style="text-align:center;margin-top:14px"><svg id="staffSvg" width="320" height="150" viewBox="0 0 320 150"></svg></div>
     <div class="answers" id="sAnswers" style="text-align:center"></div>
-    <div style="text-align:center"><div class="feedback" id="sFeed"></div><div class="muted" id="sScore"></div></div>
+    <div style="text-align:center"><div class="feedback" id="sFeed"></div></div>
   </div>
 </section>
 
@@ -604,15 +610,18 @@
 <section id="v-qualnota" class="qn">
   <div class="pg-topo"><span class="pg-ic t-qualnota"><svg aria-hidden="true"><use href="#i-ear"/></svg></span><div><h2 class="pg-tit">Qual é a nota?</h2><p class="muted">O bandoneon toca uma nota. Escute, olhe a onda do som e escolha entre quatro respostas.</p></div></div>
   <div class="card qn-escolha">
-    <div class="row">
-      <label>Mão: <select id="qnMao"><option value="right">Direita</option><option value="left">Esquerda</option><option value="both">As duas</option></select></label>
-      <label>Nível: <select id="qnNivel"><option value="1">Fácil: notas bem diferentes</option><option value="2">Médio: notas próximas</option><option value="3">Difícil: vizinhas e sustenidos</option></select></label>
-      <label class="nomes-chk"><input type="checkbox" id="qnRef" checked> Ouvir o Dó central antes de cada pergunta</label>
+    <div class="menu" id="qnMenu">
+      <div class="menu-grupos">
+        <div class="menu-grupo"><span class="menu-rot">Mão</span><select id="qnMao"><option value="right">Direita</option><option value="left">Esquerda</option><option value="both">As duas</option></select></div>
+        <div class="menu-grupo"><span class="menu-rot">Nível</span><select id="qnNivel"><option value="1">Fácil: notas bem diferentes</option><option value="2">Médio: notas próximas</option><option value="3">Difícil: vizinhas e sustenidos</option></select></div>
+      </div>
+      <label class="menu-switch"><input type="checkbox" id="qnRef" checked><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Dó central antes de cada pergunta</b><small>Um pop-up toca o Dó sozinho, para comparar.</small></span></label>
+      <div class="menu-acoes">
+        <button class="btn btn-grande" id="qnComecar"><svg aria-hidden="true"><use href="#i-play"/></svg><span id="qnComecarTxt">Começar quiz</span></button>
+        <p class="muted menu-nota" id="qnRecorde"></p>
+      </div>
     </div>
-    <div class="acao">
-      <button class="btn btn-grande" id="qnComecar"><svg aria-hidden="true"><use href="#i-play"/></svg><span id="qnComecarTxt">Começar</span></button>
-      <p class="muted acao-dica" id="qnRecorde"></p>
-    </div>
+    <div class="menu-resumo" id="qnResumo" hidden><div class="menu-chips" id="qnResumoChips"></div><button type="button" class="btn ghost" id="qnParar"><svg aria-hidden="true"><use href="#i-x"/></svg>Parar</button></div>
   </div>
 
   <div class="qn-palco" id="qnPalco">
@@ -624,7 +633,7 @@
       </div>
       <button type="button" class="qn-onda" id="qnOnda" aria-label="Ouvir a nota de novo" disabled>
         <canvas id="qnCanvas" aria-hidden="true"></canvas>
-        <span class="qn-onda-rot" id="qnOndaRot">Toque em Começar</span>
+        <span class="qn-onda-rot" id="qnOndaRot">Toque em Começar quiz</span>
       </button>
       <p class="muted qn-onda-leg">Quanto mais aguda a nota, mais ondas cabem na tela. Toque na onda para ouvir de novo.</p>
       <div class="qn-opcoes" id="qnOpcoes" role="group" aria-label="Alternativas"></div>
@@ -830,12 +839,16 @@
 <section id="v-eco" class="eco">
   <div class="pg-topo"><span class="pg-ic t-eco pg-av"><img class="gaucho-av" src="imagens/repetche/avatar.jpg" alt="" width="80" height="80"></span><div><h2 class="pg-tit"><span translate="no">RepeTCHÊ</span></h2><p class="muted">O bandoneon toca, você repete. A cada rodada a música cresce, até você tocar tudo de ouvido.</p></div></div>
   <div class="card eco-escolha" id="ecoEscolha">
-    <div class="row eco-opcoes">
-      <label>Ajuda: <select id="ecoAjuda"><option value="ver">Ver e ouvir (os botões acendem)</option><option value="fole">Só o fole (os botões não acendem)</option><option value="ouvido">Só ouvindo</option></select></label>
-      <label>A cada rodada: <select id="ecoPasso"><option value="2">+2 notas</option><option value="3">+3 notas</option><option value="4">+4 notas</option></select></label>
-      <label>Velocidade: <select id="ecoVel"><option value="0.75">Devagar</option><option value="1" selected>Normal</option></select></label>
-      <label class="nomes-chk"><input type="checkbox" id="ecoVozOn" checked> Voz do gaúcho</label>
-      <label class="nomes-chk" title="O microfone ouve o seu bandoneon: a nota tocada conta como o botão"><input type="checkbox" id="ecoMicOn"> <svg aria-hidden="true"><use href="#i-mic"/></svg> Tocar no meu bandoneon</label>
+    <div class="menu eco-opcoes">
+      <div class="menu-grupo"><span class="menu-rot">Ajuda</span><select id="ecoAjuda"><option value="ver">Ver e ouvir (os botões acendem)</option><option value="fole">Só o fole (os botões não acendem)</option><option value="ouvido">Só ouvindo</option></select></div>
+      <div class="menu-grupos">
+        <div class="menu-grupo"><span class="menu-rot">A cada rodada</span><select id="ecoPasso"><option value="2">+2 notas</option><option value="3">+3 notas</option><option value="4">+4 notas</option></select></div>
+        <div class="menu-grupo"><span class="menu-rot">Velocidade</span><select id="ecoVel"><option value="0.75">Devagar</option><option value="1" selected>Normal</option></select></div>
+      </div>
+      <div class="menu-switches">
+        <label class="menu-switch"><input type="checkbox" id="ecoVozOn" checked><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Voz do gaúcho</b><small>Ele comemora quando você acerta.</small></span></label>
+        <label class="menu-switch"><input type="checkbox" id="ecoMicOn"><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Tocar no meu bandoneon</b><small>O microfone ouve o instrumento: a nota tocada conta como o botão.</small></span></label>
+      </div>
     </div>
     <div class="eco-dia" id="ecoDia"></div>
     <h2 class="card-tit eco-escolha-tit">Escolha a música</h2>
@@ -896,7 +909,8 @@
   <div class="pg-topo"><span class="pg-ic t-ritmo"><svg aria-hidden="true"><use href="#i-metro"/></svg></span><div><h2 class="pg-tit">Ritmo</h2><p class="muted">Os acompanhamentos do tango, com metrônomo e o modo toque junto.</p></div></div>
   <div class="rt-palco">
     <div class="card rt-padrao">
-      <div class="rt-cab"><h3>Ritmos do tango</h3><label class="rt-sel">Padrão <select id="rPattern"></select></label></div>
+      <div class="rt-cab"><h3>Ritmos do tango</h3></div>
+      <div class="menu-grupo rt-padroes"><span class="menu-rot">Padrão</span><select id="rPattern"></select></div>
       <p id="rDesc" class="muted"></p>
       <div class="steps rt-steps" id="rSteps"></div>
       <div class="muted rt-conta">Compasso 4/4 dividido em colcheias: 1 e 2 e 3 e 4 e</div>
@@ -907,7 +921,7 @@
       <div class="rt-bpm"><b id="rBpmVal">70</b><span>BPM</span></div>
       <input type="range" id="rBpm" min="50" max="140" value="70" aria-label="Andamento (BPM)">
       <div class="rt-faixa"><span>50</span><span>140</span></div>
-      <label class="ctl-liga"><input type="checkbox" id="rClick" checked> Metrônomo</label>
+      <label class="menu-switch"><input type="checkbox" id="rClick" checked><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Metrônomo</b><small>Um clique em cada tempo.</small></span></label>
       <div class="acao"><button class="btn btn-grande btn-play" id="rPlay">Tocar</button></div>
     </div>
   </div>
@@ -991,10 +1005,12 @@
     <details class="ac-mais" id="acMais">
       <summary class="btn sec"><svg aria-hidden="true"><use href="#i-gear"/></svg>Mais opções</summary>
       <div class="ac-mais-painel">
-        <label title="Clique a cada tempo no modo Desafio e ao ouvir"><input type="checkbox" id="acMetro" checked> Metrônomo</label>
-        <label title="Recomeça sozinho enquanto houver erros"><input type="checkbox" id="acRepetir"> Repetir</label>
-        <label title="Destaque do próximo botão e posição das mãos (e o dedo, se o professor definiu a digitação)"><input type="checkbox" id="acGuia" checked> Guia na tela</label>
-        <label title="Toque no seu bandoneon: o app confere a nota e o ritmo pelo microfone"><input type="checkbox" id="acMic"> <svg aria-hidden="true"><use href="#i-mic"/></svg> Microfone</label>
+        <div class="menu-switches">
+          <label class="menu-switch"><input type="checkbox" id="acMetro" checked><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Metrônomo</b><small>Um clique em cada tempo, no Desafio e ao ouvir.</small></span></label>
+          <label class="menu-switch"><input type="checkbox" id="acRepetir"><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Repetir</b><small>Recomeça sozinho enquanto houver erros.</small></span></label>
+          <label class="menu-switch"><input type="checkbox" id="acGuia" checked><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Guia na tela</b><small>Destaca o próximo botão e a posição das mãos.</small></span></label>
+          <label class="menu-switch"><input type="checkbox" id="acMic"><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Microfone</b><small>Toque no seu bandoneon: o app confere nota e ritmo.</small></span></label>
+        </div>
         <span id="acTrecho">Trecho: da nota <input type="number" id="acDe" min="1" value="1" class="ac-num-in" aria-label="Primeira nota do trecho"> até <input type="number" id="acAte" min="1" value="1" class="ac-num-in" aria-label="Última nota do trecho"></span>
         <div class="row">
           <button type="button" class="btn sec" id="acTranscricaoBtn" aria-expanded="false"><svg aria-hidden="true"><use href="#i-file"/></svg>Transcrição</button>
@@ -1074,10 +1090,11 @@
       <div class="af-cents" id="mcCents">Ligue o microfone e toque uma nota.</div>
       <div class="af-nivel" aria-hidden="true"><span id="mcNivel"></span></div>
     </div>
-    <div class="row">
-      <label>Fole: <select id="mcDir"><option value="open">Abrindo</option><option value="close">Fechando</option></select></label>
-      <label class="nomes-chk"><input type="checkbox" class="nomesToggle" checked> Nomes das notas</label>
-      <span class="muted">Os botões que dão a nota ouvida nesta direção acendem nos teclados.</span>
+    <div class="menu mc-menu">
+      <div class="menu-grupos">
+        <div class="menu-grupo"><span class="menu-rot">Fole</span><select id="mcDir"><option value="open">Abrindo</option><option value="close">Fechando</option></select><p class="menu-ajuda">Os botões que dão a nota ouvida nesta direção acendem nos teclados.</p></div>
+        <div class="menu-grupo"><span class="menu-rot">Botões</span><label class="menu-switch"><input type="checkbox" class="nomesToggle" checked><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Nomes das notas</b><small>Escritos nos botões do teclado.</small></span></label></div>
+      </div>
     </div>
     <div class="instrument">
       <div class="side"><div class="label">Mão esquerda</div><div id="mcLeft"></div></div>
