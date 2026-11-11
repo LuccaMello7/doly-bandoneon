@@ -2544,3 +2544,24 @@ main.prof-pagina{max-width:880px}
   .prof-exemplo{padding:20px}
   .prof-acoes>*{flex:1 1 100%}
 }
+
+/* ===== Início: minuto guiado (o bisonoro em três passos) ===== */
+.ini-guia{position:relative;display:flex;align-items:center;gap:16px;flex-wrap:wrap;max-width:720px;margin:22px auto 0;padding:16px 20px;border-radius:16px;background:rgba(45,39,52,.82);box-shadow:inset 0 0 0 1px rgba(185,151,255,.35);animation:entra .4s var(--ease-saida) backwards}
+.ini-guia[hidden]{display:none}
+.ini-guia-pontos{display:flex;gap:6px;margin:0;padding:0;list-style:none;flex:none}
+.ini-guia-pontos li{width:8px;height:8px;border-radius:50%;background:var(--ameixa-3);box-shadow:inset 0 0 0 1px var(--borda-2);transition:background .3s,width .3s}
+.ini-guia-pontos li.atual{width:22px;border-radius:99px;background:var(--lavanda);box-shadow:none}
+.ini-guia-pontos li.feito{background:rgba(185,151,255,.5);box-shadow:none}
+.ini-guia-txt{flex:1 1 280px;margin:0;color:var(--cinza-2);font-size:15.5px;line-height:1.5}
+.ini-guia-txt b{color:var(--osso);font-weight:600}
+.ini-guia-acoes{display:flex;gap:10px;flex-wrap:wrap}
+.ini-guia-acoes:empty{display:none}
+.ini-guia-pular{border:0;background:none;color:var(--cinza);font:500 13px Onest,system-ui,sans-serif;cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:4px}
+.ini-guia-pular:hover{color:var(--osso)}
+.ini-guia-pular[hidden]{display:none}
+/* o botão que o guia pede: contorno lavanda pulsando, como a pista do teclado */
+.ini-k.guia{box-shadow:0 0 0 .09em var(--lavanda),0 0 .5em rgba(185,151,255,.6);animation:guiaPulso 1.4s ease-in-out infinite}
+@keyframes guiaPulso{50%{box-shadow:0 0 0 .14em var(--lavanda),0 0 .9em rgba(185,151,255,.75)}}
+.sem-mov .ini-k.guia{animation:none}
+@media (prefers-reduced-motion:reduce){.ini-k.guia{animation:none}}
+@media (max-width:599px){.ini-guia{margin:16px 12px 0;padding:14px 16px}.ini-guia-acoes{width:100%}.ini-guia-acoes>*{flex:1}}

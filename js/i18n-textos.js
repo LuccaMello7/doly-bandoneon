@@ -1569,6 +1569,13 @@ const TEXTOS = {
 'Teoria: quanto dura cada nota e como se conta o tempo.': ['Teoría: cuánto dura cada nota y cómo se cuenta el tiempo.', 'Theory: how long each note lasts and how to count the beat.'],
 // Conta opcional, Termos de Uso e Privacidade com conta (2026-11-10)
 'Conta': ['Cuenta', 'Account'],
+'Toque o botão aceso.': ['Tocá el botón encendido.', 'Tap the lit button.'],
+'Ele fica na mão direita. Ouça a nota.': ['Está en la mano derecha. Escuchá la nota.', 'It is on the right hand. Listen to the note.'],
+'Agora troque o fole e toque o mesmo botão.': ['Ahora cambiá el fuelle y tocá el mismo botón.', 'Now switch the bellows and tap the same button.'],
+'Use a chave {} ou a tecla Espaço.': ['Usá la llave {} o la tecla Espacio.', 'Use the {} switch or the Space key.'],
+'Nota diferente!': ['¡Otra nota!', 'A different note!'],
+'O mesmo botão deu {} {} e {} {}. Cada botão dá duas notas: uma abrindo o fole, outra fechando. Isso é o bisonoro.': ['El mismo botón dio {} {} y {} {}. Cada botón da dos notas: una abriendo el fuelle y otra cerrando. Eso es el bisonoro.', 'The same button gave {} {} and {} {}. Each button plays two notes: one opening the bellows, one closing. That is what bisonoric means.'],
+'Tocar à vontade': ['Tocar libremente', 'Play freely'],
 'Botão e dedo indicados': ['Botón y dedo indicados', 'Given button and finger'], // título antigo (histórico de tarefas)
 'Primeiras sequências': ['Primeras secuencias', 'First sequences'],
 'Tocar sequências curtas de botões vizinhos na mão direita, devagar e com atenção. Os botões são tocados pelos dedos 2 a 5; os polegares cuidam da válvula de ar (direito) e do apoio (esquerdo).': ['Tocar secuencias cortas de botones vecinos en la mano derecha, despacio y con atención. Los botones se tocan con los dedos 2 a 5; los pulgares se encargan de la válvula de aire (derecho) y del apoyo (izquierdo).', 'Play short sequences of neighbouring buttons with the right hand, slowly and carefully. The buttons are played with fingers 2 to 5; the thumbs look after the air valve (right) and support (left).'],

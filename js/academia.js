@@ -791,12 +791,12 @@ function acadEntrarCheia(){
   const sec = $('#v-academia'); sec.classList.add('ac-cheia'); document.documentElement.classList.add('tk-cheia-on');
   $('#acCheiaSair').hidden = false; $('#acMais').open = false;
   const fs = sec.requestFullscreen || sec.webkitRequestFullscreen;
-  if(fs){ try{ const p = fs.call(sec); if(p && p.catch) p.catch(()=>{}); }catch(e){} }
+  if(fs){ try{ const p = fs.call(sec); if(p && p.then) p.then(()=>deitarTela(true)).catch(()=>{}); }catch(e){} }
   acadAjustarCheia();
 }
 function acadSairCheia(){
   if(!acadCheia) return; acadCheia = false;
-  $('#v-academia').classList.remove('ac-cheia'); document.documentElement.classList.remove('tk-cheia-on');
+  deitarTela(false); $('#v-academia').classList.remove('ac-cheia'); document.documentElement.classList.remove('tk-cheia-on');
   $('#acCheiaSair').hidden = true; $('#acTeclados').classList.remove('lado');
   if(document.fullscreenElement || document.webkitFullscreenElement){
     const ex = document.exitFullscreen || document.webkitExitFullscreen;

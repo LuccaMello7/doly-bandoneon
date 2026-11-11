@@ -80,13 +80,13 @@ function entrarCheia(){
   tkMover($('#tkVer')); tkMover($('#foleBox'));
   tkBarra.hidden=false; tkCard.classList.add('cheia'); document.documentElement.classList.add('tk-cheia-on');
   const fs=tkCard.requestFullscreen||tkCard.webkitRequestFullscreen;
-  if(fs){ try{ const p=fs.call(tkCard); if(p && p.catch) p.catch(()=>{}); }catch(e){} }
+  if(fs){ try{ const p=fs.call(tkCard); if(p && p.then) p.then(()=>deitarTela(true)).catch(()=>{}); }catch(e){} }
   ajustarCheia(); $('#tkCheiaSair').focus();
 }
 function sairCheia(){
   if(!tkCheia) return; tkCheia=false;
   tkDevolver($('#tkVer')); tkDevolver($('#foleBox'));
-  tkBarra.hidden=true; tkCard.classList.remove('cheia'); $('#tkInstrumento').classList.remove('lado');
+  deitarTela(false); tkBarra.hidden=true; tkCard.classList.remove('cheia'); $('#tkInstrumento').classList.remove('lado');
   document.documentElement.classList.remove('tk-cheia-on');
   if(document.fullscreenElement||document.webkitFullscreenElement){
     const ex=document.exitFullscreen||document.webkitExitFullscreen;

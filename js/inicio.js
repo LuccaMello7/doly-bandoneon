@@ -49,6 +49,7 @@ function iniTrocaFole(d){
   ini.fole = d; $('#iniInst').dataset.fole = d;
   $$('#iniInst .ini-chave button').forEach(b=>b.setAttribute('aria-pressed', b.dataset.fole===d));
   segurados.forEach(it=>{ startVoice('ini'+it.mao+it.b.id, it.b[d], it.mao); iniVisor(it); });
+  iniGuiaFole();
   if(ini.demo && !segurados.length) iniVisor(ini.demo);
   iniRotular(true);
 }
@@ -67,7 +68,7 @@ function iniVisor(it){
   $('#iniAbre').textContent = noteName(it.b.open); $('#iniFecha').textContent = noteName(it.b.close);
 }
 function iniTocar(it){
-  iniFimDemo();
+  iniFimDemo(); iniGuiaToque(it);
   const k = it.mao + it.b.id; if(ini.ativos[k]) return;
   ini.ativos[k] = true; it.el.classList.add('on');
   startVoice('ini'+k, it.b[ini.fole], it.mao);
@@ -87,6 +88,46 @@ for(const mao of ['left','right']) iniKb[mao] = {
 $$('#iniInst .ini-chave button').forEach(b=>b.addEventListener('click', ()=>iniTrocaFole(b.dataset.fole)));
 window.addEventListener('blur', ()=>iniBotoes.forEach(iniSoltar));
 iniMontar();
+
+/* ---------- Minuto guiado: o bisonoro em três passos (primeira visita) ----------
+   1. toque o botão aceso → 2. troque o fole e toque o mesmo botão → 3. "nota diferente!" e o convite para a lição 1.
+   Segurar o botão e trocar o fole também conta. Feito ou pulado, não aparece mais (store 'guiaInicio'). */
+const guia = {passo:0, alvo:null, fole:null};
+function iniGuiaMostrar(){
+  if(store.get('guiaInicio', false) || !ini.demo){ $('#iniGuia').hidden = true; return; }
+  guia.alvo = ini.demo; guia.passo = 1; iniGuiaRender();
+}
+function iniGuiaRender(){
+  const box = $('#iniGuia'); box.hidden = !guia.passo;
+  if(!guia.passo) return;
+  $$('#iniGuia .ini-guia-pontos li').forEach((li, i)=>{ li.classList.toggle('feito', i < guia.passo - 1); li.classList.toggle('atual', i === guia.passo - 1); });
+  iniBotoes.forEach(x=>x.el.classList.remove('guia'));
+  if(guia.passo < 3 && guia.alvo) guia.alvo.el.classList.add('guia');
+  const dir = d => d==='open' ? t('abrindo') : t('fechando'), b = guia.alvo.b;
+  const [forte, resto] = guia.passo === 1 ? [t('Toque o botão aceso.'), t('Ele fica na mão direita. Ouça a nota.')]
+    : guia.passo === 2 ? [t('Agora troque o fole e toque o mesmo botão.'), t('Use a chave {} ou a tecla Espaço.', ini.fole==='open' ? t('Fechando') : t('Abrindo'))]
+    : [t('Nota diferente!'), t('O mesmo botão deu {} {} e {} {}. Cada botão dá duas notas: uma abrindo o fole, outra fechando. Isso é o bisonoro.',
+        noteName(b.open), dir('open'), noteName(b.close), dir('close'))];
+  $('#iniGuiaTxt').innerHTML = `<b>${escHtml(forte)}</b> ${escHtml(resto)}`;
+  $('#iniGuiaAcoes').innerHTML = guia.passo === 3
+    ? `<button type="button" class="btn" id="iniGuiaLicao">${t('Começar a primeira lição')}<svg aria-hidden="true"><use href="#i-arrow"/></svg></button><button type="button" class="btn-fantasma" id="iniGuiaLivre">${t('Tocar à vontade')}</button>` : '';
+  $('#iniGuiaPular').hidden = guia.passo === 3;
+  if(guia.passo === 3){ $('#iniGuiaLicao').onclick = ()=>{ iniGuiaFim(); $('#heroCta').click(); }; $('#iniGuiaLivre').onclick = iniGuiaFim; }
+}
+function iniGuiaToque(it){
+  if(!guia.passo || guia.passo === 3 || it !== guia.alvo) return;
+  if(guia.passo === 1){ guia.fole = ini.fole; guia.passo = 2; }
+  else if(ini.fole !== guia.fole) iniGuiaConcluir();
+  iniGuiaRender();
+}
+function iniGuiaFole(){ // segurando o botão aceso e trocando o fole também vale
+  if(guia.passo === 2 && guia.alvo && ini.fole !== guia.fole && ini.ativos[guia.alvo.mao + guia.alvo.b.id]){ iniGuiaConcluir(); iniGuiaRender(); }
+  else if(guia.passo === 2) iniGuiaRender();
+}
+function iniGuiaConcluir(){ guia.passo = 3; store.set('guiaInicio', true); contarUso('guia-inicio'); vibrar && vibrar(30); }
+function iniGuiaFim(){ guia.passo = 0; store.set('guiaInicio', true); iniBotoes.forEach(x=>x.el.classList.remove('guia')); iniGuiaRender(); }
+$('#iniGuiaPular').onclick = iniGuiaFim;
+iniGuiaMostrar();
 
 /* ---------- O caminho, em quatro partes ---------- */
 const INI_PARTES = [

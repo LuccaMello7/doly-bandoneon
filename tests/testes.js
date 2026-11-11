@@ -848,6 +848,22 @@ teste('botão de começar muda de cor enquanto roda (Melodias e Desafios)', () =
   fq.round = 10; nextFind(); ok(!$('#fStart').classList.contains('rodando') && /Começar/.test($('#fStart').textContent), 'no fim volta a Começar');
   go('inicio');
 });
+teste('Início: o minuto guiado ensina o bisonoro em três passos', () => {
+  go('inicio'); const antes = store.get('guiaInicio', false); store.set('guiaInicio', false);
+  iniDemo = true; iniMostrarDemo(); iniGuiaMostrar();
+  ok(!$('#iniGuia').hidden && guia.passo === 1, 'passo 1 aparece'); ok(guia.alvo.el.classList.contains('guia'), 'o botão pedido acende');
+  const outro = iniBotoes.find(x=>x !== guia.alvo); iniTocar(outro); iniSoltar(outro); igual(guia.passo, 1, 'outro botão não avança');
+  iniTocar(guia.alvo); iniSoltar(guia.alvo); igual(guia.passo, 2, 'tocou o aceso: passo 2');
+  iniTocar(guia.alvo); iniSoltar(guia.alvo); igual(guia.passo, 2, 'sem trocar o fole não avança');
+  iniTrocaFole(); iniTocar(guia.alvo); iniSoltar(guia.alvo); igual(guia.passo, 3, 'trocou o fole e tocou: pronto');
+  ok($('#iniGuiaTxt').textContent.includes(noteName(guia.alvo.b.open)) && $('#iniGuiaTxt').textContent.includes(noteName(guia.alvo.b.close)), 'mostra as duas notas');
+  ok(store.get('guiaInicio', false), 'não aparece de novo'); ok($('#iniGuiaLicao'), 'convite para a primeira lição');
+  $('#iniGuiaLivre').click(); ok($('#iniGuia').hidden && !$('.ini-k.guia'));
+  // segurar o botão e trocar o fole também vale
+  store.set('guiaInicio', false); iniTrocaFole('open'); iniDemo = true; iniMostrarDemo(); iniGuiaMostrar();
+  iniTocar(guia.alvo); iniTrocaFole(); igual(guia.passo, 3, 'segurando e trocando o fole'); iniSoltar(guia.alvo); iniGuiaFim();
+  iniTrocaFole('open'); store.set('guiaInicio', antes);
+});
 teste('Início: quem chega vê a apresentação; quem já praticou vê "Continuar"', () => {
   go('inicio');
   const dias = state.progress.days, sec = $('#v-inicio');

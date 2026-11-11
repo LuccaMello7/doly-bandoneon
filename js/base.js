@@ -76,3 +76,12 @@ function parseNote(s){
 function contarUso(nome){
   try{ if(window.goatcounter && goatcounter.count) goatcounter.count({path: 'uso/' + nome, title: nome, event: true}); }catch(e){}
 }
+
+// Tela cheia no celular: deita a tela sozinho (só funciona dentro da tela cheia, e nem todo navegador deixa)
+function deitarTela(sim){
+  try{
+    if(!screen.orientation || !matchMedia('(pointer:coarse)').matches) return;
+    if(sim) screen.orientation.lock('landscape').catch(()=>{});
+    else if(screen.orientation.unlock) screen.orientation.unlock();
+  }catch(e){}
+}
