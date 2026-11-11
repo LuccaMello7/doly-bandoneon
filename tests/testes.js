@@ -305,7 +305,8 @@ async function percorrerApp(){
 
   // Qual é a nota: pergunta, dicas, resposta errada e a tela do fim passam pela tradução
   { const antes = JSON.stringify(state.progress.qualnota || null); go('qualnota');
-    Object.assign(qn, {ativo:true, rodada:0, acertos:0, semDica:0, hist:[], alvo:null}); qnPergunta(); qnDica(); qnDica(); qnDica(); await esperar();
+    Object.assign(qn, {ativo:true, rodada:0, acertos:0, semDica:0, hist:[], alvo:null}); $('#qnRef').checked = true; qnPergunta(); await esperar();
+    $('#qnRefSeguir').click(); qnDica(); qnDica(); qnDica(); await esperar();
     qnResponder(qn.opcoes.find(m=>m!==qn.alvo.midi && !qn.riscadas.includes(m)) ?? qn.alvo.midi); await esperar();
     qn.rodada = QN_RODADAS; qnPergunta(); await esperar(); $('#qnMudar').click(); qnSair(); Object.assign(qn, {ativo:false, alvo:null}); qnRenderOpcoes(); qnRenderDicas();
     if(antes==='null') delete state.progress.qualnota; else state.progress.qualnota = JSON.parse(antes); }
@@ -858,7 +859,14 @@ teste('Qual é a nota: quatro alternativas, dica em três passos, resposta, onda
   const antes = JSON.stringify(state.progress.qualnota || null);
   go('qualnota'); $('#qnNivel').value = '1'; $('#qnMao').value = 'right';
   const novaRodada = () => Object.assign(qn, {ativo:true, rodada:0, acertos:0, semDica:0, hist:[], alvo:null});
-  novaRodada(); qnPergunta();
+  // com o Dó ligado, um pop-up toca o Dó sozinho; a pergunta só vem quando ele fecha
+  $('#qnRef').checked = true; novaRodada(); qnPergunta();
+  ok($('#qnRefDlg').open && qn.esperaRef, 'o pop-up do Dó central abre antes da pergunta');
+  ok($('#qnRefPasso').textContent.includes('1'), 'o pop-up diz qual é a pergunta');
+  $('#qnRefSeguir').click(); ok(!$('#qnRefDlg').open && !qn.esperaRef, '"Ouvir a pergunta" fecha o pop-up');
+  qnPergunta(); $('#qnRefSem').click();
+  ok(!$('#qnRefDlg').open && !$('#qnRef').checked, '"Seguir sem o Dó" desliga o Dó nas próximas perguntas');
+  qnPergunta(); ok(!$('#qnRefDlg').open, 'sem o Dó, a pergunta vem direto');
   igual($$('#qnOpcoes .qn-op').length, 4);
   ok(qn.opcoes.includes(qn.alvo.midi), 'a certa está entre as alternativas');
   igual(new Set(qn.opcoes.map(qnClasse)).size, 4, 'quatro nomes diferentes');
@@ -894,7 +902,7 @@ teste('Qual é a nota: quatro alternativas, dica em três passos, resposta, onda
   // as duas mãos: a nota pode vir da esquerda
   $('#qnMao').value = 'both'; ok(qnBanco().some(x=>x.mao==='left') && qnBanco().some(x=>x.mao==='right'));
   qnSair(); Object.assign(qn, {ativo:false, alvo:null}); qnRenderOpcoes(); qnRenderDicas(); qnBolinhas();
-  $('#qnNivel').value = '1'; $('#qnMao').value = 'right';
+  $('#qnNivel').value = '1'; $('#qnMao').value = 'right'; $('#qnRef').checked = true; store.set('qualnotaRef', true);
   if(antes==='null') delete state.progress.qualnota; else state.progress.qualnota = JSON.parse(antes);
   saveProgress(); await esperar(); go('inicio');
 });

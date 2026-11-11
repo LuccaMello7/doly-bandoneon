@@ -1,12 +1,13 @@
 /* ================== Qual é a nota? (Treinar → Qual nota?) ==================
    Um quiz de ouvido: o bandoneon toca a nota de um botão, a onda do som aparece na tela e o aluno escolhe
-   entre quatro nomes. Ao lado ficam "Ouça outra vez" (repetir não custa nada) e "Dica", em três passos:
+   entre quatro nomes. A referência (o Dó central) não toca colada na pergunta: um pop-up grande avisa e toca o Dó
+   sozinho, e a nota da pergunta só vem quando o aluno aperta "Ouvir a pergunta" (assim nunca parecem duas notas). Ao lado ficam "Ouça outra vez" (repetir não custa nada) e "Dica", em três passos:
    onde fica no teclado (a zona no mapa da mão), se é mais aguda ou mais grave que o Dó central e, por fim,
    duas alternativas erradas riscadas. Acerto com dica conta, mas o recorde é só de acertos sem dica.
    Dez perguntas por rodada; as notas que o aluno erra voltam mais vezes (progresso em progress.qualnota). */
 const QN_RODADAS = 10, QN_DO = 60; // a referência é o Dó central (Dó4)
 const qn = {ativo:false, sessao:0, rodada:0, acertos:0, semDica:0, alvo:null, opcoes:[], respondeu:false,
-  dicas:0, riscadas:[], zona:null, hist:[], timers:[], tocouEm:0};
+  dicas:0, riscadas:[], zona:null, hist:[], timers:[], tocouEm:0, esperaRef:false};
 const qnProg = () => state.progress.qualnota || (state.progress.qualnota = {melhor:null, notas:{}});
 const qnClasse = m => ((m % 12) + 12) % 12;
 const qnNatural = m => NATURAIS.includes(qnClasse(m));
@@ -100,20 +101,41 @@ function qnOnda(inicio, dur){
 function qnRotulo(txt){ $('#qnOndaRot').textContent = txt; }
 
 /* ---------- Tocar ---------- */
-// A nota da pergunta, com o Dó central antes quando "Ouvir um Dó antes" está ligado
-function qnTocar(comReferencia){
+// A nota da pergunta, sempre sozinha
+function qnTocar(){
   if(!qn.alvo) return;
-  const c = ac(), t0 = c.currentTime + 0.05, ref = comReferencia && $('#qnRef').checked;
-  qn.tocouEm = performance.now();
-  if(ref){ playNote(QN_DO, 0.6, 'right', t0); qnRotulo(t('Referência: {}', noteName(QN_DO))); }
-  const ta = ref ? 0.95 : 0;
-  playNote(qn.alvo.midi, 1.3, qn.alvo.mao, t0 + ta);
-  qnOnda(ta + 0.05, 1.3);
-  const depois = ()=>qnRotulo(qn.respondeu ? qnRotuloResposta() : t('Qual é esta nota?'));
-  ref ? qnDepois(ta * 1000, depois) : depois();
+  const c = ac(); qn.tocouEm = performance.now();
+  playNote(qn.alvo.midi, 1.3, qn.alvo.mao, c.currentTime + 0.05);
+  qnOnda(0.05, 1.3);
+  qnRotulo(qn.respondeu ? qnRotuloResposta() : t('Qual é esta nota?'));
   anelToque($('#qnOnda'));
 }
-function qnRepetir(){ if(qn.alvo && performance.now() - qn.tocouEm > 250) qnTocar(false); }
+function qnRepetir(){ if(qn.alvo && performance.now() - qn.tocouEm > 250) qnTocar(); }
+
+/* ---------- O pop-up do Dó central, antes de cada pergunta ---------- */
+// Abre, toca o Dó sozinho e espera: a pergunta só toca quando o pop-up fecha (botão, Enter ou Esc)
+function qnAbrirRef(){
+  const d = $('#qnRefDlg'); qn.esperaRef = true;
+  $('#qnRefNome').textContent = noteName(QN_DO);
+  $('#qnRefPasso').textContent = t('Antes da pergunta {} de 10', qn.rodada + 1);
+  if(!d.open) d.showModal();
+  $('#qnRefSeguir').focus();
+  qnDepois(350, qnTocarDo);
+}
+function qnTocarDo(){
+  ac(); playNote(QN_DO, 1.1, 'right');
+  const disco = $('#qnRefDisco'); disco.classList.remove('soando'); void disco.offsetWidth; disco.classList.add('soando');
+}
+// Fechou (pelo botão, Enter ou Esc): um respiro e então a pergunta, sozinha
+function qnRefFechou(){
+  if(!qn.esperaRef) return;
+  qn.esperaRef = false; qnLimparTimers();
+  if(qn.ativo && qn.alvo && !qn.respondeu) qnDepois(350, qnTocar);
+}
+function qnFecharRef(semDo){
+  if(semDo){ $('#qnRef').checked = false; store.set('qualnotaRef', false); }
+  qnRefFechou(); const d = $('#qnRefDlg'); if(d.open) d.close();
+}
 function qnOuvirDo(){ ac(); playNote(QN_DO, 0.9, 'right'); qnRotulo(t('Referência: {}', noteName(QN_DO))); qnOnda(0.05, 0.9);
   if(qn.alvo) qnDepois(1100, ()=>qnRotulo(qn.respondeu ? qnRotuloResposta() : t('Qual é esta nota?'))); }
 const qnRotuloResposta = () => `${noteName(qn.alvo.midi)} · ${Math.round(freq(qn.alvo.midi))} Hz`;
@@ -224,7 +246,7 @@ function qnPergunta(){
   qnRenderOpcoes(); qnRenderDicas(); qnBolinhas();
   $('#qnProxima').hidden = true;
   qnFeed(t('Escute e escolha a nota.'));
-  qnDepois(250, ()=>qnTocar(true));
+  if($('#qnRef').checked) qnAbrirRef(); else qnDepois(250, qnTocar);
 }
 function qnResponder(m){
   if(!qn.ativo || !qn.alvo || qn.respondeu || qn.riscadas.includes(m)) return;
@@ -249,7 +271,7 @@ function qnResponder(m){
   requestAnimationFrame(()=>$('#qnProxima').focus({preventScroll:true}));
 }
 function qnFim(){
-  qn.ativo = false; qnLimparTimers();
+  qn.ativo = false; qnLimparTimers(); qn.esperaRef = false; if($('#qnRefDlg').open) $('#qnRefDlg').close();
   const p = qnProg(), recorde = qn.semDica > 0 && (p.melhor==null || qn.semDica > p.melhor);
   if(p.melhor==null || qn.semDica > p.melhor){ p.melhor = qn.semDica; saveProgress(); }
   logPractice('desafio');
@@ -270,7 +292,7 @@ function qnRecorde(){
   const m = qnProg().melhor;
   $('#qnRecorde').textContent = m==null ? t('Dez perguntas por rodada. Repetir o som não custa nada.') : t('Seu recorde: {} de 10 sem dica.', m);
 }
-function qnSair(){ qnLimparTimers(); if(qnRaf){ cancelAnimationFrame(qnRaf); qnRaf = 0; } }
+function qnSair(){ qnLimparTimers(); qn.esperaRef = false; if($('#qnRefDlg').open) $('#qnRefDlg').close(); if(qnRaf){ cancelAnimationFrame(qnRaf); qnRaf = 0; } }
 
 /* ---------- Ligações ---------- */
 $('#qnComecar').onclick = qnComecar;
@@ -278,6 +300,13 @@ $('#qnRepetir').onclick = qnRepetir;
 $('#qnOnda').onclick = qnRepetir;
 $('#qnOuvirDo').onclick = qnOuvirDo;
 $('#qnDicaBtn').onclick = qnDica;
+$('#qnRefSeguir').onclick = ()=>qnFecharRef(false);
+$('#qnRefDeNovo').onclick = qnTocarDo;
+$('#qnRefSem').onclick = ()=>qnFecharRef(true);
+$('#qnRefDlg').addEventListener('close', qnRefFechou); // o Esc também fecha
+// a escolha do Dó fica guardada (ligada por padrão)
+$('#qnRef').checked = store.get('qualnotaRef', true) !== false;
+$('#qnRef').onchange = ()=>store.set('qualnotaRef', $('#qnRef').checked);
 $('#qnProxima').onclick = ()=>{ if(qn.ativo && qn.respondeu) qnPergunta(); };
 $('#qnDeNovo').onclick = qnComecar;
 $('#qnMudar').onclick = ()=>{ $('#qnFim').hidden = true; $('#qnPalco').hidden = false; qn.alvo = null; qnRenderOpcoes(); qnRenderDicas(); qnBolinhas();

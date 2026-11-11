@@ -67,8 +67,9 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
 - A **Teoria** é a 2ª trilha da aba Lições: não tem botão no `#subnav`, e `go('teoria')` acende o botão Lições.
 
 ### Qual é a nota? (qualnota.js, aba "Qual nota?" em Treinar)
-- Quiz de ouvido: toca a nota de um botão (com o Dó central antes, se "Ouvir um Dó antes" estiver ligado) e mostra
-  quatro nomes. Níveis: fácil (naturais, erradas a 5+ semitons), médio (naturais, até 9), difícil (com sustenidos, até 5).
+- Quiz de ouvido: toca a nota de um botão e mostra quatro nomes. O Dó central de referência nunca toca colado na
+  pergunta (parecia que eram duas notas): com "Ouvir o Dó central antes de cada pergunta" ligado (padrão; guardado em
+  `qualnotaRef`), o pop-up `#qnRefDlg` toca o Dó sozinho e a pergunta só toca quando ele fecha (`qnAbrirRef`). Níveis: fácil (naturais, erradas a 5+ semitons), médio (naturais, até 9), difícil (com sustenidos, até 5).
   As erradas nunca repetem o nome da certa em outra oitava. O sorteio pesa as notas erradas (`qnPeso`).
 - A onda é o som de verdade: um `AnalyserNode` ligado ao `master` (`qnAnalisador`), janela fixa de 1024 amostras e
   gatilho na subida pelo zero mais íngreme; com movimento reduzido, uma foto só. No Edge invisível o relógio de áudio

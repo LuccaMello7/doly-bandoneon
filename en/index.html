@@ -571,7 +571,7 @@
     <div class="row">
       <label>Hand: <select id="qnMao"><option value="right">Right</option><option value="left">Left</option><option value="both">Both</option></select></label>
       <label>Level: <select id="qnNivel"><option value="1">Easy: very different notes</option><option value="2">Medium: nearby notes</option><option value="3">Hard: neighbours and sharps</option></select></label>
-      <label class="nomes-chk"><input type="checkbox" id="qnRef" checked> Hear a C first, to compare</label>
+      <label class="nomes-chk"><input type="checkbox" id="qnRef" checked> Hear middle C before each question</label>
     </div>
     <div class="acao">
       <button class="btn btn-grande" id="qnComecar"><svg aria-hidden="true"><use href="#i-play"/></svg><span id="qnComecarTxt">Start</span></button>
@@ -604,7 +604,7 @@
           <button class="btn sec" id="qnRepetir" disabled><svg aria-hidden="true"><use href="#i-rotate"/></svg>Replay the note</button>
           <button class="btn ghost" id="qnOuvirDo"><svg aria-hidden="true"><use href="#i-note"/></svg>Hear middle C</button>
         </div>
-        <p class="muted qn-teclas"><kbd>Space</kbd> replays · <kbd>1</kbd>–<kbd>4</kbd> answer · <kbd>D</kbd> hint</p>
+        <p class="muted qn-teclas"><span><kbd>Space</kbd> replays</span><span><kbd>1</kbd>–<kbd>4</kbd> answer</span><span><kbd>D</kbd> hint</span></p>
       </div>
       <div class="card qn-bloco qn-dica">
         <h3><svg aria-hidden="true"><use href="#i-question"/></svg><span id="qnDicaTit">Hint</span></h3>
@@ -1294,6 +1294,18 @@
     </div>
   </div>
 </section>
+<!-- Qual é a nota?: o Dó central antes de cada pergunta (js/qualnota.js) -->
+<dialog class="boas qn-ref-dlg" id="qnRefDlg" aria-labelledby="qnRefTit" aria-describedby="qnRefTxt">
+  <div class="qn-ref-disco" id="qnRefDisco" aria-hidden="true"><svg aria-hidden="true"><use href="#i-note"/></svg><b translate="no" id="qnRefNome"></b></div>
+  <p class="qn-ref-passo" id="qnRefPasso"></p>
+  <h2 id="qnRefTit">First, listen to middle C</h2>
+  <p class="muted" id="qnRefTxt">It is only the reference, for comparison. Then comes the question note, on its own.</p>
+  <div class="qn-ref-acoes">
+    <button type="button" class="btn btn-grande" id="qnRefSeguir"><svg aria-hidden="true"><use href="#i-play"/></svg>Hear the question</button>
+    <button type="button" class="btn sec" id="qnRefDeNovo"><svg aria-hidden="true"><use href="#i-rotate"/></svg>Hear the C again</button>
+  </div>
+  <button type="button" class="qn-ref-sem" id="qnRefSem">Carry on without the C in the next questions</button>
+</dialog>
 <dialog class="boas" id="boasVindas" aria-labelledby="bvTit">
   <form method="dialog" id="bvForm">
     <h2 id="bvTit">Welcome to BanDoly!</h2>

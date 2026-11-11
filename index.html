@@ -570,7 +570,7 @@
     <div class="row">
       <label>Mão: <select id="qnMao"><option value="right">Direita</option><option value="left">Esquerda</option><option value="both">As duas</option></select></label>
       <label>Nível: <select id="qnNivel"><option value="1">Fácil: notas bem diferentes</option><option value="2">Médio: notas próximas</option><option value="3">Difícil: vizinhas e sustenidos</option></select></label>
-      <label class="nomes-chk"><input type="checkbox" id="qnRef" checked> Ouvir um Dó antes, para comparar</label>
+      <label class="nomes-chk"><input type="checkbox" id="qnRef" checked> Ouvir o Dó central antes de cada pergunta</label>
     </div>
     <div class="acao">
       <button class="btn btn-grande" id="qnComecar"><svg aria-hidden="true"><use href="#i-play"/></svg><span id="qnComecarTxt">Começar</span></button>
@@ -1293,6 +1293,18 @@
     </div>
   </div>
 </section>
+<!-- Qual é a nota?: o Dó central antes de cada pergunta (js/qualnota.js) -->
+<dialog class="boas qn-ref-dlg" id="qnRefDlg" aria-labelledby="qnRefTit" aria-describedby="qnRefTxt">
+  <div class="qn-ref-disco" id="qnRefDisco" aria-hidden="true"><svg aria-hidden="true"><use href="#i-note"/></svg><b translate="no" id="qnRefNome"></b></div>
+  <p class="qn-ref-passo" id="qnRefPasso"></p>
+  <h2 id="qnRefTit">Primeiro, escute o Dó central</h2>
+  <p class="muted" id="qnRefTxt">Ele é só a referência, para comparar. Depois vem a nota da pergunta, sozinha.</p>
+  <div class="qn-ref-acoes">
+    <button type="button" class="btn btn-grande" id="qnRefSeguir"><svg aria-hidden="true"><use href="#i-play"/></svg>Ouvir a pergunta</button>
+    <button type="button" class="btn sec" id="qnRefDeNovo"><svg aria-hidden="true"><use href="#i-rotate"/></svg>Ouvir o Dó de novo</button>
+  </div>
+  <button type="button" class="qn-ref-sem" id="qnRefSem">Seguir sem o Dó nas próximas perguntas</button>
+</dialog>
 <dialog class="boas" id="boasVindas" aria-labelledby="bvTit">
   <form method="dialog" id="bvForm">
     <h2 id="bvTit">Bem-vindo ao BanDoly!</h2>

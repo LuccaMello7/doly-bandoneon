@@ -571,7 +571,7 @@
     <div class="row">
       <label>Mano: <select id="qnMao"><option value="right">Derecha</option><option value="left">Izquierda</option><option value="both">Las dos</option></select></label>
       <label>Nivel: <select id="qnNivel"><option value="1">Fácil: notas bien distintas</option><option value="2">Medio: notas cercanas</option><option value="3">Difícil: vecinas y sostenidos</option></select></label>
-      <label class="nomes-chk"><input type="checkbox" id="qnRef" checked> Escuchar un Do antes, para comparar</label>
+      <label class="nomes-chk"><input type="checkbox" id="qnRef" checked> Escuchar el Do central antes de cada pregunta</label>
     </div>
     <div class="acao">
       <button class="btn btn-grande" id="qnComecar"><svg aria-hidden="true"><use href="#i-play"/></svg><span id="qnComecarTxt">Comenzar</span></button>
@@ -604,7 +604,7 @@
           <button class="btn sec" id="qnRepetir" disabled><svg aria-hidden="true"><use href="#i-rotate"/></svg>Repetir la nota</button>
           <button class="btn ghost" id="qnOuvirDo"><svg aria-hidden="true"><use href="#i-note"/></svg>Escuchar el Do central</button>
         </div>
-        <p class="muted qn-teclas"><kbd>Espacio</kbd> repite · <kbd>1</kbd>–<kbd>4</kbd> responden · <kbd>D</kbd> pista</p>
+        <p class="muted qn-teclas"><span><kbd>Espacio</kbd> repite</span><span><kbd>1</kbd>–<kbd>4</kbd> responden</span><span><kbd>D</kbd> pista</span></p>
       </div>
       <div class="card qn-bloco qn-dica">
         <h3><svg aria-hidden="true"><use href="#i-question"/></svg><span id="qnDicaTit">Pista</span></h3>
@@ -1294,6 +1294,18 @@
     </div>
   </div>
 </section>
+<!-- Qual é a nota?: o Dó central antes de cada pergunta (js/qualnota.js) -->
+<dialog class="boas qn-ref-dlg" id="qnRefDlg" aria-labelledby="qnRefTit" aria-describedby="qnRefTxt">
+  <div class="qn-ref-disco" id="qnRefDisco" aria-hidden="true"><svg aria-hidden="true"><use href="#i-note"/></svg><b translate="no" id="qnRefNome"></b></div>
+  <p class="qn-ref-passo" id="qnRefPasso"></p>
+  <h2 id="qnRefTit">Primero, escuchá el Do central</h2>
+  <p class="muted" id="qnRefTxt">Es solo la referencia, para comparar. Después viene la nota de la pregunta, sola.</p>
+  <div class="qn-ref-acoes">
+    <button type="button" class="btn btn-grande" id="qnRefSeguir"><svg aria-hidden="true"><use href="#i-play"/></svg>Escuchar la pregunta</button>
+    <button type="button" class="btn sec" id="qnRefDeNovo"><svg aria-hidden="true"><use href="#i-rotate"/></svg>Escuchar el Do de nuevo</button>
+  </div>
+  <button type="button" class="qn-ref-sem" id="qnRefSem">Seguir sin el Do en las próximas preguntas</button>
+</dialog>
 <dialog class="boas" id="boasVindas" aria-labelledby="bvTit">
   <form method="dialog" id="bvForm">
     <h2 id="bvTit">¡Bienvenido a BanDoly!</h2>

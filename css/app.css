@@ -2721,3 +2721,21 @@ main.prof-pagina{max-width:880px}
   .qn-hud{flex-wrap:wrap}
   .qn-bolinhas{order:3;width:100%;justify-content:flex-start}
 }
+/* Qual é a nota?: o pop-up do Dó central */
+.qn-ref-dlg{max-width:440px;padding:30px 26px 20px}
+.qn-ref-disco{position:relative;width:96px;height:96px;margin:2px auto 16px;border-radius:50%;display:grid;place-items:center;align-content:center;gap:2px;
+  background:radial-gradient(circle at 35% 30%,#fdfbf7,#d6cec3 72%);color:var(--ameixa);box-shadow:0 12px 30px rgba(0,0,0,.45),inset 0 -4px 10px rgba(0,0,0,.12)}
+.qn-ref-disco svg[aria-hidden]{width:22px;height:22px;color:#6b5a8a}
+.qn-ref-disco b{font-size:1.2rem;font-weight:700;letter-spacing:-.01em}
+.qn-ref-disco::after{content:"";position:absolute;inset:-7px;border-radius:50%;box-shadow:0 0 0 2px var(--lavanda);opacity:0;pointer-events:none}
+.qn-ref-disco.soando::after{animation:qnSoando 1.1s ease-out 2}
+@keyframes qnSoando{0%{opacity:.9;transform:scale(.92)}100%{opacity:0;transform:scale(1.35)}}
+@media (prefers-reduced-motion:reduce){.qn-ref-disco.soando::after{animation:none;opacity:.8}}
+.sem-mov .qn-ref-disco.soando::after{opacity:.8}
+.qn-ref-passo{margin:0;font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--lavanda)}
+.qn-ref-dlg h2{font-size:1.55rem;margin:6px 0 8px;text-wrap:balance}
+.qn-ref-dlg>p.muted{margin:0 auto;max-width:34ch}
+.qn-ref-acoes{display:grid;gap:10px;margin-top:22px}
+.qn-ref-acoes .btn{width:100%}
+.qn-ref-sem{margin-top:12px;padding:8px;background:none;border:0;cursor:pointer;color:var(--cinza);font:500 13.5px Onest,system-ui,sans-serif;text-decoration:underline;text-underline-offset:3px}
+@media (hover:hover){.qn-ref-sem:hover{color:var(--osso)}}
