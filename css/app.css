@@ -407,6 +407,33 @@ details>summary{cursor:pointer}
 .licoes-indice li{margin:0 0 12px}
 .licoes-indice li a{font-weight:600;color:var(--gold);text-decoration:none;display:block}
 .licoes-indice li a:hover{text-decoration:underline}
+
+/* Páginas de referência (notas-do-bandoneon/ e acordes/), geradas por ferramentas/gerar_referencia.py */
+.ref-notas{font-size:1.1rem}
+.ref-legenda{display:flex;flex-wrap:wrap;gap:8px 16px;margin:0 0 12px;font-size:14px;font-weight:700}
+.ref-legenda .ab{color:var(--open)} .ref-legenda .fe{color:var(--close)}
+.ref-mapas{display:grid;grid-template-columns:1fr;gap:16px;margin:16px 0}
+@media (min-width:640px){.ref-mapas{grid-template-columns:1fr 1fr}}
+.ref-mapa .ch-rel-mapa text{font-size:.24px}
+.ref-mapas.ref-mapas-notas{grid-template-columns:1fr}
+.ref-mapa{margin:0;padding:16px;border-radius:16px;background:var(--ameixa);box-shadow:inset 0 0 0 1px var(--borda);min-width:0}
+.ref-mapa figcaption{margin:0 0 12px}
+.ref-mapas-notas .ref-mapa{overflow-x:auto}
+.ref-dir.open{color:var(--open)} .ref-dir.close{color:var(--close)}
+.ref-pe{margin:12px 0 0;font-size:14px;color:var(--cinza-2)}
+.ref-teclado{display:block;width:100%;min-width:520px;height:auto}
+.ref-teclado circle{fill:rgba(241,240,236,.08);stroke:rgba(241,240,236,.22);stroke-width:.03}
+.ref-teclado text{font-weight:700;font-size:.17px;text-anchor:middle;dominant-baseline:central}
+.ref-teclado .ab{fill:var(--open)} .ref-teclado .fe{fill:var(--close)}
+.ref-tabela{overflow-x:auto;margin:16px 0}
+.ref-tabela table{border-collapse:collapse;width:100%;font-size:14px}
+.ref-tabela th,.ref-tabela td{padding:4px 12px;text-align:left;border-bottom:1px solid var(--borda)}
+.ref-tabela thead th{color:var(--muted);font-weight:600}
+.ref-tabela tbody th{white-space:nowrap}
+.ref-tons{list-style:none;padding:0;margin:8px 0 16px;display:flex;flex-wrap:wrap;gap:8px}
+.ref-tons a{display:inline-block;padding:4px 12px;border-radius:999px;background:var(--ameixa-3);color:var(--text);text-decoration:none;font-weight:600}
+.ref-tons a:hover{background:var(--line)}
+.ref-tons a[aria-current]{background:var(--gold);color:var(--ameixa)}
 .feat a+a{display:block;margin-top:4px}
 
 /* Aviso destacado: o BanDoly não substitui um professor */

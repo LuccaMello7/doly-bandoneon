@@ -35,7 +35,7 @@ def main():
         print(f'FALHA  sw.js não guarda "{a}" para uso offline (adicione em ARQUIVOS)')
     # as páginas em espanhol e inglês precisam ser geradas de novo quando o index.html ou o dicionário mudam
     # o mesmo para as páginas das lições, geradas a partir de js/licoes.js e js/licoes-traducao.js
-    for gerador in ('gerar_idiomas.py', 'gerar_licoes.py', 'gerar_teoria.py'):
+    for gerador in ('gerar_idiomas.py', 'gerar_licoes.py', 'gerar_teoria.py', 'gerar_referencia.py'):
         r = subprocess.run([sys.executable, str(RAIZ / 'ferramentas' / gerador), '--verificar'],
                            capture_output=True, text=True, encoding='utf-8')
         if r.returncode:

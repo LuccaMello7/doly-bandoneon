@@ -82,7 +82,7 @@ def gerar_todas():
             {'@type': 'CollectionPage', 'name': T['titulo'], 'url': gl.url(cod, PASTA), 'inLanguage': LANGS[cod], 'description': T['indice_desc'],
              'hasPart': [{'@type': 'Article', 'name': t['titulos'][cod], 'url': gl.url(cod, PASTA, slugs[cod][i])} for i, t in enumerate(lista)]},
             gl.migalhas(cod, [(T['inicio'], gl.url(cod)), (T['titulo'], gl.url(cod, PASTA))])]}
-        paginas[f'{base}{PASTA}/index.html'] = gl.pagina(cod, 1, T['indice_titulo'], T['indice_desc'], {c: gl.url(c, PASTA) for c in LANGS}, corpo, dados, 'website')
+        paginas[f'{base}{PASTA}/index.html'] = gl.pagina(cod, 1, gl.titulo_pagina(T['indice_titulo'], T['titulo']), T['indice_desc'], {c: gl.url(c, PASTA) for c in LANGS}, corpo, dados, 'website')
         for i, t in enumerate(lista):
             nav = []
             if i > 0: nav.append(f'<a class="btn sec" href="../{slugs[cod][i-1]}/" data-local><svg class="seta-v" aria-hidden="true" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>{e(T["anterior"])}</a>')
@@ -103,29 +103,21 @@ def gerar_todas():
                 {'@type': 'Article', 'headline': t['titulos'][cod], 'description': descricao, 'url': gl.url(cod, PASTA, slugs[cod][i]),
                  'inLanguage': LANGS[cod], 'isAccessibleForFree': True, 'publisher': {'@type': 'Organization', 'name': 'BanDoly', 'url': gl.SITE}},
                 gl.migalhas(cod, [(T['inicio'], gl.url(cod)), (T['titulo'], gl.url(cod, PASTA)), (t['titulos'][cod], gl.url(cod, PASTA, slugs[cod][i]))])]}
-            paginas[f'{base}{PASTA}/{slugs[cod][i]}/index.html'] = gl.pagina(cod, 2, T['topico'].format(t=t['titulos'][cod]), descricao,
+            paginas[f'{base}{PASTA}/{slugs[cod][i]}/index.html'] = gl.pagina(cod, 2, gl.titulo_pagina(T['topico'], t['titulos'][cod]), descricao,
                                                                              {c: gl.url(c, PASTA, slugs[c][i]) for c in LANGS}, corpo, dados)
     return paginas, lista, slugs
 
 
-def sitemap_novo(lista, slugs):
+def sitemap_novo(lista, slugs, paginas):
     grupos = [{c: gl.url(c, PASTA) for c in LANGS}] + [{c: gl.url(c, PASTA, slugs[c][i]) for c in LANGS} for i in range(len(lista))]
-    out = []
-    for g in grupos:
-        alt = ''.join(f'    <xhtml:link rel="alternate" hreflang="{LANGS[c]}" href="{u}"/>\n' for c, u in g.items())
-        alt += f'    <xhtml:link rel="alternate" hreflang="x-default" href="{g["pt"]}"/>\n'
-        for u in g.values(): out.append(f'  <url>\n    <loc>{u}</loc>\n{alt}  </url>\n')
-    bloco = '  <!--teoria-->\n' + ''.join(out) + '  <!--/teoria-->\n'
-    s = (RAIZ / 'sitemap.xml').read_text(encoding='utf-8')
-    if '<!--teoria-->' in s: return re.sub(r'  <!--teoria-->\n.*?  <!--/teoria-->\n', lambda m: bloco, s, flags=re.S)
-    return s.replace('</urlset>', bloco + '</urlset>')
+    return gl.sitemap_com_bloco('teoria', gl.sitemap_bloco('teoria', grupos, paginas))
 
 
 def main():
     if hasattr(sys.stdout, 'reconfigure'): sys.stdout.reconfigure(encoding='utf-8')
     verificar = '--verificar' in sys.argv
     paginas, lista, slugs = gerar_todas()
-    arquivos = dict(paginas); arquivos['sitemap.xml'] = sitemap_novo(lista, slugs)
+    arquivos = dict(paginas); arquivos['sitemap.xml'] = sitemap_novo(lista, slugs, paginas)
     desatualizadas = []
     for caminho, conteudo in arquivos.items():
         destino = RAIZ / caminho
@@ -138,6 +130,7 @@ def main():
         if desatualizadas:
             print('Páginas de teoria desatualizadas: ' + ', '.join(desatualizadas[:5]) + '. Rode: python ferramentas/gerar_teoria.py'); sys.exit(1)
     else:
+        gl.salvar_datas()
         print(f'{len(paginas)} páginas de teoria geradas e sitemap.xml atualizado')
 
 

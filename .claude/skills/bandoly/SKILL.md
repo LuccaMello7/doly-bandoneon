@@ -14,10 +14,11 @@ fala **português do Brasil**: responda e escreva tudo em pt-BR.
 
 1. `python tests/rodar_testes.py` → precisa dar **N/N testes passaram**. Ele também confere:
    - que todo `src`/`href` do `index.html` está em `ARQUIVOS` no `sw.js`;
-   - que as páginas geradas estão atualizadas (`gerar_idiomas.py`, `gerar_licoes.py`, `gerar_teoria.py` com `--verificar`).
+   - que as páginas geradas estão atualizadas (`gerar_idiomas.py`, `gerar_licoes.py`, `gerar_teoria.py` e `gerar_referencia.py` com `--verificar`).
 2. Mexeu no `index.html`, em `doly-costa/`, em `perguntas-frequentes/` ou no dicionário → `python ferramentas/gerar_idiomas.py`.
 3. Mexeu nas lições (`js/licoes.js`, `js/licoes-traducao.js`) → `python ferramentas/gerar_licoes.py`.
-4. Mexeu na teoria (`js/teoria.js`, `js/teoria-textos.js`) → `python ferramentas/gerar_teoria.py`.
+4. Mexeu na teoria (`js/teoria.js`, `js/teoria-textos.js`) → `python ferramentas/gerar_teoria.py`. Mexeu no mapa
+   (`DEFAULT_LAYOUT` em base.js) ou nos acordes (`chordVoicings` em acordes.js) → `python ferramentas/gerar_referencia.py`.
 5. `python ferramentas/extrair_textos.py` → precisa terminar em **0 sem tradução**.
 6. Mudou qualquer arquivo servido → suba o número em `const CACHE = 'bandoly-vNN'` no `sw.js`. Arquivo novo
    → acrescente em `ARQUIVOS`.
@@ -222,10 +223,19 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
   `python ferramentas/gerar_logo.py`, a partir de `icones/originais/` (os arquivos azul e dourado de antes).
 - `professores/`: página aberta para professores (pt é a fonte; es/en gerados). `professores/panfleto.pdf` e
   `icones/qr-professores.svg` saem de `python ferramentas/gerar_panfleto.py`.
-- `perguntas-frequentes/`: busca, categorias e FAQPage montada pelo script.
+- `perguntas-frequentes/`: busca e categorias pelo script da página; o FAQPage (JSON-LD) fica fixo no `<head>`, entre
+  `<!--faq-ld-->` e `<!--/faq-ld-->`, montado por `gerar_idiomas.py` a partir das perguntas (também na versão pt).
 - `licoes/` e `teoria/`: geradas por `ferramentas/gerar_licoes.py` e `ferramentas/gerar_teoria.py`, nos três idiomas.
+- `notas-do-bandoneon/` (mapa dos 71 botões e tabela de onde fica cada nota) e `acordes/` (índice + 36 páginas: maior,
+  menor e 7 nas 12 tônicas, com os 4 mapas mão × fole): geradas por `ferramentas/gerar_referencia.py`, que roda o
+  `chordVoicings` do próprio app no Node (a página mostra o mesmo que o Relembre). As notas são grafadas por terças
+  (Fá♯ maior = Fá♯ · Lá♯ · Dó♯), e o gerador confere que todo botão aceso é nota do acorde naquela direção.
+- Título da página: até ~60 caracteres; se passar, vira "{assunto} | BanDoly" (`gl.titulo_pagina`). Descrição: até ~160.
+  Um só `<h1>` por página (no início, o da volta é `<h2>`).
 - Links com `data-local` não ganham `../` no gerador. O bloco `<!--bandeiras-->` é refeito por idioma.
-- `sitemap.xml` tem blocos `<!--licoes-->` e `<!--teoria-->`, mantidos pelos geradores. Depois de criar
+- `sitemap.xml` é todo gerado, em blocos: `<!--paginas-->` (gerar_idiomas), `<!--licoes-->`, `<!--teoria-->` e
+  `<!--referencia-->`. Cada endereço tem `lastmod`: `ferramentas/datas-paginas.json` guarda um resumo do conteúdo de
+  cada página e a data em que mudou (página igual mantém a data). Commite esse arquivo junto. Depois de criar
   páginas, lembre o dono de reenviar o sitemap no Search Console e pedir a indexação das principais.
 - O CSS global esconde `section` que não é aba ativa. Em páginas estáticas, use `.pagina>section{display:block}`.
 

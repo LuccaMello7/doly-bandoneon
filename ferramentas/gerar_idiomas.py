@@ -21,7 +21,7 @@ bloco entre <!--bandeiras--> e <!--/bandeiras--> é refeito com os links de cada
 
 Sempre que mudar uma página em português ou o dicionário, rode este script. Os testes avisam se esquecer.
 """
-import html, re, sys
+import html, json, re, sys
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
@@ -148,21 +148,53 @@ def ajustar_cabeca(pagina, dic, cod, sub):
     return pagina.replace('<!DOCTYPE html>\n', '<!DOCTYPE html>\n' + CABECALHO.format(sub + 'index.html'), 1)
 
 
+def texto_de(h):
+    return norm(html.unescape(re.sub(r'<[^>]+>', '', re.sub(r'</?(?:p|br|li|ul|ol|div)[^>]*>', ' ', h))))  # blocos viram espaço; links e negrito, nada
+
+
+def com_faq_ld(pagina):
+    """Preenche o bloco <!--faq-ld--> com os dados estruturados FAQPage, tirados das perguntas da própria página
+    (já traduzida). Fixos no HTML, o Google os lê sem precisar rodar o script da página."""
+    if '<!--faq-ld-->' not in pagina: return pagina
+    itens = re.findall(r'<details class="faq-item".*?<span class="faq-q">(.*?)</span>.*?<div class="faq-resp">(.*?)</div>\s*</details>', pagina, re.S)
+    if not itens: sys.exit('Não achei as perguntas (details.faq-item) para os dados estruturados')
+    ld = {'@context': 'https://schema.org', '@type': 'FAQPage', 'mainEntity': [
+        {'@type': 'Question', 'name': texto_de(q), 'acceptedAnswer': {'@type': 'Answer', 'text': texto_de(r)}} for q, r in itens]}
+    js = json.dumps(ld, ensure_ascii=False, indent=1).replace('</', '<\\/')
+    bloco = f'<!--faq-ld--><script type="application/ld+json">\n{js}\n</script><!--/faq-ld-->'
+    return re.sub(r'<!--faq-ld-->.*?<!--/faq-ld-->', lambda m: bloco, pagina, flags=re.S)
+
+
 def gerar(cod, dic, origem):
     pagina = (RAIZ / origem).read_text(encoding='utf-8')
     corpo = traduzir_corpo(pagina, dic, IDIOMAS[cod][0])
-    return ajustar_cabeca(corpo, dic, cod, origem[:-len('index.html')])
+    return com_faq_ld(ajustar_cabeca(corpo, dic, cod, origem[:-len('index.html')]))
+
+
+def sitemap_paginas(conteudos):
+    """Bloco <!--paginas--> do sitemap.xml: as páginas desta lista nos três idiomas, com a data da última mudança."""
+    import gerar_licoes as gl  # aqui dentro: gerar_teoria importa os dois arquivos
+    grupos = [{c: SITE + ('' if c == 'pt' else c + '/') + origem[:-len('index.html')] for c in ('pt', *IDIOMAS)} for origem in PAGINAS]
+    return gl, gl.sitemap_com_bloco('paginas', gl.sitemap_bloco('paginas', grupos, conteudos))
 
 
 def main():
     if hasattr(sys.stdout, 'reconfigure'): sys.stdout.reconfigure(encoding='utf-8')
     verificar = '--verificar' in sys.argv
     dic = carregar_dicionario()
-    desatualizadas = []
+    desatualizadas, conteudos = [], {}
+    # as páginas em português: só o bloco dos dados estruturados (perguntas) é refeito
+    for origem in PAGINAS:
+        atual = (RAIZ / origem).read_text(encoding='utf-8'); novo = com_faq_ld(atual)
+        conteudos[origem] = novo
+        if novo != atual:
+            if verificar: desatualizadas.append(origem)
+            else: (RAIZ / origem).write_bytes(novo.encode('utf-8')); print(f'{origem}: dados estruturados atualizados')
     for cod in IDIOMAS:
         for origem in PAGINAS:
             destino = RAIZ / cod / origem
             novo = gerar(cod, dic, origem)
+            conteudos[f'{cod}/{origem}'] = novo
             if verificar:
                 if not destino.exists() or destino.read_text(encoding='utf-8') != novo:
                     desatualizadas.append(f'{cod}/{origem}')
@@ -170,6 +202,11 @@ def main():
                 destino.parent.mkdir(parents=True, exist_ok=True)
                 destino.write_bytes(novo.encode('utf-8'))  # bytes: mantém o \n também no Windows (e no Python 3.9)
                 print(f'{cod}/{origem} gerado')
+    gl, sitemap = sitemap_paginas(conteudos)
+    if verificar:
+        if (RAIZ / 'sitemap.xml').read_text(encoding='utf-8') != sitemap: desatualizadas.append('sitemap.xml')
+    else:
+        (RAIZ / 'sitemap.xml').write_bytes(sitemap.encode('utf-8')); gl.salvar_datas()
     if desatualizadas:
         print('Desatualizado: ' + ', '.join(desatualizadas) + '. Rode: python ferramentas/gerar_idiomas.py')
         sys.exit(1)

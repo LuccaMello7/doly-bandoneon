@@ -14,7 +14,8 @@ De onde vem o conteúdo: js/licoes.js (português) e js/licoes-traducao.js (espa
 os mesmos textos que o app mostra. Não edite as páginas geradas: mude as lições e rode o script.
 Os textos fixos das páginas (menus, botões, títulos) ficam em TEXTOS, logo abaixo.
 """
-import html, json, re, sys, unicodedata
+import hashlib, html, json, re, sys, unicodedata
+from datetime import date
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
@@ -145,6 +146,59 @@ def resumo(h, limite=155):
 
 def url(cod, *partes):
     return SITE + ('' if cod == 'pt' else cod + '/') + ''.join(p + '/' for p in partes)
+
+
+def titulo_pagina(modelo, t, limite=60):
+    """Título da aba e do Google: o modelo completo se couber em ~60 caracteres (o que o Google mostra);
+    senão só '{t} | BanDoly', para o assunto da página não ser cortado."""
+    completo = modelo.format(t=t)
+    return completo if len(completo) <= limite else f'{t} | BanDoly'
+
+
+# ---------- data da última mudança de cada página (lastmod do sitemap) ----------
+# ferramentas/datas-paginas.json guarda, por página gerada, um resumo do conteúdo e a data em que ele mudou.
+# Página igual mantém a data; página que mudou ganha a data de hoje. Assim o lastmod só muda quando a página muda.
+DATAS_ARQ = RAIZ / 'ferramentas' / 'datas-paginas.json'
+_DATAS = {}
+
+
+def datas():
+    if not _DATAS and DATAS_ARQ.exists(): _DATAS.update(json.loads(DATAS_ARQ.read_text(encoding='utf-8')))
+    return _DATAS
+
+
+def data_da_pagina(caminho, conteudo):
+    h = hashlib.sha1(conteudo.encode('utf-8')).hexdigest()[:12]
+    d = datas()
+    if caminho not in d or d[caminho][0] != h: d[caminho] = [h, date.today().isoformat()]
+    return d[caminho][1]
+
+
+def salvar_datas():
+    linhas = ',\n'.join(f'{json.dumps(k, ensure_ascii=False)}: {json.dumps(v)}' for k, v in sorted(datas().items()))
+    DATAS_ARQ.write_bytes(('{\n' + linhas + '\n}\n').encode('utf-8'))
+
+
+def sitemap_bloco(nome, grupos, paginas):
+    """Bloco do sitemap.xml entre <!--nome--> e <!--/nome-->: cada página com lastmod e os endereços nos outros idiomas.
+    grupos: lista de {idioma: endereço}; paginas: {caminho do arquivo: conteúdo}."""
+    out = []
+    for g in grupos:
+        alt = ''.join(f'    <xhtml:link rel="alternate" hreflang="{LANGS[c]}" href="{u}"/>\n' for c, u in g.items())
+        alt += f'    <xhtml:link rel="alternate" hreflang="x-default" href="{g["pt"]}"/>\n'
+        for u in g.values():
+            caminho = u[len(SITE):] + 'index.html'
+            mod = f'    <lastmod>{data_da_pagina(caminho, paginas[caminho])}</lastmod>\n' if caminho in paginas else ''
+            out.append(f'  <url>\n    <loc>{u}</loc>\n{mod}{alt}  </url>\n')
+    return f'  <!--{nome}-->\n' + ''.join(out) + f'  <!--/{nome}-->\n'
+
+
+def sitemap_com_bloco(nome, bloco):
+    """O sitemap.xml com o bloco trocado (ou acrescentado no fim)."""
+    s = (RAIZ / 'sitemap.xml').read_text(encoding='utf-8')
+    if f'<!--{nome}-->' in s:
+        return re.sub(f'  <!--{nome}-->\n.*?  <!--/{nome}-->\n', lambda m: bloco, s, flags=re.S)
+    return s.replace('</urlset>', bloco + '</urlset>')
 
 
 def prefixo(cod, prof):
@@ -313,7 +367,7 @@ def gerar_todas():
                                (sem_numero(l['titulo']), url(cod, PASTA, slugs[cod][i]))])]}
             urls = {c: url(c, PASTA, slugs[c][i]) for c in LANGS}
             paginas[f'{base}{PASTA}/{slugs[cod][i]}/index.html'] = pagina(
-                cod, 2, T['licao_titulo'].format(t=sem_numero(l['titulo'])), descricao, urls, corpo, dados)
+                cod, 2, titulo_pagina(T['licao_titulo'], sem_numero(l['titulo'])), descricao, urls, corpo, dados)
     return paginas
 
 
@@ -322,21 +376,11 @@ def sitemap_licoes(paginas):
     todas = carregar()
     slugs = {c: [slug(l['titulo']) for l in todas[c]] for c in LANGS}
     grupos = [{c: url(c, PASTA) for c in LANGS}] + [{c: url(c, PASTA, slugs[c][i]) for c in LANGS} for i in range(len(todas['pt']))]
-    out = []
-    for g in grupos:
-        alt = ''.join(f'    <xhtml:link rel="alternate" hreflang="{LANGS[c]}" href="{u}"/>\n' for c, u in g.items())
-        alt += f'    <xhtml:link rel="alternate" hreflang="x-default" href="{g["pt"]}"/>\n'
-        for u in g.values():
-            out.append(f'  <url>\n    <loc>{u}</loc>\n{alt}  </url>\n')
-    return '  <!--licoes-->\n' + ''.join(out) + '  <!--/licoes-->\n'
+    return sitemap_bloco('licoes', grupos, paginas)
 
 
 def sitemap_novo(paginas):
-    s = (RAIZ / 'sitemap.xml').read_text(encoding='utf-8')
-    bloco = sitemap_licoes(paginas)
-    if '<!--licoes-->' in s:
-        return re.sub(r'  <!--licoes-->\n.*?  <!--/licoes-->\n', lambda m: bloco, s, flags=re.S)
-    return s.replace('</urlset>', bloco + '</urlset>')
+    return sitemap_com_bloco('licoes', sitemap_licoes(paginas))
 
 
 def main():
@@ -367,6 +411,7 @@ def main():
                   + '. Rode: python ferramentas/gerar_licoes.py')
             sys.exit(1)
     else:
+        salvar_datas()
         print(f'{len(paginas)} páginas de lições geradas e sitemap.xml atualizado')
 
 

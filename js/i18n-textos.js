@@ -710,7 +710,7 @@ const TEXTOS = {
 'Começar a aprender': ['Empezar a aprender', 'Start learning'],
 // cabeçalho e busca da página doly-costa/
 'Doly Costa: o bandoneonista que inspirou o BanDoly': ['Doly Costa: el bandoneonista que inspiró BanDoly', 'Doly Costa: the bandoneon player who inspired BanDoly'],
-'A história de Doly Carlos da Costa, bandoneonista de Caçapava do Sul que, aos 97 anos, ainda toca: orquestras de tango nas rádios de Porto Alegre, o grupo Os Posteiros e a Medalha Simões Lopes Neto.': ['La historia de Doly Carlos da Costa, bandoneonista de Caçapava do Sul que, a los 97 años, todavía toca: orquestas de tango en las radios de Porto Alegre, el grupo Os Posteiros y la Medalla Simões Lopes Neto.', 'The story of Doly Carlos da Costa, a bandoneon player from Caçapava do Sul, Brazil, who still plays at 97: tango orchestras on Porto Alegre radio, the group Os Posteiros and the Simões Lopes Neto Medal.'],
+'A história de Doly Costa, bandoneonista de Caçapava do Sul que toca aos 97 anos: tango nas rádios de Porto Alegre, Os Posteiros e a Medalha Simões Lopes Neto.': ['La historia de Doly Costa, bandoneonista de Caçapava do Sul que toca a los 97 años: tango en radios de Porto Alegre, Os Posteiros y la Medalla Simões Lopes Neto.', 'The story of Doly Costa, bandoneon player from Caçapava do Sul still playing at 97: tango on Porto Alegre radio, Os Posteiros and the Simões Lopes Neto Medal.'],
 'Abrir o app': ['Abrir la app', 'Open the app'],
 // Academia de Bandoneón
 'Academia': ['Academia', 'Academy'],
@@ -1568,6 +1568,9 @@ const TEXTOS = {
 'Teoria: quanto dura cada nota e como se conta o tempo.': ['Teoría: cuánto dura cada nota y cómo se cuenta el tiempo.', 'Theory: how long each note lasts and how to count the beat.'],
 // Conta opcional, Termos de Uso e Privacidade com conta (2026-11-10)
 'Conta': ['Cuenta', 'Account'],
+'Mapa de notas': ['Mapa de notas', 'Note map'],
+'Mapa de acordes': ['Mapa de acordes', 'Chord map'],
+'Veja o mapa com a nota de cada botão, abrindo e fechando.': ['Mirá el mapa con la nota de cada botón, abriendo y cerrando.', 'See the map with the note of every button, opening and closing.'],
 'Este acorde é na mão esquerda.': ['Este acorde va en la mano izquierda.', 'This chord is on the left hand.'],
 'Este acorde é na mão direita.': ['Este acorde va en la mano derecha.', 'This chord is on the right hand.'],
 'Ouvir juntas': ['Escuchar juntas', 'Hear them together'],

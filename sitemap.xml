@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <!--paginas-->
   <url>
     <loc>https://bandoly.app/</loc>
-    <lastmod>2026-11-04</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/"/>
@@ -10,7 +11,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/es/</loc>
-    <lastmod>2026-11-04</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/"/>
@@ -18,7 +19,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/en/</loc>
-    <lastmod>2026-11-04</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/"/>
@@ -26,7 +27,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/doly-costa/</loc>
-    <lastmod>2026-11-04</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/doly-costa/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/doly-costa/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/doly-costa/"/>
@@ -34,7 +35,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/es/doly-costa/</loc>
-    <lastmod>2026-11-04</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/doly-costa/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/doly-costa/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/doly-costa/"/>
@@ -42,7 +43,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/en/doly-costa/</loc>
-    <lastmod>2026-11-04</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/doly-costa/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/doly-costa/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/doly-costa/"/>
@@ -50,39 +51,15 @@
   </url>
   <url>
     <loc>https://bandoly.app/perguntas-frequentes/</loc>
-    <lastmod>2026-11-04</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/perguntas-frequentes/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/perguntas-frequentes/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/perguntas-frequentes/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/perguntas-frequentes/"/>
   </url>
   <url>
-    <loc>https://bandoly.app/privacidade/</loc>
-    <lastmod>2026-11-10</lastmod>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/privacidade/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/privacidade/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/privacidade/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/privacidade/"/>
-  </url>
-  <url>
-    <loc>https://bandoly.app/termos/</loc>
-    <lastmod>2026-11-10</lastmod>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/termos/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/termos/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/termos/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/termos/"/>
-  </url>
-  <url>
-    <loc>https://bandoly.app/professores/</loc>
-    <lastmod>2026-11-10</lastmod>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/professores/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/professores/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/professores/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/professores/"/>
-  </url>
-  <url>
     <loc>https://bandoly.app/es/perguntas-frequentes/</loc>
-    <lastmod>2026-11-04</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/perguntas-frequentes/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/perguntas-frequentes/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/perguntas-frequentes/"/>
@@ -90,15 +67,89 @@
   </url>
   <url>
     <loc>https://bandoly.app/en/perguntas-frequentes/</loc>
-    <lastmod>2026-11-04</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/perguntas-frequentes/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/perguntas-frequentes/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/perguntas-frequentes/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/perguntas-frequentes/"/>
   </url>
+  <url>
+    <loc>https://bandoly.app/privacidade/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/privacidade/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/privacidade/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/privacidade/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/privacidade/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/privacidade/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/privacidade/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/privacidade/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/privacidade/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/privacidade/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/privacidade/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/privacidade/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/privacidade/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/privacidade/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/privacidade/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/termos/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/termos/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/termos/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/termos/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/termos/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/termos/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/termos/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/termos/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/termos/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/termos/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/termos/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/termos/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/termos/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/termos/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/termos/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/professores/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/professores/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/professores/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/professores/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/professores/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/professores/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/professores/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/professores/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/professores/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/professores/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/professores/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/professores/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/professores/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/professores/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/professores/"/>
+  </url>
+  <!--/paginas-->
   <!--licoes-->
   <url>
     <loc>https://bandoly.app/licoes/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/"/>
@@ -106,6 +157,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/es/licoes/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/"/>
@@ -113,6 +165,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/en/licoes/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/"/>
@@ -120,6 +173,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/licoes/o-que-e-o-bandoneon/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/o-que-e-o-bandoneon/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/que-es-el-bandoneon/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/what-is-the-bandoneon/"/>
@@ -127,6 +181,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/es/licoes/que-es-el-bandoneon/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/o-que-e-o-bandoneon/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/que-es-el-bandoneon/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/what-is-the-bandoneon/"/>
@@ -134,6 +189,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/en/licoes/what-is-the-bandoneon/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/o-que-e-o-bandoneon/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/que-es-el-bandoneon/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/what-is-the-bandoneon/"/>
@@ -141,6 +197,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/licoes/anatomia-do-instrumento/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/anatomia-do-instrumento/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/anatomia-del-instrumento/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/anatomy-of-the-instrument/"/>
@@ -148,6 +205,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/es/licoes/anatomia-del-instrumento/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/anatomia-do-instrumento/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/anatomia-del-instrumento/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/anatomy-of-the-instrument/"/>
@@ -155,6 +213,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/en/licoes/anatomy-of-the-instrument/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/anatomia-do-instrumento/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/anatomia-del-instrumento/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/anatomy-of-the-instrument/"/>
@@ -162,6 +221,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/licoes/bisonoro-abrindo-e-fechando/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/bisonoro-abrindo-e-fechando/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/bisonoro-abriendo-y-cerrando/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/bisonoric-opening-and-closing/"/>
@@ -169,6 +229,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/es/licoes/bisonoro-abriendo-y-cerrando/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/bisonoro-abrindo-e-fechando/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/bisonoro-abriendo-y-cerrando/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/bisonoric-opening-and-closing/"/>
@@ -176,6 +237,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/en/licoes/bisonoric-opening-and-closing/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/bisonoro-abrindo-e-fechando/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/bisonoro-abriendo-y-cerrando/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/bisonoric-opening-and-closing/"/>
@@ -183,6 +245,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/licoes/fole-e-expressao/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/fole-e-expressao/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/fuelle-y-expresion/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/bellows-and-expression/"/>
@@ -190,6 +253,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/es/licoes/fuelle-y-expresion/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/fole-e-expressao/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/fuelle-y-expresion/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/bellows-and-expression/"/>
@@ -197,6 +261,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/en/licoes/bellows-and-expression/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/fole-e-expressao/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/fuelle-y-expresion/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/bellows-and-expression/"/>
@@ -204,6 +269,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/licoes/leitura-duas-claves/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/leitura-duas-claves/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/lectura-dos-claves/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/reading-two-clefs/"/>
@@ -211,6 +277,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/es/licoes/lectura-dos-claves/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/leitura-duas-claves/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/lectura-dos-claves/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/reading-two-clefs/"/>
@@ -218,6 +285,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/en/licoes/reading-two-clefs/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/leitura-duas-claves/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/lectura-dos-claves/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/reading-two-clefs/"/>
@@ -225,6 +293,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/licoes/ritmos-do-tango/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/ritmos-do-tango/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/ritmos-del-tango/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/tango-rhythms/"/>
@@ -232,6 +301,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/es/licoes/ritmos-del-tango/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/ritmos-do-tango/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/ritmos-del-tango/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/tango-rhythms/"/>
@@ -239,6 +309,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/en/licoes/tango-rhythms/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/ritmos-do-tango/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/ritmos-del-tango/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/tango-rhythms/"/>
@@ -246,6 +317,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/licoes/rotina-de-estudo/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/rotina-de-estudo/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/rutina-de-estudio/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/practice-routine/"/>
@@ -253,6 +325,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/es/licoes/rutina-de-estudio/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/rotina-de-estudo/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/rutina-de-estudio/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/practice-routine/"/>
@@ -260,6 +333,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/en/licoes/practice-routine/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/rotina-de-estudo/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/rutina-de-estudio/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/practice-routine/"/>
@@ -267,6 +341,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/licoes/articulacao-legato-staccato-e-acentos/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/articulacao-legato-staccato-e-acentos/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/articulacion-legato-staccato-y-acentos/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/articulation-legato-staccato-and-accents/"/>
@@ -274,6 +349,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/es/licoes/articulacion-legato-staccato-y-acentos/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/articulacao-legato-staccato-e-acentos/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/articulacion-legato-staccato-y-acentos/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/articulation-legato-staccato-and-accents/"/>
@@ -281,6 +357,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/en/licoes/articulation-legato-staccato-and-accents/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/articulacao-legato-staccato-e-acentos/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/articulacion-legato-staccato-y-acentos/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/articulation-legato-staccato-and-accents/"/>
@@ -288,6 +365,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/licoes/acordes-no-bandoneon/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/acordes-no-bandoneon/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/acordes-en-el-bandoneon/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/chords-on-the-bandoneon/"/>
@@ -295,6 +373,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/es/licoes/acordes-en-el-bandoneon/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/acordes-no-bandoneon/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/acordes-en-el-bandoneon/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/chords-on-the-bandoneon/"/>
@@ -302,6 +381,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/en/licoes/chords-on-the-bandoneon/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/acordes-no-bandoneon/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/acordes-en-el-bandoneon/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/chords-on-the-bandoneon/"/>
@@ -309,6 +389,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/licoes/duas-maos-um-fole-so/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/duas-maos-um-fole-so/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/dos-manos-un-solo-fuelle/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/two-hands-one-bellows/"/>
@@ -316,6 +397,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/es/licoes/dos-manos-un-solo-fuelle/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/duas-maos-um-fole-so/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/dos-manos-un-solo-fuelle/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/two-hands-one-bellows/"/>
@@ -323,6 +405,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/en/licoes/two-hands-one-bellows/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/duas-maos-um-fole-so/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/dos-manos-un-solo-fuelle/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/two-hands-one-bellows/"/>
@@ -330,6 +413,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/licoes/como-ler-uma-partitura-de-tango/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/como-ler-uma-partitura-de-tango/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/como-leer-una-partitura-de-tango/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/how-to-read-a-tango-score/"/>
@@ -337,6 +421,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/es/licoes/como-leer-una-partitura-de-tango/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/como-ler-uma-partitura-de-tango/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/como-leer-una-partitura-de-tango/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/how-to-read-a-tango-score/"/>
@@ -344,6 +429,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/en/licoes/how-to-read-a-tango-score/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/licoes/como-ler-uma-partitura-de-tango/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/licoes/como-leer-una-partitura-de-tango/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/licoes/how-to-read-a-tango-score/"/>
@@ -353,6 +439,7 @@
   <!--teoria-->
   <url>
     <loc>https://bandoly.app/teoria/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/"/>
@@ -360,6 +447,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/es/teoria/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/"/>
@@ -367,6 +455,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/en/teoria/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/"/>
@@ -374,6 +463,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/teoria/as-notas-e-as-oitavas/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/as-notas-e-as-oitavas/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/las-notas-y-las-octavas/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/notes-and-octaves/"/>
@@ -381,6 +471,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/es/teoria/las-notas-y-las-octavas/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/as-notas-e-as-oitavas/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/las-notas-y-las-octavas/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/notes-and-octaves/"/>
@@ -388,6 +479,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/en/teoria/notes-and-octaves/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/as-notas-e-as-oitavas/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/las-notas-y-las-octavas/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/notes-and-octaves/"/>
@@ -395,6 +487,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/teoria/a-pauta-e-as-claves/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/a-pauta-e-as-claves/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/el-pentagrama-y-las-claves/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/the-staff-and-the-clefs/"/>
@@ -402,6 +495,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/es/teoria/el-pentagrama-y-las-claves/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/a-pauta-e-as-claves/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/el-pentagrama-y-las-claves/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/the-staff-and-the-clefs/"/>
@@ -409,6 +503,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/en/teoria/the-staff-and-the-clefs/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/a-pauta-e-as-claves/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/el-pentagrama-y-las-claves/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/the-staff-and-the-clefs/"/>
@@ -416,6 +511,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/teoria/sustenido-bemol-e-bequadro/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/sustenido-bemol-e-bequadro/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/sostenido-bemol-y-becuadro/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/sharp-flat-and-natural/"/>
@@ -423,6 +519,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/es/teoria/sostenido-bemol-y-becuadro/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/sustenido-bemol-e-bequadro/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/sostenido-bemol-y-becuadro/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/sharp-flat-and-natural/"/>
@@ -430,6 +527,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/en/teoria/sharp-flat-and-natural/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/sustenido-bemol-e-bequadro/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/sostenido-bemol-y-becuadro/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/sharp-flat-and-natural/"/>
@@ -437,6 +535,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/teoria/figuras-e-pausas/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/figuras-e-pausas/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/figuras-y-silencios/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/note-values-and-rests/"/>
@@ -444,6 +543,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/es/teoria/figuras-y-silencios/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/figuras-e-pausas/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/figuras-y-silencios/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/note-values-and-rests/"/>
@@ -451,6 +551,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/en/teoria/note-values-and-rests/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/figuras-e-pausas/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/figuras-y-silencios/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/note-values-and-rests/"/>
@@ -458,6 +559,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/teoria/compasso-e-tempo/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/compasso-e-tempo/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/compas-y-tiempo/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/time-signature-and-beat/"/>
@@ -465,6 +567,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/es/teoria/compas-y-tiempo/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/compasso-e-tempo/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/compas-y-tiempo/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/time-signature-and-beat/"/>
@@ -472,6 +575,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/en/teoria/time-signature-and-beat/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/compasso-e-tempo/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/compas-y-tiempo/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/time-signature-and-beat/"/>
@@ -479,6 +583,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/teoria/tonalidade-e-escalas/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/tonalidade-e-escalas/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/tonalidad-y-escalas/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/keys-and-scales/"/>
@@ -486,6 +591,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/es/teoria/tonalidad-y-escalas/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/tonalidade-e-escalas/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/tonalidad-y-escalas/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/keys-and-scales/"/>
@@ -493,6 +599,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/en/teoria/keys-and-scales/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/tonalidade-e-escalas/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/tonalidad-y-escalas/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/keys-and-scales/"/>
@@ -500,6 +607,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/teoria/acordes/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/acordes/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/acordes/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/chords/"/>
@@ -507,6 +615,7 @@
   </url>
   <url>
     <loc>https://bandoly.app/es/teoria/acordes/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/acordes/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/acordes/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/chords/"/>
@@ -514,10 +623,925 @@
   </url>
   <url>
     <loc>https://bandoly.app/en/teoria/chords/</loc>
+    <lastmod>2026-11-12</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/teoria/acordes/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/teoria/acordes/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/teoria/chords/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/teoria/acordes/"/>
   </url>
   <!--/teoria-->
+  <!--referencia-->
+  <url>
+    <loc>https://bandoly.app/notas-do-bandoneon/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/notas-do-bandoneon/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/notas-do-bandoneon/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/notas-do-bandoneon/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/notas-do-bandoneon/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/notas-do-bandoneon/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/notas-do-bandoneon/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/notas-do-bandoneon/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/notas-do-bandoneon/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/notas-do-bandoneon/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/notas-do-bandoneon/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/notas-do-bandoneon/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/notas-do-bandoneon/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/notas-do-bandoneon/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/notas-do-bandoneon/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/acordes/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/acordes/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/acordes/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/acordes/do-maior/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/do-maior/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/do-mayor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/c-major/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/do-maior/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/acordes/do-mayor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/do-maior/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/do-mayor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/c-major/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/do-maior/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/acordes/c-major/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/do-maior/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/do-mayor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/c-major/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/do-maior/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/acordes/do-sustenido-maior/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/do-sustenido-maior/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/do-sostenido-mayor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/c-sharp-major/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/do-sustenido-maior/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/acordes/do-sostenido-mayor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/do-sustenido-maior/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/do-sostenido-mayor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/c-sharp-major/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/do-sustenido-maior/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/acordes/c-sharp-major/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/do-sustenido-maior/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/do-sostenido-mayor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/c-sharp-major/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/do-sustenido-maior/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/acordes/re-maior/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/re-maior/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/re-mayor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/d-major/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/re-maior/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/acordes/re-mayor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/re-maior/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/re-mayor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/d-major/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/re-maior/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/acordes/d-major/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/re-maior/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/re-mayor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/d-major/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/re-maior/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/acordes/mi-bemol-maior/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/mi-bemol-maior/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/mi-bemol-mayor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/e-flat-major/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/mi-bemol-maior/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/acordes/mi-bemol-mayor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/mi-bemol-maior/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/mi-bemol-mayor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/e-flat-major/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/mi-bemol-maior/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/acordes/e-flat-major/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/mi-bemol-maior/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/mi-bemol-mayor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/e-flat-major/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/mi-bemol-maior/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/acordes/mi-maior/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/mi-maior/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/mi-mayor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/e-major/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/mi-maior/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/acordes/mi-mayor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/mi-maior/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/mi-mayor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/e-major/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/mi-maior/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/acordes/e-major/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/mi-maior/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/mi-mayor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/e-major/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/mi-maior/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/acordes/fa-maior/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/fa-maior/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/fa-mayor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/f-major/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/fa-maior/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/acordes/fa-mayor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/fa-maior/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/fa-mayor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/f-major/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/fa-maior/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/acordes/f-major/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/fa-maior/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/fa-mayor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/f-major/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/fa-maior/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/acordes/fa-sustenido-maior/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/fa-sustenido-maior/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/fa-sostenido-mayor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/f-sharp-major/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/fa-sustenido-maior/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/acordes/fa-sostenido-mayor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/fa-sustenido-maior/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/fa-sostenido-mayor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/f-sharp-major/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/fa-sustenido-maior/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/acordes/f-sharp-major/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/fa-sustenido-maior/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/fa-sostenido-mayor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/f-sharp-major/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/fa-sustenido-maior/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/acordes/sol-maior/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/sol-maior/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/sol-mayor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/g-major/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/sol-maior/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/acordes/sol-mayor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/sol-maior/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/sol-mayor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/g-major/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/sol-maior/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/acordes/g-major/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/sol-maior/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/sol-mayor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/g-major/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/sol-maior/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/acordes/la-bemol-maior/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/la-bemol-maior/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/la-bemol-mayor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/a-flat-major/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/la-bemol-maior/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/acordes/la-bemol-mayor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/la-bemol-maior/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/la-bemol-mayor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/a-flat-major/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/la-bemol-maior/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/acordes/a-flat-major/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/la-bemol-maior/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/la-bemol-mayor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/a-flat-major/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/la-bemol-maior/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/acordes/la-maior/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/la-maior/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/la-mayor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/a-major/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/la-maior/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/acordes/la-mayor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/la-maior/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/la-mayor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/a-major/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/la-maior/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/acordes/a-major/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/la-maior/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/la-mayor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/a-major/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/la-maior/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/acordes/si-bemol-maior/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/si-bemol-maior/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/si-bemol-mayor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/b-flat-major/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/si-bemol-maior/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/acordes/si-bemol-mayor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/si-bemol-maior/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/si-bemol-mayor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/b-flat-major/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/si-bemol-maior/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/acordes/b-flat-major/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/si-bemol-maior/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/si-bemol-mayor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/b-flat-major/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/si-bemol-maior/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/acordes/si-maior/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/si-maior/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/si-mayor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/b-major/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/si-maior/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/acordes/si-mayor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/si-maior/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/si-mayor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/b-major/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/si-maior/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/acordes/b-major/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/si-maior/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/si-mayor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/b-major/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/si-maior/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/acordes/do-menor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/do-menor/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/do-menor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/c-minor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/do-menor/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/acordes/do-menor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/do-menor/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/do-menor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/c-minor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/do-menor/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/acordes/c-minor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/do-menor/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/do-menor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/c-minor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/do-menor/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/acordes/do-sustenido-menor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/do-sustenido-menor/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/do-sostenido-menor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/c-sharp-minor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/do-sustenido-menor/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/acordes/do-sostenido-menor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/do-sustenido-menor/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/do-sostenido-menor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/c-sharp-minor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/do-sustenido-menor/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/acordes/c-sharp-minor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/do-sustenido-menor/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/do-sostenido-menor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/c-sharp-minor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/do-sustenido-menor/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/acordes/re-menor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/re-menor/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/re-menor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/d-minor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/re-menor/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/acordes/re-menor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/re-menor/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/re-menor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/d-minor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/re-menor/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/acordes/d-minor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/re-menor/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/re-menor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/d-minor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/re-menor/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/acordes/mi-bemol-menor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/mi-bemol-menor/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/mi-bemol-menor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/e-flat-minor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/mi-bemol-menor/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/acordes/mi-bemol-menor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/mi-bemol-menor/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/mi-bemol-menor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/e-flat-minor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/mi-bemol-menor/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/acordes/e-flat-minor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/mi-bemol-menor/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/mi-bemol-menor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/e-flat-minor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/mi-bemol-menor/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/acordes/mi-menor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/mi-menor/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/mi-menor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/e-minor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/mi-menor/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/acordes/mi-menor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/mi-menor/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/mi-menor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/e-minor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/mi-menor/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/acordes/e-minor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/mi-menor/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/mi-menor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/e-minor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/mi-menor/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/acordes/fa-menor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/fa-menor/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/fa-menor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/f-minor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/fa-menor/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/acordes/fa-menor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/fa-menor/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/fa-menor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/f-minor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/fa-menor/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/acordes/f-minor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/fa-menor/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/fa-menor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/f-minor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/fa-menor/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/acordes/fa-sustenido-menor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/fa-sustenido-menor/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/fa-sostenido-menor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/f-sharp-minor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/fa-sustenido-menor/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/acordes/fa-sostenido-menor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/fa-sustenido-menor/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/fa-sostenido-menor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/f-sharp-minor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/fa-sustenido-menor/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/acordes/f-sharp-minor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/fa-sustenido-menor/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/fa-sostenido-menor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/f-sharp-minor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/fa-sustenido-menor/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/acordes/sol-menor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/sol-menor/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/sol-menor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/g-minor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/sol-menor/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/acordes/sol-menor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/sol-menor/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/sol-menor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/g-minor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/sol-menor/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/acordes/g-minor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/sol-menor/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/sol-menor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/g-minor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/sol-menor/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/acordes/la-bemol-menor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/la-bemol-menor/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/la-bemol-menor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/a-flat-minor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/la-bemol-menor/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/acordes/la-bemol-menor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/la-bemol-menor/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/la-bemol-menor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/a-flat-minor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/la-bemol-menor/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/acordes/a-flat-minor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/la-bemol-menor/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/la-bemol-menor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/a-flat-minor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/la-bemol-menor/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/acordes/la-menor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/la-menor/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/la-menor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/a-minor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/la-menor/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/acordes/la-menor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/la-menor/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/la-menor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/a-minor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/la-menor/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/acordes/a-minor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/la-menor/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/la-menor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/a-minor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/la-menor/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/acordes/si-bemol-menor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/si-bemol-menor/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/si-bemol-menor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/b-flat-minor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/si-bemol-menor/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/acordes/si-bemol-menor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/si-bemol-menor/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/si-bemol-menor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/b-flat-minor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/si-bemol-menor/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/acordes/b-flat-minor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/si-bemol-menor/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/si-bemol-menor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/b-flat-minor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/si-bemol-menor/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/acordes/si-menor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/si-menor/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/si-menor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/b-minor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/si-menor/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/acordes/si-menor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/si-menor/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/si-menor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/b-minor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/si-menor/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/acordes/b-minor/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/si-menor/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/si-menor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/b-minor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/si-menor/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/acordes/do7/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/do7/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/do7/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/c7/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/do7/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/acordes/do7/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/do7/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/do7/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/c7/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/do7/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/acordes/c7/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/do7/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/do7/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/c7/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/do7/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/acordes/do-sustenido7/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/do-sustenido7/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/do-sostenido7/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/c-sharp7/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/do-sustenido7/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/acordes/do-sostenido7/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/do-sustenido7/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/do-sostenido7/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/c-sharp7/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/do-sustenido7/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/acordes/c-sharp7/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/do-sustenido7/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/do-sostenido7/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/c-sharp7/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/do-sustenido7/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/acordes/re7/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/re7/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/re7/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/d7/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/re7/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/acordes/re7/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/re7/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/re7/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/d7/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/re7/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/acordes/d7/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/re7/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/re7/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/d7/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/re7/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/acordes/mi-bemol7/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/mi-bemol7/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/mi-bemol7/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/e-flat7/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/mi-bemol7/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/acordes/mi-bemol7/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/mi-bemol7/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/mi-bemol7/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/e-flat7/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/mi-bemol7/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/acordes/e-flat7/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/mi-bemol7/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/mi-bemol7/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/e-flat7/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/mi-bemol7/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/acordes/mi7/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/mi7/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/mi7/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/e7/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/mi7/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/acordes/mi7/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/mi7/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/mi7/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/e7/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/mi7/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/acordes/e7/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/mi7/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/mi7/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/e7/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/mi7/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/acordes/fa7/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/fa7/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/fa7/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/f7/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/fa7/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/acordes/fa7/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/fa7/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/fa7/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/f7/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/fa7/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/acordes/f7/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/fa7/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/fa7/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/f7/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/fa7/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/acordes/fa-sustenido7/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/fa-sustenido7/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/fa-sostenido7/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/f-sharp7/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/fa-sustenido7/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/acordes/fa-sostenido7/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/fa-sustenido7/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/fa-sostenido7/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/f-sharp7/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/fa-sustenido7/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/acordes/f-sharp7/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/fa-sustenido7/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/fa-sostenido7/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/f-sharp7/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/fa-sustenido7/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/acordes/sol7/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/sol7/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/sol7/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/g7/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/sol7/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/acordes/sol7/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/sol7/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/sol7/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/g7/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/sol7/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/acordes/g7/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/sol7/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/sol7/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/g7/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/sol7/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/acordes/la-bemol7/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/la-bemol7/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/la-bemol7/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/a-flat7/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/la-bemol7/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/acordes/la-bemol7/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/la-bemol7/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/la-bemol7/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/a-flat7/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/la-bemol7/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/acordes/a-flat7/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/la-bemol7/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/la-bemol7/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/a-flat7/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/la-bemol7/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/acordes/la7/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/la7/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/la7/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/a7/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/la7/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/acordes/la7/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/la7/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/la7/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/a7/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/la7/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/acordes/a7/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/la7/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/la7/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/a7/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/la7/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/acordes/si-bemol7/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/si-bemol7/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/si-bemol7/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/b-flat7/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/si-bemol7/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/acordes/si-bemol7/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/si-bemol7/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/si-bemol7/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/b-flat7/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/si-bemol7/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/acordes/b-flat7/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/si-bemol7/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/si-bemol7/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/b-flat7/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/si-bemol7/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/acordes/si7/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/si7/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/si7/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/b7/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/si7/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/es/acordes/si7/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/si7/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/si7/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/b7/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/si7/"/>
+  </url>
+  <url>
+    <loc>https://bandoly.app/en/acordes/b7/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://bandoly.app/acordes/si7/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bandoly.app/es/acordes/si7/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bandoly.app/en/acordes/b7/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bandoly.app/acordes/si7/"/>
+  </url>
+  <!--/referencia-->
 </urlset>
