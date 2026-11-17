@@ -229,12 +229,31 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
 - `notas-do-bandoneon/` (mapa dos 71 botões e tabela de onde fica cada nota) e `acordes/` (índice + 36 páginas: maior,
   menor e 7 nas 12 tônicas, com os 4 mapas mão × fole): geradas por `ferramentas/gerar_referencia.py`, que roda o
   `chordVoicings` do próprio app no Node (a página mostra o mesmo que o Relembre). As notas são grafadas por terças
-  (Fá♯ maior = Fá♯ · Lá♯ · Dó♯), e o gerador confere que todo botão aceso é nota do acorde naquela direção.
+  (Fá♯ maior = Fá♯ · Lá♯ · Dó♯), a mesma regra de `notasDoAcorde` no app (o gerador confere que as duas batem), e o
+  gerador confere que todo botão aceso é nota do acorde naquela direção.
+- `escalas/` (índice + 36 páginas: maior, menor natural e menor harmônica nas 12 tônicas): o mesmo gerador roda
+  `scaleNotes`/`validStarts` (escalas.js) e `fingerMelody` (melodias.js) no Node. Cada página tem 4 mapas (mão × fole),
+  subindo uma oitava, com `force` na direção do mapa (o fole só troca onde a nota não existe) e andamento 120 (a regra
+  dos 6 s de fole não interfere). Os botões são o caminho do app (botão mais perto do anterior), **não dedilhado**.
+- Imagens de compartilhamento (`og:image`) das páginas de acorde e de escala: cartões 1200×630 em
+  `imagens/compartilhar/<idioma>/<pasta>/<slug>.jpg`, desenhados em HTML e fotografados pelo Edge (em lotes, recortados
+  pelo Pillow). `imagens/compartilhar/manifesto.json` guarda o resumo de cada cartão: o gerador refaz só os que mudaram
+  e o `--verificar` acusa imagem faltando, desatualizada ou sobrando.
+- "Veja também": `VEJA_LICOES` (gerar_licoes.py, pelo slug pt da lição) e `VEJA_TEORIA` (gerar_teoria.py, pelo id do
+  tópico) ligam lições e teoria ao mapa de notas, aos acordes e às escalas. Lição renomeada → atualize `VEJA_LICOES`.
+- **Segurança das páginas estáticas:** todas têm CSP numa `<meta>` (o GitHub Pages não manda cabeçalhos) que só deixa
+  rodar scripts do site e os scripts escritos na página, pelo hash sha256 (`gl.csp`). Nas páginas geradas isso é
+  automático; nas feitas à mão o bloco `<!--csp--><!--/csp-->` no `<head>` é preenchido por `gerar_idiomas.py` (também
+  na versão pt). Mudou um script de uma página → rode o gerador, senão o script é bloqueado. Nada de `onclick=` no HTML.
+- `js/moldura.js` (em todas as páginas, logo depois da CSP): o site não funciona dentro de um iframe de outro site
+  (contra clickjacking); em `file:` e no próprio site segue normal.
+- `js/goatcounter.js`: cópia do `count.js` do GoatCounter (licença ISC), servida pelo próprio site. Para atualizar,
+  baixe de novo, leia o arquivo inteiro e troque o conteúdo.
 - Título da página: até ~60 caracteres; se passar, vira "{assunto} | BanDoly" (`gl.titulo_pagina`). Descrição: até ~160.
   Um só `<h1>` por página (no início, o da volta é `<h2>`).
 - Links com `data-local` não ganham `../` no gerador. O bloco `<!--bandeiras-->` é refeito por idioma.
 - `sitemap.xml` é todo gerado, em blocos: `<!--paginas-->` (gerar_idiomas), `<!--licoes-->`, `<!--teoria-->` e
-  `<!--referencia-->`. Cada endereço tem `lastmod`: `ferramentas/datas-paginas.json` guarda um resumo do conteúdo de
+  `<!--referencia-->` (notas, acordes e escalas). Cada endereço tem `lastmod`: `ferramentas/datas-paginas.json` guarda um resumo do conteúdo de
   cada página e a data em que mudou (página igual mantém a data). Commite esse arquivo junto. Depois de criar
   páginas, lembre o dono de reenviar o sitemap no Search Console e pedir a indexação das principais.
 - O CSS global esconde `section` que não é aba ativa. Em páginas estáticas, use `.pagina>section{display:block}`.
@@ -313,7 +332,8 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
   nela, senão é bloqueado. O teste registra como erro qualquer bloqueio (`securitypolicyviolation`).
 - **Contagem de usos:** `contarUso('nome')` (base.js) manda um evento agregado ao GoatCounter (hoje: academia-comecou,
   tarefa-gerada, conta-google, conta-email, conta-entrou). Evento novo é ok; dado pessoal no nome, nunca.
-- **Login com domínio próprio:** `SUPA_DOMINIO` em conta.js (vazio = endereço padrão do Supabase). A CSP já libera auth.bandoly.app.
+- **Login com domínio próprio:** `SUPA_DOMINIO` em conta.js (vazio = endereço padrão do Supabase). Ao ativar, acrescente
+  `https://auth.bandoly.app` e `wss://auth.bandoly.app` no `connect-src` da CSP do index.html (hoje fora: o domínio não existe).
 - O responsável pelos dados (controlador, LGPD) é **Lucca Costa**, citado na Privacidade e nos Termos.
 - O repositório é público, com `LICENSE` de **todos os direitos reservados**.
 - Mantenha "sem cadastro". Login (por exemplo, Supabase) só se opcional, com RLS em todas as tabelas,

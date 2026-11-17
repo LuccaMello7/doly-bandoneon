@@ -1568,6 +1568,7 @@ const TEXTOS = {
 'Teoria: quanto dura cada nota e como se conta o tempo.': ['Teoría: cuánto dura cada nota y cómo se cuenta el tiempo.', 'Theory: how long each note lasts and how to count the beat.'],
 // Conta opcional, Termos de Uso e Privacidade com conta (2026-11-10)
 'Conta': ['Cuenta', 'Account'],
+'Mapa de escalas': ['Mapa de escalas', 'Scale map'],
 'Mapa de notas': ['Mapa de notas', 'Note map'],
 'Mapa de acordes': ['Mapa de acordes', 'Chord map'],
 'Veja o mapa com a nota de cada botão, abrindo e fechando.': ['Mirá el mapa con la nota de cada botón, abriendo y cerrando.', 'See the map with the note of every button, opening and closing.'],

@@ -47,6 +47,9 @@ for cod, T in TEXTOS.items():  # menus, aviso e rodapé iguais aos das lições
     T.update({k: v for k, v in gl.TEXTOS[cod].items() if k not in T})
 
 
+VEJA_TEORIA = {'notas': ['notas'], 'acidentes': ['notas'], 'escalas': ['escalas'], 'acordes': ['acordes']}  # tópico → páginas de referência
+
+
 def carregar():
     js = (RAIZ / 'js' / 'teoria.js').read_text(encoding='utf-8')
     topicos = re.findall(r"\{id:'(\w+)', titulo:'([^']+)'", js[js.index('const TEORIA = ['):])
@@ -94,7 +97,7 @@ def gerar_todas():
     {t['textos'][cod]}
     <div class="row licao-nav">{''.join(nav)}</div>
   </article>
-  <div class="card licao-cta">
+{gl.veja_tambem(cod, VEJA_TEORIA[t['id']], '../../') if t['id'] in VEJA_TEORIA else ''}  <div class="card licao-cta">
     <p>{e(T['pratique'])}</p>
     <a class="btn" href="../../#teoria-{i+1}" data-local>{e(T['abrir'])}</a>
   </div>'''

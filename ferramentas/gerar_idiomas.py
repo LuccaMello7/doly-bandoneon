@@ -23,6 +23,7 @@ Sempre que mudar uma página em português ou o dicionário, rode este script. O
 """
 import html, json, re, sys
 from pathlib import Path
+import gerar_licoes as gl  # a política de segurança (CSP) e o sitemap são os mesmos das páginas das lições
 
 RAIZ = Path(__file__).resolve().parent.parent
 SITE = 'https://bandoly.app/'
@@ -168,14 +169,13 @@ def com_faq_ld(pagina):
 def gerar(cod, dic, origem):
     pagina = (RAIZ / origem).read_text(encoding='utf-8')
     corpo = traduzir_corpo(pagina, dic, IDIOMAS[cod][0])
-    return com_faq_ld(ajustar_cabeca(corpo, dic, cod, origem[:-len('index.html')]))
+    return gl.com_csp(com_faq_ld(ajustar_cabeca(corpo, dic, cod, origem[:-len('index.html')])))
 
 
 def sitemap_paginas(conteudos):
     """Bloco <!--paginas--> do sitemap.xml: as páginas desta lista nos três idiomas, com a data da última mudança."""
-    import gerar_licoes as gl  # aqui dentro: gerar_teoria importa os dois arquivos
     grupos = [{c: SITE + ('' if c == 'pt' else c + '/') + origem[:-len('index.html')] for c in ('pt', *IDIOMAS)} for origem in PAGINAS]
-    return gl, gl.sitemap_com_bloco('paginas', gl.sitemap_bloco('paginas', grupos, conteudos))
+    return gl.sitemap_com_bloco('paginas', gl.sitemap_bloco('paginas', grupos, conteudos))
 
 
 def main():
@@ -185,7 +185,7 @@ def main():
     desatualizadas, conteudos = [], {}
     # as páginas em português: só o bloco dos dados estruturados (perguntas) é refeito
     for origem in PAGINAS:
-        atual = (RAIZ / origem).read_text(encoding='utf-8'); novo = com_faq_ld(atual)
+        atual = (RAIZ / origem).read_text(encoding='utf-8'); novo = gl.com_csp(com_faq_ld(atual))
         conteudos[origem] = novo
         if novo != atual:
             if verificar: desatualizadas.append(origem)
@@ -202,7 +202,7 @@ def main():
                 destino.parent.mkdir(parents=True, exist_ok=True)
                 destino.write_bytes(novo.encode('utf-8'))  # bytes: mantém o \n também no Windows (e no Python 3.9)
                 print(f'{cod}/{origem} gerado')
-    gl, sitemap = sitemap_paginas(conteudos)
+    sitemap = sitemap_paginas(conteudos)
     if verificar:
         if (RAIZ / 'sitemap.xml').read_text(encoding='utf-8') != sitemap: desatualizadas.append('sitemap.xml')
     else:

@@ -9,7 +9,8 @@
    - A tela: "Entrar" (ou o círculo com a inicial, que abre um menu) fica no topo; a aba Conta é um cartão em
      dois passos (escolher como entrar → "Confira o seu e-mail") e, conectado, o painel da nuvem e dos dados. */
 // Domínio próprio do login (complemento pago do Supabase): com ele, a tela do Google diz "bandoly.app".
-// Quando auth.bandoly.app estiver ativo, troque '' por 'https://auth.bandoly.app'. O login das pessoas continua
+// Quando auth.bandoly.app estiver ativo, troque '' por 'https://auth.bandoly.app' E acrescente https://auth.bandoly.app
+// e wss://auth.bandoly.app no connect-src da CSP do index.html (hoje fora, porque o domínio não existe). O login das pessoas continua
 // valendo, porque o lugar onde ele fica guardado no navegador (SUPA_SESSAO) não muda.
 const SUPA_DOMINIO = '';
 const SUPA_URL = SUPA_DOMINIO || 'https://venbupxwqgofwjkhixhc.supabase.co';

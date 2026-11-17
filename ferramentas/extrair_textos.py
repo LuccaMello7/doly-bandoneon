@@ -14,7 +14,8 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
 ATRIBUTOS = ('title', 'aria-label', 'alt', 'placeholder')
-IGNORAR_JS = {'i18n.js', 'i18n-textos.js', 'licoes-traducao.js', 'base.js', 'teoria-textos.js'}
+IGNORAR_JS = {'i18n.js', 'i18n-textos.js', 'licoes-traducao.js', 'base.js', 'teoria-textos.js',
+              'goatcounter.js', 'moldura.js'}  # goatcounter.js: cópia do contador, só mensagens de console em inglês
 norm = lambda s: re.sub(r'\s+', ' ', s).strip()
 
 

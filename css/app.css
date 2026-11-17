@@ -434,6 +434,15 @@ details>summary{cursor:pointer}
 .ref-tons a{display:inline-block;padding:4px 12px;border-radius:999px;background:var(--ameixa-3);color:var(--text);text-decoration:none;font-weight:600}
 .ref-tons a:hover{background:var(--line)}
 .ref-tons a[aria-current]{background:var(--gold);color:var(--ameixa)}
+.ch-rel-mapa circle.anel{fill:none;stroke-width:.06} .ch-rel-mapa circle.anel.open{stroke:var(--open)} .ch-rel-mapa circle.anel.close{stroke:var(--close)}
+.ref-mapa .ch-rel-mapa text.dois{font-size:.17px}
+.ref-passos{list-style:none;padding:0;margin:12px 0 0;display:flex;flex-wrap:wrap;gap:4px}
+.ref-passos li{display:inline-flex;align-items:baseline;gap:4px;padding:4px 8px;border-radius:8px;background:var(--ameixa-3);font-size:14px}
+.ref-passos small{color:var(--muted);font-size:12px}
+.ref-passos li.open b{color:var(--open)} .ref-passos li.close b{color:var(--close)}
+.ref-veja h2{margin:0 0 8px;font-size:1.1rem}
+.ref-veja ul{margin:0;padding-left:1.2em}
+.ref-veja li{margin:4px 0}
 .feat a+a{display:block;margin-top:4px}
 
 /* Aviso destacado: o BanDoly não substitui um professor */

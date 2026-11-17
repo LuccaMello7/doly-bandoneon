@@ -14,7 +14,7 @@ De onde vem o conteúdo: js/licoes.js (português) e js/licoes-traducao.js (espa
 os mesmos textos que o app mostra. Não edite as páginas geradas: mude as lições e rode o script.
 Os textos fixos das páginas (menus, botões, títulos) ficam em TEXTOS, logo abaixo.
 """
-import hashlib, html, json, re, sys, unicodedata
+import base64, hashlib, html, json, re, sys, unicodedata
 from datetime import date
 from pathlib import Path
 
@@ -29,6 +29,7 @@ CABECALHO = '<!-- Gerado por ferramentas/gerar_licoes.py a partir de js/licoes.j
 
 TEXTOS = {
 'pt': dict(
+    veja='Veja também', rel_notas='Mapa de notas do bandoneon: a nota de cada botão, abrindo e fechando', rel_acordes='Acordes no bandoneon: maiores, menores e com sétima, nas duas mãos', rel_escalas='Escalas no bandoneon: o caminho dos botões e do fole, nota por nota',
     marca='Aprenda Bandoneon', marca_aria='BanDoly - Aprenda Bandoneon (início)', nav_aria='Seções do app',
     abrir_app='Abrir o app', inicio='Início', curso='Curso de bandoneon grátis',
     indice_titulo='Curso de bandoneon grátis: {n} lições | BanDoly',
@@ -45,6 +46,7 @@ TEXTOS = {
     aviso_forte='O BanDoly é um site para aprendizado e nunca substituirá os conselhos e as orientações de um professor.',
     aviso_resto='Use o app como apoio aos estudos e, sempre que puder, aprenda com um professor de bandoneon: ele corrige a postura, o fole e o dedilhado, coisas que um app não consegue ver.'),
 'es': dict(
+    veja='Mirá también', rel_notas='Mapa de notas del bandoneón: la nota de cada botón, abriendo y cerrando', rel_acordes='Acordes en el bandoneón: mayores, menores y con séptima, en las dos manos', rel_escalas='Escalas en el bandoneón: el camino de botones y fuelle, nota por nota',
     marca='Aprendé Bandoneón', marca_aria='BanDoly - Aprendé Bandoneón (inicio)', nav_aria='Secciones de la app',
     abrir_app='Abrir la app', inicio='Inicio', curso='Curso de bandoneón gratis',
     indice_titulo='Curso de bandoneón gratis: {n} lecciones | BanDoly',
@@ -61,6 +63,7 @@ TEXTOS = {
     aviso_forte='BanDoly es un sitio para aprender y nunca reemplazará los consejos y la orientación de un profesor.',
     aviso_resto='Usa la app como apoyo para tus estudios y, siempre que puedas, aprendé con un profesor de bandoneón: él corrige la postura, el fuelle y la digitación, cosas que una app no puede ver.'),
 'en': dict(
+    veja='See also', rel_notas='Bandoneon note map: the note of every button, opening and closing', rel_acordes='Chords on the bandoneon: major, minor and seventh, on both hands', rel_escalas='Scales on the bandoneon: the path of buttons and bellows, note by note',
     marca='Learn Bandoneon', marca_aria='BanDoly - Learn Bandoneon (home)', nav_aria='App sections',
     abrir_app='Open the app', inicio='Home', curso='Free bandoneon course',
     indice_titulo='Free bandoneon course: {n} lessons | BanDoly',
@@ -148,6 +151,27 @@ def url(cod, *partes):
     return SITE + ('' if cod == 'pt' else cod + '/') + ''.join(p + '/' for p in partes)
 
 
+# Segurança das páginas estáticas: só scripts do próprio site e os escritos na própria página (pelo hash
+# sha256 de cada um, calculado aqui). Assim um script injetado não roda. O GitHub Pages não manda cabeçalhos,
+# então a política vai numa <meta> logo no começo do <head>.
+CSP_PAGINAS = ("default-src 'self'; script-src 'self'{hashes}; style-src 'self' 'unsafe-inline'; "
+               "img-src 'self' data: https://bandoly.goatcounter.com; connect-src 'self' https://bandoly.goatcounter.com; "
+               "font-src 'self'; media-src 'self'; frame-src https://www.youtube-nocookie.com; manifest-src 'self'; "
+               "object-src 'none'; base-uri 'self'; form-action 'self'")
+
+
+def csp(pagina):
+    inline = re.findall(r'<script>(.*?)</script>', pagina.replace('\r\n', '\n'), re.S)
+    hashes = ''.join(f" 'sha256-{base64.b64encode(hashlib.sha256(js.encode('utf-8')).digest()).decode()}'" for js in dict.fromkeys(inline))
+    return f'<meta http-equiv="Content-Security-Policy" content="{CSP_PAGINAS.format(hashes=hashes)}">'
+
+
+def com_csp(pagina):
+    """Preenche o bloco <!--csp--><!--/csp--> (páginas feitas à mão) com a política da página."""
+    if '<!--csp-->' not in pagina: return pagina
+    return re.sub(r'<!--csp-->.*?<!--/csp-->', lambda m: '<!--csp-->' + csp(pagina) + '<!--/csp-->', pagina, flags=re.S)
+
+
 def titulo_pagina(modelo, t, limite=60):
     """Título da aba e do Google: o modelo completo se couber em ~60 caracteres (o que o Google mostra);
     senão só '{t} | BanDoly', para o assunto da página não ser cortado."""
@@ -227,7 +251,7 @@ def bandeiras(caminhos, cod, raiz):
     return f'<div class="langs" role="group" aria-label="Idioma / Language" translate="no">{"".join(links)}</div>'
 
 
-def pagina(cod, prof, titulo, descricao, urls, corpo, dados, tipo_og='article'):
+def pagina(cod, prof, titulo, descricao, urls, corpo, dados, tipo_og='article', imagem=None):
     """Monta a página. urls: {idioma: endereço completo}; prof: pastas abaixo da pasta do idioma."""
     T, raiz = TEXTOS[cod], prefixo(cod, prof)
     app = '../' * prof
@@ -236,11 +260,13 @@ def pagina(cod, prof, titulo, descricao, urls, corpo, dados, tipo_og='article'):
     alternativos += f'<link rel="alternate" hreflang="x-default" href="{urls["pt"]}">\n'
     outros = ''.join(f'<meta property="og:locale:alternate" content="{LOCALES[c]}">\n' for c in LANGS if c != cod)
     e = html.escape
-    return f'''<!DOCTYPE html>
+    s = f'''<!DOCTYPE html>
 {CABECALHO}<html lang="{LANGS[cod]}">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--csp--><!--/csp-->
+<script src="{raiz}js/moldura.js"></script>
 <title>{e(titulo)}</title>
 <meta name="description" content="{e(descricao)}">
 <meta name="theme-color" content="#1c1624">
@@ -250,7 +276,7 @@ def pagina(cod, prof, titulo, descricao, urls, corpo, dados, tipo_og='article'):
 <meta property="og:url" content="{urls[cod]}">
 <meta property="og:title" content="{e(titulo)}">
 <meta property="og:description" content="{e(descricao)}">
-<meta property="og:image" content="{SITE}icones/{IMAGEM[cod]}">
+<meta property="og:image" content="{SITE}{imagem or "icones/" + IMAGEM[cod]}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:locale" content="{LOCALES[cod]}">
@@ -263,7 +289,7 @@ def pagina(cod, prof, titulo, descricao, urls, corpo, dados, tipo_og='article'):
 <link rel="apple-touch-icon" href="{raiz}icones/icone-192.png">
 <link rel="stylesheet" href="{raiz}css/app.css">
 <!-- contagem de visitas: GoatCounter, sem cookies e sem dados pessoais (painel: bandoly.goatcounter.com) -->
-<script data-goatcounter="https://bandoly.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+<script data-goatcounter="https://bandoly.goatcounter.com/count" async src="{raiz}js/goatcounter.js"></script>
 </head>
 <body>
 <header>
@@ -283,6 +309,7 @@ def pagina(cod, prof, titulo, descricao, urls, corpo, dados, tipo_og='article'):
 </body>
 </html>
 '''
+    return com_csp(s)
 
 
 QUIZ_JS = '''<script>
@@ -296,6 +323,18 @@ document.querySelectorAll('.licao-quiz .q').forEach(q => q.addEventListener('cli
 </script>'''
 
 
+# "Veja também": das lições e da teoria para as páginas de referência (mapa de notas, acordes, escalas)
+VEJA = {'notas': ('notas-do-bandoneon', 'rel_notas'), 'acordes': ('acordes', 'rel_acordes'), 'escalas': ('escalas', 'rel_escalas')}
+VEJA_LICOES = {'anatomia-do-instrumento': ['notas'], 'bisonoro-abrindo-e-fechando': ['notas'], 'duas-maos-um-fole-so': ['notas'],
+               'leitura-duas-claves': ['notas'], 'acordes-no-bandoneon': ['acordes', 'notas'], 'rotina-de-estudo': ['escalas', 'acordes']}
+
+
+def veja_tambem(cod, chaves, app):
+    T, e = TEXTOS[cod], html.escape
+    itens = ''.join(f'<li><a href="{app}{VEJA[k][0]}/" data-local>{e(T[VEJA[k][1]])}</a></li>' for k in chaves)
+    return f'  <nav class="card ref-veja" aria-label="{e(T["veja"])}"><h2>{e(T["veja"])}</h2><ul>{itens}</ul></nav>\n'
+
+
 def migalhas(cod, itens):
     return {'@type': 'BreadcrumbList', 'itemListElement': [
         {'@type': 'ListItem', 'position': k + 1, 'name': nome, 'item': u} for k, (nome, u) in enumerate(itens)]}
@@ -305,6 +344,8 @@ def gerar_todas():
     todas = carregar()
     n = len(todas['pt'])
     slugs = {c: [slug(l['titulo']) for l in todas[c]] for c in LANGS}
+    sobrando = set(VEJA_LICOES) - set(slugs['pt'])
+    if sobrando: sys.exit(f'VEJA_LICOES cita lições que não existem mais: {sorted(sobrando)}')
     paginas = {}
     for cod, lista in todas.items():
         T, e = TEXTOS[cod], html.escape
@@ -343,6 +384,7 @@ def gerar_todas():
                 + ''.join(f'<button type="button" class="btn sec"{" data-certa" if k == q["a"] else ""}>{e(o)}</button>' for k, o in enumerate(q['o']))
                 + '</div><div class="fb muted" aria-live="polite"></div></div>\n'
                 for q in l['quiz'])
+            veja = veja_tambem(cod, VEJA_LICOES[slugs['pt'][i]], '../../') if slugs['pt'][i] in VEJA_LICOES else ''
             corpo = f'''  <article class="card licao">
     <p class="muted licao-kicker"><a href="../../" data-local>{e(T['inicio'])}</a> › <a href="../" data-local>{e(T['curso'])}</a> › {e(T['licao_n'].format(i=i+1, n=n))}</p>
     <h1>{e(sem_numero(l['titulo']))}</h1>
@@ -352,7 +394,7 @@ def gerar_todas():
 {perguntas}    </div>
     <div class="row licao-nav">{''.join(nav)}</div>
   </article>
-  {aviso(T)}
+{veja}  {aviso(T)}
   <div class="card licao-cta">
     <p>{e(T['pratique'])}</p>
     <a class="btn" href="../../#licao-{i+1}" data-local>{e(T['abrir_licao'])}</a>

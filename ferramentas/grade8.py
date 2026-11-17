@@ -50,6 +50,7 @@ def percorrer(texto, corrigir=False):
 
 
 def main():
+    if hasattr(sys.stdout, 'reconfigure'): sys.stdout.reconfigure(encoding='utf-8')  # quem chama (os testes) lê em UTF-8
     corrigir, verificar = '--corrigir' in sys.argv, '--verificar' in sys.argv
     total = Counter()
     for arq in [CSS] + [p for p in PAGINAS if p.exists()]:

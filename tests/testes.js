@@ -911,7 +911,7 @@ teste('Acordes: o mapa do Relembre e o teclado mudam com a mão e o fole de cada
       ok(acesos.every(b=>doAcorde.has(pc12(b[dir]))), 'os acesos são notas do acorde nessa direção: ' + rot);
       ok($$('#chRelMapa circle.on').every(c=>c.classList.contains(dir)), 'na cor da direção: ' + rot);
       const nomes = $$('#chRelMapa text').map(x=>x.textContent);
-      ok(acesos.every((b, i)=>nomes[i]===rootName(pc12(b[dir]))), 'o nome escrito é a nota dessa direção: ' + rot);
+      ok(acesos.every((b, i)=>nomes[i]===nomeNoAcorde(pc, type, pc12(b[dir]))), 'o nome escrito é a nota dessa direção: ' + rot);
       const obrig = [0, 1, T.iv.length - 1].map(k=>(pc + T.iv[k]) % 12), tem = new Set(acesos.map(b=>pc12(b[dir])));
       ok(obrig.every(p=>tem.has(p)), 'tem a fundamental, a 3ª e a última nota: ' + rot);
       // a forma desenhada é aceita pela conferência (quem copiar o mapa acerta)
@@ -930,6 +930,31 @@ teste('Acordes: o mapa do Relembre e o teclado mudam com a mão e o fole de cada
   igual(vistos.size, 4, 'as quatro combinações apareceram: ' + [...vistos].join(' '));
   ok(desenhos.size > 20, `o desenho muda de acorde para acorde (${desenhos.size} desenhos diferentes em 80 rodadas)`);
   store.set('acordesMapa', antesMapa); $('#chRelOn').checked = antesMapa !== false; go('inicio');
+});
+teste('Acordes: as notas são grafadas por terças (Mi maior tem Sol♯, não Lá♭)', () => {
+  const antes = {lang:state.lang, names:state.names}; state.lang = 'pt'; state.names = 'pt';
+  const n = (pc, tipo) => notasDoAcorde(pc, tipo).map(x=>x.nome).join(' ');
+  igual(n(4, 'maior'), 'Mi Sol♯ Si'); igual(n(11, 'maior'), 'Si Ré♯ Fá♯'); igual(n(6, 'maior'), 'Fá♯ Lá♯ Dó♯');
+  igual(n(1, 'maior'), 'Dó♯ Mi♯ Sol♯'); igual(n(8, 'menor'), 'Lá♭ Dó♭ Mi♭'); igual(n(10, 'dom7'), 'Si♭ Ré Fá Lá♭');
+  igual(n(2, 'm6'), 'Ré Fá Lá Si'); igual(n(0, 'dim7'), 'Dó Mi♭ Sol♭ Lá'); // Si𝄫 vira Lá, o nome da tecla
+  // em todos os acordes: um nome por nota, cada nome é mesmo daquela nota, cada letra uma vez só (fora o diminuto)
+  const LET = ['Dó','Ré','Mi','Fá','Sol','Lá','Si'], NAT = [0,2,4,5,7,9,11];
+  for(let pc = 0; pc < 12; pc++) for(const tipo of Object.keys(CHORD_TYPES)){
+    const ns = notasDoAcorde(pc, tipo);
+    ok(ns.every(x=>{ const l = LET.findIndex(L=>x.nome.startsWith(L)), a = x.nome.endsWith('♯') ? 1 : x.nome.endsWith('♭') ? -1 : 0;
+      return l >= 0 && ((NAT[l] + a + 12) % 12)===x.pc; }), 'nome certo para a nota: ' + chordName(pc, tipo));
+    if(tipo!=='dim7') igual(new Set(ns.map(x=>x.nome.replace(/[♯♭]/, ''))).size, ns.length, 'uma letra por nota: ' + chordName(pc, tipo));
+  }
+  // com oitava: Dó♭ é a tecla do Si, uma oitava "acima" no nome
+  igual(nomeNoAcorde(8, 'menor', 59, 59), 'Dó♭4'); igual(nomeNoAcorde(4, 'maior', 68, 68), 'Sol♯4');
+  // espanhol e nomes em letras
+  state.lang = 'es'; igual(n(4, 'maior'), 'Mi Sol♯ Si'); igual(n(10, 'dom7'), 'Si♭ Re Fa La♭');
+  state.names = 'en'; igual(n(4, 'maior'), 'E G♯ B'); igual(n(8, 'menor'), 'A♭ C♭ E♭');
+  Object.assign(state, antes);
+  // na tela: o explorador e o Relembre usam esses nomes
+  go('acordes'); $('#chRoot').value = '4'; $('#chType').value = 'maior'; showChord();
+  ok($('#chNotes').textContent.includes('Sol♯') && !$('#chNotes').textContent.includes('Lá♭'), 'o explorador escreve Sol♯ em Mi maior');
+  go('inicio');
 });
 teste('Acordes: no treino da mão esquerda, só o teclado esquerdo aparece e botões da direita não contam', () => {
   go('acordes'); $('#chMenu [data-v="left"]').click(); $('#chTrain').click();

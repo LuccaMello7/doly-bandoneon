@@ -12,6 +12,27 @@ const ROOT_EN = ['C','C♯','D','E♭','E','F','F♯','G','A♭','A','B♭','B']
 const ROOT_ES = ['Do','Do♯','Re','Mi♭','Mi','Fa','Fa♯','Sol','La♭','La','Si♭','Si'];
 const rootName = pc => (state.names==='en' ? ROOT_EN : state.lang==='es' ? ROOT_ES : ROOT_PT)[pc];
 const chordName = (pc, type) => rootName(pc) + CHORD_TYPES[type].suf;
+// Nomes das notas do acorde pela regra das terças: Mi maior = Mi · Sol♯ · Si (nunca Lá♭), Si♭7 = Si♭ · Ré · Fá · Lá♭.
+// A letra de cada nota vem do grau (a 3ª fica duas letras acima da fundamental) e o acidente, da distância até a
+// letra natural. Acidente duplo (o 𝄫7 do diminuto) fica com o nome da tecla, mais fácil de ler.
+// As páginas acordes/ usam a mesma regra (ferramentas/gerar_referencia.py confere que os nomes batem).
+const LETRA_DO_PC = [0,0,1,2,2,3,3,4,5,5,6,6]; // a letra de cada tônica, como em ROOT_*: Dó♯ é um Dó, Mi♭ é um Mi
+const NAT_PC = [0,2,4,5,7,9,11];
+function notasDoAcorde(pc, type){
+  const T = CHORD_TYPES[type], nomes = state.names==='en' ? ROOT_EN : state.lang==='es' ? ROOT_ES : ROOT_PT;
+  return T.iv.map((iv, i)=>{
+    const alvo = (pc + iv) % 12, letra = (LETRA_DO_PC[pc] + parseInt(T.deg[i].replace(/\D/g, ''), 10) - 1) % 7;
+    const acid = (alvo - NAT_PC[letra] + 18) % 12 - 6;
+    if(Math.abs(acid) > 1) return {pc:alvo, acid:0, nome:nomes[alvo]};
+    return {pc:alvo, acid, nome:nomes[NAT_PC[letra]] + (acid > 0 ? '♯' : acid < 0 ? '♭' : '')};
+  });
+}
+// O nome de uma nota (classe de altura) dentro do acorde; com midi, também a oitava (Dó♭4 é a tecla do Si3)
+function nomeNoAcorde(pc, type, alvo, midi){
+  const n = notasDoAcorde(pc, type).find(x=>x.pc===((alvo % 12) + 12) % 12);
+  if(!n) return midi==null ? rootName(((alvo % 12) + 12) % 12) : noteName(midi);
+  return midi==null ? n.nome : n.nome + (Math.floor((midi - n.acid) / 12) - 1);
+}
 const MAX_SPREAD = 3.3; // distância máxima entre botões (em "botões") para caber na mão
 
 // Procura combinações de botões (uma por nota do acorde) na direção pedida
@@ -66,10 +87,11 @@ function showChord(){
   ckL.refresh(); ckR.refresh();
   const T=CHORD_TYPES[type];
   $('#chTitle').textContent = `${chordName(pc,type)} · ${dirLabel(ch.dir).toLowerCase()}`;
-  $('#chNotes').textContent = 'Notas: ' + T.iv.map((iv,i)=>`${rootName((pc+iv)%12)} (${T.deg[i]})`).join(' · ');
+  const nomes = notasDoAcorde(pc, type);
+  $('#chNotes').textContent = 'Notas: ' + T.iv.map((iv,i)=>`${nomes[i].nome} (${T.deg[i]})`).join(' · ');
   ch.voicings = chordVoicings(ch.hand, ch.dir, pc, type); ch.sel = 0;
   $('#chVoicings').innerHTML = ch.voicings.length
-    ? ch.voicings.map((v,i)=>`<button class="btn sec voicing ${i===0?'on':''}" data-i="${i}">Opção ${i+1}: ${v.btns.map(b=>noteName(b[ch.dir])).join(' · ')}${v.rootBass?'':' <small>(inversão)</small>'}${v.omit5?' <small>(sem a 5ª)</small>':''}</button>`).join('')
+    ? ch.voicings.map((v,i)=>`<button class="btn sec voicing ${i===0?'on':''}" data-i="${i}">Opção ${i+1}: ${v.btns.map(b=>nomeNoAcorde(pc, type, b[ch.dir], b[ch.dir])).join(' · ')}${v.rootBass?'':' <small>(inversão)</small>'}${v.omit5?' <small>(sem a 5ª)</small>':''}</button>`).join('')
     : `<p class="muted">Não encontrei uma forma confortável deste acorde ${dirLabel(ch.dir).toLowerCase()} na mão ${ch.hand==='left'?'esquerda':'direita'}. Tente a outra direção do fole.</p>`;
   markVoicing();
 }
@@ -176,9 +198,9 @@ function chRelembre(){
   svg.innerHTML = L.map(b=>{
     const on = noAcorde.has(b.id), x = (b.x + .5).toFixed(2), y = (b.y + .5).toFixed(2);
     return `<circle cx="${x}" cy="${y}" r=".42" class="${on ? 'on ' + dir : ''}"/>`
-      + (on ? `<text x="${x}" y="${y}">${rootName(((b[dir] % 12) + 12) % 12)}</text>` : '');
+      + (on ? `<text x="${x}" y="${y}">${nomeNoAcorde(pc, type, b[dir])}</text>` : '');
   }).join('');
-  $('#chRelNotas').textContent = t('Notas: {}', CHORD_TYPES[type].iv.map(i=>rootName((pc + i) % 12)).join(' · '));
+  $('#chRelNotas').textContent = t('Notas: {}', notasDoAcorde(pc, type).map(n=>n.nome).join(' · '));
   $('#chRelPos').textContent = vs.length > 1 ? t('Posição {} de {}', ch.relSel % vs.length + 1, vs.length) : '';
   $('#chRelOutra').hidden = vs.length < 2;
 }
