@@ -35,6 +35,13 @@ function streak(){
   while(state.progress.days[dayKey(d)]){ n++; d.setDate(d.getDate()-1); }
   return n;
 }
+// Maior sequência de dias seguidos com prática, em todo o progresso salvo
+function recordeDias(){
+  const dias = Object.keys(state.progress.days).filter(k=>state.progress.days[k]).sort();
+  let rec = 0, run = 0, ant = null;
+  for(const k of dias){ const d = new Date(k + 'T12:00:00'); run = ant && Math.round((d - ant) / 864e5) === 1 ? run + 1 : 1; rec = Math.max(rec, run); ant = d; }
+  return rec;
+}
 function renderRoutine(){
   const done = state.progress.days[dayKey()] || {}, {pc,type} = dailyScale();
   ROUTINE[1].d = `Hoje: ${tonicLabel(type,pc)} ${SCALE_TYPES[type].name.toLowerCase()}, no modo Espera.`;

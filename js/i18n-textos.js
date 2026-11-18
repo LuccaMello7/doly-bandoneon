@@ -2209,4 +2209,8 @@ const TEXTOS = {
 'Tocou nas orquestras de tango das rádios de Porto Alegre e fundou Os Posteiros. Aos 97 anos, ainda toca.': ['Tocó en las orquestas de tango de las radios de Porto Alegre y fundó Os Posteiros. A los 97 años, todavía toca.', 'He played in the tango orchestras of the Porto Alegre radio stations and founded Os Posteiros. At 97, he still plays.'],
 'Explorar ferramentas': ['Explorar herramientas', 'Explore the tools'],
 'Bandoneon': ['Bandoneón', 'Bandoneon'],
+'Recorde': ['Récord', 'Record'],
+'Esta semana': ['Esta semana', 'This week'],
+'{} de {} dias': ['{} de {} días', '{} of {} days'],
+'{} de 7 dias': ['{} de 7 días', '{} of 7 days'],
 };

@@ -227,6 +227,10 @@ function renderInicio(es, n, atual){
   $('#iniSemana').innerHTML = Array.from({length:7}, (_,k)=>{ const d = new Date(); d.setDate(d.getDate()-(6-k));
     const on = !!state.progress.days[dayKey(d)];
     return `<span class="${on ? 'on' : ''} ${k===6 ? 'hoje' : ''}">${d.toLocaleDateString(L, {weekday:'narrow'})}<i></i></span>`; }).join('');
+  // o pé do cartão da sequência: o recorde e os dias com prática nos últimos 7
+  const rec = recordeDias(), sem = Array.from({length:7}, (_,k)=>{ const d = new Date(); d.setDate(d.getDate()-k); return !!state.progress.days[dayKey(d)]; }).filter(Boolean).length;
+  $('#iniRecorde').textContent = rec===1 ? '1 dia' : `${rec} dias`;
+  $('#iniSemanaN').textContent = `${sem} de 7 dias`;
   // Academia: nível em curso e exercícios feitos
   const niveis = ACADEMIA.filter(x=>x.nivel<7), exs = niveis.flatMap(acadFuncionais), fe = exs.filter(e=>acadConcluido(e.id)).length;
   const nv = niveis.find(x=>acadFuncionais(x).some(e=>!acadConcluido(e.id))) || niveis[niveis.length-1];

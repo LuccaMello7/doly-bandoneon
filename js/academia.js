@@ -424,7 +424,7 @@ function acadFeed(msg, cls=''){ const f=$('#acFeed'); f.className='feedback '+cl
 
 /* ---------- Fole ---------- */
 function acadSetDir(d){
-  acad.dir = d;
+  acad.dir = d; $('#acTeclados').dataset.fole = d; // o teclado brilha na cor do fole (css)
   const fm = $('#acFoleMini'); if(fm) fm.className = 'ac-fole-mini ' + d;
   const p = $('#acDirPill'); p.className = 'dirpill '+d; p.textContent = dirLabel(d);
   akL.refresh(); akR.refresh(); akL.retune(); akR.retune();

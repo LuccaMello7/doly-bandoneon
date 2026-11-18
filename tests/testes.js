@@ -1362,6 +1362,9 @@ teste('Início de quem volta: modos em cartões, faixa do Doly, convite que sai 
   go('inicio'); await new Promise(r=>setTimeout(r,250));
   igual($$('.ini-modos a[data-go]').length, 4, 'Teclado, Melodias, Acordes e Ritmo em cartões');
   igual($$('#iniRotinaSegs i').length, ROUTINE.length, 'tarefas de hoje: um bloco por tarefa');
+  ok(/dia/.test($('#iniRecorde').textContent) && /de 7 dias/.test($('#iniSemanaN').textContent), 'cartão da sequência: recorde e semana');
+  { const d0 = state.progress.days; state.progress.days = {'2026-01-01':{a:1}, '2026-01-02':{a:1}, '2026-01-03':{a:1}, '2026-02-10':{a:1}};
+    igual(recordeDias(), 3, 'recorde: a maior sequência de dias seguidos'); state.progress.days = d0; }
   ok($('#iniInst .ini-pauta') && $('#iniInst .ini-convite'), 'instrumento, convite e partitura no mesmo console');
   ok(!$('.ini-atalhos'), 'a lista antiga saiu');
   ok($('.ini-doly-faixa img') && /doly-costa\/(index\.html)?$/.test($('.ini-doly-faixa').getAttribute('href')), 'faixa do Doly com foto e link');

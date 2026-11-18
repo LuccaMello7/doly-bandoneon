@@ -3174,3 +3174,27 @@ body.cta-a-vista:has(#v-inicio.active) .topo-cta{opacity:0;visibility:hidden}
 .ini-doly-faixa .ini-elo{margin-top:16px}
 @media (hover:hover){.ini-doly-faixa:hover .ini-elo svg[aria-hidden]{transform:translateX(4px)}}
 @media (max-width:600px){.ini-doly-faixa{grid-template-columns:112px minmax(0,1fr)}.ini-doly-faixa img{min-height:0}.ini-doly-faixa>div{padding:16px}.ini-doly-faixa p{font-size:14px}}
+
+/* Início de quem volta: os dois cartões do topo com a mesma altura; o da sequência fecha com o recorde e a semana.
+   Rótulos do palco no tom claro de texto, para ler com o instrumento no colo. */
+.ini-volta-grade{align-items:stretch}
+.ini-seq{display:flex;flex-direction:column}
+.ini-seq-pe{margin-top:auto;padding-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.ini-seq-pe>div{padding-top:16px;box-shadow:inset 0 1px 0 var(--borda)}
+.ini-seq-pe small{display:block;font-size:13px;color:var(--cinza-2)}
+.ini-seq-pe b{display:block;margin-top:2px;font-size:20px;font-weight:600;letter-spacing:-.02em;color:var(--osso);font-variant-numeric:tabular-nums}
+.ini-console-rot{font-size:13px;color:var(--cinza-2)}
+.ini-convite{font-size:14px;color:var(--cinza-2)}
+.ini-mao-rot{font-size:14px;color:var(--cinza-2)}
+
+/* ================== Academia: a mesma superfície das outras áreas (2026-11) ==================
+   Luz violeta no alto, fio de luz nos blocos, números com largura fixa, o teclado brilhando na cor do fole
+   (azul abrindo, laranja fechando, como no RepeTCHÊ) e os rótulos das mãos mais legíveis. */
+body[data-aba="academia"]{background:radial-gradient(1100px 520px at 50% -160px,rgba(108,67,216,.30),transparent 70%) no-repeat,var(--bg)}
+:where(#v-academia){font-variant-numeric:tabular-nums}
+:where(#v-academia) .card{background-image:linear-gradient(90deg,transparent,rgba(255,255,255,.16),transparent),linear-gradient(180deg,rgba(255,255,255,.035),transparent 46%);
+  background-size:calc(100% - 32px) 1px,100% 100%;background-position:center top,0 0;background-repeat:no-repeat}
+#acTeclados .kbd{transition:box-shadow .4s}
+#acTeclados[data-fole="open"] .kbd{box-shadow:inset 0 0 0 1px rgba(79,156,240,.4),0 0 40px -12px rgba(79,156,240,.6)}
+#acTeclados[data-fole="close"] .kbd{box-shadow:inset 0 0 0 1px rgba(240,138,75,.4),0 0 40px -12px rgba(240,138,75,.6)}
+.ac-maolabel{font-size:14px;color:var(--cinza-2)}
