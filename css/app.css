@@ -1344,6 +1344,19 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
 .eco-flutua.erro{color:var(--red2)}
 @keyframes ecoFlutua{from{opacity:0;transform:translate(-50%,-30%) scale(.6)}20%{opacity:1;transform:translate(-50%,-80%) scale(1.15)}to{opacity:0;transform:translate(-50%,-220%) scale(1)}}
 .eco-controles{justify-content:center;margin-top:12px}
+/* Janela baixa (tela dividida, notebook pequeno): o jogo encolhe para a faixa e o teclado caberem juntos.
+   O mapa das fases sai do jogo (continua na tela do fim) e o resto aperta os espaços. */
+@media (max-height:760px){
+  .eco-jogo .eco-mapa{display:none}
+  .eco-topo{margin-bottom:8px}
+  .eco-hud-item{padding:4px 12px}
+  .eco-hud-item>b{font-size:1.1rem}
+  .eco-faixa{min-height:48px;padding:8px 16px;margin-bottom:8px}
+  .eco-trilha{margin-bottom:8px}
+  .eco-barra{margin-bottom:8px}
+  .eco-palco{gap:8px}
+  .eco-controles{margin-top:8px}
+}
 #ecoFeed{text-align:center;min-height:1.5em}
 
 /* fim: estrelas uma a uma, pontos contando, recorde brilhando */

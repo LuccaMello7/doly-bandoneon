@@ -923,6 +923,17 @@ teste('RepeTCHÊ: tocar numa música já começa o jogo', () => {
   ok(!$('#ecoStart'), 'sem botão Começar separado');
   ecoParar(); eco.id = id0; store.set('ecoMusica', id0); go('inicio');
 });
+teste('RepeTCHÊ: em "Ver e ouvir", cada nota acende o botão e aparece na faixa enquanto toca', async () => {
+  const aj = $('#ecoAjuda').value; $('#ecoAjuda').value = 'ver';
+  go('eco'); renderEcoMusicas(); const id0 = eco.id;
+  $('#ecoMusicas [data-id="esc-do"]').click(); ecoLimpar(); eco.alvo = eco.k; ecoOuvir();
+  await new Promise(r=>setTimeout(r, 450)); // a primeira nota entra em 350 ms
+  const n = eco.seq[eco.ini], k = $$(eco.hand==='left' ? '#ecoKbL .key' : '#ecoKbR .key')[state.layout[eco.hand].findIndex(b=>b.id===n.btn.id)];
+  ok(k.classList.contains('down'), 'o botão da nota acende');
+  igual($('#ecoFaixaSub').textContent, noteName(n.midi), 'o nome da nota aparece embaixo de "Ouça…"');
+  ok(typeof ecoEnquadrar==='function', 'o jogo enquadra a faixa e o teclado na tela');
+  ecoParar(); $('#ecoAjuda').value = aj; eco.id = id0; store.set('ecoMusica', id0); go('inicio');
+});
 teste('Academia: o instrutor mostra Agora e Próximo separados, sem o desenho das mãos', () => {
   go('academia'); carregarExercicio('n3-legato'); acadInstrutor(0);
   const n0 = acad.grupos[0].ks.map(k=>acad.eventos[k])[0], n1 = acad.grupos[1].ks.map(k=>acad.eventos[k])[0];

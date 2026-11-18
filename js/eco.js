@@ -251,11 +251,32 @@ function ecoComecar(f){
   ecoMapa();
   $('#ecoTrilha').innerHTML = seq.map(()=>'<i></i>').join('');
   $('#ecoPontos').textContent = '0'; eco.dir = seq[0].dir; ecoDirPill(); ecoHud(); ecoTrilha(); ecoFeed('');
-  $('#ecoJogo').scrollIntoView({block:'start', behavior: movReduzido()?'auto':'smooth'});
+  requestAnimationFrame(()=>ecoEnquadrar(true));
   // contagem 3, 2, 1
   [3,2,1].forEach((n,i)=>ecoTimer(()=>ecoFaixa(String(n), 'conta'), i*520));
   ecoTimer(ecoRodada, 3*520);
 }
+// Deixa na tela o que importa durante o jogo: a faixa ("Ouça…", "Sua vez!") e o teclado com os controles.
+// Em janela baixa (tela dividida, notebook pequeno) rolar até o topo do cartão deixava o teclado fora da tela,
+// e o aluno ouvia as notas sem ver os botões acenderem. inicio: o jogo acabou de abrir (mostra o cartão
+// inteiro se couber); fora isso, só rola quando o teclado não está todo visível.
+function ecoEnquadrar(inicio){
+  if($('#ecoJogo').hidden) return;
+  const cab = document.querySelector('header'), topo = cab ? Math.max(0, cab.getBoundingClientRect().bottom) : 0;
+  const nav = $('#nav'), rn = nav && getComputedStyle(nav).position==='fixed' ? nav.getBoundingClientRect() : null;
+  const limite = rn && rn.top > innerHeight/2 ? rn.top : innerHeight; // no celular a barra das áreas fica embaixo
+  const jogo = $('#ecoJogo').getBoundingClientRect(), faixa = $('#ecoFaixa').getBoundingClientRect();
+  const kb = ecoKb().el.getBoundingClientRect(), fim = Math.max(kb.bottom, $('#ecoParar').getBoundingClientRect().bottom) + 8;
+  const espaco = limite - topo;
+  let dy = null;
+  if(inicio && fim - jogo.top <= espaco) dy = jogo.top - topo - 8;                 // cabe tudo: o cartão desde o topo
+  else if(faixa.top >= topo && kb.bottom <= limite) return;                         // faixa e teclado já à vista
+  else if(fim - faixa.top <= espaco) dy = fim - limite;                             // da faixa aos controles
+  else dy = kb.bottom + 8 - limite;                                                 // pelo menos o teclado inteiro
+  if(Math.abs(dy) > 2) window.scrollBy({top:dy, behavior: movReduzido() ? 'auto' : 'smooth'});
+}
+let ecoEnquadrarTimer = 0;
+window.addEventListener('resize', ()=>{ clearTimeout(ecoEnquadrarTimer); ecoEnquadrarTimer = setTimeout(()=>{ if(currentView==='eco' && eco.fase && eco.fase!=='fim') ecoEnquadrar(); }, 250); });
 // fim do trecho que começa em a (o resto pequeno no fim entra no último trecho)
 function ecoFimTrecho(a){ const N = eco.seq.length, f = Math.min(N, a + ecoTrecho()); return N - f < eco.k ? N : f; }
 function ecoRodada(){
@@ -268,13 +289,15 @@ function ecoRodada(){
 // O bandoneon toca o trecho do começo até a nota nova
 function ecoOuvir(){
   ecoLimpar(); eco.fase = 'ouvir'; ecoAtual(); ecoFaixa('Ouça…', 'ouvir'); $('#ecoRepetir').disabled = true;
+  ecoEnquadrar(); // o teclado precisa estar à vista para ver os botões acenderem
   const spb = 60/(eco.m.bpm*eco.vel); let t = 350;
   for(let i=eco.ini; i<eco.alvo; i++){
     const n = eco.seq[i], dur = Math.min(1.1, Math.max(0.3, n.beats*spb));
     ecoTimer(()=>{
       eco.dir = n.dir; ecoDirPill(); ecoPonto(i, 'soa');
       playNote(n.midi, dur*0.92, n.hand);
-      if(eco.ajuda==='ver') ecoKb().mark(n.btn.id, 'down', dur*850);
+      // "Ver e ouvir": o botão acende e o nome da nota aparece na faixa, junto com o som
+      if(eco.ajuda==='ver'){ ecoKb().mark(n.btn.id, 'down', dur*850); $('#ecoFaixaSub').textContent = noteName(n.midi); }
     }, t);
     t += dur*1000;
   }
