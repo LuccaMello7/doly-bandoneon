@@ -46,6 +46,7 @@ function micTick(){
 }
 function showMic(m, cents, rms){
   if(currentView==='microfone') mcMostrar(m, cents, rms);
+  if(currentView==='eco' && typeof ecoMicMostrar==='function') ecoMicMostrar(m, cents, rms);
   const el = $('#micStatus'); if(!el) return;
   if(m==null){ el.innerHTML = '<svg aria-hidden="true"><use href="#i-mic"/></svg> Ouvindo… <span class="muted">(toque uma nota)</span>'; return; }
   const c = cents>0 ? '+'+cents : String(cents), cls = Math.abs(cents)<=10 ? 'ok' : 'bad';
@@ -66,9 +67,14 @@ async function micStart(){
   if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
     alert(t('Este navegador não permite usar o microfone aqui. Use o app pelo link https (GitHub Pages) ou num navegador atualizado.')); return false;
   }
+  // a entrada escolhida no RepeTCHÊ (interface USB, fone…); se ela sumiu, volta para o microfone padrão
+  const audio = {echoCancellation:false, noiseSuppression:false, autoGainControl:false}, entrada = store.get('micEntrada', '');
   try{
-    mic.stream = await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false, noiseSuppression:false, autoGainControl:false}});
-  }catch(e){ alert(t('Não foi possível usar o microfone (permissão negada ou nenhum microfone encontrado).')); return false; }
+    mic.stream = await navigator.mediaDevices.getUserMedia({audio: entrada ? {...audio, deviceId:{exact:entrada}} : audio});
+  }catch(e){
+    try{ if(!entrada) throw e; store.set('micEntrada', ''); mic.stream = await navigator.mediaDevices.getUserMedia({audio}); }
+    catch(e2){ alert(t('Não foi possível usar o microfone (permissão negada ou nenhum microfone encontrado).')); return false; }
+  }
   const c = ac();
   mic.src = c.createMediaStreamSource(mic.stream);
   mic.analyser = c.createAnalyser(); mic.analyser.fftSize = 2048;
@@ -103,7 +109,7 @@ const mcL = kb($('#mcLeft'),'left',mcOpts), mcR = kb($('#mcRight'),'right',mcOpt
 let mcDono = false, mcUltima = null; // mcDono: o microfone foi ligado nesta tela (e desliga ao sair dela)
 function mcEstado(){
   $('#mcOn').lastChild.textContent = mic.on ? 'Desligar o microfone' : 'Ligar o microfone';
-  $('#mcOn').classList.toggle('sec', mic.on); $('#mcCal').disabled = !mic.on;
+  $('#mcOn').classList.toggle('sec', mic.on); $('#mcOn').classList.toggle('vivo', mic.on); $('#mcCal').disabled = !mic.on;
   if(!mic.on){ mcMostrar(null); $('#mcCents').textContent = 'Ligue o microfone e toque uma nota.'; }
 }
 // Mostra a nota ouvida, a afinação (agulha de -50 a +50 cents), o volume e acende os botões

@@ -1244,23 +1244,11 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
 @keyframes ecoIcone{0%,100%{transform:none}50%{transform:scale(1.1)}}
 
 /* escolher a música */
-.eco-musicas{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr));gap:12px;margin:8px 0 16px}
-.eco-musica{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;background:var(--panel2);border:2px solid var(--line);border-radius:16px;padding:12px 16px;color:var(--text);font:inherit;cursor:pointer;
-  transition:transform .2s cubic-bezier(.16,1,.3,1),border-color .2s,box-shadow .2s;animation:ecoCarta .45s cubic-bezier(.2,.8,.2,1) backwards;animation-delay:calc(var(--i,0)*45ms)}
 @keyframes ecoCarta{from{opacity:0;transform:translateY(14px) scale(.96)}}
-.eco-musica:hover{transform:translateY(-3px);border-color:#1fb5c9aa;box-shadow:0 10px 22px #0006}
-.eco-musica.on{border-color:var(--gold);box-shadow:0 0 0 3px #b997ff33,0 10px 24px #0006;background:linear-gradient(160deg,#1f3a60,var(--panel2))}
-.eco-musica.on::after{content:"";position:absolute;top:10px;right:12px;width:10px;height:10px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--gold)}
-.eco-musica b{font-size:1rem;line-height:1.25}
-.eco-dif{display:flex;gap:4px}
-.eco-dif i{width:16px;height:5px;border-radius:3px;background:#ffffff22}
-.eco-dif[data-dif="1"] i:nth-child(-n+1),.eco-dif[data-dif="2"] i:nth-child(-n+2),.eco-dif[data-dif="3"] i{background:#1fb5c9}
-.eco-dif[data-dif="3"] i{background:var(--close)}
 .eco-mini-estrelas{display:flex;gap:2px}
 .eco-mini-estrelas svg,.eco-estrelas svg{fill:#ffffff1a;stroke:#ffffff33;stroke-width:1.2}
 .eco-mini-estrelas svg{width:16px;height:16px}
 .eco-mini-estrelas svg.on,.eco-estrelas svg.on{fill:var(--gold);stroke:var(--gold2)}
-.eco-rec{font-weight:600;color:var(--gold2)} .eco-rec.novo{color:#5fd6e6}
 
 /* o jogo */
 .eco-jogo{position:relative;overflow:hidden;animation:ecoEntra .5s cubic-bezier(.2,.8,.2,1) backwards}
@@ -1408,8 +1396,6 @@ html[lang|="en"] .eco-mao::before{content:"R"}html[lang|="en"] .eco-mao[data-mao
 @media (max-width:700px){
   .eco-hud{width:100%}.eco-hud-item{flex:1;min-width:0}
   .eco-faixa b{font-size:1.35rem}
-  .eco-musicas{grid-template-columns:1fr 1fr}
-  .eco-musica{padding:12px 12px}
 }
 /* RepeTCHÊ: o gaúcho animado (vídeos em imagens/repetche/: o curto diz "Muy bueno!", o do fim vai do começo até a fala) */
 .pg-av{overflow:hidden;padding:0}
@@ -1434,15 +1420,6 @@ html[lang|="en"] .eco-mao::before{content:"R"}html[lang|="en"] .eco-mao[data-mao
 .gaucho-fim.danca .gaucho-balao{animation:gauchoBalaoFim .55s 2.4s cubic-bezier(.16,1,.3,1) backwards} /* o balão aparece quando ele fala */
 @keyframes gauchoBalaoFim{from{opacity:0;transform:scale(.3) rotate(-10deg)}}
 @media (max-width:700px){.gaucho-img{width:112px}.gaucho-balao{font-size:1rem}.gaucho-fim .gaucho-img{width:170px}}
-/* cartões de música: são o botão de começar (o ▶ aparece ao passar o mouse e fica no cartão escolhido) */
-.eco-opcoes{margin-bottom:16px}
-.eco-escolha-tit{margin-bottom:2px}.eco-dica{margin:0 0 4px}
-.eco-jogar{position:absolute;right:12px;bottom:12px;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--gold);color:#1b1404;
-  box-shadow:0 6px 14px #0007;opacity:0;transform:scale(.6);transition:opacity .2s,transform .25s cubic-bezier(.16,1,.3,1)}
-.eco-jogar svg{width:18px;height:18px;fill:currentColor;stroke:none;margin-left:2px}
-.eco-musica:hover .eco-jogar,.eco-musica:focus-visible .eco-jogar{opacity:1;transform:none}
-.eco-musica.on::after{display:none}
-@media (hover:none){.eco-jogar{opacity:1;transform:none;width:32px;height:32px}}
 /* sem movimento: ele aparece parado com o balão e some depois */
 .sem-mov .gaucho.aparece{transform:none}
 .sem-mov .gaucho.aparece .gaucho-balao{opacity:1;transform:none}
@@ -1533,22 +1510,8 @@ html[lang|="en"] .eco-mao::before{content:"R"}html[lang|="en"] .eco-mao[data-mao
   #v-academia.ac-cheia .ac-barra{padding:8px 12px}
 }
 
-/* RepeTCHÊ: música do dia (com a sequência de dias) e as músicas do aluno */
-.eco-dia{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin:0 0 16px;padding:16px 16px;border-radius:18px;
-  background:linear-gradient(120deg,#1a4f63,#16354f);border:1px solid #5fd6e655;box-shadow:0 10px 24px #0006;animation:ecoCarta .5s cubic-bezier(.2,.8,.2,1) backwards}
-.eco-dia.feita{background:linear-gradient(120deg,#2f2540,#272036);border-color:rgba(185,151,255,.4)}
-.eco-dia-txt{flex:1 1 200px;display:flex;flex-direction:column;gap:2px;min-width:0}
-.eco-dia-txt b{font-size:1.15rem}
-.eco-dia-seq{display:flex;align-items:center;gap:4px;padding:8px 12px;border-radius:999px;background:#ffffff10;color:var(--muted)}
-.eco-dia-seq svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2}
-.eco-dia-seq b{font-size:1.2rem;color:var(--text)}
-.eco-dia-seq.on{background:linear-gradient(160deg,#5a2a14,#3a1f14);color:#ffb15c;box-shadow:0 0 0 1px #f08a4b66}
-.eco-dia-seq.on svg{fill:#f08a4b55;animation:ecoChama .7s ease-in-out infinite alternate}
 .eco-dia-feita{display:inline-block;margin:12px 0 0;padding:8px 16px;border-radius:999px;background:rgba(185,151,255,.13);color:var(--green);font-weight:600}
 .eco-dia-feita[hidden]{display:none}
-.eco-suas-tit{margin:4px 0 4px;font-size:1rem}
-.eco-sua{font-size:.68rem;font-weight:650;letter-spacing:.08em;text-transform:uppercase;color:#1b1404;background:var(--gold);border-radius:999px;padding:1px 8px}
-#ecoSuas:empty{display:none}
 
 /* ===== Tela Início: o próprio instrumento (mundo do Doppler; .impeccable/surfaces/index-html.md) =====
    Quem chega vê o título, o bandoneon inteiro para tocar e a apresentação; quem volta (#v-inicio.volta) vê a
@@ -2016,17 +1979,6 @@ button.dirpill:focus-visible{outline:2px solid var(--lavanda)}
 
 /* ===== Treinar no mundo do Doppler ===== */
 /* RepeTCHÊ: lista de músicas, música do dia, placar, faixa e trilha */
-.eco-dia{background:var(--ameixa-2);border:0;box-shadow:inset 0 0 0 1px var(--borda)}
-.eco-dia.feita{background:var(--ameixa-2);box-shadow:inset 0 0 0 1px rgba(60,207,142,.45)}
-.eco-dia-txt b{font-size:1.15rem;font-weight:600}
-.eco-dia-seq{background:rgba(255,255,255,.06)}
-.eco-dia-seq.on{background:rgba(240,138,75,.14);color:#ffb487;box-shadow:none}
-.eco-musica{background:var(--ameixa-2);border:0;box-shadow:inset 0 0 0 1px var(--borda)}
-.eco-musica:hover{transform:translateY(-2px);box-shadow:inset 0 0 0 1px rgba(185,151,255,.5)}
-.eco-musica.on{background:var(--ameixa-2);box-shadow:inset 0 0 0 1.5px var(--lavanda)}
-.eco-musica b{font-weight:600}
-.eco-dif[data-dif="1"] i:nth-child(-n+1),.eco-dif[data-dif="2"] i:nth-child(-n+2),.eco-dif[data-dif="3"] i{background:var(--lavanda)}
-.eco-rec{color:var(--cinza-2)} .eco-rec.novo{color:var(--lavanda)}
 .eco-segs i.e1{background:rgba(185,151,255,.35)}.eco-segs i.e2{background:rgba(185,151,255,.65)}.eco-segs i.e3{background:var(--lavanda)}
 .eco-musica-tit{color:var(--osso);font-weight:600}
 .eco-hud-item{background:var(--ameixa-3)}
@@ -3010,3 +2962,176 @@ main.prof-pagina{max-width:880px}
 .ch-rel-pe .link-btn{margin-left:auto}
 #chRelVer{width:100%}
 .ch-acoes-treino{justify-content:center;gap:8px}
+
+/* ================== RepeTCHÊ: a tela de escolher ==================
+   Uma coluna de decisão (música do dia → como tocar → ajustes recolhidos) e, embaixo, as músicas com filtros.
+   Lavanda = escolhido/certo, verde só no Jogar (ir), laranja quente só na sequência de dias. */
+.eco-escolha{display:flex;flex-direction:column;gap:24px}
+.eco-secao-tit{margin:0 0 12px;font-size:.78rem;font-weight:650;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+/* música do dia: o atalho de um toque, com a marca d'água do fole */
+.eco-dia{position:relative;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px 24px;align-items:center;padding:24px 24px;border-radius:22px;
+  background:radial-gradient(120% 140% at 0% 0%,rgba(185,151,255,.18),transparent 55%),var(--ameixa-2);box-shadow:inset 0 0 0 1px rgba(185,151,255,.28);animation:ecoCarta .5s var(--ease-saida) backwards}
+@media (max-width:640px){.eco-dia{grid-template-columns:minmax(0,1fr);padding:16px}}
+.eco-dia>*{position:relative;z-index:1}
+.eco-dia svg.eco-marca-fole{position:absolute;z-index:0;right:-30px;top:50%;width:400px;height:180px;transform:translateY(-50%);opacity:.05;pointer-events:none;stroke:var(--osso);stroke-width:3;fill:none}
+.eco-marca-fole rect{fill:var(--osso);stroke:none}
+.eco-dia-txt{display:flex;flex-direction:column;align-items:flex-start;min-width:0}
+.eco-dia-olho{display:flex;flex-wrap:wrap;gap:0 8px;font-size:.78rem;font-weight:650;letter-spacing:.08em;text-transform:uppercase;color:var(--gold2)}
+.eco-dia-olho span+span::before{content:"·";margin-right:8px}
+.eco-dia-tit{margin:8px 0 8px;font-size:clamp(1.55rem,3.6vw,2rem);font-weight:700;letter-spacing:-.02em;line-height:1.15;text-wrap:balance}
+.eco-dia-meta{display:flex;align-items:center;gap:8px 12px;flex-wrap:wrap;color:var(--cinza-2);font-size:.92rem;font-variant-numeric:tabular-nums}
+.eco-dia-meta>span+span::before{content:"·";margin-right:12px;color:var(--muted)}
+.eco-dia .eco-nivel .p i{background:rgba(255,255,255,.14)}
+.eco-dia-prog{display:flex;align-items:center;gap:12px;margin-top:12px;width:100%;max-width:420px;color:var(--muted);font-size:.88rem;font-variant-numeric:tabular-nums}
+.eco-dia-prog .eco-barrinha{flex:1}
+.eco-dia-nota{margin-top:8px;color:var(--muted);font-size:.86rem}
+.eco-dia.feita .eco-dia-nota{color:var(--gold2)}
+.eco-dia-acoes{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.eco-fogo{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;background:#ffffff10;color:var(--muted);font-weight:650;font-size:.9rem;font-variant-numeric:tabular-nums}
+.eco-fogo svg[aria-hidden]{width:18px;height:18px}
+.eco-fogo.on{background:rgba(240,138,75,.14);color:#ffb487}
+.eco-fogo.on svg[aria-hidden]{fill:rgba(240,138,75,.35)}
+.eco-dia .btn-grande{padding:16px 24px;font-size:1.02rem;font-weight:650;box-shadow:0 10px 28px -10px rgba(0,245,117,.6)}
+.eco-dia .btn-grande svg[aria-hidden]{fill:currentColor;stroke:none;width:18px;height:18px}
+/* o gaúcho do topo brilha enquanto a sequência de dias está viva */
+#v-eco .pg-av.brilha{border-color:#ffb487;box-shadow:0 0 0 3px rgba(255,180,135,.25),0 0 26px rgba(255,180,135,.45);animation:ecoFesta 1.2s var(--ease-saida) .4s backwards}
+@keyframes ecoFesta{30%{transform:rotate(-6deg) scale(1.08)}60%{transform:rotate(4deg) scale(1.04)}}
+/* nível: três barrinhas (sem cor própria: azul, laranja, vermelho e verde já têm sentido no app) */
+.eco-nivel{display:inline-flex;align-items:center;gap:8px;font-size:.84rem;font-weight:650;color:var(--osso)}
+.eco-nivel .p{display:inline-flex;gap:4px}
+.eco-nivel .p i{width:7px;height:16px;border-radius:2px;background:var(--ameixa-3)}
+.eco-nivel[data-n="1"] .p i:nth-child(-n+1),.eco-nivel[data-n="2"] .p i:nth-child(-n+2),.eco-nivel[data-n="3"] .p i{background:var(--lavanda)}
+/* como você vai tocar */
+.eco-tocar{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:600px){.eco-tocar{grid-template-columns:1fr}}
+.eco-tocar-op{position:relative;display:flex;gap:16px;align-items:flex-start;text-align:left;border:0;border-radius:18px;padding:16px 40px 16px 16px;background:var(--ameixa-2);color:var(--osso);font:inherit;cursor:pointer;
+  box-shadow:inset 0 0 0 1px var(--borda);transition:box-shadow .25s,background .25s}
+@media (hover:hover){.eco-tocar-op[aria-checked="false"]:hover{box-shadow:inset 0 0 0 1px var(--borda-2)}}
+.eco-tocar-ic{flex:none;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--ameixa-3);color:var(--cinza-2)}
+.eco-tocar-ic svg[aria-hidden]{width:24px;height:24px;stroke-width:1.8}
+.eco-tocar-txt{display:flex;flex-direction:column;align-items:flex-start;min-width:0;color:var(--cinza-2);font-size:.92rem}
+.eco-tocar-txt>b{color:var(--osso);font-size:1.02rem;margin-bottom:2px}
+.eco-selo-inst{margin-top:8px;padding:2px 12px;border-radius:999px;font-size:.78rem;font-weight:650;background:rgba(185,151,255,.14);color:var(--gold2)}
+.eco-tocar-op[aria-checked="true"]{background:linear-gradient(135deg,rgba(185,151,255,.16),rgba(185,151,255,.04)),var(--ameixa-2);box-shadow:inset 0 0 0 2px var(--lavanda)}
+.eco-tocar-op[aria-checked="true"] .eco-tocar-ic{background:var(--lavanda);color:var(--ameixa)}
+.eco-tocar-ok{position:absolute;top:12px;right:12px;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--lavanda);color:var(--ameixa);opacity:0;transform:scale(.6);transition:opacity .2s,transform .3s var(--ease-saida)}
+.eco-tocar-ok svg[aria-hidden]{width:13px;height:13px;stroke-width:3}
+.eco-tocar-op[aria-checked="true"] .eco-tocar-ok{opacity:1;transform:none}
+.eco-tocar-op.vivo .eco-tocar-ic{animation:ecoOnda 1.4s ease-out infinite}
+@keyframes ecoOnda{0%{box-shadow:0 0 0 0 rgba(185,151,255,.55)}100%{box-shadow:0 0 0 12px rgba(185,151,255,0)}}
+.eco-mini{display:none;align-items:center;gap:8px;margin-top:12px;font-size:.84rem}
+.eco-tocar-op[aria-checked="true"] .eco-mini{display:flex}
+.eco-mvu{display:inline-grid;grid-template-columns:repeat(10,6px);gap:2px;height:12px;flex:none}
+.eco-mvu i,.eco-vu i{border-radius:2px;background:var(--ameixa-3);transition:background .08s}
+.eco-mvu i.on,.eco-vu i.on{background:var(--lavanda)}.eco-vu i.on.alto{background:var(--close)}
+.eco-mini-txt{display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap}
+.eco-mini-txt b{color:var(--osso)}
+.eco-mini-txt .ok{padding:2px 8px;border-radius:999px;background:rgba(185,151,255,.18);color:var(--gold2);font-weight:650}
+.eco-modo-nota{margin:12px 0 0;color:var(--muted);font-size:.88rem}
+/* teste do microfone: volume, nota ouvida, calibrar e a entrada de áudio */
+.eco-mic{position:relative;margin-top:12px;border-radius:18px;padding:16px;background:var(--ameixa-2);box-shadow:inset 0 0 0 1px rgba(185,151,255,.35);display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px 16px;align-items:center;animation:ecoAbre .35s var(--ease-saida) backwards}
+@keyframes ecoAbre{from{opacity:0;transform:translateY(-6px)}}
+@media (max-width:640px){.eco-mic{grid-template-columns:minmax(0,1fr)}}
+.eco-mic-status{display:inline-flex;align-items:center;gap:8px;font-weight:650}
+.eco-mic-status i{width:10px;height:10px;border-radius:50%;background:var(--muted)}
+.eco-mic.ativo .eco-mic-status i{background:var(--lavanda);box-shadow:0 0 0 4px rgba(185,151,255,.2);animation:ecoRespira 1.6s ease-in-out infinite}
+@keyframes ecoRespira{50%{opacity:.5}}
+.eco-mic-meio{display:grid;gap:8px;min-width:0}
+.eco-vu{display:grid;grid-template-columns:repeat(24,minmax(0,1fr));gap:4px;height:16px}
+.eco-mic-dica{color:var(--cinza-2);font-size:.88rem}
+.eco-mic-nota{display:flex;flex-direction:column;align-items:center;min-width:96px;padding:8px 12px;border-radius:14px;background:var(--ameixa-3)}
+.eco-mic-nota b{font-size:1.5rem;line-height:1.1;font-variant-numeric:tabular-nums}
+.eco-mic-nota small{color:var(--muted);font-size:.78rem;font-variant-numeric:tabular-nums}
+.eco-mic-acoes{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.eco-mic-entrada{display:flex;align-items:center;gap:8px;font-size:.88rem;color:var(--cinza-2)}
+.eco-mic-entrada select{max-width:260px;background:var(--ameixa-3);color:var(--osso);border:0;border-radius:10px;padding:8px 12px;font:inherit;box-shadow:inset 0 0 0 1px var(--borda-2)}
+/* ajustes do treino: recolhidos, com o resumo em pílulas */
+.eco-ajustes{position:relative;border-radius:18px;background:var(--ameixa-2);box-shadow:inset 0 0 0 1px var(--borda)}
+.eco-ajustes>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:16px 16px;border-radius:18px}
+.eco-ajustes>summary::-webkit-details-marker{display:none}
+.eco-pilulas{display:flex;flex-wrap:wrap;flex:1;color:var(--cinza-2);font-size:.9rem}
+.eco-pilula{transition:color .3s}
+.eco-pilula+.eco-pilula::before{content:"·";margin:0 8px;color:var(--muted)}
+.eco-pilula.muda{color:var(--gold2)}
+@media (max-width:640px){.eco-pilulas{order:3;flex-basis:100%}}
+.eco-alterar{display:inline-flex;align-items:center;gap:8px;margin-left:auto;color:var(--gold2);font-weight:600;font-size:.9rem}
+.eco-alterar svg[aria-hidden]{transition:transform .3s var(--ease-saida)}
+.eco-ajustes[open] .eco-alterar svg{transform:rotate(180deg)}
+.eco-ajustes[open] .eco-alterar .a,.eco-ajustes:not([open]) .eco-alterar .f{display:none}
+.eco-ajustes .eco-opcoes{padding:4px 16px 16px;margin:0}
+/* as músicas: legenda das estrelas, filtros e cartões com duas ações (Praticar e ouvir o começo) */
+.eco-mus-cab{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.eco-mus-cab h3{margin:0 0 2px;font-size:1.3rem;letter-spacing:-.01em}
+.eco-mus-cab p{margin:0;font-size:.9rem}
+.eco-legenda{display:flex;gap:8px 16px;flex-wrap:wrap;margin:0;color:var(--muted);font-size:.84rem}
+.eco-legenda b{color:var(--lavanda);font-weight:600;letter-spacing:1px}
+.eco-filtros{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 16px}
+.eco-filtro{display:inline-flex;gap:8px;align-items:center;border:0;border-radius:999px;padding:8px 16px;background:var(--ameixa-2);color:var(--cinza-2);font:600 .92rem Onest,system-ui,sans-serif;cursor:pointer;
+  box-shadow:inset 0 0 0 1px var(--borda);transition:background .2s,color .2s}
+.eco-filtro i{font-style:normal;font-size:.8rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.eco-filtro[aria-pressed="true"]{background:var(--lavanda);color:var(--ameixa);box-shadow:none}
+.eco-filtro[aria-pressed="true"] i{color:rgba(28,22,36,.7)}
+@media (hover:hover){.eco-filtro[aria-pressed="false"]:hover{color:var(--osso)}}
+.eco-musicas{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+@media (max-width:540px){.eco-musicas{grid-template-columns:minmax(0,1fr)}}
+.eco-carta{position:relative;display:flex;flex-direction:column;gap:12px;border-radius:18px;padding:16px;background:var(--ameixa-2);cursor:pointer;-webkit-user-select:none;user-select:none;
+  box-shadow:inset 0 0 0 1px var(--borda);transition:transform .25s var(--ease-saida),box-shadow .25s;animation:ecoCarta .45s var(--ease-saida) backwards;animation-delay:calc(var(--i,0)*35ms)}
+@keyframes ecoCarta{from{opacity:0;transform:translateY(14px) scale(.96)}}
+@media (hover:hover){.eco-carta:hover{transform:translateY(-3px);box-shadow:inset 0 0 0 1px var(--borda-2),0 14px 30px -14px rgba(0,0,0,.7)}
+  .eco-carta:hover .eco-praticar{background:var(--lavanda);color:var(--ameixa)}}
+.eco-carta-topo{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:24px}
+.eco-selo{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.eco-selo.nova{color:var(--gold2);box-shadow:inset 0 0 0 1px rgba(185,151,255,.45)}
+.eco-selo.dodia{background:rgba(255,180,135,.14);color:#ffb487}
+.eco-sua{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ameixa);background:var(--lavanda);border-radius:999px;padding:2px 8px}
+.eco-carta-tit{font-size:1.05rem;font-weight:650;line-height:1.25;text-wrap:balance}
+.eco-mao-letra{display:inline-flex;align-items:center;gap:8px;margin-top:-4px;color:var(--cinza-2);font-size:.88rem}
+.eco-mao-letra::before{content:"D";display:grid;place-items:center;width:20px;height:20px;border-radius:6px;background:var(--ameixa-3);color:var(--gold2);font-size:.72rem;font-weight:700}
+.eco-mao-letra[data-mao="left"]::before{content:"E"}
+html[lang|="es"] .eco-mao-letra[data-mao="left"]::before{content:"I"}
+html[lang|="en"] .eco-mao-letra::before{content:"R"}html[lang|="en"] .eco-mao-letra[data-mao="left"]::before{content:"L"}
+.eco-carta-base{margin-top:auto;display:flex;flex-direction:column;gap:12px;padding-top:4px}
+.eco-prog{display:grid;grid-template-columns:1fr auto;align-items:center;gap:8px 12px;font-size:.84rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.eco-prog .eco-barrinha{grid-column:1/-1}
+.eco-barrinha{display:block;height:6px;border-radius:6px;background:var(--ameixa-3);overflow:hidden}
+.eco-barrinha i{display:block;height:100%;border-radius:6px;background:var(--lavanda);transition:width .8s var(--ease-saida)}
+.eco-est{color:var(--lavanda);letter-spacing:1px}.eco-est span{color:var(--ameixa-3)}
+.eco-carta-acoes{display:flex;gap:8px;align-items:center}
+.eco-praticar{flex:1;min-width:0;display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;cursor:pointer;padding:12px 12px;border-radius:12px;background:var(--ameixa-3);color:var(--osso);
+  font:650 .92rem Onest,system-ui,sans-serif;white-space:nowrap;transition:background .2s,color .2s}
+.eco-praticar span{overflow:hidden;text-overflow:ellipsis}
+.eco-praticar svg[aria-hidden]{width:14px;height:14px;fill:currentColor;stroke:none}
+.eco-carta.feita .eco-praticar{background:transparent;box-shadow:inset 0 0 0 1px var(--borda-2)}
+.eco-ouvir{flex:none;width:40px;height:40px;display:grid;place-items:center;border:0;cursor:pointer;padding:0;border-radius:12px;background:transparent;color:var(--cinza-2);box-shadow:inset 0 0 0 1px var(--borda);transition:color .2s,box-shadow .2s}
+.eco-ouvir svg[aria-hidden]{width:18px;height:18px}
+@media (hover:hover){.eco-ouvir:hover{color:var(--osso);box-shadow:inset 0 0 0 1px var(--borda-2)}}
+.eco-carta.toca{box-shadow:inset 0 0 0 1px var(--lavanda)}
+.eco-carta.toca .eco-ouvir{color:var(--gold2);box-shadow:inset 0 0 0 1px var(--lavanda)}
+.eco-carta.toca .eco-barrinha{background:rgba(185,151,255,.3);animation:ecoPulsa .5s ease-in-out infinite alternate}
+@keyframes ecoPulsa{to{filter:brightness(1.8)}}
+.eco-vazio{display:flex;align-items:center;gap:12px 16px;flex-wrap:wrap;border-radius:18px;padding:16px;border:1px dashed var(--borda-2);color:var(--cinza-2);font-size:.92rem}
+.eco-vazio p{flex:1 1 280px;margin:0}.eco-vazio b{color:var(--osso)}
+#ecoSuas:empty{display:none}
+
+/* ================== Tocar, Treinar e Professores: superfície com luz ==================
+   Da revisão do RepeTCHÊ (2026-11): uma luz violeta suave vem do alto da página, cada bloco ganha um fio de
+   luz de 1px na borda de cima e um leve degradê, e os números ficam com largura fixa (não pulam ao mudar).
+   :where() mantém a força do seletor baixa: blocos com fundo próprio continuam com o seu. */
+body:is([data-area="tocar"],[data-area="treinar"],[data-area="professores"]){
+  background:radial-gradient(1100px 520px at 50% -160px,rgba(108,67,216,.30),transparent 70%) no-repeat,var(--bg)}
+:where(#v-teclado,#v-melodias,#v-acordes,#v-microfone,#v-desafios,#v-qualnota,#v-eco,#v-ritmo,#v-professor,#v-relatorios,#v-turmas){font-variant-numeric:tabular-nums}
+:where(#v-teclado,#v-melodias,#v-acordes,#v-microfone,#v-desafios,#v-qualnota,#v-eco,#v-ritmo,#v-professor,#v-relatorios,#v-turmas) .card,
+.eco-tocar-op,.eco-ajustes,.eco-carta,.eco-mic{
+  background-image:linear-gradient(90deg,transparent,rgba(255,255,255,.16),transparent),linear-gradient(180deg,rgba(255,255,255,.035),transparent 46%);
+  background-size:calc(100% - 32px) 1px,100% 100%;background-position:center top,0 0;background-repeat:no-repeat}
+.eco-tocar-op[aria-checked="true"]{background-image:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent),linear-gradient(135deg,rgba(185,151,255,.16),rgba(185,151,255,.04))}
+.eco-dia{background-image:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent),radial-gradient(120% 140% at 0% 0%,rgba(185,151,255,.18),transparent 55%);
+  background-size:calc(100% - 32px) 1px,100% 100%;background-position:center top,0 0;background-repeat:no-repeat}
+/* microfone ouvindo (Afinador): uma onda sai do botão */
+#mcOn.vivo{animation:micOnda 1.4s ease-out infinite}
+@keyframes micOnda{0%{box-shadow:inset 0 0 0 1px var(--borda-2),0 0 0 0 rgba(185,151,255,.5)}100%{box-shadow:inset 0 0 0 1px var(--borda-2),0 0 0 12px rgba(185,151,255,0)}}
+.sem-mov #mcOn.vivo{animation:none}
+@media (prefers-reduced-motion:reduce){#mcOn.vivo,.eco-tocar-op.vivo .eco-tocar-ic,.eco-carta.toca .eco-barrinha{animation:none}}
+.eco-nivel .p i{background:rgba(255,255,255,.12)}
+.eco-dia .eco-barrinha{background:rgba(255,255,255,.12)}
+@media (max-width:640px){.eco-dia svg.eco-marca-fole{width:300px;height:136px;top:auto;bottom:-24px;right:-40px;transform:none;opacity:.04}.eco-mini{flex-wrap:wrap}}

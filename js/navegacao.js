@@ -18,7 +18,7 @@ function go(v){
   const conquistas = v==='perfil'; if(conquistas) v = 'estudo';
   if(!$('#v-'+v)) v='inicio';
   const anterior=currentView, area=areaDe(v);
-  currentView=v;
+  currentView=v; document.body.dataset.area = area;
   if(area!=='inicio'){ ultimaAba[area]=v; store.set('ultimaAba', ultimaAba); }
   $$('#nav [data-area]').forEach(b=>{ const on=b.dataset.area===area; b.classList.toggle('active',on); b.toggleAttribute('aria-current',on); });
   const sub=$('#subnav'); sub.hidden = AREAS[area].length<2;

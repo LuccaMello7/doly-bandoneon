@@ -875,25 +875,44 @@
 <!-- RepeTCHÊ: o bandoneon toca, você repete (js/eco.js). O gaúcho é imagens/repetche/ -->
 <section id="v-eco" class="eco">
   <div class="pg-topo"><span class="pg-ic t-eco pg-av"><img class="gaucho-av" src="../imagens/repetche/avatar.jpg" alt="" width="80" height="80"></span><div><h2 class="pg-tit"><span translate="no">RepeTCHÊ</span></h2><p class="muted">The bandoneon plays, you repeat. Each round the tune grows, until you play it all by ear.</p></div></div>
-  <div class="card eco-escolha" id="ecoEscolha">
-    <div class="menu eco-opcoes">
+  <div class="eco-escolha" id="ecoEscolha">
+    <div class="eco-dia" id="ecoDia" aria-label="Tune of the day"></div>
+    <div class="eco-bloco" aria-labelledby="ecoTocarTit">
+      <h3 class="eco-secao-tit" id="ecoTocarTit">How you will play</h3>
+      <div class="eco-tocar" id="ecoTocar" role="radiogroup" aria-labelledby="ecoTocarTit">
+        <button class="eco-tocar-op" type="button" role="radio" aria-checked="true" data-tocar="tela"><span class="eco-tocar-ic"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="12" rx="2"/><circle cx="8" cy="11" r="1.2"/><circle cx="12" cy="11" r="1.2"/><circle cx="16" cy="11" r="1.2"/><path d="M9 20h6"/></svg></span><span class="eco-tocar-txt"><b>On screen</b><span>You play the buttons here in the app, with the mouse, the keyboard or your finger.</span></span><span class="eco-tocar-ok" aria-hidden="true"><svg aria-hidden="true"><use href="#i-check"/></svg></span></button>
+        <button class="eco-tocar-op" type="button" role="radio" aria-checked="false" data-tocar="instrumento"><span class="eco-tocar-ic"><svg aria-hidden="true"><use href="#i-mic"/></svg></span><span class="eco-tocar-txt"><b>On my bandoneon</b><span>The microphone listens to the instrument: the note you play counts as the button. Your hands stay free.</span><span class="eco-selo-inst">For those who have the instrument</span><span class="eco-mini"><span class="eco-mvu" id="ecoMvu" aria-hidden="true"></span><span class="eco-mini-txt" id="ecoMiniTxt">Microphone off: test it below</span></span></span><span class="eco-tocar-ok" aria-hidden="true"><svg aria-hidden="true"><use href="#i-check"/></svg></span></button>
+      </div>
+      <p class="eco-modo-nota" id="ecoModoNota">Your choice is kept for the next games.</p>
+      <div class="eco-mic" id="ecoMic" hidden>
+        <span class="eco-mic-status" id="ecoMicStatus"><i></i><span>Microphone off</span></span>
+        <div class="eco-mic-meio"><div class="eco-vu" id="ecoVu" aria-hidden="true"></div><span class="eco-mic-dica" id="ecoMicDica" aria-live="polite">Turn the microphone on and play a note on the bandoneon to test it before playing.</span></div>
+        <div class="eco-mic-nota" aria-live="polite"><b id="ecoMicNota" translate="no">–</b><small id="ecoMicCents">note heard</small></div>
+        <div class="eco-mic-acoes"><button type="button" class="btn" id="ecoMicLigar"><svg aria-hidden="true"><use href="#i-mic"/></svg><span>Turn on and test</span></button><button type="button" class="btn sec" id="ecoMicCal" disabled>Calibrate the silence</button><label class="eco-mic-entrada" id="ecoMicEntradaRot" hidden><span>Input</span><select id="ecoMicEntrada"><option value="">The device's default microphone</option></select></label></div>
+      </div>
+    </div>
+    <details class="eco-ajustes" id="ecoAjustes">
+      <summary><b>Practice settings</b><span class="eco-pilulas" id="ecoPilulas"></span><span class="eco-alterar"><span class="a">Change</span><span class="f">Close</span><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span></summary>
+      <div class="menu eco-opcoes">
       <div class="menu-grupo"><span class="menu-rot">Help</span><select id="ecoAjuda"><option value="ver">See and hear (the button lights up and the note name appears)</option><option value="fole">Bellows only (shows only whether the bellows open or close)</option><option value="ouvido">By ear only (no clues while it plays)</option></select></div>
       <div class="menu-grupos">
         <div class="menu-grupo"><span class="menu-rot">New notes per round</span><select id="ecoPasso"><option value="2">2 notes (gentler)</option><option value="3">3 notes</option><option value="4">4 notes (faster)</option></select><p class="menu-ajuda" id="ecoPassoAjuda"></p></div>
         <div class="menu-grupo"><span class="menu-rot">Speed</span><select id="ecoVel"><option value="0.75">Slow</option><option value="1" selected>Normal</option></select></div>
       </div>
-      <div class="menu-switches">
         <label class="menu-switch"><input type="checkbox" id="ecoVozOn" checked><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Gaucho voice</b><small>He celebrates when you get it right.</small></span></label>
-        <label class="menu-switch"><input type="checkbox" id="ecoMicOn"><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Play on my bandoneon</b><small>The microphone listens to the instrument: the note you play counts as the button.</small></span></label>
       </div>
+    </details>
+    <div class="eco-repert" aria-labelledby="ecoEscolhaTit">
+      <div class="eco-mus-cab"><div><h3 class="eco-escolha-tit" id="ecoEscolhaTit">Choose the tune</h3><p class="muted">Each tune is split into short stages of 8 notes. Finish one to unlock the next.</p></div>
+        <p class="eco-legenda" aria-label="How to earn the stars"><span><b aria-hidden="true">★★★</b> no mistakes</span><span><b aria-hidden="true">★★</b> up to 3 mistakes</span><span><b aria-hidden="true">★</b> reached the end</span></p></div>
+      <div class="eco-filtros" id="ecoFiltros" role="group" aria-label="Filter tunes"></div>
+      <div class="eco-musicas" id="ecoMusicas" aria-label="Tune"></div>
     </div>
-    <div class="eco-dia" id="ecoDia"></div>
-    <h2 class="card-tit eco-escolha-tit">Choose the tune</h2>
-    <p class="muted eco-dica">Tap a tune to start. Each tune is split into short 8-note stages: finish one to unlock the next. The bellows change direction on their own.</p>
-    <div class="eco-musicas" id="ecoMusicas" aria-label="Tune"></div>
-    <h3 class="eco-suas-tit">My music</h3>
-    <p class="muted eco-dica" id="ecoSuasVazio">The music you create or import, in Melodies or in the Academy, shows up here too. It stays only on your device.</p>
-    <div class="eco-musicas" id="ecoSuas" aria-label="My music"></div>
+    <div class="eco-repert" aria-labelledby="ecoSuasTit">
+      <h3 class="eco-secao-tit" id="ecoSuasTit">My music</h3>
+      <div class="eco-vazio" id="ecoSuasVazio"><p><b>None yet.</b> The tunes you create in Melodies or import in the Academy appear here, with the same stages. They stay only on your device.</p><button type="button" class="btn sec" data-go="melodias"><svg aria-hidden="true"><use href="#i-plus"/></svg>Create or import</button></div>
+      <div class="eco-musicas" id="ecoSuas" aria-label="My music"></div>
+    </div>
   </div>
 
   <div class="card eco-jogo" id="ecoJogo" hidden>

@@ -10,9 +10,13 @@
 // Pontos: 10 por nota certa × combo (sobe a cada 8 acertos seguidos, até ×4) + bônus de rodada perfeita.
 // Estrelas no fim: 3 sem erro, 2 com até 3 erros, 1 se chegou ao fim. Errar não acaba o jogo: o app
 // mostra o botão certo e espera.
+// dif: nível (1 Iniciante, 2 Intermediário, 3 Avançado). cat: 'esc' (escalas e exercícios) ou 'rep' (repertório).
+// nova: dia em que a música entrou depois da estreia do jogo; o selo "Nova" fica 30 dias, enquanto o aluno não jogou.
 const ECO_MUSICAS = [
-  {id:'estrelinha', dif:1}, {id:'esc-do', dif:1}, {id:'ode', dif:1}, {id:'esq-do', dif:2}, {id:'arpejos', dif:2},
-  {id:'esc-sol', dif:2}, {id:'esc-lam', dif:2}, {id:'esq-baixos', dif:2}, {id:'cromatica', dif:3}, {id:'cumparsita', dif:2}, {id:'choclo-intro', dif:3}, {id:'tico-tico', dif:3},
+  {id:'estrelinha', dif:1, cat:'rep'}, {id:'esc-do', dif:1, cat:'esc'}, {id:'ode', dif:1, cat:'rep'}, {id:'esq-do', dif:2, cat:'esc'},
+  {id:'arpejos', dif:2, cat:'esc'}, {id:'esc-sol', dif:2, cat:'esc'}, {id:'esc-lam', dif:2, cat:'esc'}, {id:'esq-baixos', dif:2, cat:'esc'},
+  {id:'cromatica', dif:3, cat:'esc'}, {id:'cumparsita', dif:2, cat:'rep', nova:'2026-11-07'}, {id:'choclo-intro', dif:3, cat:'rep'},
+  {id:'tico-tico', dif:3, cat:'rep', nova:'2026-11-07'},
 ];
 state.progress.eco = state.progress.eco || {}; // {id: {pts, estrelas, fases:{0:{pts,estrelas}}}}: pts/estrelas são da música inteira
 state.progress.ecoDias = state.progress.ecoDias || {}; // dias em que a música do dia foi feita: {'2026-11-07': true}
@@ -41,8 +45,25 @@ function ecoMusica(id){
   seq = seq.filter(n=>n.hand===mao);
   return ecoCache[id] = {m, seq, mao, sua:!!f.sua};
 }
-// Música do dia: a mesma para todo mundo no mesmo dia (sorteada pela data). Fazer em dias seguidos aumenta a sequência.
-function ecoDoDia(d = new Date()){ const k = dayKey(d); let h = 7; for(const c of k) h = (h*31 + c.charCodeAt(0)) >>> 0; return ECO_MUSICAS[h % ECO_MUSICAS.length].id; }
+// Nível do aluno: começa pela resposta "Já toco bandoneon" das perguntas iniciais e sobe quando ele completa
+// as músicas do nível (3, ou todas, se o nível tiver menos).
+const ecoCompleta = id => !!ecoProg(id).estrelas || ecoTodasFeitas(id);
+function ecoNivelAluno(){
+  const p = (typeof perfilAluno==='function' && perfilAluno()) || {};
+  let n = p.exp==='bandoneon' ? 2 : 1;
+  for(;;){ const doNivel = ECO_MUSICAS.filter(x=>x.dif===n);
+    if(n>=3 || doNivel.filter(x=>ecoCompleta(x.id)).length < Math.min(3, doNivel.length)) return n; n++; }
+}
+// Música do dia: sorteada pela data entre as do nível do aluno que ele ainda não completou. Fica guardada até
+// o fim do dia (completar a música não troca a do dia). Fazer em dias seguidos aumenta a sequência.
+function ecoDoDia(){
+  const hoje = dayKey(), salvo = store.get('ecoDoDia', null);
+  if(salvo && salvo.dia===hoje && ECO_MUSICAS.some(x=>x.id===salvo.id)) return salvo.id;
+  let h = 7; for(const c of hoje) h = (h*31 + c.charCodeAt(0)) >>> 0;
+  const doNivel = ECO_MUSICAS.filter(x=>x.dif===ecoNivelAluno()), faltam = doNivel.filter(x=>!ecoCompleta(x.id));
+  const lista = faltam.length ? faltam : doNivel, id = lista[h % lista.length].id;
+  store.set('ecoDoDia', {dia:hoje, id}); return id;
+}
 function ecoSequenciaDias(){
   let n = 0; const d = new Date(); if(!state.progress.ecoDias[dayKey(d)]) d.setDate(d.getDate()-1); // ainda dá tempo hoje
   while(state.progress.ecoDias[dayKey(d)]){ n++; d.setDate(d.getDate()-1); }
@@ -73,47 +94,154 @@ const ecoTimer = (f, ms) => eco.timers.push(setTimeout(f, ms));
 function ecoEstrelas(n, total=3){
   return Array.from({length:total}, (_,i)=>`<svg class="${i<n?'on':''}" aria-hidden="true"><use href="#i-star"/></svg>`).join('');
 }
-function ecoCartao(id, i, dif){
-  const {m, seq, mao} = ecoMusica(id), r = state.progress.eco[id], fs = ecoFases(id);
-  if(fs.length>1){ // em fases: um segmento por fase e qual é a próxima
-    const prox = ecoProximaFase(id), feitas = fs.filter((_,k)=>ecoFaseFeita(id,k)).length;
-    return `<button type="button" class="eco-musica ${id===eco.id?'on':''}" data-id="${id}" style="--i:${i}">
-    <span class="eco-jogar" aria-hidden="true"><svg><use href="#i-play"/></svg></span>
-    ${dif ? `<span class="eco-dif" data-dif="${dif}" aria-label="Dificuldade ${dif} de 3"><i></i><i></i><i></i></span>` : '<span class="eco-sua">Sua</span>'}
-    <b>${m.title}</b><small class="muted">${fs.length} fases · ${mao==='left'?'mão esquerda':'mão direita'}</small>
-    <span class="eco-segs" aria-label="${feitas} de ${fs.length} fases feitas">${fs.map((_,k)=>{ const f = ecoFaseFeita(id,k); return `<i class="${f ? 'e'+f.estrelas : ''}"></i>`; }).join('')}</span>
-    ${prox==='tudo' ? (r && r.estrelas ? `<small class="eco-rec">Completa · ${r.pts}</small>` : '<small class="eco-rec">Desafio final</small>')
-      : feitas || (r && r.estrelas) ? `<small class="eco-rec">Fase ${prox+1} de ${fs.length}</small>` : '<small class="eco-rec novo">Nova</small>'}
-  </button>`;
-  }
-  return `<button type="button" class="eco-musica ${id===eco.id?'on':''}" data-id="${id}" style="--i:${i}">
-    <span class="eco-jogar" aria-hidden="true"><svg><use href="#i-play"/></svg></span>
-    ${dif ? `<span class="eco-dif" data-dif="${dif}" aria-label="Dificuldade ${dif} de 3"><i></i><i></i><i></i></span>` : '<span class="eco-sua">Sua</span>'}
-    <b>${m.title}</b><small class="muted">${seq.length} notas · ${mao==='left'?'mão esquerda':'mão direita'}</small>
-    <span class="eco-mini-estrelas" aria-label="${r ? r.estrelas : 0} de 3 estrelas">${ecoEstrelas(r ? r.estrelas : 0)}</span>
-    ${r ? `<small class="eco-rec">Recorde: ${r.pts}</small>` : '<small class="eco-rec novo">Nova</small>'}
-  </button>`;
+// No RepeTCHÊ a mão já aparece no cartão: "Mão esquerda: escala de Dó maior" vira "Escala de Dó maior"
+const ecoTitulo = tit => { const x = tit.replace(/^Mão esquerda:\s*/, ''); return x.charAt(0).toUpperCase() + x.slice(1); };
+const ecoEsc = x => String(x).replace(/[&<>\x22]/g, c=>'&#' + c.charCodeAt(0) + ';');
+const ECO_NIVEL = {1:'Iniciante', 2:'Intermediário', 3:'Avançado'};
+const ECO_CRIT = {3:'3 estrelas: sem erros', 2:'2 estrelas: até 3 erros', 1:'1 estrela: chegou ao fim'};
+const ecoNivelHtml = n => `<span class="eco-nivel" data-n="${n}"><span class="p" aria-hidden="true"><i></i><i></i><i></i></span><span>${ECO_NIVEL[n]}</span></span>`;
+const ecoNova = x => !!x.nova && !state.progress.eco[x.id] && Date.now() - new Date(x.nova + 'T12:00:00') < 30*864e5;
+// Fases feitas e as estrelas que o cartão mostra: as da música inteira ou, antes dela, as da fase mais fraca
+function ecoAndamento(id){
+  const fs = ecoFases(id), r = ecoProg(id), feitas = fs.filter((_,k)=>ecoFaseFeita(id,k)), n = feitas.length;
+  return {total:fs.length, feitas:n, est: r.estrelas || (n ? Math.min(...fs.map((_,k)=>{ const f = ecoFaseFeita(id,k); return f ? f.estrelas : 3; })) : 0)};
 }
+// Cartão de música: tocar em qualquer parte dele (ou em Praticar) começa; o alto-falante toca o começo
+function ecoCartao(x, i){
+  const id = x.id, {m, mao} = ecoMusica(id), a = ecoAndamento(id), r = ecoProg(id), prox = ecoProximaFase(id);
+  const acao = r.estrelas ? 'Tocar de novo' : prox==='tudo' ? 'Desafio final' : a.feitas ? `Continuar: fase ${prox+1}` : 'Praticar';
+  const selo = x.dif && id===ecoDoDia() ? '<span class="eco-selo dodia">★ Do dia</span>' : ecoNova(x) ? '<span class="eco-selo nova">Nova</span>' : '';
+  const est = a.est ? `<span class="eco-est" title="${ECO_CRIT[a.est]}" aria-label="${ECO_CRIT[a.est]}">${'★'.repeat(a.est)}<span>${'★'.repeat(3-a.est)}</span></span>` : '';
+  return `<div class="eco-carta ${r.estrelas ? 'feita' : ''}" style="--i:${i}" data-carta="${id}">
+    <span class="eco-carta-topo">${x.dif ? ecoNivelHtml(x.dif) : '<span class="eco-sua">Sua</span>'}${selo}</span>
+    <b class="eco-carta-tit">${ecoEsc(ecoTitulo(m.title))}</b>
+    <span class="eco-mao-letra" data-mao="${mao}">${mao==='left' ? 'Mão esquerda' : 'Mão direita'}</span>
+    <span class="eco-carta-base"><span class="eco-prog"><span class="eco-barrinha"><i style="width:${Math.round(100*a.feitas/a.total)}%"></i></span><span>${a.feitas} de ${a.total} fases</span>${est}</span>
+    <span class="eco-carta-acoes"><button type="button" class="eco-praticar" data-id="${id}"><svg aria-hidden="true"><use href="#i-play"/></svg><span>${acao}</span></button><button type="button" class="eco-ouvir" data-ouvir="${id}" aria-label="Ouvir o começo" title="Ouvir o começo"><svg aria-hidden="true"><use href="#i-volume"/></svg></button></span></span>
+  </div>`;
+}
+const ECO_FILTROS = [
+  {k:'todas', r:'Todas', f:()=>true}, {k:'right', r:'Mão direita', f:x=>ecoMusica(x.id).mao==='right'}, {k:'left', r:'Mão esquerda', f:x=>ecoMusica(x.id).mao==='left'},
+  {k:'esc', r:'Escalas e exercícios', f:x=>x.cat==='esc'}, {k:'rep', r:'Repertório', f:x=>x.cat==='rep'}];
+let ecoFiltro = store.get('ecoFiltro', 'todas');
 function renderEcoMusicas(){
-  $('#ecoMusicas').innerHTML = ECO_MUSICAS.map((x,i)=>ecoCartao(x.id, i, x.dif)).join('');
+  const f = ECO_FILTROS.find(x=>x.k===ecoFiltro) || ECO_FILTROS[0];
+  $('#ecoFiltros').innerHTML = ECO_FILTROS.map(x=>`<button type="button" class="eco-filtro" data-filtro="${x.k}" aria-pressed="${x.k===f.k}"><span>${x.r}</span><i>${ECO_MUSICAS.filter(x.f).length}</i></button>`).join('');
+  $('#ecoMusicas').innerHTML = ECO_MUSICAS.filter(f.f).map((x,i)=>ecoCartao(x, i)).join('');
   const suas = ecoSuas().filter(id=>{ const mm = ecoMusica(id); return mm && mm.seq.length>=4; });
-  $('#ecoSuas').innerHTML = suas.map((id,i)=>ecoCartao(id, i, 0)).join('');
+  $('#ecoSuas').innerHTML = suas.map((id,i)=>ecoCartao({id, dif:0}, i)).join('');
   $('#ecoSuasVazio').hidden = suas.length>0;
-  renderEcoDia();
+  renderEcoDia(); ecoPilulas();
 }
+// Música do dia: o atalho de um toque, com o nível, as fases e a sequência de dias. O gaúcho do topo ganha um
+// brilho enquanto a sequência está viva.
 function renderEcoDia(){
-  const id = ecoDoDia(), mm = ecoMusica(id), feita = !!state.progress.ecoDias[dayKey()], seq = ecoSequenciaDias();
+  const id = ecoDoDia(), x = ECO_MUSICAS.find(y=>y.id===id), mm = ecoMusica(id), a = ecoAndamento(id);
+  const feita = !!state.progress.ecoDias[dayKey()], seq = ecoSequenciaDias();
+  const data = new Date().toLocaleDateString(document.documentElement.lang || 'pt-BR', {day:'numeric', month:'long'});
   const el = $('#ecoDia'); el.classList.toggle('feita', feita);
-  el.innerHTML = `<div class="eco-dia-txt"><b>${mm.m.title}</b>`
-    + `<small class="muted">${t('Música do dia')} · ${feita ? t('Feita hoje! Amanhã tem outra.') : t('Uma fase por dia. Complete para manter a sequência.')}</small></div>`
-    + `<div class="eco-dia-seq ${seq ? 'on' : ''}" aria-label="${t('Sequência de {} dia(s)', seq)}"><svg aria-hidden="true"><use href="#i-flame"/></svg><b>${seq}</b><small>${seq===1 ? t('dia') : t('dias')}</small></div>`
-    + `<button type="button" class="btn ${feita ? 'sec' : ''}" data-id="${id}"><svg aria-hidden="true"><use href="#i-play"/></svg>${feita ? t('Jogar de novo') : t('Jogar')}</button>`;
+  el.innerHTML = `<svg class="eco-marca-fole" viewBox="0 0 220 100" aria-hidden="true"><rect x="0" y="10" width="14" height="80" rx="4"/><rect x="206" y="10" width="14" height="80" rx="4"/><path d="M24 12 L40 88 L56 12 L72 88 L88 12 L104 88 L120 12 L136 88 L152 12 L168 88 L184 12 L196 88"/></svg>`
+    + `<div class="eco-dia-txt"><span class="eco-dia-olho"><span>Música do dia</span><span translate="no">${data}</span></span>`
+    + `<h3 class="eco-dia-tit">${ecoEsc(ecoTitulo(mm.m.title))}</h3>`
+    + `<span class="eco-dia-meta">${ecoNivelHtml(x.dif)}<span>${mm.mao==='left' ? 'Mão esquerda' : 'Mão direita'}</span><span>${a.total} fases</span></span>`
+    + `<span class="eco-dia-prog"><span class="eco-barrinha"><i style="width:${Math.round(100*a.feitas/a.total)}%"></i></span><span>${a.feitas} de ${a.total} fases</span></span>`
+    + `<span class="eco-dia-nota">${feita ? 'Feita hoje! Amanhã tem outra.' : 'Escolhida para o seu nível. Amanhã tem outra.'}</span></div>`
+    + `<div class="eco-dia-acoes"><span class="eco-fogo ${seq ? 'on' : ''}" title="Dias seguidos com a música do dia feita"><svg aria-hidden="true"><use href="#i-flame"/></svg><span>${seq===1 ? '1 dia' : seq + ' dias'}</span></span>`
+    + `<button type="button" class="btn btn-grande" data-id="${id}"><svg aria-hidden="true"><use href="#i-play"/></svg><span>${feita ? 'Jogar de novo' : 'Jogar'}</span></button></div>`;
+  const av = $('#v-eco .pg-av'); if(av){ av.classList.toggle('brilha', seq>0); av.title = seq ? t('Sequência de {} dia(s): o gaúcho comemora com você', seq) : ''; }
 }
-// tocar numa música (da lista, das suas ou a do dia) já começa
+// Ouvir o começo: os primeiros 2 segundos da música, com as mesmas notas do jogo e o som do app.
+// Tocar de novo no mesmo alto-falante (ou começar o jogo) para.
+let ecoPreviaT = [], ecoPreviaCarta = null;
+function ecoPrevia(id, carta){
+  const mesma = carta && carta===ecoPreviaCarta;
+  ecoPreviaT.forEach(clearTimeout); ecoPreviaT = []; if(ecoPreviaCarta) ecoPreviaCarta.classList.remove('toca'); ecoPreviaCarta = null;
+  if(!id || mesma) return;
+  const mm = ecoMusica(id); if(!mm) return;
+  ac(); const spb = 60/mm.m.bpm; let t = 0;
+  for(const n of mm.seq){ if(t >= 2000) break; const dur = Math.min(1.1, Math.max(0.25, n.beats*spb));
+    ecoPreviaT.push(setTimeout(()=>playNote(n.midi, dur*0.92, n.hand), t)); t += dur*1000; }
+  if(carta){ carta.classList.add('toca'); ecoPreviaCarta = carta; ecoPreviaT.push(setTimeout(()=>{ carta.classList.remove('toca'); ecoPreviaCarta = null; }, t)); }
+}
+// Como o aluno vai tocar: na tela ou no bandoneon de verdade (o microfone ouve). A escolha fica guardada.
+const ecoTocarModo = () => store.get('ecoTocar', 'tela');
+function ecoModoTocar(v){
+  store.set('ecoTocar', v);
+  $$('#ecoTocar [data-tocar]').forEach(b=>b.setAttribute('aria-checked', String(b.dataset.tocar===v)));
+  $('#ecoMic').hidden = v!=='instrumento';
+  $('#ecoModoNota').textContent = v==='instrumento' ? 'Ao começar, o app pede acesso ao microfone. Deixe o celular ou o computador a meio metro do bandoneon.'
+    : 'A escolha fica guardada para os próximos jogos.';
+  if(v!=='instrumento' && ecoMicDono){ micStop(); ecoMicDono = false; }
+  ecoMicUI();
+}
+// Teste do microfone dentro da tela: volume (24 barrinhas; e 10 no cartão), a nota ouvida e a afinação
+function ecoMicUI(){
+  const on = mic.on;
+  $('#ecoMic').classList.toggle('ativo', on); $('#ecoTocar [data-tocar="instrumento"]').classList.toggle('vivo', on);
+  $('#ecoMicStatus span').textContent = on ? 'Microfone ativo' : 'Microfone desligado';
+  $('#ecoMicLigar span').textContent = on ? 'Desligar' : 'Ligar e testar'; $('#ecoMicLigar').classList.toggle('sec', on);
+  $('#ecoMicCal').disabled = !on;
+  $('#ecoMicDica').textContent = on ? 'Toque uma nota no bandoneon: a barra mostra o volume e a nota aparece ao lado.'
+    : 'Ligue o microfone e toque uma nota no bandoneon para testar antes de jogar.';
+  ecoMicMostrar(null);
+}
+let ecoMiniEstado = '';
+function ecoMicMostrar(m, cents, rms){ // o microfone chama a cada leitura (js/microfone.js)
+  const f = m==null ? 0 : Math.min(1, (rms || 0)*4), n24 = Math.round(f*24), n10 = Math.round(f*10);
+  $$('#ecoVu i').forEach((i,j)=>{ i.className = j<n24 ? (j>19 ? 'on alto' : 'on') : ''; });
+  $$('#ecoMvu i').forEach((i,j)=>{ i.className = j<n10 ? 'on' : ''; });
+  const est = !mic.on ? 'off' : m==null ? 'mudo' : 'n' + m + (Math.abs(cents)<=5 ? 'a' : cents);
+  if(est===ecoMiniEstado) return; ecoMiniEstado = est; // só reescreve o texto quando muda (a tradução reage a cada mudança)
+  $('#ecoMicNota').textContent = m==null ? '–' : noteName(m);
+  $('#ecoMicCents').textContent = m==null ? (mic.on ? 'silêncio' : 'nota ouvida') : Math.abs(cents)<=5 ? 'afinado' : (cents>0 ? '+' : '−') + Math.abs(cents) + ' cents';
+  const mini = $('#ecoMiniTxt');
+  if(!mic.on) mini.textContent = 'Microfone desligado: teste abaixo';
+  else if(m==null) mini.textContent = 'Microfone ativo: toque uma nota';
+  else mini.innerHTML = `<span>Nota detectada:</span> <b translate="no">${noteName(m)}</b> <span class="ok">Bandoneon pronto!</span>`;
+}
+// Entrada de áudio: microfone do aparelho, interface USB, fone… Os nomes só aparecem depois da permissão.
+async function ecoMicEntradas(){
+  if(!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) return;
+  let ds = []; try{ ds = (await navigator.mediaDevices.enumerateDevices()).filter(d=>d.kind==='audioinput' && d.deviceId && !['default','communications'].includes(d.deviceId)); }catch(e){ return; }
+  const sel = $('#ecoMicEntrada'), atual = store.get('micEntrada', '');
+  sel.innerHTML = '<option value="">Microfone padrão do aparelho</option>'
+    + ds.map((d,i)=>`<option value="${ecoEsc(d.deviceId)}" translate="no">${ecoEsc(d.label || t('Entrada {}', i+1))}</option>`).join('');
+  sel.value = ds.some(d=>d.deviceId===atual) ? atual : '';
+  $('#ecoMicEntradaRot').hidden = ds.length<2;
+}
+let ecoMicDono = false; // o microfone foi ligado aqui (e desliga ao sair da aba)
+$('#ecoMicLigar').addEventListener('click', async ()=>{
+  if(mic.on){ micStop(); ecoMicDono = false; }
+  else if(await micStart()){ ecoMicDono = true; marcar('mic'); ecoMicEntradas(); }
+  ecoMicUI();
+});
+$('#ecoMicCal').addEventListener('click', ()=>{
+  if(!mic.on) return; $('#ecoMicCal').disabled = true;
+  calibrarSilencio(msg=>{ $('#ecoMicDica').textContent = msg; }, ()=>{ $('#ecoMicCal').disabled = !mic.on; });
+});
+$('#ecoMicEntrada').addEventListener('change', async e=>{
+  store.set('micEntrada', e.target.value);
+  if(mic.on){ micStop(); if(!(await micStart())) ecoMicDono = false; }
+  ecoMicUI();
+});
+$('#ecoVu').innerHTML = '<i></i>'.repeat(24); $('#ecoMvu').innerHTML = '<i></i>'.repeat(10);
+// Ajustes do treino: recolhidos, com o resumo em pílulas (a que acabou de mudar acende)
+const ECO_AJ = {ver:'Ver e ouvir', fole:'Só o fole', ouvido:'Só ouvindo'};
+function ecoPilulas(mudou){
+  const ps = [['ecoAjuda', ECO_AJ[$('#ecoAjuda').value]], ['ecoPasso', `${$('#ecoPasso').value} notas por rodada`],
+    ['ecoVel', $('#ecoVel').value==='1' ? 'Normal' : 'Devagar'], ['ecoVozOn', $('#ecoVozOn').checked ? 'Voz do gaúcho' : 'Sem a voz do gaúcho']];
+  $('#ecoPilulas').innerHTML = ps.map(([k, txt])=>`<span class="eco-pilula ${k===mudou ? 'muda' : ''}">${txt}</span>`).join('');
+  if(mudou) setTimeout(()=>{ const x = $('#ecoPilulas .muda'); if(x) x.classList.remove('muda'); }, 900);
+}
+// Tocar numa música (o cartão inteiro, Praticar ou o Jogar da música do dia) já começa
 $('#ecoEscolha').addEventListener('click', e=>{
-  const b = e.target.closest('[data-id]'); if(!b) return;
+  const ov = e.target.closest('[data-ouvir]'); if(ov){ ecoPrevia(ov.dataset.ouvir, ov.closest('.eco-carta')); return; }
+  const fl = e.target.closest('[data-filtro]'); if(fl){ ecoFiltro = fl.dataset.filtro; store.set('ecoFiltro', ecoFiltro); renderEcoMusicas(); return; }
+  const tc = e.target.closest('[data-tocar]'); if(tc){ ecoModoTocar(tc.dataset.tocar); return; }
+  let b = e.target.closest('[data-id]');
+  if(!b && !e.target.closest('button, a, input, select, label, summary')){ const c = e.target.closest('[data-carta]'); if(c) b = c.querySelector('[data-id]'); }
+  if(!b) return;
   eco.id = b.dataset.id; store.set('ecoMusica', eco.id);
-  $$('#ecoEscolha .eco-musica').forEach(x=>x.classList.toggle('on', x.dataset.id===eco.id));
   ecoComecar();
 });
 // Mapa de fases (no jogo e na tela do fim): número e estrelas das feitas, cadeado nas trancadas, troféu = música inteira
@@ -133,7 +261,7 @@ $('#v-eco').addEventListener('click', e=>{
   ecoComecar(b.dataset.fase==='tudo' ? 'tudo' : +b.dataset.fase);
 });
 ['ecoAjuda','ecoPasso','ecoVel'].forEach(id=>{ const v = store.get(id, null); if(v!=null && $('#'+id)) $('#'+id).value = v;
-  $('#'+id).addEventListener('change', e=>store.set(id, e.target.value)); });
+  $('#'+id).addEventListener('change', e=>{ store.set(id, e.target.value); ecoPilulas(id); }); });
 { const salvo = store.get('ecoMusica', null); if(salvo && ecoFonte(salvo)) eco.id = salvo; }
 
 /* ---------- Partes da tela que mudam durante o jogo ---------- */
@@ -157,7 +285,7 @@ function ecoPulsoFole(){ if(eco.ajuda==='ouvido') return; const f = $('#ecoFole'
 function ecoMarcarModo(){ $$('#ecoModo [data-ajuda]').forEach(b=>{ const on = b.dataset.ajuda===eco.ajuda; b.classList.toggle('on', on); b.setAttribute('aria-checked', on); }); }
 $('#ecoModo').addEventListener('click', e=>{
   const b = e.target.closest('[data-ajuda]'); if(!b || b.dataset.ajuda===eco.ajuda) return;
-  eco.ajuda = b.dataset.ajuda; $('#ecoAjuda').value = eco.ajuda; store.set('ecoAjuda', eco.ajuda); ecoMarcarModo();
+  eco.ajuda = b.dataset.ajuda; $('#ecoAjuda').value = eco.ajuda; store.set('ecoAjuda', eco.ajuda); ecoMarcarModo(); ecoPilulas();
   if(eco.fase==='ouvir'){ ecoTrilha(); ecoOuvir(); } else ecoDirPill(); // ouvindo: recomeça o trecho já no modo novo
 });
 $('#ecoAjuda').addEventListener('change', ()=>{ eco.ajuda = $('#ecoAjuda').value; ecoMarcarModo(); });
@@ -232,7 +360,7 @@ function ecoTocarVideo(v){
   try{ const p = v.play(); if(p && p.catch) p.catch(()=>{ v.muted = true; const q = v.play(); if(q && q.catch) q.catch(()=>{}); }); }catch(e){}
 }
 $('#ecoVozOn').checked = store.get('ecoVoz', true);
-$('#ecoVozOn').addEventListener('change', e=>{ store.set('ecoVoz', e.target.checked); if(e.target.checked) ecoTocarVideo(ecoVid); }); // ligou: ouve como fica
+$('#ecoVozOn').addEventListener('change', e=>{ store.set('ecoVoz', e.target.checked); ecoPilulas('ecoVozOn'); if(e.target.checked) ecoTocarVideo(ecoVid); }); // ligou: ouve como fica
 function ecoGaucho(){
   ecoTocarVideo(ecoVid);
   const g = $('#ecoGaucho'); g.classList.remove('aparece'); void g.offsetWidth; g.classList.add('aparece');
@@ -244,7 +372,9 @@ function ecoFeed(msg, cls=''){ const f = $('#ecoFeed'); f.className = 'feedback 
 function ecoLimpar(){ eco.timers.forEach(clearTimeout); eco.timers = []; ecoL.clearMarks(); ecoR.clearMarks(); }
 // f = número da fase (0, 1, …) ou 'tudo'; sem f, a próxima fase a fazer dessa música
 function ecoComecar(f){
-  ac(); ecoLimpar(); ecoPrepararGaucho();
+  ac(); ecoLimpar(); ecoPrepararGaucho(); ecoPrevia(null);
+  // "No meu bandoneon": liga o microfone ao começar (o toque no cartão é o gesto que o navegador pede)
+  if(ecoTocarModo()==='instrumento' && !mic.on) micStart().then(ok=>{ if(ok){ ecoMicDono = true; marcar('mic'); } ecoMicUI(); });
   if(!ecoMusica(eco.id)) eco.id = ECO_MUSICAS[0].id; // a música salva foi apagada
   const {m, seq:toda} = ecoMusica(eco.id), fs = ecoFases(eco.id);
   if(f!=='tudo' && !(Number.isInteger(f) && fs[f])) f = ecoProximaFase(eco.id);
@@ -260,7 +390,7 @@ function ecoComecar(f){
   $('#ecoKbL').hidden = eco.hand!=='left'; $('#ecoKbR').hidden = eco.hand!=='right';
   ecoKb().build();
   $('#ecoMao').textContent = t(eco.hand==='left' ? 'Mão esquerda' : 'Mão direita'); $('#ecoMao').dataset.mao = eco.hand; ecoMarcarModo();
-  $('#ecoMusicaTit').textContent = m.title;
+  $('#ecoMusicaTit').textContent = ecoTitulo(m.title);
   $('#ecoFaseTit').hidden = fs.length<2;
   $('#ecoFaseTit').textContent = f==='tudo' ? 'Música inteira' : `Fase ${f+1} de ${fs.length}`;
   ecoMapa();
@@ -333,11 +463,6 @@ function ecoMicNota(m){
   const n = eco.seq[eco.pos];
   if(micMatches(m, n.midi)) ecoAcerto(n.btn); else ecoErro(null, m);
 }
-let ecoMicDono = false; // o microfone foi ligado aqui (e desliga ao sair da aba)
-$('#ecoMicOn').addEventListener('change', async e=>{
-  if(e.target.checked){ if(!mic.on){ if(await micStart()) ecoMicDono = true; else e.target.checked = false; } }
-  else if(mic.on){ micStop(); ecoMicDono = false; }
-});
 // acerto (b = botão da nota certa) e erro (b = botão tocado; sem botão quando veio do microfone)
 function ecoAcerto(b){
   const k = ecoKb();
@@ -435,8 +560,8 @@ $('#ecoProxima').onclick = ()=>{
 // a lista só é montada ao abrir a aba (a tela inicial abre mais rápido) e é refeita se o mapa dos botões mudou
 ganchosAba.push(nova=>{
   if(nova!=='eco' && eco.fase && eco.fase!=='fim') ecoParar();
-  if(nova!=='eco' && ecoMicDono){ micStop(); ecoMicDono = false; $('#ecoMicOn').checked = false; }
-  if(nova==='eco'){ $('#ecoMicOn').checked = mic.on; if(!eco.fase){ Object.keys(ecoCache).forEach(k=>delete ecoCache[k]); renderEcoMusicas(); } }
+  if(nova!=='eco'){ ecoPrevia(null); if(ecoMicDono){ micStop(); ecoMicDono = false; } }
+  if(nova==='eco'){ ecoModoTocar(ecoTocarModo()); if(!eco.fase){ Object.keys(ecoCache).forEach(k=>delete ecoCache[k]); renderEcoMusicas(); } }
 });
 // Ajuda, notas por rodada e velocidade viram botões lado a lado (js/menus.js)
 segmentar($('#ecoAjuda'), {rotulo:rotuloExplicado, classe:'menu-seg-2l'}); segmentar($('#ecoPasso'), {rotulo:rotuloExplicado, classe:'menu-seg-2l'}); segmentar($('#ecoVel'));

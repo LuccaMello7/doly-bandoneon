@@ -923,6 +923,42 @@ teste('RepeTCHÊ: tocar numa música já começa o jogo', () => {
   ok(!$('#ecoStart'), 'sem botão Começar separado');
   ecoParar(); eco.id = id0; store.set('ecoMusica', id0); go('inicio');
 });
+teste('RepeTCHÊ: tela de escolher (filtros, cartão inteiro, música do dia pelo nível, selos e ajustes)', () => {
+  const filtro0 = ecoFiltro, dia0 = store.get('ecoDoDia', null), perfil0 = store.get('perfilAluno', null), id0 = eco.id;
+  go('eco'); ecoFiltro = 'todas'; renderEcoMusicas();
+  igual($$('#ecoMusicas .eco-carta').length, ECO_MUSICAS.length, 'todas as músicas');
+  $('#ecoFiltros [data-filtro="left"]').click();
+  ok($$('#ecoMusicas .eco-carta').length>0 && $$('#ecoMusicas .eco-carta').every(c=>c.querySelector('.eco-mao-letra').dataset.mao==='left'), 'filtro: só a mão esquerda');
+  $('#ecoFiltros [data-filtro="esc"]').click();
+  ok($$('#ecoMusicas .eco-carta').every(c=>ECO_MUSICAS.find(x=>x.id===c.dataset.carta).cat==='esc'), 'filtro: escalas e exercícios');
+  $('#ecoFiltros [data-filtro="todas"]').click();
+  igual(ecoTitulo('Mão esquerda: escala de Dó maior'), 'Escala de Dó maior', 'o cartão não repete a mão no título');
+  ok(!$('#ecoMusicas').textContent.includes('Mão esquerda:'), 'nenhum título com "Mão esquerda:"');
+  // música do dia: do nível do aluno, e não muda no mesmo dia
+  store.set('ecoDoDia', null); store.set('perfilAluno', {exp:'nunca', inst:'nao', obj:'tango'});
+  const dia = ecoDoDia(); igual(ECO_MUSICAS.find(x=>x.id===dia).dif, ecoNivelAluno(), 'do nível do aluno'); igual(ecoDoDia(), dia, 'a mesma o dia todo');
+  store.set('ecoDoDia', null); store.set('perfilAluno', {exp:'bandoneon', inst:'sim', obj:'tango'});
+  ok(ecoNivelAluno()>=2, 'quem já toca começa no intermediário');
+  store.set('ecoDoDia', null); renderEcoMusicas(); const doDia = ecoDoDia();
+  ok($(`#ecoMusicas [data-carta="${doDia}"] .eco-selo.dodia`), 'o cartão da música do dia tem o selo');
+  ok(!ecoNova({id:'x', nova:'2020-01-01'}) && ecoNova({id:'x', nova:dayKey()}), '"Nova": só nos primeiros 30 dias');
+  // tocar em qualquer parte do cartão começa
+  $('#ecoMusicas [data-carta="ode"] .eco-carta-tit').click(); ecoLimpar();
+  igual(eco.id, 'ode'); ok(!$('#ecoJogo').hidden, 'o cartão inteiro começa o jogo'); ecoParar();
+  // ouvir o começo não começa o jogo e para ao tocar de novo
+  const ouvir = $('#ecoMusicas [data-carta="esc-do"] .eco-ouvir'); ouvir.click();
+  ok(ouvir.closest('.eco-carta').classList.contains('toca') && $('#ecoJogo').hidden, 'pré-escuta sem abrir o jogo');
+  ouvir.click(); ok(!ouvir.closest('.eco-carta').classList.contains('toca'), 'tocar de novo para');
+  // como tocar: o teste do microfone só aparece no "No meu bandoneon"
+  const modo0 = ecoTocarModo();
+  $('#ecoTocar [data-tocar="instrumento"]').click(); ok(!$('#ecoMic').hidden, 'painel do microfone');
+  $('#ecoTocar [data-tocar="tela"]').click(); ok($('#ecoMic').hidden); ecoModoTocar(modo0);
+  // ajustes recolhidos: o resumo acompanha
+  const passo0 = $('#ecoPasso').value; $('#ecoPasso').value = '3'; $('#ecoPasso').dispatchEvent(new Event('change'));
+  ok($('#ecoPilulas').textContent.includes('3 notas por rodada'), 'o resumo mostra o ajuste');
+  $('#ecoPasso').value = passo0; $('#ecoPasso').dispatchEvent(new Event('change'));
+  ecoFiltro = filtro0; store.set('ecoFiltro', filtro0); store.set('ecoDoDia', dia0); store.set('perfilAluno', perfil0); eco.id = id0; store.set('ecoMusica', id0); go('inicio');
+});
 teste('RepeTCHÊ: em "Ver e ouvir", cada nota acende o botão e aparece na faixa enquanto toca', async () => {
   const aj = $('#ecoAjuda').value; $('#ecoAjuda').value = 'ver';
   go('eco'); renderEcoMusicas(); const id0 = eco.id;

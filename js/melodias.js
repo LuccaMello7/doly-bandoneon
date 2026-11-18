@@ -25,7 +25,7 @@ mão: direita
 bpm: 66
 descrição: Todos os semitons em sequência. Ótimo para memorizar o mapa nas duas direções.
 Lá3:8 Lá#3:8 Si3:8 Dó4:8 Dó#4:8 Ré4:8 Ré#4:8 Mi4:8 | Fá4:8 Fá#4:8 Sol4:8 Sol#4:8 Lá4:2`},
-{id:'arpejos', text:`título: Arpejos Dó, Lám, Fá, Sol
+{id:'arpejos', text:`título: Arpejos: Dó, Lám, Fá, Sol
 mão: direita
 bpm: 70
 descrição: Arpejos dos quatro acordes mais comuns em Dó maior e Lá menor.
