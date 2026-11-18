@@ -326,8 +326,9 @@ async function percorrerApp(){
   go('desafios'); $('#fStart').click(); await esperar(); $('#sStart').click(); await esperar();
   $('[data-ch="pautabot"]').click(); $('#pStart').click(); await esperar();
   { const b = state.layout[pq.hand].find(x=>x[pq.dir]!==pq.target); pautaPress(b, b[pq.dir], pq.hand==='left'?pkL:pkR); } await esperar(); pq.round = 10; nextPauta(); await esperar();
-  go('teoria'); for(let i=0;i<TEORIA.length;i++){ teoriaAtual = i; renderTeoria(); await esperar(); $('#teConteudo [data-o="0"]').click(); await esperar(); }
-  teoriaAtual = 1; renderTeoria(); $('#teConteudo [data-d]').dispatchEvent(new MouseEvent('click', {bubbles:true})); await esperar(); go('desafios');
+  await carregarTeoria(); go('teoria');
+  for(let i=0;i<TEORIA.length;i++){ teoriaAtual = i; renderTopicoT(); await esperar(); const T = tqTopicoCtx.teste; await responderTeoria(T.box, T.qz.qs[0], false); await esperar(); }
+  pararRelogiosT(); go('desafios');
   go('qualnota'); ouvidoModo('som'); $('#eStart').click(); await esperar();
   { const b = state.layout[eq.hand].find(x=>x[eq.dir]!==eq.target); earPress(b, b[eq.dir], eq.hand==='left'?ekL:ekR); } await esperar();
   eq.round = 10; nextEar(); await esperar(); ouvidoModo('nome'); go('desafios'); $('[data-ch="find"]').click();
@@ -690,15 +691,87 @@ teste('sugestão: o texto leva o tipo, a mensagem e as informações técnicas',
 });
 
 /* ---------- Teoria musical, Pauta no bandoneon e a Academia reorganizada ---------- */
-teste('teoria: 7 tópicos, a pauta toca a nota clicada e o teste rápido marca o tópico', () => {
-  go('teoria'); igual(TEORIA.length, 7); igual($$('#teLista [data-t]').length, 7);
-  teoriaAtual = 1; renderTeoria();
-  $('#teConteudo [data-d="32"]').dispatchEvent(new MouseEvent('click', {bubbles:true}));
-  ok($('#teConteudo .te-nome').textContent.includes(noteName(dToMidi(32))), 'nome da nota da 2ª linha');
-  const antes = state.progress.teoria.pauta; delete state.progress.teoria.pauta;
-  const q = $('#teConteudo .te-q'); q.querySelector(`[data-o="${q.dataset.a}"]`).click();
-  ok(state.progress.teoria.pauta, 'tópico concluído');
-  if(!antes) delete state.progress.teoria.pauta; saveProgress(); go('inicio');
+/* ---------- Teoria musical (16 tópicos, carregados sob demanda) ---------- */
+// Responde uma pergunta do teste da teoria: certa (ok=true) ou errada. Nas de teclado, procura os botões que
+// a própria pergunta aceita (acorde: três notas diferentes) e clica neles no SVG.
+async function responderTeoria(box, P, certa){
+  if(P.o){ const k = certa ? P.a : (P.a + 1) % P.o.length; box.querySelector(`.tq-opt[data-o="${k}"]`).click(); return; }
+  const L = state.layout[P.mao], gs = box.querySelectorAll('.tq-tec-q .tq-bt'), tenta = {toques:[]};
+  const clica = i => gs[i].dispatchEvent(new MouseEvent('click', {bubbles:true}));
+  if(!certa){ const i = L.findIndex(b=>{ const r = P.toque(b, b[P.dir], {toques:[]}); return r && !r.certa; }); clica(i); return; }
+  const usados = [];
+  for(let i=0; i<L.length; i++){ const r = P.toque(L[i], L[i][P.dir], tenta); if(r && r.certa){ usados.push(i); break; } if(r===null) usados.push(i); }
+  for(const i of usados){ clica(i); await esperar(); }
+}
+teste('teoria: 16 tópicos em 3 módulos, com textos e frases nas três línguas', async () => {
+  await carregarTeoria();
+  igual(TEORIA.length, 16); igual(TEORIA_MODULOS.map(m=>m.topicos.length), [7, 5, 4]);
+  igual(TEORIA.map(x=>x.id), TEORIA_MODULOS.flatMap(m=>m.topicos), 'a ordem vem dos módulos');
+  for(const x of TEORIA) for(const l of ['pt','es','en']){
+    const T = TEORIA_TEXTOS[x.id]; ok(T['titulo_' + l] && T[l] && T['band_' + l], `texto de ${x.id} (${l})`);
+    ok(TF[l][x.id + '.lab'], `subtítulo do laboratório de ${x.id} (${l})`);
+  }
+  const conta = s=>typeof s==='string' ? (s.match(/\{\}/g) || []).length : Array.isArray(s) ? 'lista' + s.length : '?';
+  for(const k of Object.keys(TF.pt)) for(const l of ['es','en']){ ok(k in TF[l], `frase ${k} em ${l}`); igual(conta(TF[l][k]), conta(TF.pt[k]), `os {} de ${k} em ${l}`); }
+});
+teste('teoria: cada laboratório monta e cada pergunta tem opção certa, comentário das erradas e "Por quê"', async () => {
+  await carregarTeoria(); go('teoria'); await esperar();
+  const erros = [];
+  for(let i=0; i<TEORIA.length; i++){
+    teoriaAtual = i; renderTopicoT(); const x = TEORIA[i], lab = tqTopicoCtx.lab;
+    const cx = $('#teoriaApp .tq-lab .tq-caixa svg.tq-tec');
+    ok(cx && cx.querySelectorAll('.tq-bt').length===state.layout[cx.getAttribute('aria-label')===TF[state.lang]['ui.mao.esq'] ? 'left' : 'right'].length, `${x.id}: os botões do teclado ficam na caixa`);
+    ok(!$('#teoriaApp .tq-sanfona .tq-bt'), `${x.id}: nenhum botão dentro do desenho da sanfona`);
+    ok(x.perguntas.length >= 5, `${x.id}: pelo menos 5 tipos de pergunta`);
+    for(const g of x.perguntas) for(let n=0; n<6; n++){
+      const P = g(), onde = `${x.id} "${String(P.q).slice(0, 40)}"`;
+      ok(P.q && P.cat && P.pq && (P.pq.texto || (P.pq.contas || []).length), `${onde}: enunciado, categoria e porquê`);
+      const tudo = JSON.stringify(P, (k, v)=>typeof v==='function' ? undefined : v);
+      if(/\{\}|undefined|NaN|\b(ui|cat|ord|ivc|ivu|ivt|ivn|esc|notas|pauta|acid|fig|comp|din|rit|men|arm|gr|ac|se|fu|cad)\.[a-zA-Z0-9]+[a-zA-Z0-9.]*/.test(tudo.replace(/"tipo":"[^"]*"/g, ''))) erros.push(`${onde}: texto mal montado ${tudo.match(/.{0,30}(\{\}|undefined|NaN|\b(ui|cat|ord|ivc|ivu|ivt|ivn|esc|notas|pauta|acid|fig|comp|din|rit|men|arm|gr|ac|se|fu|cad)\.[a-zA-Z0-9]+).{0,30}/)[0]}`);
+      if(P.o){ ok(P.a >= 0 && P.a < P.o.length, `${onde}: resposta certa entre as opções`);
+        igual(new Set(P.o).size, P.o.length, `${onde}: opções repetidas ${P.o.join(' | ')}`);
+        P.o.forEach((_, k)=>{ if(k!==P.a) ok(P.erros && P.erros[k], `${onde}: comentário da opção ${k}`); }); }
+      else { ok(P.tipo==='tocar' && P.toque && P.resp, `${onde}: pergunta de teclado`);
+        ok(state.layout[P.mao].some(b=>{ const r = P.toque(b, b[P.dir], {toques:[]}); return r!==undefined && (r===null || r.certa); }), `${onde}: existe botão certo`); }
+      if(P.pq.lab && lab.mostra && n===0) lab.mostra(P.pq.lab);
+    }
+    pararRelogiosT();
+  }
+  igual(erros, []);
+  go('inicio');
+});
+teste('teoria: o teste de 5 perguntas abre o "Por quê" e conclui o tópico com 4 acertos', async () => {
+  await carregarTeoria();
+  const antes = JSON.stringify(state.progress.teoria);
+  for(const id of ['intervalos','acordes','compasso']){
+    delete state.progress.teoria[id];
+    teoriaAtual = TEORIA.findIndex(x=>x.id===id); go('teoria'); await esperar();
+    const T = tqTopicoCtx.teste, box = T.box;
+    for(let k=0; k<5; k++){
+      const P = T.qz.qs[k]; await responderTeoria(box, P, k!==2); await esperar();
+      const pq = box.querySelector('.tq-pq'); ok(pq, `${id}: caixa Por quê na pergunta ${k+1}`);
+      ok(pq.classList.contains(k===2 ? 'errado' : 'certo'), `${id}: certo/errado na pergunta ${k+1}`);
+      if(k===2 && P.o) ok(box.querySelector('.tq-pq-sua'), `${id}: comentário da opção errada`);
+      box.querySelector('[data-prox]').click(); await esperar();
+    }
+    ok(box.classList.contains('tq-resultado'), `${id}: resultado`); ok(box.textContent.includes('4/5'), `${id}: 4 de 5`);
+    ok(state.progress.teoria[id], `${id}: tópico concluído`);
+    ok($(`#teoriaApp .tq-topicos [data-t="${teoriaAtual}"]`).classList.contains('feito'), `${id}: marcado na trilha`);
+  }
+  state.progress.teoria = JSON.parse(antes); saveProgress(); go('inicio');
+});
+teste('teoria: "Ver no laboratório", trocar o fole e abrir pelo endereço (#teoria-intervalos)', async () => {
+  await carregarTeoria();
+  abrirTeoria('intervalos'); await esperar();
+  igual($('#teoriaApp .tq-cab h2').textContent, tituloT(TEORIA.find(x=>x.id==='intervalos')));
+  const box = tqTopicoCtx.teste.box, P = tqTopicoCtx.teste.qz.qs[0];
+  await responderTeoria(box, P, true); await esperar();
+  const lab = box.querySelector('[data-pq-lab]'); if(lab){ lab.click(); await new Promise(r=>setTimeout(r, 700)); }
+  const seg = $('#teoriaApp .tq-lab .tq-seg'), dir = seg.dataset.dir;
+  seg.querySelector(`[data-dir="${dir==='open' ? 'close' : 'open'}"]`).click(); await esperar();
+  igual(seg.dataset.dir, dir==='open' ? 'close' : 'open', 'o fole trocou');
+  ok($$('#teoriaApp .tq-lab .tq-bt.open, #teoriaApp .tq-lab .tq-bt.close').length >= 1, 'botões acesos na nova direção');
+  pararRelogiosT(); go('inicio');
 });
 teste('pauta no bandoneon: a nota da pauta é a do botão pedido e o acerto conta ponto', () => {
   go('desafios'); $('[data-ch="pautabot"]').click(); $('#pHand').value = 'right'; $('#pStart').click();

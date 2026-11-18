@@ -69,6 +69,7 @@ function rerenderTextos(){
   refreshAll(); renderLesson(); renderStaffAnswers(); if(fq.active) showFindTarget();
   if(mel.cur && !mel.running){ const g=mel.cur.guide; if(g) loadScale(g.type,g.pc,g.hand,g.octs,g.start,g.dirMode); else renderMelPlayer(); }
   renderMelList(); fillScaleTonics(); fillChordSelects(); showChord(); renderProgress();
+  if(currentView==='teoria' && typeof renderTeoria==='function') renderTeoria(); // a teoria escreve no idioma atual (teoria-frases.js)
 }
 $('#namesSel').onchange=e=>{ state.names=e.target.value; store.set('names',state.names); rerenderTextos(); };
 

@@ -18,6 +18,12 @@
         ],
         "createdAt": "2026-11-10T03:56:35.265Z",
         "reason": "User confirmed: pinned Doppler palette (2026-11-10), lavender is the brand voice in headlines"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "georgia",
+        "createdAt": "2026-11-18T01:19:55.965Z",
+        "reason": "Claude's judgment: music-engraving convention; Georgia only draws notation glyphs (time-signature numerals, dynamics like mf) in css/teoria.css, UI text stays Onest"
       }
     ]
   }

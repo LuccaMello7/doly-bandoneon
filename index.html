@@ -417,11 +417,9 @@
 
 <!-- TEORIA MUSICAL (js/teoria.js) -->
 <section id="v-teoria">
-  <div class="pg-topo"><span class="pg-ic t-teoria"><svg aria-hidden="true"><use href="#i-note"/></svg></span><div><h2 class="pg-tit">Teoria musical</h2><p class="muted">O básico para ler partitura e entender os exercícios: notas, pauta, figuras, compasso, escalas e acordes. Tudo com som.</p></div></div>
-  <div class="te-layout">
-    <nav class="card te-lista" id="teLista" aria-label="Tópicos de teoria"></nav>
-    <div class="card te-conteudo" id="teConteudo" aria-live="polite"></div>
-  </div>
+  <div class="pg-topo"><span class="pg-ic t-teoria"><svg aria-hidden="true"><use href="#i-note"/></svg></span><div><h2 class="pg-tit">Teoria musical</h2><p class="muted">Da leitura da partitura à harmonia do tango, em 16 tópicos. Cada um tem um laboratório com o teclado do bandoneon e um teste que explica cada resposta.</p></div></div>
+  <!-- montada por js/teoria-kit.js quando a aba abre (o conteúdo é baixado sob demanda: ver carregarTeoria em js/teoria.js) -->
+  <div class="tq" id="teoriaApp" translate="no"></div>
 </section>
 
 <!-- TECLADO -->
@@ -1504,7 +1502,6 @@
 <script src="js/inicio.js" defer></script>
 <script src="js/professor.js" defer></script>
 <script src="js/relatorio.js" defer></script>
-<script src="js/teoria-textos.js" defer></script>
 <script src="js/teoria.js" defer></script>
 <script src="js/contato.js" defer></script>
 <script src="js/conta.js" defer></script>

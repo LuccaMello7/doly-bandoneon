@@ -17,7 +17,7 @@ fala **português do Brasil**: responda e escreva tudo em pt-BR.
    - que as páginas geradas estão atualizadas (`gerar_idiomas.py`, `gerar_licoes.py`, `gerar_teoria.py` e `gerar_referencia.py` com `--verificar`).
 2. Mexeu no `index.html`, em `doly-costa/`, em `perguntas-frequentes/` ou no dicionário → `python ferramentas/gerar_idiomas.py`.
 3. Mexeu nas lições (`js/licoes.js`, `js/licoes-traducao.js`) → `python ferramentas/gerar_licoes.py`.
-4. Mexeu na teoria (`js/teoria.js`, `js/teoria-textos.js`) → `python ferramentas/gerar_teoria.py`. Mexeu no mapa
+4. Mexeu nos textos da teoria (`js/teoria-textos.js`) → `python ferramentas/gerar_teoria.py`. Mexeu no mapa
    (`DEFAULT_LAYOUT` em base.js) ou nos acordes (`chordVoicings` em acordes.js) → `python ferramentas/gerar_referencia.py`.
 5. `python ferramentas/extrair_textos.py` → precisa terminar em **0 sem tradução**.
 6. Mudou qualquer arquivo servido → suba o número em `const CACHE = 'bandoly-vNN'` no `sw.js`. Arquivo novo
@@ -38,8 +38,11 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
   compartilham o escopo global e rodam **nesta ordem**:
   `base, i18n-textos, i18n, licoes-traducao, audio, teclado, movimento, navegacao, menus, fole, desafios, ritmo,
   atalhos, controles, melodias, musicxml, escalas, microfone, acordes, maos, academia, partituras, rotina,
-  licoes, ajustes, ouvido, eco, qualnota, cascata, trilha, inicio, professor, relatorio, teoria-textos, teoria, contato, conta, turmas, init`.
+  licoes, ajustes, ouvido, eco, qualnota, cascata, trilha, inicio, professor, relatorio, teoria, contato, conta, turmas, init`.
   Código que roda no carregamento só pode usar o que veio antes; dentro de funções, tudo já existe.
+  A **Teoria** é a exceção: o conteúdo dela não está no `index.html` e só é baixado quando a aba abre (`carregarTeoria()`
+  em teoria.js, que injeta, nesta ordem, `teoria-textos, teoria-frases, teoria-kit, teoria-topicos` e `css/teoria.css`).
+  Esses arquivos estão em `ARQUIVOS` do sw.js à mão (o teste de ARQUIVOS só olha o index.html). Nos testes, `await carregarTeoria()`.
   `init.js` é sempre o último.
 - PWA: `manifest.webmanifest` + `sw.js` (rede primeiro; o cache guarda tudo de `ARQUIVOS`).
 - Estado: `state` (base.js). Tudo é salvo no `localStorage` com prefixo `bandoneon.` via
@@ -67,7 +70,7 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
     topo (`#contaTopo`, com menu `#contaMenu`). `go('perfil')` ainda funciona: leva às Conquistas no Meu estudo.
 - Cada aba é `<section id="v-nome">`. O botão dela fica em `#subnav`, com `data-area` e `data-v`.
 - `go(v)` troca de aba. Para agir ao entrar ou sair de uma aba: `ganchosAba.push((nova, anterior)=>…)`.
-- Links internos: `data-go="aba"`. Endereços: `#aba`, `#licao-N`, `#teoria-N` e `#tarefa=…` (link do professor).
+- Links internos: `data-go="aba"`. Endereços: `#aba`, `#licao-N`, `#teoria-N` (ou `#teoria-id`) e `#tarefa=…` (link do professor).
   Pontes: `data-abrir-nivel="N"` (Academia) e `data-abrir-desafio="find|ear|…"` (trilha.js); `abrirDesafio('ear')` vai à aba Ouvido.
 - **Minhas músicas** (`minhasMusicas()`, academia.js): as partituras da Academia (`acadPartituras`) e as melodias de
   Melodias (`melodies`) aparecem juntas na Academia (nível 7), em Melodias e no RepeTCHÊ. Os dados ficam onde estão
@@ -190,7 +193,20 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
 - **Outras abas:**
   - Bandoneon real: afinador e calibragem (microfone.js, YIN);
   - Treino de ouvido (ouvido.js) e notas caindo (cascata.js);
-  - Teoria (teoria.js, com `pautaSVG`, posição diatônica d = oitava×7 + letra, e textos em teoria-textos.js);
+  - Teoria: 16 tópicos em 3 módulos (`TEORIA_MODULOS` em teoria-textos.js: Ler a partitura 7, Escalas e tonalidades 5,
+    Harmonia 4), aprovados pela maquete de 2026-11-17. teoria.js (sempre carregado) tem só `pautaSVG` (Início e desafios),
+    o carregador e o desafio Pauta no bandoneon. O resto vem sob demanda:
+    - teoria-textos.js: título, texto e quadro "Por que isso importa no bandoneon" (`band_*`) de cada tópico, nos três
+      idiomas, um campo por linha (o gerador lê assim); `slug_*` guarda o endereço antigo de quem mudou de nome;
+    - teoria-frases.js: ~980 frases dos laboratórios e das perguntas em `TF.pt/es/en`, lidas com `tf('chave', valores)`.
+      Fica em `IGNORAR_JS` do extrair_textos.py; os testes conferem que toda chave existe nas três línguas com os mesmos `{}`;
+    - teoria-kit.js: o teclado em SVG (`tecladoT`: setas `arcos/maisArco/moveArcos`, `forma` do acorde, `onda`), `instrumentoT`
+      (teclado + fole + mão), `pautaT` (armadura, compasso, chave, acordes), grafia certa (`grafa`, `grafar`, `escalaT`,
+      `acordeT`) e `testeT`: 5 perguntas sorteadas, uma resposta por pergunta e, depois, a caixa "Por quê" (comentário da
+      opção errada, conta animada `cadeia/pontos/barras`, Ouvir, "Ver no laboratório" com o botão "Voltar ao teste");
+      4 acertos concluem o tópico (`progress.teoria[id]`);
+    - teoria-topicos.js: cada tópico = `lab(el)` → `{mostra(cfg)}` + `perguntas` (geradores; cada opção errada leva um
+      comentário próprio) + `pratica`. Endereços `#teoria-N` e `#teoria-intervalos`;
   - Sugestões (contato.js): abre uma issue preenchida no GitHub. `CONTATO_EMAIL` = contato@bandoly.app (caixa Microsoft 365 da GoDaddy, testada em 2026-11-10).
   - **Conta opcional** (conta.js, aba `conta`, aberta pelo topo; entrada em dois passos `#contaPasso1`/`#contaPasso2`; banco em `supabase/banco.sql`):
     - Supabase, projeto `venbupxwqgofwjkhixhc` (São Paulo). No site vai só a chave **publicável** (`sb_publishable_…`); a secreta nunca.
@@ -351,6 +367,9 @@ E="/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe"; W=$(cygpath -w
 - Para um estado específico: copie o `index.html` para o scratchpad com
   `<base href="file:///C:/Users/lucca/bandoneon-app/">` e um `<script>setTimeout(()=>{…},400)</script>`
   no fim. Para pular a pergunta inicial, defina antes `localStorage['bandoneon.perfilAluno']`.
+  **Tire a `<meta http-equiv="Content-Security-Policy">` da cópia**: ela bloqueia script inline (sem erro visível),
+  e o seu script simplesmente não roda. Para abrir a Teoria num tópico, use o endereço (`…html#teoria-intervalos`).
+  Com `<base href>`, `url(#id)` em SVG aponta para outro documento: por isso o teclado da teoria usa o endereço inteiro.
 - Celular: uma página com `<iframe style="width:390px">` e `--allow-file-access-from-files`.
 - Desempenho: injete `performance.now()` entre os scripts e compare antes e depois.
 

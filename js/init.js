@@ -15,8 +15,8 @@ function abrirPeloEndereco(){
   if(h.startsWith('tarefa=')){ abrirTarefa(h.slice(7)); return; } // link de tarefa mandado pelo professor (js/professor.js)
   if(h.startsWith('relatorio=')){ abrirRelatorio(h.slice(10)); return; } // relatório mandado pelo aluno (js/relatorio.js)
   if(h.startsWith('turma=')){ abrirConviteTurma(h.slice(6)); return; } // convite para a turma de um professor (js/turmas.js)
-  const tm = h.match(/^teoria-(\d+)$/);
-  if(tm && TEORIA[tm[1]-1]){ abrirTeoria(tm[1]-1); return; }
+  const tm = h.match(/^teoria-([a-z0-9]+)$/); // #teoria-8 ou #teoria-intervalos (a teoria carrega sob demanda)
+  if(tm){ abrirTeoria(/^\d+$/.test(tm[1]) ? tm[1]-1 : tm[1]); return; }
   if(m && LESSONS[m[1]-1]){ curLesson = m[1]-1; renderLesson(); go('licoes'); }
   else if(/^[a-z]+$/.test(h) && $('#v-'+h)) go(h);
 }

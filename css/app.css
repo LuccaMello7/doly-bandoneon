@@ -1166,34 +1166,6 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
 
 /* ================== Teoria musical ================== */
 .t-teoria{background:linear-gradient(140deg,#b997ff,#7b5cc4)}
-.te-layout{display:grid;grid-template-columns:260px minmax(0,1fr);gap:16px;align-items:start}
-.te-lista{display:flex;flex-direction:column;gap:8px;position:sticky;top:20px}
-.te-item{display:flex;align-items:center;gap:12px;text-align:left;background:transparent;border:0;border-radius:14px;padding:8px 12px;color:var(--muted);font:600 .93rem Onest,sans-serif;cursor:pointer;transition:background .2s,color .2s,transform .2s;animation:sobe .4s backwards;animation-delay:calc(var(--i,0)*40ms)}
-.te-num{width:30px;height:30px;flex:none;border-radius:50%;display:grid;place-items:center;background:var(--panel2);font-weight:650;color:var(--text)}
-.te-num svg[aria-hidden]{width:16px;height:16px}
-.te-item.feito .te-num{background:var(--green);color:var(--ameixa)}
-.te-item.on{background:#b997ff18;color:var(--text)}
-.te-item.on .te-num{background:var(--gold);color:#1b1404}
-@media (hover:hover){.te-item:not(.on):hover{background:#ffffff0a;color:var(--text);transform:translateX(3px)}}
-.te-conteudo.troca>*{animation:sobe .45s cubic-bezier(.2,.8,.2,1) backwards}
-.te-conteudo.troca>*:nth-child(2){animation-delay:.05s}.te-conteudo.troca>*:nth-child(3){animation-delay:.1s}.te-conteudo.troca>*:nth-child(4){animation-delay:.15s}
-.te-cab{display:flex;align-items:center;gap:16px;margin-bottom:8px}
-.te-cab h3{margin:0;font-size:1.4rem}
-.te-texto p{line-height:1.65;color:#d5def0}
-.te-widget{background:#ffffff08;border-radius:18px;padding:16px;margin:16px 0}
-.te-dica{margin:12px 0 0;font-size:.88rem}
-.te-q{margin-top:16px}
-.te-pratica{margin-top:12px}
-.te-nav{justify-content:space-between;margin-top:16px}
-.te-notas{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:8px}
-.te-nota{display:flex;flex-direction:column;align-items:center;gap:2px;background:var(--cream);color:var(--navy);border:0;border-radius:12px;padding:16px 4px 12px;cursor:pointer;box-shadow:0 4px 0 #b9ab8c;font:inherit;transition:transform .1s;animation:sobe .4s backwards;animation-delay:calc(var(--i,0)*40ms)}
-.te-nota b{font-size:1.05rem}.te-nota small{opacity:.6}
-.te-nota:active{transform:translateY(3px);box-shadow:0 1px 0 #b9ab8c}
-.te-nota.soa,.te-cromatica button.soa,.te-acorde.soa{animation:certo .45s cubic-bezier(.16,1,.3,1)}
-.te-cromatica{display:grid;grid-template-columns:repeat(13,minmax(0,1fr));gap:4px}
-.te-cromatica button{height:64px;border:0;border-radius:10px;background:var(--cream);color:var(--navy);font:600 .72rem Onest,sans-serif;cursor:pointer;display:flex;align-items:flex-end;justify-content:center;padding-bottom:8px}
-.te-cromatica button.preta{background:#1b1b1b;color:#f3e9d2;height:46px}
-.te-claves{margin-bottom:12px}
 .staff svg.pauta{background:#f6efe2;border-radius:12px;max-width:100%;display:block}
 .pauta .pl{stroke:#2a2a2a;stroke-width:1.3}
 .pauta .pc{fill:#222;font-family:"Segoe UI Symbol","Noto Music",serif}
@@ -1204,40 +1176,16 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
 .pauta .nota{transition:opacity .2s}
 .pauta .nota.entra,.pauta .nota.acesa{animation:notaPauta .4s cubic-bezier(.16,1,.3,1)}
 @keyframes notaPauta{from{opacity:0;transform:translateY(-8px)}}
-.te-alvo{fill:transparent;cursor:pointer}
-.te-alvo:hover{fill:#b997ff33}
-.te-nome{text-align:center;margin:12px 0 0}
 .figura{width:34px;height:56px;flex:none}
 .figura .cab{fill:var(--text)}.figura .cab-vazia{fill:none;stroke:var(--text);stroke-width:2}
 .figura .ph,.figura .pb{stroke:var(--text);stroke-width:2;fill:none}
-.te-figuras{display:flex;flex-direction:column;gap:8px}
-.te-fig{display:flex;align-items:center;gap:16px;background:var(--panel2);border-radius:14px;padding:8px 12px;transition:box-shadow .3s,background .3s;animation:sobe .4s backwards;animation-delay:calc(var(--i,0)*50ms)}
-.te-fig>div{flex:1;display:flex;flex-direction:column}
-.te-fig.tocando{background:#b997ff18;box-shadow:inset 3px 0 0 var(--gold)}
-.te-tempos{display:flex;gap:12px;margin-top:12px}
-.te-tempos span{flex:1;height:64px;border-radius:14px;display:grid;place-items:center;font-weight:650;font-size:1.3rem;background:var(--panel2);color:var(--muted);transition:transform .1s,background .1s}
-.te-tempos span.forte{box-shadow:inset 0 -4px 0 var(--gold)}
-.te-tempos span.agora{background:var(--gold);color:#1b1404;transform:scale(1.06)}
-.te-passos{display:flex;gap:8px;justify-content:center;margin-top:12px;flex-wrap:wrap}
-.te-passos span{min-width:42px;text-align:center;padding:4px 8px;border-radius:999px;background:#4f9cf033;color:var(--open);font-weight:650}
-.te-passos span.semi{background:#f08a4b33;color:var(--close)}
-.te-acordes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.te-acorde{display:flex;flex-direction:column;align-items:center;gap:4px;background:var(--panel2);border:0;border-radius:16px;padding:12px;color:var(--text);font:inherit;cursor:pointer;transition:transform .25s cubic-bezier(.16,1,.3,1);animation:sobe .4s backwards;animation-delay:calc(var(--i,0)*60ms)}
-.te-acorde .staff{width:100%}
-@media (hover:hover){.te-acorde:hover{transform:translateY(-3px)}}
 @media (max-width:860px){
-  .te-layout{grid-template-columns:minmax(0,1fr)}
-  .te-lista{position:static;flex-direction:row;overflow-x:auto;scrollbar-width:none}
-  .te-item{flex:none}
-  .te-notas{grid-template-columns:repeat(4,minmax(0,1fr))}
-  .te-acordes{grid-template-columns:minmax(0,1fr)}
   .ac-niveis{grid-template-columns:repeat(7,minmax(84px,1fr));overflow-x:auto;scrollbar-width:none}
 }
 /* desafio Pauta no bandoneon */
 .pauta-desafio{display:flex;flex-direction:column;align-items:center;gap:8px;margin:16px 0}
 .pauta-desafio .staff{width:min(340px,100%)}
 
-.te-widget .te-pauta svg.pauta{max-width:520px;margin:0 auto}
 
 /* ================== Acessibilidade: contraste ==================
    O texto branco sobre o azul de "abrindo" e o laranja de "fechando" ficava abaixo do mínimo (4,5:1).
@@ -1247,7 +1195,6 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
 .mcard.open .d{background:var(--open-texto)} .mcard.close .d{background:var(--close-texto)}
 .key.ok{color:var(--ameixa)!important}
 .key.bad{background:#c0392b!important}
-.te-passos span{color:#8cc0ff}.te-passos span.semi{color:#ffb27f}
 
 /* Lições: duas trilhas (o bandoneon e a teoria musical) na mesma aba */
 .trilhas{margin-bottom:16px}
@@ -2015,8 +1962,6 @@ button.dirpill:focus-visible{outline:2px solid var(--lavanda)}
 .lesson-list button.active{background:var(--ameixa-3);box-shadow:none;color:var(--osso)}
 .tarefa{background:var(--ameixa-3);border:1px solid var(--borda)}
 .tarefa-ic{background:rgba(185,151,255,.16);color:var(--lavanda)}
-.te-topico{margin:2px 0 0;font-size:13px;color:var(--cinza)}
-.te-item.on .te-num{background:var(--lavanda);color:var(--ameixa)}
 .ac-modos{border:0;border-radius:14px;padding:4px;gap:4px;background:var(--ameixa-2);box-shadow:inset 0 0 0 1px var(--borda)}
 .ac-modos button{border-radius:10px;color:var(--cinza-2);font-weight:500}
 .ac-modos button.on{background:rgba(255,255,255,.1);color:var(--osso);font-weight:500;box-shadow:inset 0 0 0 1px var(--borda-2)}
