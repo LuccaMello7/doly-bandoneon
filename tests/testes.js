@@ -1510,6 +1510,30 @@ teste('Melodias: as chaves ficam atrás de "Ajustes", e o botão mostra o que es
   ok(con.contains($('#melStaff')) && con.contains($('#mkRight')) && con.contains($('#melDirPill')), 'partitura, fole e teclado no mesmo console');
   go('inicio');
 });
+teste('RepeTCHÊ: Pedir ajuda pisca o próximo botão, custa 50 pontos e não quebra a sequência', () => {
+  go('eco'); eco.id = 'estrelinha'; $('#ecoPasso').value = '4'; $('#ecoAjuda').value = 'ver';
+  ecoComecar(); ecoLimpar(); ecoRodada(); ecoLimpar();
+  ok($('#ecoPedirAjuda').disabled, 'fora da vez, sem ajuda');
+  ecoSuaVez(); ok(!$('#ecoPedirAjuda').disabled, 'na vez, o botão vale');
+  const k = ecoKb(), [n0, n1, n2] = eco.seq;
+  ecoPress(n0.btn, n0.midi, k); ecoPress(n1.btn, n1.midi, k);
+  igual(eco.pontos, 20); igual(eco.combo, 2);
+  $('#ecoPedirAjuda').click();
+  igual(eco.pontos, 0, 'custa até 50, sem ficar negativo');
+  igual(k.el.querySelectorAll('.key.ajuda').length, 1, 'um botão pisca');
+  ok($('#ecoPedirAjuda').disabled, 'uma ajuda por nota');
+  eco.pontos = 200; $('#ecoPedirAjuda').click(); igual(eco.pontos, 200, 'clicar de novo na mesma nota não cobra');
+  ecoPress(n2.btn, n2.midi, k);
+  igual(eco.combo, 3, 'a sequência continua'); igual(eco.erros, 0, 'ajuda não é erro');
+  ok(!k.el.querySelector('.key.ajuda'), 'tocou: para de piscar');
+  igual($$('#ecoNotas .eco-nota')[2].querySelector('small').textContent, 'com ajuda');
+  ok(!$('#ecoPedirAjuda').disabled, 'próxima nota: pode pedir de novo');
+  $('#ecoPedirAjuda').click(); igual(eco.pontos, 210 - 50);
+  const n3 = eco.seq[3]; ecoPress(n3.btn, n3.midi, k); ecoLimpar();
+  igual(eco.fase, 'entre'); ok($('#ecoFaixaTxt').textContent !== 'Perfeito!', 'rodada com ajuda não é "Perfeito!"');
+  ok($('#ecoPedirAjuda').disabled, 'entre rodadas, sem ajuda');
+  ecoParar(); go('inicio');
+});
 teste('Plurais: singular e plural de verdade, sem "(s)"', () => {
   igual(plural(1, 'um', 'vários'), 'um'); igual(plural(0, 'um', 'vários'), 'vários'); igual(plural(-1, 'um', 'vários'), 'um');
   go('melodias'); ok(!/\(s\)/.test($('#melStat').textContent) && /notas · /.test($('#melStat').textContent), 'resumo da melodia sem "(s)"');

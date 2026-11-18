@@ -21,7 +21,7 @@ const ECO_MUSICAS = [
 state.progress.eco = state.progress.eco || {}; // {id: {pts, estrelas, fases:{0:{pts,estrelas}}}}: pts/estrelas são da música inteira
 state.progress.ecoDias = state.progress.ecoDias || {}; // dias em que a música do dia foi feita: {'2026-11-07': true}
 const eco = {id:ECO_MUSICAS[0].id, faseN:0, nFases:1, m:null, seq:[], k:2, ajuda:'ver', vel:1, ini:0, fimT:0, alvo:0, pos:0, rodada:0, rodadas:0,
-             fase:'', pontos:0, mostrados:0, combo:0, maxCombo:0, erros:0, errosRodada:0, timers:[], dir:'open', hand:'right'};
+             fase:'', pontos:0, mostrados:0, combo:0, maxCombo:0, erros:0, errosRodada:0, ajudas:0, ajudasRodada:0, ajudaEm:-1, timers:[], dir:'open', hand:'right'};
 const ecoCache = {};
 // De onde vem cada música: as prontas (domínio público), as que o aluno digitou em Melodias e as partituras que
 // importou na Academia (essas duas ficam só no aparelho dele: uso pessoal).
@@ -332,10 +332,11 @@ function ecoAtual(){
   const c = eco.fase==='vez' && eco.pos<eco.alvo && ecoCartaoNota(eco.pos); if(c) c.classList.add('atual');
 }
 // soa = o bandoneon está tocando essa nota; ok = acertou (mostra o nome); erro = mostra a nota que era
-function ecoPonto(i, cls){
+function ecoPonto(i, cls, ajudada){
   const c = ecoCartaoNota(i); if(!c) return;
   c.classList.remove('soa','ok','erro'); void c.offsetWidth; c.classList.add(cls);
-  if(cls==='ok' || cls==='erro'){ c.querySelector('b').textContent = noteName(eco.seq[i].midi); c.querySelector('small').textContent = cls==='ok' ? '✓ certa' : 'era esta'; }
+  if(cls==='ok' || cls==='erro'){ c.querySelector('b').textContent = noteName(eco.seq[i].midi); c.querySelector('small').textContent = cls==='ok' ? (ajudada ? 'com ajuda' : '✓ certa') : 'era esta'; }
+  c.classList.toggle('ajudada', cls==='ok' && !!ajudada);
 }
 // "+20" que sobe do botão tocado
 function ecoFlutua(k, b, txt, cls){
@@ -398,8 +399,9 @@ function ecoComecar(f){
   const seq = f==='tudo' ? toda : toda.slice(fs[f][0], fs[f][1]);
   eco.faseN = f; eco.nFases = fs.length;
   Object.assign(eco, {m, seq, k:+$('#ecoPasso').value, ajuda:$('#ecoAjuda').value, vel:+$('#ecoVel').value, hand:ecoMusica(eco.id).mao,
-    ini:0, alvo:0, pos:0, rodada:0, pontos:0, mostrados:0, combo:0, maxCombo:0, erros:0, errosRodada:0, fase:'contagem'});
+    ini:0, alvo:0, pos:0, rodada:0, pontos:0, mostrados:0, combo:0, maxCombo:0, erros:0, errosRodada:0, ajudas:0, ajudasRodada:0, ajudaEm:-1, fase:'contagem'});
   eco.fimT = ecoFimTrecho(0);
+  ecoBotaoAjuda(); // contagem: ainda não é a vez
   // total de rodadas: ceil(tamanho do trecho / notas por rodada), trecho a trecho
   eco.rodadas = 0; for(let a=0; a<seq.length; a=ecoFimTrecho(a)) eco.rodadas += Math.ceil((ecoFimTrecho(a)-a)/eco.k);
   $('#ecoEscolha').hidden = true; $('#ecoFimCard').hidden = true; $('#ecoJogo').hidden = false;
@@ -441,14 +443,14 @@ window.addEventListener('resize', ()=>{ clearTimeout(ecoEnquadrarTimer); ecoEnqu
 function ecoFimTrecho(a){ const N = eco.seq.length, f = Math.min(N, a + ecoTrecho()); return N - f < eco.k ? N : f; }
 function ecoRodada(){
   const antes = eco.alvo;
-  eco.rodada++; eco.alvo = Math.min(eco.alvo + eco.k, eco.fimT); eco.pos = eco.ini; eco.errosRodada = 0;
+  eco.rodada++; eco.alvo = Math.min(eco.alvo + eco.k, eco.fimT); eco.pos = eco.ini; eco.errosRodada = 0; eco.ajudasRodada = 0;
   ecoHud(); ecoTrilha(antes);
   ecoFaixa(`Rodada ${eco.rodada}`, 'rodada', `+${eco.alvo-antes} notas`);
   ecoTimer(ecoOuvir, movReduzido() ? 500 : 950);
 }
 // O bandoneon toca o trecho do começo até a nota nova
 function ecoOuvir(){
-  ecoLimpar(); eco.fase = 'ouvir'; ecoAtual(); ecoFaixa('Ouça…', 'ouvir'); $('#ecoRepetir').disabled = true;
+  ecoLimpar(); eco.fase = 'ouvir'; ecoAtual(); ecoFaixa('Ouça…', 'ouvir'); $('#ecoRepetir').disabled = true; eco.ajudaEm = -1; ecoBotaoAjuda();
   ecoEnquadrar(); // o teclado precisa estar à vista para ver os botões acenderem
   const spb = 60/(eco.m.bpm*eco.vel); let t = 350;
   for(let i=eco.ini; i<eco.alvo; i++){
@@ -465,7 +467,7 @@ function ecoOuvir(){
 }
 function ecoSuaVez(){
   eco.fase = 'vez'; eco.pos = eco.ini; eco.dir = eco.seq[eco.pos].dir; ecoDirPill(); ecoAtual();
-  ecoFaixa('Sua vez!', 'vez', `${eco.alvo-eco.ini} notas`); $('#ecoRepetir').disabled = false;
+  ecoFaixa('Sua vez!', 'vez', `${eco.alvo-eco.ini} notas`); $('#ecoRepetir').disabled = false; eco.ajudaEm = -1; ecoBotaoAjuda();
 }
 function ecoPress(b, m, k){
   if(eco.fase!=='vez' || k!==ecoKb()) return;
@@ -482,11 +484,12 @@ function ecoMicNota(m){
 function ecoAcerto(b){
   const k = ecoKb();
   k.mark(b.id, 'ok', 450);
+  const ajudada = eco.ajudaEm===eco.pos; if(ajudada){ k.unmark(b.id, 'ajuda'); eco.ajudaEm = -1; }
   eco.combo++; eco.maxCombo = Math.max(eco.maxCombo, eco.combo);
   const mult = ecoMult(), pts = 10*mult; eco.pontos += pts;
-  ecoFlutua(k, b, '+'+pts, mult>1 ? 'combo' : ''); ecoPonto(eco.pos, 'ok');
+  ecoFlutua(k, b, '+'+pts, mult>1 ? 'combo' : ''); ecoPonto(eco.pos, 'ok', ajudada);
   if(eco.combo>1 && eco.combo%8===0){ const c = $('#ecoCombo'); c.classList.remove('estoura'); void c.offsetWidth; c.classList.add('estoura'); }
-  eco.pos++; ecoPlacar(); ecoHud(); ecoFeed('');
+  eco.pos++; ecoPlacar(); ecoHud(); ecoFeed(''); ecoBotaoAjuda();
   if(eco.pos>=eco.alvo){ ecoRodadaFeita(); return; }
   eco.dir = eco.seq[eco.pos].dir; ecoDirPill(); ecoAtual();
 }
@@ -500,8 +503,8 @@ function ecoErro(b, m){
   ecoFeed(`Você tocou ${noteName(m)}. O botão certo está brilhando.`, 'bad');
 }
 function ecoRodadaFeita(){
-  eco.fase = 'entre'; ecoAtual(); $('#ecoRepetir').disabled = true;
-  const perfeita = eco.errosRodada===0, bonus = perfeita ? 20 + 5*(eco.alvo-eco.ini) : 0;
+  eco.fase = 'entre'; ecoAtual(); $('#ecoRepetir').disabled = true; ecoBotaoAjuda();
+  const perfeita = eco.errosRodada===0 && eco.ajudasRodada===0, bonus = perfeita ? 20 + 5*(eco.alvo-eco.ini) : 0;
   if(bonus){ eco.pontos += bonus; ecoPlacar(); }
   const fimTrecho = eco.alvo>=eco.fimT, fimMusica = eco.alvo>=eco.seq.length;
   ecoFaixa(perfeita ? 'Perfeito!' : 'Muito bem!', perfeita ? 'perfeito' : 'bem',
@@ -563,6 +566,22 @@ function ecoParar(){ ecoLimpar(); $('#ecoGaucho').classList.remove('aparece'); e
 
 $('#ecoParar').onclick = ecoParar;
 $('#ecoRepetir').onclick = ()=>{ if(eco.fase==='vez'){ ecoTrilha(); ecoOuvir(); } };
+// Pedir ajuda: na vez do aluno, o botão da próxima nota pisca forte até ele tocar. Custa 50 pontos (sem ficar
+// negativo), não conta como erro e não quebra a sequência; só a rodada deixa de ser "Perfeito!" (sem o bônus).
+// Uma ajuda por nota: o botão volta a valer depois que ele toca a nota mostrada.
+const ECO_CUSTO_AJUDA = 50;
+function ecoBotaoAjuda(){ $('#ecoPedirAjuda').disabled = eco.fase!=='vez' || eco.ajudaEm===eco.pos || eco.pos>=eco.alvo; }
+function ecoPedirAjuda(){
+  if(eco.fase!=='vez' || eco.ajudaEm===eco.pos || eco.pos>=eco.alvo) return;
+  const k = ecoKb(), n = eco.seq[eco.pos], custo = Math.min(ECO_CUSTO_AJUDA, eco.pontos);
+  eco.ajudaEm = eco.pos; eco.ajudas++; eco.ajudasRodada++;
+  eco.pontos -= custo; ecoPlacar();
+  k.unmark(n.btn.id, 'hint'); k.mark(n.btn.id, 'ajuda', 0);
+  if(custo) ecoFlutua(k, n.btn, '−'+custo, 'erro');
+  ecoFeed(custo ? t('Toque o botão que está piscando. Ajuda: −{} pontos.', custo) : 'Toque o botão que está piscando.', 'ajuda');
+  ecoBotaoAjuda();
+}
+$('#ecoPedirAjuda').onclick = ecoPedirAjuda;
 $('#ecoDeNovo').onclick = ()=>ecoComecar(eco.faseN);
 // depois desta partida: 'fase' (a seguinte), 'tudo' (a música inteira) ou 'musica' (a próxima música)
 function ecoSegue(){ return eco.faseN==='tudo' || eco.nFases<2 ? 'musica' : eco.faseN+1<eco.nFases ? 'fase' : 'tudo'; }

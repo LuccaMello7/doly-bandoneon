@@ -2234,4 +2234,10 @@ const TEXTOS = {
 'Você tocou {}. O botão certo está brilhando.': ['Tocaste {}. El botón correcto está brillando.', 'You played {}. The right button is glowing.'],
 '✓ certa': ['✓ bien', '✓ right'],
 'era esta': ['era esta', 'was this one'],
+'Pedir ajuda': ['Pedir ayuda', 'Get help'],
+'Mostra o próximo botão. Custa 50 pontos e não quebra a sequência.': ['Muestra el próximo botón. Cuesta 50 puntos y no corta la racha.', 'Shows the next button. Costs 50 points and does not break your streak.'],
+'custa 50 pontos': ['cuesta 50 puntos', 'costs 50 points'],
+'Toque o botão que está piscando. Ajuda: −{} pontos.': ['Tocá el botón que está titilando. Ayuda: −{} puntos.', 'Play the flashing button. Help: −{} points.'],
+'Toque o botão que está piscando.': ['Tocá el botón que está titilando.', 'Play the flashing button.'],
+'com ajuda': ['con ayuda', 'with help'],
 };
