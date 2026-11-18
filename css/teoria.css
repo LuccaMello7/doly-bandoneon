@@ -325,8 +325,8 @@
 .tq-selo{display:inline-flex;align-items:center;padding:3px 10px;border-radius:999px;font-weight:700;font-size:.8rem}
 .tq-pq.certo .tq-selo{background:var(--lavanda);color:var(--bg)}
 .tq-pq.errado .tq-selo{background:var(--red);color:#fff}
-.tq-pq-sua{color:var(--cinza-2);font-size:.93rem;border-left:3px solid var(--red2);padding-left:10px}
-.tq-pq.certo .tq-pq-sua{border-left-color:var(--lavanda)}
+.tq-pq-sua{color:var(--cinza-2);font-size:.93rem;background:rgba(240,122,114,.1);border-radius:10px;padding:8px 12px}
+.tq-pq.certo .tq-pq-sua{background:rgba(185,151,255,.1)}
 .tq-pq-sua b{color:var(--text)}
 .tq-pq-contas{display:grid;grid-template-columns:1fr;gap:10px}
 .tq-pq-contas.n2{grid-template-columns:1fr 1fr}
