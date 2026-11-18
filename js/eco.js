@@ -142,11 +142,25 @@ function ecoFaixa(txt, tipo, sub=''){
   const f = $('#ecoFaixa'); f.className = 'eco-faixa'; void f.offsetWidth; f.classList.add(tipo);
   $('#ecoFaixaTxt').textContent = txt; $('#ecoFaixaSub').textContent = sub;
 }
+// O fole no palco: o selo (Abrindo/Fechando), a sanfona que abre e fecha e o brilho do teclado na cor da direção.
+// Ajuda "Só ouvindo": enquanto o bandoneon toca, nada entrega a direção (selo neutro, sem brilho e sem os nomes
+// nos botões, que mudariam com o fole). Na vez do aluno o fole volta a aparecer: quem troca a direção é o jogo.
 function ecoDirPill(){
-  const p = $('#ecoDir'), escondido = eco.ajuda==='ouvido' && eco.fase==='ouvir';
-  p.className = 'dirpill ' + eco.dir; p.textContent = escondido ? '?' : dirLabel(eco.dir);
+  const escondido = eco.ajuda==='ouvido' && eco.fase==='ouvir', p = $('#ecoDir');
+  $('#ecoPalco').dataset.fole = escondido ? 'oculto' : eco.dir;
+  p.className = 'dirpill ' + (escondido ? 'oculto' : eco.dir); p.textContent = escondido ? t('Fole escondido') : dirLabel(eco.dir);
   ecoKb().refresh(); ecoKb().retune();
 }
+// a cada nota que o bandoneon toca (com o fole à vista), a sanfona dá um pulso no ritmo
+function ecoPulsoFole(){ if(eco.ajuda==='ouvido') return; const f = $('#ecoFole'); f.classList.remove('pulsa'); void f.offsetWidth; f.classList.add('pulsa'); }
+// A Ajuda também muda no meio do jogo (os três botões acima do teclado): vale a partir do próximo "Ouça…"
+function ecoMarcarModo(){ $$('#ecoModo [data-ajuda]').forEach(b=>{ const on = b.dataset.ajuda===eco.ajuda; b.classList.toggle('on', on); b.setAttribute('aria-checked', on); }); }
+$('#ecoModo').addEventListener('click', e=>{
+  const b = e.target.closest('[data-ajuda]'); if(!b || b.dataset.ajuda===eco.ajuda) return;
+  eco.ajuda = b.dataset.ajuda; $('#ecoAjuda').value = eco.ajuda; store.set('ecoAjuda', eco.ajuda); ecoMarcarModo();
+  if(eco.fase==='ouvir'){ ecoTrilha(); ecoOuvir(); } else ecoDirPill(); // ouvindo: recomeça o trecho já no modo novo
+});
+$('#ecoAjuda').addEventListener('change', ()=>{ eco.ajuda = $('#ecoAjuda').value; ecoMarcarModo(); });
 // pontos contam até o valor novo (sem animação: o valor aparece direto)
 function ecoPlacar(){
   const el = $('#ecoPontos'), de = eco.mostrados, ate = eco.pontos; eco.mostrados = ate;
@@ -245,6 +259,7 @@ function ecoComecar(f){
   $('#ecoEscolha').hidden = true; $('#ecoFimCard').hidden = true; $('#ecoJogo').hidden = false;
   $('#ecoKbL').hidden = eco.hand!=='left'; $('#ecoKbR').hidden = eco.hand!=='right';
   ecoKb().build();
+  $('#ecoMao').textContent = t(eco.hand==='left' ? 'Mão esquerda' : 'Mão direita'); $('#ecoMao').dataset.mao = eco.hand; ecoMarcarModo();
   $('#ecoMusicaTit').textContent = m.title;
   $('#ecoFaseTit').hidden = fs.length<2;
   $('#ecoFaseTit').textContent = f==='tudo' ? 'Música inteira' : `Fase ${f+1} de ${fs.length}`;
@@ -294,7 +309,7 @@ function ecoOuvir(){
   for(let i=eco.ini; i<eco.alvo; i++){
     const n = eco.seq[i], dur = Math.min(1.1, Math.max(0.3, n.beats*spb));
     ecoTimer(()=>{
-      eco.dir = n.dir; ecoDirPill(); ecoPonto(i, 'soa');
+      eco.dir = n.dir; ecoDirPill(); ecoPulsoFole(); ecoPonto(i, 'soa');
       playNote(n.midi, dur*0.92, n.hand);
       // "Ver e ouvir": o botão acende e o nome da nota aparece na faixa, junto com o som
       if(eco.ajuda==='ver'){ ecoKb().mark(n.btn.id, 'down', dur*850); $('#ecoFaixaSub').textContent = noteName(n.midi); }

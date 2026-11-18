@@ -1338,6 +1338,35 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
 /* palco: pílula do fole e o teclado da mão da música */
 .eco-palco{display:flex;flex-direction:column;align-items:center;gap:12px}
 .eco-palco .dirpill{transition:background .25s}
+/* Cabeçalho do palco: a mão, o fole (sanfona + selo) e a Ajuda, que muda no meio do jogo */
+.eco-palco-cab{display:flex;align-items:center;justify-content:center;gap:8px 16px;flex-wrap:wrap;width:100%}
+.eco-mao{display:inline-flex;align-items:center;gap:8px;font-weight:650;font-size:.95rem;color:var(--text)}
+.eco-mao::before{content:"D";display:grid;place-items:center;width:24px;height:24px;border-radius:8px;background:var(--panel2);color:var(--gold2);font-size:.78rem;font-weight:700}
+.eco-mao[data-mao="left"]::before{content:"E"}
+html[lang|="es"] .eco-mao::before{content:"D"}html[lang|="es"] .eco-mao[data-mao="left"]::before{content:"I"}
+html[lang|="en"] .eco-mao::before{content:"R"}html[lang|="en"] .eco-mao[data-mao="left"]::before{content:"L"}
+.eco-fole{display:inline-flex;align-items:center;gap:8px}
+.eco-sanfona{width:46px;height:26px;display:block}
+.eco-sanfona rect{fill:var(--ferro)}
+.eco-sanfona path{fill:none;stroke:var(--muted);stroke-width:2;stroke-linejoin:round;transition:stroke .3s}
+.eco-sanfona .pregas{transform-origin:27px 15px;transform-box:view-box;transition:transform .45s var(--ease-saida)}
+.eco-palco[data-fole="open"] .eco-sanfona .pregas{transform:scaleX(1.18)}
+.eco-palco[data-fole="close"] .eco-sanfona .pregas{transform:scaleX(.72)}
+.eco-palco[data-fole="open"] .eco-sanfona path{stroke:var(--open)}
+.eco-palco[data-fole="close"] .eco-sanfona path{stroke:var(--close)}
+.eco-fole.pulsa .eco-sanfona{animation:ecoFolePulsa .35s var(--ease-saida)}
+@keyframes ecoFolePulsa{40%{transform:scale(1.12)}}
+.dirpill.oculto{background:var(--panel2);color:var(--muted)}
+/* o teclado brilha na cor do fole; com o fole escondido, sem brilho e sem os nomes (eles mudam com a direção) */
+.eco-palco .kbd{transition:box-shadow .4s}
+.eco-palco[data-fole="open"] .kbd{box-shadow:inset 0 0 0 1px rgba(79,156,240,.4),0 0 40px -12px rgba(79,156,240,.6)}
+.eco-palco[data-fole="close"] .kbd{box-shadow:inset 0 0 0 1px rgba(240,138,75,.4),0 0 40px -12px rgba(240,138,75,.6)}
+.eco-palco[data-fole="oculto"] .key{color:transparent}
+.eco-modo{display:inline-flex;gap:4px;padding:4px;border-radius:12px;background:var(--panel2)}
+.eco-modo button{border:0;background:transparent;color:var(--cinza-2);font:600 .8rem Onest,sans-serif;padding:4px 8px;border-radius:8px;cursor:pointer;transition:background .2s,color .2s}
+.eco-modo button.on{background:var(--lavanda);color:var(--bg)}
+@media (hover:hover){.eco-modo button:not(.on):hover{color:var(--text)}}
+.sem-mov .eco-fole.pulsa .eco-sanfona{animation:none}
 .eco-kb[hidden]{display:none}
 .eco-flutua{position:absolute;z-index:5;transform:translate(-50%,-50%);font-weight:650;font-size:1rem;color:#fff;text-shadow:0 2px 6px #000c;pointer-events:none;animation:ecoFlutua .9s cubic-bezier(.2,.8,.2,1) forwards}
 .eco-flutua.combo{color:#ffd36e;font-size:1.15rem}

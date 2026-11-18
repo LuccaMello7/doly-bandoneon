@@ -934,6 +934,27 @@ teste('RepeTCHÊ: em "Ver e ouvir", cada nota acende o botão e aparece na faixa
   ok(typeof ecoEnquadrar==='function', 'o jogo enquadra a faixa e o teclado na tela');
   ecoParar(); $('#ecoAjuda').value = aj; eco.id = id0; store.set('ecoMusica', id0); go('inicio');
 });
+teste('RepeTCHÊ: os três modos de Ajuda são diferentes, e o palco mostra a mão e o fole', async () => {
+  const aj = $('#ecoAjuda').value, id0 = eco.id;
+  go('eco'); renderEcoMusicas();
+  const estado = async modo=>{
+    $('#ecoAjuda').value = modo; $('#ecoAjuda').dispatchEvent(new Event('change'));
+    $('#ecoMusicas [data-id="esc-do"]').click(); ecoLimpar(); eco.alvo = eco.k; ecoOuvir(); await new Promise(r=>setTimeout(r, 450));
+    const n = eco.seq[eco.ini], k = $$('#ecoKbR .key')[state.layout.right.findIndex(b=>b.id===n.btn.id)];
+    const r = {acende:k.classList.contains('down'), nome:$('#ecoFaixaSub').textContent, fole:$('#ecoPalco').dataset.fole, selo:$('#ecoDir').textContent,
+               nomesVisiveis:getComputedStyle(k).color!=='rgba(0, 0, 0, 0)', mao:$('#ecoMao').textContent, modo:$('#ecoModo .on') && $('#ecoModo .on').dataset.ajuda};
+    ecoSuaVez(); r.foleNaVez = $('#ecoPalco').dataset.fole; ecoParar(); return r;
+  };
+  const ver = await estado('ver'), fole = await estado('fole'), ouvido = await estado('ouvido');
+  ok(ver.acende && ver.nome && ver.fole!=='oculto', 'Ver e ouvir: botão aceso, nome da nota e fole');
+  ok(!fole.acende && !fole.nome && ['open','close'].includes(fole.fole) && fole.selo===dirLabel(fole.fole) && fole.nomesVisiveis, 'Só o fole: nada acende, o fole aparece');
+  ok(!ouvido.acende && !ouvido.nome && ouvido.fole==='oculto' && ouvido.selo===t('Fole escondido') && !ouvido.nomesVisiveis, 'Só ouvindo: nenhuma pista enquanto toca');
+  ok(['open','close'].includes(ouvido.foleNaVez), 'Só ouvindo: na vez do aluno o fole volta');
+  igual([ver.modo, fole.modo, ouvido.modo], ['ver','fole','ouvido'], 'o seletor no jogo acompanha a Ajuda');
+  igual(ver.mao, t('Mão direita'), 'o palco diz a mão');
+  $('#ecoMusicas [data-id="esq-do"]').click(); ecoLimpar(); igual($('#ecoMao').textContent, t('Mão esquerda')); ecoParar();
+  $('#ecoAjuda').value = aj; $('#ecoAjuda').dispatchEvent(new Event('change')); eco.id = id0; store.set('ecoMusica', id0); go('inicio');
+});
 teste('Academia: o instrutor mostra Agora e Próximo separados, sem o desenho das mãos', () => {
   go('academia'); carregarExercicio('n3-legato'); acadInstrutor(0);
   const n0 = acad.grupos[0].ks.map(k=>acad.eventos[k])[0], n1 = acad.grupos[1].ks.map(k=>acad.eventos[k])[0];

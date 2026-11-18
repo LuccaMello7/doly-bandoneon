@@ -876,7 +876,7 @@
   <div class="pg-topo"><span class="pg-ic t-eco pg-av"><img class="gaucho-av" src="imagens/repetche/avatar.jpg" alt="" width="80" height="80"></span><div><h2 class="pg-tit"><span translate="no">RepeTCHÊ</span></h2><p class="muted">O bandoneon toca, você repete. A cada rodada a música cresce, até você tocar tudo de ouvido.</p></div></div>
   <div class="card eco-escolha" id="ecoEscolha">
     <div class="menu eco-opcoes">
-      <div class="menu-grupo"><span class="menu-rot">Ajuda</span><select id="ecoAjuda"><option value="ver">Ver e ouvir (os botões acendem)</option><option value="fole">Só o fole (os botões não acendem)</option><option value="ouvido">Só ouvindo</option></select></div>
+      <div class="menu-grupo"><span class="menu-rot">Ajuda</span><select id="ecoAjuda"><option value="ver">Ver e ouvir (o botão acende e o nome da nota aparece)</option><option value="fole">Só o fole (mostra só se o fole abre ou fecha)</option><option value="ouvido">Só ouvindo (nenhuma pista enquanto ele toca)</option></select></div>
       <div class="menu-grupos">
         <div class="menu-grupo"><span class="menu-rot">Notas novas por rodada</span><select id="ecoPasso"><option value="2">2 notas (mais calmo)</option><option value="3">3 notas</option><option value="4">4 notas (mais rápido)</option></select><p class="menu-ajuda" id="ecoPassoAjuda"></p></div>
         <div class="menu-grupo"><span class="menu-rot">Velocidade</span><select id="ecoVel"><option value="0.75">Devagar</option><option value="1" selected>Normal</option></select></div>
@@ -908,8 +908,13 @@
     <div class="eco-faixa" id="ecoFaixa" aria-live="polite"><span class="eco-ondas" aria-hidden="true"><i></i><i></i><i></i></span><b id="ecoFaixaTxt"></b><small id="ecoFaixaSub"></small></div>
     <div class="eco-trilha" id="ecoTrilha" aria-hidden="true"></div>
     <div class="bar eco-barra"><div id="ecoBarra"></div></div>
-    <div class="eco-palco">
-      <div id="ecoDir" class="dirpill open">Abrindo</div>
+    <!-- o palco mostra sempre a mão e o fole; o quanto aparece enquanto o bandoneon toca depende da Ajuda (js/eco.js) -->
+    <div class="eco-palco" id="ecoPalco" data-fole="open">
+      <div class="eco-palco-cab">
+        <span class="eco-mao" id="ecoMao">Mão direita</span>
+        <span class="eco-fole" id="ecoFole"><svg class="eco-sanfona" viewBox="0 0 54 30" aria-hidden="true"><rect x="0" y="3" width="5" height="24" rx="2"/><rect x="49" y="3" width="5" height="24" rx="2"/><g class="pregas"><path d="M9 4 L13 26 L17 4 L21 26 L25 4 L29 26 L33 4 L37 26 L41 4 L45 26"/></g></svg><span id="ecoDir" class="dirpill open">Abrindo</span></span>
+        <div class="eco-modo" id="ecoModo" role="radiogroup" aria-label="Ajuda"><button type="button" role="radio" data-ajuda="ver">Ver e ouvir</button><button type="button" role="radio" data-ajuda="fole">Só o fole</button><button type="button" role="radio" data-ajuda="ouvido">Só ouvindo</button></div>
+      </div>
       <div class="eco-kb" id="ecoKbL" hidden></div>
       <div class="eco-kb" id="ecoKbR"></div>
     </div>
