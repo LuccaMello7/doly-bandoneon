@@ -330,7 +330,7 @@ function acadInstrutor(gi){
     + `<span class="ac-chip"><span class="muted">${t('Mão')}</span> <b>${t(e.mao==='left'?'Esquerda':'Direita')}</b></span>`
     + (aj.fole ? pilulaFole(e.fole) : '')
     + (aj.dedo && e.dedo!=null ? `<span class="ac-chip"><span class="muted">${t('Dedo')}</span> <b>${textoDedo(e)}</b></span>` : '')
-    + (acad.modo==='desafio' && !acad.ex.semTempo ? `<span class="ac-chip"><span class="muted">${t('Duração')}</span> ${t('{} tempo(s)', +e.duracao.toFixed(2))}</span>` : '')
+    + (acad.modo==='desafio' && !acad.ex.semTempo ? `<span class="ac-chip"><span class="muted">${t('Duração')}</span> ${t(plural(e.duracao, '{} tempo', '{} tempos'), +e.duracao.toFixed(2))}</span>` : '')
     + '</div>').join('<hr>');
   const dicas = oculto ? '' : renderDicas(gi); $('#acDicas').innerHTML = dicas; $('#acDicasCel').innerHTML = dicas;
   const pe = prox ? prox.ks.map(k=>acad.eventos[k]) : [];
@@ -675,7 +675,7 @@ function acadFim(){
     linhas.push(p && !p.perdida ? t('Na nota {} ({}, {}), {}.', num(e), nomeEvento(e), maoNome(e.mao), diferenca(e, p, p.tocado))
       : t('Na nota {} ({}, {}), a nota não foi tocada a tempo.', num(e), nomeEvento(e), maoNome(e.mao)));
   });
-  if(errados.length>3) linhas.push(t('E mais {} nota(s) com erro.', errados.length-3));
+  if(errados.length>3) linhas.push(t(plural(errados.length-3, 'E mais {} nota com erro.', 'E mais {} notas com erro.'), errados.length-3));
   // articulação (legato/staccato), medida pelo tempo em que cada botão ficou apertado
   const art = acad.ex.articulacao;
   if(art && acad.modo!=='aprender'){

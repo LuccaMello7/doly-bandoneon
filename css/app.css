@@ -3198,3 +3198,8 @@ body[data-aba="academia"]{background:radial-gradient(1100px 520px at 50% -160px,
 #acTeclados[data-fole="open"] .kbd{box-shadow:inset 0 0 0 1px rgba(79,156,240,.4),0 0 40px -12px rgba(79,156,240,.6)}
 #acTeclados[data-fole="close"] .kbd{box-shadow:inset 0 0 0 1px rgba(240,138,75,.4),0 0 40px -12px rgba(240,138,75,.6)}
 .ac-maolabel{font-size:14px;color:var(--cinza-2)}
+
+/* Encontre a nota: antes de começar, o palco (nota, Ouvir, Dica) fica guardado; o teclado sobe para perto do botão Começar.
+   As duas mãos alinhadas pelo alto, com os rótulos na mesma linha. */
+.fd-palco.parado .fd-topo{display:none}
+#chFind .instrument{align-items:flex-start}

@@ -148,7 +148,7 @@ function renderEcoDia(){
     + `<span class="eco-dia-nota">${feita ? 'Feita hoje! Amanhã tem outra.' : 'Escolhida para o seu nível. Amanhã tem outra.'}</span></div>`
     + `<div class="eco-dia-acoes"><span class="eco-fogo ${seq ? 'on' : ''}" title="Dias seguidos com a música do dia feita"><svg aria-hidden="true"><use href="#i-flame"/></svg><span>${seq===1 ? '1 dia' : seq + ' dias'}</span></span>`
     + `<button type="button" class="btn btn-grande" data-id="${id}"><svg aria-hidden="true"><use href="#i-play"/></svg><span>${feita ? 'Jogar de novo' : 'Jogar'}</span></button></div>`;
-  const av = $('#v-eco .pg-av'); if(av){ av.classList.toggle('brilha', seq>0); av.title = seq ? t('Sequência de {} dia(s): o gaúcho comemora com você', seq) : ''; }
+  const av = $('#v-eco .pg-av'); if(av){ av.classList.toggle('brilha', seq>0); av.title = seq ? t(plural(seq, 'Sequência de {} dia: o gaúcho comemora com você', 'Sequência de {} dias: o gaúcho comemora com você'), seq) : ''; }
 }
 // Ouvir o começo: os primeiros 2 segundos da música, com as mesmas notas do jogo e o som do app.
 // Tocar de novo no mesmo alto-falante (ou começar o jogo) para.
@@ -516,7 +516,7 @@ function ecoFim(){
   if(doDia) state.progress.ecoDias[dayKey()] = true;
   logPractice('desafio'); saveProgress(); renderEcoMusicas();
   $('#ecoDiaFeita').hidden = !doDia;
-  if(doDia) $('#ecoDiaFeita').textContent = t('Música do dia feita! Sequência: {} dia(s).', ecoSequenciaDias());
+  if(doDia) $('#ecoDiaFeita').textContent = t(plural(ecoSequenciaDias(), 'Música do dia feita! Sequência: {} dia.', 'Música do dia feita! Sequência: {} dias.'), ecoSequenciaDias());
   $('#ecoJogo').hidden = true; const f = $('#ecoFimCard'); f.hidden = false;
   const gf = f.querySelector('.gaucho-fim'); gf.classList.remove('danca'); void gf.offsetWidth; gf.classList.add('danca');
   ecoTocarVideo(ecoFimVid);
@@ -529,7 +529,7 @@ function ecoFim(){
   $('#ecoFimEstrelas').setAttribute('aria-label', `${estrelas} de 3 estrelas`);
   $('#ecoFimPts').textContent = eco.pontos;
   $('#ecoRecorde').hidden = !recorde || !ant;
-  $('#ecoFimInfo').textContent = `${eco.erros} erro(s) · maior sequência: ${eco.maxCombo} notas`;
+  { const e = eco.erros, c = eco.maxCombo; $('#ecoFimInfo').textContent = c > 1 ? (!e ? `Nenhum erro · maior sequência: ${c} notas` : e===1 ? `1 erro · maior sequência: ${c} notas` : `${e} erros · maior sequência: ${c} notas`) : (!e ? 'Nenhum erro' : e===1 ? '1 erro' : `${e} erros`); }
   // o botão de seguir: próxima fase, depois a música inteira, depois a próxima música (as suas músicas não têm "próxima")
   const i = ECO_MUSICAS.findIndex(x=>x.id===eco.id), segue = ecoSegue();
   $('#ecoProxima').hidden = segue==='musica' && (i<0 || i>=ECO_MUSICAS.length-1);

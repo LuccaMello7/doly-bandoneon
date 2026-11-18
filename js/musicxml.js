@@ -142,7 +142,7 @@ function melodyFromScore(score, o){
     for(let i=0;i<bars.length;i+=4) body.push((two && i===0 ? (v.hand==='right'?'direita: ':'esquerda: ') : '') + bars.slice(i,i+4).join(' | ')+' |');
   }
   const staffTxt = o.staff==='all' ? 'todas as pautas' : o.staff==='hands' ? 'duas mãos' : 'pauta '+o.staff;
-  const shifts = voices.filter(v=>v.shift).map(v=>`${v.hand==='left'?'esquerda':'direita'} ${v.shift>0?'+':''}${v.shift/12} oitava(s)`);
+  const shifts = voices.filter(v=>v.shift).map(v=>`${v.hand==='left'?'esquerda':'direita'} ${v.shift>0?'+':''}${plural(v.shift/12, `${v.shift/12} oitava`, `${v.shift/12} oitavas`)}`);
   const desc = `Importado de MusicXML (${part.name}, ${staffTxt})${shifts.length?`, transposto: ${shifts.join(', ')}`:''}.`;
   const head = two ? '' : `mão: ${o.hand==='left'?'esquerda':'direita'}\n`;
   return {text:`título: ${score.title}\n${head}bpm: ${score.tempo||80}\ndescrição: ${desc}\n${body.join('\n')}`,

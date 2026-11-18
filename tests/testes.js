@@ -1227,8 +1227,8 @@ teste('Encontre a nota: toca a nota ao começar, dica em dois passos, placar e p
   go('desafios'); $('[data-ch="find"]').click(); fEscolher('fHand', 'right'); fEscolher('fDir', 'open');
   let tocou = 0; const pn = playNote; playNote = (...a)=>{ tocou++; return pn(...a); };
   try{
-    pararFind(); ok($('#fHud').hidden && $('#fListen').disabled, 'antes de começar, sem placar e sem Ouvir');
-    $('#fStart').click(); ok(fq.active && !$('#fHud').hidden && !$('#fListen').disabled, 'Começar mostra o placar e libera Ouvir e Dica');
+    pararFind(); ok($('#fHud').hidden && $('#fListen').disabled, 'antes de começar, sem placar e sem Ouvir'); ok($('#fPalco').classList.contains('parado'), 'antes de começar, o palco fica guardado');
+    $('#fStart').click(); ok(fq.active && !$('#fHud').hidden && !$('#fListen').disabled, 'Começar mostra o placar e libera Ouvir e Dica'); ok(!$('#fPalco').classList.contains('parado'), 'e o palco aparece');
     igual($$('#fBolinhas i').length, 10); ok($('#fTarget').textContent===noteName(fq.target));
     ok($('#fkLeft').closest('.side').classList.contains('fora') && !$('#fkRight').closest('.side').classList.contains('fora'), 'a mão fora de jogo fica marcada (some no celular)');
     await pausa(2600); ok(tocou >= 1, 'a nota da rodada toca sozinha');
@@ -1488,4 +1488,12 @@ teste('Conta: Entrar no topo, aceite dos 18 anos, passo do e-mail e a conta cone
   igual($('.conta-ola').textContent, 'Olá, Lucca!', 'com o nome do Google: só o primeiro nome'); igual($('#contaAv .conta-letra').textContent, 'L');
   contarUso('teste'); // sem o GoatCounter carregado, não faz nada e não quebra
   contaUsuario = null; renderConta(); go('inicio');
+});
+teste('Plurais: singular e plural de verdade, sem "(s)"', () => {
+  igual(plural(1, 'um', 'vários'), 'um'); igual(plural(0, 'um', 'vários'), 'vários'); igual(plural(-1, 'um', 'vários'), 'um');
+  go('melodias'); ok(!/\(s\)/.test($('#melStat').textContent) && /notas · /.test($('#melStat').textContent), 'resumo da melodia sem "(s)"');
+  const l0 = state.lang; state.lang = 'en';
+  igual(t(plural(1, '{} tempo', '{} tempos'), 1), '1 beat'); igual(t(plural(3, '{}% ({} tentativa)', '{}% ({} tentativas)'), 90, 3), '90% (3 attempts)');
+  igual(traduzTexto('12 notas · 1 troca de fole sugerida'), '12 notes · 1 suggested bellows change');
+  state.lang = l0; go('inicio');
 });

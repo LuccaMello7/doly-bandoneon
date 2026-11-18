@@ -67,7 +67,7 @@ function fillScaleStarts(){
   const st = validStarts(type, pc, hand, octs);
   const name = n => tonicLabel(type, pc) + (Math.floor(n/12)-1);
   $('#scStart').innerHTML = st.map(m=>`<option value="${m}">${name(m)}</option>`).join('');
-  $('#scErr').textContent = st.length ? '' : `Essa escala não cabe em ${octs} oitava(s) na mão ${hand==='left'?'esquerda':'direita'}. Tente 1 oitava ou a outra mão.`;
+  $('#scErr').textContent = st.length ? '' : (m => octs===1 ? `Essa escala não cabe em 1 oitava na mão ${m}. Tente 1 oitava ou a outra mão.` : `Essa escala não cabe em ${octs} oitavas na mão ${m}. Tente 1 oitava ou a outra mão.`)(hand==='left'?'esquerda':'direita');
   $('#scGo').disabled = !st.length;
 }
 $('#scType').innerHTML = Object.entries(SCALE_TYPES).map(([k,t])=>`<option value="${k}">${t.name}</option>`).join('');
@@ -85,7 +85,7 @@ function loadScale(type, pc, hand, octs, start, dirMode){
   notes.forEach((n,i)=>{ n.beats = i===notes.length-1 ? 2 : 1; });
   const title = `${tonicLabel(type,pc)} ${t(T.name).toLowerCase()}${type==='cromatica'?' '+t('(a partir de {})', tonicLabel(type,pc)):''}`;
   const tok = n => noteToken(n.midi)+':'+(n.beats===2?'2':'4');
-  const m = {title:`Escala: ${title}`, desc:`${octs} oitava(s)`, hand, bpm:72, notes, bad:[],
+  const m = {title:`Escala: ${title}`, desc:plural(octs, `${octs} oitava`, `${octs} oitavas`), hand, bpm:72, notes, bad:[],
     id:scaleId(type,pc,hand,octs), builtin:true, guide:{type, pc, hand, octs, start, dirMode}, // parâmetros guardados para refazer ao trocar o idioma
     text:`título: Escala: ${title}\nmão: ${hand==='left'?'esquerda':'direita'}\nbpm: 72\n${notes.map(tok).join(' ')}`};
   fingerMelody(m); mel.cur = m;

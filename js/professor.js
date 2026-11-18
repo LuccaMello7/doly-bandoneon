@@ -272,7 +272,7 @@ function enviarRelatorioTarefa(){
   const rels = relsDaTarefa(tf); if(!rels.length) return;
   const nome = store.get('alunoNome', '');
   const linhas = [t('BanDoly · Relatório da tarefa'), ...(nome ? [t('Aluno: {}', nome)] : []), ...(tf.prof ? [t('Tarefa de {}', tf.prof)] : []), '',
-    ...tf.itens.map(x=>{ const e = exercicioPorId(x.ex); return '• ' + t(e.titulo) + ': ' + (x.rel ? t('{}% ({} tentativa(s))', x.rel.nota, x.vz||1) : t('ainda não feito')); })];
+    ...tf.itens.map(x=>{ const e = exercicioPorId(x.ex); return '• ' + t(e.titulo) + ': ' + (x.rel ? t(plural(x.vz||1, '{}% ({} tentativa)', '{}% ({} tentativas)'), x.rel.nota, x.vz||1) : t('ainda não feito')); })];
   compartilhar(t('Relatório do BanDoly'), linhas.join('\n') + '\n\n' + t('Ver o relatório com gráficos no BanDoly: {}', linkRelatorio(rels, tf)));
 }
 // Chamada no fim de cada tentativa da Academia (acadFim): acrescenta o nome e o botão de enviar

@@ -49,6 +49,8 @@ const state = {
   progress: store.get('progress', {lessons:{}, find:null, staff:null, rhythm:null}),
 };
 function saveProgress(){ store.set('progress', state.progress); renderProgress(); }
+// singular ou plural pelo número: plural(n, '{} erro', '{} erros')
+const plural = (n, um, varios) => Math.abs(+n)===1 ? um : varios;
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 const rand = n => Math.floor(Math.random()*n);

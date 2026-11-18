@@ -166,7 +166,7 @@ $('#acImpGo').onclick = () => {
     const est = salvarPartitura(acScore.title, r.text, acArquivo);
     $('#acImp').hidden = true; acScore = null;
     acMsg(t('{} notas transcritas para os botões.', est.notas)
-      + (r.shift ? ' ' + t('A música foi deslocada {} oitava(s) para caber na mão.', (r.shift>0?'+':'') + r.shift/12) : '')
+      + (r.shift ? ' ' + t(plural(r.shift/12, 'A música foi deslocada {} oitava para caber na mão.', 'A música foi deslocada {} oitavas para caber na mão.'), (r.shift>0?'+':'') + r.shift/12) : '')
       + (est.fora ? ' ' + t('{} notas ficaram fora da extensão do bandoneon e serão puladas.', est.fora) : '')
       + ' ' + t('Veja a transcrição ou comece no modo Aprender.'), est.fora ? '' : 'ok');
     abrirTranscricao(true);
@@ -183,7 +183,7 @@ function acadTranscricao(){
   if(acad.ex.gerar){ box.innerHTML = `<p class="muted">${t('Este exercício é sorteado a cada rodada, então não tem uma transcrição fixa.')}</p>`; return; }
   const m = parseMelody(acad.ex.texto); buildTimeline(m); fingerMelody(m);
   transcricaoNotas = m.notes.slice().sort((a,b)=>a.t-b.t || (a.hand===b.hand ? 0 : a.hand==='right' ? -1 : 1));
-  const tempo = x => +(x+1).toFixed(2), dur = b => t('{} tempo(s)', +b.toFixed(2));
+  const tempo = x => +(x+1).toFixed(2), dur = b => t(plural(+b.toFixed(2), '{} tempo', '{} tempos'), +b.toFixed(2));
   const linhas = transcricaoNotas.map((n,i)=>{
     const mao = t(n.hand==='left' ? 'Esquerda' : 'Direita');
     if(n.rest) return `<tr class="pausa"><td>${tempo(n.t)}</td><td>${t('Pausa')}</td><td>${mao}</td><td>–</td><td>${dur(n.beats)}</td></tr>`;

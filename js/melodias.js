@@ -311,14 +311,14 @@ function renderMelPlayer(){
   const missing = m.notes.filter(n=>n.error && !n.conflict).map(n=>noteName(n.midi)), conflicts = m.notes.filter(n=>n.conflict).length;
   const warn = [];
   if(missing.length) warn.push(`Notas que não existem na mão indicada (serão puladas): ${[...new Set(missing)].join(', ')}.`);
-  if(conflicts) warn.push(`${conflicts} nota(s) da mão esquerda não existem na mesma direção de fole da mão direita naquele momento (serão puladas).`);
+  if(conflicts) warn.push(conflicts===1 ? '1 nota da mão esquerda não existe na mesma direção de fole da mão direita naquele momento (será pulada).' : `${conflicts} notas da mão esquerda não existem na mesma direção de fole da mão direita naquele momento (serão puladas).`);
   if(m.bad.length) warn.push(`Trechos não reconhecidos: ${m.bad.join(' ')}`);
   $('#melWarn').style.display = warn.length?'block':'none'; $('#melWarn').textContent = warn.join(' ');
   drawMelStaff();
   const first = m.groups.find(g=>!g.rest && g.dir);
   mel.pending = new Set();
   setMelDir(first ? first.dir : 'open'); markCur(-1); if(first) hintGroup(m.groups.indexOf(first));
-  melFeed(''); $('#melStat').textContent = `${playableNotes().length} notas · ${countChanges()} troca(s) de fole sugerida(s)`;
+  melFeed(''); { const n = playableNotes().length, c = countChanges(); $('#melStat').textContent = n===1 ? '1 nota · sem troca de fole' : `${n} notas · ${!c ? 'sem troca de fole' : plural(c, '1 troca de fole sugerida', `${c} trocas de fole sugeridas`)}`; }
   renderGuide();
 }
 function countChanges(){ const gs=mel.cur.groups.filter(g=>g.dir); return gs.filter((g,i)=>i && g.dir!==gs[i-1].dir).length; }
@@ -468,7 +468,7 @@ function advanceWait(){
   do{ mel.g++; } while(mel.g<gs.length && !groupNotes(mel.g).length);
   if(mel.g>=gs.length){
     const total=playableNotes().length, acc=Math.round(100*total/(total+mel.errors));
-    mel.pending=new Set(); finishMel(`Concluído! ${mel.errors} erro(s) · precisão ${acc}%`, acc); hintBtn(null); return;
+    mel.pending=new Set(); finishMel(!mel.errors ? `Concluído sem erros! Precisão ${acc}%` : plural(mel.errors, `Concluído! 1 erro · precisão ${acc}%`, `Concluído! ${mel.errors} erros · precisão ${acc}%`), acc); hintBtn(null); return;
   }
   const ns=groupNotes(mel.g); mel.idx=gs[mel.g].idxs[0];
   mel.pending=new Set(ns.map(n=>mel.cur.notes.indexOf(n)));

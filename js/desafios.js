@@ -130,7 +130,7 @@ function fimFind(){
 function pararFind(){
   clearTimeout(fq.timer); Object.assign(fq, {active:false, target:null, resolvido:false, zona:null, dirAntes:null}); fTirarCirculo();
   fkL.clearMarks(); fkR.clearMarks(); fkL.setDim(false); fkR.setDim(false); refreshAll(); botoesDesafio(); fLados(false); fMenuJogo(false);
-  $('#fHud').hidden = true; $('#fTreinarBox').hidden = true;
+  $('#fHud').hidden = true; $('#fTreinarBox').hidden = true; $('#fPalco').classList.add('parado');
   $('#fAlvoRot').textContent = t('Toque em Começar desafio'); $('#fTarget').textContent = '–'; $('#fDirPill').style.visibility = 'hidden';
   fFeed(''); fBotoes();
 }
@@ -170,7 +170,7 @@ function findPress(b,m,k){
 }
 $('#fStart').onclick=()=>{
   ac(); if(fq.heat) toggleHeat();
-  Object.assign(fq,{round:0,score:0,active:true,hist:[]}); fMenuJogo(true); nextFind();
+  Object.assign(fq,{round:0,score:0,active:true,hist:[]}); $('#fPalco').classList.remove('parado'); fMenuJogo(true); nextFind();
   // no celular, a nota e o teclado ficam à vista
   if(window.innerWidth < 900) $('#fPalco').scrollIntoView({block:'start', behavior: movReduzido() ? 'auto' : 'smooth'});
 };

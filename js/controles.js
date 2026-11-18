@@ -195,7 +195,7 @@ function renderMidi(){
   $('#midiAparelhos').textContent = !midiCtl.ligado ? '' : ent.length ? `Conectado: ${ent.join(', ')}` : 'Nenhum controlador encontrado. Conecte o cabo e espere um pouco.';
   $('#midiCcPressao').textContent = midiCtl.cc.pressao!=null ? `Controle ${midiCtl.cc.pressao}` : 'nenhum';
   $('#midiCcFole').textContent = midiCtl.cc.fole!=null ? `Controle ${midiCtl.cc.fole}` : 'nenhum';
-  $('#midiEnsinados').textContent = `${Object.keys(midiCtl.mapa).length} botão(ões) ensinado(s)`;
+  { const n = Object.keys(midiCtl.mapa).length; $('#midiEnsinados').textContent = plural(n, `${n} botão ensinado`, `${n} botões ensinados`); }
   $('#midiForca').checked = midiCtl.forca;
 }
 $('#midiLigar').onclick = ligarMidi;
