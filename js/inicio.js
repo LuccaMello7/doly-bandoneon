@@ -69,7 +69,7 @@ function iniVisor(it){
   $('#iniAbre').textContent = noteName(it.b.open); $('#iniFecha').textContent = noteName(it.b.close);
 }
 function iniTocar(it){
-  iniFimDemo(); iniGuiaToque(it);
+  iniFimDemo(); iniGuiaToque(it); $('#iniConvite').classList.add('some'); // tocou: o convite acima do instrumento sai
   const k = it.mao + it.b.id; if(ini.ativos[k]) return;
   ini.ativos[k] = true; it.el.classList.add('on');
   startVoice('ini'+k, it.b[ini.fole], it.mao);
@@ -249,6 +249,14 @@ $('#inContBtn').onclick = ()=>$('#heroCta').click();
 $('#iniIdiomas').addEventListener('click', e=>{ const b = e.target.closest('[data-lang]'); if(b) irParaIdioma(b.dataset.lang); });
 $$('#iniIdiomas [data-lang]').forEach(b=>b.toggleAttribute('aria-current', b.dataset.lang===state.lang));
 $('#topoCta').onclick = ()=>$('#heroCta').click(); // o botão verde da barra do topo leva à próxima etapa, de qualquer aba
+// No Início, o botão verde do topo repetia o Começar/Continuar da tela: ele só aparece depois que esse botão sai de vista
+if('IntersectionObserver' in window){
+  const aVista = new Set(), io = new IntersectionObserver(es=>{
+    es.forEach(e=>{ if(e.isIntersecting) aVista.add(e.target); else aVista.delete(e.target); });
+    document.body.classList.toggle('cta-a-vista', aVista.size>0);
+  });
+  ['#heroCta', '#inContBtn'].forEach(sel=>io.observe($(sel)));
+}
 $('#iniFechoCta').onclick = ()=>$('#heroCta').click();
 $('#iniCaminhoCta').onclick = ()=>$('#heroCta').click();
 $('#iniEcoJogar').onclick = ()=>{ eco.id = ecoDoDia(); store.set('ecoMusica', eco.id); go('eco'); ecoComecar(); };

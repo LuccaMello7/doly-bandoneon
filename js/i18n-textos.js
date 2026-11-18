@@ -2201,4 +2201,10 @@ const TEXTOS = {
 'Sequência de {} dia(s): o gaúcho comemora com você': ['Racha de {} día(s): el gaucho festeja con vos', '{}-day streak: the gaucho celebrates with you'],
 'Ouvir o começo': ['Escuchar el comienzo', 'Hear the beginning'],
 'Baixos em Lá menor': ['Bajos en La menor', 'Basses in A minor'],
+// Início de quem volta: convite do instrumento e a faixa do Doly
+'Toque nos botões para ouvir o som real': ['Tocá los botones para escuchar el sonido real', 'Tap the buttons to hear the real sound'],
+'ou use o teclado do computador': ['o usá el teclado de la computadora', 'or use the computer keyboard'],
+'Doly Costa jovem tocando bandoneon diante de um microfone': ['Doly Costa joven tocando el bandoneón frente a un micrófono', 'A young Doly Costa playing the bandoneon in front of a microphone'],
+'O bandoneonista de Caçapava do Sul que dá nome ao BanDoly.': ['El bandoneonista de Caçapava do Sul que da nombre a BanDoly.', 'The bandoneon player from Caçapava do Sul who gives BanDoly its name.'],
+'Tocou nas orquestras de tango das rádios de Porto Alegre e fundou Os Posteiros. Aos 97 anos, ainda toca.': ['Tocó en las orquestas de tango de las radios de Porto Alegre y fundó Os Posteiros. A los 97 años, todavía toca.', 'He played in the tango orchestras of the Porto Alegre radio stations and founded Os Posteiros. At 97, he still plays.'],
 };

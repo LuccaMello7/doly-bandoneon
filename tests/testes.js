@@ -1358,6 +1358,20 @@ teste('Início: o minuto guiado ensina o bisonoro em três passos', () => {
   iniTocar(guia.alvo); iniTrocaFole(); igual(guia.passo, 3, 'segurando e trocando o fole'); iniSoltar(guia.alvo); iniGuiaFim();
   iniTrocaFole('open'); store.set('guiaInicio', antes);
 });
+teste('Início de quem volta: modos em cartões, faixa do Doly, convite que sai ao tocar e um só Continuar à vista', async () => {
+  go('inicio'); await new Promise(r=>setTimeout(r,250));
+  igual($$('.ini-modos a[data-go]').length, 4, 'Teclado, Melodias, Acordes e Ritmo em cartões');
+  ok(!$('.ini-atalhos'), 'a lista antiga saiu');
+  ok($('.ini-doly-faixa img') && /doly-costa\/(index\.html)?$/.test($('.ini-doly-faixa').getAttribute('href')), 'faixa do Doly com foto e link');
+  const cv = $('#iniConvite'); cv.classList.remove('some');
+  ok(cv.textContent.includes('Toque nos botões'), 'o convite diz o que fazer');
+  iniTocar(iniBotoes[0]); ok(cv.classList.contains('some'), 'tocou: o convite sai');
+  cv.classList.remove('some');
+  scrollTo(0, 0); await new Promise(r=>setTimeout(r,250));
+  const cta = $('#heroCta').offsetParent ? $('#heroCta') : $('#inContBtn'), r = cta.getBoundingClientRect();
+  if(r.top>=0 && r.bottom<=innerHeight) ok(document.body.classList.contains('cta-a-vista') && getComputedStyle($('#topoCta')).visibility==='hidden', 'o botão do topo some enquanto o da tela está à vista');
+  go('inicio');
+});
 teste('Início: quem chega vê a apresentação; quem já praticou vê "Continuar"', () => {
   go('inicio');
   const dias = state.progress.days, sec = $('#v-inicio');

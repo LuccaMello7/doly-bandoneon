@@ -46,6 +46,7 @@ const ehIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platfor
 function convidarInstalar(){
   if(instalado() || store.get('instalarNao', false) || aberturas<2) return;
   if(!installPrompt && !ehIOS) return;
+  if(!ehIOS && window.matchMedia && !matchMedia('(pointer: coarse)').matches) return; // no computador ele ocupava o meio do Início (instalar fica em Ajustes)
   $('#instalarSim').hidden = !installPrompt; $('#instalarIos').hidden = !!installPrompt; $('#instalarTxt').hidden = !installPrompt;
   $('#instalarNao').textContent = installPrompt ? 'Agora não' : 'Entendi';
   $('#instalarCard').hidden = false;
