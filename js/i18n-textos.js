@@ -168,7 +168,6 @@ const TEXTOS = {
 '+{} pontos': ['+{} puntos', '+{} points'],
 '+{} pontos · Trecho completo!': ['+{} puntos · ¡Tramo completo!', '+{} points · Section complete!'],
 'Trecho completo!': ['¡Tramo completo!', 'Section complete!'],
-'Esse é {}. A nota era {}: o botão certo está brilhando.': ['Ese es {}. La nota era {}: el botón correcto está brillando.', 'That is {}. The note was {}: the right button is glowing.'],
 'Toque de ouvido': ['Tocar de oído', 'Playing by ear'],
 'Complete uma música no RepeTCHÊ: o bandoneon toca e você repete.': ['Completá una música en RepeTCHÊ: el bandoneón toca y vos repetís.', 'Complete a tune in RepeTCHÊ: the bandoneon plays and you repeat.'],
 'RepeTCHÊ perfeito': ['RepeTCHÊ perfecto', 'Perfect RepeTCHÊ'],
@@ -2232,4 +2231,7 @@ const TEXTOS = {
 '{} botões ensinados': ['{} botones enseñados', '{} buttons taught'],
 '{}% ({} tentativa)': ['{}% ({} intento)', '{}% ({} attempt)'],
 '{}% ({} tentativas)': ['{}% ({} intentos)', '{}% ({} attempts)'],
+'Você tocou {}. O botão certo está brilhando.': ['Tocaste {}. El botón correcto está brillando.', 'You played {}. The right button is glowing.'],
+'✓ certa': ['✓ bien', '✓ right'],
+'era esta': ['era esta', 'was this one'],
 };

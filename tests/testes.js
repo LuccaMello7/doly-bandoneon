@@ -859,14 +859,21 @@ teste('Eco: a música cresce de 2 em 2, o acerto pontua, o erro mostra o botão 
   ok(!$('#ecoJogo').hidden && $('#ecoEscolha').hidden, 'a escolha dá lugar ao jogo');
   igual(ecoMusica('estrelinha').seq.length, 42); igual(ecoFases('estrelinha').length, 5, 'fases de 8 notas; o resto pequeno entra na última');
   igual(eco.seq.length, 8); igual(eco.fimT, 8); igual(eco.rodadas, 4);
-  igual($$('#ecoTrilha i').length, 8);
+  igual($$('#ecoNotas .eco-nota').length, 0, 'antes da 1ª rodada, nenhum cartão');
   ecoRodada(); ecoLimpar(); igual(eco.alvo, 2);
+  igual($$('#ecoNotas .eco-nota').length, 2, 'um cartão por nota da rodada');
   ecoSuaVez(); const k = ecoKb(), n0 = eco.seq[0], n1 = eco.seq[1];
   ecoPress(n0.btn, n0.midi, k); igual(eco.pos, 1); igual(eco.pontos, 10);
   const errado = state.layout[eco.hand].find(b=>b[eco.dir]!==n1.midi);
   ecoPress(errado, errado[eco.dir], k);
   igual(eco.pos, 1); igual(eco.erros, 1); igual(eco.combo, 0);
   ok($('#ecoFeed').classList.contains('bad'), 'o erro avisa');
+  const cs = $$('#ecoNotas .eco-nota');
+  ok(cs[0].classList.contains('ok') && cs[0].querySelector('b').textContent === noteName(n0.midi), 'acertou: o cartão mostra o nome');
+  ok(cs[1].classList.contains('erro') && cs[1].querySelector('b').textContent === noteName(n1.midi), 'errou: o cartão mostra a nota que era');
+  ok($('#ecoFeed').textContent.includes(noteName(errado[eco.dir])), 'o aviso diz a nota que você tocou');
+  ok(cs[1].classList.contains(n1.dir), 'o traço do cartão é a direção do fole');
+  ok($('#ecoPalco').contains($('#ecoFaixa')) && $('#ecoPalco').contains($('#ecoNotas')), 'aviso e cartões dentro do palco');
   ecoPress(n1.btn, n1.midi, k); ecoLimpar();
   igual(eco.fase, 'entre'); igual(eco.pontos, 20);
   ecoRodada(); ecoLimpar(); igual(eco.alvo, 4); igual(eco.pos, 0);
@@ -1488,6 +1495,20 @@ teste('Conta: Entrar no topo, aceite dos 18 anos, passo do e-mail e a conta cone
   igual($('.conta-ola').textContent, 'Olá, Lucca!', 'com o nome do Google: só o primeiro nome'); igual($('#contaAv .conta-letra').textContent, 'L');
   contarUso('teste'); // sem o GoatCounter carregado, não faz nada e não quebra
   contaUsuario = null; renderConta(); go('inicio');
+});
+teste('Melodias: as chaves ficam atrás de "Ajustes", e o botão mostra o que está ligado', () => {
+  go('melodias'); const p = $('#melAjustes'), bt = $('#melAjBt'), st = $('#melStaffOn'), antes = st.checked;
+  ok(p.hidden && bt.getAttribute('aria-expanded') === 'false', 'fechado de começo');
+  bt.click(); ok(!p.hidden && bt.getAttribute('aria-expanded') === 'true', 'abre no clique');
+  st.checked = true; st.dispatchEvent(new Event('change', {bubbles:true}));
+  ok([...$$('#melAjResumo span')].some(x=>x.textContent === t('Partitura')), 'o resumo mostra "Partitura"');
+  st.checked = false; st.dispatchEvent(new Event('change', {bubbles:true}));
+  ok(![...$$('#melAjResumo span')].some(x=>x.textContent === t('Partitura')), 'desligou, saiu do resumo');
+  st.checked = antes; st.dispatchEvent(new Event('change', {bubbles:true}));
+  bt.click(); ok(p.hidden, 'fecha de novo');
+  const con = document.querySelector('.mel-console');
+  ok(con.contains($('#melStaff')) && con.contains($('#mkRight')) && con.contains($('#melDirPill')), 'partitura, fole e teclado no mesmo console');
+  go('inicio');
 });
 teste('Plurais: singular e plural de verdade, sem "(s)"', () => {
   igual(plural(1, 'um', 'vários'), 'um'); igual(plural(0, 'um', 'vários'), 'vários'); igual(plural(-1, 'um', 'vários'), 'um');

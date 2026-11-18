@@ -85,7 +85,15 @@ const ecoTudoLiberado = id => !!ecoProg(id).estrelas || ecoTodasFeitas(id);
 // o que jogar ao tocar na música: a primeira fase ainda não feita; com todas feitas, a música inteira
 function ecoProximaFase(id){ const fs = ecoFases(id), i = fs.findIndex((_,k)=>!ecoFaseFeita(id,k)); return i>=0 ? i : fs.length>1 ? 'tudo' : 0; }
 const ecoTrecho = () => eco.k*4; // notas por trecho (na música inteira)
-const ecoOpts = {getDir:()=>eco.dir, perRow:1, onPress:(b,m,dir,k)=>ecoPress(b,m,k)};
+// Teclado maior no computador: até 60px por botão quando cabe no palco. No celular (ou com o jogo fechado), 0 deixa
+// o teclado no tamanho automático de sempre. Só mede o palco com o jogo aberto (medir escondido força o layout).
+function ecoTamanho(){
+  if(!eco.hand || $('#ecoJogo').hidden) return 0;
+  const w = $('#ecoPalco').clientWidth; if(w < 860) return 0;
+  const maxX = Math.max(...state.layout[eco.hand].map(b=>b.x));
+  return Math.max(48, Math.min(60, Math.floor((w - 80) / (maxX + 1))));
+}
+const ecoOpts = {getDir:()=>eco.dir, perRow:1, onPress:(b,m,dir,k)=>ecoPress(b,m,k), get size(){ return ecoTamanho(); }};
 const ecoL = kb($('#ecoKbL'),'left',ecoOpts), ecoR = kb($('#ecoKbR'),'right',ecoOpts);
 const ecoKb = () => eco.hand==='left' ? ecoL : ecoR;
 const ecoTimer = (f, ms) => eco.timers.push(setTimeout(f, ms));
@@ -282,7 +290,7 @@ function ecoDirPill(){
 // a cada nota que o bandoneon toca (com o fole à vista), a sanfona dá um pulso no ritmo
 function ecoPulsoFole(){ if(eco.ajuda==='ouvido') return; const f = $('#ecoFole'); f.classList.remove('pulsa'); void f.offsetWidth; f.classList.add('pulsa'); }
 // A Ajuda também muda no meio do jogo (os três botões acima do teclado): vale a partir do próximo "Ouça…"
-function ecoMarcarModo(){ $$('#ecoModo [data-ajuda]').forEach(b=>{ const on = b.dataset.ajuda===eco.ajuda; b.classList.toggle('on', on); b.setAttribute('aria-checked', on); }); }
+function ecoMarcarModo(){ $$('#ecoModo [data-ajuda]').forEach(b=>{ const on = b.dataset.ajuda===eco.ajuda; b.classList.toggle('on', on); b.setAttribute('aria-checked', on); }); $('#ecoNotas').dataset.ajuda = eco.ajuda; }
 $('#ecoModo').addEventListener('click', e=>{
   const b = e.target.closest('[data-ajuda]'); if(!b || b.dataset.ajuda===eco.ajuda) return;
   eco.ajuda = b.dataset.ajuda; $('#ecoAjuda').value = eco.ajuda; store.set('ecoAjuda', eco.ajuda); ecoMarcarModo(); ecoPilulas();
@@ -305,22 +313,30 @@ function ecoHud(){
   const c = $('#ecoCombo'), mult = ecoMult();
   $('#ecoComboN').textContent = '×' + mult; c.classList.toggle('quente', mult>1); c.dataset.mult = mult;
   $('#ecoSeq').textContent = eco.combo;
-  $('#ecoBarra').style.width = (100*eco.alvo/eco.seq.length) + '%';
 }
-// A trilha: um ponto por nota da música. Os do trecho atual brilham; os novos da rodada entram "pulando".
+// As notas da rodada, uma por cartão. O nome só aparece quando o aluno acerta (antes é "?", para não virar leitura);
+// no erro, o cartão fica vermelho e mostra a nota que era. O traço embaixo é a direção do fole (some em "Só ouvindo").
+// novosDe: as notas novas desta rodada entram "pulando", uma depois da outra.
 function ecoTrilha(novosDe){
-  const ps = $$('#ecoTrilha i');
-  ps.forEach((p,i)=>{
-    p.className = i<eco.ini ? 'feito' : i<eco.alvo ? 'rodada' : i<eco.fimT ? 'trecho' : '';
-    if(novosDe!=null && i>=novosDe && i<eco.alvo){ p.classList.add('novo'); p.style.setProperty('--d', (i-novosDe)*90+'ms'); }
-  });
+  let h = '';
+  for(let i=eco.ini; i<eco.alvo; i++){
+    const novo = novosDe!=null && i>=novosDe;
+    h += `<div class="eco-nota ${eco.seq[i].dir}${novo ? ' novo' : ''}"${novo ? ` style="--d:${(i-novosDe)*90}ms"` : ''}><b translate="no">?</b><small>${i-eco.ini+1}</small></div>`;
+  }
+  $('#ecoNotas').innerHTML = h;
   ecoAtual();
 }
+const ecoCartaoNota = i => $$('#ecoNotas .eco-nota')[i - eco.ini];
 function ecoAtual(){
-  $$('#ecoTrilha i.atual').forEach(p=>p.classList.remove('atual'));
-  if(eco.fase==='vez' && eco.pos<eco.alvo) $$('#ecoTrilha i')[eco.pos].classList.add('atual');
+  $$('#ecoNotas .atual').forEach(c=>c.classList.remove('atual'));
+  const c = eco.fase==='vez' && eco.pos<eco.alvo && ecoCartaoNota(eco.pos); if(c) c.classList.add('atual');
 }
-function ecoPonto(i, cls){ const p = $$('#ecoTrilha i')[i]; if(!p) return; p.classList.remove('soa','ok','erro'); void p.offsetWidth; p.classList.add(cls); }
+// soa = o bandoneon está tocando essa nota; ok = acertou (mostra o nome); erro = mostra a nota que era
+function ecoPonto(i, cls){
+  const c = ecoCartaoNota(i); if(!c) return;
+  c.classList.remove('soa','ok','erro'); void c.offsetWidth; c.classList.add(cls);
+  if(cls==='ok' || cls==='erro'){ c.querySelector('b').textContent = noteName(eco.seq[i].midi); c.querySelector('small').textContent = cls==='ok' ? '✓ certa' : 'era esta'; }
+}
 // "+20" que sobe do botão tocado
 function ecoFlutua(k, b, txt, cls){
   if(movReduzido()) return;
@@ -394,7 +410,6 @@ function ecoComecar(f){
   $('#ecoFaseTit').hidden = fs.length<2;
   $('#ecoFaseTit').textContent = f==='tudo' ? 'Música inteira' : `Fase ${f+1} de ${fs.length}`;
   ecoMapa();
-  $('#ecoTrilha').innerHTML = seq.map(()=>'<i></i>').join('');
   $('#ecoPontos').textContent = '0'; eco.dir = seq[0].dir; ecoDirPill(); ecoHud(); ecoTrilha(); ecoFeed('');
   requestAnimationFrame(()=>ecoEnquadrar(true));
   // contagem 3, 2, 1
@@ -481,8 +496,8 @@ function ecoErro(b, m){
   k.mark(n.btn.id, 'hint', 1800);
   eco.erros++; eco.errosRodada++; eco.combo = 0; ecoHud();
   ecoPonto(eco.pos, 'erro');
-  const tr = $('#ecoTrilha'); tr.classList.remove('treme'); void tr.offsetWidth; tr.classList.add('treme');
-  ecoFeed(`Esse é ${noteName(m)}. A nota era ${noteName(n.midi)}: o botão certo está brilhando.`, 'bad');
+  const tr = $('#ecoNotas'); tr.classList.remove('treme'); void tr.offsetWidth; tr.classList.add('treme');
+  ecoFeed(`Você tocou ${noteName(m)}. O botão certo está brilhando.`, 'bad');
 }
 function ecoRodadaFeita(){
   eco.fase = 'entre'; ecoAtual(); $('#ecoRepetir').disabled = true;

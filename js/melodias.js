@@ -577,3 +577,15 @@ $('#melDelete').onclick=()=>{
   delete state.progress.melodies[mel.editingId]; if(state.progress.academia) delete state.progress.academia[mel.editingId]; saveProgress();
   loadMelody(BUILTIN_MELODIES[0].id);
 };
+
+/* ---------- Ajustes: as cinco chaves ficam atrás de um botão, que mostra ao lado o que está ligado ---------- */
+function melAjResumo(){
+  const ligadas = $$('#melAjustes .menu-switch').filter(l=>l.querySelector('input').checked);
+  // cada nome num span, para a tradução achar o texto igual ao da chave
+  $('#melAjResumo').innerHTML = ligadas.map(l=>`<span>${l.querySelector('b').dataset.pt || l.querySelector('b').textContent}</span>`).join(' · ');
+}
+$$('#melAjustes .menu-switch b').forEach(b=>{ b.dataset.pt = b.textContent; });
+$('#melAjBt').onclick = ()=>{ const p = $('#melAjustes'); p.hidden = !p.hidden; $('#melAjBt').setAttribute('aria-expanded', String(!p.hidden)); };
+$('#melAjustes').addEventListener('change', melAjResumo);
+ganchosAba.push(nova=>{ if(nova==='melodias') melAjResumo(); });
+melAjResumo();

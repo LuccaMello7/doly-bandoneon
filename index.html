@@ -746,26 +746,29 @@
             <div class="menu-grupo"><span class="menu-rot">Modo</span><select id="melMode"><option value="listen">Ouvir</option><option value="wait">Espera</option><option value="timed">No tempo</option></select><p class="menu-ajuda" id="melModoAjuda"></p></div>
             <div class="menu-grupo"><span class="menu-rot">Velocidade</span><div class="menu-faixa"><input type="range" id="melSpeed" min="40" max="120" step="10" value="70" aria-label="Velocidade"><span id="melSpeedVal">70%</span></div></div>
           </div>
-          <div class="menu-switches">
+          <div class="menu-acoes">
+            <button class="btn btn-grande btn-play" id="melStart">Começar</button>
+            <button class="btn sec" id="melEdit">Editar</button>
+            <button type="button" class="btn sec mel-aj-bt" id="melAjBt" aria-expanded="false" aria-controls="melAjustes"><svg aria-hidden="true"><use href="#i-gear"/></svg>Ajustes<span class="mel-aj-resumo" id="melAjResumo"></span></button>
+          </div>
+          <div class="menu-switches mel-ajustes" id="melAjustes" hidden>
             <label class="menu-switch"><input type="checkbox" id="melAuto"><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Fole automático</b><small>O app troca a direção do fole sozinho.</small></span></label>
             <label class="menu-switch"><input type="checkbox" id="micToggle"><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Usar microfone</b><small>Toque no seu bandoneon: o app confere as notas.</small></span></label>
             <label class="menu-switch"><input type="checkbox" id="melStaffOn"><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Partitura</b><small>As notas na pauta, com o cursor.</small></span></label>
             <label class="menu-switch"><input type="checkbox" id="melRollOn"><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Notas caindo</b><small>Descem até a linha no tempo da música.</small></span></label>
             <label class="menu-switch"><input type="checkbox" class="nomesToggle" checked><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Nomes das notas</b><small>Escritos nos botões do teclado.</small></span></label>
           </div>
-          <div class="menu-acoes">
-            <button class="btn btn-grande btn-play" id="melStart">Começar</button>
-            <button class="btn sec" id="melEdit">Editar</button>
-          </div>
         </div>
         <div class="menu-resumo" id="melResumo" hidden><div class="menu-chips" id="melResumoChips"></div><button type="button" class="btn ghost" id="melParar"><svg aria-hidden="true"><use href="#i-x"/></svg>Parar</button></div>
         <div class="notice" id="melWarn" style="display:none;margin-top:12px"></div>
         <div class="guide" id="melGuide" style="display:none"><details id="guideIntroBox" open><summary>Sobre esta escala</summary><div id="guideIntro"></div></details><div class="gstep" id="guideStep"></div></div>
+        <div class="palco-console mel-console">
+        <span class="palco-rot">Bandoneon</span>
+        <div id="melDirPill" class="dirpill open">Abrindo</div>
         <div class="staffwrap" id="melStaff" aria-hidden="true"></div>
         <div class="mroll" id="melRoll" hidden><canvas id="melRollCv" aria-hidden="true"></canvas></div>
         <div class="mstrip" id="melStrip"></div>
-        <div style="text-align:center">
-          <div id="melDirPill" class="dirpill open">Abrindo</div>
+        <div class="mel-pe">
           <div id="micStatus" aria-live="polite"></div>
           <div class="feedback" id="melFeed"></div>
           <div class="muted" id="melStat"></div>
@@ -774,7 +777,8 @@
           <div class="side" id="mkLeftWrap"><div class="label">Mão esquerda</div><div id="mkLeft"></div></div>
           <div class="side" id="mkRightWrap"><div class="label">Mão direita</div><div id="mkRight"></div></div>
         </div>
-        <p class="muted">O botão com contorno lilás é o próximo a tocar. A cor de cada nota mostra a direção sugerida do fole: <span class="dirpill open" style="padding:1px 8px">abrindo</span> <span class="dirpill close" style="padding:1px 8px">fechando</span>. Troque a direção com <kbd>Espaço</kbd> ou marque "Fole automático".</p>
+        </div>
+        <p class="muted mel-legenda">O botão com contorno lilás é o próximo a tocar. A cor de cada nota mostra a direção sugerida do fole: <span class="dirpill open" style="padding:1px 8px">abrindo</span> <span class="dirpill close" style="padding:1px 8px">fechando</span>. Troque a direção com <kbd>Espaço</kbd> ou marque "Fole automático".</p>
       </div>
       <div class="card" id="melImport" style="display:none">
         <h3 style="margin-top:0">Importar MusicXML</h3>
@@ -931,20 +935,20 @@
       </div>
     </div>
     <div class="eco-mapa" id="ecoMapa" aria-label="Fases" hidden></div>
-    <div class="eco-faixa" id="ecoFaixa" aria-live="polite"><span class="eco-ondas" aria-hidden="true"><i></i><i></i><i></i></span><b id="ecoFaixaTxt"></b><small id="ecoFaixaSub"></small></div>
-    <div class="eco-trilha" id="ecoTrilha" aria-hidden="true"></div>
-    <div class="bar eco-barra"><div id="ecoBarra"></div></div>
     <!-- o palco mostra sempre a mão e o fole; o quanto aparece enquanto o bandoneon toca depende da Ajuda (js/eco.js) -->
-    <div class="eco-palco" id="ecoPalco" data-fole="open">
+    <div class="eco-palco palco-console" id="ecoPalco" data-fole="open">
       <div class="eco-palco-cab">
         <span class="eco-mao" id="ecoMao">Mão direita</span>
         <span class="eco-fole" id="ecoFole"><svg class="eco-sanfona" viewBox="0 0 54 30" aria-hidden="true"><rect x="0" y="3" width="5" height="24" rx="2"/><rect x="49" y="3" width="5" height="24" rx="2"/><g class="pregas"><path d="M9 4 L13 26 L17 4 L21 26 L25 4 L29 26 L33 4 L37 26 L41 4 L45 26"/></g></svg><span id="ecoDir" class="dirpill open">Abrindo</span></span>
         <div class="eco-modo" id="ecoModo" role="radiogroup" aria-label="Ajuda"><button type="button" role="radio" data-ajuda="ver">Ver e ouvir</button><button type="button" role="radio" data-ajuda="fole">Só o fole</button><button type="button" role="radio" data-ajuda="ouvido">Só ouvindo</button></div>
       </div>
+      <div class="eco-faixa" id="ecoFaixa" aria-live="polite"><span class="eco-ondas" aria-hidden="true"><i></i><i></i><i></i></span><b id="ecoFaixaTxt"></b><small id="ecoFaixaSub"></small></div>
       <div class="eco-kb" id="ecoKbL" hidden></div>
       <div class="eco-kb" id="ecoKbR"></div>
+      <!-- as notas da rodada, uma por cartão (js/eco.js, ecoTrilha) -->
+      <div class="eco-notas" id="ecoNotas" aria-hidden="true"></div>
+      <div class="feedback" id="ecoFeed" aria-live="polite"></div>
     </div>
-    <div class="feedback" id="ecoFeed" aria-live="polite"></div>
     <div class="row eco-controles">
       <button class="btn sec" id="ecoRepetir" disabled><svg aria-hidden="true"><use href="#i-volume"/></svg>Ouvir de novo</button>
       <button class="btn ghost" id="ecoParar">Parar</button>
