@@ -8,6 +8,8 @@
 //   size, diaFator tamanho fixo da casa de cada botão e quanto dela o círculo ocupa (padrão 0,8)
 //   largura()     largura disponível em px, quando o teclado fica numa área menor que a página
 //   editable, canSound, sound   edição do mapa e controle do som
+//   rotulo(b)     um nome próprio para o botão (texto; undefined = o normal)
+//   rotuloHtml(b) o mesmo, em HTML (ex.: as duas notas do botão, uma em cima da outra, no Afinador)
 // Devolve uma api para marcar botões (dica, acerto, erro, acorde, cor do mapa de erros).
 let kbSeq=0;
 // Tamanho do botão conforme a largura da tela. perRow = quantos teclados lado a lado (1 ou 2)
@@ -57,8 +59,8 @@ function createKeyboard(el, hand, opts={}){
     const dir=opts.getDir?opts.getDir():state.dir, show=opts.showLabels?opts.showLabels():state.showLabels;
     el.dataset.fole = dir; // o botão apertado acende na cor do fole (azul abrindo, laranja fechando)
     for(const {d,b} of Object.values(nodes)){
-      const m=b[dir], r=opts.rotulo ? opts.rotulo(b) : undefined; // opts.rotulo(b): um nome próprio para o botão (undefined = o normal)
-      d.textContent = r!==undefined ? r : show ? noteName(m) : '';
+      const m=b[dir], r=opts.rotulo ? opts.rotulo(b) : undefined, h=opts.rotuloHtml ? opts.rotuloHtml(b) : undefined; // undefined = o normal
+      if(h!==undefined) d.innerHTML = h; else d.textContent = r!==undefined ? r : show ? noteName(m) : '';
       d.setAttribute('aria-label', show ? `${noteName(b.open)} abrindo, ${noteName(b.close)} fechando` : 'Botão do bandoneon');
       d.classList.toggle('sharp', [1,3,6,8,10].includes(m%12));
       d.classList.toggle('edit', state.editing && !!opts.editable);

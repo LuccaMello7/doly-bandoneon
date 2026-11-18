@@ -565,6 +565,16 @@ teste('Bandoneon real: a nota ouvida acende os botões que dão essa nota', () =
   ok($('#mcAfinador').classList.contains('afinado'));
   go('inicio');
 });
+teste('Afinador: com "Nomes das notas" ligado, todo botão mostra as duas notas (abrindo e fechando)', () => {
+  const antes = state.showLabels; go('microfone'); mcUltima = null; mcAcesos = {}; mcMostrar(null); setMostrarNomes(true);
+  const b = state.layout.right.find(x=>x.open!==x.close), k = $$('#mcRight .key')[state.layout.right.indexOf(b)];
+  igual(k.querySelector('.mc-duas .a').textContent, noteName(b.open), 'a nota de abrindo em cima');
+  igual(k.querySelector('.mc-duas .f').textContent, noteName(b.close), 'a de fechando embaixo');
+  const i = state.layout.right.findIndex(x=>x.open===x.close); if(i >= 0) igual($$('#mcRight .key')[i].textContent, noteName(state.layout.right[i].open), 'nota igual nas duas direções: um nome só');
+  mcMostrar(b.open, 0, 0.1); ok(!k.querySelector('.mc-duas') && k.textContent===noteName(b.open), 'aceso: só a nota ouvida');
+  setMostrarNomes(false); igual(k.textContent, '', 'desligado: sem nomes');
+  setMostrarNomes(antes); mcUltima = null; mcAcesos = {}; go('inicio');
+});
 teste('vibração e animações: Ajustes liga e desliga', () => {
   $('#movSel').value = 'reduzido'; $('#movSel').dispatchEvent(new Event('change')); ok(document.documentElement.classList.contains('sem-mov'));
   $('#movSel').value = 'normal'; $('#movSel').dispatchEvent(new Event('change'));

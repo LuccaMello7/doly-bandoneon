@@ -90,9 +90,15 @@ function micStop(){
   const el = $('#micStatus'); if(el) el.textContent = '';
 }
 /* ---------- Tela Afinador: a nota ouvida, a afinação e os botões que dão essa nota ---------- */
-// Com "Abrindo e fechando", cada botão tem duas notas: os nomes ficam só nos botões acesos (a nota ouvida)
+// O som não diz a direção do fole, então este teclado vale para as duas. Com "Nomes das notas" ligado, cada botão
+// mostra as duas notas: a de abrindo em cima (azul) e a de fechando embaixo (laranja); se forem iguais, uma só.
+// Nos botões acesos fica só a nota ouvida.
 let mcAcesos = {};
-const mcOpts = {getDir:()=>'open', rotulo:b=>state.showLabels && mcAcesos[b.id]!=null ? noteName(mcAcesos[b.id]) : ''};
+const mcOpts = {getDir:()=>'open', rotuloHtml:b=>{
+  if(!state.showLabels) return '';
+  if(mcAcesos[b.id]!=null) return noteName(mcAcesos[b.id]);
+  return b.open===b.close ? noteName(b.open) : `<span class="mc-duas"><i class="a">${noteName(b.open)}</i><i class="f">${noteName(b.close)}</i></span>`;
+}};
 const mcL = kb($('#mcLeft'),'left',mcOpts), mcR = kb($('#mcRight'),'right',mcOpts);
 let mcDono = false, mcUltima = null; // mcDono: o microfone foi ligado nesta tela (e desliga ao sair dela)
 function mcEstado(){
