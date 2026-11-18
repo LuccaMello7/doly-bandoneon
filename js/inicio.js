@@ -243,6 +243,8 @@ function renderInicio(es, n, atual){
   // Rotina de hoje
   const feitas = state.progress.days[dayKey()] || {}, falta = ROUTINE.find(r=>!feitas[r.k]);
   $('#iniRotinaTit').textContent = t('{} de {} tarefas', ROUTINE.filter(r=>feitas[r.k]).length, ROUTINE.length);
+  $('#iniRotinaSegs').style.setProperty('--n', ROUTINE.length);
+  $('#iniRotinaSegs').innerHTML = ROUTINE.map(r=>`<i class="${feitas[r.k] ? 'f' : ''}"></i>`).join('');
   $('#iniRotinaTxt').textContent = falta ? t('Próxima: {}.', t(falta.t)) : 'Rotina de hoje completa.';
 }
 $('#inContBtn').onclick = ()=>$('#heroCta').click();

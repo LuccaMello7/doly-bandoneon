@@ -1361,6 +1361,8 @@ teste('Início: o minuto guiado ensina o bisonoro em três passos', () => {
 teste('Início de quem volta: modos em cartões, faixa do Doly, convite que sai ao tocar e um só Continuar à vista', async () => {
   go('inicio'); await new Promise(r=>setTimeout(r,250));
   igual($$('.ini-modos a[data-go]').length, 4, 'Teclado, Melodias, Acordes e Ritmo em cartões');
+  igual($$('#iniRotinaSegs i').length, ROUTINE.length, 'tarefas de hoje: um bloco por tarefa');
+  ok($('#iniInst .ini-pauta') && $('#iniInst .ini-convite'), 'instrumento, convite e partitura no mesmo console');
   ok(!$('.ini-atalhos'), 'a lista antiga saiu');
   ok($('.ini-doly-faixa img') && /doly-costa\/(index\.html)?$/.test($('.ini-doly-faixa').getAttribute('href')), 'faixa do Doly com foto e link');
   const cv = $('#iniConvite'); cv.classList.remove('some');
