@@ -1013,9 +1013,9 @@
 </section>
 <!-- ACADEMIA: exercícios progressivos com instrutor digital (js/academia.js) -->
 <section id="v-academia">
-  <div class="pg-topo"><span class="pg-ic t-academia"><svg aria-hidden="true"><use href="#i-cap"/></svg></span><div><h2 class="pg-tit">Academia de Bandoneón</h2><p class="muted">Exercícios em 6 níveis, do primeiro botão até músicas com as duas mãos, e um nível para as suas próprias partituras. O instrutor mostra a nota, a mão e a direção do fole de cada momento, e no fim você recebe um relatório com o que acertou e o que revisar.</p></div></div>
+  <div class="pg-topo"><span class="pg-ic t-academia"><svg aria-hidden="true"><use href="#i-cap"/></svg></span><div><h2 class="pg-tit">Academia de Bandoneón</h2><p class="muted">Seis níveis, do primeiro botão às músicas com as duas mãos, e um sétimo para as suas partituras. O instrutor acompanha cada nota e, no fim, mostra o que revisar.</p></div></div>
   <div class="card tarefa-aviso" hidden></div>
-  <aside class="aviso aviso-curto" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></svg><p><strong>O BanDoly é um site para aprendizado e nunca substituirá os conselhos e as orientações de um professor.</strong> Use o app como apoio aos estudos e, sempre que puder, aprenda com um professor de bandoneon: ele corrige a postura, o fole e o dedilhado, coisas que um app não consegue ver.</p><p class="aviso-linha"><strong>O BanDoly não substitui um professor de bandoneon.</strong> <button type="button" class="aviso-ler">Ler o aviso</button></p></aside>
+  <aside class="aviso aviso-curto ac-aviso" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg><p><strong>O BanDoly é um site para aprendizado e nunca substituirá os conselhos e as orientações de um professor.</strong> Use o app como apoio aos estudos e, sempre que puder, aprenda com um professor de bandoneon: ele corrige a postura, o fole e o dedilhado, coisas que um app não consegue ver.</p><p class="aviso-linha">O BanDoly apoia os estudos e não substitui um professor de bandoneon. <button type="button" class="aviso-ler">Ler o aviso</button></p></aside>
   <!-- 1. escolher: níveis em fileira e os exercícios do nível (recolhe enquanto você toca) -->
   <div class="card ac-escolha" id="acEscolha">
     <div class="ac-resumo" id="acResumo">
@@ -1059,13 +1059,23 @@
       </details>
     </div>
       <div class="ac-lista" id="acLista"></div>
-      <div class="ac-escalas"><div><b>Escalas em todas as tonalidades</b><span class="muted">Maior, menor e outras, em qualquer tom, com o seu progresso em cada uma.</span></div><button type="button" class="btn sec" id="acAbrirEscalas"><svg aria-hidden="true"><use href="#i-music"/></svg>Abrir as escalas guiadas</button></div>
     </div>
   </div>
 
-  <!-- 2. ajustar e começar: a barra fica logo acima do teclado -->
-  <div class="card ac-barra" id="acBarra">
-    <div class="ac-ajustes">
+  <!-- 2. tocar: o palco (o exercício, os controles, o fole, o teclado) e o instrutor ao lado -->
+  <div class="ac-layout">
+    <div class="card ac-centro palco-console" id="acCentro">
+      <div class="ac-ex-cab">
+        <div class="ac-ex-cab-txt"><small id="acExNivel"></small><h3 id="acExTitulo"></h3><p id="acExDesc"></p></div>
+        <div class="acao">
+          <button class="btn sec btn-play" id="acOuvirBtn">Ouvir</button>
+          <button class="btn sec ac-ic" id="acCheiaBtn" title="Tela cheia" aria-label="Tela cheia"><svg aria-hidden="true"><use href="#i-expand"/></svg></button>
+          <button class="btn sec" id="acCheiaSair" hidden><svg aria-hidden="true"><use href="#i-x"/></svg>Sair da tela cheia</button>
+          <button class="btn btn-grande btn-play" id="acStart">Começar</button>
+        </div>
+      </div>
+      <!-- modo, velocidade e mais opções -->
+      <div class="ac-barra" id="acBarra">
     <div class="ac-modos" id="acModo" role="group" aria-label="Modo">
       <button type="button" data-modo="aprender" class="on">Aprender</button>
       <button type="button" data-modo="praticar">Praticar</button>
@@ -1073,7 +1083,7 @@
     </div>
     <label class="ac-vel">Velocidade <input type="range" id="acVel" min="40" max="120" step="10" value="70"> <span id="acVelVal">70%</span></label>
     <details class="ac-mais" id="acMais">
-      <summary class="btn sec"><svg aria-hidden="true"><use href="#i-gear"/></svg>Mais opções</summary>
+      <summary class="btn sec ac-ic" title="Mais opções" aria-label="Mais opções"><svg aria-hidden="true"><use href="#i-gear"/></svg></summary>
       <div class="ac-mais-painel">
         <div class="menu-switches">
           <label class="menu-switch"><input type="checkbox" id="acMetro" checked><span class="menu-trilho" aria-hidden="true"></span><span class="menu-switch-txt"><b>Metrônomo</b><small>Um clique em cada tempo, no Desafio e ao ouvir.</small></span></label>
@@ -1088,27 +1098,16 @@
         </div>
       </div>
     </details>
-    </div>
-    <div class="acao">
-      <button class="btn btn-grande btn-play" id="acStart">Começar</button>
-      <button class="btn sec btn-play" id="acOuvirBtn">Ouvir</button>
-      <button class="btn sec" id="acCheiaBtn"><svg aria-hidden="true"><use href="#i-expand"/></svg>Tela cheia</button>
-      <button class="btn sec" id="acCheiaSair" hidden><svg aria-hidden="true"><use href="#i-x"/></svg>Sair da tela cheia</button>
-      <p class="muted ac-modo-info acao-dica" id="acModoInfo"></p>
-    </div>
-  </div>
-
-  <!-- 3. tocar: o teclado (só a mão do exercício, ou as duas com o fole no meio) e o instrutor -->
-  <div class="ac-layout">
-    <div class="card ac-centro" id="acCentro">
-      <div class="row ac-topo">
-        <div><b id="acExTitulo"></b><div class="muted" id="acExDesc"></div></div>
       </div>
-      <div class="row ac-fole-linha">
-        <span class="muted">Seu fole:</span> <span class="dirpill open" id="acDirPill"></span>
-        <button class="btn sec" id="acDirBtn" title="Troca a direção do fole (tecla Espaço)">⇄ Trocar fole <kbd class="so-teclado">Espaço</kbd></button>
-        <label title="O app troca a direção do fole sozinho. Nesse caso o fole não é avaliado."><input type="checkbox" id="acAuto"> Fole automático</label>
-        <label><input type="checkbox" id="acNomes" class="nomesToggle" checked> Nomes nos botões</label>
+      <p class="muted ac-modo-info" id="acModoInfo"></p>
+      <!-- o fole: Abrindo | Fechando (Espaço troca) e as duas chaves -->
+      <div class="ac-fole-linha">
+        <span class="ac-fole-rot">Fole</span>
+        <div class="ac-fole-seg" id="acFoleSeg" role="radiogroup" aria-label="Fole"><button type="button" role="radio" data-dir="open"><i aria-hidden="true"></i>Abrindo</button><button type="button" role="radio" data-dir="close"><i aria-hidden="true"></i>Fechando</button></div>
+        <kbd class="so-teclado" title="Troca a direção do fole">Espaço</kbd>
+        <span class="ac-fole-esp"></span>
+        <label class="ac-chave" title="O app troca a direção do fole sozinho. Nesse caso o fole não é avaliado."><input type="checkbox" id="acAuto"><i aria-hidden="true"></i>Fole automático</label>
+        <label class="ac-chave"><input type="checkbox" id="acNomes" class="nomesToggle" checked><i aria-hidden="true"></i>Nomes nos botões</label>
       </div>
       <div class="ac-teclados" id="acTeclados" data-maos="duas" data-fole="open">
         <div class="ac-mao" id="acMaoE"><div class="ac-maolabel">Mão esquerda</div><div id="acKbLeft"></div></div>
@@ -1127,7 +1126,7 @@
       <div class="ac-prog" aria-hidden="true"><span id="acProgTxt" class="muted"></span><span class="ac-prog-bar"><i id="acProgBar"></i></span></div>
       <!-- "Agora" em destaque e "Próximo" num cartão tracejado (o mesmo tracejado do próximo botão no teclado) -->
       <div class="ac-ap">
-        <div class="ac-agora-box"><span class="ac-rotulo">Agora</span><div id="acAgora" aria-live="polite"></div></div>
+        <div class="ac-agora-box"><span class="ac-rotulo" id="acAgoraRot">Agora</span><div id="acAgora" aria-live="polite"></div></div>
         <div class="ac-prox-box" id="acProxBox" hidden><span class="ac-rotulo">Próximo</span><div id="acProximo"></div></div>
       </div>
       <div class="ac-dicas-box" id="acDicas"></div>

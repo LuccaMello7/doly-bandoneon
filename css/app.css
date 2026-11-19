@@ -1139,7 +1139,6 @@ html:not(.sem-mov) [data-revela="cascata"]:not(.visto)>*{opacity:0}
 .acao .btn-grande{min-width:190px;justify-content:center}
 .acao .acao-dica{flex:1 1 240px;margin:0}
 @media (max-width:700px){.acao .btn-grande{flex:1 1 100%}}
-@media (min-width:1000px){.ac-barra{position:sticky;top:10px;box-shadow:0 10px 26px #0006}}
 .ac-barra .ac-modos{margin:0}
 .ac-vel{display:inline-flex;align-items:center;gap:8px;font-weight:600;color:var(--muted)}
 .ac-vel input{width:110px}
@@ -1473,7 +1472,7 @@ html[lang|="en"] .eco-mao::before{content:"R"}html[lang|="en"] .eco-mao[data-mao
 /* Academia em tela cheia: Começar/Parar, o instrutor (Agora e Próximo) e o teclado */
 #v-academia.ac-cheia{position:fixed;inset:0;z-index:50;margin:0;max-width:none;width:100%;height:100%;overflow:hidden;display:flex!important;
   flex-direction:column;gap:8px;padding:8px 12px calc(8px + env(safe-area-inset-bottom));background:var(--bg)}
-#v-academia.ac-cheia>:not(.ac-barra):not(.ac-layout){display:none!important}
+#v-academia.ac-cheia>:not(.ac-layout){display:none!important}
 #v-academia.ac-cheia .ac-barra{margin:0;padding:8px 12px;flex:none}
 #v-academia.ac-cheia .ac-ajustes,#v-academia.ac-cheia .acao-dica,#v-academia.ac-cheia #acCheiaBtn{display:none!important}
 #v-academia.ac-cheia .acao{margin:0;padding:0;border:0}
@@ -1487,7 +1486,7 @@ html[lang|="en"] .eco-mao::before{content:"R"}html[lang|="en"] .eco-mao[data-mao
 #v-academia.ac-cheia .ac-prox-box{margin:0}
 #v-academia.ac-cheia .ac-nota{font-size:2rem}
 #v-academia.ac-cheia .ac-centro{flex:1;min-height:0;margin:0;padding:8px 12px;display:flex;flex-direction:column;align-items:center}
-#v-academia.ac-cheia .ac-centro>:not(.ac-teclados):not(#acFeed):not(.ac-fole-linha){display:none!important}
+#v-academia.ac-cheia .ac-centro>:not(.ac-teclados):not(#acFeed):not(.ac-fole-linha):not(.ac-ex-cab){display:none!important}
 #v-academia.ac-cheia .ac-fole-linha{margin:0;justify-content:center}
 /* com o fole automático o instrutor já mostra a direção: a linha do fole sai e o teclado ganha espaço */
 #v-academia.ac-cheia .ac-fole-linha:has(#acAuto:checked){display:none!important}
@@ -2100,7 +2099,7 @@ main.priv-pagina{max-width:760px}
 .mroll{background:var(--ameixa);border:0;box-shadow:inset 0 0 0 1px var(--borda)}
 .ac-dedo-pop{background:var(--ameixa-2);border:0;box-shadow:inset 0 0 0 1px var(--borda-2),0 24px 48px -20px rgba(0,0,0,.8);animation-timing-function:var(--ease-saida)}
 .dedo-linha button{background:var(--ameixa-3);box-shadow:inset 0 0 0 1px var(--borda)}
-@media (min-width:1000px){.ac-barra{box-shadow:inset 0 0 0 1px var(--borda),0 18px 30px -22px rgba(0,0,0,.75)}}
+
 .lupa{background:rgba(21,17,27,.95)}
 .lupa img{box-shadow:none}
 .lupa-fechar,.lupa-seta{background:rgba(241,240,236,.1)}
@@ -3295,3 +3294,120 @@ body[data-aba="academia"]{background:radial-gradient(1100px 520px at 50% -160px,
 .eco-nota.ok.ajudada{background:rgba(255,255,255,.06);box-shadow:inset 0 0 0 1px rgba(185,151,255,.35)}
 .eco-nota.ok.ajudada small{color:var(--cinza-2)}
 #ecoPalco #ecoFeed.ajuda{color:var(--lavanda)}
+
+/* ================== Academia: do currículo ao palco em menos passos (2026-11) ==================
+   Aviso numa linha, níveis em pílulas, cartões iguais, o palco com os controles dentro e o instrutor "Prepare-se". */
+/* aviso: (i) e uma linha, sem a faixa dourada (na primeira visita o texto inteiro aparece, sem alarme) */
+#v-academia .ac-aviso{background:none;border:0;box-shadow:none;border-radius:0;padding:0;margin:-8px 0 24px;gap:8px;color:var(--cinza-2);font-size:14px;align-items:flex-start}
+#v-academia .ac-aviso svg{width:20px;height:20px;stroke:var(--cinza-2);margin-top:1px}
+#v-academia .ac-aviso strong{color:var(--osso);font-size:14px}
+#v-academia .ac-aviso .aviso-ler{color:var(--osso);font-weight:500}
+/* níveis: pílulas numa fileira, com um fio de progresso */
+#acNiveis{display:flex;gap:8px;overflow-x:auto;margin:0 0 24px;padding-bottom:4px;scrollbar-width:none}
+#acNiveis::-webkit-scrollbar{display:none}
+#acNiveis .ac-nivel{position:relative;flex:0 0 auto;flex-direction:row;gap:8px;padding:8px 16px 8px 8px;border-radius:999px;background:var(--ameixa);box-shadow:inset 0 0 0 1px var(--borda);color:var(--cinza-2);overflow:hidden}
+#acNiveis .ac-nivel::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:calc(var(--p,0)*100%);background:var(--lavanda)}
+#acNiveis .ac-nivel .ac-num{width:28px;height:28px;background:rgba(255,255,255,.08)}
+#acNiveis .ac-nivel .ac-num::before{display:none}
+#acNiveis .ac-nivel .ac-num b{font-size:14px;color:var(--osso)}
+#acNiveis .ac-nivel .ac-ntit{font-size:14px;font-weight:600;white-space:nowrap}
+#acNiveis .ac-nivel.on{background:rgba(185,151,255,.16);box-shadow:inset 0 0 0 1px var(--lavanda);color:var(--osso)}
+#acNiveis .ac-nivel.on .ac-num{background:var(--lavanda)}
+#acNiveis .ac-nivel.on .ac-num b{color:var(--bg)}
+#acNiveis .ac-nivel.completo .ac-num::after{width:14px;height:14px;font-size:9px;right:-4px;top:-4px}
+#acNivelTitulo{margin:0 0 4px;font-size:20px}
+#acNivelObjetivo{margin:0 0 16px;max-width:80ch}
+/* cartões do mesmo tamanho: título, duas linhas, o tipo, a porcentagem e a barra */
+#acLista{grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0}
+#acLista .ac-ex{display:grid;grid-template-rows:auto 1fr auto auto;gap:4px;min-height:152px;padding:16px;border:0;border-radius:16px;background:var(--ameixa);box-shadow:inset 0 0 0 1px var(--borda)}
+#acLista .ac-ex>b{font-size:16px;font-weight:600}
+#acLista .ac-ex-desc{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;align-self:start;font-size:14px;line-height:1.5;max-height:3em}
+#acLista .ac-ex.on{background:rgba(185,151,255,.12);box-shadow:inset 0 0 0 1.5px var(--lavanda)}
+#acLista .ac-ex:disabled{opacity:.55;cursor:default}
+.ac-ex-pe{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:8px;font-size:13px;color:var(--cinza-2)}
+.ac-ex-pe b{font-weight:600;color:var(--osso)}
+.ac-ex-pe b.ac-ok{color:var(--lavanda)}
+.ac-ex-barra{height:4px;border-radius:4px;background:rgba(255,255,255,.08);overflow:hidden}
+.ac-ex-barra i{display:block;height:100%;border-radius:4px;background:var(--lavanda)}
+.ac-breve{display:inline-flex;align-items:center;gap:8px}
+.ac-breve svg{width:14px;height:14px}
+#acLista .ac-ex-escalas{background:transparent;box-shadow:inset 0 0 0 1px var(--borda);outline:1px dashed rgba(255,255,255,.14);outline-offset:-1px}
+#acLista .ac-ex-escalas .ac-ex-pe b{color:var(--lavanda)}
+@media (hover:hover){#acLista .ac-ex:not(:disabled):hover{box-shadow:inset 0 0 0 1px rgba(185,151,255,.5)}}
+/* o palco: o exercício e o Começar; a barra (modo, velocidade, mais opções); o fole; o teclado */
+#acCentro.palco-console{padding:24px 32px;background-color:transparent;scroll-margin-top:80px}
+.ac-ex-cab{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.ac-ex-cab-txt{flex:1 1 320px;min-width:0}
+.ac-ex-cab small{display:block;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--cinza-2);margin-bottom:4px}
+.ac-ex-cab h3{margin:0;font-size:22px;letter-spacing:-.01em}
+.ac-ex-cab p{margin:4px 0 0;color:var(--cinza-2);font-size:14px;max-width:70ch}
+#acCentro .acao{margin:0;padding:0;border:0;gap:12px;flex-wrap:nowrap}
+#acCentro .acao .btn-grande{min-width:168px}
+.ac-ic{width:44px;height:44px;padding:0;display:inline-grid;place-items:center}
+.ac-ic svg{margin:0}
+#acCentro .ac-barra{flex-direction:row;flex-wrap:wrap;align-items:center;gap:12px;margin-top:16px;padding:16px 0 0;border-top:1px solid rgba(255,255,255,.07);position:static;box-shadow:none;background:none}
+#acCentro .ac-modo-info{margin:8px 0 0;font-size:13px;color:var(--cinza-2)}
+#acCentro .ac-fole-linha{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:24px 0 8px}
+.ac-fole-rot{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--cinza-2)}
+.ac-fole-seg{display:inline-flex;padding:4px;border-radius:12px;background:var(--ameixa);box-shadow:inset 0 0 0 1px var(--borda)}
+.ac-fole-seg button{border:0;background:transparent;color:var(--cinza-2);font:600 14px Onest,sans-serif;padding:8px 16px;border-radius:8px;display:inline-flex;align-items:center;gap:8px;cursor:pointer;transition:background .2s,color .2s}
+.ac-fole-seg button i{width:8px;height:8px;border-radius:50%;background:currentColor}
+.ac-fole-seg [data-dir="open"].on{background:var(--open);color:#0b1a2e}
+.ac-fole-seg [data-dir="close"].on{background:var(--close);color:#2a1100}
+.ac-fole-seg button:focus-visible{outline:2px solid var(--lavanda);outline-offset:2px}
+.ac-fole-linha kbd{font-size:12px}
+.ac-fole-esp{flex:1}
+.ac-chave{position:relative;display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--osso);padding:8px 12px 8px 8px;border-radius:999px;background:var(--ameixa);box-shadow:inset 0 0 0 1px var(--borda);cursor:pointer}
+.ac-chave input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
+.ac-chave i{width:30px;height:18px;border-radius:999px;background:rgba(255,255,255,.12);position:relative;transition:background .2s}
+.ac-chave i::after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:var(--osso);transition:left .2s}
+.ac-chave input:checked+i{background:var(--lavanda)}
+.ac-chave input:checked+i::after{left:14px}
+.ac-chave input:focus-visible+i{outline:2px solid var(--lavanda);outline-offset:2px}
+#acCentro #acFeed{font-size:15px;font-weight:500;color:var(--cinza-2);text-align:center}
+#acCentro #acFeed.ok{color:var(--lavanda)}
+#acCentro #acFeed.bad{color:#ff9a9a}
+#acCentro .ac-strip{justify-content:center}
+/* instrutor: preso abaixo do menu (antes ficava a 20px do topo, atrás do menu de 64px) e o "Prepare-se" */
+@media (min-width:980px){.ac-instrutor{top:80px}}
+.ac-prep-rot{display:block;font-size:13px;color:var(--cinza-2);margin-bottom:2px}
+.ac-prep-n{color:var(--osso)}
+.ac-prep-n small{font-size:.5em;font-weight:600;color:var(--cinza-2)}
+.ac-passos{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:12px;counter-reset:p}
+.ac-passos li{display:grid;grid-template-columns:28px 1fr;column-gap:12px;font-size:14px;counter-increment:p}
+.ac-passos li::before{content:counter(p);grid-row:span 2;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:rgba(185,151,255,.14);color:var(--lavanda);font-weight:650;font-size:13px}
+.ac-passos b{font-weight:600}
+.ac-passos span{color:var(--cinza-2);font-size:13px}
+/* volta ao exercício: a linha do currículo recolhido */
+#acEscolha.recolhido .ac-resumo-num{background:var(--lavanda);color:var(--bg)}
+/* tela cheia: do cabeçalho do palco ficam só o Começar/Parar, o Ouvir e o Sair */
+#v-academia.ac-cheia .ac-ex-cab{width:100%;justify-content:center}
+#v-academia.ac-cheia .ac-ex-cab-txt,#v-academia.ac-cheia #acCheiaBtn{display:none!important}
+#v-academia.ac-cheia .ac-centro.palco-console{border:0;background:none;padding:8px 12px}
+#v-academia.ac-cheia .ac-fole-esp{display:none}
+@media (max-width:999px){#acLista{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){
+  #v-academia .ac-aviso{font-size:13px}
+  #acLista{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin:0 -16px;padding:0 16px 4px;scrollbar-width:none}
+  #acLista::-webkit-scrollbar{display:none}
+  #acLista .ac-ex,#acLista .ac-ex-minha{flex:0 0 78%;scroll-snap-align:start}
+  #acNivelObjetivo{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  #acCentro.palco-console{padding:16px 12px;border-radius:24px}
+  .ac-ex-cab p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  #acCentro .acao{width:100%}
+  #acCentro .acao .btn-grande{flex:1;min-width:0}
+  #acCentro .acao .ac-ic{flex:0 0 44px}
+  #acCentro .ac-modos button{flex:1}
+  #acCentro .ac-barra{gap:8px 12px}
+  #acCentro .ac-modos{width:100%}
+  #acCentro .ac-vel{flex:1;min-width:0}
+  #acCentro .ac-vel input{flex:1;width:auto;min-width:0}
+  #acCentro .ac-modo-info{display:none}
+  #acCentro .ac-fole-linha{gap:8px;margin-top:16px}
+  .ac-fole-linha kbd{display:none}
+  .ac-fole-esp{flex-basis:100%;height:0}
+  .ac-chave{font-size:13px;padding:4px 12px 4px 4px}
+  .ac-passos{display:none}
+  .ac-prep-n{font-size:26px}
+}
+#v-academia.ac-cheia .ac-passos{display:none}

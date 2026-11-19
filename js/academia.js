@@ -91,20 +91,20 @@ function minhasMusicas(){
 const escHtml = s => { const d = document.createElement('div'); d.textContent = s; return d.innerHTML.replace(/\x22/g, '&quot;'); };
 
 const ACADEMIA = [
-{nivel:1, titulo:'Reconhecimento dos botões', objetivo:'Aprender onde fica cada nota, nas duas mãos e nas duas direções do fole.', exercicios:[
+{nivel:1, curto:'Botões', titulo:'Reconhecimento dos botões', objetivo:'Aprender onde fica cada nota, nas duas mãos e nas duas direções do fole.', exercicios:[
   {id:'n1-direita', titulo:'Notas da mão direita', desc:'Encontre 10 notas sorteadas na mão direita.', gerar:()=>acadSorteio(['right'],['open','close'],10), semTempo:true},
   {id:'n1-esquerda', titulo:'Notas da mão esquerda', desc:'Encontre 10 notas sorteadas na mão esquerda.', gerar:()=>acadSorteio(['left'],['open','close'],10), semTempo:true},
   {id:'n1-direcao', titulo:'Abrindo e fechando', desc:'Cada botão dá duas notas. Toque o mesmo botão abrindo e depois fechando: troque o fole entre as duas.', gerar:()=>acadParesDeDirecao(5), semTempo:true, foleManual:true},
   {id:'n1-sem-ajuda', titulo:'Sem auxílio visual', desc:'Etapa avançada: encontre as notas sem destaque e sem nomes nos botões.', gerar:()=>acadSorteio(['left','right'],['open','close'],10), semTempo:true, semAjuda:true},
 ]},
-{nivel:2, titulo:'Primeiras sequências', objetivo:'Tocar sequências curtas de botões vizinhos na mão direita, devagar e com atenção. Os botões são tocados pelos dedos 2 a 5; os polegares cuidam da válvula de ar (direito) e do apoio (esquerdo).', exercicios:[
+{nivel:2, curto:'Sequências', titulo:'Primeiras sequências', objetivo:'Tocar sequências curtas de botões vizinhos na mão direita, devagar e com atenção. Os botões são tocados pelos dedos 2 a 5; os polegares cuidam da válvula de ar (direito) e do apoio (esquerdo).', exercicios:[
   {id:'n2-indicado', titulo:'Botões destacados', desc:'Toque cada botão destacado, um de cada vez, com calma. Se o seu professor definiu a digitação, o dedo aparece no instrutor.', texto:'direita: Dó4:2 Mi4:2 | Sol4:2 Mi4:2 | Ré4:2 Fá4:2 | Mi4:1', bpm:60},
   {id:'n2-sequencias', titulo:'Sequências simples', desc:'Pequenas sequências de botões vizinhos, devagar.', texto:'direita: Dó4 Ré4 Mi4 Ré4 | Dó4:2 p:2 | Mi4 Fá4 Sol4 Fá4 | Mi4:2 p:2', bpm:60},
   {id:'n2-indicador-medio', titulo:'Alternar indicador e médio', desc:'Alternância entre os dedos 2 e 3.', pendente:true},
   {id:'n2-anelar-minimo', titulo:'Anelar e mínimo', desc:'Movimentos com os dedos 4 e 5, os mais fracos.', pendente:true},
   {id:'n2-memorizar', titulo:'Memorize a sequência', desc:'Aperte Começar: o app toca e mostra uma sequência curta. Depois ela some e você toca de memória. A cada acerto, a sequência ganha uma nota.', gerar:()=>acadSequenciaMemoria(), memorizar:true},
 ]},
-{nivel:3, titulo:'Independência dos dedos', objetivo:'Desenvolver coordenação e precisão. No modo Desafio a velocidade sobe conforme a sua precisão.', exercicios:[
+{nivel:3, curto:'Dedos', titulo:'Independência dos dedos', objetivo:'Desenvolver coordenação e precisão. No modo Desafio a velocidade sobe conforme a sua precisão.', exercicios:[
   {id:'n3-escada', titulo:'Sobe e desce', desc:'Sequência ascendente e descendente.', texto:'direita: Dó4:8 Ré4:8 Mi4:8 Fá4:8 Sol4:8 Fá4:8 Mi4:8 Ré4:8 | Dó4:2', bpm:70},
   {id:'n3-alternancia', titulo:'Alternância', desc:'Notas alternadas em terças: uma volta, duas para frente.', texto:'direita: Dó4:8 Mi4:8 Ré4:8 Fá4:8 Mi4:8 Sol4:8 Fá4:8 Lá4:8 | Sol4:2', bpm:70},
   {id:'n3-repeticao', titulo:'Repetição controlada', desc:'Repita a mesma nota com regularidade, sem acelerar.', texto:'direita: Dó4:8 Dó4:8 Dó4:8 Dó4:8 Ré4:8 Ré4:8 Ré4:8 Ré4:8 | Mi4:8 Mi4:8 Mi4:8 Mi4:8 Ré4:2', bpm:70},
@@ -113,7 +113,7 @@ const ACADEMIA = [
   {id:'n3-legato', titulo:'Legato', desc:'Ligado: segure cada botão até apertar o próximo, sem silêncio entre as notas.', texto:'direita: Dó4:4 Ré4:4 Mi4:4 Fá4:4 | Sol4:2 Mi4:2 | Dó4:1', bpm:66, articulacao:'legato'},
   {id:'n3-staccato', titulo:'Staccato', desc:'Picado: solte o botão rápido, deixando um silêncio entre as notas.', texto:'direita: Dó4:4 Ré4:4 Mi4:4 Fá4:4 | Sol4:4 Mi4:4 Dó4:2', bpm:66, articulacao:'staccato'},
 ]},
-{nivel:4, titulo:'Coordenação com o fole', objetivo:'Integrar a digitação com a direção do fole. Aqui o fole é seu: troque com Espaço ou com o botão de fole.', exercicios:[
+{nivel:4, curto:'Fole', titulo:'Coordenação com o fole', objetivo:'Integrar a digitação com a direção do fole. Aqui o fole é seu: troque com Espaço ou com o botão de fole.', exercicios:[
   {id:'n4-abrindo', titulo:'Só abrindo', desc:'Uma escada de notas que existem com o fole abrindo.', gerar:()=>{ const s=acadEscalaNaDirecao('right','open',60,72).slice(0,5); return acadDeNotas([...s, ...s.slice(0,-1).reverse()].map(m=>({midi:m, hand:'right', force:'open'})), 66); }, foleManual:true},
   {id:'n4-fechando', titulo:'Só fechando', desc:'Uma escada de notas que existem com o fole fechando.', gerar:()=>{ const s=acadEscalaNaDirecao('right','close',60,72).slice(0,5); return acadDeNotas([...s, ...s.slice(0,-1).reverse()].map(m=>({midi:m, hand:'right', force:'close'})), 66); }, foleManual:true},
   {id:'n4-alternar', titulo:'Alternar a direção', desc:'A mesma nota abrindo e depois fechando (em botões diferentes). Troque o fole a cada nota.', gerar:()=>{
@@ -123,21 +123,21 @@ const ACADEMIA = [
   {id:'n4-frases', titulo:'Pequenas frases', desc:'Uma frase curta com trocas de fole nos lugares sugeridos.', texto:'direita: Dó4 Dó4 Sol4 Sol4 | Lá4 Lá4 Sol4:2 | Fá4 Fá4 Mi4 Mi4 | Ré4 Ré4 Dó4:2', bpm:80, foleManual:true},
   {id:'n4-sem-interromper', titulo:'Trocar sem interromper', desc:'Escala ligada: troque o fole sem deixar um buraco de silêncio na frase (avaliado no modo Desafio).', texto:melodiaPronta('esc-do'), bpm:72, foleManual:true, verificaTroca:true, articulacao:'legato'},
 ]},
-{nivel:5, titulo:'Coordenação das duas mãos', objetivo:'Independência entre a mão direita e a esquerda, com um fole só para as duas.', exercicios:[
+{nivel:5, curto:'Duas mãos', titulo:'Coordenação das duas mãos', objetivo:'Independência entre a mão direita e a esquerda, com um fole só para as duas.', exercicios:[
   {id:'n5-alternadas', titulo:'Mãos alternadas', desc:'Uma nota na direita, outra na esquerda.', texto:'direita: Dó4:4 p:4 Mi4:4 p:4 | Sol4:4 p:4 Mi4:4 p:4\nesquerda: p:4 Dó3:4 p:4 Sol2:4 | p:4 Dó3:4 p:4 Sol2:4', bpm:66, foleManual:true},
   {id:'n5-acompanhamento', titulo:'Acompanhamento na esquerda', desc:'A direita segura notas longas enquanto a esquerda marca os baixos.', texto:'direita: Mi4:2 Ré4:2 | Dó4:1\nesquerda: Dó3 Sol2 Dó3 Sol2 | Dó3 Sol2 Dó3 Sol2', bpm:66, foleManual:true},
   {id:'n5-ritmo', titulo:'Padrão rítmico', desc:'Marcato na esquerda (quatro por compasso) e notas longas na direita.', texto:'direita: Mi4:2 Sol4:2 | Fá4:2 Ré4:2\nesquerda: Dó3:4 Dó3:4 Dó3:4 Dó3:4 | Sol2:4 Sol2:4 Sol2:4 Sol2:4', bpm:72, foleManual:true},
   {id:'n5-frases', titulo:'Frase com as duas mãos', desc:'O começo da Ode à Alegria com baixos.', texto:'direita: Mi4 Mi4 Fá4 Sol4 | Sol4 Fá4 Mi4 Ré4 | Dó4 Dó4 Ré4 Mi4 | Mi4:4. Ré4:8 Ré4:2\nesquerda: Dó3:2 Dó3:2 | Sol2:2 Sol2:2 | Dó3:2 Dó3:2 | Sol2:2 Sol2:2', bpm:72, foleManual:true},
   {id:'n5-sincronia', titulo:'Sincronia', desc:'As duas mãos juntas. No modo Desafio o app mede a diferença de entrada entre elas.', texto:'direita: Dó4:2 Mi4:2 | Sol4:2 Mi4:2 | Dó4:1\nesquerda: Dó3:2 Dó3:2 | Sol2:2 Sol2:2 | Dó3:1', bpm:66, foleManual:true, verificaSincronia:true},
 ]},
-{nivel:6, titulo:'Aplicação musical', objetivo:'Aplicar a técnica em músicas: devagar, com metrônomo, repetindo trechos e por fim sem auxílio visual.', exercicios:[
+{nivel:6, curto:'Músicas', titulo:'Aplicação musical', objetivo:'Aplicar a técnica em músicas: devagar, com metrônomo, repetindo trechos e por fim sem auxílio visual.', exercicios:[
   {id:'n6-estrelinha', titulo:'Brilha, brilha estrelinha', desc:'Melodia simples, com as trocas de fole sugeridas.', texto:melodiaPronta('estrelinha'), foleManual:true},
   {id:'n6-ode', titulo:'Ode à Alegria', desc:'Um pouco mais longa, com ritmo pontuado.', texto:melodiaPronta('ode'), foleManual:true},
   {id:'n6-lam', titulo:'Lá menor harmônica', desc:'A escala com a cor do tango, com trocas de fole.', texto:melodiaPronta('esc-lam'), foleManual:true},
   {id:'n6-choclo', titulo:'El Choclo: introdução', desc:'O primeiro tango: oito compassos em colcheias, com o cromatismo do Lá#.', texto:melodiaPronta('choclo-intro'), foleManual:true},
   {id:'n6-ode-duas', titulo:'Ode à Alegria a duas mãos', desc:'Melodia e baixos juntos: o desafio final.', texto:melodiaPronta('ode-duas'), foleManual:true},
 ]},
-{nivel:7, titulo:'Minhas músicas', objetivo:'As suas músicas num lugar só: as que você importa aqui (MusicXML ou MIDI) e as que cria ou importa em Melodias. O app transcreve cada nota para um botão, com a mão, a direção do fole, a duração e as pausas. Depois é só treinar nos modos Aprender, Praticar e Desafio.',
+{nivel:7, curto:'Minhas músicas', titulo:'Minhas músicas', objetivo:'As suas músicas num lugar só: as que você importa aqui (MusicXML ou MIDI) e as que cria ou importa em Melodias. O app transcreve cada nota para um botão, com a mão, a direção do fole, a duração e as pausas. Depois é só treinar nos modos Aprender, Praticar e Desafio.',
   get exercicios(){ return minhasMusicas().map(p=>({id:p.id, titulo:p.titulo, desc:p.desc, texto:p.texto, minha:true, origem:p.origem})); }},
 ];
 const todosExercicios = () => ACADEMIA.flatMap(n=>n.exercicios.map(e=>({...e, nivel:n.nivel})));
@@ -186,9 +186,9 @@ function renderAcadNiveis(){
   $('#acNiveis').innerHTML = ACADEMIA.map(n=>{
     const f = acadFuncionais(n), feitos = f.filter(e=>acadConcluido(e.id)).length;
     const p = f.length ? feitos/f.length : 0;
-    return `<button type="button" class="ac-nivel${n.nivel===acad.nivel?' on':''}${p===1?' completo':''}" data-nivel="${n.nivel}" style="--p:${p}">`
-      + `<span class="ac-num"><b>${n.nivel}</b></span><span class="ac-ntit">${n.titulo}</span>`
-      + `<span class="muted ac-nfeitos">${t('{}/{} concluídos', feitos, f.length)}</span></button>`;
+    // pílula: número, nome curto e um fio com o progresso; o nome inteiro e os concluídos ficam no title
+    return `<button type="button" class="ac-nivel${n.nivel===acad.nivel?' on':''}${p===1?' completo':''}" data-nivel="${n.nivel}" style="--p:${p}" title="${t(n.titulo)} · ${t('{}/{} concluídos', feitos, f.length)}">`
+      + `<span class="ac-num"><b>${n.nivel}</b></span><span class="ac-ntit">${t(n.curto)}</span></button>`;
   }).join('');
 }
 function renderAcadLista(){
@@ -199,14 +199,32 @@ function renderAcadLista(){
   if(n.nivel===7 && !n.exercicios.length){ $('#acLista').innerHTML = `<p class="muted">${t('Nenhuma partitura ainda. Importe a primeira acima.')}</p>`; return; }
   $('#acLista').innerHTML = n.exercicios.map(e=>{
     const p = state.progress.academia[e.id], melhor = p ? Math.max(p.melhor.aprender||0, p.melhor.praticar||0, p.melhor.desafio||0) : null;
-    const st = e.pendente ? `<span class="ac-pend">${'Aguardando o dedilhado de referência'}</span>`
-      : acadConcluido(e.id) ? `<span class="ac-ok">✓ ${melhor}%</span>` : melhor!=null ? `<span class="muted">${melhor}%</span>` : '';
     const tit = e.minha ? escHtml(e.titulo) : e.titulo, desc = e.minha ? escHtml(e.desc) : e.desc;
+    const pe = e.pendente ? `<div class="ac-ex-pe"><span class="ac-breve" title="${t('Aguardando o dedilhado de referência')}"><svg aria-hidden="true"><use href="#i-lock"/></svg>Em breve</span></div>`
+      : `<div class="ac-ex-pe"><span>${tipoExercicio(e)}</span><b class="${acadConcluido(e.id) ? 'ac-ok' : ''}">${acadConcluido(e.id) ? '✓ ' : ''}${melhor||0}%</b></div>`
+        + `<div class="ac-ex-barra"><i style="width:${melhor||0}%"></i></div>`;
     const botao = `<button type="button" class="ac-ex${acad.ex&&acad.ex.id===e.id?' on':''}" data-ex="${e.id}"${e.pendente?' disabled':''}>`
-      + `<b>${tit}</b><span class="muted">${desc}</span>${st}</button>`;
+      + `<b>${tit}</b><span class="muted ac-ex-desc">${desc}</span>${pe}</button>`;
     // partituras do usuário: botão para remover
     return e.minha ? `<div class="ac-ex-minha">${botao}<button type="button" class="ac-del" data-del="${e.id}" title="${t('Remover')}" aria-label="${t('Remover')}">✕</button></div>` : botao;
-  }).join('');
+  }).join('') + (n.nivel===7 ? '' : `<button type="button" class="ac-ex ac-ex-escalas" id="acAbrirEscalas"><b>Escalas em todas as tonalidades</b>`
+    + `<span class="muted ac-ex-desc">Maior, menor e outras, em qualquer tom, com o seu progresso em cada uma.</span>`
+    + `<div class="ac-ex-pe"><span>Escalas guiadas</span><b>Abrir →</b></div></button>`);
+  acadRolarCartao();
+}
+// No celular os cartões passam de lado: o carrossel começa no exercício escolhido (só com a aba aberta, para não medir escondido)
+function acadRolarCartao(){
+  const l = $('#acLista'), on = l.querySelector('.ac-ex.on');
+  if(!on || currentView!=='academia' || l.scrollWidth <= l.clientWidth) return;
+  l.scrollLeft += on.getBoundingClientRect().left - l.getBoundingClientRect().left - 16;
+}
+// O tipo do exercício no pé do cartão. Conta as notas do texto sem montar a música (montarEventos mexe no andamento atual).
+function tipoExercicio(e){
+  if(e.memorizar) return 'Memória · cresce a cada acerto';
+  if(e.gerar) return 'Notas sorteadas';
+  if(e._nNotas==null){ try{ e._nNotas = parseMelody(e.texto).notes.filter(x=>!x.rest).length; }catch(_){ e._nNotas = 0; } }
+  const bpm = e.bpm ? ' · ' + e.bpm + ' BPM' : '';
+  return e._nNotas ? (e._nNotas===1 ? '1 nota' : t('{} notas', e._nNotas)) + bpm : bpm.slice(3);
 }
 $('#acNiveis').addEventListener('click', ev=>{
   const b = ev.target.closest('[data-nivel]'); if(!b) return;
@@ -218,6 +236,7 @@ $('#acNiveis').addEventListener('click', ev=>{
 $('#acLista').addEventListener('click', ev=>{
   const d = ev.target.closest('[data-del]');
   if(d){ removerPartitura(d.dataset.del); return; }
+  if(ev.target.closest('#acAbrirEscalas')){ acadAbrirEscalas(); return; }
   const b = ev.target.closest('[data-ex]'); if(b && !b.disabled) carregarExercicio(b.dataset.ex);
 });
 
@@ -251,7 +270,7 @@ function carregarExercicio(id){
   $('#acAuto').checked = ex.minha || (!ex.foleManual && ex.nivel<4); // nas partituras importadas o fole começa automático
   $('#acDe').value = 1; $('#acAte').value = acad.todos.length; $('#acDe').max = $('#acAte').max = acad.todos.length;
   $('#acTrecho').style.display = ex.semTempo ? 'none' : '';
-  $('#acExTitulo').textContent = ex.titulo; $('#acExDesc').textContent = ex.desc;
+  $('#acExTitulo').textContent = ex.titulo; $('#acExDesc').textContent = ex.desc; $('#acExNivel').textContent = t('Nível {} · Exercício', ex.nivel);
   $('#acRelatorio').innerHTML = ''; acadFeed('');
   $('#acDigitar').hidden = !!ex.gerar; // sorteado a cada rodada: não há digitação para fixar
   $('#acOuvirBtn').hidden = !!ex.memorizar; // na memória, o Começar já toca a sequência antes
@@ -293,7 +312,7 @@ function acadResumo(){
   const n = ACADEMIA.find(x=>x.nivel===acad.ex.nivel); $('#acResumoNivel').textContent = t('Nível {}: {}', n.nivel, t(n.titulo));
 }
 function acadRecolher(sim){ $('#acEscolha').classList.toggle('recolhido', sim); }
-$('#acTrocar').onclick = ()=>{ acadParar(); acadPrevia(); acadRecolher(false); $('#acEscolha').scrollIntoView({behavior: movReduzido()?'auto':'smooth', block:'start'}); };
+$('#acTrocar').onclick = ()=>{ acadParar(); acadPrevia(); acadRecolher(false); acadRolarCartao(); $('#acEscolha').scrollIntoView({behavior: movReduzido()?'auto':'smooth', block:'start'}); };
 ['#acDe','#acAte'].forEach(s=>$(s).addEventListener('change', ()=>{ acadParar(); aplicarTrecho(); }));
 $('#acVel').oninput = e=>{ $('#acVelVal').textContent = e.target.value+'%'; };
 
@@ -323,6 +342,7 @@ function textoDedo(e){
 const pilulaFole = (d, mini) => `<span class="dirpill ${d}${mini?' mini':''}">${dirLabel(d)}</span>`;
 function acadInstrutor(gi){
   const aj = acadAjuda(), g = acad.grupos[gi], prox = acad.grupos[gi+1];
+  $('#acAgoraRot').textContent = t('Agora');
   if(!g){ $('#acAgora').innerHTML = `<div class="muted">${t('Escolha um exercício e um modo, depois aperte Começar.')}</div>`;
     $('#acProxBox').hidden = true; $('#acDicas').innerHTML = ''; $('#acDicasCel').innerHTML = ''; return; }
   const evs = g.ks.map(k=>acad.eventos[k]), oculto = aj.faixa==='oculta' && !(acad.ex.semAjuda);
@@ -397,9 +417,32 @@ function pulsoInstrutor(tipo){
   const el = $('#acInstrutor'); el.classList.remove('ok','erro'); void el.offsetWidth; el.classList.add(tipo);
 }
 // Prévia antes de começar: o primeiro botão já brilha, e tocá-lo começa o exercício
+// Antes de começar, o instrutor diz o que vem ("Prepare-se") em vez de pontos de interrogação: na memória, quantas
+// notas e os três passos; nos outros, a primeira nota, a mão e o fole (do mapa). O dedo só se um professor definiu.
+function acadPreparo(){
+  const evs = acad.eventos, ex = acad.ex; if(!evs.length || !ex) return;
+  const aj = acadAjuda(), e = evs[0], oculto = aj.faixa==='oculta';
+  $('#acAgoraRot').textContent = t('Prepare-se'); $('#acProxBox').hidden = true;
+  $('#acDicas').innerHTML = ''; $('#acDicasCel').innerHTML = '';
+  const maos = new Set(evs.map(x=>x.mao)), mao = maos.size>1 ? t('As duas') : t(e.mao==='left' ? 'Esquerda' : 'Direita');
+  const chipMao = `<span class="ac-chip"><span class="muted">${t('Mão')}</span> <b>${mao}</b></span>`;
+  const quantas = `<div class="ac-nota ac-prep-n">${evs.length} <small>${evs.length===1 ? t('nota') : t('notas')}</small></div>`;
+  let h;
+  if(ex.memorizar){
+    const modo = {aprender:'Aprender', praticar:'Praticar', desafio:'Desafio'}[acad.modo];
+    h = quantas + `<div class="ac-chips">${chipMao}<span class="ac-chip"><span class="muted">${t('Modo')}</span> <b>${t(modo)}</b></span></div>`
+      + `<ol class="ac-passos"><li><b>${t('Ouça e veja')}</b><span>${t('O app toca a sequência e acende os botões.')}</span></li>`
+      + `<li><b>${t('Ela some')}</b><span>${t('Os botões apagam e os nomes ficam escondidos.')}</span></li>`
+      + `<li><b>${t('Toque de memória')}</b><span>${acad.modo==='desafio' ? t('No tempo, depois da contagem. Acertou? A sequência ganha uma nota.') : t('No seu ritmo. Acertou? A sequência ganha uma nota.')}</span></li></ol>`;
+  } else if(oculto) h = quantas + `<div class="ac-chips">${chipMao}</div>`;
+  else h = `<span class="ac-prep-rot">${t('Primeira nota')}</span><div class="ac-nota">${noteName(e.midi)}</div><div class="ac-chips">${chipMao}`
+      + (aj.fole ? pilulaFole(e.fole) : '') + (aj.dedo && e.dedo!=null ? `<span class="ac-chip"><span class="muted">${t('Dedo')}</span> <b>${textoDedo(e)}</b></span>` : '') + '</div>';
+  $('#acAgora').innerHTML = h;
+}
 function acadPrevia(){
   acadDica(-1);
   const g = acad.grupos[0], aj = acadAjuda(); if(!g || acad.rodando || acad.demo) return;
+  acadPreparo();
   if(aj.brilho) g.ks.map(k=>acad.eventos[k]).forEach(e=>akOf(e.mao).mark(e.botao.id,'guia',0));
   acadFeed(acad.ex.memorizar ? t('Aperte Começar: o app toca e mostra a sequência ({} notas). Depois ela some e é a sua vez.', acad.eventos.length)
     : acad.modo==='desafio' && !acad.ex.semTempo ? t('Aperte Começar: há uma contagem de 4 tempos antes das notas.')
@@ -426,10 +469,10 @@ function acadFeed(msg, cls=''){ const f=$('#acFeed'); f.className='feedback '+cl
 function acadSetDir(d){
   acad.dir = d; $('#acTeclados').dataset.fole = d; // o teclado brilha na cor do fole (css)
   const fm = $('#acFoleMini'); if(fm) fm.className = 'ac-fole-mini ' + d;
-  const p = $('#acDirPill'); p.className = 'dirpill '+d; p.textContent = dirLabel(d);
+  $$('#acFoleSeg [data-dir]').forEach(b=>{ const on = b.dataset.dir===d; b.classList.toggle('on', on); b.setAttribute('aria-checked', on); });
   akL.refresh(); akR.refresh(); akL.retune(); akR.retune();
 }
-$('#acDirBtn').onclick = ()=>acadSetDir(acad.dir==='open'?'close':'open');
+$('#acFoleSeg').addEventListener('click', e=>{ const b = e.target.closest('[data-dir]'); if(b) acadSetDir(b.dataset.dir); });
 
 /* ---------- Avaliação de um toque ---------- */
 // toque = {botao, mao, midi, fole, fonte:'tela'|'microfone'}. Separa nota, botão, mão, fole e dedo.
@@ -565,7 +608,7 @@ $('#acStart').onclick = ()=>{
   acad.sortearDeNovo = false; acadInstrutor(0);
   if(acad.modo==='desafio' && !acad.ex.semTempo) iniciarNoTempo(); else avancar();
   // a tela vai até o teclado: no celular o instrutor (barra fixa) fica logo acima dele; no computador, a faixa do Começar
-  if(!acad.autoInicio && !acadCheia) (window.innerWidth<980 ? $('#acInstrutor') : $('#acBarra')).scrollIntoView({block:'start', behavior: movReduzido()?'auto':'smooth'});
+  if(!acad.autoInicio && !acadCheia) (window.innerWidth<980 ? $('#acInstrutor') : $('#acCentro')).scrollIntoView({block:'start', behavior: movReduzido()?'auto':'smooth'});
 };
 $('#acOuvirBtn').onclick = ()=>{
   if(acad.demo || acad.rodando){ acadParar(); acadDica(-1); return; }
@@ -595,7 +638,7 @@ function acadComecarMemoria(){
   acadRecolher(true); $('#acMais').open = false; novaRodada();
   $('#acStart').textContent = t('Parar'); botaoRodando($('#acStart'), true);
   acadFeed(t('Ouça e memorize: {} notas.', acad.eventos.length));
-  if(!acadCheia) (window.innerWidth<980 ? $('#acInstrutor') : $('#acBarra')).scrollIntoView({block:'start', behavior: movReduzido()?'auto':'smooth'});
+  if(!acadCheia) (window.innerWidth<980 ? $('#acInstrutor') : $('#acCentro')).scrollIntoView({block:'start', behavior: movReduzido()?'auto':'smooth'});
   acadTocarDemo(()=>{
     acad.demo = false; acad.timers.forEach(clearTimeout); acad.timers = []; acadDica(-1); renderFaixa(); acadInstrutor(0);
     if(acad.dir !== acad.grupos[0].fole) acadSetDir(acad.grupos[0].fole); // o fole volta para o começo da sequência
@@ -821,6 +864,10 @@ $('#acCheiaSair').onclick = acadSairCheia;
 window.addEventListener('resize', ()=>{ if(acadCheia){ clearTimeout(acadCheiaTimer); acadCheiaTimer = setTimeout(acadAjustarCheia, 150); } });
 document.addEventListener('keydown', e=>{ if(e.key==='Escape' && acadCheia) acadSairCheia(); });
 ganchosAba.push(nova=>{ if(nova!=='academia') acadSairCheia(); });
+ganchosAba.push((nova, anterior)=>{
+  if(nova==='academia' && anterior!=='academia' && acad.ex && !acad.rodando && Object.keys(state.progress.academia||{}).length){ acadResumo(); acadRecolher(true); }
+  if(nova==='academia') requestAnimationFrame(acadRolarCartao);
+});
 function acadAoMudarMapa(){ if(acad.ex) carregarExercicio(acad.ex.id); }
 // Tela Início: "Continue de onde parou" com o exercício atual da Academia (só depois da 1ª tentativa)
 function renderContinuar(){
@@ -841,4 +888,4 @@ carregarExercicio(exercicioPorId(store.get('acadEx', '')) ? store.get('acadEx') 
 acad.nivel = acad.ex.nivel; renderAcadNiveis(); renderAcadLista(); renderContinuar();
 $(`#acModo [data-modo="${store.get('acadModo','aprender')}"]`).click();
 // Escalas guiadas (o motor fica em Melodias): a Academia ganhou uma entrada para elas
-$('#acAbrirEscalas').onclick = ()=>{ go('melodias'); const c = $('#scaleCard'); if(c.style.display==='none') $('#scaleOpen').click(); else c.scrollIntoView({block:'start'}); };
+function acadAbrirEscalas(){ go('melodias'); const c = $('#scaleCard'); if(c.style.display==='none') $('#scaleOpen').click(); else c.scrollIntoView({block:'start'}); }

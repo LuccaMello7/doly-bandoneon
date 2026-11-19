@@ -1534,6 +1534,39 @@ teste('RepeTCHÊ: Pedir ajuda pisca o próximo botão, custa 50 pontos e não qu
   ok($('#ecoPedirAjuda').disabled, 'entre rodadas, sem ajuda');
   ecoParar(); go('inicio');
 });
+teste('Academia: pílulas, cartões iguais, controles no palco, fole segmentado, "Prepare-se" e volta ao exercício', () => {
+  go('academia'); const exAntes = acad.ex.id, modoAntes = acad.modo;
+  carregarExercicio('n2-sequencias');
+  igual($$('#acNiveis .ac-nivel').length, 7);
+  igual($('#acNiveis .ac-nivel.on .ac-ntit').textContent, t('Sequências'), 'nome curto na pílula');
+  ok($('#acNiveis .ac-nivel.on').title.includes(t('Primeiras sequências')), 'o nome inteiro fica no title');
+  const cartoes = $$('#acLista .ac-ex[data-ex]');
+  ok(cartoes.length && cartoes.every(c=>c.querySelector('.ac-ex-pe')), 'todo cartão tem o pé');
+  ok($('#acLista [data-ex="n2-sequencias"] .ac-ex-pe').textContent.includes('60 BPM'), 'o tipo mostra notas e andamento');
+  ok($('#acLista [data-ex="n2-indicador-medio"] .ac-breve'), 'pendente vira "Em breve"');
+  ok($('#acLista #acAbrirEscalas'), 'escalas viram o último cartão'); ok(!$('#v-academia .ac-escalas'), 'sem o banner');
+  ok($('#acCentro').contains($('#acStart')) && $('#acCentro').contains($('#acModo')) && $('#acCentro').contains($('#acVel')), 'os controles moram no palco');
+  igual($('#acExNivel').textContent, t('Nível {} · Exercício', 2));
+  $('#acFoleSeg [data-dir="close"]').click(); igual(acad.dir, 'close'); ok($('#acFoleSeg [data-dir="close"]').classList.contains('on'), 'Fechando aceso');
+  $('#acFoleSeg [data-dir="open"]').click(); igual(acad.dir, 'open');
+  // instrutor antes de começar: a primeira nota, sem "?"
+  $('#acModo [data-modo="aprender"]').click(); acadPrevia();
+  igual($('#acAgoraRot').textContent, t('Prepare-se'));
+  igual($('#acAgora .ac-nota').textContent, noteName(acad.eventos[0].midi), 'mostra a primeira nota');
+  // na memória: quantas notas e os três passos
+  carregarExercicio('n2-memorizar'); $('#acModo [data-modo="desafio"]').click(); acadPrevia();
+  ok($('#acAgora .ac-nota').textContent.startsWith(String(acad.eventos.length)), 'mostra quantas notas, não "?"'); igual($$('#acAgora .ac-passos li').length, 3);
+  // começar: volta a ser "Agora"
+  carregarExercicio('n2-sequencias'); $('#acModo [data-modo="aprender"]').click(); $('#acStart').click();
+  igual($('#acAgoraRot').textContent, t('Agora')); $('#acStart').click();
+  // volta à aba com progresso: o currículo vem recolhido
+  const prog = state.progress.academia; if(!Object.keys(prog).length) prog['n2-sequencias'] = {melhor:{}, _teste:1};
+  acadRecolher(false); go('inicio'); go('academia');
+  ok($('#acEscolha').classList.contains('recolhido'), 'voltou: currículo numa linha');
+  igual($('#acResumoTit').textContent, t(acad.ex.titulo));
+  if(prog['n2-sequencias'] && prog['n2-sequencias']._teste) delete prog['n2-sequencias'];
+  acadRecolher(false); carregarExercicio(exAntes); $(`#acModo [data-modo="${modoAntes}"]`).click(); go('inicio');
+});
 teste('Plurais: singular e plural de verdade, sem "(s)"', () => {
   igual(plural(1, 'um', 'vários'), 'um'); igual(plural(0, 'um', 'vários'), 'vários'); igual(plural(-1, 'um', 'vários'), 'um');
   go('melodias'); ok(!/\(s\)/.test($('#melStat').textContent) && /notas · /.test($('#melStat').textContent), 'resumo da melodia sem "(s)"');
