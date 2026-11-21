@@ -12,7 +12,7 @@ web
 
 Outros públicos confirmados, que o app também atende:
 
-- **Professores de bandoneon**, que mandam tarefas por link (pelo WhatsApp, por exemplo) e recebem o relatório do aluno.
+- **Professores de bandoneon**, que mandam tarefas por link (pelo WhatsApp, por exemplo), recebem o relatório do aluno e, com conta, acompanham uma turma.
 - **Quem já tem um bandoneon** e toca no instrumento real, com o app ouvindo pelo microfone.
 - **Falantes de espanhol e de inglês**, pelas versões `/es/` e `/en/`.
 
@@ -33,8 +33,8 @@ Sucesso, segundo o dono:
 Quatro argumentos que o BanDoly sustenta e que devem aparecer sempre:
 
 1. **O teclado real na tela.** O mapa do Rheinische 142 (38 botões na direita, 33 na esquerda), com as duas notas de cada botão (abrindo e fechando o fole) e o som gravado de um bandoneon de 1930. Dá para aprender sem ter o instrumento.
-2. **Gratuito e sem cadastro.** Abre no navegador, pode ser instalado e funciona sem internet. Não pede conta nem e-mail.
-3. **A ponte com professores.** O professor manda uma tarefa por link, e o aluno devolve o relatório. Não há servidor nem cadastro no caminho.
+2. **Gratuito e sem cadastro.** Abre no navegador, pode ser instalado e funciona sem internet. Não pede conta para nada; a conta é opcional, só para levar o progresso a outro aparelho e entrar em turmas.
+3. **A ponte com professores.** O professor manda uma tarefa por link, e o aluno devolve o relatório, sem cadastro no caminho. Com conta, o professor cria uma turma e vê o resultado das tarefas.
 4. **A raiz gaúcha e o Doly.** A homenagem a um bandoneonista real e vivo, e a ligação com o tango e a música do Rio Grande do Sul.
 
 ## Operating Context
@@ -45,8 +45,8 @@ Quatro argumentos que o BanDoly sustenta e que devem aparecer sempre:
   - teclado do computador (fileiras mapeadas aos botões; setas para o fole);
   - controlador MIDI;
   - o bandoneon real, ouvido pelo microfone.
-- **Progresso:** fica salvo no próprio navegador. Em Ajustes dá para exportar e importar um backup.
-- **Professores:** criam a tarefa na aba "Para professores" e mandam o link. O aluno abre o exercício pronto e envia o relatório de volta.
+- **Progresso:** fica salvo no próprio navegador. Em Ajustes dá para exportar e importar um backup. Com a conta opcional (só maiores de 18 anos), uma cópia fica na nuvem.
+- **Professores:** criam a tarefa na área Professores e mandam o link ou a passam para uma turma. O aluno abre o exercício pronto e envia o relatório de volta.
 - **Idiomas:**
   - português (principal);
   - espanhol neutro, com toque rio-platense;
@@ -56,22 +56,24 @@ Quatro argumentos que o BanDoly sustenta e que devem aparecer sempre:
 
 **O que existe hoje:**
 
-- **Início e caminho de estudo:** um caminho de 18 etapas, personalizado por três perguntas na primeira visita.
+- **Início:** o próprio bandoneon para tocar, com as duas mãos e o fole, e o caminho de estudo personalizado por três perguntas na primeira visita.
 - **Aprender:**
-  - Meu estudo: rotina diária, sequência de dias e recordes;
-  - Academia: 6 níveis com instrutor (Agora e Próximo), modos aprender, praticar e desafio, e o nível 7 com as partituras do próprio aluno (MusicXML ou MIDI);
+  - Meu estudo: caminho, rotina diária, sequência de dias, recordes e conquistas;
+  - Academia: 6 níveis com instrutor ("Prepare-se" antes, "Agora" durante), modos aprender, praticar e desafio, e o nível 7 com as partituras do próprio aluno (MusicXML ou MIDI);
   - 11 lições com quiz;
-  - teoria musical com páginas próprias.
+  - Teoria: 16 tópicos com laboratório e teste com "Por quê".
 - **Tocar:**
   - teclado livre;
-  - Melodias e escalas guiadas, com partitura, em que a nota tocada aparece em verde;
+  - Melodias e escalas guiadas, com partitura;
   - acordes;
   - Bandoneon real: afinador e calibragem.
 - **Treinar:**
-  - desafios: encontre a nota, leitura na pauta e treino de ouvido;
-  - RepeTCHÊ, em que o bandoneon toca, a pessoa repete e cada música é dividida em fases de 8 notas;
+  - desafios: encontre a nota e leitura na pauta;
+  - ouvido: Qual é a nota? e Ache pelo som;
+  - RepeTCHÊ: o bandoneon toca, a pessoa repete, com fases de 8 notas e "Pedir ajuda";
   - ritmo.
-- **Perfil:** conquistas, Para professores e Ajustes.
+- **Professores:** mandar tarefa, relatórios recebidos e turmas (com conta).
+- **Você:** conta opcional (e-mail ou Google) e Ajustes.
 - **Páginas estáticas:**
   - a história do Doly (`doly-costa/`);
   - perguntas frequentes;
@@ -79,7 +81,8 @@ Quatro argumentos que o BanDoly sustenta e que devem aparecer sempre:
 
 **Restrições técnicas:**
 
-- Site estático, sem build: HTML, CSS e JS clássico, publicado no GitHub Pages em bandoly.app.
+- Site estático, sem build: HTML, CSS e JS clássico, publicado no GitHub Pages em bandoly.app. Detalhes em `ARCHITECTURE.md` e `docs/decisoes/`.
+- Conta e turmas no Supabase (São Paulo), opcionais, com regras de acesso por linha.
 - PWA com service worker; o app funciona offline.
 - As páginas em espanhol e inglês são geradas a partir do português.
 - Há testes automáticos no navegador (`tests/`).
@@ -100,16 +103,30 @@ Quatro argumentos que o BanDoly sustenta e que devem aparecer sempre:
 
 **Privacidade:**
 
-- Sem cadastro. Login só se for opcional, e então com RLS, LGPD, servidor em São Paulo e nunca a chave secreta no site.
+- Sem cadastro obrigatório. A conta é opcional, só para maiores de 18 anos, com RLS em todas as tabelas, servidor em São Paulo e nunca a chave secreta no site.
+- Sem conta, nenhum dado sai do aparelho além da contagem anônima de visitas (GoatCounter, sem cookie).
 - Não publicar o e-mail pessoal do dono.
 
 **Custo:** gratuito hoje, com o futuro em aberto. Os textos não prometem "grátis para sempre" nem "sem anúncios".
 
 **Decisões em aberto:**
 
-- se o público inclui menores de idade (relevante para a LGPD, caso venha login);
 - o modelo de sustentação no futuro;
-- o endereço de contato para as sugestões.
+- ranking ou hall da fama (exigiria servidor e comparação entre pessoas);
+- professores cadastrando alunos nas turmas.
+
+**Já decidido:** contas só para maiores de 18 anos (2026-11-10); contato pelas sugestões em contato@bandoly.app.
+
+## Non-Goals
+
+O que o BanDoly não faz, de propósito:
+
+- conta obrigatória ou cadastro para começar;
+- rastrear pessoas ou vender dados (anúncios no futuro seguem em aberto, ver Custo);
+- dedilhado, técnica ou melodia inventada para preencher a tela;
+- músicas protegidas prontas no app (o usuário pode importar as dele);
+- substituir o professor, ou prometer que ensina tudo sozinho;
+- promessas de "grátis para sempre".
 
 ## Brand Commitments
 
