@@ -193,6 +193,10 @@ Uma paleta escura e quente, de um único acento de marca, onde cada cor viva tem
 
 **A Regra da Voz Lavanda.** A lavanda fala pela marca em títulos e marcas de progresso; não vira fundo de painel nem gradiente de cartão.
 
+**A Regra do Lilás Escolhido.** Lavanda também quer dizer "escolhido / certo / é a sua vez": o nível e o exercício ativos, o cartão da nota acertada, o ponto do "Sua vez!", o botão que pisca no "Pedir ajuda". Por isso nunca vira uma faixa inteira: uma faixa lilás grita mais que o próprio teclado.
+
+**A Regra Sem Cor por Nível.** Níveis, áreas e exercícios não ganham cor própria. O que distingue é o número, o nome e o progresso (um fio ou uma barra lavanda), nunca um arco-íris.
+
 ## Typography
 
 **Display Font:** Onest (com Segoe UI, system-ui, sans-serif)
@@ -269,6 +273,23 @@ Diretos e calmos: uma cor chapada, sem gradiente, sem brilho.
 - **Mapa do teclado do computador** (`.pc-tecla`): mão esquerda em lilás, direita em osso. Azul e laranja nunca marcam mão, só a direção do fole.
 - **Perguntas das lições** (`.q`) e **Perguntas frequentes** (`.faq-item`): linhas separadas por divisória de 1px, sem caixa dentro do painel; a pergunta aberta fica em lavanda.
 
+### O palco (console) — desde 2026-11-18
+O lugar onde se toca, em qualquer tela de prática (Início, Melodias, RepeTCHÊ, Academia), é um console só, com tudo o que a pessoa precisa para tocar dentro dele, e o resto fora:
+- **Moldura:** cantos de 28px (24px no celular), borda de 1px a 7% de branco, fundo translúcido (4% → 1,2% de branco) e um fio de luz de 1px no alto (`.palco-console` em `css/app.css`). Rótulo opcional no canto ("BANDONEON", 13px, 600, caixa alta, .08em).
+- **Ordem dentro:** o que é (título do exercício ou da música) com o Começar ao lado → os controles (modo, velocidade, engrenagem de mais opções) → o fole → o teclado → a faixa de notas e o aviso de acerto/erro.
+- **Nada de barra de controle em cartão separado acima do palco**, e nada fixo (sticky) que possa passar por baixo do menu do topo (64px): o que for sticky usa `top` ≥ 72px.
+- **Ajustes recolhidos:** chaves de apoio (fole automático, microfone, partitura, nomes…) ficam atrás de um botão "Ajustes" ou da engrenagem, e o botão mostra ao lado o que está ligado.
+
+### Peças do palco
+- **Fole segmentado** (`.ac-fole-seg`, a chave do Início): "Abrindo | Fechando", o ativo em azul ou laranja com texto escuro, Espaço ao lado. Nunca quatro botões soltos na mesma linha.
+- **Chave em pílula** (`.ac-chave`): trilho de 30×18 que acende em lavanda, rótulo ao lado; para ligar/desligar coisas do palco.
+- **Pílulas de nível** (`#acNiveis`): número num círculo, nome curto, fio lavanda embaixo com o progresso; a ativa em lavanda a 16%. Numa fileira que rola de lado, nunca em grade de cartões grandes.
+- **Cartões de exercício**: todos da mesma altura — título, duas linhas de descrição, o tipo ("10 notas · 60 BPM"), a porcentagem e a barra de progresso. Indisponível vira "Em breve" com cadeado. No celular, carrossel (scroll-snap) que abre no escolhido. Atalhos para outras ferramentas viram o último cartão (tracejado), não banners no meio do caminho.
+- **Cartões de nota** (RepeTCHÊ): um por nota da rodada; "?" antes de acertar, o nome e "✓ certa" no acerto, vermelho com "era esta" no erro, traço embaixo na cor do fole (some em "Só ouvindo").
+- **Instrutor "Prepare-se"**: antes de começar, nunca "?": a primeira nota, a mão e o fole (do mapa), ou quantas notas e os passos, quando a nota é segredo. "Agora" só durante o exercício.
+- **Pré-visualização por botão**: prévias (de música, de som) abrem num botão de tocar, nunca tocando sozinhas.
+- **Avisos discretos**: o aviso "não substitui um professor" é uma linha com (i), não uma faixa com triângulo de alerta.
+
 ### Chips
 - **Pílula de direção:** cápsula de 12px de texto, azul ou laranja translúcido, com o texto num tom claro da mesma cor.
 - **Círculos de fase:** 38px, ameixa-3 com texto cinza quando inativos, lavanda translúcida quando feitos, osso com texto ameixa no atual.
@@ -307,6 +328,23 @@ O bandoneonista desenhado do logo original, repintado na paleta do app (escolha 
 ### Aurora
 Três gradientes radiais (rosa `rgba(255,158,250,.34)`, violeta `rgba(107,19,245,.5)`, brasa `rgba(255,86,50,.3)`) desfocados em 28px, atrás do instrumento e só dele.
 
+## Estados de cada tela
+
+Antes de desenhar ou mudar uma tela, liste os estados dela e desenhe cada um. Telas desenhadas só no estado "cheio" quebram nos outros (os "?" do instrutor antes do Começar eram um estado esquecido). A lista mínima:
+
+1. **Primeira vez:** quem nunca usou (sem progresso, sem conta). O que precisa saber para começar?
+2. **Vazio:** nenhuma música importada, nenhuma turma, nenhum aluno, nenhum resultado.
+3. **Antes de começar:** o exercício escolhido, nada tocando. Diz o que vem (nunca "?" nem "–").
+4. **Durante:** tocando, a vez da pessoa, o app tocando.
+5. **Acerto e erro:** o que muda na tela, com que cor (lavanda e vermelho) e com que texto.
+6. **Fim:** resultado, estrelas, o próximo passo.
+7. **Volta:** quem já usou e volta à tela (o currículo recolhe, o palco vem antes).
+8. **Sem recurso:** sem microfone, sem som carregado, sem internet, sem conta.
+9. **Celular (390px):** onde fica o teclado? Quanto é preciso rolar até ele? E na tela cheia, deitado.
+10. **Sem movimento e outros idiomas:** `sem-mov` e textos mais longos em es/en.
+
+Na maquete, mostre pelo menos o estado principal, o "antes de começar" e o celular; nos pontos da maquete, diga quais estados mudam.
+
 ## Do's and Don'ts
 
 ### Do:
@@ -318,6 +356,8 @@ Três gradientes radiais (rosa `rgba(255,158,250,.34)`, violeta `rgba(107,19,245
 - **Do** separar listas com divisórias de 1px em vez de caixas.
 - **Do** animar com a curva de saída `cubic-bezier(.16,1,.3,1)` e respeitar o modo sem movimento (classe `sem-mov`).
 - **Do** desenhar o teclado com botões de madrepérola sobre placa escura.
+- **Do** pôr os controles de tocar dentro do palco, junto do teclado.
+- **Do** listar os estados da tela (seção acima) antes de cada maquete.
 
 ### Don't:
 - **Don't** usar o dourado nem os gradientes azul-marinho do visual anterior.
@@ -326,6 +366,11 @@ Três gradientes radiais (rosa `rgba(255,158,250,.34)`, violeta `rgba(107,19,245
 - **Don't** voltar à barra lateral no computador; a navegação é a barra de vidro no topo.
 - **Don't** usar easings elásticos (overshoot) nem pesos 800 e 900 em superfícies do mundo novo.
 - **Don't** montar o primeiro viewport como título com print ao lado e fileira de cartões iguais.
+- **Don't** dar cor própria a nível, área ou exercício.
+- **Don't** pintar uma faixa inteira de lilás (ou de qualquer cor) para um aviso de estado.
+- **Don't** empilhar blocos (aviso, banner, cartão de controles) entre a escolha e o teclado.
+- **Don't** mostrar "?" ou "–" como estado de espera.
+- **Don't** inventar dica técnica (postura, dedo) para enfeitar a tela: só com fonte real.
 
 ### Dívida conhecida (não é regra do sistema)
 Todas as abas e as páginas abertas seguem o sistema desde 2026-11-10. O que ainda destoa:

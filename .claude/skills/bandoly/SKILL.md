@@ -285,8 +285,13 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
   (`fontes/`), barra do topo em vidro fosco no computador (o desfoque fica em `header::before`: no próprio header
   ele prenderia a barra fixa de baixo do celular). Ícones em sprite SVG (`<svg aria-hidden="true"><use href="#i-nome"/></svg>`;
   a regra geral de `svg[aria-hidden]` encolhe qualquer desenho que use esse atributo).
-- O Início já está no mundo novo; as outras abas receberam só os tokens e ainda têm cores fixas antigas
-  (azul-marinho em gradientes, moldura dourada do teclado, brilhos). Revisar uma área por vez.
+- **O sistema de design está em `DESIGN.md` (raiz).** Leia antes de qualquer mudança visual: cores com significado
+  (verde só para ir, azul abrindo, laranja fechando, vermelho só erro, lilás = escolhido/certo, sem cor por nível),
+  o palco (console) com os controles dentro, as peças (fole segmentado, pílulas, cartões, "Prepare-se") e os
+  Do's and Don'ts. Regra nova aprovada pelo dono → escreva lá no mesmo commit.
+- **Antes de cada maquete, liste os estados da tela** (seção "Estados de cada tela" do `DESIGN.md`: primeira vez,
+  vazio, antes de começar, durante, acerto/erro, fim, volta, sem recurso, celular, sem movimento e outros idiomas)
+  e diga nos pontos da maquete quais mudam.
 - A marca é sempre **BanDoly**, junta, nunca "Ban Doly".
 - Teclado com caixa escura e botões de madrepérola. Azul = abrindo, laranja = fechando, e para texto em
   cima use `--open-texto`/`--close-texto` (contraste ≥ 4,5). Vermelho só para erro.
@@ -388,7 +393,11 @@ E="/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe"; W=$(cygpath -w
 
 - Pede melhorias amplas ("faça todas"). Implemente, teste, publique e então relate em pt-BR, de forma
   curta: o que mudou, o que precisa da parte dele e o que não deu para testar.
-- Para mudanças grandes de visual, ele gosta de ver uma **maquete** antes (em `scratchpad/maquetes/`).
+- Para mudanças grandes de visual, ele gosta de ver uma **maquete** antes (em `scratchpad/maquetes/`): capturas do
+  app de verdade com a proposta aplicada numa cópia, alternando Proposta/Hoje e computador/celular, e a lista de pontos
+  ("Na proposta" e "Mantido"). Ele aprova ponto a ponto.
+- Análises de outras IAs: confira cada afirmação no app antes de seguir (já vieram defeitos que eram efeito de
+  captura e regras "que fizemos" que não fizemos) e diga com clareza onde discorda.
 - Quer opinião honesta, inclusive para discordar ("não recomendo… porque…").
 - Gosta de movimento e de visual forte, mas com propósito e sem poluir a tela inicial.
 
