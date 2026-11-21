@@ -35,10 +35,9 @@ Seja honesto sobre o que não foi testado (celular real, MIDI real, microfone re
 ## 2. Arquitetura (sem build)
 
 - `index.html` (todas as abas) + `css/app.css` + `js/*.js` em **scripts clássicos com `defer`**, que
-  compartilham o escopo global e rodam **nesta ordem**:
-  `base, i18n-textos, i18n, licoes-traducao, audio, teclado, movimento, navegacao, menus, fole, desafios, ritmo,
-  atalhos, controles, melodias, musicxml, escalas, microfone, acordes, maos, academia, partituras, rotina,
-  licoes, ajustes, ouvido, eco, qualnota, cascata, trilha, inicio, professor, relatorio, teoria, contato, conta, turmas, init`.
+  compartilham o escopo global e rodam na ordem do `index.html`. **O mapa oficial está em `ARCHITECTURE.md`** (ordem
+  dos scripts, áreas, invariantes, fronteiras de dados) e os porquês em `docs/decisoes/`. Mudou a ordem ou as áreas →
+  atualize o ARCHITECTURE.md (os testes conferem). Decisão grande nova → registro novo em `docs/decisoes/`.
   Código que roda no carregamento só pode usar o que veio antes; dentro de funções, tudo já existe.
   A **Teoria** é a exceção: o conteúdo dela não está no `index.html` e só é baixado quando a aba abre (`carregarTeoria()`
   em teoria.js, que injeta, nesta ordem, `teoria-textos, teoria-frases, teoria-kit, teoria-topicos` e `css/teoria.css`).

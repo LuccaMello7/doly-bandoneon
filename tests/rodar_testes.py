@@ -47,6 +47,12 @@ def main():
     if r.returncode:
         print('FALHA  espaçamentos fora do grid de 8 pontos:\n       ' + r.stdout.strip().replace('\n', '\n       '))
         faltando.append('grade8.py')
+    # o mapa da arquitetura precisa bater com o código (ordem dos scripts e áreas)
+    r = subprocess.run([sys.executable, str(RAIZ / 'ferramentas' / 'verificar_arquitetura.py')],
+                       capture_output=True, text=True, encoding='utf-8')
+    if r.returncode:
+        print('FALHA  ' + r.stdout.strip())
+        faltando.append('verificar_arquitetura.py')
     captura = ('<base href="../">\n<script>window.__erros=[];'
                'window.onerror=(m,s,l)=>{window.__erros.push(m+" ("+(s||"").split("/").pop()+":"+l+")");};'
                'document.addEventListener("securitypolicyviolation",e=>window.__erros.push("CSP bloqueou "+e.violatedDirective+": "+e.blockedURI));</script>')
